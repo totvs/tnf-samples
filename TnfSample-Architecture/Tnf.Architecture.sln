@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Domain.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Web.Tests", "test\Tnf.Architecture.Web.Tests\Tnf.Architecture.Web.Tests.csproj", "{34402382-5BA0-476F-BC39-BD3AF82EA284}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application.Tests", "test\Tnf.Architecture.EntityFrameworkCore.Tests\Tnf.Architecture.Application.Tests.csproj", "{D68AD5CD-0073-4CDD-9513-A351F2320B35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application.Tests", "test\Tnf.Architecture.Application.Tests\Tnf.Architecture.Application.Tests.csproj", "{A0097654-C85D-4AA2-B78D-C260296A9F01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +79,10 @@ Global
 		{34402382-5BA0-476F-BC39-BD3AF82EA284}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34402382-5BA0-476F-BC39-BD3AF82EA284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34402382-5BA0-476F-BC39-BD3AF82EA284}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D68AD5CD-0073-4CDD-9513-A351F2320B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D68AD5CD-0073-4CDD-9513-A351F2320B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D68AD5CD-0073-4CDD-9513-A351F2320B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D68AD5CD-0073-4CDD-9513-A351F2320B35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +102,6 @@ Global
 		{FC8BB0E9-30B1-4D00-B596-84F7D2080AA3} = {D9BB2CA0-3AF4-412F-AE17-A7DB0C0EE94E}
 		{0DD3D07E-8AC8-4E48-8F9D-67B3137BEC42} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{34402382-5BA0-476F-BC39-BD3AF82EA284} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
-		{D68AD5CD-0073-4CDD-9513-A351F2320B35} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
+		{A0097654-C85D-4AA2-B78D-C260296A9F01} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 	EndGlobalSection
 EndGlobal
