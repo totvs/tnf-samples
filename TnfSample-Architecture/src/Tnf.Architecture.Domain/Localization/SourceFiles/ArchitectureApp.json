@@ -1,0 +1,8 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "President_Title": "Presidents",
+    "PresidentZipCodeMustHaveValue": "A president must have a name",
+    "PresidentNameMustHaveValue": "A president must have a Zip Code"
+  }
+}

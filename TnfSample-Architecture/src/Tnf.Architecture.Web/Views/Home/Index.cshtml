@@ -1,0 +1,14 @@
+﻿@section scripts
+{
+    <environment names="Development">
+        <script src="~/js/views/home/index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/js/views/home/index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<h2>
+    @ViewBag.Title
+</h2>
