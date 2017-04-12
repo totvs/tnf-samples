@@ -5,9 +5,8 @@ Este repositório contém alguns exemplos de utilização de algumas funcionalid
 	Exemplo de utilização de EF Core;
 
 ## TnfSample-Architecture
-	Exemplo full da arquitetura utilizada com validações a nível de domínio, multiplos repositórios, 
-	localização, configurações e testes integrados e de unidade. 
-	Este é o exemplo mais completo de utilização do TNF
+	Exemplo full da arquitetura utilizada com validações a nível de domínio, multiplos repositórios, localização, 
+	configurações e testes integrados e de unidade. Este é o exemplo mais completo de utilização do TNF
 	
 ## TnfSample-FluigData
 	Exemplo de utilização do provider desenvolvido para o FluigData no modelo TNF
