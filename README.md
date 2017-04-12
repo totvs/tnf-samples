@@ -1,9 +1,20 @@
 # TNF Samples 
-Este projeto reune exemplos de utilização do Framework cross-platform desenvolvido pela TOTVS em .NET Core, contendo:
-1. N-Layered Architecture
-2. Validações na camada de domínio: builders e specifications
-3. Multiplos repositórios de dados: Carol, EF Core
-4. Teste a nível de domain, applicatication e services, utilizando: xunit, NSubstitute, EF in memory e utilitários do frame TNF.
+Este repositório contém alguns exemplos de utilização de algumas funcionalidades do TNF
 
-# Getting Started
-1. Para execução do projeto é necessário rodar o script localizado em: "TnfSample-Architecture/ScriptDB-Sample.sql":
+## SimpleDbContext-Core
+	Exemplo de utilização de EF Core;
+
+## TnfSample-Architecture
+	Exemplo full da arquitetura utilizada com validações a nível de domínio, multiplos repositórios, localização, configurações e testes integrados e de unidade. Este é o exemplo mais completo de utilização do TNF
+	
+## TnfSample-FluigData
+	Exemplo de utilização do provider desenvolvido para o FluigData no modelo TNF
+
+## TnfSample-i18n
+	Exemplo de utilização da infraestrutura de i18n criada para o TNF
+
+## TnfSample-IS4
+	Exemplo de utilização da infraestrutura de IS4 criada para o TNF
+
+## TnfSample-Settings
+	Exemplo de utilização da infraestrutura de settings criada para o TNF
