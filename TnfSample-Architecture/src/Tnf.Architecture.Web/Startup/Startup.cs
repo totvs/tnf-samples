@@ -2,13 +2,14 @@
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore;
+using Tnf.Castle.Log4Net;
 using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Configuration;
 
 namespace Tnf.Architecture.Web.Startup
@@ -48,10 +49,10 @@ namespace Tnf.Architecture.Web.Startup
 
             //Configure Abp and Dependency Injection
             return services.AddTnf<WebModule>(options =>
-            {   
+            {
                 //Configure Log4Net logging
                 options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseLog4Net().WithConfig("log4net.config")
+                    f => f.UseTnfLog4Net().WithConfig("log4net.config")
                 );
             });
         }
@@ -60,6 +61,8 @@ namespace Tnf.Architecture.Web.Startup
         {
             app.UseTnf(); //Initializes Tnf framework.
             
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
