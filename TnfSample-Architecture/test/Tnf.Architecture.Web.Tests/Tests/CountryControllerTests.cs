@@ -7,7 +7,6 @@ using Tnf.Web.Models;
 using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using System.Net;
-using Tnf.Architecture.Web.Controllers;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {

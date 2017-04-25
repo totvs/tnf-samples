@@ -9,7 +9,7 @@ namespace Tnf.Architecture.Application.Tests
     [DependsOn(
         typeof(AppModule),
         typeof(TnfTestBaseModule))]
-    public class AppTestModule : TnfModule
+    public class EfCoreAppTestModule : TnfModule
     {
         public override void PreInitialize()
         {
@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Application.Tests
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(EfCoreAppTestModule).GetAssembly());
         }
     }
 }

@@ -4,7 +4,7 @@ using Tnf.Architecture.EntityFrameworkCore.Entities;
 
 namespace Tnf.Architecture.Application.Tests
 {
-    public class AppTestBase : TnfEfCoreIntegratedTestBase<AppTestModule>
+    public class EfCoreAppTestBase : TnfEfCoreIntegratedTestBase<EfCoreAppTestModule>
     {
         protected override void InitializeIntegratedTest()
         {

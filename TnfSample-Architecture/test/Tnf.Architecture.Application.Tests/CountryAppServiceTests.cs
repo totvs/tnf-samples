@@ -7,7 +7,7 @@ using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Application.Tests
 {
-    public class CountryAppServiceTests : AppTestBase
+    public class CountryAppServiceTests : EfCoreAppTestBase
     {
         private readonly ICountryAppService _countryAppService;
 

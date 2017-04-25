@@ -13,7 +13,7 @@ namespace Tnf.Architecture.Web.Views.Shared.Components.LanguageSelection
             _localizationManager = localizationManager;
         }
 
-        public IViewComponentResult InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = new LanguageSelectionViewModel
             {

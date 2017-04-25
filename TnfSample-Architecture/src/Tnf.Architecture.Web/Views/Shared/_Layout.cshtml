@@ -128,7 +128,7 @@
 
     <script>
         if (moment) { //Localizing momentjs
-            moment.locale('@Thread.CurrentThread.CurrentUICulture.Name');
+            moment.locale('@System.Globalization.CultureInfo.CurrentUICulture.Name');
         }
     </script>
 
