@@ -10,7 +10,7 @@ namespace Tnf.Architecture.Application
     [DependsOn(
         typeof(TnfAutoMapperModule),
         typeof(DomainModule),
-        typeof(FluigDataModule),
+        typeof(CarolModule),
         typeof(EntityFrameworkModule))]
     public class AppModule : TnfModule
     {

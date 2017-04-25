@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Data", "3 - Data", "{D9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - CrossCutting", "4 - CrossCutting", "{00C9C500-F532-493C-9741-301F540E69C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.FluigData", "src\Tnf.Architecture.FluigData\Tnf.Architecture.FluigData.csproj", "{FC8BB0E9-30B1-4D00-B596-84F7D2080AA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Carol", "src\Tnf.Architecture.Carol\Tnf.Architecture.Carol.csproj", "{FC8BB0E9-30B1-4D00-B596-84F7D2080AA3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}"
 EndProject

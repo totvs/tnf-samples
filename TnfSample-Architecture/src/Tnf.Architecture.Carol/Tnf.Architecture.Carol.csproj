@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>Tnf.Architecture.FluigData</AssemblyName>
-    <PackageId>Tnf.Architecture.FluigData</PackageId>
+    <AssemblyName>Tnf.Architecture.Carol</AssemblyName>
+    <PackageId>Tnf.Architecture.Carol</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.App.FluigData" Version="1.0.0" />
+    <PackageReference Include="Tnf.App.Carol" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

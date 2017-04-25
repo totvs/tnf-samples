@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Tnf.App.FluigData.FluigData.Repositories;
+using Tnf.App.Carol.Repositories;
 
 namespace Tnf.Architecture.Data.Entities
 {
     [JsonObject("president")]
-    public class PresidentEntity : FluigDataEntity
+    public class PresidentEntity : CarolEntity
     {
         public string Name { get; set; }
         public string ZipCode { get; set; }
