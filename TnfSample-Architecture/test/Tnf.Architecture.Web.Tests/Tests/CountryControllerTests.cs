@@ -1,5 +1,4 @@
-﻿using Tnf.Architecture.Web.Tests.App.Controllers;
-using Xunit;
+﻿using Xunit;
 using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using Tnf.Web.Models;
 using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using System.Net;
+using Tnf.Architecture.Web.Controllers;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -15,7 +15,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         [Fact]
         public void Should_Resolve_Controller()
         {
-            ServiceProvider.GetService<CountryController>().ShouldNotBeNull();
+           ServiceProvider.GetService<CountryController>().ShouldNotBeNull();
         }
 
         [Fact]

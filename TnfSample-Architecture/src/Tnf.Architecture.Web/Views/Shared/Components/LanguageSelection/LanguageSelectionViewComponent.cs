@@ -15,6 +15,8 @@ namespace Tnf.Architecture.Web.Views.Shared.Components.LanguageSelection
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            await Task.Delay(1);
+
             var model = new LanguageSelectionViewModel
             {
                 CurrentLanguage = _localizationManager.CurrentLanguage,

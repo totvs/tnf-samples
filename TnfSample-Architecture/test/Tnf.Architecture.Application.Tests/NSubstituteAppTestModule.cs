@@ -8,6 +8,7 @@ using Tnf.Architecture.Dto;
 using NSubstitute;
 using Castle.MicroKernel.Registration;
 using Tnf.Reflection.Extensions;
+using Castle.Core.Logging;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -19,6 +20,16 @@ namespace Tnf.Architecture.Application.Tests
         public override void PreInitialize()
         {
             // Mock repositories
+            Configuration.ReplaceService<ILogger>(() =>
+            {
+                IocManager.IocContainer.Register(
+                    Component
+                    .For<ILogger>()
+                    .Instance(Substitute.For<ILogger>())
+                    .LifestyleTransient()
+                );
+            });
+
             Configuration.ReplaceService<IWhiteHouseRepository>(() =>
             {
                 var instance = Substitute.For<IWhiteHouseRepository>();
@@ -29,7 +40,7 @@ namespace Tnf.Architecture.Application.Tests
                     new PresidentDto("7", "New President", "55833479")
                 };
 
-                instance.InsertPresidentsAsync(presidentsToInsert, true)
+                instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)
                     .Returns(Task.FromResult(presidentsToInsert));
 
                 IocManager.IocContainer.Register(

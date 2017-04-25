@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Tnf.Architecture.Web.Tests.App.Controllers;
 using Xunit;
 using Shouldly;
 using Tnf.Web.Models;
 using Tnf.Architecture.Dto;
 using System.Net;
+using Tnf.Architecture.Web.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tnf.Architecture.Web.Tests.Tests

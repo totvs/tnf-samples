@@ -14,11 +14,12 @@ namespace Tnf.Architecture.Web.Tests.App
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            var mvc = services.AddMvc();
-            
-            services.AddEntityFrameworkInMemoryDatabase();
+            services.AddMvc()
+                .AddApplicationPart(typeof(TnfAspNetCoreModule).GetAssembly())
+                .AddApplicationPart(typeof(Tnf.Architecture.Web.Startup.WebModule).GetAssembly())
+                .AddControllersAsServices();
 
-            mvc.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(TnfAspNetCoreModule).GetAssembly()));
+            services.AddEntityFrameworkInMemoryDatabase();
 
             //Configure Tnf and Dependency Injection
             return services.AddTnf<AppTestModule>(options =>

@@ -32,7 +32,7 @@ namespace Tnf.Architecture.Application.Tests
             var response = await _whiteHouseAppService.InsertPresidentAsync(new List<PresidentDto>()
             {
                 new PresidentDto("1", "New President", "12345678")
-            });
+            }, true);
 
             // Assert
             Assert.True(response.Success);
