@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using Tnf.App.FluigData;
+﻿using Tnf.App.FluigData;
 using Tnf.App.FluigData.Configuration;
 using Tnf.Modules;
 using Tnf.Architecture.Domain;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Data
 {
@@ -29,7 +29,7 @@ namespace Tnf.Architecture.Data
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(FluigDataModule).GetAssembly());
         }
     }
 }

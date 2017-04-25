@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
     <AssemblyName>Tnf.Architecture.Domain.Tests</AssemblyName>
-    <PackageId>Tnf.Tests</PackageId>
+    <PackageId>Tnf.Architecture.Domain.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -11,17 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="2.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
+    <PackageReference Include="NSubstitute" Version="2.0.3" />
     <PackageReference Include="Shouldly" Version="2.8.2" />
     <PackageReference Include="Tnf.TestBase.App" Version="1.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="xunit" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Transactions" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using Tnf.Modules;
+﻿using Tnf.Modules;
 using Tnf.Architecture.Domain;
 using Tnf.Architecture.Data;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AutoMapper;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application
 {
@@ -21,7 +21,7 @@ namespace Tnf.Architecture.Application
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AppModule).GetAssembly());
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Tnf.Modules;
 using Tnf.AspNetCore;
-using Tnf.AspNetCore.Configuration;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Configuration;
 using Tnf.App.App.Configuration;
 using Tnf.Architecture.CrossCutting;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -37,7 +36,7 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(WebModule).GetAssembly());
         }
     }
 }

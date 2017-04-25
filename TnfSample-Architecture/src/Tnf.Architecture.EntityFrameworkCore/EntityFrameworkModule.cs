@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Tnf.Reflection.Extensions;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.Domain;
 using Tnf.Modules;
@@ -12,7 +12,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(EntityFrameworkModule).GetAssembly());
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application", "src\Tnf.Architecture.Application\Tnf.Architecture.Application.csproj", "{CA7C6730-1500-499D-A66D-C4A6981B4BA8}"
 EndProject
@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.EntityFram
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.CrossCutting", "src\Tnf.Architecture.CrossCutting\Tnf.Architecture.CrossCutting.csproj", "{408EFCB3-3381-481D-B91E-21F524E23F9F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Services", "0 - Services", "{6D2F7A2F-C58D-4F43-9194-BA646C2CAC69}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - API", "0 - API", "{6D2F7A2F-C58D-4F43-9194-BA646C2CAC69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Application", "{C4EC98A8-B100-4D75-A310-CFBBB26342A3}"
 EndProject

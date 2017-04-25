@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore.TestBase;
 using Tnf.AspNetCore;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -17,7 +18,7 @@ namespace Tnf.Architecture.Web.Tests.App
             
             services.AddEntityFrameworkInMemoryDatabase();
 
-            mvc.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(TnfAspNetCoreModule).Assembly));
+            mvc.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(TnfAspNetCoreModule).GetAssembly()));
 
             //Configure Tnf and Dependency Injection
             return services.AddTnf<AppTestModule>(options =>

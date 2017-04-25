@@ -47,7 +47,7 @@ namespace Tnf.Architecture.Web.Startup
             //services.AddRouting();
             services.AddSwaggerGen();
 
-            //Configure Abp and Dependency Injection
+            //Configure Tnf and Dependency Injection
             return services.AddTnf<WebModule>(options =>
             {
                 //Configure Log4Net logging

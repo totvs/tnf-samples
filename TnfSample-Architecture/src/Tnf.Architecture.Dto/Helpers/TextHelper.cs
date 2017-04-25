@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Tnf.Architecture.Dto.Helpers
 {
-    public class TextHelper
+    public static class TextHelper
     {
         const string withAccents = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç'`´^";
         const string withoutAccents = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc    ";
@@ -67,6 +67,25 @@ namespace Tnf.Architecture.Dto.Helpers
 
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
             return textInfo.ToTitleCase(text);
+        }
+
+        public static string ToTitleCase(this TextInfo info, string str)
+        {
+            string auxStr = str.ToLower();
+            string[] auxArr = auxStr.Split(' ');
+            string result = "";
+            bool firstWord = true;
+            foreach (string word in auxArr)
+            {
+                if (!firstWord)
+                    result += " ";
+                else
+                    firstWord = false;
+
+                result += word.Substring(0, 1).ToUpper() + word.Substring(1, word.Length - 1);
+            }
+
+            return result;
         }
     }
 }

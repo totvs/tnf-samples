@@ -1,8 +1,8 @@
-using System.Reflection;
 using Tnf.Modules;
 using Tnf.TestBase;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Application.Tests
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).GetAssembly());
         }
     }
 }

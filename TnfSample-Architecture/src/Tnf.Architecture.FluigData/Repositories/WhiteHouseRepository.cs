@@ -66,7 +66,7 @@ namespace Tnf.Architecture.Data.Repositories
                 ZipCode = s.ZipCode.Number
             }).ToList();
 
-            presidentEntities = await InsertAsync(presidentEntities, sync);
+            presidentEntities = await InsertAsync(presidentEntities, sync) as List<PresidentEntity>;
 
             return presidents;
         }

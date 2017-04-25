@@ -6,6 +6,7 @@ using Tnf.Web.Models;
 using Tnf.Architecture.Dto;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
+using Tnf.Architecture.Web.Controllers;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {

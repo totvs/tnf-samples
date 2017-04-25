@@ -1,6 +1,5 @@
 ﻿using Tnf.AspNetCore.TestBase;
 using Tnf.Modules;
-using System.Reflection;
 using Tnf.Localization;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
@@ -9,6 +8,7 @@ using Tnf.Configuration.Startup;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.EntityFrameworkCore;
 using System;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -31,7 +31,7 @@ namespace Tnf.Architecture.Web.Tests.App
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).GetAssembly());
         }
 
         public override void PostInitialize()
