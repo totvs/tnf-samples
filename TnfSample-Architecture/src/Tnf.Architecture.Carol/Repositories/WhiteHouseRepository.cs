@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tnf.App.FluigData.Repositories;
-using Tnf.Provider.FluigData;
+using Tnf.App.Carol.Repositories;
+using Tnf.Provider.Carol;
 using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto;
@@ -9,9 +9,9 @@ using Tnf.Architecture.Data.Entities;
 
 namespace Tnf.Architecture.Data.Repositories
 {
-    public class WhiteHouseRepository : FluigDataRepositoryBase<PresidentEntity>, IWhiteHouseRepository
+    public class WhiteHouseRepository : CarolRepositoryBase<PresidentEntity>, IWhiteHouseRepository
     {
-        public WhiteHouseRepository(IFluigDataClient client) :
+        public WhiteHouseRepository(ICarolClient client) :
             base(client)
         {
         }
@@ -33,7 +33,7 @@ namespace Tnf.Architecture.Data.Repositories
             var query = Client.Queries<PresidentEntity>().ProcessFilter()
                 .Offset(request.Offset)
                 .PageSize(request.PageSize)
-                .IndexType(Provider.FluigData.Messages.ProcessFilter.IndexType.STAGING)
+                .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)
                 .MustList((m) => m.TypeFilter()
                                   .MatchFilter(p => p.Name, request.Name)
                                   .TermFilter(p => p.ZipCode, request.ZipCode));

@@ -14,7 +14,7 @@
     <ProjectReference Include="..\Tnf.Architecture.Domain\Tnf.Architecture.Domain.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.EntityFrameworkCore\Tnf.Architecture.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Tnf.Architecture.FluigData\Tnf.Architecture.FluigData.csproj" />
+    <ProjectReference Include="..\Tnf.Architecture.Carol\Tnf.Architecture.Carol.csproj" />
   </ItemGroup>
 
   <ItemGroup>
