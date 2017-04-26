@@ -1,6 +1,5 @@
 ﻿using Tnf.AspNetCore.TestBase;
 using Tnf.Modules;
-using Tnf.Localization;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Web.Tests.Mocks;
@@ -32,12 +31,6 @@ namespace Tnf.Architecture.Web.Tests.App
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).GetAssembly());
-        }
-
-        public override void PostInitialize()
-        {
-            Configuration.Localization.Languages.Add(new LanguageInfo("en-US", "English", isDefault: true));
-            Configuration.Localization.Languages.Add(new LanguageInfo("it", "Italian"));
         }
     }
 }
