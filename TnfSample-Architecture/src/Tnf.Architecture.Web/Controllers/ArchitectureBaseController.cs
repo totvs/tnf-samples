@@ -1,5 +1,5 @@
 ﻿using Tnf.Architecture.CrossCutting;
-using Tnf.AspNetCore.AspNetCore.Mvc.Controllers;
+using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace Tnf.Architecture.Web.Controllers
 {
