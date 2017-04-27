@@ -48,13 +48,7 @@ namespace Tnf.Architecture.Web.Startup
             services.AddSwaggerGen();
 
             //Configure Tnf and Dependency Injection
-            return services.AddTnf<WebModule>(options =>
-            {
-                //Configure Log4Net logging
-                options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseTnfLog4Net().WithConfig("log4net.config")
-                );
-            });
+            return services.AddTnf<WebModule>(options => { });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

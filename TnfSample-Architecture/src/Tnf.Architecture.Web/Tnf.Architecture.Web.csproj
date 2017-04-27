@@ -14,9 +14,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
-    <None Update="wwwroot\**\*;Views\**\*">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,8 +40,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
     <PackageReference Include="System.Net.Http" Version="4.3.1" />
-    <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.0" />
+    <PackageReference Include="Tnf.App.AspNetCore" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

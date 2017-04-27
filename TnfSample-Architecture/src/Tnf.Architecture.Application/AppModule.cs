@@ -4,6 +4,8 @@ using Tnf.Architecture.Data;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AutoMapper;
 using Tnf.Reflection.Extensions;
+using Tnf.Castle.Log4Net;
+using Castle.Facilities.Logging;
 
 namespace Tnf.Architecture.Application
 {
@@ -17,6 +19,11 @@ namespace Tnf.Architecture.Application
         public override void PreInitialize()
         {
             base.PreInitialize();
+
+            //Configure Log4Net logging
+            IocManager.IocContainer.AddFacility<LoggingFacility>(
+                f => f.UseTnfLog4Net().WithConfig("log4net.config")
+            );
         }
 
         public override void Initialize()

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html ng-app="totvsApp">
+<head>
+	<title>TOTVS | Totvs TNF THF</title>
+
+	<!-- start: Meta -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <meta charset="utf-8">
+
+	<meta name="description" content="TOTVS TNF THF">
+	<meta name="keywords" content="totvs">
+	<meta name="author" content="totvs">
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+	<!-- end: Meta -->
+
+	<!-- start: Favicon and Touch Icons -->
+	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+	<!-- end: Favicon and Touch Icons -->
+
+    <link rel="stylesheet" href="js/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/libs/famfamfam-flags/dist/sprite/famfamfam-flags.css">
+    <link rel="stylesheet" href="js/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" href="js/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+
+    <link rel="stylesheet" href="js/libs/angular-nestable/lib/jquery.nestable.css">
+
+    <link rel="stylesheet" href="js/libs/AngularJS-Toaster/toaster.min.css">
+
+    <link rel="stylesheet" href="js/libs/angular-ui-select/dist/select.min.css">
+
+    <link rel="stylesheet" href="js/libs/telerik.kendoui/styles/kendo.common-bootstrap.min.css">
+    <link rel="stylesheet" href="js/libs/telerik.kendoui/styles/kendo.bootstrap.min.css">
+
+    <link rel="stylesheet" href="js/libs/totvs-html-framework/assets/css/totvs-html-framework.css">
+
+    <link rel="stylesheet" href="assets/css/app.min.css">
+</head>
+
+<body ng-cloak>
+
+    <!-- Component TOASTER -->
+    <toaster-container toaster-options="{'time-out':3000}"></toaster-container>
+
+    <!-- APP / DESKTOP HTML -->
+    <div id="menu-wrapper" class="total-height" style="background-color: #e0e5eA" ng-controller="TotvsDesktopController as desktop">
+        <!-- TABS AND OPTIONS -->
+        <div>
+            <totvs-desktop-tab t-tabs="desktop.tabs" t-options="desktop.options"></totvs-desktop-tab>
+        </div>
+
+        <!-- HEADER -->
+        <div>
+            <totvs-desktop-header t-title="TOTVS" t-informations="desktop.headerInformations"></totvs-desktop-header>
+        </div>
+
+        <!-- MENU -->
+        <div id="menu-contents">
+            <div id="menu-view" ui-view></div>
+            
+        </div>
+    </div>
+
+    <!-- Carga dos arquivos JS -->
+    <script src="js/libs/jquery/dist/jquery.min.js"></script>
+
+    <script src="js/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="js/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="js/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+
+    <script src="js/libs/angular/angular.min.js"></script>
+    <script src="js/libs/angular-scroll/angular-scroll.min.js"></script>
+    <script src="js/libs/angular-animate/angular-animate.min.js"></script>
+    <script src="js/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/libs/angular-hotkeys/build/hotkeys.min.js"></script>
+    <script src="js/libs/angular-i18n/angular-locale_pt-br.js"></script>
+    <script src="js/libs/angular-nestable/src/angular-nestable.js"></script>
+    <script src="js/libs/angular-nestable/lib/jquery.nestable.js"></script>
+    <script src="js/libs/angular-resource/angular-resource.min.js"></script>
+    <script src="js/libs/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="js/libs/angular-ui-mask/dist/mask.min.js"></script>
+    <script src="js/libs/ngMask/dist/ngMask.min.js"></script>
+    <script src="js/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="js/libs/angular-ui-select/dist/select.min.js"></script>
+
+    <script src="js/libs/AngularJS-Toaster/toaster.min.js"></script>
+
+    <script src="js/libs/ngDraggable/ngDraggable.js"></script>
+
+    <script src="js/libs/telerik.kendoui/js/kendo.all.min.js"></script>
+    <script src="js/libs/telerik.kendoui/js/cultures/kendo.culture.pt.min.js"></script>
+    <script src="js/libs/telerik.kendoui/js/cultures/kendo.culture.en.min.js"></script>
+    <script src="js/libs/telerik.kendoui/js/cultures/kendo.culture.es.min.js"></script>
+
+    <script src="js/libs/totvs-html-framework/totvs-html-framework.min.js"></script>
+
+    <script src="js/totvs-app.module.js"></script>
+    <script src="js/totvs-app.config.js"></script>
+    <script src="js/totvs-app.route.js"></script>
+
+    <!-- Desktop -->
+    <script src="js/totvs-desktop/totvs-desktop.module.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop-view.service.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop-tab.service.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop-sidebar.service.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop.controller.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop-header.directive.js"></script>
+    <script src="js/totvs-desktop/totvs-desktop-tab.directive.js"></script>
+
+    <!-- President -->
+    <script src="js/presidents/presidents.module.js"></script>
+    <script src="js/presidents/presidents.route.js"></script>
+    <script src="js/presidents/presidents.factory.js"></script>
+    <script src="js/presidents/presidents-search.controller.js"></script>
+    <script src="js/presidents/presidents-list.controller.js"></script>
+    <script src="js/presidents/presidents-detail.controller.js"></script>
+    <script src="js/presidents/presidents-edit.controller.js"></script>
+
+</body>
+</html>

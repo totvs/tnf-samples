@@ -1,0 +1,110 @@
+<totvs-page type="list">
+
+    <totvs-page-navbar>
+
+        <totvs-page-header>
+
+            <totvs-page-breadcrumb>
+                <breadcrumb link="#/">
+                    <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/presidents' }}</span>
+                    <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+                </breadcrumb>
+                <breadcrumb>
+                    <span>{{ ::'l-president' | i18n : [] : 'js/presidents' }}</span>
+                </breadcrumb>
+            </totvs-page-breadcrumb>
+
+            <totvs-page-header-title
+                title="{{ ::'l-presidents' | i18n : [] : 'js/presidents' }}"
+                total="{{ controller.recordsCount }}">
+            </totvs-page-header-title>
+
+            <totvs-page-header-operation>
+
+                <totvs-page-header-operation-action
+                    limit-primary-action="3"
+                    items="controller.records"
+                    items-as="president">
+                    <action link="#/presidents/new" icon="glyphicon-plus">
+                        {{ ::'btn-add' | i18n }}
+                    </action>
+                </totvs-page-header-operation-action>
+
+                <totvs-page-header-operation-filter
+                    placeholder="{{ ::'l-search' | i18n }}"
+                    ng-submit="controller.search()"
+                    ng-model="controller.searchText"
+                    advanced-search="controller.openAdvancedSearch">
+                </totvs-page-header-operation-filter>
+
+            </totvs-page-header-operation>
+
+            <totvs-page-disclaimers
+                disclaimer-list="controller.disclaimers"
+                ng-click="controller.removeDisclaimer">
+            </totvs-page-disclaimers>
+
+        </totvs-page-header>
+
+    </totvs-page-navbar>
+
+    <totvs-page-content>
+
+        <totvs-page-alert
+            ng-if="controller.recordsCount === undefined"
+            type="info"
+            message="{{ ::'loading' | i18n }}">
+        </totvs-page-alert>
+
+        <totvs-page-alert
+            ng-if="controller.recordsCount != undefined && controller.recordsCount === 0"
+            type="info"
+            message="{{ ::'l-msg-not-found' | i18n }}">
+        </totvs-page-alert>
+
+        <totvs-list-item ng-repeat="president in controller.records track by president.id">
+
+            <totvs-list-item-header>
+                <totvs-list-item-title
+                    title="{{ ::president.name }}"
+                    link="#/presidents/detail/{{ ::president.id }}">
+                </totvs-list-item-title>
+
+                <totvs-list-item-action limit-primary-action="2">
+                    <action link="#/presidents/edit/{{ ::president.id }}" icon="glyphicon-pencil">
+                        {{ ::'btn-edit' | i18n }}
+                    </action>
+                    <action ng-click="controller.onRemove(president)" icon="glyphicon-trash">
+                        {{ ::'btn-remove' | i18n }}
+                    </action>
+                </totvs-list-item-action>
+            </totvs-list-item-header>
+
+            <totvs-list-item-content>
+                <totvs-list-item-info
+                    title="{{ ::'l-id' | i18n : [] : 'js/presidents'}}"
+                    value="{{ ::president.id }}">
+                </totvs-list-item-info>
+
+                <totvs-list-item-info
+                    title="{{ ::'l-name' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.name }}">
+                </totvs-list-item-info>
+            </totvs-list-item-content>
+
+            <totvs-list-item-content-detail>
+                <totvs-list-item-info
+                    title="{{ ::'l-zip-code' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.zipCode.number | mask:'99999-999' }}">
+                </totvs-list-item-info>
+            </totvs-list-item-content-detail>
+        </totvs-list-item>
+
+        <totvs-list-pagination
+            ng-if="controller.records.length < controller.recordsCount && controller.records.length"
+            ng-click="controller.loadRecords(true)">
+        </totvs-list-pagination>
+
+    </totvs-page-content>
+
+</totvs-page>

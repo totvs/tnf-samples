@@ -21,4 +21,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>
