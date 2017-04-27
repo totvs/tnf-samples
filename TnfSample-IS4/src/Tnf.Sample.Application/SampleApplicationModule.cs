@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Tnf.AutoMapper;
+﻿using Tnf.AutoMapper;
 using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample
 {
@@ -11,7 +11,7 @@ namespace Tnf.Sample
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleApplicationModule).GetAssembly());
             
         }
     }

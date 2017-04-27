@@ -1,5 +1,5 @@
 
-using Tnf.AspNetCore.AspNetCore.Mvc.Controllers;
+using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace Acme.SimpleTaskApp.Web.Controllers
 {

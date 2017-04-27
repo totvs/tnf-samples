@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tnf.App.Configuration;
+using Tnf.Configuration;
 
 namespace Tnf.Sample
 {
-    public class AppSettingsDbProvider : Tnf.App.Configuration.SettingProvider
+    public class AppSettingsDbProvider : SettingProvider
     {
         public override IEnumerable<SettingDefinition> GetSettingDefinitions()
         {

@@ -66,7 +66,7 @@ namespace Tnf.Sample.FluigData.Repositories
                 ZipCode = s.ZipCode.Number
             }).ToList();
 
-            presidentEntities = await InsertAsync(presidentEntities, sync);
+            await InsertAsync(presidentEntities, sync);
 
             return presidents;
         }

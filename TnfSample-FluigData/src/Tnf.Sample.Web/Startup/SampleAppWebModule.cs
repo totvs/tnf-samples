@@ -7,6 +7,7 @@ using Tnf.AspNetCore.Configuration;
 using Tnf.Sample.Application;
 using Tnf.Sample.Core.Configuration;
 using Tnf.Sample.Data.FluigData;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample.Web.Startup
 {
@@ -33,7 +34,7 @@ namespace Tnf.Sample.Web.Startup
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleAppWebModule).GetAssembly());
         }
     }
 }

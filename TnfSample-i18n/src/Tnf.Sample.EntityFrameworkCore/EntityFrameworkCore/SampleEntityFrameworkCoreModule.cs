@@ -2,6 +2,7 @@
 using Tnf.App.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore;
 using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample.EntityFrameworkCore
 {
@@ -12,7 +13,7 @@ namespace Tnf.Sample.EntityFrameworkCore
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleEntityFrameworkCoreModule).GetAssembly());
         }
     }
 }

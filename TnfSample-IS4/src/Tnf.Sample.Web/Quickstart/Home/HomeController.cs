@@ -5,7 +5,7 @@
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Tnf.AspNetCore.AspNetCore.Mvc.Controllers;
+using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace IdentityServer4.Quickstart.UI
 {

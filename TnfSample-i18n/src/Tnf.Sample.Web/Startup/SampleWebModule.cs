@@ -6,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Tnf.Modules;
 using Tnf.AspNetCore;
 using Tnf.AspNetCore.Configuration;
-using Tnf.App.App.Configuration;
+using Tnf.App.Configuration;
 using Tnf.App;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample.Web.Startup
 {
@@ -35,14 +36,14 @@ namespace Tnf.Sample.Web.Startup
 
             Configuration.Modules.TnfAspNetCore()
                 .CreateControllersForAppServices(
-                    typeof(SampleApplicationModule).Assembly
+                    typeof(SampleApplicationModule).GetAssembly()
                 );
 
         }
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleWebModule).GetAssembly());
 
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
-using Tnf.Extensions;
 using Microsoft.Extensions.Configuration;
+using Tnf.Extensions;
 
 namespace Tnf.Sample.Configuration
 {

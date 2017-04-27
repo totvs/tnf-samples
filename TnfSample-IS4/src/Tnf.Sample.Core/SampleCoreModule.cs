@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using Tnf.Modules;
-using Tnf.Localization;
+﻿using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 using Tnf.Localization.Dictionaries.Json;
+using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample
 {
@@ -18,7 +18,7 @@ namespace Tnf.Sample
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(SampleAppConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(
-                        Assembly.GetExecutingAssembly(),
+                        typeof(SampleCoreModule).GetAssembly(),
                         "Tnf.Sample.Core.Localization.SourceFiles"
                     )
                 )
@@ -28,7 +28,7 @@ namespace Tnf.Sample
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleCoreModule).GetAssembly());
         }
     }
 }

@@ -8,7 +8,7 @@ using Tnf.Sample.Dto;
 
 namespace Tnf.Sample.Core.WhiteHouse
 {
-    public class WhiteHouseService : DomainServiceBase, IWhiteHouseService
+    public class WhiteHouseService : DomainService<IWhiteHouseRepository>, IWhiteHouseService
     {
         private readonly IWhiteHouseRepository _repository;
 
