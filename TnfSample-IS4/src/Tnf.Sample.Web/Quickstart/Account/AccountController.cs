@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
-using Tnf.AspNetCore.AspNetCore.Mvc.Controllers;
+using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace IdentityServer4.Quickstart.UI
 {

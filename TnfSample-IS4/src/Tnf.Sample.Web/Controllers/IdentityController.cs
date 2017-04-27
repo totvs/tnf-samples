@@ -1,8 +1,7 @@
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Tnf.AspNetCore.AspNetCore.Mvc.Controllers;
-using Abp.AspNetCore.Mvc.Authorization;
+using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace Tnf.Sample.Web.Controllers
 {
