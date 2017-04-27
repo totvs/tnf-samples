@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Tnf.App.App.Configuration;
+using Tnf.App.Configuration;
 using Tnf.App.AspNetCore;
 using Tnf.Modules;
 using Tnf.Sample.Configuration;
 using Tnf.Sample.EntityFrameworkCore;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample.Web.Startup
 {
@@ -39,7 +40,7 @@ namespace Tnf.Sample.Web.Startup
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleWebModule).GetAssembly());
 
         }
     }
