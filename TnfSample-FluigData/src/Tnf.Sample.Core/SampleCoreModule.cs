@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using Tnf.Modules;
+﻿using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Sample.Core
 {
@@ -14,7 +14,7 @@ namespace Tnf.Sample.Core
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleCoreModule).GetAssembly());
         }
     }
 }

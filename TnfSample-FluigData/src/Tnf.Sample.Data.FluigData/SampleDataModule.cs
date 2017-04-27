@@ -2,6 +2,7 @@
 using Tnf.App.FluigData;
 using Tnf.App.FluigData.Configuration;
 using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 using Tnf.Sample.Core;
 
 namespace Tnf.Sample.Data.FluigData
@@ -29,7 +30,7 @@ namespace Tnf.Sample.Data.FluigData
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SampleDataModule).GetAssembly());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿
+using System.Globalization;
 using System.Linq;
 
 namespace Tnf.Sample.Dto.Helpers
@@ -66,7 +67,11 @@ namespace Tnf.Sample.Dto.Helpers
                 text = text.ToLower();
 
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
-            return textInfo.ToTitleCase(text);
+            
+            // TODO: ToTitleCase não existe no .NetStandard.
+            //return textInfo.ToTitleCase(text);
+
+            return text;
         }
     }
 }
