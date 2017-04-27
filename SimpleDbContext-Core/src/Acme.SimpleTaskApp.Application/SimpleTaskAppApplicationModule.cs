@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Tnf.AutoMapper;
+﻿using Tnf.AutoMapper;
 using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Acme.SimpleTaskApp
 {
@@ -11,7 +11,7 @@ namespace Acme.SimpleTaskApp
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SimpleTaskAppApplicationModule).GetAssembly());
         }
     }
 }

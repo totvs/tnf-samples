@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using Tnf.Modules;
+﻿using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Acme.SimpleTaskApp
 {
@@ -12,7 +12,7 @@ namespace Acme.SimpleTaskApp
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SimpleTaskAppCoreModule).GetAssembly());
         }
     }
 }

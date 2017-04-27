@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Tnf.Reflection.Extensions;
 
 namespace Acme.SimpleTaskApp.Web
 {
@@ -12,10 +13,12 @@ namespace Acme.SimpleTaskApp.Web
     {
         public static string CalculateContentRootFolder()
         {
-            var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(SimpleTaskAppCoreModule).Assembly.Location);
+            var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(SimpleTaskAppCoreModule).GetAssembly().Location);
             if (coreAssemblyDirectoryPath == null)
             {
-                throw new ApplicationException("Could not find location of Acme.SimpleTaskApp.Core assembly!");
+                // TODO: Levantava ApplicationException que só estará presente no .NETStandard 2.0 com ressalvas
+                // Vide: https://github.com/dotnet/corefx/issues/4222
+                throw new Exception("Could not find location of Acme.SimpleTaskApp.Core assembly!");
             }
 
             var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
@@ -23,7 +26,9 @@ namespace Acme.SimpleTaskApp.Web
             {
                 if (directoryInfo.Parent == null)
                 {
-                    throw new ApplicationException("Could not find content root folder!");
+                    // TODO: Levantava ApplicationException que só estará presente no .NETStandard 2.0 com ressalvas
+                    // Vide: https://github.com/dotnet/corefx/issues/4222
+                    throw new Exception("Could not find content root folder!");
                 }
 
                 directoryInfo = directoryInfo.Parent;

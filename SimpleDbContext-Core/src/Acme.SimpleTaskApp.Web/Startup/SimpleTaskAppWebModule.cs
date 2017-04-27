@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Tnf.Modules;
 using Tnf.AspNetCore;
 using Tnf.AspNetCore.Configuration;
+using Tnf.Reflection.Extensions;
 
 namespace Acme.SimpleTaskApp.Web.Startup
 {
@@ -30,14 +31,14 @@ namespace Acme.SimpleTaskApp.Web.Startup
 
             Configuration.Modules.TnfAspNetCore()
                 .CreateControllersForAppServices(
-                    typeof(SimpleTaskAppApplicationModule).Assembly
+                    typeof(SimpleTaskAppApplicationModule).GetAssembly()
                 );
 
         }
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(SimpleTaskAppWebModule).GetAssembly());
 
         }
     }
