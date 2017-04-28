@@ -30,7 +30,7 @@
     presidentFactory.$inject = ['$totvsresource'];
 
     function presidentFactory($totvsresource) {
-        var url = 'http://localhost:80/api/white-house/:id', 
+        var url = 'http://localhost:5000/api/white-house/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});
