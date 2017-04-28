@@ -71,7 +71,7 @@
 
             self.options = [
                 //{title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: "/TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" },
-                //{title: 'Swagger', action: actionRedirect, icon: '', url: 'http://localhost:5000/swagger/ui/index.html', newTab: true },
+                //{title: 'Swagger', action: actionRedirect, icon: '', url: 'http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000/swagger/ui/index.html', newTab: true },
                 {title: 'Config', action: optionAction, icon:  'cfg'},
                 {title: 'Help', action: optionAction, icon: 'hlp'},
                 {title: 'Logoff', action: optionAction, icon: 'off'}
