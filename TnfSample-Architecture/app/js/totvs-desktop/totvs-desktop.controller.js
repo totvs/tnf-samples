@@ -45,15 +45,15 @@
         TotvsDesktopTabService) {
 
         // *********************************************************************************
-		// *** Variables
-		// *********************************************************************************
+        // *** Variables
+        // *********************************************************************************
 
         var self = this,
             removeCurrentView = false;
 
         // *********************************************************************************
-		// *** Public Properties and Methods
-		// *********************************************************************************
+        // *** Public Properties and Methods
+        // *********************************************************************************
 
         self.tabs = [];
         self.options = [];
@@ -62,32 +62,35 @@
         init();
 
         // *********************************************************************************
-		// *** Controller Initialize
-		// *********************************************************************************
+        // *** Controller Initialize
+        // *********************************************************************************
 
         function init() {
 
             self.tabs = TotvsDesktopTabService.addTab('Home', 'home.blank', {}, undefined, tabOnSelect);
 
-            self.options = [
-                //{title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: "/TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" },
-                //{title: 'Swagger', action: actionRedirect, icon: '', url: 'http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000/swagger/ui/index.html', newTab: true },
-                {title: 'Config', action: optionAction, icon:  'cfg'},
-                {title: 'Help', action: optionAction, icon: 'hlp'},
-                {title: 'Logoff', action: optionAction, icon: 'off'}
-            ];
+            self.options = [];
+
+            if (window.location.hostname.indexOf("amazon") === -1) {
+                self.options.push({title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: "/TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" });
+                self.options.push({title: 'Swagger', action: actionRedirect, icon: 'swagger', url: 'http://localhost:62114/swagger/ui/index.html', newTab: true });
+            }
+
+            self.options.push({ title: 'Config', action: optionAction, icon: 'cfg' });
+            self.options.push({ title: 'Help', action: optionAction, icon: 'hlp' });
+            self.options.push({ title: 'Logoff', action: optionAction, icon: 'off' });
 
             // TODO: Load information of server
             self.headerInformations = [
-                {label: 'TOTVS S/A', action: headerAction},
-                {label: 'Usuário: Admin'}
+                { label: 'TOTVS S/A', action: headerAction },
+                { label: 'Usuário: Admin' }
             ];
 
         }
 
         // *********************************************************************************
-		// *** Functions
-		// *********************************************************************************
+        // *** Functions
+        // *********************************************************************************
 
         function tabOnClose(tab) {
             if (tab.view) {
@@ -107,8 +110,8 @@
         }
 
         function actionRedirect(option) {
-            if(option.newTab)
-                window.open(option.url,'_blank');
+            if (option.newTab)
+                window.open(option.url, '_blank');
             else
                 window.location.href = option.url;
         }
@@ -118,8 +121,8 @@
         }
 
         // *********************************************************************************
-		// *** Listeners Broadcast
-		// *********************************************************************************
+        // *** Listeners Broadcast
+        // *********************************************************************************
 
         // states
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -135,7 +138,7 @@
             // Verifica se o controller que está sendo carregado tem cache
             var viewController;
 
-            $timeout(function() {
+            $timeout(function () {
                 viewController =
                     TotvsDesktopViewService.getViewControllerState($state, $state.href(toState, toParams));
                 // Avisa o controller que o state finalizou a carga

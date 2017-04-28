@@ -1,12 +1,10 @@
 ﻿using System;
-using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore;
-using Tnf.Castle.Log4Net;
 using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Localization;
@@ -18,20 +16,23 @@ namespace Tnf.Architecture.Web.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //services.AddTnfDbContext<ArchitectureDbContext>(options =>
-            //{
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
 
-            //services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
-            //{
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
+#if DEBUG
+            services.AddTnfDbContext<ArchitectureDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
 
-            //services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
-            //{
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
+            services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
+
+            services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
+#endif
 
             services.AddCors(options =>
             {

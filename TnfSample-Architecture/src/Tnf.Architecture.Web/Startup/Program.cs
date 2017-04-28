@@ -12,7 +12,9 @@ namespace Tnf.Architecture.Web.Startup
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+# if RELEASE
                 .UseUrls("http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000")
+#endif
                 .Build();
 
             host.Run();

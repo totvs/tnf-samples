@@ -85,7 +85,7 @@
                 viewName = getViewNameState(state.$current.locals);
             }
 
-            if (viewName) {
+            if (viewName && state.$current.locals[viewName].$scope) {
                 addView(
                     viewName.replace('@', ''),
                     state.current.controller,

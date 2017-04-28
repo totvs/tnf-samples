@@ -30,7 +30,9 @@
     presidentFactory.$inject = ['$totvsresource'];
 
     function presidentFactory($totvsresource) {
-        var url = 'http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000/api/white-house/:id', 
+
+        var hostname = (window.location.hostname.indexOf("amazon") === -1) ? "localhost:62114" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000",
+            url = 'http://' + hostname + '/api/white-house/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

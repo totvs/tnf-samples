@@ -180,11 +180,6 @@ html, body {
             width: 15%;
         }
 
-        // &.active:not(.btn-home) {
-        //     background-color: #31576b; //Compatibilidade.
-        //     background: linear-gradient(to bottom, #041f30 0%, #31576b 100%);
-        // }
-
         &.active:after {
             bottom: -1px;
             left: 50%;
@@ -207,12 +202,12 @@ html, body {
         color: transparent;
     }
 
-    .btn-presidents {
-        background: url(../img/white-house.png) center no-repeat;
-        background-size: 80px 60px;
-        border-left: none;
-        color: transparent;
-    }
+     .btn-presidents {
+         background: url(../img/white-house.png) center no-repeat;
+         background-size: 80px 60px;
+         border-left: none;
+         color: transparent;
+     }
 
     .btn-swagger {
         background: url(../img/bw-swagger-round.png) center no-repeat;
@@ -292,7 +287,6 @@ html, body {
 //------------------------------------------------------------------------------
 #menu-contents {
     height: 100%;
-    padding-top: @topbar-height * 2;
 
     @media (max-width: @screen-xs-max) {
         padding-top: @topbar-height;
@@ -319,7 +313,7 @@ html, body {
 // ESTILOS DO DESKTOP
 //-----------------------------------------------------------------------------
 #menu-desktop {
-    padding-top: 10px;
+    padding-top: @topbar-height * 2;
 
     .menu-block {
         background-color: @menu-block-bgcolor;

@@ -47,7 +47,6 @@
                         '<button ng-repeat="option in tOptions" type="button" ' +
                             ' title="{{option.title}}" ' +
                             ' class="btn btn-{{option.icon}} hidden-xs" ' +
-                            ' ng-class="{\'btn-swagger\':option.title===\'Swagger\'}" ' +
                             ' ng-click="option.action(option)">' +
                                 '<div class="famfamfam-flags {{option.flag}}"></div>' +
                             '</button> ' +

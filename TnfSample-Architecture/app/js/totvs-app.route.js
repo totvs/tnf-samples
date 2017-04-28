@@ -37,9 +37,6 @@
 
         }).state('home.blank', {
             url: '/',
-            controller: 'TotvsMenuController',
-            controllerAs: 'menu',
-            templateUrl: 'js/totvs-menu/totvs-menu.view.html',
             title: 'Home'
 
         });

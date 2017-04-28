@@ -26,6 +26,7 @@
     presidentRouteConfig.$inject = ['$stateProvider'];
 
     function presidentRouteConfig($stateProvider) {
+        var title = (window.location.hostname.indexOf("amazon") === -1) ? 'Presidents' : 'President';
 
         $stateProvider.state('presidents', {
             abstract: true,
@@ -36,28 +37,28 @@
             controller: 'PresidentListController',
             controllerAs: 'controller',
             templateUrl: 'js/presidents/presidents-list.view.html',
-            title: 'Presidents'
+            title: title
             
         }).state('presidents.detail', {
             url: '/presidents/detail/:id',
             controller: 'PresidentDetailController',
             controllerAs: 'controller',
             templateUrl: 'js/presidents/presidents-detail.view.html',
-            title: 'Presidents'
+            title: title
 
         }).state('presidents.new', {
             url: '/presidents/new',
             controller: 'PresidentEditController',
             controllerAs: 'controller',
             templateUrl: 'js/presidents/presidents-edit.view.html',
-            title: 'Presidents'
+            title: title
 
         }).state('presidents.edit', {
             url: '/presidents/edit/:id',
             controller: 'PresidentEditController',
             controllerAs: 'controller',
             templateUrl: 'js/presidents/presidents-edit.view.html',
-            title: 'Presidents'
+            title: title
 
         });
     }

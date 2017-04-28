@@ -25,11 +25,13 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void PreInitialize()
         {
+#if DEBUG
             // Inicializa a localização multiTenant, sendo o faultBack as localiações em arquivo
-            //Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
-            //Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
-            
+            Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
+            Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
+#elif RELEASE
             Configuration.Modules.TnfAspNetCore();
+#endif
         }
 
         public override void Initialize()
