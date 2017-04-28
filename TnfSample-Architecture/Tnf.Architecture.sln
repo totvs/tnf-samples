@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Web.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application.Tests", "test\Tnf.Architecture.Application.Tests\Tnf.Architecture.Application.Tests.csproj", "{A0097654-C85D-4AA2-B78D-C260296A9F01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.Architecture.Dto.Tests", "test\Tnf.Architecture.CrossCutting.Tests\Tnf.Architecture.Dto.Tests.csproj", "{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,10 +83,6 @@ Global
 		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0097654-C85D-4AA2-B78D-C260296A9F01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +103,5 @@ Global
 		{0DD3D07E-8AC8-4E48-8F9D-67B3137BEC42} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{34402382-5BA0-476F-BC39-BD3AF82EA284} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{A0097654-C85D-4AA2-B78D-C260296A9F01} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
-		{18A26EF2-02C4-4C30-94C5-07BB3FC9DD3D} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 	EndGlobalSection
 EndGlobal
