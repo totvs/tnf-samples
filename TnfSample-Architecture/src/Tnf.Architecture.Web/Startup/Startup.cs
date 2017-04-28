@@ -18,20 +18,20 @@ namespace Tnf.Architecture.Web.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddTnfDbContext<ArchitectureDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
+            //services.AddTnfDbContext<ArchitectureDbContext>(options =>
+            //{
+            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            //});
 
-            services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
+            //services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
+            //{
+            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            //});
 
-            services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
+            //services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
+            //{
+            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            //});
 
             services.AddCors(options =>
             {
