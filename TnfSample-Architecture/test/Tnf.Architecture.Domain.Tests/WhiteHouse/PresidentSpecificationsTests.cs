@@ -7,8 +7,10 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
 {
     public class PresidentSpecificationsTests
     {
-        [Fact]
-        public void President_Should_Have_Name()
+        [Theory]
+        [InlineData("Abraham Lincon")]
+        [InlineData("George Washington")]
+        public void President_Should_Have_Name(string name)
         {
             // Arrange
             var spec = new PresidentShouldHaveNameSpecification();
@@ -16,15 +18,17 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new President()
             {
-                Name = "George Washington"
+                Name = name
             });
 
             // Assert
             Assert.True(isSatisfied);
         }
 
-        [Fact]
-        public void President_Not_Accept_Invalid_Name()
+        [Theory]
+        [InlineData(null)]
+        [InlineData(" ")]
+        public void President_Not_Accept_Invalid_Name(string name)
         {
             // Arrange
             var spec = new PresidentShouldHaveNameSpecification();
@@ -32,7 +36,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new President()
             {
-                Name = null
+                Name = name
             });
 
             // Assert

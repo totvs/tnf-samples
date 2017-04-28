@@ -6,6 +6,10 @@ using Tnf.Architecture.Dto;
 using System.Net;
 using Tnf.Architecture.Web.Controllers;
 using Microsoft.Extensions.DependencyInjection;
+using Tnf.Architecture.Dto.ValueObjects;
+using System.Collections.Generic;
+using Tnf.Dto;
+using System.Linq;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -22,7 +26,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagingDtoResponse<PresidentDto>>>(
-                               "/api/white-house?offset=0&pageSize=10",
+                               "/api/white-house?pageSize=10",
                                HttpStatusCode.OK
                            );
 
@@ -37,7 +41,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                "/api/white-house?offset=0&pageSize=0",
+                "/api/white-house?",
                 HttpStatusCode.BadRequest
                 );
 
@@ -46,7 +50,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_President_Return_With_Sucess()
+        public async Task Get_President_With_Sucess()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PresidentDto>>(
@@ -63,11 +67,25 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_President_Not_Exist_Return_Not_Found()
+        public async Task Get_President_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                               "/api/white-house/0",
+                "/api/white-house/%20",
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Get_President_When_Not_Exists_Return_Not_Found()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
+                               "/api/white-house/99",
                                HttpStatusCode.BadRequest
                            );
 
@@ -75,6 +93,104 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.True(response.Success);
             Assert.NotNull(response);
             Assert.Equal(response.Result, "President not found");
+        }
+
+        [Fact]
+        public async Task Post_President_With_Success()
+        {
+            //Arrange
+            var presidentDto = new PresidentDto()
+            {
+                Id = "7",
+                Name = "Lula",
+                ZipCode = new ZipCode("74125306")
+            };
+
+            var presidents = new List<PresidentDto>() { presidentDto };
+
+            // Act
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
+                "/api/white-house",
+                presidents,
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.True(response.Result.Data.Any(p => p.Name == "Lula"));
+        }
+
+        [Fact]
+        public async Task Post_President_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<string>> (
+                "/api/white-house",
+                new List<PresidentDto>(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: presidents");
+        }
+
+        [Fact]
+        public async Task Put_President_With_Success()
+        {
+            //Arrange
+            var presidentDto = new PresidentDto("6", "Ronald Reagan", "85236417");
+
+            // Act
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<PresidentDto>>(
+                "/api/white-house",
+                presidentDto,
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Id, "6");
+            Assert.Equal(response.Result.Name, "Ronald Reagan");
+        }
+
+        [Fact]
+        public async Task Put_President_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<string>>(
+                "/api/white-house",
+                new PresidentDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: president");
+        }
+
+        [Fact]
+        public async Task Delete_President_With_Success()
+        {
+            // Act
+            await DeleteResponseAsObjectAsync<AjaxResponse>(
+                "/api/white-house/1",
+                HttpStatusCode.OK
+            );
+        }
+
+        [Fact]
+        public async Task Delete_President_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
+                "/api/white-house/%20",
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Success.ShouldBeTrue();
+            response.Result.ShouldBe("Invalid parameter: id");
         }
     }
 }

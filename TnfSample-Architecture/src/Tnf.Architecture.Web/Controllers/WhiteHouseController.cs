@@ -59,7 +59,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]PresidentDto president)
         {
-            if (president == null)
+            if (president == null || string.IsNullOrEmpty(president.Id))
                 return BadRequest($"Invalid parameter: {nameof(president)}");
 
             await _whiteHouseAppService.UpdatePresidentAsync(president);

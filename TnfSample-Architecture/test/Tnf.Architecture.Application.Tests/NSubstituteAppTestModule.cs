@@ -33,15 +33,26 @@ namespace Tnf.Architecture.Application.Tests
             Configuration.ReplaceService<IWhiteHouseRepository>(() =>
             {
                 var instance = Substitute.For<IWhiteHouseRepository>();
-                instance.DeletePresidentsAsync("6").Returns(Task.FromResult<object>(null));
 
-                var presidentsToInsert = new List<PresidentDto>()
-                {
-                    new PresidentDto("7", "New President", "55833479")
-                };
+                var president = new PresidentDto("1", "New President", "55833479");
+
+                var presidentsToInsert = new List<PresidentDto>() { president };
+
+                var presidentsToGetAll = new PagingDtoResponse<PresidentDto>();
+                presidentsToGetAll.Data.Add(president);
+                presidentsToGetAll.Data.Add(president);
+
+                instance.GetPresidentById("1")
+                    .Returns(Task.FromResult(president));
+
+                instance.GetAllPresidents(Arg.Any<GellAllPresidentsRequestDto>())
+                    .Returns(Task.FromResult(presidentsToGetAll));
 
                 instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)
                     .Returns(Task.FromResult(presidentsToInsert));
+
+                instance.DeletePresidentsAsync(Arg.Any<string>())
+                    .Returns(Task.FromResult<object>(null));
 
                 IocManager.IocContainer.Register(
                     Component
