@@ -26,6 +26,7 @@
             'ui.mask',
             'ui.select',
             'totvsHtmlFramework',
+            'totvsMenu',
             'totvsDesktop',
             'president'
         ]);

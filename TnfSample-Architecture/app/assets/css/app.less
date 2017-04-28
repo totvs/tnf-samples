@@ -180,10 +180,10 @@ html, body {
             width: 15%;
         }
 
-        &.active:not(.btn-home) {
-            background-color: #31576b; //Compatibilidade.
-            background: linear-gradient(to bottom, #041f30 0%, #31576b 100%);
-        }
+        // &.active:not(.btn-home) {
+        //     background-color: #31576b; //Compatibilidade.
+        //     background: linear-gradient(to bottom, #041f30 0%, #31576b 100%);
+        // }
 
         &.active:after {
             bottom: -1px;
@@ -203,6 +203,13 @@ html, body {
 
     .btn-home {
         background: url(../img/icon-home.png) center no-repeat;
+        border-left: none;
+        color: transparent;
+    }
+
+    .btn-presidents {
+        background: url(../img/white-house.png) center no-repeat;
+        background-size: 80px 60px;
         border-left: none;
         color: transparent;
     }

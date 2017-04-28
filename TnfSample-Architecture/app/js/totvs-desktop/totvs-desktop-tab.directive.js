@@ -37,9 +37,9 @@
             template:
                 '<div id="menu-topbar">' +
                     '<div class="btn-group pull-left" id="menu-tabs" role="group" aria-label="menu-tabs"> ' +
-                        '<div class="btn btn-module" id="{{tab.name}}" title="{{tab.name}}" role="button" ' +
+                        '<div class="btn btn-module btn-{{tab.name.toLowerCase()}}" id="{{tab.name}}" title="{{tab.name}}" role="button" ' +
                             ' ng-repeat="tab in tTabs" ' +
-                            ' ng-class="{\'active\':tab.active,\'btn-home\':tab.name===\'Home\'}"> ' +
+                            ' ng-class="{\'active\':tab.active}"> ' +
                             '<span class="module-title disable-select" ng-click="selectTab(tab)"></span> ' +
                         '</div>' +
                     '</div> ' +

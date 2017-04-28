@@ -37,9 +37,9 @@
 
         }).state('home.blank', {
             url: '/',
-            controller: 'PresidentListController',
-            controllerAs: 'controller',
-            templateUrl: 'js/presidents/presidents-list.view.html',
+            controller: 'TotvsMenuController',
+            controllerAs: 'menu',
+            templateUrl: 'js/totvs-menu/totvs-menu.view.html',
             title: 'Home'
 
         });
