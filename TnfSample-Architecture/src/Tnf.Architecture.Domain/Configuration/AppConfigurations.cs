@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using Tnf.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace Tnf.Architecture.Domain.Configuration
@@ -26,13 +25,9 @@ namespace Tnf.Architecture.Domain.Configuration
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(path)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
-            if (!environmentName.IsNullOrWhiteSpace())
-            {
-                builder = builder.AddJsonFile($"appsettings.{environmentName}.json", optional: true);
-            }
-            
             builder = builder.AddEnvironmentVariables();
 
             return builder.Build();

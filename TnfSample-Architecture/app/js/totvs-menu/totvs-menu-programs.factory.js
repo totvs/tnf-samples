@@ -47,12 +47,16 @@
 
                 applications.splice(0, 0,
                     new MenuApplication(999, 0, 'Sample', [
-                        new MenuModule(999, 999, 'Presidents')
+                        new MenuModule(998, 998, 'Presidents'),
+                        new MenuModule(999, 999, 'Countries')
                     ])
                 );
 
+                programs['998'] = [];
+                programs['998'].push(new Program(false, 'Presidents', 'Sample of CRUD', 'Presidents', '/presidents', 2));
+
                 programs['999'] = [];
-                programs['999'].push(new Program(false, 'Presidents', 'Sample of CRUD', 'Presidents', '/presidents', 2));
+                programs['999'].push(new Program(false, 'Países', 'Sample of CRUD', 'Countries', '/countries', 2));
             }
 
             callback(applications);

@@ -58,8 +58,8 @@ namespace Tnf.Architecture.Web.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody]CountryDto dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(string id, [FromBody]CountryDto dto)
         {
             if (dto == null)
                 return BadRequest($"Invalid parameter: {nameof(dto)}");

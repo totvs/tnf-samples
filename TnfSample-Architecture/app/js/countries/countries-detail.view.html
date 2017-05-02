@@ -1,0 +1,50 @@
+<totvs-page type="detail">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/countries' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/countries">
+                <span>{{ ::'l-country' | i18n : [] : 'js/countries' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>Detalhe: {{ ::controller.country.name }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+        <totvs-page-header>
+            <totvs-page-header-title title="{{ ::controller.country.name }}"></totvs-page-header-title>
+
+            <totvs-page-header-operation>
+                <totvs-page-header-operation-action
+                    limit-primary-action="3"
+                    on-back-link="#/countries"
+                    on-edit-link="#/countries/edit/{{ ::controller.country.id }}">
+				</totvs-page-header-operation-action>
+            </totvs-page-header-operation>
+        </totvs-page-header>
+
+    </totvs-page-navbar>
+
+	<totvs-page-content>
+		<totvs-page-detail>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-id' | i18n : [] : 'js/countries' }}">
+                {{ controller.country.id }}
+            </totvs-page-detail-info>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-country' | i18n : [] : 'js/countries' }}">
+                {{ controller.country.name }}
+            </totvs-page-detail-info>
+
+		</totvs-page-detail>
+
+    </totvs-page-content>
+
+</totvs-page>

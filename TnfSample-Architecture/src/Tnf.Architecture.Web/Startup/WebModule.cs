@@ -7,7 +7,6 @@ using Tnf.Architecture.Domain.Configuration;
 using Tnf.App.Configuration;
 using Tnf.Architecture.CrossCutting;
 using Tnf.Reflection.Extensions;
-using Tnf.AspNetCore.Configuration;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -20,18 +19,22 @@ namespace Tnf.Architecture.Web.Startup
 
         public WebModule(IHostingEnvironment env)
         {
-            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName);
+            var enviroment = env.EnvironmentName;
+
+#if DEBUG
+            enviroment = "Development";
+#elif RELEASE
+            enviroment = "Release";
+#endif
+
+            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, enviroment);
         }
 
         public override void PreInitialize()
         {
-#if DEBUG
             // Inicializa a localização multiTenant, sendo o faultBack as localiações em arquivo
             Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
-#elif RELEASE
-            Configuration.Modules.TnfAspNetCore();
-#endif
         }
 
         public override void Initialize()

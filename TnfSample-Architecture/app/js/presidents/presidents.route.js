@@ -26,7 +26,7 @@
     presidentRouteConfig.$inject = ['$stateProvider'];
 
     function presidentRouteConfig($stateProvider) {
-        var title = (window.location.hostname.indexOf("amazon") === -1) ? 'Presidents' : 'President';
+        var title = (currentEnviroment === enviroment.DEVELOPMENT) ? 'Presidents' : 'President';
 
         $stateProvider.state('presidents', {
             abstract: true,

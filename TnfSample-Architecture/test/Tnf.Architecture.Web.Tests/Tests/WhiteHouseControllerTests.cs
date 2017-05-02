@@ -143,7 +143,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<PresidentDto>>(
-                "/api/white-house",
+                "/api/white-house/1",
                 presidentDto,
                 HttpStatusCode.OK
             );
@@ -159,7 +159,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<string>>(
-                "/api/white-house",
+                "/api/white-house/%20",
                 new PresidentDto(),
                 HttpStatusCode.BadRequest
             );

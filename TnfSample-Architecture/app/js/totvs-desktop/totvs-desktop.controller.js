@@ -71,9 +71,9 @@
 
             self.options = [];
 
-            if (window.location.hostname.indexOf("amazon") === -1) {
+            if (currentEnviroment === enviroment.DEVELOPMENT) {
                 self.options.push({title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: "/TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" });
-                self.options.push({title: 'Swagger', action: actionRedirect, icon: 'swagger', url: 'http://localhost:62114/swagger/ui/index.html', newTab: true });
+                self.options.push({title: 'Swagger', action: actionRedirect, icon: 'swagger', url: 'http://localhost:5000/swagger/ui/index.html', newTab: true });
             }
 
             self.options.push({ title: 'Config', action: optionAction, icon: 'cfg' });

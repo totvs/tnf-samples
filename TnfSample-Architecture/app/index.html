@@ -38,6 +38,16 @@
     <link rel="stylesheet" href="js/libs/totvs-html-framework/assets/css/totvs-html-framework.css">
 
     <link rel="stylesheet" href="assets/css/app.min.css">
+
+    <script>
+        var enviroment = {
+            DEVELOPMENT: 0,
+            RELEASE: 1
+        },
+            currentEnviroment = (window.location.hostname.indexOf("amazon") === -1) ? 
+                enviroment.DEVELOPMENT :
+                enviroment.RELEASE;
+    </script>
 </head>
 
 <body ng-cloak>
@@ -195,6 +205,14 @@
     <script src="js/presidents/presidents-detail.controller.js"></script>
     <script src="js/presidents/presidents-edit.controller.js"></script>
 
+    <!-- Country -->
+    <script src="js/countries/countries.module.js"></script>
+    <script src="js/countries/countries.route.js"></script>
+    <script src="js/countries/countries.factory.js"></script>
+    <script src="js/countries/countries-search.controller.js"></script>
+    <script src="js/countries/countries-list.controller.js"></script>
+    <script src="js/countries/countries-detail.controller.js"></script>
+    <script src="js/countries/countries-edit.controller.js"></script>
 </body>
 
 </html>

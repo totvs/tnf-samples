@@ -5,8 +5,8 @@
 */
 
 /**
-* @module totvsPresident
-* @name TotvsPresidentListController
+* @module totvsCountry
+* @name TotvsCountryListController
 * @object controller
 *
 * @created 2017-3-6 v0.1.0
@@ -24,15 +24,15 @@
     'use strict';
 
     angular
-        .module('president')
-        .factory('presidentFactory', presidentFactory);
+        .module('country')
+        .factory('countryFactory', countryFactory);
 
-    presidentFactory.$inject = ['$totvsresource'];
+    countryFactory.$inject = ['$totvsresource'];
 
-    function presidentFactory($totvsresource) {
+    function countryFactory($totvsresource) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5000/api/white-house/:id', 
+            url = 'http://' + hostname + ':5000/api/countries/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});
@@ -73,7 +73,7 @@
  
     // Registra a AngularJS Factory para customização do httpInterceptor padrão do AngularJS.
     angular        
-        .module('president')
+        .module('country')
         .factory('totvsHttpInterceptor', appHTTPInterceptors);
 
     appHTTPInterceptors.$inject = ['$q'];
@@ -90,6 +90,10 @@
                 if(response.data.result
                    && response.data.result.data)
                     response.data = response.data.result.data;
+                    
+                if(response.data.result
+                   && response.data.result.items)
+                    response.data = response.data.result.items;
 
                 if(response.data.data)
                     response.data = response.data.data;

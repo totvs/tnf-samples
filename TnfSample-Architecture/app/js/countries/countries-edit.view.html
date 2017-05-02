@@ -1,0 +1,52 @@
+<totvs-page type="edit">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/countries' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/countries">
+                <span>{{ ::'l-country' | i18n : [] : 'js/countries' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>{{ controller.country.id ? 'Edição:' : 'Novo País:' }} {{ controller.country.name }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+		<totvs-page-header>
+			<totvs-page-header-title
+                title="{{ controller.country.id ? controller.country.name || 'Editando País' : controller.country.name || 'Novo País' }}"
+                placeholder="{{ ::'l-country' | i18n : [] : 'js/countries' }}">
+			</totvs-page-header-title>
+
+			<totvs-page-header-operation>
+				<totvs-page-header-operation-action>
+                </totvs-page-header-operation-action>
+			</totvs-page-header-operation>
+		</totvs-page-header>
+
+	</totvs-page-navbar>
+
+	<totvs-page-content>
+
+        <totvs-page-form name="frmCountry">
+
+			<fieldset>
+
+				<totvs-field
+					totvs-input
+					class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+					ng-model="controller.country.name"
+					required
+					label="{{ ::'l-name' | i18n : [] : 'js/countries' }}"
+                    focus>
+				</totvs-field>
+
+			</fieldset>
+
+		</totvs-page-form>
+
+	</totvs-page-content>
+
+</totvs-page>

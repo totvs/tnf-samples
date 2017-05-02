@@ -16,8 +16,6 @@ namespace Tnf.Architecture.Web.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
-#if DEBUG
             services.AddTnfDbContext<ArchitectureDbContext>(options =>
             {
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
@@ -32,7 +30,6 @@ namespace Tnf.Architecture.Web.Startup
             {
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
-#endif
 
             services.AddCors(options =>
             {

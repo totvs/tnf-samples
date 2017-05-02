@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]List<PresidentDto> presidents, [FromQuery]bool? sync)
         {
-            if (presidents == null || presidents.Count <= 0)
+            if (presidents.Count <= 0)
                 return BadRequest($"Invalid parameter: {nameof(presidents)}");
 
             if (sync == true)
@@ -56,10 +56,10 @@ namespace Tnf.Architecture.Web.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody]PresidentDto president)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(string id, [FromBody]PresidentDto president)
         {
-            if (president == null || string.IsNullOrEmpty(president.Id))
+            if (string.IsNullOrEmpty(id))
                 return BadRequest($"Invalid parameter: {nameof(president)}");
 
             await _whiteHouseAppService.UpdatePresidentAsync(president);

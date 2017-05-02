@@ -28,7 +28,8 @@
             'totvsHtmlFramework',
             'totvsMenu',
             'totvsDesktop',
-            'president'
+            'president',
+            'country'
         ]);
 
 }());
