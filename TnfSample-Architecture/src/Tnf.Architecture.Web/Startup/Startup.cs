@@ -16,6 +16,11 @@ namespace Tnf.Architecture.Web.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddTnfDbContext<LegacyDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
+
             services.AddTnfDbContext<ArchitectureDbContext>(options =>
             {
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);

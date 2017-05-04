@@ -4,6 +4,7 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Application.Services;
 using Tnf.Dto;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Application.Interfaces;
 
 namespace Tnf.Architecture.Application.Services
 {

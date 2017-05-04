@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Tnf.Application.Services.Dto;
-using Tnf.Architecture.Application.Services;
+using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Runtime.Validation;
 

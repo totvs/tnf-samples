@@ -12,5 +12,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
             : base(options)
         {
         }
+
+
     }
 }

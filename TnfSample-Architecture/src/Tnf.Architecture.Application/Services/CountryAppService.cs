@@ -1,4 +1,5 @@
 ﻿using Tnf.Application.Services;
+using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Domain.Repositories;

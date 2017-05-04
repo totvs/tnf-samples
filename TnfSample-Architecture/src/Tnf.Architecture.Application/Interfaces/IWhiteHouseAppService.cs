@@ -4,7 +4,7 @@ using Tnf.Application.Services;
 using Tnf.Dto;
 using Tnf.Architecture.Dto;
 
-namespace Tnf.Architecture.Application.Services
+namespace Tnf.Architecture.Application.Interfaces
 {
     public interface IWhiteHouseAppService : IApplicationService
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tnf.Architecture.Application.Services;
+using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Web.Controllers
