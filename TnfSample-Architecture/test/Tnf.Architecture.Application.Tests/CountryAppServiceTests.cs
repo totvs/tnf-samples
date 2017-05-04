@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
-using Tnf.Architecture.Application.Services;
 using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Application.Interfaces;
 
 namespace Tnf.Architecture.Application.Tests
 {

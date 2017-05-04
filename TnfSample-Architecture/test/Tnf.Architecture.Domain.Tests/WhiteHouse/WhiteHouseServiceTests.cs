@@ -7,16 +7,16 @@ using Tnf.Architecture.Dto;
 using Xunit;
 using System.Linq;
 using Tnf.Architecture.Domain.Events;
-using Tnf.Tests;
 using Shouldly;
 using Tnf.Architecture.Domain.Interfaces.Services;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
     public class WhiteHouseServiceTests : TestBaseWithLocalIocManager
     {
         IWhiteHouseService _whiteHouseService;
-        IWhiteHouseRepository _whiteHouseRepository;
+        readonly IWhiteHouseRepository _whiteHouseRepository;
 
         public WhiteHouseServiceTests()
         {

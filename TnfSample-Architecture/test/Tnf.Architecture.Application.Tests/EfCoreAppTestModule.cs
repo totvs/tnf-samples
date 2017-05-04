@@ -15,7 +15,8 @@ namespace Tnf.Architecture.Application.Tests
         {
             Configuration.Modules
                 .TnfEfCoreInMemory(IocManager.IocContainer)
-                .RegisterDbContextInMemory<ArchitectureDbContext>();
+                .RegisterDbContextInMemory<ArchitectureDbContext>()
+                .RegisterDbContextInMemory<LegacyDbContext>();
         }
 
         public override void Initialize()
