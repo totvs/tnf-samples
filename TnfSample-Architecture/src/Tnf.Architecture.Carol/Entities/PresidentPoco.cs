@@ -4,7 +4,7 @@ using Tnf.App.Carol.Repositories;
 namespace Tnf.Architecture.Data.Entities
 {
     [JsonObject("president")]
-    public class PresidentEntity : CarolEntity
+    public class PresidentPoco : CarolEntity
     {
         public string Name { get; set; }
         public string ZipCode { get; set; }

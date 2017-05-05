@@ -9,6 +9,7 @@ using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.App.EntityFrameworkCore.Configuration;
+using Newtonsoft.Json.Serialization;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -46,8 +47,7 @@ namespace Tnf.Architecture.Web.Startup
             });
 
             services.AddMvc();
-
-            //services.AddRouting();
+            
             services.AddSwaggerGen();
 
             //Configure Tnf and Dependency Injection

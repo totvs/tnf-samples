@@ -6,7 +6,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
 {
     public class ArchitectureDbContext : TnfDbContext
     {
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<CountryPoco> Countries { get; set; }
 
         public ArchitectureDbContext(DbContextOptions<ArchitectureDbContext> options)
             : base(options)

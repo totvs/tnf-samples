@@ -3,6 +3,7 @@ using Tnf.Architecture.Web.Tests.App;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
+using System;
 
 namespace Tnf.Architecture.Web.Tests
 {
@@ -13,11 +14,41 @@ namespace Tnf.Architecture.Web.Tests
             IocManager.UsingDbContext<ArchitectureDbContext>(
                 context =>
                 {
-                    context.Countries.Add(new Country(1, "Brasil"));
-                    context.Countries.Add(new Country(2, "EUA"));
-                    context.Countries.Add(new Country(3, "Uruguai"));
-                    context.Countries.Add(new Country(4, "Paraguai"));
-                    context.Countries.Add(new Country(5, "Venezuela"));
+                    context.Countries.Add(new CountryPoco(1, "Brasil"));
+                    context.Countries.Add(new CountryPoco(2, "EUA"));
+                    context.Countries.Add(new CountryPoco(3, "Uruguai"));
+                    context.Countries.Add(new CountryPoco(4, "Paraguai"));
+                    context.Countries.Add(new CountryPoco(5, "Venezuela"));
+                });
+
+            IocManager.UsingDbContext<LegacyDbContext>(
+                context =>
+                {
+                    context.Professionals.Add(new ProfessionalPoco()
+                    {
+                        ProfessionalId = 1,
+                        Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
+                        Address = "Rua do comercio",
+                        AddressNumber = "123",
+                        AddressComplement = "APT 123",
+                        Email = "email@email.com",
+                        Name = "João da Silva",
+                        Phone = "55998765432",
+                        ZipCode = "99888777"
+                    });
+
+                    context.Professionals.Add(new ProfessionalPoco()
+                    {
+                        ProfessionalId = 2,
+                        Code = Guid.Parse("f31a6ed8-9d0e-4a02-8b66-0c067981d72e"),
+                        Address = "Rua do comercio 2",
+                        AddressNumber = "1233",
+                        AddressComplement = "APT 1234",
+                        Email = "email2@email2.com",
+                        Name = "José da Silva",
+                        Phone = "15398264438",
+                        ZipCode = "22888888"
+                    });
                 });
         }
     }

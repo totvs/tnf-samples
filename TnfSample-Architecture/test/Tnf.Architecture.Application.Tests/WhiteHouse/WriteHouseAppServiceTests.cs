@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.WhiteHouse;
 using Xunit;
 
 namespace Tnf.Architecture.Application.Tests
@@ -34,11 +35,11 @@ namespace Tnf.Architecture.Application.Tests
             // Act
             var response = await _whiteHouseAppService.DeletePresidentAsync(listResponse.Data[0].Id);
 
-            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsRequestDto());
+            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsDto());
 
             // Assert
             Assert.True(response.Success);
-            pagedResult.Count.ShouldBe(0);
+            pagedResult.Total.ShouldBe(0);
         }
 
         [Fact]
@@ -71,7 +72,7 @@ namespace Tnf.Architecture.Application.Tests
         [Fact]
         public async Task Should_Get_All_Presidents_With_Success()
         {
-            var requestDto = new GellAllPresidentsRequestDto();
+            var requestDto = new GellAllPresidentsDto();
 
             var result = await _whiteHouseAppService.GetAllPresidents(requestDto);
 

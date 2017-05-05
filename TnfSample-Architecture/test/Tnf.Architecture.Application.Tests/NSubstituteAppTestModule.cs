@@ -9,6 +9,7 @@ using NSubstitute;
 using Castle.MicroKernel.Registration;
 using Tnf.Reflection.Extensions;
 using Castle.Core.Logging;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -38,14 +39,14 @@ namespace Tnf.Architecture.Application.Tests
 
                 var presidentsToInsert = new List<PresidentDto>() { president };
 
-                var presidentsToGetAll = new PagingDtoResponse<PresidentDto>();
+                var presidentsToGetAll = new PagingResponseDto<PresidentDto>();
                 presidentsToGetAll.Data.Add(president);
                 presidentsToGetAll.Data.Add(president);
 
                 instance.GetPresidentById("1")
                     .Returns(Task.FromResult(president));
 
-                instance.GetAllPresidents(Arg.Any<GellAllPresidentsRequestDto>())
+                instance.GetAllPresidents(Arg.Any<GellAllPresidentsDto>())
                     .Returns(Task.FromResult(presidentsToGetAll));
 
                 instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)

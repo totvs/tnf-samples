@@ -5,8 +5,8 @@ using Tnf.AspNetCore;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Configuration;
 using Tnf.App.Configuration;
-using Tnf.Architecture.CrossCutting;
 using Tnf.Reflection.Extensions;
+using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Web.Startup
 {

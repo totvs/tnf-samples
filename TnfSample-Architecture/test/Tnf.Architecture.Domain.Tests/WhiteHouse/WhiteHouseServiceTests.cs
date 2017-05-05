@@ -6,10 +6,11 @@ using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto;
 using Xunit;
 using System.Linq;
-using Tnf.Architecture.Domain.Events;
 using Shouldly;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Domain.Events.WhiteHouse;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
@@ -30,9 +31,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                 new PresidentDto("2", "Bill Clinton", "87654321")
             };
 
-            var presidentPaging = new PagingDtoResponse<PresidentDto>(presidentList);
+            var presidentPaging = new PagingResponseDto<PresidentDto>(presidentList);
 
-            _whiteHouseRepository.GetAllPresidents(Arg.Any<GellAllPresidentsRequestDto>())
+            _whiteHouseRepository.GetAllPresidents(Arg.Any<GellAllPresidentsDto>())
                 .Returns(Task.FromResult(presidentPaging));
 
             _whiteHouseRepository.GetPresidentById(Arg.Any<string>())
@@ -60,7 +61,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Return_All_Values()
         {
             // Arrange
-            var requestDto = new GellAllPresidentsRequestDto(0, 2);
+            var requestDto = new GellAllPresidentsDto(0, 2);
 
             // Act
             var allPresidents = await _whiteHouseService.GetAllPresidents(requestDto);

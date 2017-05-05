@@ -5,7 +5,7 @@ using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
 
-namespace Tnf.Architecture.Application.Tests
+namespace Tnf.Architecture.Application.Tests.Registration
 {
     public class CountryAppServiceTests : EfCoreAppTestBase
     {

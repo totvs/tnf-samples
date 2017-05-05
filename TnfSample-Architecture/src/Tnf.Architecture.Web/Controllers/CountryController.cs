@@ -8,7 +8,7 @@ using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Web.Controllers
 {
-    [Route("api/countries")]
+    [Route(RouteConsts.Country)]
     [DisableValidation]
     public class CountryController : ArchitectureControllerBase
     {

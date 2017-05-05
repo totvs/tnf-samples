@@ -2,15 +2,15 @@
 using Tnf.Architecture.Domain;
 using Tnf.Architecture.Data;
 using Tnf.Architecture.EntityFrameworkCore;
-using Tnf.AutoMapper;
 using Tnf.Reflection.Extensions;
 using Tnf.Castle.Log4Net;
 using Castle.Facilities.Logging;
+using Tnf.Architecture.Mapper;
 
 namespace Tnf.Architecture.Application
 {
     [DependsOn(
-        typeof(TnfAutoMapperModule),
+        typeof(MapperModule),
         typeof(DomainModule),
         typeof(CarolModule),
         typeof(EntityFrameworkModule))]

@@ -1,12 +1,11 @@
 ﻿using Castle.Core.Logging;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Dependency;
 using Tnf.Events.Bus;
 using Tnf.Events.Bus.Handlers;
 
-namespace Tnf.Architecture.Domain.Events
+namespace Tnf.Architecture.Domain.Events.WhiteHouse
 {
-
     public class PresidentCreatedHandler : IEventHandler<PresidentCreatedEvent>, ITransientDependency
     {
         private readonly ILogger _logger;

@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagedResultDto<CountryDto>>>(
-                "/api/countries?skipCount=0",
+                $"/{RouteConsts.Country}?skipCount=0",
                 HttpStatusCode.OK
             );
 
@@ -37,7 +37,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagedResultDto<CountryDto>>>(
-                "/api/countries?",
+                $"/{RouteConsts.Country}?",
                 HttpStatusCode.OK
             );
 
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<CountryDto>>(
-                "/api/countries/1",
+                $"/{RouteConsts.Country}/1",
                 HttpStatusCode.OK
             );
 
@@ -66,7 +66,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse>(
-                "/api/countries/0",
+                $"/{RouteConsts.Country}/0",
                 HttpStatusCode.BadRequest
             );
 
@@ -80,7 +80,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse>(
-                "/api/countries/99",
+                $"/{RouteConsts.Country}/99",
                 HttpStatusCode.NotFound
             );
 
@@ -100,7 +100,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PostResponseAsObjectAsync<CountryDto, AjaxResponse<CountryDto>>(
-                "/api/countries",
+                $"/{RouteConsts.Country}",
                 countryDto,
                 HttpStatusCode.OK
             );
@@ -116,7 +116,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<CountryDto, AjaxResponse>(
-                "/api/countries",
+                $"/{RouteConsts.Country}",
                 null,
                 HttpStatusCode.BadRequest
             );
@@ -137,7 +137,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse<CountryDto>>(
-                "/api/countries/4",
+                $"/{RouteConsts.Country}/4",
                 countryDto,
                 HttpStatusCode.OK
             );
@@ -153,7 +153,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse>(
-                "/api/countries/%20",
+                $"/{RouteConsts.Country}/%20",
                 null,
                 HttpStatusCode.BadRequest
             );
@@ -168,7 +168,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             await DeleteResponseAsObjectAsync<AjaxResponse>(
-                "/api/countries/1",
+                $"/{RouteConsts.Country}/1",
                 HttpStatusCode.OK
             );
         }
@@ -178,7 +178,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
-                "/api/countries/0",
+                $"/{RouteConsts.Country}/0",
                 HttpStatusCode.BadRequest
             );
 

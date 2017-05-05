@@ -5,7 +5,7 @@ using Tnf.Specifications;
 
 namespace Tnf.Architecture.Domain.WhiteHouse.Specifications
 {
-    public class PresidentShouldHaveZipCodeSpecification : Specification<President>
+    internal class PresidentShouldHaveZipCodeSpecification : Specification<President>
     {
         public override Expression<Func<President, bool>> ToExpression()
         {

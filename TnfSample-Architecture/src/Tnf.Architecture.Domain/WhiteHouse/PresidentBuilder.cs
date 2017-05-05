@@ -1,12 +1,12 @@
 ﻿using Tnf.Builder;
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.CrossCutting;
 using Tnf.Localization;
+using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
-    public class PresidentBuilder : Builder<President>
+    internal class PresidentBuilder : Builder<President>
     {
         public PresidentBuilder()
             : base()

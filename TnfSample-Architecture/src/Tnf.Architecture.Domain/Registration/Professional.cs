@@ -1,31 +1,31 @@
 ﻿using System;
-using Tnf.Domain.Entities;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    /// <summary>
-    /// Por default a entidade recebe uma propriedade "int Id" pela herança
-    /// Para casos onde o nome seja especifico onde a PK seja "SYS009_PROFESSIONAL_ID" fazendo o mapeamento
-    /// da entidade normalmente mas ao configurar ela via anotations ou via modelbuilder (olhar dentro do LegacyDbContext)
-    /// fazemos o uso do metodo Ignore
-    /// </summary>
-    public class Professional : Entity
+    internal class Professional
     {
-        public Professional()
-        {
-            Code = Guid.NewGuid();
-        }
+        public decimal ProfessionalId { get; internal set; }
+        public string Name { get; internal set; }
+        public Guid Code { get; internal set; }
+        public string Address { get; internal set; }
+        public string AddressNumber { get; internal set; }
+        public string AddressComplement { get; internal set; }
+        public ZipCode ZipCode { get; internal set; }
+        public string Phone { get; internal set; }
+        public string Email { get; internal set; }
 
-        [Obsolete("Id property excluded from entity.")]
-        public override int Id { get; set; }
-        public decimal ProfessionalId { get; set; }
-        public string Name { get; set; }
-        public Guid Code { get; set; }
-        public string Address { get; set; }
-        public string AddressNumber { get; set; }
-        public string AddressComplement { get; set; }
-        public string ZipCode { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public enum Error
+        {
+            Unexpected = 0,
+            InvalidId = 1,
+            ProfessionalNameMustHaveValue = 2,
+            ProfessionalZipCodeMustHaveValue = 3,
+            ProfessionalAddressMustHaveValue = 4,
+            ProfessionalAddressComplementMustHaveValue = 5,
+            ProfessionalAddressNumberMustHaveValue = 6,
+            ProfessionalEmailMustHaveValue = 7,
+            ProfessionalPhoneMustHaveValue = 8
+        }
     }
 }

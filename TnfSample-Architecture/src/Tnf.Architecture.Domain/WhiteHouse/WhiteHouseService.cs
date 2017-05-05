@@ -5,12 +5,13 @@ using Tnf.Dto;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
-using Tnf.Architecture.Domain.Events;
 using Tnf.Events.Bus;
+using Tnf.Architecture.Domain.Events.WhiteHouse;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
-    public class WhiteHouseService : DomainService<IWhiteHouseRepository>, IWhiteHouseService
+    internal class WhiteHouseService : DomainService<IWhiteHouseRepository>, IWhiteHouseService
     {
         private readonly IEventBus _eventBus;
 
@@ -28,7 +29,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return new DtoResponseBase();
         }
 
-        public Task<PagingDtoResponse<PresidentDto>> GetAllPresidents(GellAllPresidentsRequestDto request)
+        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
         {
             return Repository.GetAllPresidents(request);
         }

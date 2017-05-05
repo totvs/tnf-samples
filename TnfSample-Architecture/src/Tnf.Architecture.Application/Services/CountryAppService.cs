@@ -6,9 +6,9 @@ using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Application.Services
 {
-    public class CountryAppService : AsyncCrudAppService<Country, CountryDto>, ICountryAppService
+    public class CountryAppService : AsyncCrudAppService<CountryPoco, CountryDto>, ICountryAppService
     {
-        public CountryAppService(IRepository<Country> repository)
+        public CountryAppService(IRepository<CountryPoco> repository)
             : base(repository)
         {
         }

@@ -10,6 +10,7 @@ using Tnf.Architecture.Dto.ValueObjects;
 using System.Collections.Generic;
 using Tnf.Dto;
 using System.Linq;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -25,7 +26,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingDtoResponse<PresidentDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
                                "/api/white-house?pageSize=10",
                                HttpStatusCode.OK
                            );

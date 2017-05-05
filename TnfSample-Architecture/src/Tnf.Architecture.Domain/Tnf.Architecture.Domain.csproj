@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tnf.Architecture.CrossCutting\Tnf.Architecture.CrossCutting.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
   </ItemGroup>
 

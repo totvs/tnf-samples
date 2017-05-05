@@ -1,4 +1,4 @@
-﻿using Tnf.Architecture.CrossCutting;
+﻿using Tnf.Architecture.Dto;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 using Tnf.Localization.Dictionaries.Json;

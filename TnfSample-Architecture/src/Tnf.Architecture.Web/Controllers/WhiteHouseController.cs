@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (pageSize <= 0)
                 return BadRequest($"Invalid parameter: {nameof(pageSize)}");
             
-            var response = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsRequestDto(offset, pageSize, name, zipCode));
+            var response = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsDto(offset, pageSize, name, zipCode));
 
             return Ok(response);
         }

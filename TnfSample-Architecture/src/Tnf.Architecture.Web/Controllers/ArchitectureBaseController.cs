@@ -1,4 +1,4 @@
-﻿using Tnf.Architecture.CrossCutting;
+﻿using Tnf.Architecture.Dto;
 using Tnf.AspNetCore.Mvc.Controllers;
 
 namespace Tnf.Architecture.Web.Controllers

@@ -1,6 +1,6 @@
 ﻿using Tnf.Architecture.Dto.ValueObjects;
 
-namespace Tnf.Architecture.Dto
+namespace Tnf.Architecture.Dto.WhiteHouse
 {
     public class PresidentDto
     {

@@ -5,6 +5,7 @@ using Tnf.Application.Services;
 using Tnf.Dto;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -21,7 +22,7 @@ namespace Tnf.Architecture.Application.Services
         public async Task<DtoResponseBase> DeletePresidentAsync(string id)
             => await _whiteHouserService.DeletePresidentAsync(id);
 
-        public async Task<PagingDtoResponse<PresidentDto>> GetAllPresidents(GellAllPresidentsRequestDto request)
+        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
             => await _whiteHouserService.GetAllPresidents(request);
 
         public async Task<PresidentDto> GetPresidentById(string id)

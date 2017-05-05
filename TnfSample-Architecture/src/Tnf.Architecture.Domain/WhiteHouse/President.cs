@@ -1,12 +1,12 @@
-﻿using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.ValueObjects;
+﻿using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.AutoMapper;
 using Tnf.Domain.Entities;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
     [AutoMap(typeof(PresidentDto))]
-    public class President : Entity<string>
+    internal class President : Entity<string>
     {
         public const int MaxNameLength = 256;
 

@@ -8,7 +8,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
 {
     [AutoMap(typeof(CountryDto))]
     [Table("Countries")]
-    public class Country : Entity
+    public class CountryPoco : Entity
     {
         public const int MaxNameLength = 256;
 
@@ -16,11 +16,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
         [MaxLength(MaxNameLength)]
         public string Name { get; set; }
 
-        public Country()
+        public CountryPoco()
         {
         }
 
-        public Country(int id, string name)
+        public CountryPoco(int id, string name)
         {
             Id = id;
             Name = name;

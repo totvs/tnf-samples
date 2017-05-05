@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore.TestBase;
 using Tnf.AspNetCore;
 using Tnf.Reflection.Extensions;
+using Newtonsoft.Json.Serialization;
 
 namespace Tnf.Architecture.Web.Tests.App
 {

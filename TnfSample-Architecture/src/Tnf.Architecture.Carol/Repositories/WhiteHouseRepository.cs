@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using Tnf.App.Carol.Repositories;
 using Tnf.Provider.Carol;
-using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Data.Entities;
+using Tnf.AutoMapper;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Data.Repositories
 {
-    public class WhiteHouseRepository : CarolRepositoryBase<PresidentEntity>, IWhiteHouseRepository
+    public class WhiteHouseRepository : CarolRepositoryBase<PresidentPoco>, IWhiteHouseRepository
     {
         public WhiteHouseRepository(ICarolClient client) :
             base(client)
@@ -26,11 +27,11 @@ namespace Tnf.Architecture.Data.Repositories
             await DeleteAsync(president.Id);
         }
 
-        public async Task<PagingDtoResponse<PresidentDto>> GetAllPresidents(GellAllPresidentsRequestDto request)
+        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
         {
-            var response = new PagingDtoResponse<PresidentDto>();
+            var response = new PagingResponseDto<PresidentDto>();
 
-            var query = Client.Queries<PresidentEntity>().ProcessFilter()
+            var query = Client.Queries<PresidentPoco>().ProcessFilter()
                 .Offset(request.Offset)
                 .PageSize(request.PageSize)
                 .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)
@@ -40,11 +41,9 @@ namespace Tnf.Architecture.Data.Repositories
 
             var resultData = await GetAllAsync(query);
 
-            response.Count = resultData.Count;
-            response.Took = resultData.Took;
-            response.TotalHits = resultData.TotalHits;
+            response.Total = resultData.TotalHits;
 
-            resultData.Hits.ForEach((item) => response.Data.Add(new PresidentDto(item.Id, item.Name, item.ZipCode)));
+            response.Data = resultData.Hits.MapTo<List<PresidentDto>>();
 
             return response;
         }
@@ -54,31 +53,23 @@ namespace Tnf.Architecture.Data.Repositories
             var presidentData = await GetAsync(id);
 
             var president = new PresidentDto(presidentData.Id, presidentData.Name, presidentData.ZipCode);
+
             return president;
         }
 
         public async Task<List<PresidentDto>> InsertPresidentsAsync(List<PresidentDto> presidents, bool sync = false)
         {
-            var presidentEntities = presidents.Select(s => new PresidentEntity()
-            {
-                Id = s.Id,
-                Name = s.Name,
-                ZipCode = s.ZipCode.Number
-            }).ToList();
+            var pocos = presidents.MapTo<List<PresidentPoco>>();
 
-            presidentEntities = await InsertAsync(presidentEntities, sync) as List<PresidentEntity>;
+            var result = await InsertAsync(pocos, sync);
 
-            return presidents;
+            return result.MapTo<List<PresidentDto>>();
         }
 
         public async Task UpdatePresidentsAsync(PresidentDto president)
         {
-            await UpdateAsync(new PresidentEntity()
-            {
-                Id = president.Id,
-                Name = president.Name,
-                ZipCode = president.ZipCode.Number
-            });
+            var poco = president.MapTo<PresidentPoco>();
+            await UpdateAsync(poco);
         }
     }
 }

@@ -11,11 +11,11 @@ namespace Tnf.Architecture.Application.Tests
             UsingDbContext<ArchitectureDbContext>(
                 context =>
                 {
-                    context.Countries.Add(new Country(1, "Brasil"));
-                    context.Countries.Add(new Country(2, "EUA"));
-                    context.Countries.Add(new Country(3, "Uruguai"));
-                    context.Countries.Add(new Country(4, "Paraguai"));
-                    context.Countries.Add(new Country(5, "Venezuela"));
+                    context.Countries.Add(new CountryPoco(1, "Brasil"));
+                    context.Countries.Add(new CountryPoco(2, "EUA"));
+                    context.Countries.Add(new CountryPoco(3, "Uruguai"));
+                    context.Countries.Add(new CountryPoco(4, "Paraguai"));
+                    context.Countries.Add(new CountryPoco(5, "Venezuela"));
                 });
         }
     }

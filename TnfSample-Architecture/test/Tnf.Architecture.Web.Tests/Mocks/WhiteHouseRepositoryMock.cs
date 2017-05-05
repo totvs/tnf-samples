@@ -5,6 +5,7 @@ using Tnf.Architecture.Dto;
 using Tnf.Dto;
 using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -48,7 +49,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult<object>(null);
         }
 
-        public Task<PagingDtoResponse<PresidentDto>> GetAllPresidents(GellAllPresidentsRequestDto request)
+        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
         {
             var presidents = _presidents.Where(w =>
                 string.IsNullOrWhiteSpace(request.Name) || request.Name.Contains(w.Value.Name) &&
@@ -56,7 +57,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .Select(s => s.Value)
                 .ToList();
 
-            return Task.FromResult(new PagingDtoResponse<PresidentDto>(presidents));
+            return Task.FromResult(new PagingResponseDto<PresidentDto>(presidents));
         }
 
         public Task<PresidentDto> GetPresidentById(string id)

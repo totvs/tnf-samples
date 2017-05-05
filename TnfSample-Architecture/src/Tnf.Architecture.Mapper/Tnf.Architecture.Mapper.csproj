@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
+    <ProjectReference Include="..\Tnf.Architecture.EntityFrameworkCore\Tnf.Architecture.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>
