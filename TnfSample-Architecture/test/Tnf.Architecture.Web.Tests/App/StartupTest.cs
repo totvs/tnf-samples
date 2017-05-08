@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore.TestBase;
 using Tnf.AspNetCore;
 using Tnf.Reflection.Extensions;
-using Newtonsoft.Json.Serialization;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -14,7 +13,8 @@ namespace Tnf.Architecture.Web.Tests.App
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddMvcCore()
+                .AddJsonFormatters()
                 .AddApplicationPart(typeof(TnfAspNetCoreModule).GetAssembly())
                 .AddApplicationPart(typeof(Tnf.Architecture.Web.Startup.WebModule).GetAssembly())
                 .AddControllersAsServices();

@@ -1,5 +1,4 @@
 ﻿using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Paging;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
 using Tnf.Dto;
@@ -8,10 +7,16 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IProfessionalService : IDomainService
     {
-        PagingResponseDto<ProfessionalDto> All(GetAllProfessionalsDto request);
-        ProfessionalDto Get(ProfessionalKeysDto keys);
-        DtoResponseBase<ProfessionalDto> Create(ProfessionalCreateDto entity);
-        DtoResponseBase<ProfessionalDto> Update(ProfessionalDto dto);
-        void Delete(ProfessionalKeysDto keys);
+        PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
+        ProfessionalDto GetProfessional(ProfessionalKeysDto keys);
+        DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto entity);
+        DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto);
+        void DeleteProfessional(ProfessionalKeysDto keys);
+
+        PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
+        SpecialtyDto GetSpecialty(int id);
+        void DeleteSpecialty(int id);
+        DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto);
+        DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto);
     }
 }

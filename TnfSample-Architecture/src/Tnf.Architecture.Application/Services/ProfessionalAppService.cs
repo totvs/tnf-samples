@@ -1,7 +1,6 @@
 ﻿using Tnf.Application.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto.Paging;
 using Tnf.Dto;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
@@ -17,14 +16,24 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public PagingResponseDto<ProfessionalDto> All(GetAllProfessionalsDto dto) => _service.All(dto);
+        public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
 
-        public DtoResponseBase<ProfessionalDto> Create(ProfessionalCreateDto dto) => _service.Create(dto);
+        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto dto) => _service.CreateProfessional(dto);
 
-        public void Delete(ProfessionalKeysDto keys) => _service.Delete(keys);
+        public void DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
 
-        public ProfessionalDto Get(ProfessionalKeysDto keys) => _service.Get(keys);
+        public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => _service.GetProfessional(keys);
 
-        public DtoResponseBase<ProfessionalDto> Update(ProfessionalDto dto) => _service.Update(dto);
+        public DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
+
+        public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _service.GetAllSpecialties(request);
+
+        public SpecialtyDto GetSpecialty(int id) => _service.GetSpecialty(id);
+
+        public void DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
+
+        public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
+
+        public DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
     }
 }

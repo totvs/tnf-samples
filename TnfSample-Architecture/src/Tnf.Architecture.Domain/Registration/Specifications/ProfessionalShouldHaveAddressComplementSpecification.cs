@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Domain.Registration.Specifications
     {
         public override Expression<Func<Professional, bool>> ToExpression()
         {
-            return (p) => !string.IsNullOrWhiteSpace(p.AddressComplement);
+            return (p) => p.Address != null && !string.IsNullOrWhiteSpace(p.Address.Complement);
         }
     }
 }
