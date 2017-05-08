@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
-                               "/api/white-house?pageSize=10",
+                               $"{RouteConsts.WhiteHouse}?pageSize=10",
                                HttpStatusCode.OK
                            );
 
@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                "/api/white-house?",
+                $"{RouteConsts.WhiteHouse}?",
                 HttpStatusCode.BadRequest
                 );
 
@@ -56,7 +56,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PresidentDto>>(
-                               "/api/white-house/1",
+                               $"{RouteConsts.WhiteHouse}/1",
                                HttpStatusCode.OK
                            );
 
@@ -73,7 +73,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                "/api/white-house/%20",
+                $"{RouteConsts.WhiteHouse}/%20",
                 HttpStatusCode.BadRequest
             );
 
@@ -87,7 +87,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                               "/api/white-house/99",
+                               $"{RouteConsts.WhiteHouse}/99",
                                HttpStatusCode.BadRequest
                            );
 
@@ -112,7 +112,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
-                "/api/white-house",
+                $"{RouteConsts.WhiteHouse}",
                 presidents,
                 HttpStatusCode.OK
             );
@@ -127,7 +127,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<string>> (
-                "/api/white-house",
+                $"{RouteConsts.WhiteHouse}",
                 new List<PresidentDto>(),
                 HttpStatusCode.BadRequest
             );
@@ -142,7 +142,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
-                "/api/white-house",
+                $"{RouteConsts.WhiteHouse}",
                 new List<PresidentDto>() { new PresidentDto() },
                 HttpStatusCode.OK
             );
@@ -162,7 +162,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<PresidentDto>>(
-                "/api/white-house/1",
+                $"{RouteConsts.WhiteHouse}/1",
                 presidentDto,
                 HttpStatusCode.OK
             );
@@ -178,7 +178,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<string>>(
-                "/api/white-house/%20",
+                $"{RouteConsts.WhiteHouse}/%20",
                 new PresidentDto(),
                 HttpStatusCode.BadRequest
             );
@@ -193,7 +193,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             await DeleteResponseAsObjectAsync<AjaxResponse>(
-                "/api/white-house/1",
+                $"{RouteConsts.WhiteHouse}/1",
                 HttpStatusCode.OK
             );
         }
@@ -203,7 +203,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
-                "/api/white-house/%20",
+                $"{RouteConsts.WhiteHouse}/%20",
                 HttpStatusCode.BadRequest
             );
 

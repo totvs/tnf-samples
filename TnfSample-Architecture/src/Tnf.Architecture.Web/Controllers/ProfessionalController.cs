@@ -2,7 +2,6 @@
 using System;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Paging;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.AutoMapper;
 
