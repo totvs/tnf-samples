@@ -33,8 +33,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                .Include(i => i.ProfessionalSpecialties.Select(s => s.Specialty))
                 .Single(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+
             return dbEntity.MapTo<ProfessionalDto>();
         }
 
@@ -64,13 +64,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var response = new PagingResponseDto<ProfessionalDto>();
 
-            var dbBaseQuery = (from p in Context.Professionals
-                               join ps in Context.ProfessionalSpecialties on new { p.ProfessionalId, p.Code } equals new { ps.ProfessionalId, ps.Code } into psLeft
-                               from ps in psLeft.DefaultIfEmpty()
-                               join s in Context.Specialties on ps.SpecialtyId equals s.Id into sLeft
-                               from s in sLeft.DefaultIfEmpty()
-                               where request.Name == null || p.Name.Contains(request.Name)
-                               select new { p, ps, s });
+            var dbBaseQuery = Context.Professionals
+                .Include(i => i.ProfessionalSpecialties)
+                .Include("ProfessionalSpecialties.Specialty")
+                .Where(w => request.Name == null || w.Name.Contains(request.Name));
 
             var dbQuery = dbBaseQuery
                 .Skip(request.Offset)
@@ -78,7 +75,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                 .ToArray();
 
             response.Total = base.Count();
-            response.Data = dbQuery.Select(s => s.p).MapTo<List<ProfessionalDto>>();
+            response.Data = dbQuery.MapTo<List<ProfessionalDto>>();
 
             return response;
         }

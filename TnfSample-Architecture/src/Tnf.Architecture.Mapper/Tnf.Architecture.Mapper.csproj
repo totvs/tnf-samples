@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tnf.Architecture.Carol\Tnf.Architecture.Carol.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.EntityFrameworkCore\Tnf.Architecture.EntityFrameworkCore.csproj" />
   </ItemGroup>
