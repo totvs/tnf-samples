@@ -26,7 +26,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
         [Theory]
         [InlineData("Rua do comercio")]
-        public void Professional_Should_Have_Address(string address)
+        public void Professional_Should_Have_Address(string street)
         {
             // Arrange
             var spec = new ProfessionalShouldHaveAddressSpecification();
@@ -34,7 +34,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new Professional()
             {
-                Address = address
+                Address = new Address(street, null, null, null)
             });
 
             // Assert
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new Professional()
             {
-                AddressNumber = number
+                Address = new Address(null, number, null, null)
             });
 
             // Assert
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new Professional()
             {
-                AddressComplement = complement
+                Address = new Address(null, null, complement, null)
             });
 
             // Assert
@@ -119,7 +119,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new Professional()
             {
-                ZipCode = new ZipCode(zipCode)
+                Address = new Address(null, null, null, new ZipCode(zipCode))
             });
 
             // Assert

@@ -27,7 +27,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (requestDto.PageSize <= 0)
                 return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
 
-            var response = _professionalAppService.All(requestDto);
+            var response = _professionalAppService.GetAllProfessionals(requestDto);
 
             return Ok(response);
         }
@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
-            var result = _professionalAppService.Get(new ProfessionalKeysDto(professionalId, code));
+            var result = _professionalAppService.GetProfessional(new ProfessionalKeysDto(professionalId, code));
             return Ok(result);
         }
 
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (dto == null)
                 return BadRequest($"Invalid parameter: {nameof(dto)}");
 
-            var result = _professionalAppService.Create(dto.MapTo<ProfessionalCreateDto>());
+            var result = _professionalAppService.CreateProfessional(dto.MapTo<ProfessionalCreateDto>());
             return Ok(result);
         }
 
@@ -70,7 +70,7 @@ namespace Tnf.Architecture.Web.Controllers
 
             updateParam = dto.MapTo(updateParam);
 
-            var result = _professionalAppService.Update(updateParam);
+            var result = _professionalAppService.UpdateProfessional(updateParam);
 
             return Ok(result);
         }
@@ -84,7 +84,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
-            _professionalAppService.Delete(new ProfessionalKeysDto(professionalId, code));
+            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
 
             return Ok();
         }

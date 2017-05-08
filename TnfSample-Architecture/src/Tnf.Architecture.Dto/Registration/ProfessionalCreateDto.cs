@@ -1,4 +1,5 @@
-﻿using Tnf.Architecture.Dto.ValueObjects;
+﻿using System.Collections.Generic;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.Registration
 {
@@ -6,11 +7,9 @@ namespace Tnf.Architecture.Dto.Registration
     {
         public decimal ProfessionalId { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string AddressNumber { get; set; }
-        public string AddressComplement { get; set; }
-        public ZipCode ZipCode { get; set; }
+        public Address Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
     }
 }

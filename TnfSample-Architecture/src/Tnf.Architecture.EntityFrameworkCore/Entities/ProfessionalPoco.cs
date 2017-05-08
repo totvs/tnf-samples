@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.AutoMapper;
 using Tnf.Domain.Entities;
@@ -21,5 +22,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
         public string ZipCode { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public virtual List<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
     }
 }

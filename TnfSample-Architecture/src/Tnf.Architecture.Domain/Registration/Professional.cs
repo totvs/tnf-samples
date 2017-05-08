@@ -8,10 +8,7 @@ namespace Tnf.Architecture.Domain.Registration
         public decimal ProfessionalId { get; internal set; }
         public string Name { get; internal set; }
         public Guid Code { get; internal set; }
-        public string Address { get; internal set; }
-        public string AddressNumber { get; internal set; }
-        public string AddressComplement { get; internal set; }
-        public ZipCode ZipCode { get; internal set; }
+        public Address Address { get; internal set; }
         public string Phone { get; internal set; }
         public string Email { get; internal set; }
 

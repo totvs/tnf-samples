@@ -1,4 +1,6 @@
-﻿namespace Tnf.Architecture.Dto.Paging
+﻿using Tnf.Architecture.Dto.Paging;
+
+namespace Tnf.Architecture.Dto.Registration
 {
     public class GetAllProfessionalsDto : PagingRequestDto
     {

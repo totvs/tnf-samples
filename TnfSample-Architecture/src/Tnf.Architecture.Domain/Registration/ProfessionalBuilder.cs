@@ -1,7 +1,6 @@
 ﻿using System;
 using Tnf.Architecture.Domain.Registration.Specifications;
 using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Helpers;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Builder;
 using Tnf.Localization;
@@ -38,12 +37,21 @@ namespace Tnf.Architecture.Domain.Registration
             return this;
         }
 
-        public ProfessionalBuilder WithAddress(string address, string number, string complement, ZipCode zipCode)
+        public ProfessionalBuilder WithAddress(Address address)
         {
-            Instance.Address = TextHelper.ToTitleCase(address);
-            Instance.AddressNumber = number;
-            Instance.AddressComplement = TextHelper.ToTitleCase(complement);
-            Instance.ZipCode = zipCode;
+            Instance.Address = address;
+            return this;
+        }
+
+        public ProfessionalBuilder WithAddress(string street, string number, string complement, string zipCode)
+        {
+            Instance.Address = new Address(street, number, complement, new ZipCode(zipCode));
+            return this;
+        }
+
+        public ProfessionalBuilder WithAddress(string street, string number, string complement, ZipCode zipCode)
+        {
+            Instance.Address = new Address(street, number, complement, zipCode);
             return this;
         }
 
@@ -61,7 +69,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         private void AddNotification(Professional.Error error)
         {
-            var notificationMessage = LocalizationHelper.GetString(AppConsts.LocalizationSourceName,error);
+            var notificationMessage = LocalizationHelper.GetString(AppConsts.LocalizationSourceName, error);
             Response.AddNotification(error, notificationMessage);
         }
 

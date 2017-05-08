@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Tnf.Dto;
 using System.Linq;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Domain.WhiteHouse;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -134,6 +135,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             response.Result.ShouldBe("Invalid parameter: presidents");
+        }
+
+        [Fact]
+        public async Task Post_Empty_President_And_Return_Notifications()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
+                "/api/white-house",
+                new List<PresidentDto>() { new PresidentDto() },
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]

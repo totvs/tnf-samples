@@ -49,6 +49,18 @@ namespace Tnf.Architecture.Web.Tests
                         Phone = "15398264438",
                         ZipCode = "22888888"
                     });
+
+                    context.Specialties.Add(new SpecialtyPoco()
+                    {
+                        Id = 1,
+                        Description = "Cirurgia Vascular"
+                    });
+
+                    context.Specialties.Add(new SpecialtyPoco()
+                    {
+                        Id = 2,
+                        Description = "Cirurgia Geral"
+                    });
                 });
         }
     }

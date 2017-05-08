@@ -1,6 +1,6 @@
 ﻿using Tnf.Architecture.Dto.Paging;
 
-namespace Tnf.Architecture.Dto
+namespace Tnf.Architecture.Dto.WhiteHouse
 {
     public class GellAllPresidentsDto : PagingRequestDto
     {

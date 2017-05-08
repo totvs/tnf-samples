@@ -44,6 +44,9 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]List<PresidentDto> presidents, [FromQuery]bool? sync)
         {
+            if (presidents == null)
+                return BadRequest($"Invalid parameter: {nameof(presidents)}");
+
             if (presidents.Count <= 0)
                 return BadRequest($"Invalid parameter: {nameof(presidents)}");
 
