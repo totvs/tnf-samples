@@ -13,7 +13,7 @@ namespace Tnf.Architecture.Web.Startup
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseUrls("http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000",
-                         "http://localhost:5000")
+                         "http://localhost:5050")
                 .Build();
 
             host.Run();

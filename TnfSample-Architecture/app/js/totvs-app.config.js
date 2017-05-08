@@ -31,7 +31,11 @@
 
     function totvsAppConfig($httpProvider, TOTVSProfileProvider) {
 
-        $httpProvider.interceptors.push('totvsHttpInterceptor');
+        $httpProvider.interceptors.push(
+            'totvsHttpInterceptor',
+            'presidentHttpInterceptor',
+            'countryHttpInterceptor',
+            'professionalHttpInterceptor');
 
         //TotvsI18nProvider.setBaseContext('/');
 

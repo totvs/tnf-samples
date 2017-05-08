@@ -32,7 +32,7 @@
     function presidentFactory($totvsresource) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5000/api/white-house/:id', 
+            url = 'http://' + hostname + ':5050/api/white-house/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});
@@ -74,7 +74,7 @@
     // Registra a AngularJS Factory para customização do httpInterceptor padrão do AngularJS.
     angular        
         .module('president')
-        .factory('totvsHttpInterceptor', appHTTPInterceptors);
+        .factory('presidentHttpInterceptor', appHTTPInterceptors);
 
     appHTTPInterceptors.$inject = ['$q'];
 
