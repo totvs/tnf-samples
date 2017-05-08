@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Web.Controllers

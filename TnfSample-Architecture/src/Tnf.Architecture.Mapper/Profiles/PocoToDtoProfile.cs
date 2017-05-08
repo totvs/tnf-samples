@@ -4,6 +4,8 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using System.Linq;
+using Tnf.Architecture.Data.Entities;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Mapper.Profiles
 {
@@ -49,6 +51,7 @@ namespace Tnf.Architecture.Mapper.Profiles
                 });
 
             CreateMap<SpecialtyPoco, SpecialtyDto>();
+            CreateMap<PresidentPoco, PresidentDto>();
         }
     }
 }
