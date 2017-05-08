@@ -179,8 +179,16 @@
                 addDisclaimer('name', filter.name, 'Nome igual a "' + filter.name + '"');
             }
 
-            if (filter.zipCode.number) {
-                addDisclaimer('zipCode', filter.zipCode.number, 'Código Postal igual a "' + filter.zipCode.number + '"');
+            if (filter.phone) {
+                addDisclaimer('phone', filter.phone, 'Telefone igual a "' + filter.phone + '"');
+            }
+
+            if (filter.email) {
+                addDisclaimer('email', filter.email, 'Email igual a "' + filter.email + '"');
+            }
+
+            if (filter.address.zipCode.number) {
+                addDisclaimer('zipCode', filter.address.zipCode.number, 'Código Postal igual a "' + filter.address.zipCode.number + '"');
             }
 
             self.loadRecords(false);
@@ -211,7 +219,7 @@
             if (newValue !== professional[field]) {
                 update[field] = newValue;
 
-                professionalFactory.updateRecord(professional.id, update);
+                professionalFactory.updateRecord(professional.professionalId, professional.code, update);
             }
         }
 
@@ -225,7 +233,7 @@
                     var index;
 
 					if (isPositiveResult) {
-						professionalFactory.deleteRecord(record.id, function (result) {
+						professionalFactory.deleteRecord(record.professionalId, record.code, function (result) {
 							if (result) {
 
 								index = self.records.indexOf(record);

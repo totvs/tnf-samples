@@ -62,16 +62,16 @@
             message="{{ ::'l-msg-not-found' | i18n }}">
         </totvs-page-alert>
 
-        <totvs-list-item ng-repeat="professional in controller.records track by professional.id">
+        <totvs-list-item ng-repeat="professional in controller.records track by professional.professionalId">
 
             <totvs-list-item-header>
                 <totvs-list-item-title
                     title="{{ ::professional.name }}"
-                    link="#/professionals/detail/{{ ::professional.id }}">
+                    link="#/professionals/detail/{{ ::professional.professionalId }}/{{ ::professional.code }}">
                 </totvs-list-item-title>
 
                 <totvs-list-item-action limit-primary-action="2">
-                    <action link="#/professionals/edit/{{ ::professional.id }}" icon="glyphicon-pencil">
+                    <action link="#/professionals/edit/{{ ::professional.professionalId }}/{{ ::professional.code }}" icon="glyphicon-pencil">
                         {{ ::'btn-edit' | i18n }}
                     </action>
                     <action ng-click="controller.onRemove(professional)" icon="glyphicon-trash">
@@ -82,20 +82,40 @@
 
             <totvs-list-item-content>
                 <totvs-list-item-info
-                    title="{{ ::'l-id' | i18n : [] : 'js/professionals'}}"
-                    value="{{ ::professional.id }}">
-                </totvs-list-item-info>
-
-                <totvs-list-item-info
                     title="{{ ::'l-name' | i18n : [] : 'js/professionals' }}"
                     value="{{ ::professional.name }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-phone' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.phone }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-email' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.email }}">
                 </totvs-list-item-info>
             </totvs-list-item-content>
 
             <totvs-list-item-content-detail>
                 <totvs-list-item-info
-                    title="{{ ::'l-zip-code' | i18n : [] : 'js/professionals' }}"
-                    value="{{ ::professional.zipCode.number | mask:'99999-999' }}">
+                    title="{{ ::'l-address-zip' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.address.zipCode.number | mask:'99999-999' }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-street' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.address.street }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-number' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.address.number }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-complement' | i18n : [] : 'js/professionals' }}"
+                    value="{{ ::professional.address.complement }}">
                 </totvs-list-item-info>
             </totvs-list-item-content-detail>
         </totvs-list-item>

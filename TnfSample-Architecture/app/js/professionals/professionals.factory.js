@@ -32,7 +32,7 @@
     function professionalFactory($totvsresource) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5050/api/professionals/:id', 
+            url = 'http://' + hostname + ':5050/api/professional/:professionalId/:code',
             factory;
 
         factory = $totvsresource.REST(url, {}, {});
@@ -46,33 +46,33 @@
         return factory;
 
         // *********************************************************************************
-		// *** Functions
-		// *********************************************************************************
+        // *** Functions
+        // *********************************************************************************
 
         function findRecords(parameters, callback) {
             return this.TOTVSQuery(parameters, callback);
         }
 
-        function getRecord(id, callback) {
-            return this.TOTVSGet({id: id}, callback);
+        function getRecord(professionalId, code, callback) {
+            return this.TOTVSGet({ professionalId: professionalId, code: code }, callback);
         }
 
         function saveRecord(model, callback) {
             return this.TOTVSSave({}, model, callback);
         }
 
-        function updateRecord(id, model, callback) {
-            return this.TOTVSUpdate({id: id}, model, callback);
+        function updateRecord(professionalId, code, model, callback) {
+            return this.TOTVSUpdate({ professionalId: professionalId, code: code }, model, callback);
         }
 
-        function deleteRecord(id, callback) {
-            return this.TOTVSRemove({id: id}, callback);
+        function deleteRecord(professionalId, code, callback) {
+            return this.TOTVSRemove({ professionalId: professionalId, code: code }, callback);
         }
     }
 
- 
+
     // Registra a AngularJS Factory para customização do httpInterceptor padrão do AngularJS.
-    angular        
+    angular
         .module('professional')
         .factory('professionalHttpInterceptor', appHTTPInterceptors);
 
@@ -87,11 +87,11 @@
                 return rejection;
             },
             response: function (response) {
-                if(response.data.result
-                   && response.data.result.data)
+                if (response.data.result
+                    && response.data.result.data)
                     response.data = response.data.result.data;
 
-                if(response.data.data)
+                if (response.data.data)
                     response.data = response.data.data;
 
                 return response;

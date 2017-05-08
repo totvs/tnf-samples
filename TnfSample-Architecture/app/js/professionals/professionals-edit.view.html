@@ -11,12 +11,12 @@
                 <span>{{ ::'l-professional' | i18n : [] : 'js/professionals' }}</span>
             </breadcrumb>
 
-			<breadcrumb>{{ controller.professional.id ? 'Edição:' : 'Novo Professionale:' }} {{ controller.professional.name }}</breadcrumb>
+			<breadcrumb>{{ controller.professional.professionalId ? 'Edição:' : 'Novo Profissional:' }} {{ controller.professional.name }}</breadcrumb>
 		</totvs-page-breadcrumb>
 
 		<totvs-page-header>
 			<totvs-page-header-title
-                title="{{ controller.professional.id ? controller.professional.name || 'Editando Professionale' : controller.professional.name || 'Novo Professionale' }}"
+                title="{{ controller.professional.professionalId ? controller.professional.name || 'Editando Profissional' : controller.professional.name || 'Novo Profissional' }}"
                 placeholder="{{ ::'l-professional' | i18n : [] : 'js/professionals' }}">
 			</totvs-page-header-title>
 
@@ -36,7 +36,7 @@
 
 				<totvs-field
 					totvs-input
-					class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+					class="col-lg-4 col-md-4 col-sm-4 col-xs-12"
 					ng-model="controller.professional.name"
 					required
 					label="{{ ::'l-name' | i18n : [] : 'js/professionals' }}"
@@ -45,10 +45,53 @@
 
 				<totvs-field
 					totvs-input
+					class="col-lg-4 col-md-4 col-sm-4 col-xs-12"
+					ng-model="controller.professional.phone"
+					required
+					label="{{ ::'l-phone' | i18n : [] : 'js/professionals' }}">
+				</totvs-field>
+
+				<totvs-field
+					totvs-input
+					class="col-lg-4 col-md-4 col-sm-4 col-xs-12"
+					ng-model="controller.professional.email"
+					required
+					label="{{ ::'l-email' | i18n : [] : 'js/professionals' }}">
+				</totvs-field>
+
+
+
+				<totvs-field
+					totvs-input
                     class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
-                    ng-model="controller.professional.zipCode.number"
-                    label="{{ ::'l-zip-code' | i18n : [] : 'js/professionals' }}"
+                    ng-model="controller.professional.address.zipCode.number"
+					required
+                    label="{{ ::'l-address-zip' | i18n : [] : 'js/professionals' }}"
                     ui-mask="99999-999">
+				</totvs-field>
+
+				<totvs-field
+					totvs-input
+                    class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    ng-model="controller.professional.address.street"
+					required
+                    label="{{ ::'l-address-street' | i18n : [] : 'js/professionals' }}">
+				</totvs-field>
+
+				<totvs-field
+					totvs-input
+                    class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    ng-model="controller.professional.address.number"
+					required
+                    label="{{ ::'l-address-number' | i18n : [] : 'js/professionals' }}">
+				</totvs-field>
+
+				<totvs-field
+					totvs-input
+                    class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    ng-model="controller.professional.address.complement"
+					required
+                    label="{{ ::'l-address-complement' | i18n : [] : 'js/professionals' }}">
 				</totvs-field>
 
 			</fieldset>

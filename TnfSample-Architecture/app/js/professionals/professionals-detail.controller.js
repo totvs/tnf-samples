@@ -61,7 +61,7 @@
 
         function init(cacheController) {
             if ($stateParams) {
-                self.loadRecord($stateParams.id || $stateParams);
+                self.loadRecord($stateParams.professionalId, $stateParams.code);
             } else {
                 $state.go('professionals.start');
             }
@@ -72,21 +72,20 @@
 		// *** Functions
 		// *********************************************************************************
 
-		function loadRecord(id) {
-
-			professionalFactory.getRecord(id, function (professional) {
+		function loadRecord(professionalId, code) {
+			professionalFactory.getRecord(professionalId, code, function (professional) {
 				if (professional){
-                    if(professional.id)
+                    if(professional.professionalId)
 					    self.professional = professional;
-                    if(professional.data && professional.data.id)
+                    if(professional.data && professional.data.professionalId)
 					    self.professional = professional.data;
-                    if(professional.result && professional.result.id)
+                    if(professional.result && professional.result.professionalId)
 					    self.professional = professional.result;
 				} else {
                     notification.notify({
                         type: 'warning',
                         title: '404',
-                        detail: 'Registro "' + id + '" não encontrado. Você será redirecionado a lista de registros!'
+                        detail: 'Registro "' + professionalId + '", "' + code + '" não encontrado. Você será redirecionado a lista de registros!'
                     });
 
                     $state.go('professionals.start');
@@ -99,7 +98,7 @@
 
             if (newValue !== self.professional[field]) {
                 update[field] = newValue;
-                professionalFactory.updateRecord(self.professional.id, update);
+                professionalFactory.updateRecord(self.professional.professionalId, self.professional.code, update);
             }
         }
 
@@ -111,7 +110,7 @@
 				confirmLabel: 'l-yes',
 				callback: function (isPositiveResult) {
 					if (isPositiveResult) {
-						professionalFactory.deleteRecord(self.professional.id, function (result) {
+						professionalFactory.deleteRecord(self.professional.professionalId, self.professional.code, function (result) {
 							if (result) {
                                 $state.go('professionals.start');
 							}

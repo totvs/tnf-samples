@@ -9,11 +9,14 @@
         "l-professionals": {
             "pt": "Profissionais"
         },
-        "l-id": {
-            "pt": "Código"
-        },
         "l-name": {
             "pt": "Nome"
+        },
+        "l-phone": {
+            "pt": "Telefone"
+        },
+        "l-email": {
+            "pt": "Email"
         },
         "l-address-zip": {
             "pt": "CEP"
@@ -23,12 +26,6 @@
         },
         "l-address-number": {
             "pt": "Número"
-        },
-        "l-address-district": {
-            "pt": "Bairro"
-        },
-        "l-address-city": {
-            "pt": "Cidade"
         },
         "l-address-complement": {
             "pt": "Complemento"

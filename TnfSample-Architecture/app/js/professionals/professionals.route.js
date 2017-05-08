@@ -40,7 +40,7 @@
             title: title
             
         }).state('professionals.detail', {
-            url: '/professionals/detail/:id',
+            url: '/professionals/detail/:professionalId/:code',
             controller: 'ProfessionalDetailController',
             controllerAs: 'controller',
             templateUrl: 'js/professionals/professionals-detail.view.html',
@@ -54,7 +54,7 @@
             title: title
 
         }).state('professionals.edit', {
-            url: '/professionals/edit/:id',
+            url: '/professionals/edit/:professionalId/:code',
             controller: 'ProfessionalEditController',
             controllerAs: 'controller',
             templateUrl: 'js/professionals/professionals-edit.view.html',
