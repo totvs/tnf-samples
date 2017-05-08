@@ -1,0 +1,60 @@
+<totvs-page type="edit">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/professionals' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/professionals">
+                <span>{{ ::'l-professional' | i18n : [] : 'js/professionals' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>{{ controller.professional.id ? 'Edição:' : 'Novo Professionale:' }} {{ controller.professional.name }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+		<totvs-page-header>
+			<totvs-page-header-title
+                title="{{ controller.professional.id ? controller.professional.name || 'Editando Professionale' : controller.professional.name || 'Novo Professionale' }}"
+                placeholder="{{ ::'l-professional' | i18n : [] : 'js/professionals' }}">
+			</totvs-page-header-title>
+
+			<totvs-page-header-operation>
+				<totvs-page-header-operation-action>
+                </totvs-page-header-operation-action>
+			</totvs-page-header-operation>
+		</totvs-page-header>
+
+	</totvs-page-navbar>
+
+	<totvs-page-content>
+
+        <totvs-page-form name="frmProfessional">
+
+			<fieldset>
+
+				<totvs-field
+					totvs-input
+					class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+					ng-model="controller.professional.name"
+					required
+					label="{{ ::'l-name' | i18n : [] : 'js/professionals' }}"
+                    focus>
+				</totvs-field>
+
+				<totvs-field
+					totvs-input
+                    class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    ng-model="controller.professional.zipCode.number"
+                    label="{{ ::'l-zip-code' | i18n : [] : 'js/professionals' }}"
+                    ui-mask="99999-999">
+				</totvs-field>
+
+			</fieldset>
+
+		</totvs-page-form>
+
+	</totvs-page-content>
+
+</totvs-page>

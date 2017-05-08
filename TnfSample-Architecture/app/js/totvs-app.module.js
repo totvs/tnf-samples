@@ -29,7 +29,8 @@
             'totvsMenu',
             'totvsDesktop',
             'president',
-            'country'
+            'country',
+            'professional'
         ]);
 
 }());

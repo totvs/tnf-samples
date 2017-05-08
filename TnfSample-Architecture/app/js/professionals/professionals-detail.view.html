@@ -1,0 +1,60 @@
+<totvs-page type="detail">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/professionals' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/professionals">
+                <span>{{ ::'l-professional' | i18n : [] : 'js/professionals' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>Detalhe: {{ ::controller.professional.name }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+        <totvs-page-header>
+            <totvs-page-header-title title="{{ ::controller.professional.name }}"></totvs-page-header-title>
+
+            <totvs-page-header-operation>
+                <totvs-page-header-operation-action
+                    limit-primary-action="3"
+                    on-back-link="#/professionals"
+                    on-edit-link="#/professionals/edit/{{ ::controller.professional.id }}">
+				</totvs-page-header-operation-action>
+            </totvs-page-header-operation>
+        </totvs-page-header>
+
+    </totvs-page-navbar>
+
+	<totvs-page-content>
+		<totvs-page-detail>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-id' | i18n : [] : 'js/professionals' }}">
+                {{ controller.professional.id }}
+            </totvs-page-detail-info>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-professional' | i18n : [] : 'js/professionals' }}">
+                {{ controller.professional.name }}
+            </totvs-page-detail-info>
+
+            <totvs-group-content title="Mais detalhes">
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-zip-code' | i18n : [] : 'js/professionals' }}">
+                {{ ::controller.professional.zipCode.number | mask:'99999-999' }}
+            </totvs-page-detail-info>
+
+            </totvs-group-content>
+
+		</totvs-page-detail>
+
+    </totvs-page-content>
+
+</totvs-page>

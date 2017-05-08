@@ -44,7 +44,7 @@
             DEVELOPMENT: 0,
             RELEASE: 1
         },
-            currentEnviroment = (window.location.hostname.indexOf("amazon") === -1) ? 
+            currentEnviroment = (window.location.hostname.indexOf("amazon") === -1) ?
                 enviroment.DEVELOPMENT :
                 enviroment.RELEASE;
     </script>
@@ -129,10 +129,12 @@
                 </div>
 
 
-                <!-- CONTENT -->
-                <div id="menu-contents">
-                    <div id="menu-view" ui-view></div>
+                <div class="col-md-10 col-sm-9 col-xs-12 total-height" id="menu-workspace">
+                    <!-- CONTEÚDO DO MENU -->
+                    <div id="menu-contents">
+                        <div id="menu-view" ui-view></div>
 
+                    </div>
                 </div>
 
             </div>
@@ -213,6 +215,15 @@
     <script src="js/countries/countries-list.controller.js"></script>
     <script src="js/countries/countries-detail.controller.js"></script>
     <script src="js/countries/countries-edit.controller.js"></script>
+
+    <!-- Professional -->
+    <script src="js/professionals/professionals.module.js"></script>
+    <script src="js/professionals/professionals.route.js"></script>
+    <script src="js/professionals/professionals.factory.js"></script>
+    <script src="js/professionals/professionals-search.controller.js"></script>
+    <script src="js/professionals/professionals-list.controller.js"></script>
+    <script src="js/professionals/professionals-detail.controller.js"></script>
+    <script src="js/professionals/professionals-edit.controller.js"></script>
 </body>
 
 </html>

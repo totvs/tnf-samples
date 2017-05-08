@@ -47,16 +47,20 @@
 
                 applications.splice(0, 0,
                     new MenuApplication(999, 0, 'Sample', [
-                        new MenuModule(998, 998, 'Presidents'),
-                        new MenuModule(999, 999, 'Countries')
+                        new MenuModule(997, 997, 'Presidents'),
+                        new MenuModule(998, 998, 'Countries'),
+                        new MenuModule(999, 999, 'Professionals')
                     ])
                 );
 
+                programs['997'] = [];
+                programs['997'].push(new Program(false, 'Presidents', 'Sample of CRUD', 'Presidents', '/presidents', 2));
+
                 programs['998'] = [];
-                programs['998'].push(new Program(false, 'Presidents', 'Sample of CRUD', 'Presidents', '/presidents', 2));
+                programs['998'].push(new Program(false, 'Países', 'Sample of CRUD', 'Countries', '/countries', 2));
 
                 programs['999'] = [];
-                programs['999'].push(new Program(false, 'Países', 'Sample of CRUD', 'Countries', '/countries', 2));
+                programs['999'].push(new Program(false, 'Profissionais', 'Sample of CRUD', 'Professionals', '/professionals', 2));
             }
 
             callback(applications);
