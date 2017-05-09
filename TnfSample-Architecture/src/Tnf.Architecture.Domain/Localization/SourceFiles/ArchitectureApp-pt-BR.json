@@ -2,8 +2,8 @@
   "culture": "pt-BR",
   "texts": {
     "President_Title": "Presidentes",
-    "PresidentZipCodeMustHaveValue": "Um presidente precisa ter um nome",
-    "PresidentNameMustHaveValue": "Um presidente precisa ter um CEP",
+    "PresidentZipCodeMustHaveValue": "Um presidente precisa ter um CEP",
+    "PresidentNameMustHaveValue": "Um presidente precisa ter um Nome",
     "ProfessionalAddressComplementMustHaveValue": "Um professional deve ter um complemento para o endereço",
     "ProfessionalAddressNumberMustHaveValue": "Um professional deve ter um número para o endereço",
     "ProfessionalAddressMustHaveValue": "Um professional deve ter um endereço",

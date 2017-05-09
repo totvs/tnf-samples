@@ -2,8 +2,8 @@
   "culture": "en",
   "texts": {
     "President_Title": "Presidents",
-    "PresidentZipCodeMustHaveValue": "A president must have a name",
-    "PresidentNameMustHaveValue": "A president must have a Zip Code",
+    "PresidentZipCodeMustHaveValue": "A president must have a Zip Code",
+    "PresidentNameMustHaveValue": "A president must have a Name",
     "ProfessionalAddressComplementMustHaveValue": "A professional must have a address complement",
     "ProfessionalAddressNumberMustHaveValue": "A professional must have a address number",
     "ProfessionalAddressMustHaveValue": "A professional must have a address",
