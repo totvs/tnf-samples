@@ -33,6 +33,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
+                .Include("ProfessionalSpecialties.Specialty")
                 .Single(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
             return dbEntity.MapTo<ProfessionalDto>();
