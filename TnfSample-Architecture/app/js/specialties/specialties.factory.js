@@ -5,8 +5,8 @@
 */
 
 /**
-* @module totvsPresident
-* @name TotvsPresidentListController
+* @module totvsSpecialty
+* @name TotvsSpecialtyListController
 * @object controller
 *
 * @created 2017-3-6 v0.1.0
@@ -24,15 +24,15 @@
     'use strict';
 
     angular
-        .module('president')
-        .factory('presidentFactory', presidentFactory);
+        .module('specialty')
+        .factory('specialtyFactory', specialtyFactory);
 
-    presidentFactory.$inject = ['$totvsresource', 'NotifyFactory'];
+    specialtyFactory.$inject = ['$totvsresource', 'NotifyFactory'];
 
-    function presidentFactory($totvsresource, NotifyFactory) {
+    function specialtyFactory($totvsresource, NotifyFactory) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5050/api/white-house/:id', 
+            url = 'http://' + hostname + ':5050/api/specialty/:id',
             factory;
 
         factory = $totvsresource.REST(url, {}, {});
@@ -46,8 +46,8 @@
         return factory;
 
         // *********************************************************************************
-		// *** Functions
-		// *********************************************************************************
+        // *** Functions
+        // *********************************************************************************
 
         function findRecords(parameters, callback) {
             var callback = NotifyFactory.encapsulateCallback(callback);

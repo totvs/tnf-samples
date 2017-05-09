@@ -18,6 +18,9 @@
         "l-email": {
             "pt": "Email"
         },
+        "l-specialties": {
+            "pt": "Especialidades"
+        },
         "l-address-zip": {
             "pt": "CEP"
         },

@@ -94,6 +94,18 @@
                     label="{{ ::'l-address-complement' | i18n : [] : 'js/professionals' }}">
 				</totvs-field>
 
+
+
+				<totvs-field
+					totvs-multi-select
+					class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+					ng-model="controller.professional.specialties"
+					t-data="controller.specialties"
+					t-multi-id="id"
+					t-multi-description="description"
+					label="{{ ::'l-specialties' | i18n : [] : 'js/professionals' }}">
+				</totvs-field>
+
 			</fieldset>
 
 		</totvs-page-form>

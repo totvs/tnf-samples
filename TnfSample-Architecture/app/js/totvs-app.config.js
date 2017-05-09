@@ -31,14 +31,9 @@
 
     function totvsAppConfig($httpProvider, TOTVSProfileProvider) {
 
-        $httpProvider.interceptors.push(
-            'totvsHttpInterceptor',
-            'presidentHttpInterceptor',
-            'countryHttpInterceptor',
-            'professionalHttpInterceptor');
+        $httpProvider.interceptors.push('appHTTPInterceptor');
 
         //TotvsI18nProvider.setBaseContext('/');
-
     }
 
 }());

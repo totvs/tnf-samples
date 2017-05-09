@@ -49,6 +49,14 @@
                 {{ controller.professional.email }}
             </totvs-page-detail-info>
 
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-12 col-md-12"
+                title="{{ ::'l-specialties' | i18n : [] : 'js/professionals' }}">
+                <label ng-repeat="specialty in controller.professional.specialties">
+                    {{ specialty.description }},
+                </label>
+            </totvs-page-detail-info>
+
             <totvs-group-content title="Mais detalhes">
 
             <totvs-page-detail-info

@@ -27,9 +27,9 @@
         .module('country')
         .factory('countryFactory', countryFactory);
 
-    countryFactory.$inject = ['$totvsresource'];
+    countryFactory.$inject = ['$totvsresource', 'NotifyFactory'];
 
-    function countryFactory($totvsresource) {
+    function countryFactory($totvsresource, NotifyFactory) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
             url = 'http://' + hostname + ':5050/api/countries/:id', 
@@ -50,60 +50,34 @@
 		// *********************************************************************************
 
         function findRecords(parameters, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSQuery(parameters, callback);
         }
 
         function getRecord(id, callback) {
-            return this.TOTVSGet({id: id}, callback);
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
+            return this.TOTVSGet({ id: id }, callback);
         }
 
         function saveRecord(model, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSSave({}, model, callback);
         }
 
         function updateRecord(id, model, callback) {
-            return this.TOTVSUpdate({id: id}, model, callback);
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
+            return this.TOTVSUpdate({ id: id }, model, callback);
         }
 
         function deleteRecord(id, callback) {
-            return this.TOTVSRemove({id: id}, callback);
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
+            return this.TOTVSRemove({ id: id }, callback);
         }
-    }
-
- 
-    // Registra a AngularJS Factory para customização do httpInterceptor padrão do AngularJS.
-    angular        
-        .module('country')
-        .factory('countryHttpInterceptor', appHTTPInterceptors);
-
-    appHTTPInterceptors.$inject = ['$q'];
-
-    function appHTTPInterceptors($q) {
-        return {
-            request: function (config) {
-                return config || $q.when(config);
-            },
-            requestError: function (rejection) {
-                return rejection;
-            },
-            response: function (response) {
-                if(response.data.result
-                   && response.data.result.data)
-                    response.data = response.data.result.data;
-                    
-                if(response.data.result
-                   && response.data.result.items)
-                    response.data = response.data.result.items;
-
-                if(response.data.data)
-                    response.data = response.data.data;
-
-                return response;
-            },
-            responseError: function (rejection) {
-                return rejection;
-            }
-        };
     }
 
 }());

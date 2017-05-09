@@ -1,0 +1,44 @@
+<totvs-page type="detail">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/specialties' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/specialties">
+                <span>{{ ::'l-specialty' | i18n : [] : 'js/specialties' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>Detalhe: {{ ::controller.specialty.description }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+        <totvs-page-header>
+            <totvs-page-header-title title="{{ ::controller.specialty.description }}"></totvs-page-header-title>
+
+            <totvs-page-header-operation>
+                <totvs-page-header-operation-action
+                    limit-primary-action="3"
+                    on-back-link="#/specialties"
+                    on-edit-link="#/specialties/edit/{{ ::controller.specialty.id }}">
+				</totvs-page-header-operation-action>
+            </totvs-page-header-operation>
+        </totvs-page-header>
+
+    </totvs-page-navbar>
+
+	<totvs-page-content>
+		<totvs-page-detail>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-specialty' | i18n : [] : 'js/specialties' }}">
+                {{ controller.specialty.description }}
+            </totvs-page-detail-info>
+
+		</totvs-page-detail>
+
+    </totvs-page-content>
+
+</totvs-page>

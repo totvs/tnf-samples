@@ -21,24 +21,24 @@
 
 (function () {
 
-    'use strict';
+	'use strict';
 
-    angular
-        .module('president')
-        .controller('PresidentEditController', PresidentEditController);
+	angular
+		.module('president')
+		.controller('PresidentEditController', PresidentEditController);
 
-    PresidentEditController.$inject = [
-        '$scope',
-        '$stateParams',
-        '$state',
-        '$window',
-        'totvs.app-notification.Service',
-        'i18nFilter',
+	PresidentEditController.$inject = [
+		'$scope',
+		'$stateParams',
+		'$state',
+		'$window',
+		'totvs.app-notification.Service',
+		'i18nFilter',
 		'presidentFactory'
-    ];
+	];
 
 	function PresidentEditController(
-        $scope, $stateParams, $state, $window, notification, i18nFilter, presidentFactory) {
+		$scope, $stateParams, $state, $window, notification, i18nFilter, presidentFactory) {
 
 		// *********************************************************************************
 		// *** Variables
@@ -46,41 +46,41 @@
 
 		var self = this;
 
-        // *********************************************************************************
+		// *********************************************************************************
 		// *** Public Properties and Methods
 		// *********************************************************************************
 
-        self.president = {};
-        self.cancel = cancel;
-        self.save = save;
-        self.saveNew = saveNew;
+		self.president = {};
+		self.cancel = cancel;
+		self.save = save;
+		self.saveNew = saveNew;
 
-        // *********************************************************************************
+		// *********************************************************************************
 		// *** Controller Initialize
 		// *********************************************************************************
 
-        function init(cacheController) {
+		function init(cacheController) {
 
-            if (!cacheController) {
-                if ($stateParams && $stateParams.id) {
-                    loadRecord($stateParams.id);
-                }
-            } else {
-                // Buscando dados iniciais do "cache"
-                angular.forEach(cacheController, function(value, property) {
-                    self[property] = value;
-                });
-            }
+			if (!cacheController) {
+				if ($stateParams && $stateParams.id) {
+					loadRecord($stateParams.id);
+				}
+			} else {
+				// Buscando dados iniciais do "cache"
+				angular.forEach(cacheController, function (value, property) {
+					self[property] = value;
+				});
+			}
 
 		}
 
-        // *********************************************************************************
+		// *********************************************************************************
 		// *** Events Listners
 		// *********************************************************************************
 
-        $scope.$on('$totvsViewServiceInit', function (event, cacheController) {
-            init(cacheController);
-        });
+		$scope.$on('$totvsViewServiceInit', function (event, cacheController) {
+			init(cacheController);
+		});
 
 		// *********************************************************************************
 		// *** Functions
@@ -88,26 +88,26 @@
 
 		function loadRecord(id) {
 			presidentFactory.getRecord(id, function (president) {
-				if (president){
-                    if(president.id)
-					    self.president = president;
-                    if(president.data && president.data.id)
-					    self.president = president.data;
-                    if(president.result && president.result.id)
-					    self.president = president.result;
+				if (president) {
+					if (president.id)
+						self.president = president;
+					if (president.data && president.data.id)
+						self.president = president.data;
+					if (president.result && president.result.id)
+						self.president = president.result;
 				} else {
-                    notification.notify({
-                        type: 'warning',
-                        title: '404',
-                        detail: 'Registro "' + id + '" não encontrado, mas você pode inserir um novo registro. =P'
-                    });
+					notification.notify({
+						type: 'warning',
+						title: '404',
+						detail: 'Registro "' + id + '" não encontrado, mas você pode inserir um novo registro. =P'
+					});
 
-                    $state.go('presidents.new');
-                }
+					$state.go('presidents.new');
+				}
 			});
 		}
 
-        function cancel() {
+		function cancel() {
 			notification.question({
 				title: 'l-question',
 				text: i18nFilter('l-cancel-operation'),
@@ -121,28 +121,30 @@
 			});
 		}
 
-        function save() {
+		function save() {
 			if (self.president.id) {
 				presidentFactory.updateRecord(self.president.id, self.president, function (result) {
-					$state.go('presidents.detail', {id: self.president.id});
+					if (result.success)
+						$state.go('presidents.detail', { id: self.president.id }, { reload: true });
 				});
 			} else {
 				presidentFactory.saveRecord([self.president], function (result) {
-					$state.go('presidents.start');
+					if (result.success)
+						$state.go('presidents.start', {}, { reload: true });
 				});
 			}
 		}
 
-        function saveNew() {
+		function saveNew() {
 			if (self.president.id) {
 				presidentFactory.updateRecord(self.president.id, self.president, function (result) {
-					$state.go('president.new');
+					if (result.success)
+						$state.go('president.new', {}, { reload: true });
 				});
 			} else {
 				presidentFactory.saveRecord([self.president], function (result) {
-					setTimeout(function() {
-                    	$state.go($state.current, {}, {reload: true});
-					}, 5000);
+					if (result.success)
+						$state.go($state.current, {}, { reload: true });
 				});
 			}
 		}

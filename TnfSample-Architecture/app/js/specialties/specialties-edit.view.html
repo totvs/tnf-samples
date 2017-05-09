@@ -1,0 +1,52 @@
+<totvs-page type="edit">
+
+	<totvs-page-navbar>
+
+		<totvs-page-breadcrumb>
+            <breadcrumb link="#/">
+                <span class="hidden-xs">{{ ::'l-home' | i18n : [] : 'js/specialties' }}</span>
+                <span class="glyphicon glyphicon-home hidden-sm hidden-md hidden-lg"></span>
+            </breadcrumb>
+            <breadcrumb link="#/specialties">
+                <span>{{ ::'l-specialty' | i18n : [] : 'js/specialties' }}</span>
+            </breadcrumb>
+
+			<breadcrumb>{{ controller.specialty.id ? 'Edição:' : 'Nova Especialidade:' }} {{ controller.specialty.description }}</breadcrumb>
+		</totvs-page-breadcrumb>
+
+		<totvs-page-header>
+			<totvs-page-header-title
+                title="{{ controller.specialty.id ? controller.specialty.description || 'Editando Especialidade' : controller.specialty.description || 'Nova Especialidade' }}"
+                placeholder="{{ ::'l-specialty' | i18n : [] : 'js/specialties' }}">
+			</totvs-page-header-title>
+
+			<totvs-page-header-operation>
+				<totvs-page-header-operation-action>
+                </totvs-page-header-operation-action>
+			</totvs-page-header-operation>
+		</totvs-page-header>
+
+	</totvs-page-navbar>
+
+	<totvs-page-content>
+
+        <totvs-page-form name="frmSpecialty">
+
+			<fieldset>
+
+				<totvs-field
+					totvs-input
+					class="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+					ng-model="controller.specialty.description"
+					required
+					label="{{ ::'l-description' | i18n : [] : 'js/specialties' }}"
+                    focus>
+				</totvs-field>
+
+			</fieldset>
+
+		</totvs-page-form>
+
+	</totvs-page-content>
+
+</totvs-page>

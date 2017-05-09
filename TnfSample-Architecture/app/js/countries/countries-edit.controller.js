@@ -124,11 +124,13 @@
 		function save() {
 			if (self.country.id) {
 				countryFactory.updateRecord(self.country.id, self.country, function (result) {
-					$state.go('countries.detail', { id: self.country.id });
+					if (result.success)
+						$state.go('countries.detail', { id: self.country.id }, { reload: true });
 				});
 			} else {
 				countryFactory.saveRecord(self.country, function (result) {
-					$state.go('countries.start');
+					if (result.success)
+						$state.go('countries.start', {}, { reload: true });
 				});
 			}
 		}
@@ -136,11 +138,13 @@
 		function saveNew() {
 			if (self.country.id) {
 				countryFactory.updateRecord(self.country.id, self.country, function (result) {
-					$state.go('countries.new');
+					if (result.success)
+						$state.go('countries.new', {}, { reload: true });
 				});
 			} else {
 				countryFactory.saveRecord(self.country, function (result) {
-					$state.go($state.current, {}, { reload: true });
+					if (result.success)
+						$state.go($state.current, {}, { reload: true });
 				});
 			}
 		}

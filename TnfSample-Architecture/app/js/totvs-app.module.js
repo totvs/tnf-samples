@@ -30,7 +30,8 @@
             'totvsDesktop',
             'president',
             'country',
-            'professional'
+            'professional',
+            'specialty'
         ]);
 
 }());

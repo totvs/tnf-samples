@@ -117,6 +117,13 @@
                     title="{{ ::'l-address-complement' | i18n : [] : 'js/professionals' }}"
                     value="{{ ::professional.address.complement }}">
                 </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-specialties' | i18n : [] : 'js/professionals' }}">
+                    <label ng-repeat="specialty in professional.specialties">
+                        {{ specialty.description }},
+                    </label>
+                </totvs-list-item-info>
             </totvs-list-item-content-detail>
         </totvs-list-item>
 

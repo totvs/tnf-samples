@@ -27,9 +27,9 @@
         .module('professional')
         .factory('professionalFactory', professionalFactory);
 
-    professionalFactory.$inject = ['$totvsresource'];
+    professionalFactory.$inject = ['$totvsresource', 'NotifyFactory'];
 
-    function professionalFactory($totvsresource) {
+    function professionalFactory($totvsresource, NotifyFactory) {
 
         var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
             url = 'http://' + hostname + ':5050/api/professional/:professionalId/:code',
@@ -50,56 +50,34 @@
         // *********************************************************************************
 
         function findRecords(parameters, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSQuery(parameters, callback);
         }
 
         function getRecord(professionalId, code, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSGet({ professionalId: professionalId, code: code }, callback);
         }
 
         function saveRecord(model, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSSave({}, model, callback);
         }
 
         function updateRecord(professionalId, code, model, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSUpdate({ professionalId: professionalId, code: code }, model, callback);
         }
 
         function deleteRecord(professionalId, code, callback) {
+            var callback = NotifyFactory.encapsulateCallback(callback);
+
             return this.TOTVSRemove({ professionalId: professionalId, code: code }, callback);
         }
-    }
-
-
-    // Registra a AngularJS Factory para customização do httpInterceptor padrão do AngularJS.
-    angular
-        .module('professional')
-        .factory('professionalHttpInterceptor', appHTTPInterceptors);
-
-    appHTTPInterceptors.$inject = ['$q'];
-
-    function appHTTPInterceptors($q) {
-        return {
-            request: function (config) {
-                return config || $q.when(config);
-            },
-            requestError: function (rejection) {
-                return rejection;
-            },
-            response: function (response) {
-                if (response.data.result
-                    && response.data.result.data)
-                    response.data = response.data.result.data;
-
-                if (response.data.data)
-                    response.data = response.data.data;
-
-                return response;
-            },
-            responseError: function (rejection) {
-                return rejection;
-            }
-        };
     }
 
 }());

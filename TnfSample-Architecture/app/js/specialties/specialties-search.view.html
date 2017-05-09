@@ -1,0 +1,17 @@
+<totvs-modal-header>{{ 'btn-advanced-search' | i18n }}</totvs-modal-header>
+
+<totvs-modal-body>
+    <div class="row">
+        <form class="form-horizontal" role="form">
+
+            <field type="input" class="col-lg-12" ng-model="controller.advancedSearch.description"
+                label="{{ ::'l-description' | i18n : [] : 'js/specialties' }}" canclean></field>
+                
+        </form>
+    </div>
+</totvs-modal-body>
+
+<totvs-modal-footer>
+    <button type="button" class="btn btn-default" ng-click="controller.close();">{{ ::'btn-cancel' | i18n }}</button>
+    <button type="button" class="btn btn-primary" ng-click="controller.search();">{{ ::'btn-confirm' | i18n }}</button>
+</totvs-modal-footer>
