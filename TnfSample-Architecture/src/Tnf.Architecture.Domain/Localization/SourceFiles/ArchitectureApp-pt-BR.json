@@ -3,6 +3,14 @@
   "texts": {
     "President_Title": "Presidentes",
     "PresidentZipCodeMustHaveValue": "Um presidente precisa ter um nome",
-    "PresidentNameMustHaveValue": "Um presidente precisa ter um CEP"
+    "PresidentNameMustHaveValue": "Um presidente precisa ter um CEP",
+    "ProfessionalAddressComplementMustHaveValue": "Um professional deve ter um complemento para o endereço",
+    "ProfessionalAddressNumberMustHaveValue": "Um professional deve ter um número para o endereço",
+    "ProfessionalAddressMustHaveValue": "Um professional deve ter um endereço",
+    "ProfessionalEmailMustHaveValue": "Um professional deve ter um email",
+    "ProfessionalNameMustHaveValue": "Um professional deve ter um nome",
+    "ProfessionalPhoneMustHaveValue": "Um professional deve ter um telefone",
+    "ProfessionalZipCodeMustHaveValue": "Um professional deve ter um CEP",
+    "SpecialtyDescriptionMustHaveValue": "Uma especialidade deve ter uma descrição"
   }
 }

@@ -37,7 +37,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public override BuilderResponse<Specialty> Build()
         {
-            var shouldHaveDescription = new SpecialtyShouldHaveNameSpecification();
+            var shouldHaveDescription = new SpecialtyShouldHaveDescriptionSpecification();
 
             if (!shouldHaveDescription.IsSatisfiedBy(Instance))
                 AddNotification(Specialty.Error.SpecialtyDescriptionMustHaveValue);

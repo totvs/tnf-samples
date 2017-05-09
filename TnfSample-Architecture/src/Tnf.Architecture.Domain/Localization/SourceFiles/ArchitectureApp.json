@@ -3,6 +3,14 @@
   "texts": {
     "President_Title": "Presidents",
     "PresidentZipCodeMustHaveValue": "A president must have a name",
-    "PresidentNameMustHaveValue": "A president must have a Zip Code"
+    "PresidentNameMustHaveValue": "A president must have a Zip Code",
+    "ProfessionalAddressComplementMustHaveValue": "A professional must have a address complement",
+    "ProfessionalAddressNumberMustHaveValue": "A professional must have a address number",
+    "ProfessionalAddressMustHaveValue": "A professional must have a address",
+    "ProfessionalEmailMustHaveValue": "A professional must have a email",
+    "ProfessionalNameMustHaveValue": "A professional must have a name",
+    "ProfessionalPhoneMustHaveValue": "A professional must have a phone",
+    "ProfessionalZipCodeMustHaveValue": "A professional must have a zip code",
+    "SpecialtyDescriptionMustHaveValue": "A specialty must have a name"
   }
 }

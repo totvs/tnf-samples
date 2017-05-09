@@ -4,7 +4,7 @@ using Tnf.Specifications;
 
 namespace Tnf.Architecture.Domain.Registration.Specifications
 {
-    internal class SpecialtyShouldHaveNameSpecification : Specification<Specialty>
+    internal class SpecialtyShouldHaveDescriptionSpecification : Specification<Specialty>
     {
         public override Expression<Func<Specialty, bool>> ToExpression()
         {
