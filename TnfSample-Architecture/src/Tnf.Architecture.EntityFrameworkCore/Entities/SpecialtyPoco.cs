@@ -9,7 +9,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
     public class SpecialtyPoco : Entity
     {
         public string Description { get; set; }
-
-        public List<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
+        public virtual List<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
     }
 }

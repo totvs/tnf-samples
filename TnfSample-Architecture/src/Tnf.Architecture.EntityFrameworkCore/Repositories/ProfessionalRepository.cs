@@ -85,6 +85,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbProfessional = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
+                .Include("ProfessionalSpecialties.Specialty")
                 .Single(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
             var idsToAdd = dto.Select(s => s.Id).ToArray();
@@ -97,8 +98,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             dto.ForEach(w =>
             {
                 var dbProfessionalSpecialties = dbProfessional.ProfessionalSpecialties
-                    .FirstOrDefault(s => s.ProfessionalId == dbProfessional.ProfessionalId &&
-                                         s.Code == dbProfessional.Code);
+                    .FirstOrDefault(s => s.SpecialtyId == w.Id);
 
                 if (dbProfessionalSpecialties == null)
                 {

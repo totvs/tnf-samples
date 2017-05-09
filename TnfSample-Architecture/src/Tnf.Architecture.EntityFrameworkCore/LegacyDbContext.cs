@@ -20,8 +20,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
             {
                 // PKs
                 m.Ignore(i => i.Id);
-                m.HasKey(i => i.ProfessionalId);
-                m.HasKey(i => i.Code);
+                m.HasKey(i => new { i.ProfessionalId, i.Code });
 
                 // Configure PKs auto generated
                 m.Property(i => i.Code).ValueGeneratedOnAdd().HasColumnName("SYS009_PROFESSIONAL_CODE");
@@ -54,8 +53,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
             {
                 // PKs
                 m.Ignore(i => i.Id);
-                m.HasKey(i => i.SpecialtyId);
-                m.HasKey(i => new { i.ProfessionalId, i.Code });
+                m.HasKey(i => new { i.ProfessionalId, i.Code, i.SpecialtyId });
                 
                 m.Property(i => i.ProfessionalId).HasColumnName("SYS009_PROFESSIONAL_ID");
                 m.Property(i => i.Code).HasColumnName("SYS009_PROFESSIONAL_CODE");
@@ -68,7 +66,9 @@ namespace Tnf.Architecture.EntityFrameworkCore
 
                 m.HasOne(o => o.Specialty)
                     .WithMany(w => w.ProfessionalSpecialties)
+                    .HasPrincipalKey(k => k.Id)
                     .HasForeignKey(k => k.SpecialtyId);
+
                 m.ToTable("SYS010_PROFESSIONAL_SPECIALTIES");
             });
         }
