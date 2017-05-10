@@ -38,7 +38,7 @@ namespace Tnf.Architecture.Application.Services
         public async Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true)
             => await _whiteHouserService.InsertPresidentAsync(dtos, sync);
 
-        public async Task<DtoResponseBase> UpdatePresidentAsync(PresidentDto dto)
+        public async Task<DtoResponseBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto)
             => await _whiteHouserService.UpdatePresidentAsync(dto);
     }
 }

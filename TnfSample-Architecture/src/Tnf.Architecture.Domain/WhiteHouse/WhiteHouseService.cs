@@ -8,6 +8,7 @@ using Tnf.Architecture.Dto;
 using Tnf.Events.Bus;
 using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Localization;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -24,9 +25,11 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public async Task<DtoResponseBase> DeletePresidentAsync(string id)
         {
-            await Repository.DeletePresidentsAsync(id);
+            var success = await Repository.DeletePresidentsAsync(id);
 
-            return new DtoResponseBase();
+            var result = new DtoResponseBase();
+
+            return result;
         }
 
         public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
@@ -67,18 +70,21 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return response;
         }
 
-        public async Task<DtoResponseBase> UpdatePresidentAsync(PresidentDto president)
+        public async Task<DtoResponseBase<PresidentDto>> UpdatePresidentAsync(PresidentDto president)
         {
+            var response = new DtoResponseBase<PresidentDto>();
+
             var builder = new PresidentBuilder()
                 .WithId(president.Id)
                 .WithName(president.Name)
                 .WithZipCode(president.ZipCode);
+            
+            var build = builder.Build();
+            if (!build.Success)
+                response.AddNotifications(build.Notifications);
 
-            var response = builder.Build();
             if (response.Success)
-            {
-                await Repository.UpdatePresidentsAsync(president);
-            }
+                response.Data = await Repository.UpdatePresidentsAsync(president);
 
             return response;
         }

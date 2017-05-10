@@ -41,6 +41,9 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
             var result = _professionalAppService.GetProfessional(new ProfessionalKeysDto(professionalId, code));
+            if (result == null)
+                return NotFound("Professional not found");
+
             return Ok(result);
         }
 

@@ -88,7 +88,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
                                $"{RouteConsts.WhiteHouse}/99",
-                               HttpStatusCode.BadRequest
+                               HttpStatusCode.NotFound
                            );
 
             // Assert
@@ -161,7 +161,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("6", "Ronald Reagan", "85236417");
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<PresidentDto>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
                 $"{RouteConsts.WhiteHouse}/1",
                 presidentDto,
                 HttpStatusCode.OK
@@ -169,8 +169,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Id, "6");
-            Assert.Equal(response.Result.Name, "Ronald Reagan");
+            Assert.Empty(response.Result.Notifications);
+            Assert.Equal(response.Result.Data.Id, "6");
+            Assert.Equal(response.Result.Data.Name, "Ronald Reagan");
         }
 
         [Fact]
@@ -185,7 +186,24 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            response.Result.ShouldBe("Invalid parameter: president");
+            response.Result.ShouldBe("Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Put_Empty_President_And_Return_Notifications()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
+                $"{RouteConsts.WhiteHouse}/1",
+                new PresidentDto(),
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]

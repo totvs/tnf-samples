@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_Specialties_With_Sucess()
+        public async Task Get_Specialty_With_Sucess()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<SpecialtyDto>>(
@@ -67,7 +67,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_Specialties_With_Invalid_Parameter_Return_Bad_Request()
+        public async Task Get_Specialty_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
@@ -81,7 +81,22 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Specialties_With_Success()
+        public async Task Get_Specialty_When_Not_Exists_Return_Not_Found()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
+                               $"{RouteConsts.Specialty}/99",
+                               HttpStatusCode.NotFound
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.NotNull(response);
+            Assert.Equal(response.Result, "Specialty not found");
+        }
+
+        [Fact]
+        public async Task Post_Specialty_With_Success()
         {
             //Arrange
             var specialtyDto = new SpecialtyDto()
@@ -103,7 +118,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Empty_Professional_And_Return_Notifications()
+        public async Task Post_Empty_Specialty_And_Return_Notifications()
         {
             //Arrange
             var specialtyDto = new SpecialtyDto();
@@ -119,6 +134,85 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
             Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public async Task Put_Specialty_With_Success()
+        {
+            //Arrange
+            var specialtyDto = new SpecialtyDto()
+            {
+                Id = 1,
+                Description = "Cirurgia Torácica"
+            };
+
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+                $"{RouteConsts.Specialty}/1",
+                specialtyDto,
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Empty(response.Result.Notifications);
+            Assert.Equal(response.Result.Data.Id, 1);
+            Assert.Equal(response.Result.Data.Description, "Cirurgia Torácica");
+        }
+
+        [Fact]
+        public async Task Put_Specialty_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<string>>(
+                $"{RouteConsts.Specialty}/-1",
+                new SpecialtyDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Put_Empty_Specialty_And_Return_Notifications()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+                $"{RouteConsts.Specialty}/1",
+                new SpecialtyDto(),
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public async Task Delete_Specialty_With_Success()
+        {
+            // Act
+            await DeleteResponseAsObjectAsync<AjaxResponse>(
+                $"{RouteConsts.Specialty}/1",
+                HttpStatusCode.OK
+            );
+        }
+
+        [Fact]
+        public async Task Delete_Specialty_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
+                $"{RouteConsts.Specialty}/%20",
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Success.ShouldBeTrue();
+            response.Result.ShouldBe("Invalid parameter: id");
         }
     }
 }

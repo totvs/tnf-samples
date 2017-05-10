@@ -7,6 +7,7 @@ using Tnf.EntityFrameworkCore.Repositories;
 using Tnf.AutoMapper;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -46,8 +47,17 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public SpecialtyDto GetSpecialty(int id)
         {
-            var dbEntity = base.Get(id);
-            return dbEntity.MapTo<SpecialtyDto>();
+            try
+            {
+                var dbEntity = base.Get(id);
+                return dbEntity.MapTo<SpecialtyDto>();
+            }
+            catch (Exception)
+            {
+                //TODO: Estourar exceção quando não achar?
+            }
+
+            return null;
         }
 
         public SpecialtyDto UpdateSpecialty(SpecialtyDto dto)

@@ -22,11 +22,14 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                .Single(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
+                .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
 
-            dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
+            if (dbEntity != null)
+            {
+                dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
 
-            Context.Professionals.Remove(dbEntity);
+                Context.Professionals.Remove(dbEntity);
+            }
         }
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys)
@@ -34,9 +37,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                 .Include("ProfessionalSpecialties.Specialty")
-                .Single(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+                .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
-            return dbEntity.MapTo<ProfessionalDto>();
+            return dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
         }
 
         public ProfessionalDto CreateProfessional(ProfessionalCreateDto entity)
@@ -86,30 +89,33 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             var dbProfessional = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                 .Include("ProfessionalSpecialties.Specialty")
-                .Single(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+                .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
-            var idsToAdd = dto.Select(s => s.Id).ToArray();
-
-            if (dbProfessional.ProfessionalSpecialties == null)
-                dbProfessional.ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>();
-
-            dbProfessional.ProfessionalSpecialties.RemoveAll(w => !idsToAdd.Contains(w.SpecialtyId));
-
-            dto.ForEach(w =>
+            if (dbProfessional != null)
             {
-                var dbProfessionalSpecialties = dbProfessional.ProfessionalSpecialties
-                    .FirstOrDefault(s => s.SpecialtyId == w.Id);
+                var idsToAdd = dto.Select(s => s.Id).ToArray();
 
-                if (dbProfessionalSpecialties == null)
+                if (dbProfessional.ProfessionalSpecialties == null)
+                    dbProfessional.ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>();
+
+                dbProfessional.ProfessionalSpecialties.RemoveAll(w => !idsToAdd.Contains(w.SpecialtyId));
+
+                dto.ForEach(w =>
                 {
-                    dbProfessional.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco()
+                    var dbProfessionalSpecialties = dbProfessional.ProfessionalSpecialties
+                        .FirstOrDefault(s => s.SpecialtyId == w.Id);
+
+                    if (dbProfessionalSpecialties == null)
                     {
-                        ProfessionalId = dbProfessional.ProfessionalId,
-                        Code = dbProfessional.Code,
-                        SpecialtyId = w.Id
-                    });
-                }
-            });
+                        dbProfessional.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco()
+                        {
+                            ProfessionalId = dbProfessional.ProfessionalId,
+                            Code = dbProfessional.Code,
+                            SpecialtyId = w.Id
+                        });
+                    }
+                });
+            }
         }
     }
 }

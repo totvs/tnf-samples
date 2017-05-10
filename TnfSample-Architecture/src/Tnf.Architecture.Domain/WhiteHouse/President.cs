@@ -19,6 +19,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             InvalidId = 1,
             PresidentNameMustHaveValue = 2,
             PresidentZipCodeMustHaveValue = 3,
+            CouldNotDeletePresident = 4
         }
     }
 }

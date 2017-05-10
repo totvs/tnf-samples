@@ -36,7 +36,7 @@ namespace Tnf.Architecture.Web.Controllers
 
             var president = await _whiteHouseAppService.GetPresidentById(id);
             if (president == null)
-                return BadRequest("President not found");
+                return NotFound("President not found");
 
             return Ok(president);
         }
@@ -64,11 +64,13 @@ namespace Tnf.Architecture.Web.Controllers
         public async Task<IActionResult> Put(string id, [FromBody]PresidentDto president)
         {
             if (string.IsNullOrEmpty(id))
-                return BadRequest($"Invalid parameter: {nameof(president)}");
+                return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            await _whiteHouseAppService.UpdatePresidentAsync(president);
+            var result = await _whiteHouseAppService.UpdatePresidentAsync(president);
+            if (president == null)
+                return NotFound("President not found");
 
-            return Ok(president);
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

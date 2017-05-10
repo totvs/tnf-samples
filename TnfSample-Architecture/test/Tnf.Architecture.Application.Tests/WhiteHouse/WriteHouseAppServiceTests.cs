@@ -43,6 +43,19 @@ namespace Tnf.Architecture.Application.Tests
         }
 
         [Fact]
+        public async Task Should_Delete_President_With_Error()
+        {
+            // Act
+            var response = await _whiteHouseAppService.DeletePresidentAsync("");
+
+            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsDto());
+
+            // Assert
+            Assert.True(response.Success);
+            pagedResult.Total.ShouldBe(0);
+        }
+
+        [Fact]
         public async Task Should_Insert_President_With_Success()
         {
             // Act

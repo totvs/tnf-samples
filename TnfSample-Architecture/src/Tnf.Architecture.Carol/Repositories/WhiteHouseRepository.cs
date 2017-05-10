@@ -17,14 +17,14 @@ namespace Tnf.Architecture.Data.Repositories
         {
         }
 
-        public async Task DeletePresidentsAsync(string id)
+        public async Task<bool> DeletePresidentsAsync(string id)
         {
-            await DeleteAsync(id);
+            return await DeleteAsync(id);
         }
 
-        public async Task DeletePresidentsAsync(PresidentDto president)
+        public async Task<bool> DeletePresidentsAsync(PresidentDto president)
         {
-            await DeleteAsync(president.Id);
+            return await DeleteAsync(president.Id);
         }
 
         public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
@@ -66,10 +66,12 @@ namespace Tnf.Architecture.Data.Repositories
             return result.MapTo<List<PresidentDto>>();
         }
 
-        public async Task UpdatePresidentsAsync(PresidentDto president)
+        public async Task<PresidentDto> UpdatePresidentsAsync(PresidentDto president)
         {
             var poco = president.MapTo<PresidentPoco>();
-            await UpdateAsync(poco);
+            var result = await UpdateAsync(poco);
+
+            return result.MapTo<PresidentDto>();
         }
     }
 }

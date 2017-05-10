@@ -36,6 +36,9 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
             var result = _professionalAppService.GetSpecialty(id);
+            if (result == null)
+                return NotFound("Specialty not found");
+
             return Ok(result);
         }
 
