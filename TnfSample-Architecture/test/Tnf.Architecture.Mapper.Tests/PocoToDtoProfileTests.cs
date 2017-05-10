@@ -130,31 +130,5 @@ namespace Tnf.Architecture.Mapper.Tests
             Assert.Equal(poco.Address.Number, mappDto.Address.Number);
             Assert.Equal(poco.Address.Street, mappDto.Address.Street);
         }
-
-        [Fact]
-        public void teste()
-        {
-            var poco = new PresidentPoco()
-            {
-                Id = "122334232423",
-                Name = "dsaudsahuadsh",
-                Address = new Address("rua tal", "12", "apt sas", new ZipCode("12345678"))
-            };
-
-            var json = JObject.FromObject(poco);
-
-            var parse = json.ToObject<PresidentPoco>();
-            Assert.NotNull(parse);
-
-            var stringTeste = "{\"Street\":\"Rua Do Bill\",\"Number\":\"123\",\"Complement\":\"Casa\",\"ZipCode\":{\"Number\":\"99987526\"}}";
-            json = JObject.FromObject(stringTeste);
-            parse = json.ToObject<PresidentPoco>();
-            Assert.NotNull(parse);
-
-            stringTeste = "{\"street\":\"Rua Do Bill\",\"number\":\"123\",\"complement\":\"Casa\",\"zipCode\":{\"number\":\"99987526\"}}";
-            json = JObject.FromObject(stringTeste);
-            parse = json.ToObject<PresidentPoco>();
-            Assert.NotNull(parse);
-        }
     }
 }
