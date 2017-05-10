@@ -11,7 +11,6 @@ using Tnf.Dto;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 
-
 namespace Tnf.Architecture.Web.Tests.Tests
 {
     public class SpecialtyControllerTests : AppTestBase
@@ -71,7 +70,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                $"/{RouteConsts.Specialty}/%20",
+                $"/{RouteConsts.Specialty}/-1",
                 HttpStatusCode.BadRequest
             );
 
@@ -92,7 +91,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.NotNull(response);
-            Assert.Equal(response.Result, "Specialty not found");
         }
 
         [Fact]
@@ -192,13 +190,39 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Put_Specialty_When_Not_Exists_Return_Notifications()
+        {
+            //Arrange
+            var specialtyDto = new SpecialtyDto()
+            {
+                Id = 99,
+                Description = "Cirurgia Torácica"
+            };
+
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+                $"{RouteConsts.Specialty}/99",
+                specialtyDto,
+                HttpStatusCode.NotFound
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+        }
+
+        [Fact]
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            await DeleteResponseAsObjectAsync<AjaxResponse>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
+
+            // Assert
+            Assert.True(response.Success);
         }
 
         [Fact]
@@ -213,6 +237,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             response.Success.ShouldBeTrue();
             response.Result.ShouldBe("Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Delete_Specialty_When_Not_Exists_Return_Notifications()
+        {
+            // Act
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+                $"{RouteConsts.Specialty}/99",
+                HttpStatusCode.NotFound
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }
 }

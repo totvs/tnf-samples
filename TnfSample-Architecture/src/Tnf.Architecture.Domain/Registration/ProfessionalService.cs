@@ -4,6 +4,7 @@ using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
 using Tnf.Dto;
+using Tnf.Localization;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -45,7 +46,23 @@ namespace Tnf.Architecture.Domain.Registration
             return response;
         }
 
-        public void DeleteProfessional(ProfessionalKeysDto keys) => Repository.DeleteProfessional(keys);
+        public DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys)
+        {
+            var result = new DtoResponseBase();
+
+            var success = Repository.DeleteProfessional(keys);
+
+            if (!success)
+            {
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Professional.Error.CouldNotFindProfessional);
+
+                result.AddNotification(new Notification(Professional.Error.CouldNotFindProfessional, notificationMessage));
+            }
+
+            return result;
+        }
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => Repository.GetProfessional(keys);
 
@@ -68,9 +85,20 @@ namespace Tnf.Architecture.Domain.Registration
             {
                 response.Data = Repository.UpdateProfessional(entity);
 
-                Repository.AddOrRemoveSpecialties(new ProfessionalKeysDto(response.Data.ProfessionalId, response.Data.Code), entity.Specialties);
+                if (response.Data == null)
+                {
+                    var notificationMessage = LocalizationHelper.GetString(
+                        AppConsts.LocalizationSourceName,
+                        Professional.Error.CouldNotFindProfessional);
 
-                response.Data.Specialties = entity.Specialties;
+                    response.AddNotification(new Notification(Professional.Error.CouldNotFindProfessional, notificationMessage));
+                }
+                else
+                {
+                    Repository.AddOrRemoveSpecialties(new ProfessionalKeysDto(response.Data.ProfessionalId, response.Data.Code), entity.Specialties);
+
+                    response.Data.Specialties = entity.Specialties;
+                }
             }
 
             return response;
@@ -80,7 +108,23 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SpecialtyDto GetSpecialty(int id) => _specialtyRepository.GetSpecialty(id);
 
-        public void DeleteSpecialty(int id) => _specialtyRepository.DeleteSpecialty(id);
+        public DtoResponseBase DeleteSpecialty(int id)
+        {
+            var result = new DtoResponseBase();
+
+            var success = _specialtyRepository.DeleteSpecialty(id);
+
+            if (!success)
+            {
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Specialty.Error.CouldNotFindSpecialty);
+
+                result.AddNotification(new Notification(Specialty.Error.CouldNotFindSpecialty, notificationMessage));
+            }
+
+            return result;
+        }
 
         public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto)
         {
@@ -111,7 +155,18 @@ namespace Tnf.Architecture.Domain.Registration
                 response.AddNotifications(build.Notifications);
 
             if (response.Success)
+            {
                 response.Data = _specialtyRepository.UpdateSpecialty(dto);
+
+                if (response.Data == null)
+                {
+                    var notificationMessage = LocalizationHelper.GetString(
+                        AppConsts.LocalizationSourceName,
+                        Specialty.Error.CouldNotFindSpecialty);
+
+                    response.AddNotification(new Notification(Specialty.Error.CouldNotFindSpecialty, notificationMessage));
+                }
+            }
 
             return response;
         }

@@ -47,7 +47,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                 .Returns(Task.FromResult(presidentDto));
 
             _whiteHouseRepository.DeletePresidentsAsync(Arg.Any<string>())
-                .Returns(Task.FromResult<object>(null));
+                .Returns(Task.FromResult(true));
 
             _whiteHouseService = new WhiteHouseService(_whiteHouseRepository, EventBus);
         }

@@ -18,18 +18,20 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
         }
 
-        public void DeleteProfessional(ProfessionalKeysDto keys)
+        public bool DeleteProfessional(ProfessionalKeysDto keys)
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                 .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
-
+            
             if (dbEntity != null)
             {
                 dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
 
                 Context.Professionals.Remove(dbEntity);
             }
+
+            return dbEntity != null;
         }
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys)

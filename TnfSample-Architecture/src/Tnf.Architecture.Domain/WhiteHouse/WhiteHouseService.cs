@@ -29,6 +29,15 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
             var result = new DtoResponseBase();
 
+            if (!success)
+            {
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    President.Error.CouldNotFindPresident);
+
+                result.AddNotification(new Notification(President.Error.CouldNotFindPresident, notificationMessage));
+            }
+
             return result;
         }
 
@@ -83,9 +92,19 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             if (!build.Success)
                 response.AddNotifications(build.Notifications);
 
-            var response = builder.Build();
             if (response.Success)
+            {
                 response.Data = await Repository.UpdatePresidentsAsync(president);
+
+                if(response.Data == null)
+                {
+                    var notificationMessage = LocalizationHelper.GetString(
+                        AppConsts.LocalizationSourceName,
+                        President.Error.CouldNotFindPresident);
+                    
+                    response.AddNotification(new Notification(President.Error.CouldNotFindPresident, notificationMessage));
+                }
+            }
 
             return response;
         }

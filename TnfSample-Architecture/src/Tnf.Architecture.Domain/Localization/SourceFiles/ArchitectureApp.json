@@ -11,6 +11,13 @@
     "ProfessionalNameMustHaveValue": "A professional must have a name",
     "ProfessionalPhoneMustHaveValue": "A professional must have a phone",
     "ProfessionalZipCodeMustHaveValue": "A professional must have a zip code",
-    "SpecialtyDescriptionMustHaveValue": "A specialty must have a name"
+    "SpecialtyDescriptionMustHaveValue": "A specialty must have a name",
+    "CouldNotFindPresident": "Could not find President",
+
+    "CouldNotFindCountry": "Could not find Country",
+
+    "CouldNotFindSpecialty": "Could not find Specialty",
+
+    "CouldNotFindProfessional": "Could not find Professional"
   }
 }

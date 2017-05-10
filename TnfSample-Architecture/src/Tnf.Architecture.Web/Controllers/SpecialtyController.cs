@@ -35,34 +35,36 @@ namespace Tnf.Architecture.Web.Controllers
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var result = _professionalAppService.GetSpecialty(id);
-            if (result == null)
-                return NotFound("Specialty not found");
+            var specialty = _professionalAppService.GetSpecialty(id);
+            if (specialty == null)
+                return NotFound(L("CouldNotFindSpecialty"));
 
-            return Ok(result);
+            return Ok(specialty);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]SpecialtyDto dto)
+        public IActionResult Post([FromBody]SpecialtyDto specialty)
         {
-            if (dto == null)
-                return BadRequest($"Invalid parameter: {nameof(dto)}");
+            if (specialty == null)
+                return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
-            var result = _professionalAppService.CreateSpecialty(dto);
+            var result = _professionalAppService.CreateSpecialty(specialty);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]SpecialtyDto dto)
+        public IActionResult Put(int id, [FromBody]SpecialtyDto specialty)
         {
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            if (dto == null)
-                return BadRequest($"Invalid parameter: {nameof(dto)}");
+            if (specialty == null)
+                return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
-            dto.Id = id;
-            var result = _professionalAppService.UpdateSpecialty(dto);
+            specialty.Id = id;
+            var result = _professionalAppService.UpdateSpecialty(specialty);
+            if (result.Data == null)
+                return NotFound(result);
 
             return Ok(result);
         }
@@ -73,8 +75,11 @@ namespace Tnf.Architecture.Web.Controllers
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            _professionalAppService.DeleteSpecialty(id);
-            return Ok();
+            var result = _professionalAppService.DeleteSpecialty(id);
+            if (!result.Success)
+                return NotFound(result);
+
+            return Ok(result);
         }
     }
 }

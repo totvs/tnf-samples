@@ -38,34 +38,39 @@ namespace Tnf.Architecture.Web.Controllers
 
             try
             {
-                var result = await _countryAppService.Get(new EntityDto<int>(id));
-                return Ok(result);
+                var country = await _countryAppService.Get(new EntityDto<int>(id));
+                return Ok(country);
             }
             catch (Exception)
             {
-                return NotFound("Country not found");
+                return NotFound(L("CouldNotFindCountry"));
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CountryDto dto)
+        public async Task<IActionResult> Post([FromBody]CountryDto country)
         {
-            if (dto == null)
-                return BadRequest($"Invalid parameter: {nameof(dto)}");
+            if (country == null)
+                return BadRequest($"Invalid parameter: {nameof(country)}");
 
-            var result = await _countryAppService.Create(dto);
+            var result = await _countryAppService.Create(country);
 
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]CountryDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody]CountryDto country)
         {
-            if (dto == null)
-                return BadRequest($"Invalid parameter: {nameof(dto)}");
+            if (id <= 0)
+                return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            dto.Id = id;
-            var result = await _countryAppService.Update(dto);
+            if (country == null)
+                return BadRequest($"Invalid parameter: {nameof(country)}");
+
+            country.Id = id;
+            var result = await _countryAppService.Update(country);
+            if (result == null)
+                return NotFound(L("CouldNotFindCountry"));
 
             return Ok(result);
         }

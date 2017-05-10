@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
     {
         PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
         SpecialtyDto GetSpecialty(int id);
-        void DeleteSpecialty(int id);
+        bool DeleteSpecialty(int id);
         SpecialtyDto CreateSpecialty(SpecialtyDto dto);
         SpecialtyDto UpdateSpecialty(SpecialtyDto dto);
     }

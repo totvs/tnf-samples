@@ -108,7 +108,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.NotNull(response);
-            Assert.Equal(response.Result, "Professional not found");
         }
 
         [Fact]
@@ -244,6 +243,32 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Put_Professional_With_Invalid_Parameter_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
+                $"{RouteConsts.Professional}/%20/23",
+                new ProfessionalDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Invalid parameter: professionalId");
+
+            // Act
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
+                $"/{RouteConsts.Professional}/1/{Guid.Empty}",
+                new ProfessionalDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Invalid parameter: code");
+        }
+
+        [Fact]
         public async Task Put_Empty_Professional_And_Return_Notifications()
         {
             // Act
@@ -266,13 +291,41 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Put_Professional_When_Not_Exists_Return_Notifications()
+        {
+            //Arrange
+            var professionalDto = new ProfessionalUpdateDto()
+            {
+                Address = new Address("Rua do comercio", "123", "APT 123", new ZipCode("99888777")),
+                Email = "email@email.com",
+                Name = "João da Silva",
+                Phone = "55998765432"
+            };
+
+            // Act
+            var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+                $"{RouteConsts.WhiteHouse}/99/{Guid.NewGuid()}",
+                professionalDto,
+                HttpStatusCode.NotFound
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+        }
+
+        [Fact]
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            await DeleteResponseAsObjectAsync<AjaxResponse>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
+
+            // Assert
+            Assert.True(response.Success);
         }
 
         [Fact]
@@ -287,6 +340,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             response.Success.ShouldBeTrue();
             response.Result.ShouldBe("Invalid parameter: professionalId");
+        }
+
+        [Fact]
+        public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
+        {
+            // Act
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+                $"{RouteConsts.WhiteHouse}/99",
+                HttpStatusCode.NotFound
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.False(response.Result.Success);
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
     }
 }

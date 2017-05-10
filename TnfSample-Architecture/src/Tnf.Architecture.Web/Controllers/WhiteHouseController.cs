@@ -18,12 +18,15 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Get([FromQuery]int offset, [FromQuery] int pageSize, [FromQuery]string name, [FromQuery]string zipCode)
+        public async Task<IActionResult> Get(GellAllPresidentsDto requestDto)
         {
-            if (pageSize <= 0)
-                return BadRequest($"Invalid parameter: {nameof(pageSize)}");
-            
-            var response = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsDto(offset, pageSize, name, zipCode));
+            if (requestDto == null)
+                return BadRequest($"Invalid parameter: {nameof(requestDto)}");
+
+            if (requestDto.PageSize <= 0)
+                return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
+
+            var response = await _whiteHouseAppService.GetAllPresidents(requestDto);
 
             return Ok(response);
         }
@@ -36,7 +39,7 @@ namespace Tnf.Architecture.Web.Controllers
 
             var president = await _whiteHouseAppService.GetPresidentById(id);
             if (president == null)
-                return NotFound("President not found");
+                return NotFound(L("CouldNotFindPresident"));
 
             return Ok(president);
         }
@@ -48,13 +51,7 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(presidents)}");
 
             if (presidents.Count <= 0)
-                return BadRequest($"Invalid parameter: {nameof(presidents)}");
-
-            if (sync == true)
-            {
-                var responseSync = await _whiteHouseAppService.InsertPresidentAsync(presidents);
-                return Ok(responseSync);
-            }
+                return BadRequest($"Empty parameter: {nameof(presidents)}");
 
             var response = await _whiteHouseAppService.InsertPresidentAsync(presidents);
             return Ok(response);
@@ -66,9 +63,13 @@ namespace Tnf.Architecture.Web.Controllers
             if (string.IsNullOrEmpty(id))
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var result = await _whiteHouseAppService.UpdatePresidentAsync(president);
             if (president == null)
-                return NotFound("President not found");
+                return BadRequest($"Invalid parameter: {nameof(president)}");
+
+            president.Id = id;
+            var result = await _whiteHouseAppService.UpdatePresidentAsync(president);
+            if (result.Data == null)
+                return NotFound(result);
 
             return Ok(result);
         }
@@ -79,9 +80,11 @@ namespace Tnf.Architecture.Web.Controllers
             if (string.IsNullOrWhiteSpace(id))
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            await _whiteHouseAppService.DeletePresidentAsync(id);
+            var result = await _whiteHouseAppService.DeletePresidentAsync(id);
+            if(!result.Success)
+                return NotFound(result);
 
-            return Ok();
+            return Ok(result);
         }
     }
 }

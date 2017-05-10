@@ -15,7 +15,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         [Fact]
         public void Should_Resolve_Controller()
         {
-           ServiceProvider.GetService<CountryController>().ShouldNotBeNull();
+            ServiceProvider.GetService<CountryController>().ShouldNotBeNull();
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse>(
-                $"/{RouteConsts.Country}/0",
+                $"/{RouteConsts.Country}/-1",
                 HttpStatusCode.BadRequest
             );
 
@@ -76,7 +76,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_Country_When_Not_Exits_Return_Not_Found_Request()
+        public async Task Get_Country_When_Not_Exits_Return_Not_Found()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse>(
@@ -86,7 +86,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result, "Country not found");
+            Assert.NotNull(response);
         }
 
         [Fact]
@@ -161,6 +161,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             response.Result.ShouldBe("Invalid parameter: dto");
+        }
+
+        [Fact]
+        public async Task Put_Country_When_Not_Exits_Return_Not_Found_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse>(
+                $"/{RouteConsts.Country}/-1",
+                null,
+                HttpStatusCode.NotFound
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Country not found");
         }
 
         [Fact]

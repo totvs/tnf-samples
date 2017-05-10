@@ -22,7 +22,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             PresidentAddressMustHaveValue = 4,
             PresidentAddressComplementMustHaveValue = 5,
             PresidentAddressNumberMustHaveValue = 6,
-            CouldNotDeletePresident = 7
+            CouldNotFindPresident = 7
         }
     }
 }

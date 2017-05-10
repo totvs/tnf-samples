@@ -29,25 +29,18 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             _presidents = new ConcurrentDictionary<string, PresidentDto>(source);
         }
 
-        public Task<DtoResponseBase> DeletePresidentAsync(string id)
+        public Task<bool> DeletePresidentsAsync(PresidentDto president)
         {
-            _presidents.TryRemove(id, out PresidentDto presidentDto);
+            var result = _presidents.TryRemove(president.Id, out PresidentDto presidentDto);
 
-            return Task.FromResult(new DtoResponseBase());
+            return Task.FromResult(result);
         }
 
-        public Task DeletePresidentsAsync(PresidentDto president)
+        public Task<bool> DeletePresidentsAsync(string id)
         {
-            _presidents.TryRemove(president.Id, out PresidentDto presidentDto);
+            var result = _presidents.TryRemove(id, out PresidentDto presidentDto);
 
-            return Task.FromResult<object>(null);
-        }
-
-        public Task DeletePresidentsAsync(string id)
-        {
-            _presidents.TryRemove(id, out PresidentDto presidentDto);
-            
-            return Task.FromResult<object>(null);
+            return Task.FromResult(result);
         }
 
         public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)

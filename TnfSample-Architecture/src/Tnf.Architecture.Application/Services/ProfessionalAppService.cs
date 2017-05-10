@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Application.Services
 
         public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto dto) => _service.CreateProfessional(dto);
 
-        public void DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
+        public DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => _service.GetProfessional(keys);
 
@@ -30,7 +30,7 @@ namespace Tnf.Architecture.Application.Services
 
         public SpecialtyDto GetSpecialty(int id) => _service.GetSpecialty(id);
 
-        public void DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
+        public DtoResponseBase DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
 
         public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
 

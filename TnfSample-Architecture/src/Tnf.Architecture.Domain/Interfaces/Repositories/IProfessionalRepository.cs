@@ -11,7 +11,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
         ProfessionalDto GetProfessional(ProfessionalKeysDto keys);
         ProfessionalDto CreateProfessional(ProfessionalCreateDto entity);
         ProfessionalDto UpdateProfessional(ProfessionalDto dto);
-        void DeleteProfessional(ProfessionalKeysDto keys);
+        bool DeleteProfessional(ProfessionalKeysDto keys);
         void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto);
     }
 }

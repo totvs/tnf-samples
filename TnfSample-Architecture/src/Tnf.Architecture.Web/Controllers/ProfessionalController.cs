@@ -42,23 +42,23 @@ namespace Tnf.Architecture.Web.Controllers
 
             var result = _professionalAppService.GetProfessional(new ProfessionalKeysDto(professionalId, code));
             if (result == null)
-                return NotFound("Professional not found");
+                return NotFound(L("CouldNotFindProfessional"));
 
             return Ok(result);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]ProfessionalCreateDto dto)
+        public IActionResult Post([FromBody]ProfessionalCreateDto professional)
         {
-            if (dto == null)
-                return BadRequest($"Invalid parameter: {nameof(dto)}");
+            if (professional == null)
+                return BadRequest($"Invalid parameter: {nameof(professional)}");
 
-            var result = _professionalAppService.CreateProfessional(dto.MapTo<ProfessionalCreateDto>());
+            var result = _professionalAppService.CreateProfessional(professional.MapTo<ProfessionalCreateDto>());
             return Ok(result);
         }
 
         [HttpPut("{professionalId}/{code}")]
-        public IActionResult Put(decimal professionalId, Guid code, [FromBody]ProfessionalUpdateDto dto)
+        public IActionResult Put(decimal professionalId, Guid code, [FromBody]ProfessionalUpdateDto professional)
         {
             if (professionalId <= 0)
                 return BadRequest($"Invalid parameter: {nameof(professionalId)}");
@@ -66,13 +66,18 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
+            if (professional == null)
+                return BadRequest($"Invalid parameter: {nameof(professional)}");
+
             var updateParam = new ProfessionalDto();
             updateParam.ProfessionalId = professionalId;
             updateParam.Code = code;
 
-            updateParam = dto.MapTo(updateParam);
+            updateParam = professional.MapTo(updateParam);
 
             var result = _professionalAppService.UpdateProfessional(updateParam);
+            if (result.Data == null)
+                return NotFound(result);
 
             return Ok(result);
         }
@@ -86,9 +91,11 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
-            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
+            var result = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
+            if (!result.Success)
+                return NotFound(result);
 
-            return Ok();
+            return Ok(result);
         }
     }
 }

@@ -22,7 +22,8 @@ namespace Tnf.Architecture.Domain.Registration
             ProfessionalAddressComplementMustHaveValue = 5,
             ProfessionalAddressNumberMustHaveValue = 6,
             ProfessionalEmailMustHaveValue = 7,
-            ProfessionalPhoneMustHaveValue = 8
+            ProfessionalPhoneMustHaveValue = 8,
+            CouldNotFindProfessional = 9
         }
     }
 }

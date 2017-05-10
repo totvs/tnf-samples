@@ -55,7 +55,7 @@ namespace Tnf.Architecture.Application.Tests
                     .Returns(Task.FromResult(presidentsToInsert.ToList()));
 
                 instance.DeletePresidentsAsync(Arg.Any<string>())
-                    .Returns(Task.FromResult<object>(null));
+                    .Returns(Task.FromResult(true));
 
                 IocManager.IocContainer.Register(
                     Component
