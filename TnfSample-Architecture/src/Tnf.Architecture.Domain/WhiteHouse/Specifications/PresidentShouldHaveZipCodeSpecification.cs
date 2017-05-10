@@ -9,10 +9,11 @@ namespace Tnf.Architecture.Domain.WhiteHouse.Specifications
     {
         public override Expression<Func<President, bool>> ToExpression()
         {
-            return (p) => 
-                p.ZipCode != null && 
-                !string.IsNullOrWhiteSpace(p.ZipCode.Number) &&
-                p.ZipCode.Number.Length == ZipCode.Length;
+            return (p) =>
+                p.Address != null &&
+                p.Address.ZipCode != null &&
+                !string.IsNullOrWhiteSpace(p.Address.ZipCode.Number) &&
+                p.Address.ZipCode.Number.Length == ZipCode.Length;
         }
     }
 }

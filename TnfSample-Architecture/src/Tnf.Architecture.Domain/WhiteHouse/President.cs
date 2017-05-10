@@ -11,7 +11,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
         public const int MaxNameLength = 256;
 
         public string Name { get; internal set; }
-        public ZipCode ZipCode { get; internal set; }
+        public Address Address { get; internal set; }
 
         public enum Error
         {
@@ -19,6 +19,9 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             InvalidId = 1,
             PresidentNameMustHaveValue = 2,
             PresidentZipCodeMustHaveValue = 3,
+            PresidentAddressMustHaveValue = 4,
+            PresidentAddressComplementMustHaveValue = 5,
+            PresidentAddressNumberMustHaveValue = 6,
         }
     }
 }

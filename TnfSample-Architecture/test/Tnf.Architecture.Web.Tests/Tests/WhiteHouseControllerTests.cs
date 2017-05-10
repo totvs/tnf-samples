@@ -65,7 +65,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.NotNull(response);
             Assert.NotNull(response.Result.Id == "1");
             Assert.NotNull(response.Result.Name == "George Washington");
-            Assert.NotNull(response.Result.ZipCode.Number == "12345678");
+            Assert.NotNull(response.Result.Address.Number == "12345678");
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             {
                 Id = "7",
                 Name = "Lula",
-                ZipCode = new ZipCode("74125306")
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306"))
             };
 
             var presidents = new List<PresidentDto>() { presidentDto };
@@ -158,8 +158,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_President_With_Success()
         {
             //Arrange
-            var presidentDto = new PresidentDto("6", "Ronald Reagan", "85236417");
-
+            var presidentDto = new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
+            
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<PresidentDto>>(
                 $"{RouteConsts.WhiteHouse}/1",

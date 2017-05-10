@@ -6,6 +6,7 @@ using Tnf.Dto;
 using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -17,12 +18,12 @@ namespace Tnf.Architecture.Web.Tests.Mocks
         {
             var source = new Dictionary<string, PresidentDto>()
             {
-                { "1", new PresidentDto("1", "George Washington", "12345678") },
-                { "2", new PresidentDto("2", "Bill Clinton", "87654321") },
-                { "3", new PresidentDto("3", "Donald Trump", "12341234") },
-                { "4", new PresidentDto("4", "Thomas Jefferson", "56785678") },
-                { "5", new PresidentDto("5", "Abraham Lincoln", "14785236") },
-                { "6", new PresidentDto("6", "Ronald Reagan", "85236417") }
+                { "1", new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))) },
+                { "2", new PresidentDto("2", "Bill Clinton", new Address("Rua de teste", "123", "APT 12", new ZipCode("87654321"))) },
+                { "3", new PresidentDto("3", "Donald Trump", new Address("Rua de teste", "123", "APT 12", new ZipCode("12341234"))) },
+                { "4", new PresidentDto("4", "Thomas Jefferson", new Address("Rua de teste", "123", "APT 12", new ZipCode("56785678"))) },
+                { "5", new PresidentDto("5", "Abraham Lincoln", new Address("Rua de teste", "123", "APT 12", new ZipCode("14785236"))) },
+                { "6", new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("85236417"))) }
             };
 
             _presidents = new ConcurrentDictionary<string, PresidentDto>(source);
@@ -53,7 +54,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
         {
             var presidents = _presidents.Where(w =>
                 string.IsNullOrWhiteSpace(request.Name) || request.Name.Contains(w.Value.Name) &&
-                string.IsNullOrWhiteSpace(request.ZipCode) || request.ZipCode.Contains(w.Value.ZipCode.Number))
+                string.IsNullOrWhiteSpace(request.ZipCode) || request.ZipCode.Contains(w.Value.Address.ZipCode.Number))
                 .Select(s => s.Value)
                 .ToList();
 

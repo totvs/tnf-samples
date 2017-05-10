@@ -59,11 +59,12 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]CountryDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody]CountryDto dto)
         {
             if (dto == null)
                 return BadRequest($"Invalid parameter: {nameof(dto)}");
 
+            dto.Id = id;
             var result = await _countryAppService.Update(dto);
 
             return Ok(result);

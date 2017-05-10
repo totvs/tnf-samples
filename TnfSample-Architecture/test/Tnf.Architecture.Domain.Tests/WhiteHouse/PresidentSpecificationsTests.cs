@@ -56,7 +56,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new President()
             {
-                ZipCode = new ZipCode(zipCode)
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode(zipCode))
             });
 
             // Assert
@@ -75,7 +75,58 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
             // Act
             var isSatisfied = spec.IsSatisfiedBy(new President()
             {
-                ZipCode = new ZipCode(zipCode)
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode(zipCode))
+            });
+
+            // Assert
+            Assert.True(isSatisfied);
+        }
+
+        [Theory]
+        [InlineData("Rua do comercio")]
+        public void President_Should_Have_Address(string street)
+        {
+            // Arrange
+            var spec = new PresidentShouldHaveAddressSpecification();
+
+            // Act
+            var isSatisfied = spec.IsSatisfiedBy(new President()
+            {
+                Address = new Address(street, null, null, null)
+            });
+
+            // Assert
+            Assert.True(isSatisfied);
+        }
+
+        [Theory]
+        [InlineData("123")]
+        public void President_Should_Have_Address_Number(string number)
+        {
+            // Arrange
+            var spec = new PresidentShouldHaveAddressNumberSpecification();
+
+            // Act
+            var isSatisfied = spec.IsSatisfiedBy(new President()
+            {
+                Address = new Address(null, number, null, null)
+            });
+
+            // Assert
+            Assert.True(isSatisfied);
+        }
+
+        [Theory]
+        [InlineData("APT 123")]
+        public void President_Should_Have_Address_Complement(string complement)
+        {
+            // Arrange
+            var spec = new PresidentShouldHaveAddressComplementSpecification();
+
+            // Act
+            var isSatisfied = spec.IsSatisfiedBy(new President()
+            {
+                Address = new Address(null, null, complement, null)
             });
 
             // Assert
