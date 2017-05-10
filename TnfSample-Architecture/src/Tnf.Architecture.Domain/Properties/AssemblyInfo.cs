@@ -17,6 +17,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Tnf.Architecture.Domain.Tests")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Web.Tests")]
+[assembly: InternalsVisibleTo("Tnf.Architecture.Application.Tests")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("3bc7b394-4016-45df-926d-c8e25303a477")]

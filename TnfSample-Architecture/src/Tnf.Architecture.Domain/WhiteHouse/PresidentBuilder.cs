@@ -1,7 +1,6 @@
 ﻿using Tnf.Builder;
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Localization;
 using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
@@ -30,42 +29,46 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return this;
         }
 
-        public PresidentBuilder WithZipCode(ZipCode zipCode)
+        public PresidentBuilder WithAddress(Address address)
         {
-            Instance.ZipCode = zipCode;
+            Instance.Address = address;
             return this;
         }
 
-        public PresidentBuilder WithZipCode(string zipCode)
+        public PresidentBuilder WithAddress(string street, string number, string complement, string zipCode)
         {
-            Instance.ZipCode = new ZipCode(zipCode);
+            Instance.Address = new Address(street, number, complement, new ZipCode(zipCode));
+            return this;
+        }
+
+        public PresidentBuilder WithAddress(string street, string number, string complement, ZipCode zipCode)
+        {
+            Instance.Address = new Address(street, number, complement, zipCode);
             return this;
         }
 
         public override BuilderResponse<President> Build()
         {
             var shouldHaveName = new PresidentShouldHaveNameSpecification();
+            var shouldHaveAddress = new PresidentShouldHaveAddressSpecification();
+            var shouldHaveAddressNumber = new PresidentShouldHaveAddressNumberSpecification();
+            var shouldHaveAddressComplement = new PresidentShouldHaveAddressComplementSpecification();
             var shouldHaveZipCode = new PresidentShouldHaveZipCodeSpecification();
 
             if (!shouldHaveName.IsSatisfiedBy(Instance))
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName, 
-                    President.Error.PresidentNameMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentNameMustHaveValue);
 
-                Response.AddNotification(
-                    President.Error.PresidentNameMustHaveValue, notificationMessage);
-            }
+            if (!shouldHaveAddress.IsSatisfiedBy(Instance))
+                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressMustHaveValue);
+
+            if (!shouldHaveAddressNumber.IsSatisfiedBy(Instance))
+                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressNumberMustHaveValue);
+
+            if (!shouldHaveAddressComplement.IsSatisfiedBy(Instance))
+                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressComplementMustHaveValue);
 
             if (!shouldHaveZipCode.IsSatisfiedBy(Instance))
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    President.Error.PresidentZipCodeMustHaveValue);
-
-                Response.AddNotification(
-                   President.Error.PresidentZipCodeMustHaveValue, notificationMessage);
-            }
+                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentZipCodeMustHaveValue);
 
             return base.Build();
         }

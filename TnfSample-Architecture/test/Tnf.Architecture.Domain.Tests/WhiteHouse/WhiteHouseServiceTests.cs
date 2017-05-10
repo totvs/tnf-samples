@@ -11,6 +11,7 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
@@ -23,12 +24,12 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         {
             _whiteHouseRepository = Substitute.For<IWhiteHouseRepository>();
 
-            var presidentDto = new PresidentDto("1", "George Washington", "12345678");
+            var presidentDto = new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")));
 
             var presidentList = new List<PresidentDto>()
             {
                 presidentDto,
-                new PresidentDto("2", "Bill Clinton", "87654321")
+                new PresidentDto("2", "Bill Clinton", new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321")))
             };
 
             var presidentPaging = new PagingResponseDto<PresidentDto>(presidentList);
@@ -109,7 +110,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             // Act
             var responseBase = await _whiteHouseService.InsertPresidentAsync(new List<PresidentDto>()
             {
-                new PresidentDto("1", "George Washington", "12345678")
+                new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
             });
 
             // Assert
@@ -122,13 +123,14 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Insert_Not_Accept_Invalid_Presidents()
         {
             // Act
-            var responseBase = await _whiteHouseService.InsertPresidentAsync(new List<PresidentDto>() {
-                    new PresidentDto("1", null, "1234567890")
+            var responseBase = await _whiteHouseService.InsertPresidentAsync(new List<PresidentDto>()
+            {
+                    new PresidentDto("1", null, new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
             });
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
             Assert.Null(responseBase.Data);
         }
 
@@ -136,7 +138,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Update_Valid_Presidents()
         {
             // Act
-            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", "George Washington", "12345678"));
+            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             // Assert
             Assert.True(responseBase.Success);
@@ -147,11 +149,11 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Update_Not_Accept_Invalid_Presidents()
         {
             // Act
-            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", null, "1234567890"));
+            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", null, new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
         }
     }
 }

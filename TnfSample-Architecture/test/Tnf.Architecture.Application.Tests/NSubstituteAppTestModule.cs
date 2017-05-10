@@ -10,6 +10,8 @@ using Castle.MicroKernel.Registration;
 using Tnf.Reflection.Extensions;
 using Castle.Core.Logging;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Dto.ValueObjects;
+using System.Linq;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -35,7 +37,7 @@ namespace Tnf.Architecture.Application.Tests
             {
                 var instance = Substitute.For<IWhiteHouseRepository>();
 
-                var president = new PresidentDto("1", "New President", "55833479");
+                var president = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
                 var presidentsToInsert = new List<PresidentDto>() { president };
 
@@ -50,7 +52,7 @@ namespace Tnf.Architecture.Application.Tests
                     .Returns(Task.FromResult(presidentsToGetAll));
 
                 instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)
-                    .Returns(Task.FromResult(presidentsToInsert));
+                    .Returns(Task.FromResult(presidentsToInsert.ToList()));
 
                 instance.DeletePresidentsAsync(Arg.Any<string>())
                     .Returns(Task.FromResult<object>(null));

@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 var builder = new PresidentBuilder()
                    .WithId(item.Id)
                    .WithName(item.Name)
-                   .WithZipCode(item.ZipCode);
+                   .WithAddress(item.Address);
 
                 var build = builder.Build();
                 if (!build.Success)
@@ -77,12 +77,13 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             var builder = new PresidentBuilder()
                 .WithId(president.Id)
                 .WithName(president.Name)
-                .WithZipCode(president.ZipCode);
-            
+                .WithAddress(president.Address);
+
             var build = builder.Build();
             if (!build.Success)
                 response.AddNotifications(build.Notifications);
 
+            var response = builder.Build();
             if (response.Success)
                 response.Data = await Repository.UpdatePresidentsAsync(president);
 

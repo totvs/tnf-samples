@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Xunit;
+using System.Linq;
+using Tnf.Architecture.Domain.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -29,7 +31,7 @@ namespace Tnf.Architecture.Application.Tests
             // Arrange
             var listResponse = await _whiteHouseAppService.InsertPresidentAsync(new List<PresidentDto>()
             {
-                new PresidentDto("1", "New President", "12345678")
+                new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
             }, true);
 
             // Act
@@ -61,7 +63,7 @@ namespace Tnf.Architecture.Application.Tests
             // Act
             var response = await _whiteHouseAppService.InsertPresidentAsync(new List<PresidentDto>()
             {
-                new PresidentDto("1", "New President", "12345678")
+                new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
             }, true);
 
             // Assert
@@ -79,7 +81,11 @@ namespace Tnf.Architecture.Application.Tests
 
             // Assert
             Assert.False(response.Success);
-            Assert.Equal(response.Notifications.Count, 2);
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -115,7 +121,7 @@ namespace Tnf.Architecture.Application.Tests
             // Act
             var listResponse = await _whiteHouseAppService.InsertPresidentAsync(new List<PresidentDto>()
             {
-                new PresidentDto("1", "New President", "12345678")
+                new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
             }, true);
 
             Assert.True(listResponse.Success);
@@ -124,7 +130,7 @@ namespace Tnf.Architecture.Application.Tests
             var response = await _whiteHouseAppService.UpdatePresidentAsync(new PresidentDto(
                 listResponse.Data[0].Id,
                 listResponse.Data[0].Name,
-                listResponse.Data[0].ZipCode.Number));
+                listResponse.Data[0].Address));
 
             Assert.True(response.Success);
         }

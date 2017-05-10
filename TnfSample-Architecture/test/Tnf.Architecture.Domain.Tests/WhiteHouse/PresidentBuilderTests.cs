@@ -13,7 +13,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var builder = new PresidentBuilder()
                   .WithId("1")
                   .WithName("George Washington")
-                  .WithZipCode("99.999-999");
+                  .WithAddress("Rua de teste", "123", "APT 12", "99380000");
 
             // Act
             var build = builder.Build();
@@ -29,7 +29,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var builder = new PresidentBuilder()
                   .WithId("1")
                   .WithName(null)
-                  .WithZipCode("99.999-999");
+                  .WithAddress("Rua de teste", "123", "APT 12", "99380000");
 
             // Act
             var build = builder.Build();
@@ -46,7 +46,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var builder = new PresidentBuilder()
                   .WithId("1")
                   .WithName("George Washington")
-                  .WithZipCode("99.999-999-23");
+                  .WithAddress("Rua de teste", "123", "APT 12", "993800021120");
 
             // Act
             var build = builder.Build();

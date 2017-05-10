@@ -115,15 +115,15 @@ namespace Tnf.Architecture.Mapper.Tests
             {
                 Id = "1234",
                 Name = "George",
-                ZipCode = new ZipCode("12345678")
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
             PresidentPoco mappDto = dto.MapTo<PresidentPoco>();
 
             Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Name, mappDto.Name);
-            Assert.Equal(mappDto.ZipCode, mappDto.ZipCode);
+            Assert.Equal(dto.Id, mappDto.Id);
+            Assert.Equal(dto.Name, mappDto.Name);
+            Assert.Equal(dto.Address, mappDto.Address);
         }
     }
 }

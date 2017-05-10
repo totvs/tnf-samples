@@ -8,15 +8,15 @@ namespace Tnf.Architecture.Dto.WhiteHouse
         {
         }
 
-        public PresidentDto(string id, string name, string zipCode)
+        public PresidentDto(string id, string name, Address address)
         {
             Id = id;
             Name = name;
-            ZipCode = new ZipCode(zipCode);
+            Address = address;
         }
 
         public string Id { get; set; }
         public string Name { get; set; }
-        public ZipCode ZipCode { get; set; }
+        public Address Address { get; set; }
     }
 }

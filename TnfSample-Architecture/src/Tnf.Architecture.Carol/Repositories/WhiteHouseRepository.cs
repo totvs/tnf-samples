@@ -37,7 +37,7 @@ namespace Tnf.Architecture.Data.Repositories
                 .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)
                 .MustList((m) => m.TypeFilter()
                                   .MatchFilter(p => p.Name, request.Name)
-                                  .TermFilter(p => p.ZipCode, request.ZipCode));
+                                  .TermFilter(p => p.Address.ZipCode.Number, request.ZipCode));
 
             var resultData = await GetAllAsync(query);
 
@@ -52,7 +52,7 @@ namespace Tnf.Architecture.Data.Repositories
         {
             var presidentData = await GetAsync(id);
 
-            var president = new PresidentDto(presidentData.Id, presidentData.Name, presidentData.ZipCode);
+            var president = presidentData.MapTo<PresidentDto>();
 
             return president;
         }

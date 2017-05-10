@@ -61,6 +61,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (dto == null)
                 return BadRequest($"Invalid parameter: {nameof(dto)}");
 
+            dto.Id = id;
             var result = _professionalAppService.UpdateSpecialty(dto);
 
             return Ok(result);

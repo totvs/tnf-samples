@@ -31,12 +31,6 @@ namespace Tnf.Architecture.Domain.Registration
             return this;
         }
 
-        public ProfessionalBuilder GenerateProfessionalCode()
-        {
-            Instance.Code = Guid.NewGuid();
-            return this;
-        }
-
         public ProfessionalBuilder WithAddress(Address address)
         {
             Instance.Address = address;
@@ -67,12 +61,6 @@ namespace Tnf.Architecture.Domain.Registration
             return this;
         }
 
-        private void AddNotification(Professional.Error error)
-        {
-            var notificationMessage = LocalizationHelper.GetString(AppConsts.LocalizationSourceName, error);
-            Response.AddNotification(error, notificationMessage);
-        }
-
         public override BuilderResponse<Professional> Build()
         {
             var shouldHaveName = new ProfessionalShouldHaveNameSpecification();
@@ -84,28 +72,25 @@ namespace Tnf.Architecture.Domain.Registration
             var shouldHaveEmail = new ProfessionalShouldHaveEmailSpecification();
 
             if (!shouldHaveName.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalNameMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalNameMustHaveValue);
 
             if (!shouldHaveAddress.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalAddressMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalAddressMustHaveValue);
 
             if (!shouldHaveAddressNumber.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalAddressNumberMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalAddressNumberMustHaveValue);
 
             if (!shouldHaveAddressComplement.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalAddressComplementMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalAddressComplementMustHaveValue);
 
             if (!shouldHaveZipCode.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalZipCodeMustHaveValue);
-
-            if (!shouldHaveZipCode.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalZipCodeMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalZipCodeMustHaveValue);
 
             if (!shouldHavePhone.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalPhoneMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalPhoneMustHaveValue);
 
             if (!shouldHaveEmail.IsSatisfiedBy(Instance))
-                AddNotification(Professional.Error.ProfessionalEmailMustHaveValue);
+                AddNotification(AppConsts.LocalizationSourceName, Professional.Error.ProfessionalEmailMustHaveValue);
 
             return base.Build();
         }

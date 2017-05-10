@@ -6,6 +6,7 @@ using Tnf.Dto;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -30,7 +31,7 @@ namespace Tnf.Architecture.Application.Services
             var president = await _whiteHouserService.GetPresidentById(id);
 
             if (president != null)
-                president = new PresidentDto(president.Id, president.Name, president.ZipCode.Number);
+                president = president.MapTo<PresidentDto>();
 
             return president;
         }

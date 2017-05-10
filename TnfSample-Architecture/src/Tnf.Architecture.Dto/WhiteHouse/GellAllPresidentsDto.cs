@@ -1,4 +1,5 @@
 ﻿using Tnf.Architecture.Dto.Paging;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {

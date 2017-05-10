@@ -8,6 +8,10 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Data.Entities;
 using Tnf.Architecture.Dto.Helpers;
+using Tnf.Architecture.Dto.ValueObjects;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
@@ -102,8 +106,8 @@ namespace Tnf.Architecture.Mapper.Tests
             SpecialtyDto mappDto = poco.MapTo<SpecialtyDto>();
 
             Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Description, mappDto.Description);
+            Assert.Equal(mappDto.Id, poco.Id);
+            Assert.Equal(mappDto.Description, poco.Description);
         }
 
         [Fact]
@@ -113,15 +117,18 @@ namespace Tnf.Architecture.Mapper.Tests
             {
                 Id = "1234",
                 Name = "George",
-                ZipCode = "12345678"
+                Address = new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
             PresidentDto mappDto = poco.MapTo<PresidentDto>();
 
             Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Name, mappDto.Name);
-            Assert.Equal(mappDto.ZipCode, mappDto.ZipCode);
+            Assert.Equal(poco.Id, mappDto.Id);
+            Assert.Equal(poco.Name, mappDto.Name);
+            Assert.Equal(poco.Address.ZipCode.Number, mappDto.Address.ZipCode.Number);
+            Assert.Equal(poco.Address.Complement, mappDto.Address.Complement);
+            Assert.Equal(poco.Address.Number, mappDto.Address.Number);
+            Assert.Equal(poco.Address.Street, mappDto.Address.Street);
         }
     }
 }
