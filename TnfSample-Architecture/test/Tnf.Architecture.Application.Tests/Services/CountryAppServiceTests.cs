@@ -5,7 +5,7 @@ using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
 
-namespace Tnf.Architecture.Application.Tests.Registration
+namespace Tnf.Architecture.Application.Tests.Services
 {
     public class CountryAppServiceTests : EfCoreAppTestBase
     {
@@ -23,7 +23,19 @@ namespace Tnf.Architecture.Application.Tests.Registration
         }
 
         [Fact]
-        public async Task Paged_And_Sorted_Result_With_Sucess()
+        public async Task Should_Insert_Country_With_Success()
+        {
+            var result = await _countryAppService.Create(new CountryDto()
+            {
+                Id = 6,
+                Name = "Mexico"
+            });
+
+            result.Name.ShouldBe("Mexico");
+        }
+
+        [Fact]
+        public async Task Should_Get_All_Countries_With_Success()
         {
             var requestDto = new PagedAndSortedResultRequestDto();
 
@@ -39,7 +51,7 @@ namespace Tnf.Architecture.Application.Tests.Registration
         }
 
         [Fact]
-        public async Task Get_Return_Item_With_Sucess()
+        public async Task Should_Get_Country_With_Success()
         {
             var result = await _countryAppService.Get(new EntityDto<int>(1));
 
@@ -48,19 +60,7 @@ namespace Tnf.Architecture.Application.Tests.Registration
         }
 
         [Fact]
-        public async Task Create_Item_With_Sucess()
-        {
-            var result = await _countryAppService.Create(new CountryDto()
-            {
-                Id = 6,
-                Name = "Mexico"
-            });
-
-            result.Name.ShouldBe("Mexico");
-        }
-
-        [Fact]
-        public async Task Create_And_Update_Item_With_Sucess()
+        public async Task Should_Update_Country_With_Success()
         {
             var result = await _countryAppService.Create(new CountryDto()
             {
@@ -80,7 +80,7 @@ namespace Tnf.Architecture.Application.Tests.Registration
         }
 
         [Fact]
-        public async Task Delete_Item_With_Sucess()
+        public async Task Should_Delete_Country_With_Success()
         {
             var result = await _countryAppService.Create(new CountryDto()
             {
