@@ -50,7 +50,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Get_All_Presidents_With_Success()
         {
             // Arrange
-            var requestDto = new GellAllPresidentsDto();
+            var requestDto = new GetAllPresidentsDto();
 
             // Act
             var result = await _whiteHouseAppService.GetAllPresidents(requestDto);
@@ -104,11 +104,13 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             var response = await _whiteHouseAppService.UpdatePresidentAsync(new PresidentDto(
                 listResponse.Data[0].Id,
-                listResponse.Data[0].Name,
+                "Alter President",
                 listResponse.Data[0].Address));
 
             // Assert
             Assert.True(response.Success);
+            Assert.Empty(response.Notifications);
+            response.Data.Name.ShouldBe("Alter President");
         }
 
         [Fact]
@@ -140,7 +142,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Act
             var response = await _whiteHouseAppService.DeletePresidentAsync(listResponse.Data[0].Id);
 
-            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GellAllPresidentsDto());
+            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto());
 
             // Assert
             Assert.True(response.Success);

@@ -8,6 +8,11 @@ namespace Tnf.Architecture.Dto.Registration
         {
         }
 
+        public GetAllProfessionalsDto(int offset, int pageSize)
+            : base(offset, pageSize)
+        {
+        }
+
         public GetAllProfessionalsDto(int offset, int pageSize, string name)
             : base(offset, pageSize)
         {

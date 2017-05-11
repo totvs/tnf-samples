@@ -43,12 +43,12 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                $"{RouteConsts.WhiteHouse}",
+                $"{RouteConsts.WhiteHouse}?",
                 HttpStatusCode.BadRequest
                 );
 
             response.Success.ShouldBeTrue();
-            response.Result.ShouldBe($"Invalid parameter: pageSize");
+            response.Result.ShouldBe($"Invalid parameter: PageSize");
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
-                $"{RouteConsts.WhiteHouse}/1",
+                $"{RouteConsts.WhiteHouse}/6",
                 presidentDto,
                 HttpStatusCode.OK
             );
@@ -193,7 +193,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
-                $"{RouteConsts.WhiteHouse}/1",
+                $"{RouteConsts.WhiteHouse}/6",
                 new PresidentDto(),
                 HttpStatusCode.OK
             );

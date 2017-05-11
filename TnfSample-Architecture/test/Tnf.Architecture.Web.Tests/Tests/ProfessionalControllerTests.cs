@@ -191,15 +191,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
             response.Success.ShouldBeTrue();
             response.Result.Data.ProfessionalId.ShouldBe(2);
 
-            response.Result.Data.Name = "Rua alterada de teste";
-
             response.Result.Data.Specialties.Clear();
 
             var updateParam = new ProfessionalUpdateDto()
             {
                 Address = response.Result.Data.Address,
                 Email = response.Result.Data.Email,
-                Name = response.Result.Data.Name,
+                Name = "Nome Alterado Teste",
                 Phone = response.Result.Data.Phone
             };
 
@@ -212,7 +210,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             //Assert
             response.Success.ShouldBeTrue();
-            response.Result.Data.Name.ShouldBe("Rua alterada de teste");
+            response.Result.Data.Name.ShouldBe("Nome Alterado Teste");
         }
 
         [Fact]
@@ -246,9 +244,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
-                $"{RouteConsts.Professional}/%20/23",
-                new ProfessionalDto(),
+            var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<string>>(
+                $"{RouteConsts.Professional}/0/{Guid.Empty}",
+                new ProfessionalUpdateDto(),
                 HttpStatusCode.BadRequest
             );
 
@@ -257,9 +255,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.Equal(response.Result, "Invalid parameter: professionalId");
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
+            response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<string>>(
                 $"/{RouteConsts.Professional}/1/{Guid.Empty}",
-                new ProfessionalDto(),
+                new ProfessionalUpdateDto(),
                 HttpStatusCode.BadRequest
             );
 
@@ -304,7 +302,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Act
             var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
-                $"{RouteConsts.WhiteHouse}/99/{Guid.NewGuid()}",
+                $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound
             );
@@ -347,7 +345,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
-                $"{RouteConsts.WhiteHouse}/99",
+                $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );
 

@@ -8,6 +8,7 @@ using System.Linq;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.Registration;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -23,7 +24,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                 .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
-            
+
             if (dbEntity != null)
             {
                 dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
@@ -34,12 +35,19 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return dbEntity != null;
         }
 
-        public ProfessionalDto GetProfessional(ProfessionalKeysDto keys)
+        private ProfessionalPoco GetProfessionalPoco(ProfessionalKeysDto keys)
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                 .Include("ProfessionalSpecialties.Specialty")
                 .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+
+            return dbEntity;
+        }
+
+        public ProfessionalDto GetProfessional(ProfessionalKeysDto keys)
+        {
+            var dbEntity = GetProfessionalPoco(keys);
 
             return dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
         }
@@ -57,7 +65,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public ProfessionalDto UpdateProfessional(ProfessionalDto entity)
         {
-            var mappedEntity = entity.MapTo<ProfessionalPoco>();
+            var mappedEntity = GetProfessionalPoco(new ProfessionalKeysDto(entity.ProfessionalId, entity.Code));
+
+            entity.MapTo(mappedEntity);
 
             Context.Professionals.Update(mappedEntity);
 
@@ -88,10 +98,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)
         {
-            var dbProfessional = Context.Professionals
-                .Include(i => i.ProfessionalSpecialties)
-                .Include("ProfessionalSpecialties.Specialty")
-                .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+            var dbProfessional = GetProfessionalPoco(keys);
 
             if (dbProfessional != null)
             {
@@ -118,6 +125,14 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                     }
                 });
             }
+        }
+
+        public bool ExistsProfessional(ProfessionalKeysDto keys)
+        {
+            var dbEntity = Context.Professionals
+                .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
+
+            return dbEntity != null;
         }
     }
 }

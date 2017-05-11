@@ -68,7 +68,17 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(country)}");
 
             country.Id = id;
-            var result = await _countryAppService.Update(country);
+            CountryDto result = null;
+
+            try
+            {
+                result = await _countryAppService.Update(country);
+            }
+            catch (Exception)
+            {
+                //TODO: Estourar exceção quando não achar?
+            }
+
             if (result == null)
                 return NotFound(L("CouldNotFindCountry"));
 

@@ -195,13 +195,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
             //Arrange
             var specialtyDto = new SpecialtyDto()
             {
-                Id = 99,
+                Id = 10,
                 Description = "Cirurgia Torácica"
             };
 
             // Act
             var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
-                $"{RouteConsts.Specialty}/99",
+                $"{RouteConsts.Specialty}/10",
                 specialtyDto,
                 HttpStatusCode.NotFound
             );
@@ -216,13 +216,14 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.True(responseDelete.Success);
+            Assert.True(responseDelete.Result.Success);
         }
 
         [Fact]
@@ -244,7 +245,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
-                $"{RouteConsts.Specialty}/99",
+                $"{RouteConsts.Specialty}/10",
                 HttpStatusCode.NotFound
             );
 

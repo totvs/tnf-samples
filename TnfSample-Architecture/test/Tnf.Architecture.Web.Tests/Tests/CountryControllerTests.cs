@@ -123,12 +123,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            response.Result.ShouldBe("Invalid parameter: dto");
+            response.Result.ShouldBe("Invalid parameter: country");
         }
 
         [Fact]
         public async Task Put_Country_With_Success()
         {
+            // Arrange
             var countryDto = new CountryDto()
             {
                 Id = 4,
@@ -152,7 +153,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Country_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse>(
+            var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse<string>>(
                 $"/{RouteConsts.Country}/%20",
                 null,
                 HttpStatusCode.BadRequest
@@ -160,22 +161,28 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            response.Result.ShouldBe("Invalid parameter: dto");
+            response.Result.ShouldBe("Invalid parameter: id");
         }
 
         [Fact]
         public async Task Put_Country_When_Not_Exits_Return_Not_Found_Request()
         {
+            // Arrange
+            var countryDto = new CountryDto()
+            {
+                Id = 99,
+                Name = "Canada"
+            };
+
             // Act
-            var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse>(
-                $"/{RouteConsts.Country}/-1",
-                null,
+            var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse<string>>(
+                $"/{RouteConsts.Country}/99",
+                countryDto,
                 HttpStatusCode.NotFound
             );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result, "Country not found");
         }
 
         [Fact]

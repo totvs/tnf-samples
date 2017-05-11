@@ -38,6 +38,7 @@ namespace Tnf.Architecture.Application.Tests
                 var instance = Substitute.For<IWhiteHouseRepository>();
 
                 var president = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
+                var alterPresident = new PresidentDto("1", "Alter President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
                 var presidentsToInsert = new List<PresidentDto>() { president };
 
@@ -48,13 +49,16 @@ namespace Tnf.Architecture.Application.Tests
                 instance.GetPresidentById("1")
                     .Returns(Task.FromResult(president));
 
-                instance.GetAllPresidents(Arg.Any<GellAllPresidentsDto>())
+                instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                     .Returns(Task.FromResult(presidentsToGetAll));
 
                 instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)
                     .Returns(Task.FromResult(presidentsToInsert.ToList()));
 
-                instance.DeletePresidentsAsync(Arg.Any<string>())
+                instance.UpdatePresidentsAsync(Arg.Is<PresidentDto>(p => p.Id == "1"))
+                    .Returns(Task.FromResult(alterPresident));
+
+                instance.DeletePresidentsAsync("1")
                     .Returns(Task.FromResult(true));
 
                 IocManager.IocContainer.Register(

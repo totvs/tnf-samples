@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Application.Services
         public async Task<DtoResponseBase> DeletePresidentAsync(string id)
             => await _whiteHouserService.DeletePresidentAsync(id);
 
-        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
+        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
             => await _whiteHouserService.GetAllPresidents(request);
 
         public async Task<PresidentDto> GetPresidentById(string id)

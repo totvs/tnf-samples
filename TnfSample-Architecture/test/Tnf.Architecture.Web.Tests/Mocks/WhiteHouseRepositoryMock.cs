@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
+        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var presidents = _presidents.Where(w =>
                 string.IsNullOrWhiteSpace(request.Name) || request.Name.Contains(w.Value.Name) &&
@@ -87,8 +87,11 @@ namespace Tnf.Architecture.Web.Tests.Mocks
         public Task<PresidentDto> UpdatePresidentsAsync(PresidentDto president)
         {
             var deleted = _presidents.TryRemove(president.Id, out PresidentDto removedDto);
+
             if (deleted)
                 _presidents.TryAdd(president.Id, president);
+            else
+                president = null;
 
             return Task.FromResult(president);
         }

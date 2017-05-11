@@ -27,7 +27,7 @@ namespace Tnf.Architecture.Data.Repositories
             return await DeleteAsync(president.Id);
         }
 
-        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
+        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var response = new PagingResponseDto<PresidentDto>();
 

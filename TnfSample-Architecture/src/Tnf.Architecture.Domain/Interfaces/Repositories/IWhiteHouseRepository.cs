@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IWhiteHouseRepository : IRepository
     {
-        Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request);
+        Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
         Task<PresidentDto> GetPresidentById(string id);
         Task<List<PresidentDto>> InsertPresidentsAsync(List<PresidentDto> presidents, bool sync = false);
         Task<PresidentDto> UpdatePresidentsAsync(PresidentDto president);

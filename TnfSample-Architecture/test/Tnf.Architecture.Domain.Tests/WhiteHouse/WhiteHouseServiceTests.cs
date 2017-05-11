@@ -34,19 +34,19 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 
             var presidentPaging = new PagingResponseDto<PresidentDto>(presidentList);
 
-            _whiteHouseRepository.GetAllPresidents(Arg.Any<GellAllPresidentsDto>())
+            _whiteHouseRepository.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                 .Returns(Task.FromResult(presidentPaging));
 
-            _whiteHouseRepository.GetPresidentById(Arg.Any<string>())
+            _whiteHouseRepository.GetPresidentById(Arg.Is("1"))
                 .Returns(Task.FromResult(presidentDto));
 
             _whiteHouseRepository.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>())
                 .Returns(Task.FromResult(presidentList));
 
-            _whiteHouseRepository.UpdatePresidentsAsync(Arg.Any<PresidentDto>())
+            _whiteHouseRepository.UpdatePresidentsAsync(Arg.Is<PresidentDto>(p => p.Id == "1"))
                 .Returns(Task.FromResult(presidentDto));
 
-            _whiteHouseRepository.DeletePresidentsAsync(Arg.Any<string>())
+            _whiteHouseRepository.DeletePresidentsAsync(Arg.Is("1"))
                 .Returns(Task.FromResult(true));
 
             _whiteHouseService = new WhiteHouseService(_whiteHouseRepository, EventBus);
@@ -62,14 +62,14 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Return_All_Values()
         {
             // Arrange
-            var requestDto = new GellAllPresidentsDto(0, 2);
+            var requestDto = new GetAllPresidentsDto(0, 2);
 
             // Act
             var allPresidents = await _whiteHouseService.GetAllPresidents(requestDto);
 
             // Assert
             Assert.True(allPresidents.Success);
-            Assert.False(allPresidents.Notifications.Any());
+            Assert.Empty(allPresidents.Notifications);
             Assert.True(allPresidents.Data.Count == 2);
         }
 
@@ -85,6 +85,16 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         }
 
         [Fact]
+        public async Task WhiteHouse_Service_Not_Return_Non_Existing_President()
+        {
+            // Act
+            var president = await _whiteHouseService.GetPresidentById("99");
+
+            // Assert
+            Assert.Null(president);
+        }
+
+        [Fact]
         public async Task WhiteHouse_Service_Delete_President()
         {
             // Act
@@ -92,6 +102,18 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 
             // Assert
             Assert.True(response.Success);
+            Assert.Empty(response.Notifications);
+        }
+
+        [Fact]
+        public async Task WhiteHouse_Service_Delete_Not_Accept_Non_Existing_President()
+        {
+            // Act
+            var response = await _whiteHouseService.DeletePresidentAsync("99");
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
         [Fact]
@@ -115,7 +137,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 
             // Assert
             Assert.True(responseBase.Success);
-            Assert.False(responseBase.Notifications.Any());
+            Assert.Empty(responseBase.Notifications);
             Assert.True(responseBase.Data.Count == 2);
         }
 
@@ -125,35 +147,56 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             // Act
             var responseBase = await _whiteHouseService.InsertPresidentAsync(new List<PresidentDto>()
             {
-                    new PresidentDto("1", null, new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")))
+                    new PresidentDto()
             });
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
             Assert.Null(responseBase.Data);
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
-        public async Task WhiteHouse_Service_Update_Valid_Presidents()
+        public async Task WhiteHouse_Service_Update_Valid_President()
         {
             // Act
             var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             // Assert
             Assert.True(responseBase.Success);
-            Assert.False(responseBase.Notifications.Any());
+            Assert.Empty(responseBase.Notifications);
+            Assert.True(responseBase.Data.Name == "George Washington");
         }
 
         [Fact]
-        public async Task WhiteHouse_Service_Update_Not_Accept_Invalid_Presidents()
+        public async Task WhiteHouse_Service_Update_Not_Accept_Invalid_President()
         {
             // Act
-            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("1", null, new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
+            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto());
 
             // Assert
             Assert.False(responseBase.Success);
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
             Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public async Task WhiteHouse_Service_Update_Not_Accept_Non_Existing_President()
+        {
+            // Act
+            var responseBase = await _whiteHouseService.UpdatePresidentAsync(new PresidentDto("99", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
+
+            // Assert
+            Assert.False(responseBase.Success);
+            Assert.Null(responseBase.Data);
+            Assert.True(responseBase.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
     }
 }

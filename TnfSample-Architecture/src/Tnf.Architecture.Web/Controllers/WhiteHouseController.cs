@@ -18,7 +18,7 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Get(GellAllPresidentsDto requestDto)
+        public async Task<IActionResult> Get(GetAllPresidentsDto requestDto)
         {
             if (requestDto == null)
                 return BadRequest($"Invalid parameter: {nameof(requestDto)}");

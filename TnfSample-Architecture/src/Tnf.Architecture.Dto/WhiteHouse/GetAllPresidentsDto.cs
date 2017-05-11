@@ -1,20 +1,20 @@
 ﻿using Tnf.Architecture.Dto.Paging;
-using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {
-    public class GellAllPresidentsDto : PagingRequestDto
+    public class GetAllPresidentsDto : PagingRequestDto
     {
-        public GellAllPresidentsDto()
+        public GetAllPresidentsDto()
+            :base()
         {
         }
 
-        public GellAllPresidentsDto(int offset, int pageSize)
+        public GetAllPresidentsDto(int offset, int pageSize)
             : base(offset, pageSize)
         {
         }
 
-        public GellAllPresidentsDto(int offset, int pageSize, string name, string zipCode)
+        public GetAllPresidentsDto(int offset, int pageSize, string name, string zipCode)
             : base(offset, pageSize)
         {
             Name = name;

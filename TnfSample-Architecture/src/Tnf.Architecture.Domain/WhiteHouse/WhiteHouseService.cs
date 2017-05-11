@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return result;
         }
 
-        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GellAllPresidentsDto request)
+        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
             return Repository.GetAllPresidents(request);
         }
@@ -90,18 +90,21 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
             var build = builder.Build();
             if (!build.Success)
+            {
                 response.AddNotifications(build.Notifications);
+                response.Data = new PresidentDto();
+            }
 
             if (response.Success)
             {
                 response.Data = await Repository.UpdatePresidentsAsync(president);
 
-                if(response.Data == null)
+                if (response.Data == null)
                 {
                     var notificationMessage = LocalizationHelper.GetString(
                         AppConsts.LocalizationSourceName,
                         President.Error.CouldNotFindPresident);
-                    
+
                     response.AddNotification(new Notification(President.Error.CouldNotFindPresident, notificationMessage));
                 }
             }

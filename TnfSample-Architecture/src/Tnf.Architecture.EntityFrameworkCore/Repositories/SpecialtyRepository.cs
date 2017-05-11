@@ -27,20 +27,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return dto;
         }
 
-        public bool DeleteSpecialty(int id)
-        {
-            var success = false;
-            try
-            {
-                base.Delete(id);
-            }
-            catch (Exception)
-            {
-                //TODO: Estourar exceção quando não achar?
-            }
+        public void DeleteSpecialty(int id) => base.Delete(id);
 
-            return success;
-        }
+        public bool ExistsSpecialty(int id) => base.Count(s => s.Id == id) > 0;
 
         public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
@@ -61,15 +50,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public SpecialtyDto GetSpecialty(int id)
         {
             SpecialtyDto specialty = null;
-            try
-            {
-                var dbEntity = base.Get(id);
+
+            var dbEntity = base.Get(id);
+            if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
-            }
-            catch (Exception)
-            {
-                //TODO: Estourar exceção quando não achar?
-            }
 
             return specialty;
         }

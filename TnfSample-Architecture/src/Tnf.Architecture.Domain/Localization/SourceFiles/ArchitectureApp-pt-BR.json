@@ -13,11 +13,8 @@
     "ProfessionalZipCodeMustHaveValue": "Um professional deve ter um CEP",
     "SpecialtyDescriptionMustHaveValue": "Uma especialidade deve ter uma descrição",
     "CouldNotFindPresident": "Não foi possível encontrar o Presidente",
-
     "CouldNotFindCountry": "Não foi possível encontrar o País",
-
     "CouldNotFindSpecialty": "Não foi possível encontrar a Especialidade",
-
     "CouldNotFindProfessional": "Não foi possível encontrar o Profissional"
   }
 }

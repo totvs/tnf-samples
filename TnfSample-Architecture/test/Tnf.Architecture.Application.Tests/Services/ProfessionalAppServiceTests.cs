@@ -123,14 +123,14 @@ namespace Tnf.Architecture.Application.Tests.Services
             result.Success.ShouldBeTrue();
             result.Data.ProfessionalId.ShouldBe(2);
 
-            result.Data.Name = "Rua alterada de teste";
+            result.Data.Name = "Nome Alterado Teste";
 
             result.Data.Specialties.Clear();
             result = _professionalAppService.UpdateProfessional(result.Data);
 
             //Assert
             result.Success.ShouldBeTrue();
-            result.Data.Name.ShouldBe("Rua alterada de teste");
+            result.Data.Name.ShouldBe("Nome Alterado Teste");
 
             var professional = _professionalAppService.GetProfessional(new ProfessionalKeysDto(result.Data.ProfessionalId, result.Data.Code));
 
@@ -317,14 +317,25 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public void Should_Delete_Specialty_With_Success()
         {
-            //Act
-            var response = _professionalAppService.DeleteSpecialty(1);
+            //Arrange
+            var specialtyDto = new SpecialtyDto()
+            {
+                Id = 2,
+                Description = "Cirurgia Geral"
+            };
 
-            var count = _professionalAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
+            //Act
+            var result = _professionalAppService.CreateSpecialty(specialtyDto);
+
+            //Assert
+            result.Success.ShouldBeTrue();
+            result.Data.Id.ShouldBe(2);
+
+            //Act
+            var response = _professionalAppService.DeleteSpecialty(2);
 
             //Assert
             Assert.True(response.Success);
-            count.Data.ShouldBeEmpty();
         }
 
         [Fact]

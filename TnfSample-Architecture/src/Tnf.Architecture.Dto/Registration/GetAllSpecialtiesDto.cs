@@ -8,6 +8,11 @@ namespace Tnf.Architecture.Dto.Registration
         {
         }
 
+        public GetAllSpecialtiesDto(int offset, int pageSize)
+            : base(offset, pageSize)
+        {
+        }
+
         public GetAllSpecialtiesDto(int offset, int pageSize, string description)
             : base(offset, pageSize)
         {

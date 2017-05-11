@@ -13,11 +13,8 @@
     "ProfessionalZipCodeMustHaveValue": "A professional must have a zip code",
     "SpecialtyDescriptionMustHaveValue": "A specialty must have a name",
     "CouldNotFindPresident": "Could not find President",
-
     "CouldNotFindCountry": "Could not find Country",
-
     "CouldNotFindSpecialty": "Could not find Specialty",
-
     "CouldNotFindProfessional": "Could not find Professional"
   }
 }
