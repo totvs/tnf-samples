@@ -12,11 +12,5 @@ namespace Tnf.Architecture.Application.Interfaces
         DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto dto);
         DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto);
         DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys);
-
-        PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
-        SpecialtyDto GetSpecialty(int id);
-        DtoResponseBase DeleteSpecialty(int id);
-        DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto);
-        DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto);
     }
 }

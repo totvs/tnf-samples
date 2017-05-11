@@ -25,15 +25,5 @@ namespace Tnf.Architecture.Application.Services
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => _service.GetProfessional(keys);
 
         public DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
-
-        public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _service.GetAllSpecialties(request);
-
-        public SpecialtyDto GetSpecialty(int id) => _service.GetSpecialty(id);
-
-        public DtoResponseBase DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
-
-        public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
-
-        public DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
     }
 }

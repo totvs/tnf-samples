@@ -10,12 +10,9 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalService : DomainService<IProfessionalRepository>, IProfessionalService
     {
-        private readonly ISpecialtyRepository _specialtyRepository;
-
-        public ProfessionalService(IProfessionalRepository repository, ISpecialtyRepository professionalSpecialtyRepository)
+        public ProfessionalService(IProfessionalRepository repository)
             : base(repository)
         {
-            _specialtyRepository = professionalSpecialtyRepository;
         }
 
         public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
@@ -101,91 +98,6 @@ namespace Tnf.Architecture.Domain.Registration
                         Professional.Error.CouldNotFindProfessional);
 
                     response.AddNotification(new Notification(Professional.Error.CouldNotFindProfessional, notificationMessage));
-                }
-            }
-
-            return response;
-        }
-
-
-
-        public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _specialtyRepository.GetAllSpecialties(request);
-
-        public SpecialtyDto GetSpecialty(int id)
-        {
-            SpecialtyDto result = null;
-
-            if (_specialtyRepository.ExistsSpecialty(id))
-                result = _specialtyRepository.GetSpecialty(id);
-
-            return result;
-        }
-
-        public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto)
-        {
-            var response = new DtoResponseBase<SpecialtyDto>();
-
-            var builder = new SpecialtyBuilder()
-                   .WithDescription(dto.Description);
-
-            var build = builder.Build();
-            if (!build.Success)
-                response.AddNotifications(build.Notifications);
-
-            if (response.Success)
-                response.Data = _specialtyRepository.CreateSpecialty(dto);
-
-            return response;
-        }
-
-        public DtoResponseBase DeleteSpecialty(int id)
-        {
-            var result = new DtoResponseBase();
-
-            if (_specialtyRepository.ExistsSpecialty(id))
-            {
-                _specialtyRepository.DeleteSpecialty(id);
-            }
-            else
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Specialty.Error.CouldNotFindSpecialty);
-
-                result.AddNotification(new Notification(Specialty.Error.CouldNotFindSpecialty, notificationMessage));
-            }
-
-            return result;
-        }
-
-        public DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto)
-        {
-            var response = new DtoResponseBase<SpecialtyDto>();
-
-            var builder = new SpecialtyBuilder()
-                   .WithDescription(dto.Description);
-
-            var build = builder.Build();
-            if (!build.Success)
-            {
-                response.AddNotifications(build.Notifications);
-                response.Data = new SpecialtyDto();
-            }
-
-            if (response.Success)
-            {
-                if (_specialtyRepository.ExistsSpecialty(dto.Id))
-                {
-                    response.Data = _specialtyRepository.UpdateSpecialty(dto);
-                }
-                else
-                {
-                    response.Data = null;
-                    var notificationMessage = LocalizationHelper.GetString(
-                        AppConsts.LocalizationSourceName,
-                        Specialty.Error.CouldNotFindSpecialty);
-
-                    response.AddNotification(new Notification(Specialty.Error.CouldNotFindSpecialty, notificationMessage));
                 }
             }
 

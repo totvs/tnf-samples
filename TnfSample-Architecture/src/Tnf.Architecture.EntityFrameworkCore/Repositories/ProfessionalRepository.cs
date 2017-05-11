@@ -39,7 +39,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                .Include("ProfessionalSpecialties.Specialty")
+                    .ThenInclude(i => i.Specialty)
                 .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
             return dbEntity;

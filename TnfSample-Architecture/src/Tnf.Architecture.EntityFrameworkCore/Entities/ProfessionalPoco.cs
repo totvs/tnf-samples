@@ -22,6 +22,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
         public string ZipCode { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public virtual List<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
+        public List<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
     }
 }

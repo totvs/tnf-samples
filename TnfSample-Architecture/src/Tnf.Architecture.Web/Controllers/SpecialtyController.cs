@@ -8,11 +8,11 @@ namespace Tnf.Architecture.Web.Controllers
     [Route(RouteConsts.Specialty)]
     public class SpecialtyController : ArchitectureControllerBase
     {
-        private readonly IProfessionalAppService _professionalAppService;
+        private readonly ISpecialtyAppService _specialtyAppService;
 
-        public SpecialtyController(IProfessionalAppService professionalAppService)
+        public SpecialtyController(ISpecialtyAppService specialtyAppService)
         {
-            _professionalAppService = professionalAppService;
+            _specialtyAppService = specialtyAppService;
         }
 
         [HttpGet("")]
@@ -24,7 +24,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (requestDto.PageSize <= 0)
                 return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
 
-            var response = _professionalAppService.GetAllSpecialties(requestDto);
+            var response = _specialtyAppService.GetAllSpecialties(requestDto);
 
             return Ok(response);
         }
@@ -35,7 +35,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var specialty = _professionalAppService.GetSpecialty(id);
+            var specialty = _specialtyAppService.GetSpecialty(id);
             if (specialty == null)
                 return NotFound(L("CouldNotFindSpecialty"));
 
@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (specialty == null)
                 return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
-            var result = _professionalAppService.CreateSpecialty(specialty);
+            var result = _specialtyAppService.CreateSpecialty(specialty);
             return Ok(result);
         }
 
@@ -62,7 +62,7 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
             specialty.Id = id;
-            var result = _professionalAppService.UpdateSpecialty(specialty);
+            var result = _specialtyAppService.UpdateSpecialty(specialty);
             if (result.Data == null)
                 return NotFound(result);
 
@@ -75,7 +75,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var result = _professionalAppService.DeleteSpecialty(id);
+            var result = _specialtyAppService.DeleteSpecialty(id);
             if (!result.Success)
                 return NotFound(result);
 

@@ -16,7 +16,6 @@ namespace Tnf.Architecture.Application.Tests.Services
     {
         private readonly IProfessionalAppService _professionalAppService;
         private readonly ProfessionalPoco _professionalPoco;
-        private readonly SpecialtyPoco _specialtyPoco;
 
         public ProfessionalAppServiceTests()
         {
@@ -35,16 +34,11 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             // Setup
-            UsingDbContext<LegacyDbContext>(context => context.Professionals.Add(_professionalPoco));
-
-            _specialtyPoco = new SpecialtyPoco()
+            UsingDbContext<LegacyDbContext>(context =>
             {
-                Id = 1,
-                Description = "Anestesiologia"
-            };
-
-            // Setup
-            UsingDbContext<LegacyDbContext>(context => context.Specialties.Add(_specialtyPoco));
+                context.Professionals.Add(_professionalPoco);
+                context.Specialties.Add(new SpecialtyPoco() { Id = 1, Description = "Anestesiologia" });                
+            });
         }
 
         [Fact]
@@ -206,147 +200,6 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.False(response.Success);
             Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
-        }
-
-
-
-        [Fact]
-        public void Should_Get_All_Specialties_With_Success()
-        {
-            //Act
-            var count = _professionalAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
-
-            //Assert
-            count.Total.ShouldBe(1);
-        }
-
-        [Fact]
-        public void Should_Insert_Specialty_With_Success()
-        {
-            //Arrange
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 2,
-                Description = "Cirurgia Geral"
-            };
-
-            //Act
-            var result = _professionalAppService.CreateSpecialty(specialtyDto);
-
-            //Assert
-            result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
-        }
-
-        [Fact]
-        public void Should_Insert_Specialty_With_Error()
-        {
-            // Act
-            var response = _professionalAppService.CreateSpecialty(new SpecialtyDto());
-
-            // Assert
-            Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
-        }
-
-        [Fact]
-        public void Should_Update_Specialty_With_Success()
-        {
-            //Arrange
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 2,
-                Description = "Cirurgia Geral"
-            };
-
-            //Act
-            var result = _professionalAppService.CreateSpecialty(specialtyDto);
-
-            //Assert
-            result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
-
-            result.Data.Description = "Cirurgia Vascular";
-
-            result = _professionalAppService.UpdateSpecialty(result.Data);
-
-            //Assert
-            result.Success.ShouldBeTrue();
-            result.Data.Description.ShouldBe("Cirurgia Vascular");
-        }
-
-        [Fact]
-        public void Should_Update_Specialty_With_Error()
-        {
-            // Arrange
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 99,
-                Description = "Cirurgia Geral"
-            };
-
-            //Act
-            var response = _professionalAppService.UpdateSpecialty(specialtyDto);
-
-            // Assert
-            Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
-        }
-
-        [Fact]
-        public void Should_Get_Specialty_With_Success()
-        {
-            //Act
-            var result = _professionalAppService.GetSpecialty(1);
-
-            //Assert
-            result.Id.ShouldBe(1);
-            result.Description.ShouldBe(_specialtyPoco.Description);
-        }
-
-        [Fact]
-        public void Should_Get_Specialty_With_Error()
-        {
-            // Act
-            var result = _professionalAppService.GetSpecialty(99);
-
-            // Assert
-            result.ShouldBeNull();
-        }
-
-        [Fact]
-        public void Should_Delete_Specialty_With_Success()
-        {
-            //Arrange
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 2,
-                Description = "Cirurgia Geral"
-            };
-
-            //Act
-            var result = _professionalAppService.CreateSpecialty(specialtyDto);
-
-            //Assert
-            result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
-
-            //Act
-            var response = _professionalAppService.DeleteSpecialty(2);
-
-            //Assert
-            Assert.True(response.Success);
-        }
-
-        [Fact]
-        public void Should_Delete_Specialty_With_Error()
-        {
-            // Act
-            var response = _professionalAppService.DeleteSpecialty(99);
-
-            // Assert
-            Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }
 }

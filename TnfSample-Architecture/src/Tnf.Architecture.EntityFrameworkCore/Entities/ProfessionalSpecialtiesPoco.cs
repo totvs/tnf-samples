@@ -7,8 +7,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
     {
         public decimal ProfessionalId { get; set; }
         public Guid Code { get; set; }
-        public virtual ProfessionalPoco Professional { get; set; }
+        public ProfessionalPoco Professional { get; set; }
         public int SpecialtyId { get; set; }
-        public virtual SpecialtyPoco Specialty { get; set; }
+        public SpecialtyPoco Specialty { get; set; }
     }
 }
