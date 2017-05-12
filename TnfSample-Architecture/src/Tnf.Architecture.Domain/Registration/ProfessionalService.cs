@@ -19,7 +19,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => Repository.GetProfessional(keys);
 
-        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto entity)
+        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalDto entity)
         {
             var response = new DtoResponseBase<ProfessionalDto>();
 

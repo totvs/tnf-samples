@@ -55,7 +55,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalCreateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
@@ -80,7 +80,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.CreateProfessional(new ProfessionalCreateDto());
+            var response = _professionalAppService.CreateProfessional(new ProfessionalDto());
 
             // Assert
             Assert.False(response.Success);
@@ -97,7 +97,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalCreateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),

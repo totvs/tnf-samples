@@ -48,17 +48,17 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]ProfessionalCreateDto professional)
+        public IActionResult Post([FromBody]ProfessionalDto professional)
         {
             if (professional == null)
                 return BadRequest($"Invalid parameter: {nameof(professional)}");
 
-            var result = _professionalAppService.CreateProfessional(professional.MapTo<ProfessionalCreateDto>());
+            var result = _professionalAppService.CreateProfessional(professional);
             return Ok(result);
         }
 
         [HttpPut("{professionalId}/{code}")]
-        public IActionResult Put(decimal professionalId, Guid code, [FromBody]ProfessionalUpdateDto professional)
+        public IActionResult Put(decimal professionalId, Guid code, [FromBody]ProfessionalDto professional)
         {
             if (professionalId <= 0)
                 return BadRequest($"Invalid parameter: {nameof(professionalId)}");
@@ -69,13 +69,10 @@ namespace Tnf.Architecture.Web.Controllers
             if (professional == null)
                 return BadRequest($"Invalid parameter: {nameof(professional)}");
 
-            var updateParam = new ProfessionalDto();
-            updateParam.ProfessionalId = professionalId;
-            updateParam.Code = code;
+            professional.ProfessionalId = professionalId;
+            professional.Code = code;
 
-            updateParam = professional.MapTo(updateParam);
-
-            var result = _professionalAppService.UpdateProfessional(updateParam);
+            var result = _professionalAppService.UpdateProfessional(professional);
             if (result.Data == null)
                 return NotFound(result);
 

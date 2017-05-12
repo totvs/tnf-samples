@@ -114,7 +114,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalCreateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 1,
                 Address = new Address("Rua do comercio", "123", "APT 123", new ZipCode("99888777")),
@@ -124,7 +124,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalCreateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -143,10 +143,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_Empty_Professional_And_Return_Notifications()
         {
             //Arrange
-            var professionalDto = new ProfessionalCreateDto();
+            var professionalDto = new ProfessionalDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalCreateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -167,7 +167,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         [Fact]
         public async Task Post_Professional_Should_Be_Insert_And_Update_Item()
         {
-            var professionalDto = new ProfessionalCreateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
@@ -181,7 +181,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalCreateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -193,7 +193,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             response.Result.Data.Specialties.Clear();
 
-            var updateParam = new ProfessionalUpdateDto()
+            var updateParam = new ProfessionalDto()
             {
                 Address = response.Result.Data.Address,
                 Email = response.Result.Data.Email,
@@ -202,7 +202,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/2/{response.Result.Data.Code}",
                 updateParam,
                 HttpStatusCode.OK
@@ -217,7 +217,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalUpdateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 Address = new Address("Rua do comercio", "123", "APT 123", new ZipCode("99888777")),
                 Email = "email@email.com",
@@ -226,7 +226,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 professionalDto,
                 HttpStatusCode.OK
@@ -244,9 +244,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<string>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
                 $"{RouteConsts.Professional}/0/{Guid.Empty}",
-                new ProfessionalUpdateDto(),
+                new ProfessionalDto(),
                 HttpStatusCode.BadRequest
             );
 
@@ -255,9 +255,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.Equal(response.Result, "Invalid parameter: professionalId");
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<string>>(
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
                 $"/{RouteConsts.Professional}/1/{Guid.Empty}",
-                new ProfessionalUpdateDto(),
+                new ProfessionalDto(),
                 HttpStatusCode.BadRequest
             );
 
@@ -292,7 +292,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Professional_When_Not_Exists_Return_Notifications()
         {
             //Arrange
-            var professionalDto = new ProfessionalUpdateDto()
+            var professionalDto = new ProfessionalDto()
             {
                 Address = new Address("Rua do comercio", "123", "APT 123", new ZipCode("99888777")),
                 Email = "email@email.com",
@@ -301,7 +301,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalUpdateDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound

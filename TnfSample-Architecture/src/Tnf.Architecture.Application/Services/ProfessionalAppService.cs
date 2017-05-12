@@ -18,7 +18,7 @@ namespace Tnf.Architecture.Application.Services
 
         public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
 
-        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto dto) => _service.CreateProfessional(dto);
+        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
 
         public DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
 

@@ -9,7 +9,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
     {
         PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
         ProfessionalDto GetProfessional(ProfessionalKeysDto keys);
-        DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalCreateDto entity);
+        DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalDto entity);
         DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto);
         DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys);
     }

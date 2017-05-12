@@ -18,7 +18,6 @@ namespace Tnf.Architecture.Mapper
                 {
                     config.AddProfile(new DtoToPocoProfile());
                     config.AddProfile(new PocoToDtoProfile());
-                    config.AddProfile(new DtoToDtoProfile());
                 });
         }
     }

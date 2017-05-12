@@ -44,7 +44,6 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
         }
 
         [Theory]
-        [InlineData("12345678")]
         [InlineData("87654321")]
         [InlineData("99.999-999")]
         public void President_Should_Have_Valid_ZipCode(string zipCode)
@@ -65,7 +64,6 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
         [Theory]
         [InlineData(null)]
         [InlineData(" ")]
-        [InlineData("1234567")]
         [InlineData("8765432")]
         [InlineData("99.999-9899")]
         [InlineData("99.9999899")]

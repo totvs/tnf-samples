@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             _profissionalRepository.GetProfessional(Arg.Is<ProfessionalKeysDto>(p => p.ProfessionalId == 1 && p.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(professionalDto);
 
-            _profissionalRepository.CreateProfessional(Arg.Any<ProfessionalCreateDto>())
+            _profissionalRepository.CreateProfessional(Arg.Any<ProfessionalDto>())
                 .Returns(professionalDto);
 
             _profissionalRepository.UpdateProfessional(Arg.Any<ProfessionalDto>())
@@ -128,7 +128,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Insert_Valid_Professional()
         {
             // Act
-            var responseBase = _profissionalService.CreateProfessional(new ProfessionalCreateDto()
+            var responseBase = _profissionalService.CreateProfessional(new ProfessionalDto()
             {
                 Address = new Address("Rua do comercio 2", "1233", "APT 1234", new ZipCode("22888888")),
                 Email = "email2@email2.com",
@@ -146,7 +146,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Insert_Not_Accept_Invalid_Professional()
         {
             // Act
-            var responseBase = _profissionalService.CreateProfessional(new ProfessionalCreateDto());
+            var responseBase = _profissionalService.CreateProfessional(new ProfessionalDto());
 
             // Assert
             Assert.False(responseBase.Success);

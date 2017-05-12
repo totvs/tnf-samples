@@ -52,7 +52,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
         }
 
-        public ProfessionalDto CreateProfessional(ProfessionalCreateDto entity)
+        public ProfessionalDto CreateProfessional(ProfessionalDto entity)
         {
             var dbEntity = entity.MapTo<ProfessionalPoco>();
 

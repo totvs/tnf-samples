@@ -62,36 +62,6 @@ namespace Tnf.Architecture.Mapper.Tests
         }
 
         [Fact]
-        public void MapTo_ProfessionalCreateDto_To_ProfessionalPoco()
-        {
-            ProfessionalCreateDto dto = new ProfessionalCreateDto()
-            {
-                Address = new Address("Rua de teste", "123", "Compelemento", new ZipCode("12345678")),
-                Email = "email@email.com",
-                Name = "Professional teste",
-                Phone = "988765541",
-                ProfessionalId = 1,
-                Specialties = new List<SpecialtyDto>()
-                {
-                    new SpecialtyDto() { Id = 1, Description = "Especialidade" }
-                }
-            };
-
-            ProfessionalPoco mappPoco = dto.MapTo<ProfessionalPoco>();
-
-            Assert.NotNull(mappPoco);
-            Assert.Equal(dto.Name, mappPoco.Name);
-            Assert.Equal(dto.Email, mappPoco.Email);
-            Assert.Equal(dto.Phone, mappPoco.Phone);
-            Assert.NotNull(mappPoco.Address);
-            Assert.Equal(dto.Address.Complement, mappPoco.AddressComplement);
-            Assert.Equal(dto.Address.Number, mappPoco.AddressNumber);
-            Assert.Equal(dto.Address.Street, mappPoco.Address);
-            Assert.Equal(dto.Address.ZipCode.Number, mappPoco.ZipCode);
-            Assert.Null(mappPoco.ProfessionalSpecialties);
-        }
-
-        [Fact]
         public void MapTo_SpecialtyDto_To_SpecialtyPoco()
         {
             SpecialtyDto dto = new SpecialtyDto()
