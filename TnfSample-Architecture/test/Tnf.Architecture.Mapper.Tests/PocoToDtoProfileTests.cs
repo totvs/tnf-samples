@@ -9,8 +9,6 @@ using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Data.Entities;
 using Tnf.Architecture.Dto.Helpers;
 using Tnf.Architecture.Dto.ValueObjects;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Tnf.Architecture.Mapper.Tests
@@ -46,22 +44,38 @@ namespace Tnf.Architecture.Mapper.Tests
                 Email = "email@email.com",
                 Name = "Professional",
                 Phone = "987456321",
-                ProfessionalId = 1
+                ProfessionalId = 1,
+                ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>()
+                {
+                    new ProfessionalSpecialtiesPoco()
+                    {
+                        Specialty = new SpecialtyPoco()
+                        {
+                            Id = 1,
+                            Description = "Especialidade teste"
+                        },
+                        SpecialtyId = 1
+                    }
+                }
             };
 
             ProfessionalDto mappDto = poco.MapTo<ProfessionalDto>();
 
             Assert.NotNull(mappDto);
-            Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
             Assert.Equal(poco.Name, mappDto.Name);
+            Assert.Equal(poco.Email, mappDto.Email);
+            Assert.Equal(poco.Phone, mappDto.Phone);
+            Assert.NotNull(mappDto.Address);
             Assert.Equal(poco.AddressComplement, mappDto.Address.Complement);
             Assert.Equal(poco.AddressNumber, mappDto.Address.Number);
             Assert.Equal(TextHelper.ToTitleCase(poco.Address), mappDto.Address.Street);
             Assert.Equal(poco.ZipCode, mappDto.Address.ZipCode.Number);
-            Assert.Equal(poco.Code, mappDto.Code);
-            Assert.Equal(poco.Email, mappDto.Email);
-            Assert.Equal(poco.Phone, mappDto.Phone);
-            Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
+            Assert.NotNull(mappDto.Specialties);
+            Assert.NotEmpty(mappDto.Specialties);
+            Assert.Equal(poco.ProfessionalSpecialties.Count, mappDto.Specialties.Count);
+            Assert.NotNull(mappDto.Specialties[0]);
+            Assert.Equal(poco.ProfessionalSpecialties[0].Specialty.Id, mappDto.Specialties[0].Id);
+            Assert.Equal(poco.ProfessionalSpecialties[0].Specialty.Description, mappDto.Specialties[0].Description);
         }
 
         [Fact]
@@ -77,21 +91,38 @@ namespace Tnf.Architecture.Mapper.Tests
                 Email = "email@email.com",
                 Name = "Professional",
                 Phone = "987456321",
-                ProfessionalId = 1
+                ProfessionalId = 1,
+                ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>()
+                {
+                    new ProfessionalSpecialtiesPoco()
+                    {
+                        Specialty = new SpecialtyPoco()
+                        {
+                            Id = 1,
+                            Description = "Especialidade teste"
+                        },
+                        SpecialtyId = 1
+                    }
+                }
             };
 
             ProfessionalCreateDto mappDto = poco.MapTo<ProfessionalCreateDto>();
 
             Assert.NotNull(mappDto);
-            Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
             Assert.Equal(poco.Name, mappDto.Name);
+            Assert.Equal(poco.Email, mappDto.Email);
+            Assert.Equal(poco.Phone, mappDto.Phone);
+            Assert.NotNull(mappDto.Address);
             Assert.Equal(poco.AddressComplement, mappDto.Address.Complement);
             Assert.Equal(poco.AddressNumber, mappDto.Address.Number);
             Assert.Equal(TextHelper.ToTitleCase(poco.Address), mappDto.Address.Street);
             Assert.Equal(poco.ZipCode, mappDto.Address.ZipCode.Number);
-            Assert.Equal(poco.Email, mappDto.Email);
-            Assert.Equal(poco.Phone, mappDto.Phone);
-            Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
+            Assert.NotNull(mappDto.Specialties);
+            Assert.NotEmpty(mappDto.Specialties);
+            Assert.Equal(poco.ProfessionalSpecialties.Count, mappDto.Specialties.Count);
+            Assert.NotNull(mappDto.Specialties[0]);
+            Assert.Equal(poco.ProfessionalSpecialties[0].Specialty.Id, mappDto.Specialties[0].Id);
+            Assert.Equal(poco.ProfessionalSpecialties[0].Specialty.Description, mappDto.Specialties[0].Description);
         }
 
         [Fact]
@@ -125,10 +156,11 @@ namespace Tnf.Architecture.Mapper.Tests
             Assert.NotNull(mappDto);
             Assert.Equal(poco.Id, mappDto.Id);
             Assert.Equal(poco.Name, mappDto.Name);
-            Assert.Equal(poco.Address.ZipCode.Number, mappDto.Address.ZipCode.Number);
+            Assert.NotNull(mappDto.Address);
             Assert.Equal(poco.Address.Complement, mappDto.Address.Complement);
             Assert.Equal(poco.Address.Number, mappDto.Address.Number);
             Assert.Equal(poco.Address.Street, mappDto.Address.Street);
+            Assert.Equal(poco.Address.ZipCode.Number, mappDto.Address.ZipCode.Number);
         }
     }
 }

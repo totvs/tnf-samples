@@ -23,11 +23,11 @@ namespace Tnf.Architecture.Mapper.Tests
                 Name = "Brasil"
             };
 
-            CountryPoco mappDto = dto.MapTo<CountryPoco>();
+            CountryPoco mappPoco = dto.MapTo<CountryPoco>();
 
-            Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Name, mappDto.Name);
+            Assert.NotNull(mappPoco);
+            Assert.Equal(mappPoco.Id, mappPoco.Id);
+            Assert.Equal(mappPoco.Name, mappPoco.Name);
         }
 
         [Fact]
@@ -47,19 +47,18 @@ namespace Tnf.Architecture.Mapper.Tests
                 }
             };
 
-            ProfessionalPoco mappDto = dto.MapTo<ProfessionalPoco>();
+            ProfessionalPoco mappPoco = dto.MapTo<ProfessionalPoco>();
 
-            Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Name, mappDto.Name);
-            Assert.Equal(dto.Address.Complement, mappDto.AddressComplement);
-            Assert.Equal(dto.Address.Number, mappDto.AddressNumber);
-            Assert.Equal(dto.Address.Street, mappDto.Address);
-            Assert.Equal(dto.Address.ZipCode.Number, mappDto.ZipCode);
-            Assert.Equal(dto.Code, mappDto.Code);
-            Assert.Equal(dto.Email, mappDto.Email);
-            Assert.Equal(dto.Phone, mappDto.Phone);
-            Assert.Equal(dto.ProfessionalId, mappDto.ProfessionalId);
+            Assert.NotNull(mappPoco);
+            Assert.Equal(dto.Name, mappPoco.Name);
+            Assert.Equal(dto.Email, mappPoco.Email);
+            Assert.Equal(dto.Phone, mappPoco.Phone);
+            Assert.NotNull(mappPoco.Address);
+            Assert.Equal(dto.Address.Complement, mappPoco.AddressComplement);
+            Assert.Equal(dto.Address.Number, mappPoco.AddressNumber);
+            Assert.Equal(dto.Address.Street, mappPoco.Address);
+            Assert.Equal(dto.Address.ZipCode.Number, mappPoco.ZipCode);
+            Assert.Null(mappPoco.ProfessionalSpecialties);
         }
 
         [Fact]
@@ -78,18 +77,18 @@ namespace Tnf.Architecture.Mapper.Tests
                 }
             };
 
-            ProfessionalPoco mappDto = dto.MapTo<ProfessionalPoco>();
+            ProfessionalPoco mappPoco = dto.MapTo<ProfessionalPoco>();
 
-            Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Name, mappDto.Name);
-            Assert.Equal(dto.Address.Complement, mappDto.AddressComplement);
-            Assert.Equal(dto.Address.Number, mappDto.AddressNumber);
-            Assert.Equal(dto.Address.Street, mappDto.Address);
-            Assert.Equal(dto.Address.ZipCode.Number, mappDto.ZipCode);
-            Assert.Equal(dto.Email, mappDto.Email);
-            Assert.Equal(dto.Phone, mappDto.Phone);
-            Assert.Equal(dto.ProfessionalId, mappDto.ProfessionalId);
+            Assert.NotNull(mappPoco);
+            Assert.Equal(dto.Name, mappPoco.Name);
+            Assert.Equal(dto.Email, mappPoco.Email);
+            Assert.Equal(dto.Phone, mappPoco.Phone);
+            Assert.NotNull(mappPoco.Address);
+            Assert.Equal(dto.Address.Complement, mappPoco.AddressComplement);
+            Assert.Equal(dto.Address.Number, mappPoco.AddressNumber);
+            Assert.Equal(dto.Address.Street, mappPoco.Address);
+            Assert.Equal(dto.Address.ZipCode.Number, mappPoco.ZipCode);
+            Assert.Null(mappPoco.ProfessionalSpecialties);
         }
 
         [Fact]
@@ -101,11 +100,11 @@ namespace Tnf.Architecture.Mapper.Tests
                 Description = "Cirurgia Geral"
             };
 
-            SpecialtyPoco mappDto = dto.MapTo<SpecialtyPoco>();
+            SpecialtyPoco mappPoco = dto.MapTo<SpecialtyPoco>();
 
-            Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, mappDto.Id);
-            Assert.Equal(mappDto.Description, mappDto.Description);
+            Assert.NotNull(mappPoco);
+            Assert.Equal(mappPoco.Id, mappPoco.Id);
+            Assert.Equal(mappPoco.Description, mappPoco.Description);
         }
 
         [Fact]
@@ -118,12 +117,16 @@ namespace Tnf.Architecture.Mapper.Tests
                 Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
-            PresidentPoco mappDto = dto.MapTo<PresidentPoco>();
+            PresidentPoco mappPoco = dto.MapTo<PresidentPoco>();
 
-            Assert.NotNull(mappDto);
-            Assert.Equal(dto.Id, mappDto.Id);
-            Assert.Equal(dto.Name, mappDto.Name);
-            Assert.Equal(dto.Address, mappDto.Address);
+            Assert.NotNull(mappPoco);
+            Assert.Equal(dto.Id, mappPoco.Id);
+            Assert.Equal(dto.Name, mappPoco.Name);
+            Assert.NotNull(mappPoco.Address);
+            Assert.Equal(dto.Address.Complement, mappPoco.Address.Complement);
+            Assert.Equal(dto.Address.Number, mappPoco.Address.Number);
+            Assert.Equal(dto.Address.Street, mappPoco.Address.Street);
+            Assert.Equal(dto.Address.ZipCode.Number, mappPoco.Address.ZipCode.Number);
         }
     }
 }

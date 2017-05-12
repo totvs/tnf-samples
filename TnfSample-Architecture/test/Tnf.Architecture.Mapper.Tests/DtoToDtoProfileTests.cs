@@ -26,11 +26,21 @@ namespace Tnf.Architecture.Mapper.Tests
 
             ProfessionalDto mappDto = dto.MapTo<ProfessionalDto>();
 
-            Assert.NotNull(dto.Address);
+            Assert.NotNull(mappDto);
+            Assert.Equal(dto.Name, mappDto.Name);
+            Assert.Equal(dto.Email, mappDto.Email);
+            Assert.Equal(dto.Phone, mappDto.Phone);
+            Assert.NotNull(mappDto.Address);
             Assert.Equal(dto.Address.Complement, mappDto.Address.Complement);
             Assert.Equal(dto.Address.Number, mappDto.Address.Number);
             Assert.Equal(dto.Address.Street, mappDto.Address.Street);
             Assert.Equal(dto.Address.ZipCode.Number, mappDto.Address.ZipCode.Number);
+            Assert.NotNull(mappDto.Specialties);
+            Assert.NotEmpty(mappDto.Specialties);
+            Assert.Equal(dto.Specialties.Count, mappDto.Specialties.Count);
+            Assert.NotNull(mappDto.Specialties[0]);
+            Assert.Equal(dto.Specialties[0].Id, mappDto.Specialties[0].Id);
+            Assert.Equal(dto.Specialties[0].Description, mappDto.Specialties[0].Description);
         }
     }
 }
