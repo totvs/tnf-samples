@@ -116,6 +116,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Post_Null_Specialty_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<string>>(
+                $"{RouteConsts.Specialty}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: specialty");
+        }
+
+        [Fact]
         public async Task Post_Empty_Specialty_And_Return_Notifications()
         {
             //Arrange
@@ -171,6 +186,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             response.Result.ShouldBe("Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Put_Null_Specialty_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<string>>(
+                $"/{RouteConsts.Specialty}/1",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Invalid parameter: specialty");
         }
 
         [Fact]

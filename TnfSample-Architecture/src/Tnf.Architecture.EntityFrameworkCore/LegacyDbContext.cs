@@ -24,6 +24,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
 
                 // Configure PKs auto generated
                 m.Property(i => i.Code).ValueGeneratedOnAdd().HasColumnName("SYS009_PROFESSIONAL_CODE");
+                // Hack pois o método ValueGeneratedOnAdd do EF Core ainda não aceita propriedades decimal
                 m.Property(i => i.ProfessionalId).HasDefaultValueSql("SELECT ISNULL(MAX(SYS009_PROFESSIONAL_ID), 1) FROM SYS009_PROFESSIONAL").HasColumnName("SYS009_PROFESSIONAL_ID");
 
                 m.Property(p => p.Name).HasColumnName("SYS009_NAME").HasMaxLength(50).IsRequired();
@@ -34,6 +35,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
                 m.Property(p => p.Email).HasColumnName("SYS009_EMAIL").HasMaxLength(50).IsRequired();
                 m.Property(p => p.Phone).HasColumnName("SYS009_PHONE").HasMaxLength(50).IsRequired();
                 m.Property(p => p.ZipCode).HasColumnName("SYS009_ZIP_CODE").HasMaxLength(15).IsRequired();
+
                 m.ToTable("SYS009_PROFESSIONAL");
             });
 
@@ -46,6 +48,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
                 m.Property(i => i.Id).ValueGeneratedOnAdd().HasColumnName("SYS011_SPECIALTIES_ID");
 
                 m.Property(p => p.Description).HasColumnName("SYS011_SPECIALTIES_DESCRIPTION").HasMaxLength(100).IsRequired();
+
                 m.ToTable("SYS011_SPECIALTIES");
             });
 

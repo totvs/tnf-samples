@@ -140,6 +140,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Post_Null_Professional_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
+                $"{RouteConsts.Professional}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: professional");
+        }
+
+        [Fact]
         public async Task Post_Empty_Professional_And_Return_Notifications()
         {
             //Arrange
@@ -264,6 +279,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.Equal(response.Result, "Invalid parameter: code");
+        }
+
+        [Fact]
+        public async Task Put_Null_Professional_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<string>>(
+                $"/{RouteConsts.Professional}/1/{Guid.NewGuid()}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result, "Invalid parameter: professional");
         }
 
         [Fact]

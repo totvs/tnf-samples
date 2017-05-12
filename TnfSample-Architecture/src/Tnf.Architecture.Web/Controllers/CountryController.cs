@@ -4,12 +4,10 @@ using System.Threading.Tasks;
 using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
-using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Web.Controllers
 {
     [Route(RouteConsts.Country)]
-    [DisableValidation]
     public class CountryController : ArchitectureControllerBase
     {
         private readonly ICountryAppService _countryAppService;

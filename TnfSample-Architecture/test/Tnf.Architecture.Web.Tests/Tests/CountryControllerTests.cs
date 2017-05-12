@@ -112,7 +112,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Country_With_Invalid_Parameter_Return_Bad_Request()
+        public async Task Post_Null_Country_Return_Bad_Request()
         {
             // Act
             var response = await PostResponseAsObjectAsync<CountryDto, AjaxResponse>(
@@ -150,7 +150,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Country_With_Invalid_Parameter_Return_Bad_Request()
+        public async Task Put_Null_Country_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<CountryDto, AjaxResponse<string>>(

@@ -137,7 +137,37 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Empty_President_And_Return_Notifications()
+        public async Task Post_Null_President_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<string>>(
+                $"{RouteConsts.WhiteHouse}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: presidents");
+        }
+
+        [Fact]
+        public async Task Post_Empty_Presidents_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<string>>(
+                $"{RouteConsts.WhiteHouse}",
+                new List<PresidentDto>(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Empty parameter: presidents");
+        }
+
+        [Fact]
+        public async Task Post_President_With_Invalid_Parameter_And_Return_Notifications()
         {
             // Act
             var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
@@ -186,6 +216,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             response.Result.ShouldBe("Invalid parameter: id");
+        }
+
+        [Fact]
+        public async Task Put_Null_President_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<string>>(
+                $"{RouteConsts.WhiteHouse}/1",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.True(response.Success);
+            response.Result.ShouldBe("Invalid parameter: president");
         }
 
         [Fact]
