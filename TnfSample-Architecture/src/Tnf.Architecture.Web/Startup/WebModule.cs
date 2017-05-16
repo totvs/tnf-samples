@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Tnf.Modules;
-using Tnf.AspNetCore;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Configuration;
 using Tnf.App.Configuration;
 using Tnf.Reflection.Extensions;
 using Tnf.Architecture.Dto;
+using Tnf.App.AspNetCore;
 
 namespace Tnf.Architecture.Web.Startup
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfAspNetCoreModule))]
+        typeof(TnfAppAspNetCoreModule))]
     public class WebModule : TnfModule
     {
         private readonly IConfigurationRoot _appConfiguration;

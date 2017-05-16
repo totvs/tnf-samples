@@ -11,7 +11,6 @@ using Tnf.App;
 namespace Tnf.Architecture.Application
 {
     [DependsOn(
-        typeof(TnfAppModule),
         typeof(MapperModule),
         typeof(DomainModule),
         typeof(CarolModule),
