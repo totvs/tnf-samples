@@ -6,10 +6,12 @@ using Tnf.Reflection.Extensions;
 using Tnf.Castle.Log4Net;
 using Castle.Facilities.Logging;
 using Tnf.Architecture.Mapper;
+using Tnf.App;
 
 namespace Tnf.Architecture.Application
 {
     [DependsOn(
+        typeof(TnfAppModule),
         typeof(MapperModule),
         typeof(DomainModule),
         typeof(CarolModule),

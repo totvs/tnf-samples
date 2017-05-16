@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Tnf.Architecture.Dto.ValueObjects;
+﻿using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 
 namespace Tnf.Architecture.Dto.Tests.ValueObjects
