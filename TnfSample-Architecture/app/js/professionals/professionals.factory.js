@@ -27,12 +27,11 @@
         .module('professional')
         .factory('professionalFactory', professionalFactory);
 
-    professionalFactory.$inject = ['$totvsresource', 'NotifyFactory'];
+    professionalFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
 
-    function professionalFactory($totvsresource, NotifyFactory) {
+    function professionalFactory($totvsresource, NotifyFactory, EnviromentFactory) {
 
-        var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5050/api/professional/:professionalId/:code',
+        var url = EnviromentFactory.apiurl + 'api/professional/:professionalId/:code',
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

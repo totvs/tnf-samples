@@ -27,12 +27,11 @@
         .module('specialty')
         .factory('specialtyFactory', specialtyFactory);
 
-    specialtyFactory.$inject = ['$totvsresource', 'NotifyFactory'];
+    specialtyFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
 
-    function specialtyFactory($totvsresource, NotifyFactory) {
+    function specialtyFactory($totvsresource, NotifyFactory, EnviromentFactory) {
 
-        var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5050/api/specialty/:id',
+        var url = EnviromentFactory.apiurl + 'api/specialty/:id',
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

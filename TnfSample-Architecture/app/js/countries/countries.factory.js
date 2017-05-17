@@ -27,12 +27,11 @@
         .module('country')
         .factory('countryFactory', countryFactory);
 
-    countryFactory.$inject = ['$totvsresource', 'NotifyFactory'];
+    countryFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
 
-    function countryFactory($totvsresource, NotifyFactory) {
+    function countryFactory($totvsresource, NotifyFactory, EnviromentFactory) {
 
-        var hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com",
-            url = 'http://' + hostname + ':5050/api/countries/:id', 
+        var url = EnviromentFactory.apiurl + 'api/countries/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

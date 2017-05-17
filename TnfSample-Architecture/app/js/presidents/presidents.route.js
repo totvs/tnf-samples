@@ -23,10 +23,10 @@
         .module('president')
         .config(presidentRouteConfig);
 
-    presidentRouteConfig.$inject = ['$stateProvider'];
+    presidentRouteConfig.$inject = ['$stateProvider', 'EnviromentFactory'];
 
-    function presidentRouteConfig($stateProvider) {
-        var title = (currentEnviroment === enviroment.DEVELOPMENT) ? 'Presidents' : 'President';
+    function presidentRouteConfig($stateProvider, EnviromentFactory) {
+        var title = (EnviromentFactory.currentEnviroment === EnviromentFactory.enviroment.DEVELOPMENT) ? 'Presidents' : 'President';
 
         $stateProvider.state('presidents', {
             abstract: true,

@@ -33,7 +33,8 @@
         '$scope',
         '$state',
         'TotvsDesktopViewService',
-        'TotvsDesktopTabService'
+        'TotvsDesktopTabService',
+        'EnviromentFactory'
     ];
 
     function TotvsDesktopController(
@@ -42,7 +43,8 @@
         $scope,
         $state,
         TotvsDesktopViewService,
-        TotvsDesktopTabService) {
+        TotvsDesktopTabService,
+        EnviromentFactory) {
 
         // *********************************************************************************
         // *** Variables
@@ -71,9 +73,9 @@
 
             self.options = [];
 
-            if (currentEnviroment === enviroment.DEVELOPMENT) {
-                self.options.push({title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: "/TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" });
-                self.options.push({title: 'Swagger', action: actionRedirect, icon: 'swagger', url: 'http://localhost:5050/swagger/ui/index.html', newTab: true });
+            if (EnviromentFactory.currentEnviroment === EnviromentFactory.enviroment.DEVELOPMENT) {
+                self.options.push({title: 'Language', action: actionRedirect, icon: '', flag: 'br', url: EnviromentFactory.apiurl + "TnfLocalization/ChangeCulture?cultureName=pt-BR&returnUrl=/" });
+                self.options.push({title: 'Swagger', action: actionRedirect, icon: 'swagger', url: EnviromentFactory.apiurl + 'swagger/ui/index.html', newTab: true });
             }
 
             self.options.push({ title: 'Config', action: optionAction, icon: 'cfg' });

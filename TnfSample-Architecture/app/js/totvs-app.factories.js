@@ -57,4 +57,27 @@
         }
     }
 
+    angular
+        .module('totvsApp')
+        .factory('EnviromentFactory', EnviromentFactory);
+
+    function EnviromentFactory(){
+		var self = this;
+
+        self.enviroment = {
+            DEVELOPMENT: 0,
+            RELEASE: 1
+        };
+        
+        self.currentEnviroment = (window.location.hostname.indexOf("amazon") === -1) ?
+                self.enviroment.DEVELOPMENT :
+                self.enviroment.RELEASE;
+        
+        self.hostname = (currentEnviroment === enviroment.DEVELOPMENT) ? "localhost" : "ec2-35-165-157-186.us-west-2.compute.amazonaws.com";
+            
+        self.apiurl = 'http://' + TnfHostName + ':5050/';
+
+        return self;
+    }
+
 }());

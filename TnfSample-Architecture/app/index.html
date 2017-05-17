@@ -38,16 +38,6 @@
     <link rel="stylesheet" href="js/libs/totvs-html-framework/assets/css/totvs-html-framework.css">
 
     <link rel="stylesheet" href="assets/css/app.min.css">
-
-    <script>
-        var enviroment = {
-            DEVELOPMENT: 0,
-            RELEASE: 1
-        },
-            currentEnviroment = (window.location.hostname.indexOf("amazon") === -1) ?
-                enviroment.DEVELOPMENT :
-                enviroment.RELEASE;
-    </script>
 </head>
 
 <body ng-cloak>
@@ -180,7 +170,7 @@
     <script src="js/totvs-app.config.js"></script>
     <script src="js/totvs-app.route.js"></script>
     <script src="js/totvs-app.interceptor.js"></script>
-    <script src="js/totvs-app.factory.js"></script>
+    <script src="js/totvs-app.factories.js"></script>
 
     <!-- Menu Tab -->
     <script src="js/totvs-menu/totvs-menu.module.js"></script>
