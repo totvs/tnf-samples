@@ -45,10 +45,7 @@ namespace Tnf.Architecture.Web.Startup
                     .AllowCredentials());
             });
 
-            services
-                .AddMvcCore()
-                .AddJsonFormatters();
-
+            services.AddMvc();
             services.AddSwaggerGen();
 
             //Configure Tnf and Dependency Injection
