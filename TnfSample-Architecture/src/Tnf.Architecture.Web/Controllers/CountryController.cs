@@ -23,6 +23,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (requestDto == null)
                 return BadRequest($"Invalid parameter: {nameof(requestDto)}");
 
+            if (requestDto.MaxResultCount <= 0)
+                return BadRequest($"Invalid parameter: {nameof(requestDto.MaxResultCount)}");
+
             var pagedResult = await _countryAppService.GetAll(requestDto);
 
             return Ok(pagedResult);

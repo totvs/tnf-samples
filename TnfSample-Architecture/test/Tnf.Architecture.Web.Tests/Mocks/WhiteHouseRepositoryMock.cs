@@ -7,6 +7,7 @@ using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -45,10 +46,11 @@ namespace Tnf.Architecture.Web.Tests.Mocks
 
         public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var presidents = _presidents.Where(w =>
-                string.IsNullOrWhiteSpace(request.Name) || request.Name.Contains(w.Value.Name) &&
-                string.IsNullOrWhiteSpace(request.ZipCode) || request.ZipCode.Contains(w.Value.Address.ZipCode.Number))
+            var presidents = _presidents
                 .Select(s => s.Value)
+                .AsQueryable()
+                .SkipAndTakeByRequestDto(request)
+                .OrderByRequestDto(request)
                 .ToList();
 
             return Task.FromResult(new PagingResponseDto<PresidentDto>(presidents));
@@ -61,14 +63,14 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(dto);
         }
 
-        public Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync)
+        public Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync)
         {
             foreach (var item in dtos)
                 _presidents.TryAdd(item.Id, item);
 
             var allInsertedDtos = dtos.Select(s => s).ToList();
 
-            return Task.FromResult(new DtoResponseBase<List<PresidentDto>>()
+            return Task.FromResult(new ResponseDtoBase<List<PresidentDto>>()
             {
                 Data = allInsertedDtos
             });

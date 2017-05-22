@@ -45,7 +45,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_All_Professionals_With_Success()
         {
             //Act
-            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
+            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
             count.Total.ShouldBe(1);
@@ -184,7 +184,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             //Act
             var response = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(1, _professionalPoco.Code));
 
-            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
+            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
             Assert.True(response.Success);

@@ -62,7 +62,10 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Return_All_Values()
         {
             // Arrange
-            var requestDto = new GetAllSpecialtiesDto(0, 2);
+            var requestDto = new GetAllSpecialtiesDto()
+            {
+                PageSize = 2
+            };
 
             // Act
             var allSpecialties = _specialtyService.GetAllSpecialties(requestDto);

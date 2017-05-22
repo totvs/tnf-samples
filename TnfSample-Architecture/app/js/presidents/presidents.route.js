@@ -23,10 +23,10 @@
         .module('president')
         .config(presidentRouteConfig);
 
-    presidentRouteConfig.$inject = ['$stateProvider', 'EnviromentFactory'];
+    presidentRouteConfig.$inject = ['$stateProvider', 'TNF_ENVIROMENT'];
 
-    function presidentRouteConfig($stateProvider, EnviromentFactory) {
-        var title = (EnviromentFactory.currentEnviroment === EnviromentFactory.enviroment.DEVELOPMENT) ? 'Presidents' : 'President';
+    function presidentRouteConfig($stateProvider, TNF_ENVIROMENT) {
+        var title = (TNF_ENVIROMENT.currentEnviroment === TNF_ENVIROMENT.enum.DEVELOPMENT) ? 'Presidents' : 'President';
 
         $stateProvider.state('presidents', {
             abstract: true,

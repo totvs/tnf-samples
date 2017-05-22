@@ -14,15 +14,26 @@ namespace Tnf.Architecture.Data.Entities
         {
             return new
             {
-                name = "string",
-                address = new
+                properties = new
                 {
-                    street = "string",
-                    number = "string",
-                    complement = "string",
-                    zipCode = new
+                    name = "string",
+                    address = new
                     {
-                        number = "string"
+                        properties = new
+                        {
+                            street = "string",
+                            number = "string",
+                            complement = "string",
+                            zipCode = new
+                            {
+                                properties = new
+                                {
+                                    number = "string"
+                                },
+                                type = "nested"
+                            }
+                        },
+                        type = "nested"
                     }
                 }
             };

@@ -82,11 +82,6 @@
 
             <totvs-list-item-content>
                 <totvs-list-item-info
-                    title="{{ ::'l-id' | i18n : [] : 'js/presidents'}}"
-                    value="{{ ::president.id }}">
-                </totvs-list-item-info>
-
-                <totvs-list-item-info
                     title="{{ ::'l-name' | i18n : [] : 'js/presidents' }}"
                     value="{{ ::president.name }}">
                 </totvs-list-item-info>
@@ -94,8 +89,30 @@
 
             <totvs-list-item-content-detail>
                 <totvs-list-item-info
-                    title="{{ ::'l-zip-code' | i18n : [] : 'js/presidents' }}"
-                    value="{{ ::president.zipCode.number | mask:'99999-999' }}">
+                    title="{{ ::'l-address-zip' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.address.zipCode.number | mask:'99999-999' }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-street' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.address.street }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-number' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.address.number }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-address-complement' | i18n : [] : 'js/presidents' }}"
+                    value="{{ ::president.address.complement }}">
+                </totvs-list-item-info>
+                
+                <totvs-list-item-info
+                    title="{{ ::'l-specialties' | i18n : [] : 'js/presidents' }}">
+                    <label ng-repeat="specialty in president.specialties">
+                        {{ specialty.description }},
+                    </label>
                 </totvs-list-item-info>
             </totvs-list-item-content-detail>
         </totvs-list-item>

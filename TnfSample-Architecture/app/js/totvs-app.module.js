@@ -32,6 +32,7 @@
             'country',
             'professional',
             'specialty'
-        ]);
+        ])
+        .constant('TNF_ENVIROMENT', DynamicEnvironment);
 
 }());

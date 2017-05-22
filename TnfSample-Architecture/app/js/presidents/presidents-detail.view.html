@@ -32,13 +32,7 @@
 		<totvs-page-detail>
 
             <totvs-page-detail-info
-                class="col-xs-12 col-sm-6 col-md-3"
-                title="{{ ::'l-id' | i18n : [] : 'js/presidents' }}">
-                {{ controller.president.id }}
-            </totvs-page-detail-info>
-
-            <totvs-page-detail-info
-                class="col-xs-12 col-sm-6 col-md-3"
+                class="col-xs-12 col-sm-12 col-md-12"
                 title="{{ ::'l-president' | i18n : [] : 'js/presidents' }}">
                 {{ controller.president.name }}
             </totvs-page-detail-info>
@@ -47,8 +41,26 @@
 
             <totvs-page-detail-info
                 class="col-xs-12 col-sm-6 col-md-3"
-                title="{{ ::'l-zip-code' | i18n : [] : 'js/presidents' }}">
-                {{ ::controller.president.zipCode.number | mask:'99999-999' }}
+                title="{{ ::'l-address-zip' | i18n : [] : 'js/presidents' }}">
+                {{ ::controller.president.address.zipCode.number | mask:'99999-999' }}
+            </totvs-page-detail-info>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-address-street' | i18n : [] : 'js/presidents' }}">
+                {{ ::controller.president.address.street }}
+            </totvs-page-detail-info>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-address-number' | i18n : [] : 'js/presidents' }}">
+                {{ ::controller.president.address.number }}
+            </totvs-page-detail-info>
+
+            <totvs-page-detail-info
+                class="col-xs-12 col-sm-6 col-md-3"
+                title="{{ ::'l-address-complement' | i18n : [] : 'js/presidents' }}">
+                {{ ::controller.president.address.complement }}
             </totvs-page-detail-info>
 
             </totvs-group-content>

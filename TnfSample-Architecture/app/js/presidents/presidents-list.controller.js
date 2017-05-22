@@ -179,8 +179,8 @@
                 addDisclaimer('name', filter.name, 'Nome igual a "' + filter.name + '"');
             }
 
-            if (filter.zipCode.number) {
-                addDisclaimer('zipCode', filter.zipCode.number, 'Código Postal igual a "' + filter.zipCode.number + '"');
+            if (filter.address.zipCode.number) {
+                addDisclaimer('zipCode', filter.address.zipCode.number, 'Código Postal igual a "' + filter.address.zipCode.number + '"');
             }
 
             self.loadRecords(false);

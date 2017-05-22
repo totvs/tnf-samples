@@ -23,11 +23,11 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             _eventBus = eventBus;
         }
 
-        public async Task<DtoResponseBase> DeletePresidentAsync(string id)
+        public async Task<ResponseDtoBase> DeletePresidentAsync(string id)
         {
             var success = await Repository.DeletePresidentsAsync(id);
 
-            var result = new DtoResponseBase();
+            var result = new ResponseDtoBase();
 
             if (!success)
             {
@@ -51,9 +51,9 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return await Repository.GetPresidentById(id);
         }
 
-        public async Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> presidents, bool sync = false)
+        public async Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> presidents, bool sync = false)
         {
-            var response = new DtoResponseBase<List<PresidentDto>>();
+            var response = new ResponseDtoBase<List<PresidentDto>>();
 
             foreach (var item in presidents)
             {
@@ -79,9 +79,9 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return response;
         }
 
-        public async Task<DtoResponseBase<PresidentDto>> UpdatePresidentAsync(PresidentDto president)
+        public async Task<ResponseDtoBase<PresidentDto>> UpdatePresidentAsync(PresidentDto president)
         {
-            var response = new DtoResponseBase<PresidentDto>();
+            var response = new ResponseDtoBase<PresidentDto>();
 
             var builder = new PresidentBuilder()
                 .WithId(president.Id)

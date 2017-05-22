@@ -28,13 +28,45 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
-                               $"{RouteConsts.WhiteHouse}?pageSize=10",
+                               $"{RouteConsts.WhiteHouse}?pageSize=5",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 5);
+            response.Result.Notifications.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAll_Presidents_Sorted_ASC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
+                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
             Assert.Equal(response.Result.Data.Count, 6);
+            Assert.Equal(response.Result.Data[0].Name, "Abraham Lincoln");
+            response.Result.Notifications.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAll_Presidents_Sorted_DESC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
+                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 6);
+            Assert.Equal(response.Result.Data[0].Name, "Thomas Jefferson");
             response.Result.Notifications.ShouldBeEmpty();
         }
 
@@ -43,7 +75,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                $"{RouteConsts.WhiteHouse}?",
+                $"{RouteConsts.WhiteHouse}",
                 HttpStatusCode.BadRequest
                 );
 
@@ -110,7 +142,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidents = new List<PresidentDto>() { presidentDto };
 
             // Act
-            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<ResponseDtoBase<List<PresidentDto>>>>(
                 $"{RouteConsts.WhiteHouse}",
                 presidents,
                 HttpStatusCode.OK
@@ -170,7 +202,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_President_With_Invalid_Parameter_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<DtoResponseBase<List<PresidentDto>>>>(
+            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<ResponseDtoBase<List<PresidentDto>>>>(
                 $"{RouteConsts.WhiteHouse}",
                 new List<PresidentDto>() { new PresidentDto() },
                 HttpStatusCode.OK
@@ -190,7 +222,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
                 $"{RouteConsts.WhiteHouse}/6",
                 presidentDto,
                 HttpStatusCode.OK
@@ -237,7 +269,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_President_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
                 $"{RouteConsts.WhiteHouse}/6",
                 new PresidentDto(),
                 HttpStatusCode.OK
@@ -257,7 +289,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("99", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<DtoResponseBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
                 $"{RouteConsts.WhiteHouse}/99",
                 presidentDto,
                 HttpStatusCode.NotFound
@@ -273,7 +305,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.WhiteHouse}/1",
                 HttpStatusCode.OK
             );
@@ -300,7 +332,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.WhiteHouse}/99",
                 HttpStatusCode.NotFound
             );

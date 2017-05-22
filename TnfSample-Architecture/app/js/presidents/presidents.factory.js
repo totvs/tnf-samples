@@ -27,11 +27,11 @@
         .module('president')
         .factory('presidentFactory', presidentFactory);
 
-    presidentFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
+    presidentFactory.$inject = ['$totvsresource', 'NotifyFactory', 'TNF_ENVIROMENT'];
 
-    function presidentFactory($totvsresource, NotifyFactory, EnviromentFactory) {
+    function presidentFactory($totvsresource, NotifyFactory, TNF_ENVIROMENT) {
 
-        var url = EnviromentFactory.apiurl + 'api/white-house/:id', 
+        var url = TNF_ENVIROMENT.apiurl + 'api/white-house/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

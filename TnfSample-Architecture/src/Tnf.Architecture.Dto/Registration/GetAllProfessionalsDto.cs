@@ -1,22 +1,12 @@
-﻿using Tnf.Architecture.Dto.Paging;
+﻿using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class GetAllProfessionalsDto : PagingRequestDto
+    public class GetAllProfessionalsDto : RequestAllDto
     {
         public GetAllProfessionalsDto()
+            : base()
         {
-        }
-
-        public GetAllProfessionalsDto(int offset, int pageSize)
-            : base(offset, pageSize)
-        {
-        }
-
-        public GetAllProfessionalsDto(int offset, int pageSize, string name)
-            : base(offset, pageSize)
-        {
-            Name = name;
         }
 
         public string Name { get; set; }

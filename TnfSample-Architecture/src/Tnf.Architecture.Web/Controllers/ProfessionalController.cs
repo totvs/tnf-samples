@@ -3,7 +3,6 @@ using System;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -18,7 +17,7 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Get(GetAllProfessionalsDto requestDto)
+        public IActionResult Get([FromQuery] GetAllProfessionalsDto requestDto)
         {
             if (requestDto == null)
                 return BadRequest($"Invalid parameter: {nameof(requestDto)}");

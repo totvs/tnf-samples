@@ -20,6 +20,7 @@
     'use strict';
 
     angular
-        .module('president', ['totvsHtmlFramework']);
+        .module('president', ['totvsHtmlFramework'])
+        .constant('TNF_ENVIROMENT', DynamicEnvironment);
 
 }());

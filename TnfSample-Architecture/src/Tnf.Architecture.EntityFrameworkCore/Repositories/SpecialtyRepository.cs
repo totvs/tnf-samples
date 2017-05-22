@@ -1,13 +1,14 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Dto;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Tnf.AutoMapper;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
-using Tnf.AutoMapper;
-using System.Linq;
-using System.Collections.Generic;
-using System;
+using Tnf.Domain.Repositories;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -31,23 +32,23 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public bool ExistsSpecialty(int id) => base.Count(s => s.Id == id) > 0;
 
-        public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
+        public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
-            var response = new PagingResponseDto<SpecialtyDto>();
+            var response = new SuccessResponseListDto<SpecialtyDto>();
 
             var dbQuery = GetAll()
                 .Where(w => request.Description == null || w.Description.Contains(request.Description))
-                .Skip(request.Offset)
-                .Take(request.PageSize)
+                .SkipAndTakeByRequestDto(request)
+                .OrderByRequestDto(request)
                 .ToArray();
 
             response.Total = base.Count();
-            response.Data = dbQuery.MapTo<List<SpecialtyDto>>();
+            response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
 
             return response;
         }
 
-        public SpecialtyDto GetSpecialty(int id)
+        public SpecialtyDto GetSpecialty(RequestDto requestDto)
         {
             SpecialtyDto specialty = null;
 

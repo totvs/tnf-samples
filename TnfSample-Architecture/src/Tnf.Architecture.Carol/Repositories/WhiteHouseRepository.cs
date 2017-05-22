@@ -32,8 +32,8 @@ namespace Tnf.Architecture.Data.Repositories
             var response = new PagingResponseDto<PresidentDto>();
 
             var query = Client.Queries<PresidentPoco>().ProcessFilter()
-                .Offset(request.Offset)
-                .PageSize(request.PageSize)
+                .SkipAndTakeByRequestDto(request)
+                .OrderByRequestDto(request)
                 .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)
                 .MustList((m) => m.TypeFilter()
                                   .MatchFilter(p => p.Name, request.Name)

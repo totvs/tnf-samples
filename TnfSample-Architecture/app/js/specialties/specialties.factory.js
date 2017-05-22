@@ -27,11 +27,11 @@
         .module('specialty')
         .factory('specialtyFactory', specialtyFactory);
 
-    specialtyFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
+    specialtyFactory.$inject = ['$totvsresource', 'NotifyFactory', 'TNF_ENVIROMENT'];
 
-    function specialtyFactory($totvsresource, NotifyFactory, EnviromentFactory) {
+    function specialtyFactory($totvsresource, NotifyFactory, TNF_ENVIROMENT) {
 
-        var url = EnviromentFactory.apiurl + 'api/specialty/:id',
+        var url = TNF_ENVIROMENT.apiurl + 'api/specialty/:id',
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

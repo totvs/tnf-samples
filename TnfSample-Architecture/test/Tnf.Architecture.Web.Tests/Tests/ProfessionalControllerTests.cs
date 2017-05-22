@@ -25,11 +25,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Professional_With_Success()
+        public async Task GetAll_Professionals_With_Success()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
-                               $"/{RouteConsts.Professional}?pageSize=10",
+                               $"/{RouteConsts.Professional}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
@@ -40,16 +40,48 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Professional_With_Invalid_Parameters()
+        public async Task GetAll_Professionals_With_Invalid_Parameters()
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                $"/{RouteConsts.Professional}?pageSize=0",
+                $"/{RouteConsts.Professional}",
                 HttpStatusCode.BadRequest
                 );
 
             response.Success.ShouldBeTrue();
             response.Result.ShouldBe($"Invalid parameter: PageSize");
+        }
+
+        [Fact]
+        public async Task GetAll_Professionals_Sorted_ASC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
+                               $"{RouteConsts.Professional}?pageSize=10&order=name",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 2);
+            Assert.Equal(response.Result.Data[0].Name, "João da Silva");
+            response.Result.Notifications.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAll_Professionals_Sorted_DESC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
+                               $"{RouteConsts.Professional}?pageSize=10&order=-name",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 2);
+            Assert.Equal(response.Result.Data[0].Name, "José da Silva");
+            response.Result.Notifications.ShouldBeEmpty();
         }
 
         [Fact]
@@ -124,7 +156,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -161,7 +193,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var professionalDto = new ProfessionalDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -196,7 +228,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -217,7 +249,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/2/{response.Result.Data.Code}",
                 updateParam,
                 HttpStatusCode.OK
@@ -241,7 +273,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 professionalDto,
                 HttpStatusCode.OK
@@ -300,7 +332,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 new ProfessionalDto(),
                 HttpStatusCode.OK
@@ -331,7 +363,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound
@@ -347,7 +379,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
@@ -360,7 +392,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<string>>(
                 $"{RouteConsts.Professional}/%20/%20",
                 HttpStatusCode.BadRequest
             );
@@ -374,7 +406,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );

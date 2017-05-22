@@ -23,10 +23,10 @@
         .module('professional')
         .config(professionalRouteConfig);
 
-    professionalRouteConfig.$inject = ['$stateProvider', 'EnviromentFactory'];
+    professionalRouteConfig.$inject = ['$stateProvider', 'TNF_ENVIROMENT'];
 
-    function professionalRouteConfig($stateProvider, EnviromentFactory) {
-        var title = (EnviromentFactory.currentEnviroment === EnviromentFactory.enviroment.DEVELOPMENT) ? 'Professionals' : 'Professional';
+    function professionalRouteConfig($stateProvider, TNF_ENVIROMENT) {
+        var title = (TNF_ENVIROMENT.currentEnviroment === TNF_ENVIROMENT.enum.DEVELOPMENT) ? 'Professionals' : 'Professional';
 
         $stateProvider.state('professionals', {
             abstract: true,

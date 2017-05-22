@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagedResultDto<CountryDto>>>(
-                $"/{RouteConsts.Country}?skipCount=0",
+                $"/{RouteConsts.Country}",
                 HttpStatusCode.OK
             );
 
@@ -33,17 +33,17 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Countries_With_Default_Parameter()
+        public async Task GetAll_Countries_With_Invalid_Parameters()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagedResultDto<CountryDto>>>(
-                $"/{RouteConsts.Country}?",
-                HttpStatusCode.OK
+            var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
+                $"/{RouteConsts.Country}?maxResultCount=0",
+                HttpStatusCode.BadRequest
             );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.TotalCount, 5);
+            Assert.Equal(response.Result, $"Invalid parameter: MaxResultCount");
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Get_Country_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
                 $"/{RouteConsts.Country}/-1",
                 HttpStatusCode.BadRequest
             );
@@ -79,7 +79,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Get_Country_When_Not_Exits_Return_Not_Found()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
                 $"/{RouteConsts.Country}/99",
                 HttpStatusCode.NotFound
             );
@@ -199,7 +199,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Country_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<string>>(
                 $"/{RouteConsts.Country}/0",
                 HttpStatusCode.BadRequest
             );

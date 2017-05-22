@@ -26,7 +26,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<SpecialtyDto>>>(
-                               $"/{RouteConsts.Specialty}?pageSize=10",
+                               $"/{RouteConsts.Specialty}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
@@ -41,12 +41,44 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<AjaxResponse<string>>(
-                $"/{RouteConsts.Specialty}?pageSize=0",
+                $"/{RouteConsts.Specialty}",
                 HttpStatusCode.BadRequest
                 );
 
             response.Success.ShouldBeTrue();
             response.Result.ShouldBe($"Invalid parameter: PageSize");
+        }
+
+        [Fact]
+        public async Task GetAll_Specialties_Sorted_ASC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<SpecialtyDto>>>(
+                               $"{RouteConsts.Specialty}?pageSize=10&order=description",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 2);
+            Assert.Equal(response.Result.Data[0].Description, "Cirurgia Geral");
+            response.Result.Notifications.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAll_Specialties_Sorted_DESC_With_Success()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<SpecialtyDto>>>(
+                               $"{RouteConsts.Specialty}?pageSize=10&order=-description",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Result.Data.Count, 2);
+            Assert.Equal(response.Result.Data[0].Description, "Cirurgia Vascular");
+            response.Result.Notifications.ShouldBeEmpty();
         }
 
         [Fact]
@@ -104,7 +136,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -137,7 +169,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var specialtyDto = new SpecialtyDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -160,7 +192,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/1",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -207,7 +239,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Specialty_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/1",
                 new SpecialtyDto(),
                 HttpStatusCode.OK
@@ -230,7 +262,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/10",
                 specialtyDto,
                 HttpStatusCode.NotFound
@@ -246,7 +278,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
@@ -260,7 +292,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<string>>(
                 $"{RouteConsts.Specialty}/%20",
                 HttpStatusCode.BadRequest
             );
@@ -274,7 +306,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Specialty}/10",
                 HttpStatusCode.NotFound
             );

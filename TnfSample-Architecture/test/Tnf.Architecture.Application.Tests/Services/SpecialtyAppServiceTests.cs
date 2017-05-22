@@ -35,7 +35,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_All_Specialties_With_Success()
         {
             //Act
-            var count = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
+            var count = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto() { PageSize = 10 });
 
             //Assert
             count.Total.ShouldBe(1);

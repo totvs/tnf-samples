@@ -69,7 +69,10 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Return_All_Values()
         {
             // Arrange
-            var requestDto = new GetAllProfessionalsDto(0, 2);
+            var requestDto = new GetAllProfessionalsDto()
+            {
+                PageSize = 2
+            };
 
             // Act
             var allProfessionals = _profissionalService.GetAllProfessionals(requestDto);

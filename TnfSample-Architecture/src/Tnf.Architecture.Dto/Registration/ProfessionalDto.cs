@@ -1,10 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class ProfessionalDto : ProfessionalKeysDto
+    public class ProfessionalDto : SuccessResponseDto
     {
+        public ProfessionalDto()
+            :base(new List<string>() { "address", "specialties" })
+        {
+
+        }
+
+        public decimal ProfessionalId { get; set; }
+        public Guid Code { get; set; }
         public string Name { get; set; }
         public Address Address { get; set; }
         public string Phone { get; set; }

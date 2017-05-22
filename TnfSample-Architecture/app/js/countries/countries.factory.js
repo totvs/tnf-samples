@@ -27,11 +27,11 @@
         .module('country')
         .factory('countryFactory', countryFactory);
 
-    countryFactory.$inject = ['$totvsresource', 'NotifyFactory', 'EnviromentFactory'];
+    countryFactory.$inject = ['$totvsresource', 'NotifyFactory', 'TNF_ENVIROMENT'];
 
-    function countryFactory($totvsresource, NotifyFactory, EnviromentFactory) {
+    function countryFactory($totvsresource, NotifyFactory, TNF_ENVIROMENT) {
 
-        var url = EnviromentFactory.apiurl + 'api/countries/:id', 
+        var url = TNF_ENVIROMENT.apiurl + 'api/countries/:id', 
             factory;
 
         factory = $totvsresource.REST(url, {}, {});

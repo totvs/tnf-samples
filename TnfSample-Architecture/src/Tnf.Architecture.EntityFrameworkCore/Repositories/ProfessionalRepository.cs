@@ -8,7 +8,7 @@ using System.Linq;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.Registration;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -38,8 +38,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         private ProfessionalPoco GetProfessionalPoco(ProfessionalKeysDto keys)
         {
             var dbEntity = Context.Professionals
-                .Include(i => i.ProfessionalSpecialties)
-                    .ThenInclude(i => i.Specialty)
+                .Include("ProfessionalSpecialties")
+                .Include("ProfessionalSpecialties.Specialties")
                 .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
 
             return dbEntity;
@@ -86,8 +86,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                 .Where(w => request.Name == null || w.Name.Contains(request.Name));
 
             var dbQuery = dbBaseQuery
-                .Skip(request.Offset)
-                .Take(request.PageSize)
+                .SkipAndTakeByRequestDto(request)
+                .OrderByRequestDto(request)
                 .ToArray();
 
             response.Total = base.Count();

@@ -62,7 +62,10 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Return_All_Values()
         {
             // Arrange
-            var requestDto = new GetAllPresidentsDto(0, 2);
+            var requestDto = new GetAllPresidentsDto()
+            {
+                PageSize = 2
+            };
 
             // Act
             var allPresidents = await _whiteHouseService.GetAllPresidents(requestDto);

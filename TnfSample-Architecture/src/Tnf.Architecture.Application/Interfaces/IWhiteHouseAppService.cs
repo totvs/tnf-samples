@@ -11,8 +11,8 @@ namespace Tnf.Architecture.Application.Interfaces
     {
         Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
         Task<PresidentDto> GetPresidentById(string id);
-        Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true);
-        Task<DtoResponseBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto);
-        Task<DtoResponseBase> DeletePresidentAsync(string id);
+        Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true);
+        Task<ResponseDtoBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto);
+        Task<ResponseDtoBase> DeletePresidentAsync(string id);
     }
 }
