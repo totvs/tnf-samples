@@ -18,12 +18,12 @@ namespace Tnf.Architecture.Application.Services
 
         public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
 
-        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
+        public ResponseDtoBase<ProfessionalDto> CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
 
-        public DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
+        public ResponseDtoBase DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => _service.GetProfessional(keys);
 
-        public DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
+        public ResponseDtoBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
     }
 }

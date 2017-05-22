@@ -2,7 +2,7 @@
 
 namespace Tnf.Architecture.Dto.Paging
 {
-    public class PagingRequestDto : DtoRequestBase
+    public class PagingRequestDto : RequestDtoBase
     {
         public PagingRequestDto()
         {
@@ -15,6 +15,5 @@ namespace Tnf.Architecture.Dto.Paging
         }
 
         public int Offset { get; set; }
-        public int PageSize { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Application.Services
             _whiteHouserService = whiteHouserService;
         }
 
-        public async Task<DtoResponseBase> DeletePresidentAsync(string id)
+        public async Task<ResponseDtoBase> DeletePresidentAsync(string id)
             => await _whiteHouserService.DeletePresidentAsync(id);
 
         public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
@@ -36,10 +36,10 @@ namespace Tnf.Architecture.Application.Services
             return president;
         }
 
-        public async Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true)
+        public async Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true)
             => await _whiteHouserService.InsertPresidentAsync(dtos, sync);
 
-        public async Task<DtoResponseBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto)
+        public async Task<ResponseDtoBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto)
             => await _whiteHouserService.UpdatePresidentAsync(dto);
     }
 }

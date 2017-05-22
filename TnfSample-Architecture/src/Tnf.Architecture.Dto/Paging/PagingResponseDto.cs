@@ -3,7 +3,7 @@ using Tnf.Dto;
 
 namespace Tnf.Architecture.Dto
 {
-    public class PagingResponseDto<TEntity> : DtoResponseBase<List<TEntity>>
+    public class PagingResponseDto<TEntity> : ResponseDtoBase<List<TEntity>>
         where TEntity : class
     {
         public PagingResponseDto() => Data = new List<TEntity>();

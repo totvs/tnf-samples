@@ -61,14 +61,14 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(dto);
         }
 
-        public Task<DtoResponseBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync)
+        public Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync)
         {
             foreach (var item in dtos)
                 _presidents.TryAdd(item.Id, item);
 
             var allInsertedDtos = dtos.Select(s => s).ToList();
 
-            return Task.FromResult(new DtoResponseBase<List<PresidentDto>>()
+            return Task.FromResult(new ResponseDtoBase<List<PresidentDto>>()
             {
                 Data = allInsertedDtos
             });

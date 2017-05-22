@@ -104,7 +104,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -137,7 +137,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var specialtyDto = new SpecialtyDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -160,7 +160,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/1",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -207,7 +207,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Specialty_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/1",
                 new SpecialtyDto(),
                 HttpStatusCode.OK
@@ -230,7 +230,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<DtoResponseBase<SpecialtyDto>>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ResponseDtoBase<SpecialtyDto>>>(
                 $"{RouteConsts.Specialty}/10",
                 specialtyDto,
                 HttpStatusCode.NotFound
@@ -246,7 +246,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
@@ -274,7 +274,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Specialty}/10",
                 HttpStatusCode.NotFound
             );

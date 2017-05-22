@@ -9,8 +9,8 @@ namespace Tnf.Architecture.Application.Interfaces
     {
         PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
         SpecialtyDto GetSpecialty(int id);
-        DtoResponseBase DeleteSpecialty(int id);
-        DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto);
-        DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto);
+        ResponseDtoBase DeleteSpecialty(int id);
+        ResponseDtoBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto);
+        ResponseDtoBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto);
     }
 }

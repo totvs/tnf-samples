@@ -19,9 +19,9 @@ namespace Tnf.Architecture.Domain.Registration
 
         public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => Repository.GetProfessional(keys);
 
-        public DtoResponseBase<ProfessionalDto> CreateProfessional(ProfessionalDto entity)
+        public ResponseDtoBase<ProfessionalDto> CreateProfessional(ProfessionalDto entity)
         {
-            var response = new DtoResponseBase<ProfessionalDto>();
+            var response = new ResponseDtoBase<ProfessionalDto>();
 
             var builder = new ProfessionalBuilder()
                    .WithName(entity.Name)
@@ -45,9 +45,9 @@ namespace Tnf.Architecture.Domain.Registration
             return response;
         }
 
-        public DtoResponseBase DeleteProfessional(ProfessionalKeysDto keys)
+        public ResponseDtoBase DeleteProfessional(ProfessionalKeysDto keys)
         {
-            var result = new DtoResponseBase();
+            var result = new ResponseDtoBase();
 
             var success = Repository.DeleteProfessional(keys);
 
@@ -63,9 +63,9 @@ namespace Tnf.Architecture.Domain.Registration
             return result;
         }
 
-        public DtoResponseBase<ProfessionalDto> UpdateProfessional(ProfessionalDto entity)
+        public ResponseDtoBase<ProfessionalDto> UpdateProfessional(ProfessionalDto entity)
         {
-            var response = new DtoResponseBase<ProfessionalDto>();
+            var response = new ResponseDtoBase<ProfessionalDto>();
 
             var builder = new ProfessionalBuilder()
                    .WithProfessionalId(entity.ProfessionalId)

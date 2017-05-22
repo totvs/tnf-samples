@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.17136.7" />
+    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.17142.2" />
   </ItemGroup>
 
 </Project>

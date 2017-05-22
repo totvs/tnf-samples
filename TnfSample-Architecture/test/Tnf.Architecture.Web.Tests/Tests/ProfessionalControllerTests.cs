@@ -124,7 +124,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -161,7 +161,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var professionalDto = new ProfessionalDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -196,7 +196,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -217,7 +217,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/2/{response.Result.Data.Code}",
                 updateParam,
                 HttpStatusCode.OK
@@ -241,7 +241,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 professionalDto,
                 HttpStatusCode.OK
@@ -300,7 +300,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 new ProfessionalDto(),
                 HttpStatusCode.OK
@@ -331,7 +331,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<DtoResponseBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound
@@ -347,7 +347,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
@@ -374,7 +374,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<DtoResponseBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );

@@ -20,10 +20,10 @@ namespace Tnf.Architecture.Application.Services
 
         public SpecialtyDto GetSpecialty(int id) => _service.GetSpecialty(id);
 
-        public DtoResponseBase DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
+        public ResponseDtoBase DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
 
-        public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
+        public ResponseDtoBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
 
-        public DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
+        public ResponseDtoBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
     }
 }

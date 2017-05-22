@@ -27,9 +27,9 @@ namespace Tnf.Architecture.Domain.Registration
             return result;
         }
 
-        public DtoResponseBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto)
+        public ResponseDtoBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto)
         {
-            var response = new DtoResponseBase<SpecialtyDto>();
+            var response = new ResponseDtoBase<SpecialtyDto>();
 
             var builder = new SpecialtyBuilder()
                    .WithDescription(dto.Description);
@@ -44,9 +44,9 @@ namespace Tnf.Architecture.Domain.Registration
             return response;
         }
 
-        public DtoResponseBase DeleteSpecialty(int id)
+        public ResponseDtoBase DeleteSpecialty(int id)
         {
-            var result = new DtoResponseBase();
+            var result = new ResponseDtoBase();
 
             if (Repository.ExistsSpecialty(id))
             {
@@ -64,9 +64,9 @@ namespace Tnf.Architecture.Domain.Registration
             return result;
         }
 
-        public DtoResponseBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto)
+        public ResponseDtoBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto)
         {
-            var response = new DtoResponseBase<SpecialtyDto>();
+            var response = new ResponseDtoBase<SpecialtyDto>();
 
             var builder = new SpecialtyBuilder()
                    .WithDescription(dto.Description);
