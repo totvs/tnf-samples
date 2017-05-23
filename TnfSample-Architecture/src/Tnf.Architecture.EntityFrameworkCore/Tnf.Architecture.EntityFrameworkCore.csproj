@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17142.5" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17142.5" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17143.1" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17143.1" />
   </ItemGroup>
 
   <ItemGroup>

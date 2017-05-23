@@ -3,10 +3,14 @@ using System.Threading.Tasks;
 using Tnf.App.Carol.Repositories;
 using Tnf.Provider.Carol;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Data.Entities;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
+using Tnf.Architecture.Domain.WhiteHouse;
+using System;
+using System.Linq;
 
 namespace Tnf.Architecture.Data.Repositories
 {
@@ -22,14 +26,9 @@ namespace Tnf.Architecture.Data.Repositories
             return await DeleteAsync(id);
         }
 
-        public async Task<bool> DeletePresidentsAsync(PresidentDto president)
+        public async Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            return await DeleteAsync(president.Id);
-        }
-
-        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
-        {
-            var response = new PagingResponseDto<PresidentDto>();
+            var response = new SuccessResponseListDto<PresidentDto>();
 
             var query = Client.Queries<PresidentPoco>().ProcessFilter()
                 .SkipAndTakeByRequestDto(request)
@@ -43,35 +42,35 @@ namespace Tnf.Architecture.Data.Repositories
 
             response.Total = resultData.TotalHits;
 
-            response.Data = resultData.Hits.MapTo<List<PresidentDto>>();
+            response.Items = resultData.Hits.MapTo<List<PresidentDto>>();
 
             return response;
         }
 
-        public async Task<PresidentDto> GetPresidentById(string id)
+        public async Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            var presidentData = await GetAsync(id);
+            var presidentData = await GetAsync(requestDto.Key);
 
             var president = presidentData.MapTo<PresidentDto>();
 
             return president;
         }
 
-        public async Task<List<PresidentDto>> InsertPresidentsAsync(List<PresidentDto> presidents, bool sync = false)
+        public async Task<List<string>> InsertPresidentsAsync(List<President> presidents, bool sync = false)
         {
             var pocos = presidents.MapTo<List<PresidentPoco>>();
 
             var result = await InsertAsync(pocos, sync);
 
-            return result.MapTo<List<PresidentDto>>();
+            return result.Select(p => p.Id).ToList();
         }
 
-        public async Task<PresidentDto> UpdatePresidentsAsync(PresidentDto president)
+        public async Task<President> UpdatePresidentsAsync(President president)
         {
             var poco = president.MapTo<PresidentPoco>();
             var result = await UpdateAsync(poco);
 
-            return result.MapTo<PresidentDto>();
+            return president;
         }
     }
 }

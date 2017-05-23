@@ -2,6 +2,7 @@
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -30,12 +31,12 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, RequestDto<int> requestDto)
         {
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var specialty = _specialtyAppService.GetSpecialty(id);
+            var specialty = _specialtyAppService.GetSpecialty(requestDto.AddKey(id));
             if (specialty == null)
                 return NotFound(L("CouldNotFindSpecialty"));
 
@@ -63,10 +64,10 @@ namespace Tnf.Architecture.Web.Controllers
 
             specialty.Id = id;
             var result = _specialtyAppService.UpdateSpecialty(specialty);
-            if (result.Data == null)
-                return NotFound(result);
+            if (result.Success)
+                return Ok(result);
 
-            return Ok(result);
+            return NotFound(result);
         }
 
         [HttpDelete("{id}")]
@@ -76,10 +77,10 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
             var result = _specialtyAppService.DeleteSpecialty(id);
-            if (!result.Success)
-                return NotFound(result);
+            if (result.Success)
+                return Ok(result);
 
-            return Ok(result);
+            return NotFound(result);
         }
     }
 }

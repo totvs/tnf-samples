@@ -1,7 +1,7 @@
 ﻿using Tnf.Architecture.Domain.Registration.Specifications;
 using Tnf.Architecture.Dto;
 using Tnf.Builder;
-using Tnf.Localization;
+using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -31,11 +31,10 @@ namespace Tnf.Architecture.Domain.Registration
 
         private void AddNotification(Specialty.Error error)
         {
-            var notificationMessage = LocalizationHelper.GetString(AppConsts.LocalizationSourceName, error);
-            Response.AddNotification(error, notificationMessage);
+            AddNotification(AppConsts.LocalizationSourceName, error);
         }
 
-        public override BuilderResponse<Specialty> Build()
+        public override IResponseDto Build()
         {
             var shouldHaveDescription = new SpecialtyShouldHaveDescriptionSpecification();
 

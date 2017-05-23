@@ -9,6 +9,7 @@ using Tnf.EntityFrameworkCore.Repositories;
 using Tnf.Domain.Repositories;
 using Tnf.Dto.Response;
 using Tnf.Dto.Request;
+using Tnf.Architecture.Domain.Registration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -19,13 +20,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
         }
 
-        public SpecialtyDto CreateSpecialty(SpecialtyDto dto)
+        public int CreateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
-            dto.Id = base.InsertAndGetId(dbEntity);
-
-            return dto;
+            return base.InsertAndGetId(dbEntity);
         }
 
         public void DeleteSpecialty(int id) => base.Delete(id);
@@ -48,18 +47,18 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return response;
         }
 
-        public SpecialtyDto GetSpecialty(RequestDto requestDto)
+        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
         {
             SpecialtyDto specialty = null;
-
-            var dbEntity = base.Get(id);
+            
+            var dbEntity = base.Get(requestDto.Key);
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
 
             return specialty;
         }
 
-        public SpecialtyDto UpdateSpecialty(SpecialtyDto dto)
+        public Specialty UpdateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 

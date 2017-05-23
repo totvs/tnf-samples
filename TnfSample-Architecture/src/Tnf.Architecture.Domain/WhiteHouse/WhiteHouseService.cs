@@ -9,6 +9,9 @@ using Tnf.Events.Bus;
 using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Localization;
+using Tnf.Dto.Interfaces;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -23,90 +26,78 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             _eventBus = eventBus;
         }
 
-        public async Task<ResponseDtoBase> DeletePresidentAsync(string id)
-        {
-            var success = await Repository.DeletePresidentsAsync(id);
+        public Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request) => Repository.GetAllPresidents(request);
 
-            var result = new ResponseDtoBase();
-
-            if (!success)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    President.Error.CouldNotFindPresident);
-
-                result.AddNotification(new Notification(President.Error.CouldNotFindPresident, notificationMessage));
-            }
-
-            return result;
-        }
-
-        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
-        {
-            return Repository.GetAllPresidents(request);
-        }
-
-        public async Task<PresidentDto> GetPresidentById(string id)
+        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {
             return await Repository.GetPresidentById(id);
         }
 
-        public async Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> presidents, bool sync = false)
+        public async Task<IResponseDto> InsertPresidentAsync(PresidentDto dto, bool sync = false)
         {
-            var response = new ResponseDtoBase<List<PresidentDto>>();
+            var builder = new PresidentBuilder()
+               .WithId(dto.Id)
+               .WithName(dto.Name)
+               .WithAddress(dto.Address);
 
-            foreach (var item in presidents)
-            {
-                var builder = new PresidentBuilder()
-                   .WithId(item.Id)
-                   .WithName(item.Name)
-                   .WithAddress(item.Address);
-
-                var build = builder.Build();
-                if (!build.Success)
-                    response.AddNotifications(build.Notifications);
-            }
+            var response = builder.Build();
 
             if (response.Success)
             {
-                presidents = await Repository.InsertPresidentsAsync(presidents, sync);
-                response.Data = presidents;
+                var ids = await Repository.InsertPresidentsAsync(new List<President>() { builder.Instance }, sync);
+                dto.Id = ids[0];
+
+                response = dto;
 
                 // Trigger president created event
-                presidents.ForEach((president) => _eventBus.Trigger(new PresidentCreatedEvent(president)));
+                _eventBus.Trigger(new PresidentCreatedEvent(builder.Instance));
             }
 
             return response;
         }
 
-        public async Task<ResponseDtoBase<PresidentDto>> UpdatePresidentAsync(PresidentDto president)
+        public async Task<IResponseDto> DeletePresidentAsync(string id)
         {
-            var response = new ResponseDtoBase<PresidentDto>();
+            var builder = new PresidentBuilder();
 
+            var notificationMessage = LocalizationHelper.GetString(
+                AppConsts.LocalizationSourceName,
+                President.Error.CouldNotFindPresident);
+
+            builder
+                .IsTrue(await Repository.DeletePresidentsAsync(id), President.Error.CouldNotFindPresident, notificationMessage);
+            
+            var response = builder.Build();
+
+            return response;
+        }
+
+        public async Task<IResponseDto> UpdatePresidentAsync(PresidentDto dto)
+        {
             var builder = new PresidentBuilder()
-                .WithId(president.Id)
-                .WithName(president.Name)
-                .WithAddress(president.Address);
+                .WithId(dto.Id)
+                .WithName(dto.Name)
+                .WithAddress(dto.Address);
 
-            var build = builder.Build();
-            if (!build.Success)
-            {
-                response.AddNotifications(build.Notifications);
-                response.Data = new PresidentDto();
-            }
+            var response = builder.Build();
 
             if (response.Success)
             {
-                response.Data = await Repository.UpdatePresidentsAsync(president);
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    President.Error.CouldNotFindPresident);
 
-                if (response.Data == null)
-                {
-                    var notificationMessage = LocalizationHelper.GetString(
-                        AppConsts.LocalizationSourceName,
-                        President.Error.CouldNotFindPresident);
+                builder = new PresidentBuilder(builder.Instance);
 
-                    response.AddNotification(new Notification(President.Error.CouldNotFindPresident, notificationMessage));
-                }
+                var data = await Repository.UpdatePresidentsAsync(builder.Instance);
+
+                builder
+                    .IsTrue(data != null, President.Error.CouldNotFindPresident, notificationMessage);
+
+                response = builder.Build();
+
+                if (response.Success)
+                    response = dto;
             }
 
             return response;

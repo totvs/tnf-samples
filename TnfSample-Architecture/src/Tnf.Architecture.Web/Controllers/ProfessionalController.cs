@@ -3,6 +3,7 @@ using System;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -31,7 +32,7 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{professionalId}/{code}")]
-        public IActionResult Get(decimal professionalId, Guid code)
+        public IActionResult Get(decimal professionalId, Guid code, RequestDto<ProfessionalKeysDto> requestDto)
         {
             if (professionalId <= 0)
                 return BadRequest($"Invalid parameter: {nameof(professionalId)}");
@@ -39,7 +40,7 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
-            var result = _professionalAppService.GetProfessional(new ProfessionalKeysDto(professionalId, code));
+            var result = _professionalAppService.GetProfessional(requestDto.AddKey(new ProfessionalKeysDto(professionalId, code)));
             if (result == null)
                 return NotFound(L("CouldNotFindProfessional"));
 
@@ -53,6 +54,9 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(professional)}");
 
             var result = _professionalAppService.CreateProfessional(professional);
+
+
+
             return Ok(result);
         }
 
@@ -72,10 +76,10 @@ namespace Tnf.Architecture.Web.Controllers
             professional.Code = code;
 
             var result = _professionalAppService.UpdateProfessional(professional);
-            if (result.Data == null)
-                return NotFound(result);
+            if (result.Success)
+                return Ok(result);
 
-            return Ok(result);
+            return NotFound(result);
         }
 
         [HttpDelete("{professionalId}/{code}")]
@@ -88,10 +92,10 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
             var result = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
-            if (!result.Success)
-                return NotFound(result);
+            if (result.Success)
+                return Ok(result);
 
-            return Ok(result);
+            return NotFound(result);
         }
     }
 }

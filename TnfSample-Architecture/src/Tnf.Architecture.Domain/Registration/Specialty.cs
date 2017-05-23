@@ -2,7 +2,7 @@
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    internal class Specialty : Entity
+    public class Specialty : Entity
     {
         public string Description { get; internal set; }
 

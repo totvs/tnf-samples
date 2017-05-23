@@ -2,6 +2,7 @@
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 using System.Linq;
+using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -33,7 +34,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
     }
 }

@@ -12,6 +12,8 @@ using Tnf.Dto;
 using System.Linq;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Dto.Response;
+using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -27,47 +29,44 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<PresidentDto>>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 5);
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 5);
         }
 
         [Fact]
         public async Task GetAll_Presidents_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<PresidentDto>>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 6);
-            Assert.Equal(response.Result.Data[0].Name, "Abraham Lincoln");
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 6);
+            Assert.Equal(response.Result.Items[0].Name, "Abraham Lincoln");
         }
 
         [Fact]
         public async Task GetAll_Presidents_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<PresidentDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<PresidentDto>>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 6);
-            Assert.Equal(response.Result.Data[0].Name, "Thomas Jefferson");
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 6);
+            Assert.Equal(response.Result.Items[0].Name, "Thomas Jefferson");
         }
 
         [Fact]
@@ -139,18 +138,19 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306"))
             };
 
-            var presidents = new List<PresidentDto>() { presidentDto };
-
             // Act
-            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<ResponseDtoBase<List<PresidentDto>>>>(
+            var response = await PostResponseAsObjectAsync<PresidentDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}",
-                presidents,
+                presidentDto,
                 HttpStatusCode.OK
             );
 
             // Assert
             Assert.True(response.Success);
-            Assert.True(response.Result.Data.Any(p => p.Name == "Lula"));
+            Assert.True(response.Result.Success);
+            Assert.IsType(typeof(PresidentDto), response.Result);
+            var president = response.Result as PresidentDto;
+            Assert.Equal(president.Name, "Lula");
         }
 
         [Fact]
@@ -202,17 +202,19 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_President_With_Invalid_Parameter_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<List<PresidentDto>, AjaxResponse<ResponseDtoBase<List<PresidentDto>>>>(
+            var response = await PostResponseAsObjectAsync<PresidentDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}",
-                new List<PresidentDto>() { new PresidentDto() },
+                new PresidentDto(),
                 HttpStatusCode.OK
             );
 
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -222,7 +224,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}/6",
                 presidentDto,
                 HttpStatusCode.OK
@@ -230,9 +232,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            Assert.Empty(response.Result.Notifications);
-            Assert.Equal(response.Result.Data.Id, "6");
-            Assert.Equal(response.Result.Data.Name, "Ronald Reagan");
+            Assert.IsType(typeof(PresidentDto), response.Result);
+            var president = response.Result as PresidentDto;
+            Assert.Equal(president.Id, "6");
+            Assert.Equal(president.Name, "Ronald Reagan");
         }
 
         [Fact]
@@ -269,7 +272,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_President_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}/6",
                 new PresidentDto(),
                 HttpStatusCode.OK
@@ -278,8 +281,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -289,7 +294,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("99", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<ResponseDtoBase<PresidentDto>>>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}/99",
                 presidentDto,
                 HttpStatusCode.NotFound
@@ -298,20 +303,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
         [Fact]
         public async Task Delete_President_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}/1",
                 HttpStatusCode.OK
             );
 
             // Assert
             Assert.True(response.Success);
+            Assert.True(response.Result.Success);
         }
 
         [Fact]
@@ -332,7 +340,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.WhiteHouse}/99",
                 HttpStatusCode.NotFound
             );
@@ -340,7 +348,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
     }
 }

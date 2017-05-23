@@ -1,9 +1,10 @@
 ﻿using Tnf.Application.Services;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Dto;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Dto.Interfaces;
+using Tnf.Dto.Request;
+using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -16,14 +17,14 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public PagingResponseDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _service.GetAllSpecialties(request);
+        public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _service.GetAllSpecialties(request);
 
-        public SpecialtyDto GetSpecialty(int id) => _service.GetSpecialty(id);
+        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto) => _service.GetSpecialty(requestDto);
 
-        public ResponseDtoBase DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
+        public IResponseDto DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
 
-        public ResponseDtoBase<SpecialtyDto> CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
+        public IResponseDto CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
 
-        public ResponseDtoBase<SpecialtyDto> UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
+        public IResponseDto UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
     }
 }

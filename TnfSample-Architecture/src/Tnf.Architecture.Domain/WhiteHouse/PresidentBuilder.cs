@@ -2,6 +2,7 @@
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto;
+using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -47,7 +48,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return this;
         }
 
-        public override BuilderResponse<President> Build()
+        public override IResponseDto Build()
         {
             var shouldHaveName = new PresidentShouldHaveNameSpecification();
             var shouldHaveAddress = new PresidentShouldHaveAddressSpecification();

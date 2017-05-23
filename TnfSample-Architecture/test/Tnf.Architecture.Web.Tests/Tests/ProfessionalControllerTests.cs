@@ -13,6 +13,8 @@ using Tnf.Architecture.Dto.ValueObjects;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using System.Collections.Generic;
+using Tnf.Dto.Response;
+using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -28,15 +30,14 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<ProfessionalDto>>>(
                                $"/{RouteConsts.Professional}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 2);
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 2);
         }
 
         [Fact]
@@ -56,32 +57,30 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<ProfessionalDto>>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 2);
-            Assert.Equal(response.Result.Data[0].Name, "João da Silva");
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 2);
+            Assert.Equal(response.Result.Items[0].Name, "João da Silva");
         }
 
         [Fact]
         public async Task GetAll_Professionals_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<PagingResponseDto<ProfessionalDto>>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<SuccessResponseListDto<ProfessionalDto>>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Count, 2);
-            Assert.Equal(response.Result.Data[0].Name, "José da Silva");
-            response.Result.Notifications.ShouldBeEmpty();
+            Assert.Equal(response.Result.Items.Count, 2);
+            Assert.Equal(response.Result.Items[0].Name, "José da Silva");
         }
 
         [Fact]
@@ -156,7 +155,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -164,11 +163,14 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            Assert.Equal(response.Result.Data.Name, "João da Silva");
-            Assert.Equal(response.Result.Data.Address.Street, "Rua Do Comercio");
-            Assert.Equal(response.Result.Data.Address.Number, "123");
-            Assert.Equal(response.Result.Data.Address.Complement, "APT 123");
-            Assert.Equal(response.Result.Data.Address.ZipCode.Number, "99888777");
+            Assert.True(response.Result.Success);
+            Assert.IsType(typeof(ProfessionalDto), response.Result);
+            var professional = response.Result as ProfessionalDto;
+            Assert.Equal(professional.Name, "João da Silva");
+            Assert.Equal(professional.Address.Street, "Rua Do Comercio");
+            Assert.Equal(professional.Address.Number, "123");
+            Assert.Equal(professional.Address.Complement, "APT 123");
+            Assert.Equal(professional.Address.ZipCode.Number, "99888777");
         }
 
         [Fact]
@@ -193,7 +195,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var professionalDto = new ProfessionalDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -202,13 +204,15 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -228,7 +232,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}",
                 professionalDto,
                 HttpStatusCode.OK
@@ -236,28 +240,34 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             response.Success.ShouldBeTrue();
-            response.Result.Data.ProfessionalId.ShouldBe(2);
+            response.Result.Success.ShouldBeTrue();
+            Assert.IsType(typeof(ProfessionalDto), response.Result);
+            var professional = response.Result as ProfessionalDto;
 
-            response.Result.Data.Specialties.Clear();
+            professional.ProfessionalId.ShouldBe(2);
+
+            professional.Specialties.Clear();
 
             var updateParam = new ProfessionalDto()
             {
-                Address = response.Result.Data.Address,
-                Email = response.Result.Data.Email,
+                Address = professional.Address,
+                Email = professional.Email,
                 Name = "Nome Alterado Teste",
-                Phone = response.Result.Data.Phone
+                Phone = professional.Phone
             };
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
-                $"/{RouteConsts.Professional}/2/{response.Result.Data.Code}",
+            response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
+                $"/{RouteConsts.Professional}/2/{professional.Code}",
                 updateParam,
                 HttpStatusCode.OK
             );
 
             //Assert
             response.Success.ShouldBeTrue();
-            response.Result.Data.Name.ShouldBe("Nome Alterado Teste");
+            Assert.IsType(typeof(ProfessionalDto), response.Result);
+            professional = response.Result as ProfessionalDto;
+            professional.Name.ShouldBe("Nome Alterado Teste");
         }
 
         [Fact]
@@ -273,7 +283,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 professionalDto,
                 HttpStatusCode.OK
@@ -281,10 +291,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.True(response.Success);
-            Assert.Empty(response.Result.Notifications);
-            Assert.Equal(response.Result.Data.ProfessionalId, 1);
-            Assert.Equal(response.Result.Data.Code.ToString(), "1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
-            Assert.Equal(response.Result.Data.Name, "João da Silva");
+            Assert.IsType(typeof(ProfessionalDto), response.Result);
+            var professional = response.Result as ProfessionalDto;
+            Assert.Equal(professional.ProfessionalId, 1);
+            Assert.Equal(professional.Code.ToString(), "1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
+            Assert.Equal(professional.Name, "João da Silva");
         }
 
         [Fact]
@@ -332,7 +343,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 new ProfessionalDto(),
                 HttpStatusCode.OK
@@ -341,13 +352,15 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -363,7 +376,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<ResponseDtoBase<ProfessionalDto>>>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound
@@ -372,20 +385,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
 
             // Assert
             Assert.True(response.Success);
+            Assert.True(response.Result.Success);
         }
 
         [Fact]
@@ -406,7 +422,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ResponseDtoBase>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );
@@ -414,7 +430,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.True(response.Result.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response.Result);
+            var errorResponse = response.Result as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
     }
 }

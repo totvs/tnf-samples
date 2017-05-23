@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Application.Services;
-using Tnf.Dto;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.AutoMapper;
+using Tnf.Dto.Interfaces;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -20,13 +20,13 @@ namespace Tnf.Architecture.Application.Services
             _whiteHouserService = whiteHouserService;
         }
 
-        public async Task<ResponseDtoBase> DeletePresidentAsync(string id)
+        public async Task<IResponseDto> DeletePresidentAsync(string id)
             => await _whiteHouserService.DeletePresidentAsync(id);
 
-        public async Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public async Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
             => await _whiteHouserService.GetAllPresidents(request);
 
-        public async Task<PresidentDto> GetPresidentById(string id)
+        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {
             var president = await _whiteHouserService.GetPresidentById(id);
 
@@ -36,10 +36,10 @@ namespace Tnf.Architecture.Application.Services
             return president;
         }
 
-        public async Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync = true)
-            => await _whiteHouserService.InsertPresidentAsync(dtos, sync);
+        public async Task<IResponseDto> InsertPresidentAsync(PresidentDto dto, bool sync = true)
+            => await _whiteHouserService.InsertPresidentAsync(dto, sync);
 
-        public async Task<ResponseDtoBase<PresidentDto>> UpdatePresidentAsync(PresidentDto dto)
+        public async Task<IResponseDto> UpdatePresidentAsync(PresidentDto dto)
             => await _whiteHouserService.UpdatePresidentAsync(dto);
     }
 }

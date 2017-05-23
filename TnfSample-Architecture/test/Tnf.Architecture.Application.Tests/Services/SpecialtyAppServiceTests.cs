@@ -3,12 +3,12 @@ using Tnf.Architecture.EntityFrameworkCore;
 using Xunit;
 using Shouldly;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.Registration;
-using System.Collections.Generic;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -56,7 +56,8 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             //Assert
             result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
+            Assert.IsType(typeof(SpecialtyDto), result);
+            (result as SpecialtyDto).Id.ShouldBe(2);
         }
 
         [Fact]
@@ -67,7 +68,9 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             // Assert
             Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -85,15 +88,20 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             //Assert
             result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
+            Assert.IsType(typeof(SpecialtyDto), result);
+            var specialty = result as SpecialtyDto;
 
-            result.Data.Description = "Cirurgia Vascular";
+            specialty.Id.ShouldBe(2);
 
-            result = _specialtyAppService.UpdateSpecialty(result.Data);
+            specialty.Description = "Cirurgia Vascular";
+
+            result = _specialtyAppService.UpdateSpecialty(specialty);
 
             //Assert
             result.Success.ShouldBeTrue();
-            result.Data.Description.ShouldBe("Cirurgia Vascular");
+            Assert.IsType(typeof(SpecialtyDto), result);
+            specialty = result as SpecialtyDto;
+            specialty.Description.ShouldBe("Cirurgia Vascular");
         }
 
         [Fact]
@@ -111,14 +119,16 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             // Assert
             Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
         public void Should_Get_Specialty_With_Success()
         {
             //Act
-            var result = _specialtyAppService.GetSpecialty(1);
+            var result = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
 
             //Assert
             result.Id.ShouldBe(1);
@@ -129,7 +139,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Specialty_With_Error()
         {
             // Act
-            var result = _specialtyAppService.GetSpecialty(99);
+            var result = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
             result.ShouldBeNull();
@@ -150,7 +160,8 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             //Assert
             result.Success.ShouldBeTrue();
-            result.Data.Id.ShouldBe(2);
+            Assert.IsType(typeof(SpecialtyDto), result);
+            (result as SpecialtyDto).Id.ShouldBe(2);
 
             //Act
             var response = _specialtyAppService.DeleteSpecialty(2);
@@ -167,7 +178,9 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             // Assert
             Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }
 }

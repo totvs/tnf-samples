@@ -6,7 +6,7 @@ using Tnf.Domain.Entities;
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
     [AutoMap(typeof(PresidentDto))]
-    internal class President : AggregateRoot<string>
+    public class President : AggregateRoot<string>
     {
         public const int MaxNameLength = 256;
 

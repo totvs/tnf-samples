@@ -8,6 +8,10 @@ using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Domain.Repositories;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
+using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -30,13 +34,6 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             _presidents = new ConcurrentDictionary<string, PresidentDto>(source);
         }
 
-        public Task<bool> DeletePresidentsAsync(PresidentDto president)
-        {
-            var result = _presidents.TryRemove(president.Id, out PresidentDto presidentDto);
-
-            return Task.FromResult(result);
-        }
-
         public Task<bool> DeletePresidentsAsync(string id)
         {
             var result = _presidents.TryRemove(id, out PresidentDto presidentDto);
@@ -44,7 +41,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<PagingResponseDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var presidents = _presidents
                 .Select(s => s.Value)
@@ -53,45 +50,35 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .OrderByRequestDto(request)
                 .ToList();
 
-            return Task.FromResult(new PagingResponseDto<PresidentDto>(presidents));
+            var result = new SuccessResponseListDto<PresidentDto>();
+            result.Items = presidents;
+
+            return Task.FromResult(result);
         }
 
-        public Task<PresidentDto> GetPresidentById(string id)
+        public Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            _presidents.TryGetValue(id, out PresidentDto dto);
+            _presidents.TryGetValue(requestDto.Key, out PresidentDto dto);
 
             return Task.FromResult(dto);
         }
 
-        public Task<ResponseDtoBase<List<PresidentDto>>> InsertPresidentAsync(List<PresidentDto> dtos, bool sync)
-        {
-            foreach (var item in dtos)
-                _presidents.TryAdd(item.Id, item);
-
-            var allInsertedDtos = dtos.Select(s => s).ToList();
-
-            return Task.FromResult(new ResponseDtoBase<List<PresidentDto>>()
-            {
-                Data = allInsertedDtos
-            });
-        }
-
-        public Task<List<PresidentDto>> InsertPresidentsAsync(List<PresidentDto> presidents, bool sync = false)
+        public Task<List<string>> InsertPresidentsAsync(List<President> presidents, bool sync = false)
         {
             foreach (var item in presidents)
-                _presidents.TryAdd(item.Id, item);
+                _presidents.TryAdd(item.Id, item.MapTo<PresidentDto>());
 
             var allInsertedDtos = _presidents.Select(s => s.Value).ToList();
 
-            return Task.FromResult(allInsertedDtos);
+            return Task.FromResult(allInsertedDtos.Select(p => p.Id).ToList());
         }
 
-        public Task<PresidentDto> UpdatePresidentsAsync(PresidentDto president)
+        public Task<President> UpdatePresidentsAsync(President president)
         {
             var deleted = _presidents.TryRemove(president.Id, out PresidentDto removedDto);
 
             if (deleted)
-                _presidents.TryAdd(president.Id, president);
+                _presidents.TryAdd(president.Id, president.MapTo<PresidentDto>());
             else
                 president = null;
 

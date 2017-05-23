@@ -1,5 +1,5 @@
 ﻿using Castle.Core.Logging;
-using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Dependency;
 using Tnf.Events.Bus;
 using Tnf.Events.Bus.Handlers;
@@ -23,9 +23,9 @@ namespace Tnf.Architecture.Domain.Events.WhiteHouse
 
     public class PresidentCreatedEvent : EventData
     {
-        public PresidentDto President { get; }
+        public President President { get; }
 
-        public PresidentCreatedEvent(PresidentDto president)
+        public PresidentCreatedEvent(President president)
         {
             President = president;
         }

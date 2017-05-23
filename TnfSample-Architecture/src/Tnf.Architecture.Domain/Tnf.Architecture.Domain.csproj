@@ -22,8 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17142.5" />
-    <PackageReference Include="Tnf.Builder" Version="1.0.17142.5" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17143.1" />
+    <PackageReference Include="Tnf.Builder" Version="1.0.17143.1" />
   </ItemGroup>
 
   <ItemGroup>

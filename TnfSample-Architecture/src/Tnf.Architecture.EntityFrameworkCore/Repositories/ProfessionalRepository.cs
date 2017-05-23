@@ -2,13 +2,15 @@
 using Tnf.EntityFrameworkCore.Repositories;
 using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.Dto;
 using System.Collections.Generic;
 using System.Linq;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.Registration;
 using Microsoft.EntityFrameworkCore;
 using Tnf.Domain.Repositories;
+using Tnf.Dto.Request;
+using Tnf.Dto.Response;
+using Tnf.Architecture.Domain.Registration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -35,24 +37,24 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return dbEntity != null;
         }
 
-        private ProfessionalPoco GetProfessionalPoco(ProfessionalKeysDto keys)
+        private ProfessionalPoco GetProfessionalPoco(RequestDto<ProfessionalKeysDto> requestDto)
         {
             var dbEntity = Context.Professionals
-                .Include("ProfessionalSpecialties")
-                .Include("ProfessionalSpecialties.Specialties")
-                .SingleOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+                .IncludeByRequestDto(requestDto)
+                .SelectFieldsByRequestDto(requestDto)
+                .SingleOrDefault(w => w.ProfessionalId == requestDto.Key.ProfessionalId && w.Code == requestDto.Key.Code);
 
             return dbEntity;
         }
 
-        public ProfessionalDto GetProfessional(ProfessionalKeysDto keys)
+        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)
         {
-            var dbEntity = GetProfessionalPoco(keys);
+            var dbEntity = GetProfessionalPoco(requestDto);
 
             return dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
         }
 
-        public ProfessionalDto CreateProfessional(ProfessionalDto entity)
+        public ProfessionalKeysDto CreateProfessional(Professional entity)
         {
             var dbEntity = entity.MapTo<ProfessionalPoco>();
 
@@ -60,12 +62,12 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             Context.SaveChanges();
 
-            return dbEntity.MapTo<ProfessionalDto>();
+            return new ProfessionalKeysDto(dbEntity.ProfessionalId, dbEntity.Code);
         }
 
-        public ProfessionalDto UpdateProfessional(ProfessionalDto entity)
+        public Professional UpdateProfessional(Professional entity)
         {
-            var mappedEntity = GetProfessionalPoco(new ProfessionalKeysDto(entity.ProfessionalId, entity.Code));
+            var mappedEntity = GetProfessionalPoco(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(entity.ProfessionalId, entity.Code)));
 
             entity.MapTo(mappedEntity);
 
@@ -73,16 +75,16 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             Context.SaveChanges();
 
-            return mappedEntity.MapTo<ProfessionalDto>();
+            return entity;
         }
 
-        public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
         {
-            var response = new PagingResponseDto<ProfessionalDto>();
+            var response = new SuccessResponseListDto<ProfessionalDto>();
 
             var dbBaseQuery = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                .Include("ProfessionalSpecialties.Specialty")
+                    .ThenInclude(i => i.Specialty)
                 .Where(w => request.Name == null || w.Name.Contains(request.Name));
 
             var dbQuery = dbBaseQuery
@@ -91,14 +93,14 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                 .ToArray();
 
             response.Total = base.Count();
-            response.Data = dbQuery.MapTo<List<ProfessionalDto>>();
+            response.Items = dbQuery.MapTo<List<ProfessionalDto>>();
 
             return response;
         }
 
         public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)
         {
-            var dbProfessional = GetProfessionalPoco(keys);
+            var dbProfessional = GetProfessionalPoco(new RequestDto<ProfessionalKeysDto>(keys));
 
             if (dbProfessional != null)
             {

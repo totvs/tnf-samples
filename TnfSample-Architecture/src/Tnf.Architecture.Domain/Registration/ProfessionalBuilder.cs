@@ -3,7 +3,7 @@ using Tnf.Architecture.Domain.Registration.Specifications;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Builder;
-using Tnf.Localization;
+using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -22,6 +22,12 @@ namespace Tnf.Architecture.Domain.Registration
         public ProfessionalBuilder WithProfessionalId(decimal id)
         {
             Instance.ProfessionalId = id;
+            return this;
+        }
+
+        public ProfessionalBuilder WithCode(Guid code)
+        {
+            Instance.Code = code;
             return this;
         }
 
@@ -61,7 +67,7 @@ namespace Tnf.Architecture.Domain.Registration
             return this;
         }
 
-        public override BuilderResponse<Professional> Build()
+        public override IResponseDto Build()
         {
             var shouldHaveName = new ProfessionalShouldHaveNameSpecification();
             var shouldHaveAddress = new ProfessionalShouldHaveAddressSpecification();

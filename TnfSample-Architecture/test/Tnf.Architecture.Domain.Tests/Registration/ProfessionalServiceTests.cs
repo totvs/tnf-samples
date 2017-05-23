@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
 using System;
@@ -11,6 +10,8 @@ using Tnf.Architecture.Domain.Registration;
 using Xunit;
 using Shouldly;
 using System.Linq;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -34,20 +35,28 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             var professionalList = new List<ProfessionalDto>() { professionalDto };
 
-            var professionalPaging = new PagingResponseDto<ProfessionalDto>(professionalList);
+            var professionalPaging = new SuccessResponseListDto<ProfessionalDto>();
+            professionalPaging.Items = professionalList;
 
+            var builder = new ProfessionalBuilder()
+                   .WithProfessionalId(professionalDto.ProfessionalId)
+                   .WithCode(professionalDto.Code)
+                   .WithName(professionalDto.Name)
+                   .WithAddress(professionalDto.Address)
+                   .WithPhone(professionalDto.Phone)
+                   .WithEmail(professionalDto.Email);
 
             _profissionalRepository.GetAllProfessionals(Arg.Any<GetAllProfessionalsDto>())
                 .Returns(professionalPaging);
 
-            _profissionalRepository.GetProfessional(Arg.Is<ProfessionalKeysDto>(p => p.ProfessionalId == 1 && p.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
+            _profissionalRepository.GetProfessional(Arg.Is<RequestDto<ProfessionalKeysDto>>(p => p.Key.ProfessionalId == 1 && p.Key.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(professionalDto);
 
-            _profissionalRepository.CreateProfessional(Arg.Any<ProfessionalDto>())
-                .Returns(professionalDto);
+            _profissionalRepository.CreateProfessional(Arg.Any<Professional>())
+                .Returns(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")));
 
-            _profissionalRepository.UpdateProfessional(Arg.Any<ProfessionalDto>())
-                .Returns(professionalDto);
+            _profissionalRepository.UpdateProfessional(Arg.Any<Professional>())
+                .Returns(builder.Instance);
 
             _profissionalRepository.DeleteProfessional(Arg.Is<ProfessionalKeysDto>(p => p.ProfessionalId == 1 && p.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(true);
@@ -79,15 +88,14 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.True(allProfessionals.Success);
-            Assert.Empty(allProfessionals.Notifications);
-            Assert.True(allProfessionals.Data.Count == 1);
+            Assert.True(allProfessionals.Items.Count == 1);
         }
 
         [Fact]
         public void Professional_Service_Return_Professional()
         {
             // Act
-            var professional = _profissionalService.GetProfessional(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")));
+            var professional = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"))));
 
             // Assert
             Assert.True(professional.ProfessionalId == 1);
@@ -99,7 +107,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Not_Return_Non_Existing_Professional()
         {
             // Act
-            var professional = _profissionalService.GetProfessional(new ProfessionalKeysDto(99, Guid.NewGuid()));
+            var professional = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
 
             // Assert
             Assert.Null(professional);
@@ -113,7 +121,6 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.True(response.Success);
-            Assert.Empty(response.Notifications);
         }
 
         [Fact]
@@ -124,7 +131,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(response.Success);
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
@@ -141,8 +150,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.True(responseBase.Success);
-            Assert.Empty(responseBase.Notifications);
-            Assert.True(responseBase.Data.Name == "João da Silva");
+            Assert.IsType(typeof(ProfessionalDto), responseBase);
+            var professional = responseBase as ProfessionalDto;
+            Assert.True(professional.Name == "João da Silva");
         }
 
         [Fact]
@@ -153,14 +163,15 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.Null(responseBase.Data);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), responseBase);
+            var errorResponse = responseBase as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -179,8 +190,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.True(responseBase.Success);
-            Assert.Empty(responseBase.Notifications);
-            Assert.True(responseBase.Data.Name == "João da Silva");
+            Assert.IsType(typeof(ProfessionalDto), responseBase);
+            var professional = responseBase as ProfessionalDto;
+            Assert.True(professional.Name == "João da Silva");
         }
 
         [Fact]
@@ -191,13 +203,15 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), responseBase);
+            var errorResponse = responseBase as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -216,8 +230,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(responseBase.Success);
-            Assert.Null(responseBase.Data);
-            Assert.True(responseBase.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), responseBase);
+            var errorResponse = responseBase as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
     }

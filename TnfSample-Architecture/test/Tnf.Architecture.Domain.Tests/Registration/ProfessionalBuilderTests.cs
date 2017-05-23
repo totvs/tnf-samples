@@ -2,6 +2,7 @@
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 using System.Linq;
+using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -39,7 +40,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -57,7 +60,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -75,7 +80,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -93,7 +100,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -111,7 +120,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -129,7 +140,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -147,7 +160,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             // Assert
             Assert.False(build.Success);
-            Assert.True(build.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.IsType(typeof(ErrorResponseDto), build);
+            var errorResponse = build as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
         }
     }
 }

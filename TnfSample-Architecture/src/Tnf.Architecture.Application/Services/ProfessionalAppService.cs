@@ -1,9 +1,10 @@
 ﻿using Tnf.Application.Services;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Dto;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Dto.Response;
+using Tnf.Dto.Interfaces;
+using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -16,14 +17,14 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public PagingResponseDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
+        public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
 
-        public ResponseDtoBase<ProfessionalDto> CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
+        public IResponseDto CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
 
-        public ResponseDtoBase DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
+        public IResponseDto DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
 
-        public ProfessionalDto GetProfessional(ProfessionalKeysDto keys) => _service.GetProfessional(keys);
+        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys) => _service.GetProfessional(keys);
 
-        public ResponseDtoBase<ProfessionalDto> UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
+        public IResponseDto UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
     }
 }

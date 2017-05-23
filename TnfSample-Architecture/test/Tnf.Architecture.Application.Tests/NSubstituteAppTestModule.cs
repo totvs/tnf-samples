@@ -4,14 +4,15 @@ using Tnf.Modules;
 using Tnf.TestBase;
 using Tnf.Configuration.Startup;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Dto;
 using NSubstitute;
 using Castle.MicroKernel.Registration;
 using Tnf.Reflection.Extensions;
 using Castle.Core.Logging;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Dto.ValueObjects;
-using System.Linq;
+using Tnf.Dto.Response;
+using Tnf.Dto.Request;
+using Tnf.Architecture.Domain.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -38,25 +39,29 @@ namespace Tnf.Architecture.Application.Tests
                 var instance = Substitute.For<IWhiteHouseRepository>();
 
                 var president = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
-                var alterPresident = new PresidentDto("1", "Alter President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
-                var presidentsToInsert = new List<PresidentDto>() { president };
+                var builder = new PresidentBuilder()
+                   .WithId(president.Id)
+                   .WithName("Alter President")
+                   .WithAddress(president.Address);
 
-                var presidentsToGetAll = new PagingResponseDto<PresidentDto>();
-                presidentsToGetAll.Data.Add(president);
-                presidentsToGetAll.Data.Add(president);
+                var ids = new List<string>() { "1" };
 
-                instance.GetPresidentById("1")
+                var presidentsToGetAll = new SuccessResponseListDto<PresidentDto>();
+                presidentsToGetAll.Items.Add(president);
+                presidentsToGetAll.Items.Add(president);
+
+                instance.GetPresidentById(new RequestDto<string>("1"))
                     .Returns(Task.FromResult(president));
 
                 instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                     .Returns(Task.FromResult(presidentsToGetAll));
 
-                instance.InsertPresidentsAsync(Arg.Any<List<PresidentDto>>(), true)
-                    .Returns(Task.FromResult(presidentsToInsert.ToList()));
+                instance.InsertPresidentsAsync(Arg.Any<List<President>>(), true)
+                    .Returns(Task.FromResult(ids));
 
-                instance.UpdatePresidentsAsync(Arg.Is<PresidentDto>(p => p.Id == "1"))
-                    .Returns(Task.FromResult(alterPresident));
+                instance.UpdatePresidentsAsync(Arg.Is<President>(p => p.Id == "1"))
+                    .Returns(Task.FromResult(builder.Instance));
 
                 instance.DeletePresidentsAsync("1")
                     .Returns(Task.FromResult(true));

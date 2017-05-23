@@ -3,7 +3,7 @@ using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    internal class Professional
+    public class Professional
     {
         public decimal ProfessionalId { get; internal set; }
         public string Name { get; internal set; }
