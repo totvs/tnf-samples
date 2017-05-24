@@ -135,7 +135,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<IResponseDto>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<SpecialtyDto>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -144,9 +144,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.True(response.Result.Success);
-            Assert.IsType(typeof(SpecialtyDto), response.Result);
-            var specialty = response.Result as SpecialtyDto;
-            Assert.Equal(specialty.Description, "Cirurgia Torácica");
+            Assert.Equal(response.Result.Description, "Cirurgia Torácica");
         }
 
         [Fact]
@@ -171,18 +169,16 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var specialtyDto = new SpecialtyDto();
 
             // Act
-            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<IResponseDto>>(
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ErrorResponseDto>>(
                 $"/{RouteConsts.Specialty}",
                 specialtyDto,
-                HttpStatusCode.OK
+                HttpStatusCode.BadRequest
             );
 
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response.Result);
-            var errorResponse = response.Result as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -196,7 +192,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<IResponseDto>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<SpecialtyDto>>(
                 $"{RouteConsts.Specialty}/1",
                 specialtyDto,
                 HttpStatusCode.OK
@@ -205,10 +201,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.True(response.Result.Success);
-            Assert.IsType(typeof(SpecialtyDto), response.Result);
-            var specialty = response.Result as SpecialtyDto;
-            Assert.Equal(specialty.Id, 1);
-            Assert.Equal(specialty.Description, "Cirurgia Torácica");
+            Assert.Equal(response.Result.Id, 1);
+            Assert.Equal(response.Result.Description, "Cirurgia Torácica");
         }
 
         [Fact]
@@ -245,18 +239,16 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Empty_Specialty_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<IResponseDto>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ErrorResponseDto>>(
                 $"{RouteConsts.Specialty}/1",
                 new SpecialtyDto(),
-                HttpStatusCode.OK
+                HttpStatusCode.BadRequest
             );
 
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response.Result);
-            var errorResponse = response.Result as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -270,7 +262,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<IResponseDto>>(
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, AjaxResponse<ErrorResponseDto>>(
                 $"{RouteConsts.Specialty}/10",
                 specialtyDto,
                 HttpStatusCode.NotFound
@@ -279,16 +271,14 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response.Result);
-            var errorResponse = response.Result as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
+            var responseDelete = await DeleteResponseAsObjectAsync<AjaxResponse<SuccessResponseDto>>(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
@@ -316,7 +306,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<AjaxResponse<IResponseDto>>(
+            var response = await DeleteResponseAsObjectAsync<AjaxResponse<ErrorResponseDto>>(
                 $"{RouteConsts.Specialty}/10",
                 HttpStatusCode.NotFound
             );
@@ -324,9 +314,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.True(response.Success);
             Assert.False(response.Result.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response.Result);
-            var errorResponse = response.Result as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(response.Result.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }
 }

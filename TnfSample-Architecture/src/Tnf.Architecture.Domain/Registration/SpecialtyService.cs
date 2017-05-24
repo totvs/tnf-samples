@@ -1,4 +1,5 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
+﻿using System.Net;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
@@ -33,6 +34,7 @@ namespace Tnf.Architecture.Domain.Registration
         public IResponseDto CreateSpecialty(SpecialtyDto dto)
         {
             var builder = new SpecialtyBuilder()
+                   .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
             var response = builder.Build();
@@ -55,6 +57,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Specialty.Error.CouldNotFindSpecialty);
 
             builder
+                .WithHttpStatus(HttpStatusCode.NotFound)
                 .IsTrue(Repository.ExistsSpecialty(id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
             var response = builder.Build();
@@ -68,6 +71,7 @@ namespace Tnf.Architecture.Domain.Registration
         public IResponseDto UpdateSpecialty(SpecialtyDto dto)
         {
             var builder = new SpecialtyBuilder()
+                   .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
             var response = builder.Build();
@@ -81,6 +85,7 @@ namespace Tnf.Architecture.Domain.Registration
                 builder = new SpecialtyBuilder(builder.Instance);
 
                 builder
+                    .WithHttpStatus(HttpStatusCode.NotFound)
                     .IsTrue(Repository.ExistsSpecialty(dto.Id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
                 response = builder.Build();

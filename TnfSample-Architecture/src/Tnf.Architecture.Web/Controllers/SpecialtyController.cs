@@ -26,8 +26,8 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
 
             var response = _specialtyAppService.GetAllSpecialties(requestDto);
-
-            return Ok(response);
+            
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpGet("{id}")]
@@ -49,8 +49,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (specialty == null)
                 return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
-            var result = _specialtyAppService.CreateSpecialty(specialty);
-            return Ok(result);
+            var response = _specialtyAppService.CreateSpecialty(specialty);
+
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpPut("{id}")]
@@ -63,11 +64,9 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(specialty)}");
 
             specialty.Id = id;
-            var result = _specialtyAppService.UpdateSpecialty(specialty);
-            if (result.Success)
-                return Ok(result);
+            var response = _specialtyAppService.UpdateSpecialty(specialty);
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpDelete("{id}")]
@@ -76,11 +75,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (id <= 0)
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var result = _specialtyAppService.DeleteSpecialty(id);
-            if (result.Success)
-                return Ok(result);
+            var response = _specialtyAppService.DeleteSpecialty(id);
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
     }
 }

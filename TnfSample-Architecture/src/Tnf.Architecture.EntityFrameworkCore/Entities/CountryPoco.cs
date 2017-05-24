@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Tnf.Architecture.Dto;
-using Tnf.AutoMapper;
 using Tnf.Domain.Entities;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Entities
 {
-    [AutoMap(typeof(CountryDto))]
     [Table("Countries")]
     public class CountryPoco : Entity
     {

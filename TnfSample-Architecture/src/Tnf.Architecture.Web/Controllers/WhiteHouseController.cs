@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
@@ -27,8 +28,8 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
 
             var response = await _whiteHouseAppService.GetAllPresidents(requestDto);
-
-            return Ok(response);
+            
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpGet("{id}")]
@@ -51,7 +52,8 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(president)}");
 
             var response = await _whiteHouseAppService.InsertPresidentAsync(president);
-            return Ok(response);
+
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpPut("{id}")]
@@ -64,11 +66,9 @@ namespace Tnf.Architecture.Web.Controllers
                 return BadRequest($"Invalid parameter: {nameof(president)}");
 
             president.Id = id;
-            var result = await _whiteHouseAppService.UpdatePresidentAsync(president);
-            if (result.Success)
-                return Ok(result);
+            var response = await _whiteHouseAppService.UpdatePresidentAsync(president);
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpDelete("{id}")]
@@ -77,11 +77,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (string.IsNullOrWhiteSpace(id))
                 return BadRequest($"Invalid parameter: {nameof(id)}");
 
-            var result = await _whiteHouseAppService.DeletePresidentAsync(id);
-            if (result.Success)
-                return Ok(result);
+            var response = await _whiteHouseAppService.DeletePresidentAsync(id);
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
     }
 }

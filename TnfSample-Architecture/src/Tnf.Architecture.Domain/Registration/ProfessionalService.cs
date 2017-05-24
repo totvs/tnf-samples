@@ -1,4 +1,5 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
+﻿using System.Net;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
@@ -25,10 +26,12 @@ namespace Tnf.Architecture.Domain.Registration
         public IResponseDto CreateProfessional(ProfessionalDto dto)
         {
             var builder = new ProfessionalBuilder()
+                   .WithProfessionalId(dto.ProfessionalId)
+                   .WithCode(dto.Code)
                    .WithName(dto.Name)
-                   .WithAddress(dto.Address)
                    .WithPhone(dto.Phone)
-                   .WithEmail(dto.Email);
+                   .WithEmail(dto.Email)
+                   .WithAddress(dto.Address);
 
             var response = builder.Build();
 
@@ -36,9 +39,8 @@ namespace Tnf.Architecture.Domain.Registration
             {
                 var keys = Repository.CreateProfessional(builder.Instance);
 
-                builder = new ProfessionalBuilder(builder.Instance)
-                   .WithProfessionalId(keys.ProfessionalId)
-                   .WithCode(keys.Code);
+                dto.ProfessionalId = keys.ProfessionalId;
+                dto.Code = keys.Code;
 
                 Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
 
@@ -57,6 +59,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Professional.Error.CouldNotFindProfessional);
 
             builder
+                .WithHttpStatus(HttpStatusCode.NotFound)
                 .IsTrue(Repository.ExistsProfessional(keys), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
             var response = builder.Build();
@@ -71,10 +74,11 @@ namespace Tnf.Architecture.Domain.Registration
         {
             var builder = new ProfessionalBuilder()
                    .WithProfessionalId(dto.ProfessionalId)
+                   .WithCode(dto.Code)
                    .WithName(dto.Name)
-                   .WithAddress(dto.Address)
                    .WithPhone(dto.Phone)
-                   .WithEmail(dto.Email);
+                   .WithEmail(dto.Email)
+                   .WithAddress(dto.Address);
 
             var build = builder.Build();
 
@@ -89,6 +93,7 @@ namespace Tnf.Architecture.Domain.Registration
                 builder = new ProfessionalBuilder(builder.Instance);
 
                 builder
+                    .WithHttpStatus(HttpStatusCode.NotFound)
                     .IsTrue(Repository.ExistsProfessional(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code)), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
                 response = builder.Build();

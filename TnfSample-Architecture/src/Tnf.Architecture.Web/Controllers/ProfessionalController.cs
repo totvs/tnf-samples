@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Web.Controllers
 
             var response = _professionalAppService.GetAllProfessionals(requestDto);
 
-            return Ok(response);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpGet("{professionalId}/{code}")]
@@ -53,11 +53,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (professional == null)
                 return BadRequest($"Invalid parameter: {nameof(professional)}");
 
-            var result = _professionalAppService.CreateProfessional(professional);
+            var response = _professionalAppService.CreateProfessional(professional);
 
-
-
-            return Ok(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpPut("{professionalId}/{code}")]
@@ -75,11 +73,9 @@ namespace Tnf.Architecture.Web.Controllers
             professional.ProfessionalId = professionalId;
             professional.Code = code;
 
-            var result = _professionalAppService.UpdateProfessional(professional);
-            if (result.Success)
-                return Ok(result);
+            var response = _professionalAppService.UpdateProfessional(professional);
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpDelete("{professionalId}/{code}")]
@@ -91,11 +87,9 @@ namespace Tnf.Architecture.Web.Controllers
             if (code == Guid.Empty)
                 return BadRequest($"Invalid parameter: {nameof(code)}");
 
-            var result = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
-            if (result.Success)
-                return Ok(result);
+            var response = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
 
-            return NotFound(result);
+            return StatusCode(response.GetHttpStatus(), response);
         }
     }
 }

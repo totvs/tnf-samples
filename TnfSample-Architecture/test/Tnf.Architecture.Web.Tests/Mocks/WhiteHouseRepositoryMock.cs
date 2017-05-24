@@ -12,31 +12,32 @@ using Tnf.Dto.Response;
 using Tnf.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.AutoMapper;
+using Tnf.Architecture.Data.Entities;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
     public class WhiteHouseRepositoryMock : IWhiteHouseRepository
     {
-        private readonly ConcurrentDictionary<string, PresidentDto> _presidents = null;
+        private readonly ConcurrentDictionary<string, PresidentPoco> _presidents = null;
 
         public WhiteHouseRepositoryMock()
         {
-            var source = new Dictionary<string, PresidentDto>()
+            var source = new Dictionary<string, PresidentPoco>()
             {
-                { "1", new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))) },
-                { "2", new PresidentDto("2", "Bill Clinton", new Address("Rua de teste", "123", "APT 12", new ZipCode("87654321"))) },
-                { "3", new PresidentDto("3", "Donald Trump", new Address("Rua de teste", "123", "APT 12", new ZipCode("12341234"))) },
-                { "4", new PresidentDto("4", "Thomas Jefferson", new Address("Rua de teste", "123", "APT 12", new ZipCode("56785678"))) },
-                { "5", new PresidentDto("5", "Abraham Lincoln", new Address("Rua de teste", "123", "APT 12", new ZipCode("14785236"))) },
-                { "6", new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("85236417"))) }
+                { "1", new PresidentPoco(){ Id="1", Name="George Washington", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")) } },
+                { "2", new PresidentPoco(){ Id="2", Name="Bill Clinton", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("87654321")) } },
+                { "3", new PresidentPoco(){ Id="3", Name="Donald Trump", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("12341234")) } },
+                { "4", new PresidentPoco(){ Id="4", Name="Thomas Jefferson", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("56785678")) } },
+                { "5", new PresidentPoco(){ Id="5", Name="Abraham Lincoln", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("14785236")) } },
+                { "6", new PresidentPoco(){ Id="6", Name="Ronald Reagan", Address=new Address("Rua de teste", "123", "APT 12", new ZipCode("85236417")) } },
             };
 
-            _presidents = new ConcurrentDictionary<string, PresidentDto>(source);
+            _presidents = new ConcurrentDictionary<string, PresidentPoco>(source);
         }
 
         public Task<bool> DeletePresidentsAsync(string id)
         {
-            var result = _presidents.TryRemove(id, out PresidentDto presidentDto);
+            var result = _presidents.TryRemove(id, out PresidentPoco presidentpoco);
 
             return Task.FromResult(result);
         }
@@ -51,22 +52,22 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .ToList();
 
             var result = new SuccessResponseListDto<PresidentDto>();
-            result.Items = presidents;
+            result.Items = presidents.MapTo<List<PresidentDto>>();
 
             return Task.FromResult(result);
         }
 
         public Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            _presidents.TryGetValue(requestDto.Key, out PresidentDto dto);
+            _presidents.TryGetValue(requestDto.Key, out PresidentPoco presidentpoco);
 
-            return Task.FromResult(dto);
+            return Task.FromResult(presidentpoco.MapTo<PresidentDto>());
         }
 
         public Task<List<string>> InsertPresidentsAsync(List<President> presidents, bool sync = false)
         {
             foreach (var item in presidents)
-                _presidents.TryAdd(item.Id, item.MapTo<PresidentDto>());
+                _presidents.TryAdd(item.Id, item.MapTo<PresidentPoco>());
 
             var allInsertedDtos = _presidents.Select(s => s.Value).ToList();
 
@@ -75,10 +76,10 @@ namespace Tnf.Architecture.Web.Tests.Mocks
 
         public Task<President> UpdatePresidentsAsync(President president)
         {
-            var deleted = _presidents.TryRemove(president.Id, out PresidentDto removedDto);
+            var deleted = _presidents.TryRemove(president.Id, out PresidentPoco removedPoco);
 
             if (deleted)
-                _presidents.TryAdd(president.Id, president.MapTo<PresidentDto>());
+                _presidents.TryAdd(president.Id, president.MapTo<PresidentPoco>());
             else
                 president = null;
 

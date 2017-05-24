@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.AutoMapper;
 using Tnf.Domain.Entities;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Entities
 {
-    [AutoMap(typeof(ProfessionalDto))]
     public class ProfessionalPoco : Entity
     {
         public ProfessionalPoco()
