@@ -11,6 +11,7 @@ using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Dto.Response;
 using Tnf.Dto.Request;
+using System;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -26,6 +27,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             _professionalPoco = new ProfessionalPoco()
             {
                 ProfessionalId = 1,
+                Code = Guid.NewGuid(),
                 Address = "Rua do comercio",
                 AddressNumber = "123",
                 AddressComplement = "APT 123",
@@ -60,6 +62,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
+                Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",
@@ -105,6 +108,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
+                Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",

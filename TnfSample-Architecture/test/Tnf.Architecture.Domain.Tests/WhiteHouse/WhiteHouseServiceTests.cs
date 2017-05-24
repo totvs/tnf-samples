@@ -44,7 +44,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             _whiteHouseRepository.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                 .Returns(Task.FromResult(presidentPaging));
 
-            _whiteHouseRepository.GetPresidentById(Arg.Is(new RequestDto<string>("1")))
+            _whiteHouseRepository.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.Key == "1"))
                 .Returns(Task.FromResult(presidentDto));
 
             _whiteHouseRepository.InsertPresidentsAsync(Arg.Any<List<President>>())
@@ -89,6 +89,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var president = await _whiteHouseService.GetPresidentById(new RequestDto<string>("1"));
 
             // Assert
+            Assert.NotNull(president);
             Assert.True(president.Id == "1");
             Assert.True(president.Name == "George Washington");
         }

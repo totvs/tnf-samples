@@ -58,7 +58,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public async Task<IResponseDto> DeletePresidentAsync(string id)
         {
-            var builder = new PresidentBuilder();
+            var builder = new Builder();
 
             var notificationMessage = LocalizationHelper.GetString(
                 AppConsts.LocalizationSourceName,

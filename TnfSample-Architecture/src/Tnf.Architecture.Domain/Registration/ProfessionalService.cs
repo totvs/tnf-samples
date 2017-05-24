@@ -50,7 +50,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public IResponseDto DeleteProfessional(ProfessionalKeysDto keys)
         {
-            var builder = new ProfessionalBuilder();
+            var builder = new Builder();
 
             var notificationMessage = LocalizationHelper.GetString(
                 AppConsts.LocalizationSourceName,

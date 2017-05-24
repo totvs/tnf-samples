@@ -62,6 +62,8 @@ namespace Tnf.Architecture.Mapper.Tests
             ProfessionalDto mappDto = poco.MapTo<ProfessionalDto>();
 
             Assert.NotNull(mappDto);
+            Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
+            Assert.Equal(poco.Code, mappDto.Code);
             Assert.Equal(poco.Name, mappDto.Name);
             Assert.Equal(poco.Email, mappDto.Email);
             Assert.Equal(poco.Phone, mappDto.Phone);

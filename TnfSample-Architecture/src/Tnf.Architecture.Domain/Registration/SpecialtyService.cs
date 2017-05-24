@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public IResponseDto DeleteSpecialty(int id)
         {
-            var builder = new SpecialtyBuilder();
+            var builder = new Builder();
 
             var notificationMessage = LocalizationHelper.GetString(
                 AppConsts.LocalizationSourceName,

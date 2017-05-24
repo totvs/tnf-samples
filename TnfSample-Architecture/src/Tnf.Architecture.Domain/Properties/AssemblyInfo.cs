@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly: InternalsVisibleTo("Tnf.Architecture.Domain.Tests")]
+[assembly: InternalsVisibleTo("Tnf.Architecture.Mapper.Tests")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Web.Tests")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Application.Tests")]
 

@@ -11,11 +11,11 @@ using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
-    public class WriteHouseAppServiceTests : NSubstituteAppTestBase
+    public class WhiteHouseAppServiceTests : NSubstituteAppTestBase
     {
         private readonly IWhiteHouseAppService _whiteHouseAppService;
 
-        public WriteHouseAppServiceTests()
+        public WhiteHouseAppServiceTests()
         {
             _whiteHouseAppService = LocalIocManager.Resolve<IWhiteHouseAppService>();
         }
