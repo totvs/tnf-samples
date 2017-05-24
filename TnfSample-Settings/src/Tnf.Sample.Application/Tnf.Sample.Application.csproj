@@ -15,16 +15,10 @@
     <ProjectReference Include="..\Tnf.Sample.EntityFrameworkCore\Tnf.Sample.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
-    <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
+        <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
+        <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
+    </ItemGroup>
 
 </Project>

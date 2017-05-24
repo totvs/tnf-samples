@@ -1,54 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>Tnf.Sample.Web</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>Tnf.Sample.Web</PackageId>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp1.1</TargetFramework>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <AssemblyName>Tnf.Sample.Web</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <PackageId>Tnf.Sample.Web</PackageId>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Update="log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-    <None Update="wwwroot\**\*;Views\**\*">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="App.config" />
+        <None Update="log4net.config">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tnf.Sample.Application\Tnf.Sample.Application.csproj" />
-    <ProjectReference Include="..\Tnf.Sample.EntityFrameworkCore\Tnf.Sample.EntityFrameworkCore.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tnf.Sample.Application\Tnf.Sample.Application.csproj" />
+        <ProjectReference Include="..\Tnf.Sample.EntityFrameworkCore\Tnf.Sample.EntityFrameworkCore.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="1.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
-    <PackageReference Include="Castle.Windsor-log4net" Version="3.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
-    <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-    <PackageReference Include="Tnf.App.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="2.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+        <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
+        <PackageReference Include="Tnf.App.AspNetCore" Version="1.0.0" />
+        <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
+        <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
+    </ItemGroup>
 
 </Project>
