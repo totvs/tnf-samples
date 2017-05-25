@@ -86,22 +86,27 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public async Task WhiteHouse_Service_Return_PresidentById()
         {
             // Act
-            var president = await _whiteHouseService.GetPresidentById(new RequestDto<string>("1"));
+            var response = await _whiteHouseService.GetPresidentById(new RequestDto<string>("1"));
 
             // Assert
-            Assert.NotNull(president);
-            Assert.True(president.Id == "1");
-            Assert.True(president.Name == "George Washington");
+            Assert.True(response.Success);
+            Assert.IsType(typeof(PresidentDto), response);
+            var successResponse = response as PresidentDto;
+            Assert.True(successResponse.Id == "1");
+            Assert.True(successResponse.Name == "George Washington");
         }
 
         [Fact]
         public async Task WhiteHouse_Service_Not_Return_Non_Existing_President()
         {
             // Act
-            var president = await _whiteHouseService.GetPresidentById(new RequestDto<string>("99"));
+            var response = await _whiteHouseService.GetPresidentById(new RequestDto<string>("99"));
 
             // Assert
-            Assert.Null(president);
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
         [Fact]

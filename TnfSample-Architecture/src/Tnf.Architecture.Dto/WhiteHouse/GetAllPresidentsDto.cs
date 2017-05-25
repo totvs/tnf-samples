@@ -5,7 +5,7 @@ namespace Tnf.Architecture.Dto.WhiteHouse
     public class GetAllPresidentsDto : RequestAllDto
     {
         public GetAllPresidentsDto()
-            :base()
+            : base()
         {
         }
 

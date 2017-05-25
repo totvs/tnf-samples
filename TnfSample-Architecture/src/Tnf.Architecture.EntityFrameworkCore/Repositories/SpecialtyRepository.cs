@@ -43,6 +43,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
+            response.HasNext = response.Total > response.Items.Count();
 
             return response;
         }

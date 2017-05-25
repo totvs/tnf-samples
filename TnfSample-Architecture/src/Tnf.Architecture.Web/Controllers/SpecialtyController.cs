@@ -17,38 +17,24 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Get(GetAllSpecialtiesDto requestDto)
+        public IActionResult Get([FromQuery]GetAllSpecialtiesDto requestDto)
         {
-            if (requestDto == null)
-                return BadRequest($"Invalid parameter: {nameof(requestDto)}");
-
-            if (requestDto.PageSize <= 0)
-                return BadRequest($"Invalid parameter: {nameof(requestDto.PageSize)}");
-
             var response = _specialtyAppService.GetAllSpecialties(requestDto);
             
             return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id, RequestDto<int> requestDto)
+        public IActionResult Get(int id, [FromQuery]RequestDto<int> requestDto)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
+            var response = _specialtyAppService.GetSpecialty(requestDto.AddKey(id));
 
-            var specialty = _specialtyAppService.GetSpecialty(requestDto.AddKey(id));
-            if (specialty == null)
-                return NotFound(L("CouldNotFindSpecialty"));
-
-            return Ok(specialty);
+            return StatusCode(response.GetHttpStatus(), response);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]SpecialtyDto specialty)
         {
-            if (specialty == null)
-                return BadRequest($"Invalid parameter: {nameof(specialty)}");
-
             var response = _specialtyAppService.CreateSpecialty(specialty);
 
             return StatusCode(response.GetHttpStatus(), response);
@@ -57,14 +43,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]SpecialtyDto specialty)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
-
-            if (specialty == null)
-                return BadRequest($"Invalid parameter: {nameof(specialty)}");
-
-            specialty.Id = id;
-            var response = _specialtyAppService.UpdateSpecialty(specialty);
+            var response = _specialtyAppService.UpdateSpecialty(id, specialty);
 
             return StatusCode(response.GetHttpStatus(), response);
         }
@@ -72,9 +51,6 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
-
             var response = _specialtyAppService.DeleteSpecialty(id);
 
             return StatusCode(response.GetHttpStatus(), response);

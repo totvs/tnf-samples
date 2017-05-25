@@ -4,7 +4,6 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
-using Tnf.Dto;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Request;
 using Tnf.Dto.Response;
@@ -21,14 +20,24 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
 
-        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
+        public IResponseDto GetSpecialty(RequestDto<int> requestDto)
         {
-            SpecialtyDto result = null;
+            var builder = new Builder();
 
-            if (Repository.ExistsSpecialty(requestDto.Key))
-                result = Repository.GetSpecialty(requestDto);
+            var notificationMessage = LocalizationHelper.GetString(
+                AppConsts.LocalizationSourceName,
+                Specialty.Error.CouldNotFindSpecialty);
 
-            return result;
+            builder
+                .WithHttpStatus(HttpStatusCode.NotFound)
+                .IsTrue(Repository.ExistsSpecialty(requestDto.Key), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
+
+            var response = builder.Build();
+
+            if (response.Success)
+                response = Repository.GetSpecialty(requestDto);
+
+            return response;
         }
 
         public IResponseDto CreateSpecialty(SpecialtyDto dto)

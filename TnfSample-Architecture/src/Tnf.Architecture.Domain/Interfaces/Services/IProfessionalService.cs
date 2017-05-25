@@ -1,5 +1,4 @@
-﻿using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Registration;
+﻿using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Request;
@@ -10,7 +9,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
     public interface IProfessionalService : IDomainService
     {
         SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
-        ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
+        IResponseDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
         IResponseDto CreateProfessional(ProfessionalDto dto);
         IResponseDto UpdateProfessional(ProfessionalDto dto);
         IResponseDto DeleteProfessional(ProfessionalKeysDto keys);

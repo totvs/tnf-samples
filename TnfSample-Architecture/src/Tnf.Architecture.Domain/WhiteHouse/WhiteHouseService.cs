@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Domain.Services;
-using Tnf.Dto;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
@@ -29,9 +28,26 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request) => Repository.GetAllPresidents(request);
 
-        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
+        public async Task<IResponseDto> GetPresidentById(RequestDto<string> id)
         {
-            return await Repository.GetPresidentById(id);
+            var builder = new Builder();
+
+            var notificationMessage = LocalizationHelper.GetString(
+                AppConsts.LocalizationSourceName,
+                President.Error.CouldNotFindPresident);
+
+            var president = await Repository.GetPresidentById(id);
+
+            builder
+                .WithHttpStatus(HttpStatusCode.NotFound)
+                .IsTrue(president != null, President.Error.CouldNotFindPresident, notificationMessage);
+
+            var response = builder.Build();
+
+            if (response.Success)
+                response = president;
+
+            return response;
         }
 
         public async Task<IResponseDto> InsertPresidentAsync(PresidentDto dto, bool sync = false)
@@ -69,9 +85,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 .WithHttpStatus(HttpStatusCode.NotFound)
                 .IsTrue(await Repository.DeletePresidentsAsync(id), President.Error.CouldNotFindPresident, notificationMessage);
             
-            var response = builder.Build();
-
-            return response;
+            return builder.Build();
         }
 
         public async Task<IResponseDto> UpdatePresidentAsync(PresidentDto dto)

@@ -11,7 +11,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
     public interface IWhiteHouseService : IDomainService
     {
         Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
-        Task<PresidentDto> GetPresidentById(RequestDto<string> id);
+        Task<IResponseDto> GetPresidentById(RequestDto<string> id);
         Task<IResponseDto> InsertPresidentAsync(PresidentDto request, bool sync = false);
         Task<IResponseDto> UpdatePresidentAsync(PresidentDto president);
         Task<IResponseDto> DeletePresidentAsync(string id);

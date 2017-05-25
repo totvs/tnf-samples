@@ -10,5 +10,6 @@ namespace Tnf.Architecture.Dto.Registration
         }
 
         public string Name { get; set; }
+        public string ZipCode { get; set; }
     }
 }

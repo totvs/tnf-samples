@@ -9,7 +9,6 @@ using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Dto.Response;
 using Tnf.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
-using System;
 using System.Linq;
 
 namespace Tnf.Architecture.Data.Repositories
@@ -41,8 +40,8 @@ namespace Tnf.Architecture.Data.Repositories
             var resultData = await GetAllAsync(query);
 
             response.Total = resultData.TotalHits;
-
             response.Items = resultData.Hits.MapTo<List<PresidentDto>>();
+            response.HasNext = response.Total > response.Items.Count();
 
             return response;
         }

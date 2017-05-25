@@ -9,7 +9,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
     public interface ISpecialtyService : IDomainService
     {
         SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
-        SpecialtyDto GetSpecialty(RequestDto<int> requestDto);
+        IResponseDto GetSpecialty(RequestDto<int> requestDto);
         IResponseDto DeleteSpecialty(int id);
         IResponseDto CreateSpecialty(SpecialtyDto dto);
         IResponseDto UpdateSpecialty(SpecialtyDto dto);

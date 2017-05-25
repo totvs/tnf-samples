@@ -49,10 +49,27 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_All_Professionals_With_Success()
         {
             //Act
-            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
+            var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
-            count.Total.ShouldBe(1);
+            Assert.True(response.Success);
+            Assert.IsType(typeof(SuccessResponseListDto<ProfessionalDto>), response);
+            var successResponse = response as SuccessResponseListDto<ProfessionalDto>;
+            successResponse.Items.Count.ShouldBe(1);
+        }
+
+        [Fact]
+        public void Should_Get_All_Professionals_With_Error()
+        {
+            //Act
+            var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
+
+            //Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("Invalid parameter");
+            errorResponse.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
         }
 
         [Fact]
@@ -132,16 +149,13 @@ namespace Tnf.Architecture.Application.Tests.Services
             professional.Name = "Nome Alterado Teste";
 
             professional.Specialties.Clear();
-            result = _professionalAppService.UpdateProfessional(professional);
+            result = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professional.ProfessionalId, professional.Code), professional);
 
             //Assert
             result.Success.ShouldBeTrue();
+            Assert.IsType(typeof(ProfessionalDto), result);
+            professional = result as ProfessionalDto;
             professional.Name.ShouldBe("Nome Alterado Teste");
-
-            professional = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(professional.ProfessionalId, professional.Code)));
-
-            //Assert
-            professional.Specialties.ShouldBeEmpty();
         }
 
         [Fact]
@@ -151,6 +165,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 99,
+                Code = Guid.NewGuid(),
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",
@@ -162,7 +177,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             //Act
-            var response = _professionalAppService.UpdateProfessional(professionalDto);
+            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
 
             // Assert
             Assert.False(response.Success);
@@ -175,21 +190,27 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Professional_With_Success()
         {
             //Act
-            var result = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, _professionalPoco.Code)));
+            var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, _professionalPoco.Code)));
 
             //Assert
-            result.ProfessionalId.ShouldBe(1);
-            result.Code.ShouldBe(_professionalPoco.Code);
+            Assert.True(response.Success);
+            Assert.IsType(typeof(ProfessionalDto), response);
+            var successResponse = response as ProfessionalDto;
+            successResponse.ProfessionalId.ShouldBe(1);
+            successResponse.Code.ShouldBe(_professionalPoco.Code);
         }
 
         [Fact]
         public void Should_Get_Professional_With_Error()
         {
             // Act
-            var result = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, _professionalPoco.Code)));
+            var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, _professionalPoco.Code)));
 
             // Assert
-            result.ShouldBeNull();
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
@@ -202,7 +223,10 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             //Assert
             Assert.True(response.Success);
-            count.Items.ShouldBeEmpty();
+            Assert.True(count.Success);
+            Assert.IsType(typeof(SuccessResponseListDto<ProfessionalDto>), count);
+            var successResponse = count as SuccessResponseListDto<ProfessionalDto>;
+            successResponse.Items.ShouldBeEmpty();
         }
 
         [Fact]

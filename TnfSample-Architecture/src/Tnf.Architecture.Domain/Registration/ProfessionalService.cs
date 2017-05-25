@@ -4,7 +4,6 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
-using Tnf.Dto;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Request;
 using Tnf.Dto.Response;
@@ -21,7 +20,25 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
 
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys) => Repository.GetProfessional(keys);
+        public IResponseDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
+        {
+            var builder = new Builder();
+
+            var notificationMessage = LocalizationHelper.GetString(
+                AppConsts.LocalizationSourceName,
+                Professional.Error.CouldNotFindProfessional);
+
+            builder
+                .WithHttpStatus(HttpStatusCode.NotFound)
+                .IsTrue(Repository.ExistsProfessional(keys.Key), Professional.Error.CouldNotFindProfessional, notificationMessage);
+
+            var response = builder.Build();
+
+            if (response.Success)
+                response = Repository.GetProfessional(keys);
+
+            return response;
+        }
 
         public IResponseDto CreateProfessional(ProfessionalDto dto)
         {

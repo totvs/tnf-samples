@@ -94,6 +94,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<ProfessionalDto>>();
+            response.HasNext = response.Total > response.Items.Count();
 
             return response;
         }

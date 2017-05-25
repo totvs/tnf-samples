@@ -83,21 +83,27 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Return_Specialty()
         {
             // Act
-            var specialty = _specialtyService.GetSpecialty(new RequestDto<int>(1));
+            var response = _specialtyService.GetSpecialty(new RequestDto<int>(1));
 
             // Assert
-            Assert.True(specialty.Id == 1);
-            Assert.True(specialty.Description == "Cirurgia Vascular");
+            Assert.True(response.Success);
+            Assert.IsType(typeof(SpecialtyDto), response);
+            var successResponse = response as SpecialtyDto;
+            Assert.True(successResponse.Id == 1);
+            Assert.True(successResponse.Description == "Cirurgia Vascular");
         }
 
         [Fact]
         public void Specialty_Service_Not_Return_Non_Existing_Specialty()
         {
             // Act
-            var specialty = _specialtyService.GetSpecialty(new RequestDto<int>(99));
+            var response = _specialtyService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            Assert.Null(specialty);
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]

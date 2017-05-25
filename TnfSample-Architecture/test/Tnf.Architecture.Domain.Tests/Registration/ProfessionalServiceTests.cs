@@ -95,22 +95,28 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Return_Professional()
         {
             // Act
-            var professional = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"))));
+            var response = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"))));
 
             // Assert
-            Assert.True(professional.ProfessionalId == 1);
-            Assert.True(professional.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"));
-            Assert.True(professional.Name == "João da Silva");
+            Assert.True(response.Success);
+            Assert.IsType(typeof(ProfessionalDto), response);
+            var successResponse = response as ProfessionalDto;
+            Assert.True(successResponse.ProfessionalId == 1);
+            Assert.True(successResponse.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"));
+            Assert.True(successResponse.Name == "João da Silva");
         }
 
         [Fact]
         public void Professional_Service_Not_Return_Non_Existing_Professional()
         {
             // Act
-            var professional = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
+            var response = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
 
             // Assert
-            Assert.Null(professional);
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]

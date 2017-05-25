@@ -27,37 +27,30 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
-        public async Task Should_Get_President_With_Success()
-        {
-            // Act
-            var result = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("1"));
-
-            // Assert
-            result.Id.ShouldBe("1");
-            result.Name.ShouldBe("New President");
-        }
-
-        [Fact]
-        public async Task Should_Get_President_With_Error()
-        {
-            // Act
-            var result = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("2"));
-
-            // Assert
-            result.ShouldBeNull();
-        }
-
-        [Fact]
         public async Task Should_Get_All_Presidents_With_Success()
         {
-            // Arrange
-            var requestDto = new GetAllPresidentsDto();
-
             // Act
-            var result = await _whiteHouseAppService.GetAllPresidents(requestDto);
+            var response = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto() { PageSize = 10 });
 
             // Assert
-            result.Items.Count.ShouldBe(2);
+            Assert.True(response.Success);
+            Assert.IsType(typeof(SuccessResponseListDto<PresidentDto>), response);
+            var successResponse = response as SuccessResponseListDto<PresidentDto>;
+            successResponse.Items.Count.ShouldBe(2);
+        }
+
+        [Fact]
+        public async Task Should_Get_All_Presidents_With_Error()
+        {
+            //Act
+            var response = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto());
+
+            //Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("Invalid parameter");
+            errorResponse.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
         }
 
         [Fact]
@@ -99,7 +92,7 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             president.Name.ShouldBe("New President");
 
-            response = await _whiteHouseAppService.UpdatePresidentAsync(new PresidentDto(
+            response = await _whiteHouseAppService.UpdatePresidentAsync(president.Id, new PresidentDto(
                 president.Id,
                 "Alter President",
                 president.Address));
@@ -115,14 +108,38 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public async Task Should_Update_President_With_Error()
         {
-            // Arrange
-            var presidentDto = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")));
-
             //Act
-            var response = await _whiteHouseAppService.UpdatePresidentAsync(new PresidentDto(
+            var response = await _whiteHouseAppService.UpdatePresidentAsync("99", new PresidentDto(
                 "99",
-                presidentDto.Name,
-                presidentDto.Address));
+                "New President",
+                new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Get_President_With_Success()
+        {
+            // Act
+            var response = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("1"));
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.IsType(typeof(PresidentDto), response);
+            var successResponse = response as PresidentDto;
+            successResponse.Id.ShouldBe("1");
+            successResponse.Name.ShouldBe("New President");
+        }
+
+        [Fact]
+        public async Task Should_Get_President_With_Error()
+        {
+            // Act
+            var response = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("2"));
 
             // Assert
             Assert.False(response.Success);
@@ -134,20 +151,12 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public async Task Should_Delete_President_With_Success()
         {
-            // Arrange
-            var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))), true);
-
             // Act
-            Assert.IsType(typeof(PresidentDto), response);
-            var president = response as PresidentDto;
-
-            response = await _whiteHouseAppService.DeletePresidentAsync(president.Id);
-
-            var pagedResult = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto());
+            var response = await _whiteHouseAppService.DeletePresidentAsync("1");
 
             // Assert
             Assert.True(response.Success);
-            pagedResult.Total.ShouldBe(0);
+            Assert.IsType(typeof(SuccessResponseDto), response);
         }
 
         [Fact]

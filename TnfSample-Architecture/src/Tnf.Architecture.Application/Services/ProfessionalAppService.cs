@@ -5,6 +5,7 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Dto.Response;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Request;
+using System;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -17,14 +18,131 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto) => _service.GetAllProfessionals(dto);
+        public IResponseDto GetAllProfessionals(GetAllProfessionalsDto request)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
 
-        public IResponseDto CreateProfessional(ProfessionalDto dto) => _service.CreateProfessional(dto);
+            if (request.PageSize <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(request.PageSize)}";
+            }
 
-        public IResponseDto DeleteProfessional(ProfessionalKeysDto keys) => _service.DeleteProfessional(keys);
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
 
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys) => _service.GetProfessional(keys);
+            return _service.GetAllProfessionals(request);
+        }
 
-        public IResponseDto UpdateProfessional(ProfessionalDto dto) => _service.UpdateProfessional(dto);
+        public IResponseDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (keys.Key.ProfessionalId <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Key.ProfessionalId)}";
+            }
+            else if (keys.Key.Code == Guid.Empty)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Key.Code)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.GetProfessional(keys);
+        }
+
+        public IResponseDto CreateProfessional(ProfessionalDto professional)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (professional == null)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(professional)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.CreateProfessional(professional);
+        }
+
+        public IResponseDto UpdateProfessional(ProfessionalKeysDto keys, ProfessionalDto professional)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (keys.ProfessionalId <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.ProfessionalId)}";
+            }
+            else if (keys.Code == Guid.Empty)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Code)}";
+            }
+            else if (professional == null)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(professional)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            professional.ProfessionalId = keys.ProfessionalId;
+            professional.Code = keys.Code;
+            return _service.UpdateProfessional(professional);
+        }
+
+        public IResponseDto DeleteProfessional(ProfessionalKeysDto keys)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (keys.ProfessionalId <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.ProfessionalId)}";
+            }
+            else if (keys.Code == Guid.Empty)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Code)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.DeleteProfessional(keys);
+        }
     }
 }

@@ -8,10 +8,10 @@ namespace Tnf.Architecture.Application.Interfaces
 {
     public interface IProfessionalAppService : IApplicationService
     {
-        SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto dto);
-        ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
-        IResponseDto CreateProfessional(ProfessionalDto dto);
-        IResponseDto UpdateProfessional(ProfessionalDto dto);
+        IResponseDto GetAllProfessionals(GetAllProfessionalsDto request);
+        IResponseDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
+        IResponseDto CreateProfessional(ProfessionalDto professional);
+        IResponseDto UpdateProfessional(ProfessionalKeysDto keys, ProfessionalDto professional);
         IResponseDto DeleteProfessional(ProfessionalKeysDto keys);
     }
 }

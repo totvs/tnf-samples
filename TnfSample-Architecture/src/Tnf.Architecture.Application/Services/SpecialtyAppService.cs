@@ -17,14 +17,115 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => _service.GetAllSpecialties(request);
+        public IResponseDto GetAllSpecialties(GetAllSpecialtiesDto request)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
 
-        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto) => _service.GetSpecialty(requestDto);
+            if (request.PageSize <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(request.PageSize)}";
+            }
 
-        public IResponseDto DeleteSpecialty(int id) => _service.DeleteSpecialty(id);
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
 
-        public IResponseDto CreateSpecialty(SpecialtyDto dto) => _service.CreateSpecialty(dto);
+            return _service.GetAllSpecialties(request);
+        }
 
-        public IResponseDto UpdateSpecialty(SpecialtyDto dto) => _service.UpdateSpecialty(dto);
+        public IResponseDto GetSpecialty(RequestDto<int> id)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (id.Key <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(id)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.GetSpecialty(id);
+        }
+
+        public IResponseDto CreateSpecialty(SpecialtyDto specialty)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (specialty == null)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(specialty)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.CreateSpecialty(specialty);
+        }
+
+        public IResponseDto UpdateSpecialty(int id, SpecialtyDto specialty)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (id <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(id)}";
+            }
+            else if (specialty == null)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(specialty)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            specialty.Id = id;
+            return _service.UpdateSpecialty(specialty);
+        }
+
+        public IResponseDto DeleteSpecialty(int id)
+        {
+            var message = "";
+            var detailedMssage = "";
+            var builder = ErrorResponseDto.DefaultBuilder;
+
+            if (id <= 0)
+            {
+                message = "Invalid parameter";
+                detailedMssage = $"Invalid parameter: {nameof(id)}";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+                return builder
+                        .WithMessage(message)
+                        .WithDetailedMessage(detailedMssage)
+                        .Build();
+
+            return _service.DeleteSpecialty(id);
+        }
     }
 }

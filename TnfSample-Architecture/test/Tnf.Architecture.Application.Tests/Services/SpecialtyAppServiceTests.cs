@@ -35,10 +35,27 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_All_Specialties_With_Success()
         {
             //Act
-            var count = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto() { PageSize = 10 });
+            var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto() { PageSize = 10 });
 
             //Assert
-            count.Total.ShouldBe(1);
+            Assert.True(response.Success);
+            Assert.IsType(typeof(SuccessResponseListDto<SpecialtyDto>), response);
+            var successResponse = response as SuccessResponseListDto<SpecialtyDto>;
+            successResponse.Items.Count.ShouldBe(1);
+        }
+
+        [Fact]
+        public void Should_Get_All_Specialties_With_Error()
+        {
+            //Act
+            var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
+
+            //Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("Invalid parameter");
+            errorResponse.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
         }
 
         [Fact]
@@ -95,7 +112,7 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             specialty.Description = "Cirurgia Vascular";
 
-            result = _specialtyAppService.UpdateSpecialty(specialty);
+            result = _specialtyAppService.UpdateSpecialty(specialty.Id, specialty);
 
             //Assert
             result.Success.ShouldBeTrue();
@@ -115,7 +132,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             //Act
-            var response = _specialtyAppService.UpdateSpecialty(specialtyDto);
+            var response = _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
 
             // Assert
             Assert.False(response.Success);
@@ -128,21 +145,27 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Specialty_With_Success()
         {
             //Act
-            var result = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
+            var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
 
             //Assert
-            result.Id.ShouldBe(1);
-            result.Description.ShouldBe(_specialtyPoco.Description);
+            Assert.True(response.Success);
+            Assert.IsType(typeof(SpecialtyDto), response);
+            var successResponse = response as SpecialtyDto;
+            successResponse.Id.ShouldBe(1);
+            successResponse.Description.ShouldBe(_specialtyPoco.Description);
         }
 
         [Fact]
         public void Should_Get_Specialty_With_Error()
         {
             // Act
-            var result = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
+            var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            result.ShouldBeNull();
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
