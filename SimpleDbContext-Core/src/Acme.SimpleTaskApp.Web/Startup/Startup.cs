@@ -24,13 +24,7 @@ namespace Acme.SimpleTaskApp.Web.Startup
             services.AddSwaggerGen();
 
             //Configure Abp and Dependency Injection
-            return services.AddAbp<SimpleTaskAppWebModule>(options =>
-            {
-                //Configure Log4Net logging
-                options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseLog4Net().WithConfig("log4net.config")
-                );
-            });
+            return services.AddAbp<SimpleTaskAppWebModule>(options => { });
 
 
         }

@@ -38,8 +38,8 @@
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
         <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
         <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-        <PackageReference Include="Tnf.App" Version="1.0.0" />
-        <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
+        <PackageReference Include="Tnf.App" Version="1.0.*" />
+        <PackageReference Include="Tnf.AspNetCore" Version="1.0.*" />
     </ItemGroup>
 
 

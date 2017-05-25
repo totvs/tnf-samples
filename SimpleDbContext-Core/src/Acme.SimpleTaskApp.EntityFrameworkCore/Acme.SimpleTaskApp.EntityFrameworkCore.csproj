@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.0.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="1.0.0" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="1.0.*" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.0.0</VersionPrefix>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>Tnf.Sample.Application</AssemblyName>
     <PackageId>Tnf.Sample.Application</PackageId>
@@ -17,8 +16,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
-        <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
-        <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
+        <PackageReference Include="Tnf.AspNetCore" Version="1.0.*" />
+        <PackageReference Include="Tnf.AutoMapper" Version="1.0.*" />
     </ItemGroup>
 
 </Project>

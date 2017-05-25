@@ -37,14 +37,7 @@ namespace Tnf.Sample.Web.Startup
             services.AddSwaggerGen();
 
             //Configure Abp and Dependency Injection
-            return services.AddTnf<SampleWebModule>(options =>
-            {
-                //Configure Log4Net logging
-                options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseLog4Net().WithConfig("log4net.config")
-                );
-            });
-
+            return services.AddTnf<SampleWebModule>(options => { });
 
         }
 
