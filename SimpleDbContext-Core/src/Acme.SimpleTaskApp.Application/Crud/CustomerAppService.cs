@@ -8,7 +8,7 @@ using Tnf.Domain.Repositories;
 
 namespace Acme.SimpleTaskApp.Crud
 {
-    public class CustomerAppService : CrudAppService<Customer, CustomerDto>
+    public class CustomerAppService : Abp.Application.Services.CrudAppService<Customer, CustomerDto>
     {
         public CustomerAppService(IRepository<Customer, int> repository) : base(repository)
         {

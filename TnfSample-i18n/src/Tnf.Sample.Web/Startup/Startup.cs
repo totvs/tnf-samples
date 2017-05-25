@@ -10,6 +10,7 @@ using Tnf.EntityFrameworkCore;
 using Tnf.AspNetCore;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Tnf.App.EntityFrameworkCore.Configuration;
 
 namespace Tnf.Sample.Web.Startup
 {
@@ -27,18 +28,16 @@ namespace Tnf.Sample.Web.Startup
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
+            services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
+
             services.AddMvc();
             services.AddSwaggerGen();
 
             //Configure Abp and Dependency Injection
-            return services.AddTnf<SampleWebModule>(options =>
-            {
-                //Configure Log4Net logging
-                options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseLog4Net().WithConfig("log4net.config")
-                );
-            });
-
+            return services.AddTnf<SampleWebModule>(options => { });
 
         }
 

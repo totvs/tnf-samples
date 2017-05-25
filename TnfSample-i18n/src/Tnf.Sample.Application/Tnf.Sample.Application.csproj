@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
-    <PackageReference Include="Tnf.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.0" />
+    <PackageReference Include="Tnf.AspNetCore" Version="1.0.*" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.*" />
   </ItemGroup>
 
 </Project>
