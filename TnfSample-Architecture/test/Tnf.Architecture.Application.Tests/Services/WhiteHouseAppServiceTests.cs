@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Dto.Enumerables;
 using Xunit;
 using System.Linq;
 using Tnf.Architecture.Domain.WhiteHouse;
@@ -49,8 +50,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.False(response.Success);
             Assert.IsType(typeof(ErrorResponseDto), response);
             var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("Invalid parameter");
-            errorResponse.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

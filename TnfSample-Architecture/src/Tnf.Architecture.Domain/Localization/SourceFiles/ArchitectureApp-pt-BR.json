@@ -1,6 +1,9 @@
 ﻿{
   "culture": "pt-BR",
   "texts": {
+    "InvalidParameter": "Parâmetro invalido",
+    "InvalidParameterDynamic": "Parâmetro invalido: {0}",
+
     "President_Title": "Presidentes",
     "PresidentZipCodeMustHaveValue": "Um presidente precisa ter um CEP",
     "PresidentNameMustHaveValue": "Um presidente precisa ter um Nome",

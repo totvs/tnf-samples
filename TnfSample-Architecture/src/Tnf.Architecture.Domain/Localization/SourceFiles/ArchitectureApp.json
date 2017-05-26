@@ -1,6 +1,9 @@
 ﻿{
   "culture": "en",
   "texts": {
+    "InvalidParameter": "Invalid parameter: {0}",
+    "InvalidParameterDynamic": "Invalid parameter",
+
     "President_Title": "Presidents",
     "PresidentZipCodeMustHaveValue": "A president must have a Zip Code",
     "PresidentNameMustHaveValue": "A president must have a Name",

@@ -1,19 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
-using Tnf.Web.Models;
 using Tnf.Architecture.Dto;
 using System.Net;
 using Tnf.Architecture.Web.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Tnf.Architecture.Dto.ValueObjects;
-using System.Collections.Generic;
-using Tnf.Dto;
+using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Dto.Response;
-using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -80,8 +77,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -111,8 +109,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -165,6 +164,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.False(response.Success);
             Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
             Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
@@ -199,8 +200,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -216,6 +218,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.False(response.Success);
             Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
             Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
@@ -261,8 +265,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

@@ -6,6 +6,11 @@ using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Response;
 using Tnf.Dto.Request;
+using Tnf.Localization;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Dto;
+using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -21,20 +26,20 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<IResponseDto> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (request.PageSize <= 0)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(request.PageSize)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(request.PageSize)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return await _whiteHouserService.GetAllPresidents(request);
@@ -42,20 +47,20 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<IResponseDto> GetPresidentById(RequestDto<string> id)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (string.IsNullOrWhiteSpace(id.Id))
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id.Id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return await _whiteHouserService.GetPresidentById(id);
@@ -63,20 +68,20 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<IResponseDto> InsertPresidentAsync(PresidentDto president, bool sync = true)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (president == null)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(president)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(president)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return await _whiteHouserService.InsertPresidentAsync(president, sync);
@@ -84,25 +89,29 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<IResponseDto> UpdatePresidentAsync(string id, PresidentDto president)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (string.IsNullOrEmpty(id))
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
-            }
-            else if (president == null)
-            {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(president)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (president == null)
+            {
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(president)) });
+            }
+
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             president.Id = id;
@@ -111,20 +120,20 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<IResponseDto> DeletePresidentAsync(string id)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (string.IsNullOrWhiteSpace(id))
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return await _whiteHouserService.DeletePresidentAsync(id);

@@ -39,8 +39,8 @@
                 return rejection;
             },
             response: function (response) {
-                if (response.data.items)
-                    response.data = response.data.items;
+                // if (response.data.items)
+                //     response.data = response.data.items;
 
                 return response;
             },

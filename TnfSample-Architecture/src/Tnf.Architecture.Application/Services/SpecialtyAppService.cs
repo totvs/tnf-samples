@@ -1,10 +1,15 @@
-﻿using Tnf.Application.Services;
+﻿using Tnf.Localization;
+using Tnf.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Dto;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Request;
 using Tnf.Dto.Response;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Enumerables;
+using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -19,20 +24,20 @@ namespace Tnf.Architecture.Application.Services
 
         public IResponseDto GetAllSpecialties(GetAllSpecialtiesDto request)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (request.PageSize <= 0)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(request.PageSize)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(request.PageSize)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return _service.GetAllSpecialties(request);
@@ -40,20 +45,20 @@ namespace Tnf.Architecture.Application.Services
 
         public IResponseDto GetSpecialty(RequestDto<int> id)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (id.Id <= 0)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id.Id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return _service.GetSpecialty(id);
@@ -61,20 +66,20 @@ namespace Tnf.Architecture.Application.Services
 
         public IResponseDto CreateSpecialty(SpecialtyDto specialty)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (specialty == null)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(specialty)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(specialty)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return _service.CreateSpecialty(specialty);
@@ -82,25 +87,29 @@ namespace Tnf.Architecture.Application.Services
 
         public IResponseDto UpdateSpecialty(int id, SpecialtyDto specialty)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (id <= 0)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
-            }
-            else if (specialty == null)
-            {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(specialty)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (specialty == null)
+            {
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(specialty)) });
+            }
+
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             specialty.Id = id;
@@ -109,20 +118,20 @@ namespace Tnf.Architecture.Application.Services
 
         public IResponseDto DeleteSpecialty(int id)
         {
-            var message = "";
-            var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
             if (id <= 0)
             {
-                message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(id)}";
+                var notificationMessage = LocalizationHelper.GetString(
+                    AppConsts.LocalizationSourceName,
+                    Error.InvalidParameterDynamic);
+
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
-            if (!string.IsNullOrEmpty(message))
+            if (builder.Notifications.Any())
                 return builder
-                        .WithMessage(message)
-                        .WithDetailedMessage(detailedMssage)
+                        .FromEnum(Error.InvalidParameter)
                         .Build();
 
             return _service.DeleteSpecialty(id);

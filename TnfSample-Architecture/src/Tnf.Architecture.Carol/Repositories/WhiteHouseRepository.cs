@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Data.Repositories
 
             response.Total = resultData.TotalHits;
             response.Items = resultData.Hits.MapTo<List<PresidentDto>>();
-            response.HasNext = response.Total > response.Items.Count();
+            response.HasNext = (request.Page * request.PageSize) > response.Items.Count();
 
             return response;
         }

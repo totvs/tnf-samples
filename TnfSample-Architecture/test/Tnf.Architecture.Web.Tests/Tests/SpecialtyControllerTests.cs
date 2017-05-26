@@ -2,16 +2,14 @@
 using Tnf.Architecture.Web.Controllers;
 using Xunit;
 using Shouldly;
-using Tnf.Web.Models;
 using Tnf.Architecture.Dto;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Dto;
+using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Dto.Response;
-using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -48,8 +46,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -108,8 +107,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -201,8 +201,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -266,8 +267,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: id");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

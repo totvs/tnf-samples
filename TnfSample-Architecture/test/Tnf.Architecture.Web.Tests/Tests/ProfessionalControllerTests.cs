@@ -1,20 +1,18 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
-using Tnf.Web.Models;
 using Tnf.Architecture.Dto;
 using System.Net;
 using Tnf.Architecture.Web.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.Dto.Enumerables;
 using System;
-using Tnf.Dto;
 using Tnf.Architecture.Dto.ValueObjects;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using System.Collections.Generic;
 using Tnf.Dto.Response;
-using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -51,8 +49,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: PageSize");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -115,19 +114,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: ProfessionalId");
-
-            // Act
-            response = await GetResponseAsObjectAsync<ErrorResponseDto>(
-                $"/{RouteConsts.Professional}/1/{Guid.Empty}",
-                HttpStatusCode.BadRequest
-            );
-
-            // Assert
-            Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: Code");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -282,20 +271,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: ProfessionalId");
-
-            // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
-                $"/{RouteConsts.Professional}/1/{Guid.Empty}",
-                new ProfessionalDto(),
-                HttpStatusCode.BadRequest
-            );
-
-            // Assert
-            Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: Code");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -367,19 +345,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: ProfessionalId");
-
-            // Act
-            response = await DeleteResponseAsObjectAsync<ErrorResponseDto>(
-                $"{RouteConsts.Professional}/1/{Guid.Empty}",
-                HttpStatusCode.BadRequest
-            );
-
-            // Assert
-            Assert.False(response.Success);
-            response.Message.ShouldBe("Invalid parameter");
-            response.DetailedMessage.ShouldBe("Invalid parameter: Code");
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
