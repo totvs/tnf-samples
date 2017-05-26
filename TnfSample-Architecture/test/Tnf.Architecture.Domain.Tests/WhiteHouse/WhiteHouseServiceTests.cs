@@ -44,7 +44,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             _whiteHouseRepository.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                 .Returns(Task.FromResult(presidentPaging));
 
-            _whiteHouseRepository.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.Key == "1"))
+            _whiteHouseRepository.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.Id == "1"))
                 .Returns(Task.FromResult(presidentDto));
 
             _whiteHouseRepository.InsertPresidentsAsync(Arg.Any<List<President>>())

@@ -27,7 +27,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id, [FromQuery]RequestDto<int> requestDto)
         {
-            var response = _specialtyAppService.GetSpecialty(requestDto.AddKey(id));
+            var response = _specialtyAppService.GetSpecialty(requestDto.WithId(id));
 
             return StatusCode(response.GetHttpStatus(), response);
         }

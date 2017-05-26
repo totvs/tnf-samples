@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Data.Repositories
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            var presidentData = await GetAsync(requestDto.Key);
+            var presidentData = await GetAsync(requestDto.Id);
 
             var president = presidentData.MapTo<PresidentDto>();
 

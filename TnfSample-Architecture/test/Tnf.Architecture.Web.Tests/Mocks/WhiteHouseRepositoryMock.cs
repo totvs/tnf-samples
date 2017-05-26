@@ -59,7 +59,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
 
         public Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            _presidents.TryGetValue(requestDto.Key, out PresidentPoco presidentpoco);
+            _presidents.TryGetValue(requestDto.Id, out PresidentPoco presidentpoco);
 
             return Task.FromResult(presidentpoco.MapTo<PresidentDto>());
         }

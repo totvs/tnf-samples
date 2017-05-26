@@ -49,7 +49,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             _profissionalRepository.GetAllProfessionals(Arg.Any<GetAllProfessionalsDto>())
                 .Returns(professionalPaging);
 
-            _profissionalRepository.GetProfessional(Arg.Is<RequestDto<ProfessionalKeysDto>>(p => p.Key.ProfessionalId == 1 && p.Key.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
+            _profissionalRepository.GetProfessional(Arg.Is<RequestDto<ProfessionalKeysDto>>(p => p.Id.ProfessionalId == 1 && p.Id.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(professionalDto);
 
             _profissionalRepository.CreateProfessional(Arg.Any<Professional>())

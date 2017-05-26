@@ -12,7 +12,7 @@ namespace Tnf.Architecture.Dto.WhiteHouse
         }
 
         public PresidentDto(string id, string name, Address address)
-            : base(new List<string>() { "address" })
+            : this()
         {
             Id = id;
             Name = name;

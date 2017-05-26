@@ -44,7 +44,7 @@ namespace Tnf.Architecture.Application.Services
             var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
-            if (id.Key <= 0)
+            if (id.Id <= 0)
             {
                 message = "Invalid parameter";
                 detailedMssage = $"Invalid parameter: {nameof(id)}";

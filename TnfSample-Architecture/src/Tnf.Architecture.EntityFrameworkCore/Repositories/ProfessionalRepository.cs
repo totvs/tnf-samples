@@ -42,7 +42,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             var dbEntity = Context.Professionals
                 .IncludeByRequestDto(requestDto)
                 .SelectFieldsByRequestDto(requestDto)
-                .SingleOrDefault(w => w.ProfessionalId == requestDto.Key.ProfessionalId && w.Code == requestDto.Key.Code);
+                .SingleOrDefault(w => w.ProfessionalId == requestDto.Id.ProfessionalId && w.Code == requestDto.Id.Code);
 
             return dbEntity;
         }

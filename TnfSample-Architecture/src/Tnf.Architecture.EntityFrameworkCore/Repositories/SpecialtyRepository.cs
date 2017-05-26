@@ -52,7 +52,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             SpecialtyDto specialty = null;
             
-            var dbEntity = base.Get(requestDto.Key);
+            var dbEntity = base.Get(requestDto.Id);
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
 

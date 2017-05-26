@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Tnf.Architecture.Domain.Interfaces.Repositories;
+﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
@@ -29,8 +28,8 @@ namespace Tnf.Architecture.Domain.Registration
                 Professional.Error.CouldNotFindProfessional);
 
             builder
-                .WithHttpStatus(HttpStatusCode.NotFound)
-                .IsTrue(Repository.ExistsProfessional(keys.Key), Professional.Error.CouldNotFindProfessional, notificationMessage);
+                .WithNotFoundStatus()
+                .IsTrue(Repository.ExistsProfessional(keys.Id), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
             var response = builder.Build();
 
@@ -76,7 +75,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Professional.Error.CouldNotFindProfessional);
 
             builder
-                .WithHttpStatus(HttpStatusCode.NotFound)
+                .WithNotFoundStatus()
                 .IsTrue(Repository.ExistsProfessional(keys), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
             var response = builder.Build();
@@ -110,7 +109,7 @@ namespace Tnf.Architecture.Domain.Registration
                 builder = new ProfessionalBuilder(builder.Instance);
 
                 builder
-                    .WithHttpStatus(HttpStatusCode.NotFound)
+                    .WithNotFoundStatus()
                     .IsTrue(Repository.ExistsProfessional(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code)), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
                 response = builder.Build();

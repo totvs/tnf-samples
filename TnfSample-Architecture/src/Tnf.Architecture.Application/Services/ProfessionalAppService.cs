@@ -45,15 +45,15 @@ namespace Tnf.Architecture.Application.Services
             var detailedMssage = "";
             var builder = ErrorResponseDto.DefaultBuilder;
 
-            if (keys.Key.ProfessionalId <= 0)
+            if (keys.Id.ProfessionalId <= 0)
             {
                 message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(keys.Key.ProfessionalId)}";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Id.ProfessionalId)}";
             }
-            else if (keys.Key.Code == Guid.Empty)
+            else if (keys.Id.Code == Guid.Empty)
             {
                 message = "Invalid parameter";
-                detailedMssage = $"Invalid parameter: {nameof(keys.Key.Code)}";
+                detailedMssage = $"Invalid parameter: {nameof(keys.Id.Code)}";
             }
 
             if (!string.IsNullOrEmpty(message))

@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpGet("{professionalId}/{code}")]
         public IActionResult Get(decimal professionalId, Guid code, [FromQuery]RequestDto<ProfessionalKeysDto> requestDto)
         {
-            var response = _professionalAppService.GetProfessional(requestDto.AddKey(new ProfessionalKeysDto(professionalId, code)));
+            var response = _professionalAppService.GetProfessional(requestDto.WithId(new ProfessionalKeysDto(professionalId, code)));
 
             return StatusCode(response.GetHttpStatus(), response);
         }

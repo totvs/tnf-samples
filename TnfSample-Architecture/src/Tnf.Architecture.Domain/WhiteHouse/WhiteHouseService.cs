@@ -11,7 +11,6 @@ using Tnf.Localization;
 using Tnf.Dto.Interfaces;
 using Tnf.Dto.Response;
 using Tnf.Dto.Request;
-using System.Net;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -39,7 +38,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             var president = await Repository.GetPresidentById(id);
 
             builder
-                .WithHttpStatus(HttpStatusCode.NotFound)
+                .WithNotFoundStatus()
                 .IsTrue(president != null, President.Error.CouldNotFindPresident, notificationMessage);
 
             var response = builder.Build();
@@ -82,7 +81,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 President.Error.CouldNotFindPresident);
 
             builder
-                .WithHttpStatus(HttpStatusCode.NotFound)
+                .WithNotFoundStatus()
                 .IsTrue(await Repository.DeletePresidentsAsync(id), President.Error.CouldNotFindPresident, notificationMessage);
             
             return builder.Build();
@@ -108,7 +107,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 var data = await Repository.UpdatePresidentsAsync(builder.Instance);
 
                 builder
-                    .WithHttpStatus(HttpStatusCode.NotFound)
+                    .WithNotFoundStatus()
                     .IsTrue(data != null, President.Error.CouldNotFindPresident, notificationMessage);
 
                 response = builder.Build();

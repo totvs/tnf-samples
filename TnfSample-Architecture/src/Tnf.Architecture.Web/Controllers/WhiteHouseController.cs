@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id, [FromQuery]RequestDto<string> requestDto)
         {
-            var response = await _whiteHouseAppService.GetPresidentById(requestDto.AddKey(id));
+            var response = await _whiteHouseAppService.GetPresidentById(requestDto.WithId(id));
 
             return StatusCode(response.GetHttpStatus(), response);
         }

@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Application.Tests
                 presidentsToGetAll.Items.Add(president);
                 presidentsToGetAll.Items.Add(president);
 
-                instance.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.Key == "1"))
+                instance.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.Id == "1"))
                     .Returns(Task.FromResult(president));
 
                 instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())

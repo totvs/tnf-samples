@@ -29,31 +29,34 @@
 
     NotifyFactory.$inject = ['totvs.app-notification.Service'];
 
-    function NotifyFactory(totvsNotification){
-		var self = this;
+    function NotifyFactory(totvsNotification) {
+        var self = this;
 
         self.showNotifications = showNotifications;
         self.encapsulateCallback = encapsulateCallback;
 
         return self;
-        
+
         function showNotifications(notifications) {
             angular.forEach(notifications, function (value) {
                 totvsNotification.notify({
                     type: 'error',
-                    title: 'Erro',
-                    detail: value.message
+                    title: value.message,
+                    detail: value.detailedMessage
                 });
             });
         }
 
-        function encapsulateCallback(callback){
-            var _callback = callback;
-            return function (result) {
-                if (result.notifications)
-                    self.showNotifications(result.notifications);
-                _callback(result);
-            }
+        function encapsulateCallback(callback) {
+            return callback;
+            // var _callback = callback;
+            // return function (result) {
+            //     if (result.message)
+            //         self.showNotifications([result]);
+            //     if (result.Details)
+            //         self.showNotifications(result.Details);
+            //     _callback(result);
+            // }
         }
     }
 

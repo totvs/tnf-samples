@@ -111,7 +111,7 @@
             }
 
             parameters.offset = start;
-            parameters.pageSize = 10;
+            parameters.pageSize = 0;
 
 			specialtyFactory.findRecords(parameters, function (result) {
 				if (result) {

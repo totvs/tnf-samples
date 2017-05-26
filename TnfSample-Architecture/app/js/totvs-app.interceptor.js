@@ -39,19 +39,13 @@
                 return rejection;
             },
             response: function (response) {
-                if (response.data.result) {
-                    var notifications = response.data.result.notifications || response.data.result.Notifications,
-                        success = response.data.result.success;
-
-                    response.data = response.data.result.data || response.data.result.items || response.data.result || {};
-                    response.data.notifications = notifications;
-                    response.data.success = success;
-                }
+                if (response.data.items)
+                    response.data = response.data.items;
 
                 return response;
             },
-            responseError: function (rejection) {
-                return rejection;
+            responseError: function (response) {
+                return response;
             }
         };
     }
