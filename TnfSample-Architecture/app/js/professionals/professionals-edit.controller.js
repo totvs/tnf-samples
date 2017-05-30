@@ -51,7 +51,7 @@
 		// *** Public Properties and Methods
 		// *********************************************************************************
 
-		self.professional = {};
+		self.professional = { _expandables: [] };
 		self.cancel = cancel;
 		self.save = save;
 		self.saveNew = saveNew;
@@ -89,12 +89,15 @@
 		// *********************************************************************************
 
 
-		specialtyFactory.findRecords({}, function (result) {
-			if (result) {
-				self.specialties = result
-			}
+		specialtyFactory.findRecords({ pageSize: 100 }, function (result) {
+			if (result)
+				self.specialties = result;
 		});
 
+		function setSpecialties() {
+			self.professional.specialties = self.professional.specialties || [];
+			self.professional.specialties = self.professional.specialties.map(s => self.specialties.filter(x => x.id === s.id)[0]);
+		};
 
 		function loadRecord(professionalId, code) {
 			professionalFactory.getRecord(professionalId, code, function (professional) {
@@ -134,32 +137,30 @@
 		}
 
 		function save() {
-			self.professional.specialties = self.professional.specialties || [];
-			self.professional.specialties = self.professional.specialties.map(function (s) { return { id: s }; });
+			setSpecialties();
 			if (self.professional.professionalId) {
 				professionalFactory.updateRecord(self.professional.professionalId, self.professional.code, self.professional, function (result) {
-					if (result.success)
+					if (!result.messages)
 						$state.go('professionals.detail', { professionalId: self.professional.professionalId, code: self.professional.code }, { reload: true });
 				});
 			} else {
 				professionalFactory.saveRecord(self.professional, function (result) {
-					if (result.success)
+					if (!result.messages)
 						$state.go('professionals.start', {}, { reload: true });
 				});
 			}
 		}
 
 		function saveNew() {
-			self.professional.specialties = self.professional.specialties || [];
-			self.professional.specialties = self.professional.specialties.map(function (s) { return { id: s }; });
+			setSpecialties();
 			if (self.professional.professionalId) {
 				professionalFactory.updateRecord(self.professional.professionalId, self.professional.code, self.professional, function (result) {
-					if (result.success)
+					if (!result.messages)
 						$state.go('professional.new', {}, { reload: true });
 				});
 			} else {
 				professionalFactory.saveRecord(self.professional, function (result) {
-					if (result.success)
+					if (!result.messages)
 						$state.go($state.current, {}, { reload: true });
 				});
 			}

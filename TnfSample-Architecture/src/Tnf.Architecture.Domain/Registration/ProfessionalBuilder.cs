@@ -19,6 +19,12 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
+        public ProfessionalBuilder WithInvalidProfessional()
+        {
+            AddEnum(Professional.Error.InvalidProfessional);
+            return this;
+        }
+
         public ProfessionalBuilder WithProfessionalId(decimal id)
         {
             Instance.ProfessionalId = id;

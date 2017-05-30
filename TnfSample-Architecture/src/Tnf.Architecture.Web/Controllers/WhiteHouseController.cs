@@ -34,7 +34,7 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]PresidentDto president, [FromQuery]bool? sync)
+        public async Task<IActionResult> Post([FromBody]PresidentDto president)
         {
             var response = await _whiteHouseAppService.InsertPresidentAsync(president);
 

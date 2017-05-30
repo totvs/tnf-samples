@@ -48,7 +48,7 @@
 		// *** Public Properties and Methods
 		// *********************************************************************************
 
-        self.president = {};
+        self.president = { _expandables: [] };
         self.loadRecord = loadRecord;
         self.applyEdit = applyEdit;
         self.remove = remove;

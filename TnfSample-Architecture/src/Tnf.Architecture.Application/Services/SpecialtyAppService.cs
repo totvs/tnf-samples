@@ -9,10 +9,12 @@ using Tnf.Dto.Request;
 using Tnf.Dto.Response;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Runtime.Validation;
 using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
+    [DisableValidation]
     public class SpecialtyAppService : ApplicationService, ISpecialtyAppService
     {
         private readonly ISpecialtyService _service;

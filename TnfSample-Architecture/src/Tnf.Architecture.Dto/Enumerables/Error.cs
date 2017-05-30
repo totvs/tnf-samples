@@ -3,6 +3,7 @@
     public enum Error
     {
         InvalidParameter = 0,
-        InvalidParameterDynamic = 1
+        InvalidParameterDynamic = 1,
+        NotFound = 2
     }
 }

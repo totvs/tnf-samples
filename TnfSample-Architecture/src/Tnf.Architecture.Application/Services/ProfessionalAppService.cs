@@ -10,10 +10,12 @@ using Tnf.Localization;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Dto;
+using Tnf.Runtime.Validation;
 using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
+    [DisableValidation]
     public class ProfessionalAppService : ApplicationService, IProfessionalAppService
     {
         private readonly IProfessionalService _service;

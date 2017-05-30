@@ -38,6 +38,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             var president = await Repository.GetPresidentById(id);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(president != null, President.Error.CouldNotFindPresident, notificationMessage);
 
@@ -52,6 +53,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
         public async Task<IResponseDto> InsertPresidentAsync(PresidentDto dto, bool sync = false)
         {
             var builder = new PresidentBuilder()
+               .WithInvalidPresident()
                .WithId(dto.Id)
                .WithName(dto.Name)
                .WithAddress(dto.Address);
@@ -81,32 +83,35 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 President.Error.CouldNotFindPresident);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(await Repository.DeletePresidentsAsync(id), President.Error.CouldNotFindPresident, notificationMessage);
-            
+
             return builder.Build();
         }
 
         public async Task<IResponseDto> UpdatePresidentAsync(PresidentDto dto)
         {
-            var builder = new PresidentBuilder()
+            var presidentBuilder = new PresidentBuilder()
+                .WithInvalidPresident()
                 .WithId(dto.Id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);
 
-            var response = builder.Build();
+            var response = presidentBuilder.Build();
 
             if (response.Success)
             {
                 var notificationMessage = LocalizationHelper.GetString(
                     AppConsts.LocalizationSourceName,
                     President.Error.CouldNotFindPresident);
+                
+                var data = await Repository.UpdatePresidentsAsync(presidentBuilder.Instance);
 
-                builder = new PresidentBuilder(builder.Instance);
-
-                var data = await Repository.UpdatePresidentsAsync(builder.Instance);
+                var builder = new Builder();
 
                 builder
+                    .WithNotFound()
                     .WithNotFoundStatus()
                     .IsTrue(data != null, President.Error.CouldNotFindPresident, notificationMessage);
 

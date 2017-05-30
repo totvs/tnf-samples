@@ -11,10 +11,12 @@ using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Dto;
 using System.Linq;
+using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Application.Services
 {
     [RemoteService(false)]
+    [DisableValidation]
     public class WhiteHouseAppService : ApplicationService, IWhiteHouseAppService
     {
         private readonly IWhiteHouseService _whiteHouserService;

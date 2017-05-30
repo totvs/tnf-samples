@@ -21,6 +21,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             ServiceProvider.GetService<SpecialtyController>().ShouldNotBeNull();
         }
 
+
         [Fact]
         public async Task GetAll_Specialties_With_Success()
         {
@@ -36,19 +37,18 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Specialties_With_Invalid_Parameters()
+        public async Task GetAll_Specialties_Filtering_By_Description_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
-                $"/{RouteConsts.Specialty}",
-                HttpStatusCode.BadRequest
-                );
+            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<SpecialtyDto>>(
+                               $"{RouteConsts.Specialty}?pageSize=10&description=Geral",
+                               HttpStatusCode.OK
+                           );
 
             // Assert
-            Assert.False(response.Success);
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Success);
+            Assert.Equal(response.Items.Count, 1);
+            Assert.Equal(response.Items[0].Description, "Cirurgia Geral");
         }
 
         [Fact]
@@ -80,6 +80,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Description, "Cirurgia Vascular");
         }
+
+        [Fact]
+        public async Task GetAll_Specialties_With_Invalid_Parameters()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+                $"/{RouteConsts.Specialty}",
+                HttpStatusCode.BadRequest
+                );
+
+            // Assert
+            Assert.False(response.Success);
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
 
         [Fact]
         public async Task Get_Specialty_With_Sucess()
@@ -123,8 +140,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
+            response.Message.ShouldBe("NotFound");
+            response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
+
 
         [Fact]
         public async Task Post_Specialty_With_Success()
@@ -149,6 +169,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Post_Null_Specialty_And_Return_Notifications()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, ErrorResponseDto>(
+                $"{RouteConsts.Specialty}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.False(response.Success);
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
         public async Task Post_Empty_Specialty_And_Return_Notifications()
         {
             //Arrange
@@ -163,8 +200,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
+            response.Message.ShouldBe("InvalidSpecialty");
+            response.DetailedMessage.ShouldBe("InvalidSpecialty");
             Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
+
 
         [Fact]
         public async Task Put_Specialty_With_Success()
@@ -207,6 +247,23 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Put_Null_Specialty_And_Return_Notifications()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<SpecialtyDto, ErrorResponseDto>(
+                $"{RouteConsts.Specialty}/1",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            Assert.False(response.Success);
+            response.Message.ShouldBe("InvalidParameter");
+            response.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
         public async Task Put_Empty_Specialty_And_Return_Notifications()
         {
             // Act
@@ -218,6 +275,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
+            response.Message.ShouldBe("InvalidSpecialty");
+            response.DetailedMessage.ShouldBe("InvalidSpecialty");
             Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
@@ -240,8 +299,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
+            response.Message.ShouldBe("NotFound");
+            response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
+
 
         [Fact]
         public async Task Delete_Specialty_With_Success()
@@ -283,6 +345,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
 
             // Assert
             Assert.False(response.Success);
+            response.Message.ShouldBe("NotFound");
+            response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }

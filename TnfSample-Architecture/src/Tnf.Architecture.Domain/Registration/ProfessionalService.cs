@@ -28,6 +28,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Professional.Error.CouldNotFindProfessional);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(Repository.ExistsProfessional(keys.Id), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
@@ -42,6 +43,7 @@ namespace Tnf.Architecture.Domain.Registration
         public IResponseDto CreateProfessional(ProfessionalDto dto)
         {
             var builder = new ProfessionalBuilder()
+                   .WithInvalidProfessional()
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)
@@ -75,6 +77,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Professional.Error.CouldNotFindProfessional);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(Repository.ExistsProfessional(keys), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
@@ -88,7 +91,8 @@ namespace Tnf.Architecture.Domain.Registration
 
         public IResponseDto UpdateProfessional(ProfessionalDto dto)
         {
-            var builder = new ProfessionalBuilder()
+            var professionalBuilder = new ProfessionalBuilder()
+                   .WithInvalidProfessional()
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)
@@ -96,9 +100,9 @@ namespace Tnf.Architecture.Domain.Registration
                    .WithEmail(dto.Email)
                    .WithAddress(dto.Address);
 
-            var build = builder.Build();
+            var build = professionalBuilder.Build();
 
-            var response = builder.Build();
+            var response = professionalBuilder.Build();
 
             if (response.Success)
             {
@@ -106,9 +110,10 @@ namespace Tnf.Architecture.Domain.Registration
                     AppConsts.LocalizationSourceName,
                     Professional.Error.CouldNotFindProfessional);
 
-                builder = new ProfessionalBuilder(builder.Instance);
+                var builder = new Builder();
 
                 builder
+                    .WithNotFound()
                     .WithNotFoundStatus()
                     .IsTrue(Repository.ExistsProfessional(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code)), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
@@ -116,7 +121,7 @@ namespace Tnf.Architecture.Domain.Registration
                 
                 if (response.Success)
                 {
-                    Repository.UpdateProfessional(builder.Instance);
+                    Repository.UpdateProfessional(professionalBuilder.Instance);
                     Repository.AddOrRemoveSpecialties(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code), dto.Specialties);
                     
                     response = dto;

@@ -12,14 +12,15 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public enum Error
         {
-            Unexpected = 0,
-            InvalidId = 1,
-            PresidentNameMustHaveValue = 2,
-            PresidentZipCodeMustHaveValue = 3,
-            PresidentAddressMustHaveValue = 4,
-            PresidentAddressComplementMustHaveValue = 5,
-            PresidentAddressNumberMustHaveValue = 6,
-            CouldNotFindPresident = 7
+            InvalidPresident = 0,
+            Unexpected = 1,
+            InvalidId = 2,
+            PresidentNameMustHaveValue = 3,
+            PresidentZipCodeMustHaveValue = 4,
+            PresidentAddressMustHaveValue = 5,
+            PresidentAddressComplementMustHaveValue = 6,
+            PresidentAddressNumberMustHaveValue = 7,
+            CouldNotFindPresident = 8
         }
     }
 }

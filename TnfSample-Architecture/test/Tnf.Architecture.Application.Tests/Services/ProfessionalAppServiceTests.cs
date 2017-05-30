@@ -121,6 +121,21 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public void Should_Insert_Null_Professional_With_Error()
+        {
+            // Act
+            var response = _professionalAppService.CreateProfessional(null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
         public void Should_Update_Professional_With_Success()
         {
             //Arrange
@@ -186,6 +201,36 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.IsType(typeof(ErrorResponseDto), response);
             var errorResponse = response as ErrorResponseDto;
             Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Invalid_Id_With_Error()
+        {
+            // Act
+            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Null_Professional_With_Error()
+        {
+            // Act
+            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

@@ -83,6 +83,21 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public async Task Should_Insert_Null_President_With_Error()
+        {
+            // Act
+            var response = await _whiteHouseAppService.InsertPresidentAsync(null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
         public async Task Should_Update_President_With_Success()
         {
             // Act
@@ -121,6 +136,36 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.IsType(typeof(ErrorResponseDto), response);
             var errorResponse = response as ErrorResponseDto;
             Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Update_Invalid_Id_With_Error()
+        {
+            // Act
+            var response = await _whiteHouseAppService.UpdatePresidentAsync("", new PresidentDto());
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Update_Null_President_With_Error()
+        {
+            // Act
+            var response = await _whiteHouseAppService.UpdatePresidentAsync("1", null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

@@ -48,7 +48,8 @@
 					class="col-lg-4 col-md-4 col-sm-4 col-xs-12"
 					ng-model="controller.professional.phone"
 					required
-					label="{{ ::'l-phone' | i18n : [] : 'js/professionals' }}">
+					label="{{ ::'l-phone' | i18n : [] : 'js/professionals' }}"
+                    ui-mask="(99) 9999?9-9999">
 				</totvs-field>
 
 				<totvs-field

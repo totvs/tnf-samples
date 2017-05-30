@@ -107,13 +107,6 @@
                     title="{{ ::'l-address-complement' | i18n : [] : 'js/presidents' }}"
                     value="{{ ::president.address.complement }}">
                 </totvs-list-item-info>
-                
-                <totvs-list-item-info
-                    title="{{ ::'l-specialties' | i18n : [] : 'js/presidents' }}">
-                    <label ng-repeat="specialty in president.specialties">
-                        {{ specialty.description }},
-                    </label>
-                </totvs-list-item-info>
             </totvs-list-item-content-detail>
         </totvs-list-item>
 

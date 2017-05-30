@@ -93,6 +93,21 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public void Should_Insert_Null_Specialty_With_Error()
+        {
+            // Act
+            var response = _specialtyAppService.CreateSpecialty(null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
         public void Should_Update_Specialty_With_Success()
         {
             //Arrange
@@ -141,6 +156,36 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.IsType(typeof(ErrorResponseDto), response);
             var errorResponse = response as ErrorResponseDto;
             Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Invalid_Id_With_Error()
+        {
+            // Act
+            var response = _specialtyAppService.UpdateSpecialty(0, new SpecialtyDto());
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Null_Specialty_With_Error()
+        {
+            // Act
+            var response = _specialtyAppService.UpdateSpecialty(1, null);
+
+            // Assert
+            Assert.False(response.Success);
+            Assert.IsType(typeof(ErrorResponseDto), response);
+            var errorResponse = response as ErrorResponseDto;
+            errorResponse.Message.ShouldBe("InvalidParameter");
+            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
+            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]

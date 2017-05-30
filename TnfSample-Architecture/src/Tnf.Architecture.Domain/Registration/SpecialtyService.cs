@@ -28,6 +28,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Specialty.Error.CouldNotFindSpecialty);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(Repository.ExistsSpecialty(requestDto.Id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
@@ -42,6 +43,7 @@ namespace Tnf.Architecture.Domain.Registration
         public IResponseDto CreateSpecialty(SpecialtyDto dto)
         {
             var builder = new SpecialtyBuilder()
+                   .WithInvalidSpecialty()
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
@@ -65,6 +67,7 @@ namespace Tnf.Architecture.Domain.Registration
                 Specialty.Error.CouldNotFindSpecialty);
 
             builder
+                .WithNotFound()
                 .WithNotFoundStatus()
                 .IsTrue(Repository.ExistsSpecialty(id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
@@ -78,11 +81,12 @@ namespace Tnf.Architecture.Domain.Registration
 
         public IResponseDto UpdateSpecialty(SpecialtyDto dto)
         {
-            var builder = new SpecialtyBuilder()
+            var specialtyBuilder = new SpecialtyBuilder()
+                   .WithInvalidSpecialty()
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
-            var response = builder.Build();
+            var response = specialtyBuilder.Build();
 
             if (response.Success)
             {
@@ -90,9 +94,10 @@ namespace Tnf.Architecture.Domain.Registration
                     AppConsts.LocalizationSourceName,
                     Specialty.Error.CouldNotFindSpecialty);
 
-                builder = new SpecialtyBuilder(builder.Instance);
+                var builder = new Builder();
 
                 builder
+                    .WithNotFound()
                     .WithNotFoundStatus()
                     .IsTrue(Repository.ExistsSpecialty(dto.Id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
@@ -100,7 +105,7 @@ namespace Tnf.Architecture.Domain.Registration
 
                 if (response.Success)
                 {
-                    Repository.UpdateSpecialty(builder.Instance);
+                    Repository.UpdateSpecialty(specialtyBuilder.Instance);
                     response = dto;
                 }
             }

@@ -17,6 +17,12 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
+        public SpecialtyBuilder WithInvalidSpecialty()
+        {
+            AddEnum(Specialty.Error.InvalidSpecialty);
+            return this;
+        }
+
         public SpecialtyBuilder WithId(int id)
         {
             Instance.Id = id;

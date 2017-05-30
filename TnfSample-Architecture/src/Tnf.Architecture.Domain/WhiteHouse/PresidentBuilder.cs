@@ -18,6 +18,12 @@ namespace Tnf.Architecture.Domain.WhiteHouse
         {
         }
 
+        public PresidentBuilder WithInvalidPresident()
+        {
+            AddEnum(President.Error.InvalidPresident);
+            return this;
+        }
+
         public PresidentBuilder WithId(string id)
         {
             Instance.Id = id;

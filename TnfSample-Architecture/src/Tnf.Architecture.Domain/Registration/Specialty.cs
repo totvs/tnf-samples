@@ -8,9 +8,10 @@ namespace Tnf.Architecture.Domain.Registration
 
         public enum Error
         {
-            Unexpected = 0,
-            SpecialtyDescriptionMustHaveValue = 1,
-            CouldNotFindSpecialty = 2
+            InvalidSpecialty = 0,
+            Unexpected = 1,
+            SpecialtyDescriptionMustHaveValue = 2,
+            CouldNotFindSpecialty = 3
         }
     }
 }

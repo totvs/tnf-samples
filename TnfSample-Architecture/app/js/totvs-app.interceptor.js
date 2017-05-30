@@ -39,8 +39,14 @@
                 return rejection;
             },
             response: function (response) {
-                // if (response.data.items)
-                //     response.data = response.data.items;
+                if (response.data.items) {
+                    var hasNext = response.data.hasNext,
+                        total = response.data.total;
+
+                    response.data = response.data.items;
+                    response.data.hasNext = hasNext;
+                    response.data.total = total;
+                }
 
                 return response;
             },
