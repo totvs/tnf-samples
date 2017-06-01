@@ -114,6 +114,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task Get_Specialty_Fields_With_Sucess()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<SpecialtyDto>(
+                               $"/{RouteConsts.Specialty}/1?fields=description",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.Id, 0);
+            Assert.Equal(response.Description, "Cirurgia Vascular");
+        }
+
+        [Fact]
         public async Task Get_Specialty_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act

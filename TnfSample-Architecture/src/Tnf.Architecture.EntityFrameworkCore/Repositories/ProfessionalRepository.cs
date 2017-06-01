@@ -53,7 +53,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             var dbEntity = GetProfessionalPoco(requestDto);
             var dto = dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
 
-            dto.RemoveExpendable(requestDto);
+            dto.RemoveExpandable(requestDto);
 
             return dto;
         }

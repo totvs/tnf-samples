@@ -27,7 +27,15 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return base.InsertAndGetId(dbEntity);
         }
 
-        public void DeleteSpecialty(int id) => base.Delete(id);
+        public void DeleteSpecialty(int id)
+        {
+            var dbEntity = base.GetAllIncluding(s => s.ProfessionalSpecialties)
+                               .SingleOrDefault(s => s.Id == id);
+
+            dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
+
+            base.Delete(dbEntity);
+        }
 
         public bool ExistsSpecialty(int id) => base.Count(s => s.Id == id) > 0;
 
@@ -51,8 +59,12 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
         {
             SpecialtyDto specialty = null;
-            
-            var dbEntity = base.Get(requestDto.GetId());
+
+            var dbEntity = base.GetAll()
+                               .IncludeByRequestDto(requestDto)
+                               .Where(w => w.Id == requestDto.GetId())
+                               .SelectFieldsByRequestDto(requestDto)
+                               .SingleOrDefault();
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
 
