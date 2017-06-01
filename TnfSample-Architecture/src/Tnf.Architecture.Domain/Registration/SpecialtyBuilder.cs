@@ -19,7 +19,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SpecialtyBuilder WithInvalidSpecialty()
         {
-            AddEnum(Specialty.Error.InvalidSpecialty);
+            AddEnum(AppConsts.LocalizationSourceName, Specialty.Error.InvalidSpecialty);
             return this;
         }
 

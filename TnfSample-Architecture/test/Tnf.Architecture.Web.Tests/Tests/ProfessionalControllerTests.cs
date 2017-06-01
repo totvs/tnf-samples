@@ -114,10 +114,60 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.True(response.Success);
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Name, "João da Silva");
+            Assert.NotNull(response.Address);
             Assert.Equal(response.Address.Street, "Rua Do Comercio");
             Assert.Equal(response.Address.Number, "123");
             Assert.Equal(response.Address.Complement, "APT 123");
+            Assert.NotNull(response.Address.ZipCode);
             Assert.Equal(response.Address.ZipCode.Number, "99888777");
+            Assert.NotNull(response.Specialties);
+            Assert.Equal(response.Specialties.Count, 0);
+        }
+
+        [Fact]
+        public async Task Get_Professional_Fields_With_Sucess()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<ProfessionalDto>(
+                               $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637?fields=name",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.ProfessionalId, 0);
+            Assert.Equal(response.Name, "João da Silva");
+            Assert.NotNull(response.Address);
+            Assert.Equal(response.Address.Street, "");
+            Assert.Equal(response.Address.Number, "");
+            Assert.Equal(response.Address.Complement, null);
+            Assert.NotNull(response.Address.ZipCode);
+            Assert.Equal(response.Address.ZipCode.Number, "");
+            Assert.NotNull(response.Specialties);
+            Assert.Equal(response.Specialties.Count, 0);
+        }
+
+        [Fact]
+        public async Task Get_Professional_Expand_With_Sucess()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<ProfessionalDto>(
+                               $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637?expand=professionalSpecialties.specialty",
+                               HttpStatusCode.OK
+                           );
+
+            // Assert
+            Assert.True(response.Success);
+            Assert.Equal(response.ProfessionalId, 1);
+            Assert.Equal(response.Name, "João da Silva");
+            Assert.NotNull(response.Address);
+            Assert.Equal(response.Address.Street, "Rua Do Comercio");
+            Assert.Equal(response.Address.Number, "123");
+            Assert.Equal(response.Address.Complement, "APT 123");
+            Assert.NotNull(response.Address.ZipCode);
+            Assert.Equal(response.Address.ZipCode.Number, "99888777");
+            Assert.NotNull(response.Specialties);
+            Assert.Equal(response.Specialties.Count, 2);
         }
 
         [Fact]

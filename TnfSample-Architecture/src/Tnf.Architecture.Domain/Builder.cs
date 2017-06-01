@@ -1,5 +1,6 @@
 ﻿using Tnf.Builder;
 using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Dto;
 
 namespace Tnf.Architecture.Domain
 {
@@ -7,7 +8,7 @@ namespace Tnf.Architecture.Domain
     {
         public Builder WithNotFound()
         {
-            AddEnum(Error.NotFound);
+            AddEnum(AppConsts.LocalizationSourceName, Error.NotFound);
             return this;
         }
     }

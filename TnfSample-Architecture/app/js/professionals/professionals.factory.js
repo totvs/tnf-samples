@@ -57,7 +57,7 @@
         function getRecord(professionalId, code, callback) {
             var callback = NotifyFactory.encapsulateCallback(callback);
 
-            return this.TOTVSGet({ professionalId: professionalId, code: code }, callback);
+            return this.TOTVSGet({ professionalId: professionalId, code: code, expand: "professionalSpecialties.specialty" }, callback);
         }
 
         function saveRecord(model, callback) {

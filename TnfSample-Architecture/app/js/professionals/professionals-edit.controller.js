@@ -51,7 +51,7 @@
 		// *** Public Properties and Methods
 		// *********************************************************************************
 
-		self.professional = { _expandables: [] };
+		self.professional = { };
 		self.cancel = cancel;
 		self.save = save;
 		self.saveNew = saveNew;
@@ -104,12 +104,6 @@
 				if (professional) {
 					if (professional.professionalId)
 						self.professional = professional;
-					if (professional.data && professional.data.professionalId)
-						self.professional = professional.data;
-					if (professional.result && professional.result.professionalId)
-						self.professional = professional.result;
-
-					self.professional.specialties = self.professional.specialties.map(function (s) { return s.id; });
 				} else {
 					notification.notify({
 						type: 'warning',

@@ -97,7 +97,7 @@
 			self.recordsCount = undefined;
 
 			if (isMore) {
-				start = self.records.length;
+				start = parseInt(self.records.length / 2) + 1;
 			} else {
 				self.records = [];
 			}
@@ -110,8 +110,8 @@
                 });
             }
 
-            parameters.offset = start;
-            parameters.pageSize = 10;
+            parameters.page = start;
+            parameters.pageSize = 2;
 
 			specialtyFactory.findRecords(parameters, function (result) {
 				if (result) {

@@ -41,8 +41,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = Context.Professionals
                 .IncludeByRequestDto(requestDto)
+                .Where(w => w.ProfessionalId == requestDto.GetId().ProfessionalId && w.Code == requestDto.GetId().Code)
                 .SelectFieldsByRequestDto(requestDto)
-                .SingleOrDefault(w => w.ProfessionalId == requestDto.Id.ProfessionalId && w.Code == requestDto.Id.Code);
+                .SingleOrDefault();
 
             return dbEntity;
         }
@@ -50,8 +51,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)
         {
             var dbEntity = GetProfessionalPoco(requestDto);
+            var dto = dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
 
-            return dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
+            dto.RemoveExpendable(requestDto);
+
+            return dto;
         }
 
         public ProfessionalKeysDto CreateProfessional(Professional entity)
@@ -94,7 +98,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<ProfessionalDto>>();
-            response.HasNext = (request.Page * request.PageSize) > response.Items.Count();
+            response.HasNext = base.Count() > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
             return response;
         }

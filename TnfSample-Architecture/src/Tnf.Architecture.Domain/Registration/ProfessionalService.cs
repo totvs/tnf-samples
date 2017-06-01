@@ -30,7 +30,7 @@ namespace Tnf.Architecture.Domain.Registration
             builder
                 .WithNotFound()
                 .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsProfessional(keys.Id), Professional.Error.CouldNotFindProfessional, notificationMessage);
+                .IsTrue(Repository.ExistsProfessional(keys.GetId()), Professional.Error.CouldNotFindProfessional, notificationMessage);
 
             var response = builder.Build();
 

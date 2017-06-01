@@ -97,7 +97,7 @@
 			self.recordsCount = undefined;
 
 			if (isMore) {
-				start = self.records.length;
+				start = parseInt(self.records.length / 2) + 1;
 			} else {
 				self.records = [];
 			}
@@ -110,7 +110,7 @@
                 });
             }
 
-            parameters.offset = start;
+            parameters.page = start;
             parameters.pageSize = 10;
 
 			professionalFactory.findRecords(parameters, function (result) {

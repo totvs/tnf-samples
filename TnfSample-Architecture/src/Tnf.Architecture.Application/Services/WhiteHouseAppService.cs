@@ -11,12 +11,10 @@ using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Dto;
 using System.Linq;
-using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Application.Services
 {
     [RemoteService(false)]
-    [DisableValidation]
     public class WhiteHouseAppService : ApplicationService, IWhiteHouseAppService
     {
         private readonly IWhiteHouseService _whiteHouserService;
@@ -42,6 +40,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return await _whiteHouserService.GetAllPresidents(request);
@@ -51,18 +50,19 @@ namespace Tnf.Architecture.Application.Services
         {
             var builder = ErrorResponseDto.DefaultBuilder;
 
-            if (string.IsNullOrWhiteSpace(id.Id))
+            if (string.IsNullOrWhiteSpace(id.GetId()))
             {
                 var notificationMessage = LocalizationHelper.GetString(
                     AppConsts.LocalizationSourceName,
                     Error.InvalidParameterDynamic);
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id.Id)) });
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return await _whiteHouserService.GetPresidentById(id);
@@ -84,6 +84,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return await _whiteHouserService.InsertPresidentAsync(president, sync);
@@ -114,6 +115,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             president.Id = id;
@@ -136,6 +138,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return await _whiteHouserService.DeletePresidentAsync(id);

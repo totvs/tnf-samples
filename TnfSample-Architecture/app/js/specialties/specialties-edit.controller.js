@@ -91,10 +91,6 @@
 				if (specialty) {
 					if (specialty.id)
 						self.specialty = specialty;
-					if (specialty.data && specialty.data.id)
-						self.specialty = specialty.data;
-					if (specialty.result && specialty.result.id)
-						self.specialty = specialty.result;
 				} else {
 					notification.notify({
 						type: 'warning',

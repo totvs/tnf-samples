@@ -61,6 +61,22 @@ namespace Tnf.Architecture.Web.Tests
                         Id = 2,
                         Description = "Cirurgia Geral"
                     });
+
+                    context.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco()
+                    {
+                        Id = 1,
+                        Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
+                        ProfessionalId = 1,
+                        SpecialtyId = 1
+                    });
+
+                    context.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco()
+                    {
+                        Id = 2,
+                        Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
+                        ProfessionalId = 1,
+                        SpecialtyId = 2
+                    });
                 });
         }
     }

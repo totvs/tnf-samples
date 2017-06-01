@@ -21,7 +21,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public ProfessionalBuilder WithInvalidProfessional()
         {
-            AddEnum(Professional.Error.InvalidProfessional);
+            AddEnum(AppConsts.LocalizationSourceName, Professional.Error.InvalidProfessional);
             return this;
         }
 

@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public PresidentBuilder WithInvalidPresident()
         {
-            AddEnum(President.Error.InvalidPresident);
+            AddEnum(AppConsts.LocalizationSourceName, President.Error.InvalidPresident);
             return this;
         }
 

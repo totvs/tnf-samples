@@ -9,12 +9,10 @@ using Tnf.Dto.Request;
 using Tnf.Dto.Response;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using Tnf.Runtime.Validation;
 using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
-    [DisableValidation]
     public class SpecialtyAppService : ApplicationService, ISpecialtyAppService
     {
         private readonly ISpecialtyService _service;
@@ -40,6 +38,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.GetAllSpecialties(request);
@@ -49,18 +48,19 @@ namespace Tnf.Architecture.Application.Services
         {
             var builder = ErrorResponseDto.DefaultBuilder;
 
-            if (id.Id <= 0)
+            if (id.GetId() <= 0)
             {
                 var notificationMessage = LocalizationHelper.GetString(
                     AppConsts.LocalizationSourceName,
                     Error.InvalidParameterDynamic);
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id.Id)) });
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
             }
 
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.GetSpecialty(id);
@@ -82,6 +82,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.CreateSpecialty(specialty);
@@ -112,6 +113,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             specialty.Id = id;
@@ -134,6 +136,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.DeleteSpecialty(id);

@@ -16,8 +16,7 @@ namespace Tnf.Architecture.Web.Tests.App
             services.AddMvcCore()
                 .AddJsonFormatters()
                 .AddApplicationPart(typeof(TnfAspNetCoreModule).GetAssembly())
-                .AddApplicationPart(typeof(Tnf.Architecture.Web.Startup.WebModule).GetAssembly())
-                .AddControllersAsServices();
+                .AddApplicationPart(typeof(Startup.WebModule).GetAssembly());
 
             services.AddEntityFrameworkInMemoryDatabase();
 

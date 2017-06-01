@@ -91,10 +91,6 @@
 				if (president) {
 					if (president.id)
 						self.president = president;
-					if (president.data && president.data.id)
-						self.president = president.data;
-					if (president.result && president.result.id)
-						self.president = president.result;
 				} else {
 					notification.notify({
 						type: 'warning',

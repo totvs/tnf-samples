@@ -43,7 +43,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
-            response.HasNext = (request.Page * request.PageSize) > response.Items.Count();
+            response.HasNext = base.Count() > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
             return response;
         }
@@ -52,7 +52,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             SpecialtyDto specialty = null;
             
-            var dbEntity = base.Get(requestDto.Id);
+            var dbEntity = base.Get(requestDto.GetId());
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
 

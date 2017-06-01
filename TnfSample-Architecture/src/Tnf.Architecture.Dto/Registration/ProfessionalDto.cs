@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Dto.Registration
     public class ProfessionalDto : SuccessResponseDto
     {
         public ProfessionalDto()
-            :base(new List<string>() { "address", "specialties" })
+            :base(new List<string>() { "professionalSpecialties.specialty" })
         {
 
         }

@@ -10,12 +10,10 @@ using Tnf.Localization;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Dto;
-using Tnf.Runtime.Validation;
 using System.Linq;
 
 namespace Tnf.Architecture.Application.Services
 {
-    [DisableValidation]
     public class ProfessionalAppService : ApplicationService, IProfessionalAppService
     {
         private readonly IProfessionalService _service;
@@ -41,6 +39,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.GetAllProfessionals(request);
@@ -50,27 +49,28 @@ namespace Tnf.Architecture.Application.Services
         {
             var builder = ErrorResponseDto.DefaultBuilder;
 
-            if (keys.Id.ProfessionalId <= 0)
+            if (keys.GetId().ProfessionalId <= 0)
             {
                 var notificationMessage = LocalizationHelper.GetString(
                     AppConsts.LocalizationSourceName,
                     Error.InvalidParameterDynamic);
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(keys.Id.ProfessionalId)) });
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, "professionalId") });
             }
 
-            if (keys.Id.Code == Guid.Empty)
+            if (keys.GetId().Code == Guid.Empty)
             {
                 var notificationMessage = LocalizationHelper.GetString(
                     AppConsts.LocalizationSourceName,
                     Error.InvalidParameterDynamic);
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(keys.Id.Code)) });
+                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, "code") });
             }
 
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.GetProfessional(keys);
@@ -92,6 +92,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.CreateProfessional(professional);
@@ -131,6 +132,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             professional.ProfessionalId = keys.ProfessionalId;
@@ -163,6 +165,7 @@ namespace Tnf.Architecture.Application.Services
             if (builder.Notifications.Any())
                 return builder
                         .FromEnum(Error.InvalidParameter)
+                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
                         .Build();
 
             return _service.DeleteProfessional(keys);

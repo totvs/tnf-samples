@@ -48,7 +48,7 @@
 		// *** Public Properties and Methods
 		// *********************************************************************************
 
-        self.specialty = { _expandables: [] };
+        self.specialty = { };
         self.loadRecord = loadRecord;
         self.applyEdit = applyEdit;
         self.remove = remove;

@@ -41,14 +41,14 @@ namespace Tnf.Architecture.Data.Repositories
 
             response.Total = resultData.TotalHits;
             response.Items = resultData.Hits.MapTo<List<PresidentDto>>();
-            response.HasNext = (request.Page * request.PageSize) > response.Items.Count();
+            response.HasNext = resultData.TotalHits > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
             return response;
         }
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
         {
-            var presidentData = await GetAsync(requestDto.Id);
+            var presidentData = await GetAsync(requestDto.GetId());
 
             var president = presidentData.MapTo<PresidentDto>();
 

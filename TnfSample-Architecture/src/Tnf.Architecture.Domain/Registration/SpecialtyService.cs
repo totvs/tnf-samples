@@ -30,7 +30,7 @@ namespace Tnf.Architecture.Domain.Registration
             builder
                 .WithNotFound()
                 .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsSpecialty(requestDto.Id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
+                .IsTrue(Repository.ExistsSpecialty(requestDto.GetId()), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
 
             var response = builder.Build();
 
