@@ -1,8 +1,6 @@
-﻿using Tnf.Builder;
+﻿using Tnf.App.Builder;
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.Dto;
-using Tnf.Dto.Interfaces;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -16,12 +14,6 @@ namespace Tnf.Architecture.Domain.WhiteHouse
         public PresidentBuilder(President instance)
             : base(instance)
         {
-        }
-
-        public PresidentBuilder WithInvalidPresident()
-        {
-            AddEnum(AppConsts.LocalizationSourceName, President.Error.InvalidPresident);
-            return this;
         }
 
         public PresidentBuilder WithId(string id)
@@ -54,29 +46,18 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return this;
         }
 
-        public override IResponseDto Build()
+        protected override void Specifications()
         {
-            var shouldHaveName = new PresidentShouldHaveNameSpecification();
-            var shouldHaveAddress = new PresidentShouldHaveAddressSpecification();
-            var shouldHaveAddressNumber = new PresidentShouldHaveAddressNumberSpecification();
-            var shouldHaveAddressComplement = new PresidentShouldHaveAddressComplementSpecification();
-            var shouldHaveZipCode = new PresidentShouldHaveZipCodeSpecification();
+            AddSpecification(new PresidentShouldHaveNameSpecification());
+            AddSpecification(new PresidentShouldHaveAddressSpecification());
+            AddSpecification(new PresidentShouldHaveAddressNumberSpecification());
+            AddSpecification(new PresidentShouldHaveAddressComplementSpecification());
+            AddSpecification(new PresidentShouldHaveZipCodeSpecification());
+        }
 
-            if (!shouldHaveName.IsSatisfiedBy(Instance))
-                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentNameMustHaveValue);
-
-            if (!shouldHaveAddress.IsSatisfiedBy(Instance))
-                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressMustHaveValue);
-
-            if (!shouldHaveAddressNumber.IsSatisfiedBy(Instance))
-                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressNumberMustHaveValue);
-
-            if (!shouldHaveAddressComplement.IsSatisfiedBy(Instance))
-                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentAddressComplementMustHaveValue);
-
-            if (!shouldHaveZipCode.IsSatisfiedBy(Instance))
-                AddNotification(AppConsts.LocalizationSourceName, President.Error.PresidentZipCodeMustHaveValue);
-
+        public override President Build()
+        {
+            base.Validate();
             return base.Build();
         }
     }

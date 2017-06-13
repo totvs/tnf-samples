@@ -1,7 +1,7 @@
 ﻿using Tnf.Architecture.Domain.WhiteHouse;
 using Xunit;
 using System.Linq;
-using Tnf.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
@@ -20,7 +20,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(build.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -36,10 +36,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -55,10 +54,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -74,10 +72,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -93,10 +90,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -112,10 +108,9 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
         }
     }
 }

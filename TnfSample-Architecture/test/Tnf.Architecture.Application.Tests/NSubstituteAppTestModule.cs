@@ -10,8 +10,8 @@ using Tnf.Reflection.Extensions;
 using Castle.Core.Logging;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Tests
@@ -47,7 +47,7 @@ namespace Tnf.Architecture.Application.Tests
 
                 var ids = new List<string>() { "1" };
 
-                var presidentsToGetAll = new SuccessResponseListDto<PresidentDto>();
+                var presidentsToGetAll = new ListDto<PresidentDto>();
                 presidentsToGetAll.Items.Add(president);
                 presidentsToGetAll.Items.Add(president);
 
@@ -61,7 +61,7 @@ namespace Tnf.Architecture.Application.Tests
                     .Returns(Task.FromResult(ids));
 
                 instance.UpdatePresidentsAsync(Arg.Is<President>(p => p.Id == "1"))
-                    .Returns(Task.FromResult(builder.Instance));
+                    .Returns(Task.FromResult(builder.Build()));
 
                 instance.DeletePresidentsAsync("1")
                     .Returns(Task.FromResult(true));

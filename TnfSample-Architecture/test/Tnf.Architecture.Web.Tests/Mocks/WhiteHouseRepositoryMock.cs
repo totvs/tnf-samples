@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Architecture.Dto;
-using Tnf.Dto;
+using Tnf.App.Dto;
 using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Domain.Repositories;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Data.Entities;
@@ -42,7 +42,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var presidents = _presidents
                 .Select(s => s.Value)
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .OrderByRequestDto(request)
                 .ToList();
 
-            var result = new SuccessResponseListDto<PresidentDto>();
+            var result = new ListDto<PresidentDto>();
             result.Items = presidents.MapTo<List<PresidentDto>>();
 
             return Task.FromResult(result);

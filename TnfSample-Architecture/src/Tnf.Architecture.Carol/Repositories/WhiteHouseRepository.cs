@@ -6,8 +6,8 @@ using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Data.Entities;
 using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
 using System.Linq;
 
@@ -25,9 +25,9 @@ namespace Tnf.Architecture.Data.Repositories
             return await DeleteAsync(id);
         }
 
-        public async Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public async Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var response = new SuccessResponseListDto<PresidentDto>();
+            var response = new ListDto<PresidentDto>();
 
             var query = Client.Queries<PresidentPoco>().ProcessFilter()
                 .SkipAndTakeByRequestDto(request)

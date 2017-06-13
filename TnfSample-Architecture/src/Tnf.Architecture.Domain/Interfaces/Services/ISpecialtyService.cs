@@ -1,17 +1,16 @@
 ﻿using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface ISpecialtyService : IDomainService
     {
-        SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
-        IResponseDto GetSpecialty(RequestDto<int> requestDto);
-        IResponseDto DeleteSpecialty(int id);
-        IResponseDto CreateSpecialty(SpecialtyDto dto);
-        IResponseDto UpdateSpecialty(SpecialtyDto dto);
+        ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
+        SpecialtyDto GetSpecialty(RequestDto<int> requestDto);
+        void DeleteSpecialty(int id);
+        SpecialtyDto CreateSpecialty(SpecialtyDto dto);
+        SpecialtyDto UpdateSpecialty(SpecialtyDto dto);
     }
 }

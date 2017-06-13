@@ -3,14 +3,11 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
-using Tnf.Localization;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using Tnf.Dto;
-using System.Linq;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -24,124 +21,70 @@ namespace Tnf.Architecture.Application.Services
             _whiteHouserService = whiteHouserService;
         }
 
-        public async Task<IResponseDto> GetAllPresidents(GetAllPresidentsDto request)
+        public async Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (request.PageSize <= 0)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(request.PageSize));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(request.PageSize)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new ListDto<PresidentDto>();
 
             return await _whiteHouserService.GetAllPresidents(request);
         }
 
-        public async Task<IResponseDto> GetPresidentById(RequestDto<string> id)
+        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (string.IsNullOrWhiteSpace(id.GetId()))
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(id));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new PresidentDto();
 
             return await _whiteHouserService.GetPresidentById(id);
         }
 
-        public async Task<IResponseDto> InsertPresidentAsync(PresidentDto president, bool sync = true)
+        public async Task<PresidentDto> InsertPresidentAsync(PresidentDto president, bool sync = true)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (president == null)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(president));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(president)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new PresidentDto();
 
             return await _whiteHouserService.InsertPresidentAsync(president, sync);
         }
 
-        public async Task<IResponseDto> UpdatePresidentAsync(string id, PresidentDto president)
+        public async Task<PresidentDto> UpdatePresidentAsync(string id, PresidentDto president)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (string.IsNullOrEmpty(id))
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
-
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
+                RaiseNotification(nameof(id));
 
             if (president == null)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(president));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(president)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new PresidentDto();
 
             president.Id = id;
             return await _whiteHouserService.UpdatePresidentAsync(president);
         }
 
-        public async Task<IResponseDto> DeletePresidentAsync(string id)
+        public async Task DeletePresidentAsync(string id)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (string.IsNullOrWhiteSpace(id))
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(id));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
+            if (!Notification.HasNotification())
+                await _whiteHouserService.DeletePresidentAsync(id);
+        }
 
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
-
-            return await _whiteHouserService.DeletePresidentAsync(id);
+        private static void RaiseNotification(params string[] parameter)
+        {
+            Notification.Raise(NotificationEvent.DefaultBuilder
+                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
+                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
+                                                .WithMessageFormat(parameter)
+                                                .Build());
         }
     }
 }

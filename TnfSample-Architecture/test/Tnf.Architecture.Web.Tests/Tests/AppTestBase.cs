@@ -1,6 +1,6 @@
 ﻿using Tnf.AspNetCore.TestBase;
 using Tnf.Architecture.Web.Tests.App;
-using Tnf.App.EntityFrameworkCore.TestBase;
+using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using System;

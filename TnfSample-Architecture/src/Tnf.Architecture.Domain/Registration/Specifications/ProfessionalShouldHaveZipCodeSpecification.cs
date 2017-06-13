@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Tnf.App.Specifications;
+using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Specifications;
 
 namespace Tnf.Architecture.Domain.Registration.Specifications
 {
     internal class ProfessionalShouldHaveZipCodeSpecification : Specification<Professional>
     {
+        public override string LocalizationSource => AppConsts.LocalizationSourceName;
+        public override Enum LocalizationKey => Professional.Error.ProfessionalZipCodeMustHaveValue;
+
         public override Expression<Func<Professional, bool>> ToExpression()
         {
             return (p) =>

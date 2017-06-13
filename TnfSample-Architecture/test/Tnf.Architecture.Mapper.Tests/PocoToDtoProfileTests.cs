@@ -1,6 +1,5 @@
 ﻿using Tnf.Architecture.Dto;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.TestBase;
 using Xunit;
 using Tnf.AutoMapper;
 using System;
@@ -10,10 +9,11 @@ using Tnf.Architecture.Data.Entities;
 using Tnf.Architecture.Dto.Helpers;
 using Tnf.Architecture.Dto.ValueObjects;
 using System.Collections.Generic;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
-    public class PocoToDtoProfileTests : TnfIntegratedTestBase<MapperTestModule>
+    public class PocoToDtoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {
         [Fact]
         public void MapTo_CountryPoco_To_CountryDto()

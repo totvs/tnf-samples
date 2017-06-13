@@ -14,17 +14,14 @@ namespace Tnf.Architecture.Domain.Registration
 
         public enum Error
         {
-            InvalidProfessional = 0,
-            Unexpected = 1,
-            InvalidId = 2,
-            ProfessionalNameMustHaveValue = 3,
-            ProfessionalZipCodeMustHaveValue = 4,
-            ProfessionalAddressMustHaveValue = 5,
-            ProfessionalAddressComplementMustHaveValue = 6,
-            ProfessionalAddressNumberMustHaveValue = 7,
-            ProfessionalEmailMustHaveValue = 8,
-            ProfessionalPhoneMustHaveValue = 9,
-            CouldNotFindProfessional = 10
+            ProfessionalNameMustHaveValue = 1,
+            ProfessionalZipCodeMustHaveValue = 2,
+            ProfessionalAddressMustHaveValue = 3,
+            ProfessionalAddressComplementMustHaveValue = 4,
+            ProfessionalAddressNumberMustHaveValue = 5,
+            ProfessionalEmailMustHaveValue = 6,
+            ProfessionalPhoneMustHaveValue = 7,
+            CouldNotFindProfessional = 8
         }
     }
 }

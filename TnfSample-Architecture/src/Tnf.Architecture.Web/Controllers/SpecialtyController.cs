@@ -2,7 +2,7 @@
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -20,8 +20,12 @@ namespace Tnf.Architecture.Web.Controllers
         public IActionResult Get([FromQuery]GetAllSpecialtiesDto requestDto)
         {
             var response = _specialtyAppService.GetAllSpecialties(requestDto);
-            
-            return StatusCode(response.GetHttpStatus(), response);
+
+            return CreateResponse<SpecialtyDto>()
+                        .FromEnum(SpecialtyDto.Error.GetAllSpecialty)
+                        .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.GetAllSpecialty)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpGet("{id}")]
@@ -29,7 +33,12 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _specialtyAppService.GetSpecialty(requestDto.WithId(id));
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<SpecialtyDto>()
+                        .FromEnum(SpecialtyDto.Error.GetSpecialty)
+                        .WithNotFoundStatus()
+                        .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.GetSpecialty)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPost]
@@ -37,7 +46,11 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _specialtyAppService.CreateSpecialty(specialty);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<SpecialtyDto>()
+                        .FromEnum(SpecialtyDto.Error.PostSpecialty)
+                        .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.PostSpecialty)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPut("{id}")]
@@ -45,15 +58,22 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _specialtyAppService.UpdateSpecialty(id, specialty);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<SpecialtyDto>()
+                        .FromEnum(SpecialtyDto.Error.PutSpecialty)
+                        .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.PutSpecialty)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var response = _specialtyAppService.DeleteSpecialty(id);
+            _specialtyAppService.DeleteSpecialty(id);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<SpecialtyDto>()
+                        .FromEnum(SpecialtyDto.Error.DeleteSpecialty)
+                        .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.DeleteSpecialty)
+                        .Build();
         }
     }
 }

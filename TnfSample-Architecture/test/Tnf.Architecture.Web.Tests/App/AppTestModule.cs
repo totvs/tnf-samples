@@ -4,7 +4,7 @@ using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Web.Tests.Mocks;
 using Tnf.Configuration.Startup;
-using Tnf.App.EntityFrameworkCore.TestBase;
+using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using System;
 using Tnf.Reflection.Extensions;
@@ -23,8 +23,8 @@ namespace Tnf.Architecture.Web.Tests.App
             // Mock repositories
             Configuration.ReplaceService<IWhiteHouseRepository, WhiteHouseRepositoryMock>();
 
-            Configuration.Modules
-                .TnfEfCoreInMemory(IocManager.IocContainer, IocManager.Resolve<IServiceProvider>())
+            Configuration
+                .TnfEfCoreInMemory(IocManager.Resolve<IServiceProvider>())
                 .RegisterDbContextInMemory<ArchitectureDbContext>()
                 .RegisterDbContextInMemory<LegacyDbContext>();
         }

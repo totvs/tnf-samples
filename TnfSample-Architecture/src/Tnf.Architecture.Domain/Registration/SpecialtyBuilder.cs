@@ -1,7 +1,5 @@
 ﻿using Tnf.Architecture.Domain.Registration.Specifications;
-using Tnf.Architecture.Dto;
-using Tnf.Builder;
-using Tnf.Dto.Interfaces;
+using Tnf.App.Builder;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -17,12 +15,6 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
-        public SpecialtyBuilder WithInvalidSpecialty()
-        {
-            AddEnum(AppConsts.LocalizationSourceName, Specialty.Error.InvalidSpecialty);
-            return this;
-        }
-
         public SpecialtyBuilder WithId(int id)
         {
             Instance.Id = id;
@@ -35,18 +27,14 @@ namespace Tnf.Architecture.Domain.Registration
             return this;
         }
 
-        private void AddNotification(Specialty.Error error)
+        protected override void Specifications()
         {
-            AddNotification(AppConsts.LocalizationSourceName, error);
+            AddSpecification(new SpecialtyShouldHaveDescriptionSpecification());
         }
 
-        public override IResponseDto Build()
+        public override Specialty Build()
         {
-            var shouldHaveDescription = new SpecialtyShouldHaveDescriptionSpecification();
-
-            if (!shouldHaveDescription.IsSatisfiedBy(Instance))
-                AddNotification(Specialty.Error.SpecialtyDescriptionMustHaveValue);
-
+            base.Validate();
             return base.Build();
         }
     }

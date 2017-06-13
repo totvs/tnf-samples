@@ -3,10 +3,9 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
-using Tnf.Localization;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -17,33 +16,29 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
-        public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
+        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
 
-        public IResponseDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
+        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
         {
-            var builder = new Builder();
+            ProfessionalDto dto = null;
 
-            var notificationMessage = LocalizationHelper.GetString(
-                AppConsts.LocalizationSourceName,
-                Professional.Error.CouldNotFindProfessional);
+            if (!Repository.ExistsProfessional(keys.GetId()))
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                                    .WithNotFoundStatus()
+                                    .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
+                                    .Build());
+            }
 
-            builder
-                .WithNotFound()
-                .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsProfessional(keys.GetId()), Professional.Error.CouldNotFindProfessional, notificationMessage);
+            if (!Notification.HasNotification())
+                dto = Repository.GetProfessional(keys);
 
-            var response = builder.Build();
-
-            if (response.Success)
-                response = Repository.GetProfessional(keys);
-
-            return response;
+            return dto;
         }
 
-        public IResponseDto CreateProfessional(ProfessionalDto dto)
+        public ProfessionalDto CreateProfessional(ProfessionalDto dto)
         {
             var builder = new ProfessionalBuilder()
-                   .WithInvalidProfessional()
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)
@@ -51,48 +46,38 @@ namespace Tnf.Architecture.Domain.Registration
                    .WithEmail(dto.Email)
                    .WithAddress(dto.Address);
 
-            var response = builder.Build();
+            var professional = builder.Build();
 
-            if (response.Success)
+            if (!Notification.HasNotification())
             {
-                var keys = Repository.CreateProfessional(builder.Instance);
+                var keys = Repository.CreateProfessional(professional);
 
                 dto.ProfessionalId = keys.ProfessionalId;
                 dto.Code = keys.Code;
 
                 Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
-
-                response = dto;
             }
 
-            return response;
+            return dto;
         }
 
-        public IResponseDto DeleteProfessional(ProfessionalKeysDto keys)
+        public void DeleteProfessional(ProfessionalKeysDto keys)
         {
-            var builder = new Builder();
+            if (!Repository.ExistsProfessional(keys))
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                                    .WithNotFoundStatus()
+                                    .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
+                                    .Build());
+            }
 
-            var notificationMessage = LocalizationHelper.GetString(
-                AppConsts.LocalizationSourceName,
-                Professional.Error.CouldNotFindProfessional);
-
-            builder
-                .WithNotFound()
-                .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsProfessional(keys), Professional.Error.CouldNotFindProfessional, notificationMessage);
-
-            var response = builder.Build();
-
-            if (response.Success)
+            if (!Notification.HasNotification())
                 Repository.DeleteProfessional(keys);
-
-            return response;
         }
 
-        public IResponseDto UpdateProfessional(ProfessionalDto dto)
+        public ProfessionalDto UpdateProfessional(ProfessionalDto dto)
         {
             var professionalBuilder = new ProfessionalBuilder()
-                   .WithInvalidProfessional()
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)
@@ -100,35 +85,28 @@ namespace Tnf.Architecture.Domain.Registration
                    .WithEmail(dto.Email)
                    .WithAddress(dto.Address);
 
-            var build = professionalBuilder.Build();
+            var keys = new ProfessionalKeysDto(dto.ProfessionalId, dto.Code);
 
-            var response = professionalBuilder.Build();
+            var professional = professionalBuilder.Build();
 
-            if (response.Success)
+            if (!Notification.HasNotification())
             {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Professional.Error.CouldNotFindProfessional);
-
-                var builder = new Builder();
-
-                builder
-                    .WithNotFound()
-                    .WithNotFoundStatus()
-                    .IsTrue(Repository.ExistsProfessional(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code)), Professional.Error.CouldNotFindProfessional, notificationMessage);
-
-                response = builder.Build();
-                
-                if (response.Success)
+                if (!Repository.ExistsProfessional(keys))
                 {
-                    Repository.UpdateProfessional(professionalBuilder.Instance);
-                    Repository.AddOrRemoveSpecialties(new ProfessionalKeysDto(dto.ProfessionalId, dto.Code), dto.Specialties);
-                    
-                    response = dto;
+                    Notification.Raise(NotificationEvent.DefaultBuilder
+                                        .WithNotFoundStatus()
+                                        .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
+                                        .Build());
+                }
+
+                if (!Notification.HasNotification())
+                {
+                    Repository.UpdateProfessional(professional);
+                    Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
                 }
             }
 
-            return response;
+            return dto;
         }
     }
 }

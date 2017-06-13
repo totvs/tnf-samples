@@ -7,8 +7,8 @@ using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 using Tnf.Domain.Repositories;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.Registration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
@@ -39,9 +39,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public bool ExistsSpecialty(int id) => base.Count(s => s.Id == id) > 0;
 
-        public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
+        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
-            var response = new SuccessResponseListDto<SpecialtyDto>();
+            var response = new ListDto<SpecialtyDto>();
 
             var dbQuery = GetAll()
                 .Where(w => request.Description == null || w.Description.Contains(request.Description))
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
-            response.HasNext = base.Count() > ((request.Page - 1) * request.PageSize) + response.Items.Count();
+            response.HasNext = response.Total > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
             return response;
         }

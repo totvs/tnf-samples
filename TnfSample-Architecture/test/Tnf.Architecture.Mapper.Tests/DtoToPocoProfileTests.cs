@@ -8,11 +8,11 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Data.Entities;
-using Tnf.TestBase;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
-    public class DtoToPocoProfileTests : TnfIntegratedTestBase<MapperTestModule>
+    public class DtoToPocoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {
         [Fact]
         public void MapTo_CountryDto_To_CountryPoco()

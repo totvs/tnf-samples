@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Domain.Services;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IWhiteHouseService : IDomainService
     {
-        Task<SuccessResponseListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
-        Task<IResponseDto> GetPresidentById(RequestDto<string> id);
-        Task<IResponseDto> InsertPresidentAsync(PresidentDto request, bool sync = false);
-        Task<IResponseDto> UpdatePresidentAsync(PresidentDto president);
-        Task<IResponseDto> DeletePresidentAsync(string id);
+        Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
+        Task<PresidentDto> GetPresidentById(RequestDto<string> id);
+        Task<PresidentDto> InsertPresidentAsync(PresidentDto request, bool sync = false);
+        Task<PresidentDto> UpdatePresidentAsync(PresidentDto president);
+        Task DeletePresidentAsync(string id);
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 using System.Linq;
-using Tnf.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -19,7 +18,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(build.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -33,10 +32,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
     }
 }

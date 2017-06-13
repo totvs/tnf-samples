@@ -10,7 +10,9 @@ using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
+using Tnf.AspNetCore.Mvc.Response;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -27,13 +29,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 5);
         }
 
@@ -41,13 +43,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 6);
             Assert.Equal(response.Items[0].Name, "Abraham Lincoln");
         }
@@ -56,13 +58,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 6);
             Assert.Equal(response.Items[0].Name, "Thomas Jefferson");
         }
@@ -71,16 +73,16 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_With_Invalid_Parameters()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}",
                 HttpStatusCode.BadRequest
                 );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
 
@@ -94,7 +96,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.NotNull(response.Id == "1");
             Assert.NotNull(response.Name == "George Washington");
             Assert.NotNull(response.Address.Number == "12345678");
@@ -104,32 +106,32 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Get_President_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/%20",
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Get_President_When_Not_Exists_Return_Not_Found()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                                $"{RouteConsts.WhiteHouse}/99",
                                HttpStatusCode.NotFound
                            );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
 
@@ -152,7 +154,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Name, "Lula");
         }
 
@@ -160,37 +162,37 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_Null_President_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}",
                 null,
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Post_President_With_Invalid_Parameter_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}",
                 new PresidentDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidPresident");
             response.DetailedMessage.ShouldBe("InvalidPresident");
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
 
@@ -208,7 +210,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Id, "6");
             Assert.Equal(response.Name, "Ronald Reagan");
         }
@@ -217,54 +219,54 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_President_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/%20",
                 new PresidentDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Put_Null_President_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/1",
                 null,
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Put_Empty_President_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/6",
                 new PresidentDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidPresident");
             response.DetailedMessage.ShouldBe("InvalidPresident");
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -274,17 +276,17 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("99", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/99",
                 presidentDto,
                 HttpStatusCode.NotFound
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
 
@@ -292,45 +294,45 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<SuccessResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<object>(
                 $"{RouteConsts.WhiteHouse}/1",
                 HttpStatusCode.OK
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
         public async Task Delete_President_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/%20",
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Delete_President_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/99",
                 HttpStatusCode.NotFound
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
     }
 }

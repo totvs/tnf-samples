@@ -1,4 +1,4 @@
-﻿using Tnf.App.EntityFrameworkCore.TestBase;
+﻿using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Xunit;
 using Shouldly;
@@ -8,8 +8,9 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -39,10 +40,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto() { PageSize = 10 });
 
             //Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SuccessResponseListDto<SpecialtyDto>), response);
-            var successResponse = response as SuccessResponseListDto<SpecialtyDto>;
-            successResponse.Items.Count.ShouldBe(1);
+            Assert.False(Notification.HasNotification());
+            response.Items.Count.ShouldBe(1);
         }
 
         [Fact]
@@ -52,12 +51,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
 
             //Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -74,9 +70,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(SpecialtyDto), result);
-            (result as SpecialtyDto).Id.ShouldBe(2);
+            Assert.False(Notification.HasNotification());
+            result.Id.ShouldBe(2);
         }
 
         [Fact]
@@ -86,10 +81,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -99,12 +93,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.CreateSpecialty(null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -121,21 +112,17 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(SpecialtyDto), result);
-            var specialty = result as SpecialtyDto;
+            Assert.False(Notification.HasNotification());
 
-            specialty.Id.ShouldBe(2);
+            result.Id.ShouldBe(2);
 
-            specialty.Description = "Cirurgia Vascular";
+            result.Description = "Cirurgia Vascular";
 
-            result = _specialtyAppService.UpdateSpecialty(specialty.Id, specialty);
+            result = _specialtyAppService.UpdateSpecialty(result.Id, result);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(SpecialtyDto), result);
-            specialty = result as SpecialtyDto;
-            specialty.Description.ShouldBe("Cirurgia Vascular");
+            Assert.False(Notification.HasNotification());
+            result.Description.ShouldBe("Cirurgia Vascular");
         }
 
         [Fact]
@@ -152,10 +139,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
@@ -165,12 +151,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(0, new SpecialtyDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -180,12 +163,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(1, null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -195,11 +175,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
 
             //Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SpecialtyDto), response);
-            var successResponse = response as SpecialtyDto;
-            successResponse.Id.ShouldBe(1);
-            successResponse.Description.ShouldBe(_specialtyPoco.Description);
+            Assert.False(Notification.HasNotification());
+            response.Id.ShouldBe(1);
+            response.Description.ShouldBe(_specialtyPoco.Description);
         }
 
         [Fact]
@@ -209,10 +187,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
@@ -229,28 +206,26 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(SpecialtyDto), result);
-            (result as SpecialtyDto).Id.ShouldBe(2);
+            Assert.False(Notification.HasNotification());
+            result.Id.ShouldBe(2);
 
             //Act
-            var response = _specialtyAppService.DeleteSpecialty(2);
+            _specialtyAppService.DeleteSpecialty(2);
 
             //Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
         public void Should_Delete_Specialty_With_Error()
         {
             // Act
-            var response = _specialtyAppService.DeleteSpecialty(99);
+            _specialtyAppService.DeleteSpecialty(99);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }
 }

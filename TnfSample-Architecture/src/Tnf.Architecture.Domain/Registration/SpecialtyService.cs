@@ -3,10 +3,9 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Services;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
-using Tnf.Localization;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -17,100 +16,77 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
-        public SuccessResponseListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
+        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
 
-        public IResponseDto GetSpecialty(RequestDto<int> requestDto)
+        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
         {
-            var builder = new Builder();
+            SpecialtyDto dto = null;
 
-            var notificationMessage = LocalizationHelper.GetString(
-                AppConsts.LocalizationSourceName,
-                Specialty.Error.CouldNotFindSpecialty);
+            if (!Repository.ExistsSpecialty(requestDto.GetId()))
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                                    .WithNotFoundStatus()
+                                    .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
+                                    .Build());
+            }
 
-            builder
-                .WithNotFound()
-                .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsSpecialty(requestDto.GetId()), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
+            if (!Notification.HasNotification())
+                dto = Repository.GetSpecialty(requestDto);
 
-            var response = builder.Build();
-
-            if (response.Success)
-                response = Repository.GetSpecialty(requestDto);
-
-            return response;
+            return dto;
         }
 
-        public IResponseDto CreateSpecialty(SpecialtyDto dto)
+        public SpecialtyDto CreateSpecialty(SpecialtyDto dto)
         {
             var builder = new SpecialtyBuilder()
-                   .WithInvalidSpecialty()
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
-            var response = builder.Build();
+            var specialty = builder.Build();
 
-            if (response.Success)
+            if (!Notification.HasNotification())
+                dto.Id = Repository.CreateSpecialty(specialty);
+
+            return dto;
+        }
+
+        public void DeleteSpecialty(int id)
+        {
+            if (!Repository.ExistsSpecialty(id))
             {
-                dto.Id = Repository.CreateSpecialty(builder.Instance);
-                response = dto;
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                                    .WithNotFoundStatus()
+                                    .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
+                                    .Build());
             }
 
-            return response;
-        }
-
-        public IResponseDto DeleteSpecialty(int id)
-        {
-            var builder = new Builder();
-
-            var notificationMessage = LocalizationHelper.GetString(
-                AppConsts.LocalizationSourceName,
-                Specialty.Error.CouldNotFindSpecialty);
-
-            builder
-                .WithNotFound()
-                .WithNotFoundStatus()
-                .IsTrue(Repository.ExistsSpecialty(id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
-
-            var response = builder.Build();
-
-            if (response.Success)
+            if (!Notification.HasNotification())
                 Repository.DeleteSpecialty(id);
-
-            return response;
         }
 
-        public IResponseDto UpdateSpecialty(SpecialtyDto dto)
+        public SpecialtyDto UpdateSpecialty(SpecialtyDto dto)
         {
             var specialtyBuilder = new SpecialtyBuilder()
-                   .WithInvalidSpecialty()
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
-            var response = specialtyBuilder.Build();
+            var specialty = specialtyBuilder.Build();
 
-            if (response.Success)
+            if (!Notification.HasNotification())
             {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Specialty.Error.CouldNotFindSpecialty);
-
-                var builder = new Builder();
-
-                builder
-                    .WithNotFound()
-                    .WithNotFoundStatus()
-                    .IsTrue(Repository.ExistsSpecialty(dto.Id), Specialty.Error.CouldNotFindSpecialty, notificationMessage);
-
-                response = builder.Build();
-
-                if (response.Success)
+                if (!Repository.ExistsSpecialty(dto.Id))
                 {
-                    Repository.UpdateSpecialty(specialtyBuilder.Instance);
-                    response = dto;
+                    Notification.Raise(NotificationEvent.DefaultBuilder
+                                        .WithNotFoundStatus()
+                                        .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
+                                        .Build());
                 }
+
+                if (!Notification.HasNotification())
+                    Repository.UpdateSpecialty(specialty);
             }
 
-            return response;
+            return dto;
         }
     }
 }

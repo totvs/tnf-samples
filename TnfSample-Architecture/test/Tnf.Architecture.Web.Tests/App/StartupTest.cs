@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Tnf.AspNetCore.TestBase;
 using Tnf.AspNetCore;
 using Tnf.Reflection.Extensions;
+using Tnf.App.AspNetCore;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -21,7 +22,7 @@ namespace Tnf.Architecture.Web.Tests.App
             services.AddEntityFrameworkInMemoryDatabase();
 
             //Configure Tnf and Dependency Injection
-            return services.AddTnf<AppTestModule>(options =>
+            return services.AddTnfApp<AppTestModule>(options =>
             {
                 //Test setup
                 options.SetupTest();

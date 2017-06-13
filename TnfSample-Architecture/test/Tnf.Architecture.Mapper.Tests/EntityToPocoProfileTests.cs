@@ -1,5 +1,4 @@
 ﻿using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.TestBase;
 using Xunit;
 using Tnf.AutoMapper;
 using System;
@@ -8,10 +7,11 @@ using Tnf.Architecture.Dto.Helpers;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
-    public class EntityToPocoProfileTests : TnfIntegratedTestBase<MapperTestModule>
+    public class EntityToPocoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {
         [Fact]
         public void MapTo_Professional_To_ProfessionalPoco()
@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Mapper.Tests
                                 .WithEmail("email@email.com")
                                 .WithName("Professional");
 
-            Professional entity = builder.Instance;
+            Professional entity = builder.Build();
 
             ProfessionalPoco mappPoco = entity.MapTo<ProfessionalPoco>();
 
@@ -47,7 +47,7 @@ namespace Tnf.Architecture.Mapper.Tests
                                 .WithId(1)
                                 .WithDescription("Cirurgia Geral");
 
-            Specialty entity = builder.Instance;
+            Specialty entity = builder.Build();
 
             SpecialtyPoco mappPoco = entity.MapTo<SpecialtyPoco>();
 
@@ -64,7 +64,7 @@ namespace Tnf.Architecture.Mapper.Tests
                                 .WithName("George")
                                 .WithAddress(new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678")));
 
-            President entity = builder.Instance;
+            President entity = builder.Build();
 
             PresidentPoco mappPoco = entity.MapTo<PresidentPoco>();
 

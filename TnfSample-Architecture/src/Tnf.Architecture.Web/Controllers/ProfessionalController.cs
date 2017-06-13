@@ -3,7 +3,7 @@ using System;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -22,7 +22,11 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.GetAllProfessionals(requestDto);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<ProfessionalDto>()
+                        .FromEnum(ProfessionalDto.Error.GetAllProfessional)
+                        .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetAllProfessional)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpGet("{professionalId}/{code}")]
@@ -30,7 +34,12 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.GetProfessional(requestDto.WithId(new ProfessionalKeysDto(professionalId, code)));
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<ProfessionalDto>()
+                        .FromEnum(ProfessionalDto.Error.GetProfessional)
+                        .WithNotFoundStatus()
+                        .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetProfessional)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPost]
@@ -38,7 +47,11 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.CreateProfessional(professional);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<ProfessionalDto>()
+                        .FromEnum(ProfessionalDto.Error.PostProfessional)
+                        .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PostProfessional)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPut("{professionalId}/{code}")]
@@ -46,15 +59,22 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalId, code), professional);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<ProfessionalDto>()
+                        .FromEnum(ProfessionalDto.Error.PutProfessional)
+                        .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PutProfessional)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpDelete("{professionalId}/{code}")]
         public IActionResult Delete(decimal professionalId, Guid code)
         {
-            var response = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
+            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<ProfessionalDto>()
+                        .FromEnum(ProfessionalDto.Error.DeleteProfessional)
+                        .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.DeleteProfessional)
+                        .Build();
         }
     }
 }

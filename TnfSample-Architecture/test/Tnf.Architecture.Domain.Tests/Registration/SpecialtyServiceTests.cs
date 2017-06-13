@@ -8,8 +8,9 @@ using Tnf.Architecture.Domain.Registration;
 using Xunit;
 using Shouldly;
 using System.Linq;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -29,7 +30,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 
             var specialtyList = new List<SpecialtyDto>() { specialtyDto };
 
-            var specialtyPaging = new SuccessResponseListDto<SpecialtyDto>();
+            var specialtyPaging = new ListDto<SpecialtyDto>();
             specialtyPaging.Items = specialtyList;
 
             var builder = new SpecialtyBuilder()
@@ -46,7 +47,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                 .Returns(1);
 
             _specialtyRepository.UpdateSpecialty(Arg.Any<Specialty>())
-                .Returns(builder.Instance);
+                .Returns(builder.Build());
 
             _specialtyRepository.DeleteSpecialty(Arg.Any<int>());
 
@@ -75,7 +76,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var allSpecialties = _specialtyService.GetAllSpecialties(requestDto);
 
             // Assert
-            Assert.True(allSpecialties.Success);
+            Assert.False(Notification.HasNotification());
             Assert.True(allSpecialties.Items.Count == 1);
         }
 
@@ -86,11 +87,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var response = _specialtyService.GetSpecialty(new RequestDto<int>(1));
 
             // Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SpecialtyDto), response);
-            var successResponse = response as SpecialtyDto;
-            Assert.True(successResponse.Id == 1);
-            Assert.True(successResponse.Description == "Cirurgia Vascular");
+            Assert.False(Notification.HasNotification());
+            Assert.True(response.Id == 1);
+            Assert.True(response.Description == "Cirurgia Vascular");
         }
 
         [Fact]
@@ -100,33 +99,31 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var response = _specialtyService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
         public void Specialty_Service_Delete_Specialty()
         {
             // Act
-            var response = _specialtyService.DeleteSpecialty(1);
+            _specialtyService.DeleteSpecialty(1);
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
         public void Specialty_Service_Delete_Not_Accept_Non_Existing_Specialty()
         {
             // Act
-            var response = _specialtyService.DeleteSpecialty(99);
+            _specialtyService.DeleteSpecialty(99);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
         [Fact]
@@ -139,10 +136,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.True(responseBase.Success);
-            Assert.IsType(typeof(SpecialtyDto), responseBase);
-            var specialty = responseBase as SpecialtyDto;
-            Assert.True(specialty.Description == "Cirurgia Vascular");
+            Assert.False(Notification.HasNotification());
+            Assert.True(responseBase.Description == "Cirurgia Vascular");
         }
 
         [Fact]
@@ -152,10 +147,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var responseBase = _specialtyService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.False(responseBase.Success);
-            Assert.IsType(typeof(ErrorResponseDto), responseBase);
-            var errorResponse = responseBase as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -169,10 +163,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.True(responseBase.Success);
-            Assert.IsType(typeof(SpecialtyDto), responseBase);
-            var specialty = responseBase as SpecialtyDto;
-            Assert.True(specialty.Description == "Cirurgia Vascular");
+            Assert.False(Notification.HasNotification());
+            Assert.True(responseBase.Description == "Cirurgia Vascular");
         }
 
         [Fact]
@@ -182,10 +174,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var responseBase = _specialtyService.UpdateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.False(responseBase.Success);
-            Assert.IsType(typeof(ErrorResponseDto), responseBase);
-            var errorResponse = responseBase as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -199,10 +190,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.False(responseBase.Success);
-            Assert.IsType(typeof(ErrorResponseDto), responseBase);
-            var errorResponse = responseBase as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
     }

@@ -1,15 +1,12 @@
-﻿using Tnf.Localization;
-using Tnf.Application.Services;
+﻿using Tnf.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Dto;
-using Tnf.Dto.Interfaces;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using System.Linq;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -22,124 +19,70 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public IResponseDto GetAllSpecialties(GetAllSpecialtiesDto request)
+        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (request.PageSize <= 0)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(request.PageSize));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(request.PageSize)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new ListDto<SpecialtyDto>();
 
             return _service.GetAllSpecialties(request);
         }
 
-        public IResponseDto GetSpecialty(RequestDto<int> id)
+        public SpecialtyDto GetSpecialty(RequestDto<int> id)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (id.GetId() <= 0)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(id));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new SpecialtyDto();
 
             return _service.GetSpecialty(id);
         }
 
-        public IResponseDto CreateSpecialty(SpecialtyDto specialty)
+        public SpecialtyDto CreateSpecialty(SpecialtyDto specialty)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (specialty == null)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(specialty));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(specialty)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new SpecialtyDto();
 
             return _service.CreateSpecialty(specialty);
         }
 
-        public IResponseDto UpdateSpecialty(int id, SpecialtyDto specialty)
+        public SpecialtyDto UpdateSpecialty(int id, SpecialtyDto specialty)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (id <= 0)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
-
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
+                RaiseNotification(nameof(id));
 
             if (specialty == null)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(specialty));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(specialty)) });
-            }
-
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
+            if (Notification.HasNotification())
+                return new SpecialtyDto();
 
             specialty.Id = id;
             return _service.UpdateSpecialty(specialty);
         }
 
-        public IResponseDto DeleteSpecialty(int id)
+        public void DeleteSpecialty(int id)
         {
-            var builder = ErrorResponseDto.DefaultBuilder;
-
             if (id <= 0)
-            {
-                var notificationMessage = LocalizationHelper.GetString(
-                    AppConsts.LocalizationSourceName,
-                    Error.InvalidParameterDynamic);
+                RaiseNotification(nameof(id));
 
-                builder.WithNotification(new Notification() { Message = string.Format(notificationMessage, nameof(id)) });
-            }
+            if (!Notification.HasNotification())
+                _service.DeleteSpecialty(id);
+        }
 
-            if (builder.Notifications.Any())
-                return builder
-                        .FromEnum(Error.InvalidParameter)
-                        .WithMessage(LocalizationHelper.GetString(AppConsts.LocalizationSourceName, Error.InvalidParameter))
-                        .Build();
-
-            return _service.DeleteSpecialty(id);
+        private static void RaiseNotification(params string[] parameter)
+        {
+            Notification.Raise(NotificationEvent.DefaultBuilder
+                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
+                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
+                                                .WithMessageFormat(parameter)
+                                                .Build());
         }
     }
 }

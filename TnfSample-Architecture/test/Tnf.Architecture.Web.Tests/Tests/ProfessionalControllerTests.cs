@@ -12,7 +12,9 @@ using Tnf.Architecture.Dto.ValueObjects;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using System.Collections.Generic;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
+using Tnf.AspNetCore.Mvc.Response;
 
 namespace Tnf.Architecture.Web.Tests.Tests
 {
@@ -29,13 +31,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
                                $"/{RouteConsts.Professional}?pageSize=5",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
         }
 
@@ -43,13 +45,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Filtering_By_Name_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&name=Jos%C3%A9",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 1);
             Assert.Equal(response.Items[0].Name, "José da Silva");
         }
@@ -58,13 +60,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Name, "João da Silva");
         }
@@ -73,13 +75,13 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<SuccessResponseListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Name, "José da Silva");
         }
@@ -88,16 +90,16 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_With_Invalid_Parameters()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"/{RouteConsts.Professional}",
                 HttpStatusCode.BadRequest
                 );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
 
@@ -111,7 +113,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -134,7 +136,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 0);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -157,7 +159,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -174,32 +176,32 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Get_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"/{RouteConsts.Professional}/%20/{Guid.Empty}",
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Get_Professional_When_Not_Exists_Return_Not_Found()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await GetResponseAsObjectAsync<ErrorResponse>(
                                $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                                HttpStatusCode.NotFound
                            );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
 
@@ -224,7 +226,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Name, "João da Silva");
             Assert.Equal(response.Address.Street, "Rua Do Comercio");
             Assert.Equal(response.Address.Number, "123");
@@ -236,40 +238,40 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Post_Null_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"{RouteConsts.Professional}",
                 null,
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Post_Empty_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"/{RouteConsts.Professional}",
                 new ProfessionalDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidProfessional");
             response.DetailedMessage.ShouldBe("InvalidProfessional");
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -296,7 +298,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Success.ShouldBeTrue();
+            Assert.False(Notification.HasNotification());
 
             response.ProfessionalId.ShouldBe(2);
 
@@ -318,7 +320,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             //Assert
-            response.Success.ShouldBeTrue();
+            Assert.False(Notification.HasNotification());
             response.Name.ShouldBe("Nome Alterado Teste");
         }
 
@@ -343,7 +345,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Code.ToString(), "1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
             Assert.Equal(response.Name, "João da Silva");
@@ -353,57 +355,57 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Put_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"{RouteConsts.Professional}/0/{Guid.Empty}",
                 new ProfessionalDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Put_Null_Specialty_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 null,
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Put_Empty_Professional_And_Return_Notifications()
         {
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 new ProfessionalDto(),
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidProfessional");
             response.DetailedMessage.ShouldBe("InvalidProfessional");
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -419,17 +421,17 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponseDto>(
+            var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 professionalDto,
                 HttpStatusCode.NotFound
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
 
@@ -437,45 +439,45 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<SuccessResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<object>(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
         public async Task Delete_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.Professional}/%20/{Guid.Empty}",
                 HttpStatusCode.BadRequest
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
         public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<ErrorResponseDto>(
+            var response = await DeleteResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.Professional}/99/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );
 
             // Assert
-            Assert.False(response.Success);
+            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
-            Assert.True(response.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
     }
 }

@@ -2,14 +2,14 @@
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Repositories;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IProfessionalRepository : IRepository
     {
-        SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
+        ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
         ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto);
         ProfessionalKeysDto CreateProfessional(Professional entity);
         Professional UpdateProfessional(Professional dto);

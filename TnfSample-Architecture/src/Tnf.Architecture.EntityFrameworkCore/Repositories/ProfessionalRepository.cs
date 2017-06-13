@@ -8,8 +8,8 @@ using Tnf.AutoMapper;
 using Tnf.Architecture.Dto.Registration;
 using Microsoft.EntityFrameworkCore;
 using Tnf.Domain.Repositories;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Domain.Registration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
@@ -82,9 +82,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return entity;
         }
 
-        public SuccessResponseListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
         {
-            var response = new SuccessResponseListDto<ProfessionalDto>();
+            var response = new ListDto<ProfessionalDto>();
 
             var dbBaseQuery = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
@@ -98,7 +98,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             response.Total = base.Count();
             response.Items = dbQuery.MapTo<List<ProfessionalDto>>();
-            response.HasNext = base.Count() > ((request.Page - 1) * request.PageSize) + response.Items.Count();
+            response.HasNext = response.Total > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
             return response;
         }

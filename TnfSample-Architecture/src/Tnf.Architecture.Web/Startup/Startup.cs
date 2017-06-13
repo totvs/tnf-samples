@@ -9,6 +9,7 @@ using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.App.EntityFrameworkCore.Configuration;
+using Tnf.App.AspNetCore;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -49,7 +50,7 @@ namespace Tnf.Architecture.Web.Startup
             services.AddSwaggerGen();
 
             //Configure Tnf and Dependency Injection
-            return services.AddTnf<WebModule>(options => { });
+            return services.AddTnfApp<WebModule>(options => { });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

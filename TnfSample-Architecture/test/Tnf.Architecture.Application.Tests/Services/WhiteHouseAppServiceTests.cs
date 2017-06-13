@@ -7,8 +7,9 @@ using Tnf.Architecture.Dto.Enumerables;
 using Xunit;
 using System.Linq;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Dto.Request;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -34,10 +35,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto() { PageSize = 10 });
 
             // Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SuccessResponseListDto<PresidentDto>), response);
-            var successResponse = response as SuccessResponseListDto<PresidentDto>;
-            successResponse.Items.Count.ShouldBe(2);
+            Assert.False(Notification.HasNotification());
+            response.Items.Count.ShouldBe(2);
         }
 
         [Fact]
@@ -47,12 +46,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto());
 
             //Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -62,7 +58,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))), true);
 
             // Assert
-            Assert.True(response.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -72,14 +68,13 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -89,12 +84,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.InsertPresidentAsync(null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -103,23 +95,19 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Act
             var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))), true);
 
-            Assert.True(response.Success);
-            Assert.IsType(typeof(PresidentDto), response);
-            var president = response as PresidentDto;
+            Assert.False(Notification.HasNotification());
 
-            president.Name.ShouldBe("New President");
+            response.Name.ShouldBe("New President");
 
-            response = await _whiteHouseAppService.UpdatePresidentAsync(president.Id, new PresidentDto(
-                president.Id,
+            response = await _whiteHouseAppService.UpdatePresidentAsync(response.Id, new PresidentDto(
+                response.Id,
                 "Alter President",
-                president.Address));
+                response.Address));
 
             // Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(PresidentDto), response);
-            president = response as PresidentDto;
+            Assert.False(Notification.HasNotification());
 
-            president.Name.ShouldBe("Alter President");
+            response.Name.ShouldBe("Alter President");
         }
 
         [Fact]
@@ -132,10 +120,9 @@ namespace Tnf.Architecture.Application.Tests.Services
                 new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
         [Fact]
@@ -145,12 +132,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.UpdatePresidentAsync("", new PresidentDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -160,12 +144,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.UpdatePresidentAsync("1", null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -175,11 +156,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("1"));
 
             // Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(PresidentDto), response);
-            var successResponse = response as PresidentDto;
-            successResponse.Id.ShouldBe("1");
-            successResponse.Name.ShouldBe("New President");
+            Assert.False(Notification.HasNotification());
+            response.Id.ShouldBe("1");
+            response.Name.ShouldBe("New President");
         }
 
         [Fact]
@@ -189,34 +168,31 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("2"));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
         [Fact]
         public async Task Should_Delete_President_With_Success()
         {
             // Act
-            var response = await _whiteHouseAppService.DeletePresidentAsync("1");
+            await _whiteHouseAppService.DeletePresidentAsync("1");
 
             // Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SuccessResponseDto), response);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
         public async Task Should_Delete_President_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.DeletePresidentAsync("99");
+            await _whiteHouseAppService.DeletePresidentAsync("99");
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
     }
 }

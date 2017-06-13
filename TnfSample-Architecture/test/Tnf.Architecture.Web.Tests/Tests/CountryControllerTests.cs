@@ -2,7 +2,6 @@
 using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
-using Tnf.Web.Models;
 using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using System.Net;

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -21,8 +21,12 @@ namespace Tnf.Architecture.Web.Controllers
         public async Task<IActionResult> Get([FromQuery]GetAllPresidentsDto requestDto)
         {
             var response = await _whiteHouseAppService.GetAllPresidents(requestDto);
-            
-            return StatusCode(response.GetHttpStatus(), response);
+
+            return CreateResponse<PresidentDto>()
+                        .FromEnum(PresidentDto.Error.GetAllPresident)
+                        .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetAllPresident)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpGet("{id}")]
@@ -30,7 +34,12 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.GetPresidentById(requestDto.WithId(id));
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<PresidentDto>()
+                        .FromEnum(PresidentDto.Error.GetPresident)
+                        .WithNotFoundStatus()
+                        .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetPresident)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPost]
@@ -38,7 +47,11 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.InsertPresidentAsync(president);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<PresidentDto>()
+                        .FromEnum(PresidentDto.Error.PostPresident)
+                        .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PostPresident)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPut("{id}")]
@@ -46,15 +59,22 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.UpdatePresidentAsync(id, president);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<PresidentDto>()
+                        .FromEnum(PresidentDto.Error.PutPresident)
+                        .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PutPresident)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var response = await _whiteHouseAppService.DeletePresidentAsync(id);
+            await _whiteHouseAppService.DeletePresidentAsync(id);
 
-            return StatusCode(response.GetHttpStatus(), response);
+            return CreateResponse<PresidentDto>()
+                        .FromEnum(PresidentDto.Error.DeletePresident)
+                        .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.DeletePresident)
+                        .Build();
         }
     }
 }

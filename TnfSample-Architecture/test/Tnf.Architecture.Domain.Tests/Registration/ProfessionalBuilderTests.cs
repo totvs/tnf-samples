@@ -2,7 +2,8 @@
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 using System.Linq;
-using Tnf.Dto.Response;
+using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -22,7 +23,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(build.Success);
+            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -39,10 +40,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -59,10 +59,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -79,10 +78,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -99,10 +97,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -119,10 +116,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -139,10 +135,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -159,10 +154,9 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(build.Success);
-            Assert.IsType(typeof(ErrorResponseDto), build);
-            var errorResponse = build as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
         }
     }
 }

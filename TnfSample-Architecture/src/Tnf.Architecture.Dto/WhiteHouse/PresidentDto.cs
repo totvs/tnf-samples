@@ -1,10 +1,14 @@
-﻿using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Dto.Response;
+﻿using System;
+using System.Collections.Generic;
+using Tnf.App.Dto.Response;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {
-    public class PresidentDto : SuccessResponseDto
+    public class PresidentDto : IDto
     {
+        public IList<string> _expandables { get; set; }
+
         public PresidentDto()
         {
         }
@@ -19,5 +23,14 @@ namespace Tnf.Architecture.Dto.WhiteHouse
         public string Id { get; set; }
         public string Name { get; set; }
         public Address Address { get; set; }
+
+        public enum Error
+        {
+            GetAllPresident = 1,
+            GetPresident = 2,
+            PostPresident = 3,
+            PutPresident = 4,
+            DeletePresident = 5
+        }
     }
 }

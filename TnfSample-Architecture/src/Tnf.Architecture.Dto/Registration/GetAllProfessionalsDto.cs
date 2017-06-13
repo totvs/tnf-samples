@@ -1,4 +1,4 @@
-﻿using Tnf.Dto.Request;
+﻿using Tnf.App.Dto.Request;
 
 namespace Tnf.Architecture.Dto.Registration
 {

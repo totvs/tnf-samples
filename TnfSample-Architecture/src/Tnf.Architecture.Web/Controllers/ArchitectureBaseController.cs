@@ -1,11 +1,11 @@
-﻿using Tnf.Architecture.Dto;
-using Tnf.AspNetCore.Mvc.Controllers;
+﻿using Tnf.App.Dto.Response;
+using Tnf.Architecture.Dto;
 using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Web.Controllers
 {
     [DisableValidation]
-    public class ArchitectureControllerBase : TnfController
+    public class ArchitectureControllerBase : TnfAppController
     {
         protected ArchitectureControllerBase()
         {

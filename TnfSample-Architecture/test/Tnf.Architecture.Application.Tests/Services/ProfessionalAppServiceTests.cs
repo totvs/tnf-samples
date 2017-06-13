@@ -1,4 +1,4 @@
-﻿using Tnf.App.EntityFrameworkCore.TestBase;
+﻿using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Xunit;
 using Shouldly;
@@ -10,9 +10,9 @@ using Tnf.Architecture.Dto.Enumerables;
 using System.Collections.Generic;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Dto.Response;
-using Tnf.Dto.Request;
+using Tnf.App.Dto.Request;
 using System;
+using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -53,10 +53,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(SuccessResponseListDto<ProfessionalDto>), response);
-            var successResponse = response as SuccessResponseListDto<ProfessionalDto>;
-            successResponse.Items.Count.ShouldBe(1);
+            Assert.False(Notification.HasNotification());
+            response.Items.Count.ShouldBe(1);
         }
 
         [Fact]
@@ -66,12 +64,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
 
             //Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -96,9 +91,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _professionalAppService.CreateProfessional(professionalDto);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(ProfessionalDto), result);
-            (result as ProfessionalDto).ProfessionalId.ShouldBe(2);
+            Assert.False(Notification.HasNotification());
+            result.ProfessionalId.ShouldBe(2);
         }
 
         [Fact]
@@ -108,16 +102,15 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.CreateProfessional(new ProfessionalDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
         [Fact]
@@ -127,12 +120,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.CreateProfessional(null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -157,22 +147,18 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _professionalAppService.CreateProfessional(professionalDto);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(ProfessionalDto), result);
-            var professional = result as ProfessionalDto;
+            Assert.False(Notification.HasNotification());
 
-            professional.ProfessionalId.ShouldBe(2);
+            result.ProfessionalId.ShouldBe(2);
 
-            professional.Name = "Nome Alterado Teste";
+            result.Name = "Nome Alterado Teste";
 
-            professional.Specialties.Clear();
-            result = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professional.ProfessionalId, professional.Code), professional);
+            result.Specialties.Clear();
+            result = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(result.ProfessionalId, result.Code), result);
 
             //Assert
-            result.Success.ShouldBeTrue();
-            Assert.IsType(typeof(ProfessionalDto), result);
-            professional = result as ProfessionalDto;
-            professional.Name.ShouldBe("Nome Alterado Teste");
+            Assert.False(Notification.HasNotification());
+            result.Name.ShouldBe("Nome Alterado Teste");
         }
 
         [Fact]
@@ -197,10 +183,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
@@ -210,12 +195,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -225,12 +207,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            errorResponse.Message.ShouldBe("InvalidParameter");
-            errorResponse.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(errorResponse.Notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
         }
 
         [Fact]
@@ -240,11 +219,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, _professionalPoco.Code)));
 
             //Assert
-            Assert.True(response.Success);
-            Assert.IsType(typeof(ProfessionalDto), response);
-            var successResponse = response as ProfessionalDto;
-            successResponse.ProfessionalId.ShouldBe(1);
-            successResponse.Code.ShouldBe(_professionalPoco.Code);
+            Assert.False(Notification.HasNotification());
+            response.ProfessionalId.ShouldBe(1);
+            response.Code.ShouldBe(_professionalPoco.Code);
         }
 
         [Fact]
@@ -254,25 +231,21 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, _professionalPoco.Code)));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.Null(response);
+            Assert.True(Notification.HasNotification());
+            Assert.True(Notification.GetAll().Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
         public void Should_Delete_Professional_With_Success()
         {
             //Act
-            var response = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(1, _professionalPoco.Code));
+            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(1, _professionalPoco.Code));
 
-            var count = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
+            var successResponse = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
-            Assert.True(response.Success);
-            Assert.True(count.Success);
-            Assert.IsType(typeof(SuccessResponseListDto<ProfessionalDto>), count);
-            var successResponse = count as SuccessResponseListDto<ProfessionalDto>;
+            Assert.False(Notification.HasNotification());
             successResponse.Items.ShouldBeEmpty();
         }
 
@@ -280,13 +253,12 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Delete_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(99, _professionalPoco.Code));
+            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(99, _professionalPoco.Code));
 
             // Assert
-            Assert.False(response.Success);
-            Assert.IsType(typeof(ErrorResponseDto), response);
-            var errorResponse = response as ErrorResponseDto;
-            Assert.True(errorResponse.Notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(Notification.HasNotification());
+            var notifications = Notification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
     }
 }

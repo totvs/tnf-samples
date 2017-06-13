@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Dto.Response;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class ProfessionalDto : SuccessResponseDto
+    public class ProfessionalDto : IDto
     {
-        public ProfessionalDto()
-            :base(new List<string>() { "professionalSpecialties.specialty" })
-        {
+        public IList<string> _expandables { get; set; }
 
+        public ProfessionalDto()
+        {
+            _expandables = new List<string>() { "professionalSpecialties.specialty" };
         }
 
         public decimal ProfessionalId { get; set; }
@@ -20,5 +22,14 @@ namespace Tnf.Architecture.Dto.Registration
         public string Phone { get; set; }
         public string Email { get; set; }
         public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
+        
+        public enum Error
+        {
+            GetAllProfessional = 1,
+            GetProfessional = 2,
+            PostProfessional = 3,
+            PutProfessional = 4,
+            DeleteProfessional = 5
+        }
     }
 }
