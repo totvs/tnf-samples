@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tnf.Domain.Services;
+using Tnf.App.Domain.Services;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
@@ -13,7 +13,7 @@ using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
-    internal class WhiteHouseService : DomainService<IWhiteHouseRepository>, IWhiteHouseService
+    internal class WhiteHouseService : AppDomainService<IWhiteHouseRepository>, IWhiteHouseService
     {
         private readonly IEventBus _eventBus;
 
@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public async Task<PresidentDto> InsertPresidentAsync(PresidentDto dto, bool sync = false)
         {
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(Notification)
                .WithId(dto.Id)
                .WithName(dto.Name)
                .WithAddress(dto.Address);
@@ -75,7 +75,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public async Task<PresidentDto> UpdatePresidentAsync(PresidentDto dto)
         {
-            var presidentBuilder = new PresidentBuilder()
+            var presidentBuilder = new PresidentBuilder(Notification)
                 .WithId(dto.Id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);

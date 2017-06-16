@@ -1,4 +1,4 @@
-﻿using Tnf.Application.Services;
+﻿using Tnf.App.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
@@ -10,7 +10,7 @@ using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Services
 {
-    public class SpecialtyAppService : ApplicationService, ISpecialtyAppService
+    public class SpecialtyAppService : AppApplicationService, ISpecialtyAppService
     {
         private readonly ISpecialtyService _service;
 
@@ -76,10 +76,10 @@ namespace Tnf.Architecture.Application.Services
                 _service.DeleteSpecialty(id);
         }
 
-        private static void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params string[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
-                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
+                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
                                                 .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
                                                 .WithMessageFormat(parameter)
                                                 .Build());

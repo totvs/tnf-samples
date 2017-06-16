@@ -40,7 +40,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto() { PageSize = 10 });
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             response.Items.Count.ShouldBe(1);
         }
 
@@ -51,9 +51,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
 
             //Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             result.Id.ShouldBe(2);
         }
 
@@ -81,8 +81,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
@@ -93,9 +93,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.CreateSpecialty(null);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
 
             result.Id.ShouldBe(2);
 
@@ -121,7 +121,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             result = _specialtyAppService.UpdateSpecialty(result.Id, result);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             result.Description.ShouldBe("Cirurgia Vascular");
         }
 
@@ -139,8 +139,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
@@ -151,9 +151,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(0, new SpecialtyDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -163,9 +163,9 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.UpdateSpecialty(1, null);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             response.Id.ShouldBe(1);
             response.Description.ShouldBe(_specialtyPoco.Description);
         }
@@ -187,8 +187,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
@@ -206,14 +206,14 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _specialtyAppService.CreateSpecialty(specialtyDto);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             result.Id.ShouldBe(2);
 
             //Act
             _specialtyAppService.DeleteSpecialty(2);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
         }
 
         [Fact]
@@ -223,8 +223,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             _specialtyAppService.DeleteSpecialty(99);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
     }

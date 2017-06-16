@@ -10,6 +10,7 @@ using Tnf.Domain.Repositories;
 using Tnf.App.Dto.Response;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.Registration;
+using Tnf.Domain.Uow;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -70,7 +71,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             return specialty;
         }
-
+        
         public Specialty UpdateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();

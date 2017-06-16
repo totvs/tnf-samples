@@ -2,18 +2,19 @@
 using Tnf.Architecture.Domain.Registration.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.App.Builder;
+using Tnf.App.Bus.Notifications.Interfaces;
 
 namespace Tnf.Architecture.Domain.Registration
 {
     internal class ProfessionalBuilder : Builder<Professional>
     {
-        public ProfessionalBuilder()
-            : base()
+        public ProfessionalBuilder(INotificationHandler notification)
+            : base(notification)
         {
         }
 
-        public ProfessionalBuilder(Professional instance)
-            : base(instance)
+        public ProfessionalBuilder(Professional instance, INotificationHandler notification)
+            : base(instance, notification)
         {
         }
 

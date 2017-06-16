@@ -1,4 +1,5 @@
 ﻿using Tnf.App.Builder;
+using Tnf.App.Bus.Notifications.Interfaces;
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
 
@@ -6,13 +7,13 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 {
     internal class PresidentBuilder : Builder<President>
     {
-        public PresidentBuilder()
-            : base()
+        public PresidentBuilder(INotificationHandler notification)
+            : base(notification)
         {
         }
 
-        public PresidentBuilder(President instance)
-            : base(instance)
+        public PresidentBuilder(President instance, INotificationHandler notification)
+            : base(instance, notification)
         {
         }
 

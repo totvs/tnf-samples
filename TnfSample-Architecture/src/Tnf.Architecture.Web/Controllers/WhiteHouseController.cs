@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = await _whiteHouseAppService.GetAllPresidents(requestDto);
 
             return CreateResponse<PresidentDto>()
-                        .FromEnum(PresidentDto.Error.GetAllPresident)
+                        .FromErrorEnum(PresidentDto.Error.GetAllPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetAllPresident)
                         .WithDto(response)
                         .Build();
@@ -35,7 +35,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = await _whiteHouseAppService.GetPresidentById(requestDto.WithId(id));
 
             return CreateResponse<PresidentDto>()
-                        .FromEnum(PresidentDto.Error.GetPresident)
+                        .FromErrorEnum(PresidentDto.Error.GetPresident)
                         .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetPresident)
                         .WithDto(response)
@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = await _whiteHouseAppService.InsertPresidentAsync(president);
 
             return CreateResponse<PresidentDto>()
-                        .FromEnum(PresidentDto.Error.PostPresident)
+                        .FromErrorEnum(PresidentDto.Error.PostPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PostPresident)
                         .WithDto(response)
                         .Build();
@@ -60,7 +60,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = await _whiteHouseAppService.UpdatePresidentAsync(id, president);
 
             return CreateResponse<PresidentDto>()
-                        .FromEnum(PresidentDto.Error.PutPresident)
+                        .FromErrorEnum(PresidentDto.Error.PutPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PutPresident)
                         .WithDto(response)
                         .Build();
@@ -72,7 +72,7 @@ namespace Tnf.Architecture.Web.Controllers
             await _whiteHouseAppService.DeletePresidentAsync(id);
 
             return CreateResponse<PresidentDto>()
-                        .FromEnum(PresidentDto.Error.DeletePresident)
+                        .FromErrorEnum(PresidentDto.Error.DeletePresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.DeletePresident)
                         .Build();
         }

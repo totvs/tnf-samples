@@ -1,4 +1,4 @@
-﻿using Tnf.Application.Services;
+﻿using Tnf.App.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
@@ -11,7 +11,7 @@ using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Services
 {
-    public class ProfessionalAppService : ApplicationService, IProfessionalAppService
+    public class ProfessionalAppService : AppApplicationService, IProfessionalAppService
     {
         private readonly IProfessionalService _service;
 
@@ -90,7 +90,7 @@ namespace Tnf.Architecture.Application.Services
                 _service.DeleteProfessional(keys);
         }
 
-        private static void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params string[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)

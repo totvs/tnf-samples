@@ -1,14 +1,14 @@
 using Tnf.Modules;
-using Tnf.TestBase;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Reflection.Extensions;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Application.Tests
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfTestBaseModule))]
+        typeof(TnfAppTestBaseModule))]
     public class EfCoreAppTestModule : TnfModule
     {
         public override void PreInitialize()

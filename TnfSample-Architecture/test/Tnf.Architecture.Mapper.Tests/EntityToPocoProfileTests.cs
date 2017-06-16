@@ -16,7 +16,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_Professional_To_ProfessionalPoco()
         {
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                                 .WithAddress(new Address("Rua de teste", "123", "Complement", new ZipCode("12345678")))
                                 .WithProfessionalId(1)
                                 .WithCode(Guid.NewGuid())
@@ -43,7 +43,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            var builder = new SpecialtyBuilder()
+            var builder = new SpecialtyBuilder(LocalNotification)
                                 .WithId(1)
                                 .WithDescription("Cirurgia Geral");
 
@@ -59,7 +59,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                                 .WithId("1234")
                                 .WithName("George")
                                 .WithAddress(new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678")));

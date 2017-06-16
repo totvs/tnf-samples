@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.Modules;
-using Tnf.TestBase;
 using Tnf.Configuration.Startup;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using NSubstitute;
@@ -13,12 +12,13 @@ using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.App.Dto.Response;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Application.Tests
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfTestBaseModule))]
+        typeof(TnfAppTestBaseModule))]
     public class NSubstituteAppTestModule : TnfModule
     {
         public override void PreInitialize()
@@ -38,21 +38,23 @@ namespace Tnf.Architecture.Application.Tests
             {
                 var instance = Substitute.For<IWhiteHouseRepository>();
 
-                var president = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
+                var presidentDto = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
-                var builder = new PresidentBuilder()
-                   .WithId(president.Id)
-                   .WithName("Alter President")
-                   .WithAddress(president.Address);
+                var president = new President()
+                {
+                    Id = presidentDto.Id,
+                    Name = "Alter President",
+                    Address = presidentDto.Address
+                };
 
                 var ids = new List<string>() { "1" };
 
                 var presidentsToGetAll = new ListDto<PresidentDto>();
-                presidentsToGetAll.Items.Add(president);
-                presidentsToGetAll.Items.Add(president);
+                presidentsToGetAll.Items.Add(presidentDto);
+                presidentsToGetAll.Items.Add(presidentDto);
 
                 instance.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.GetId() == "1"))
-                    .Returns(Task.FromResult(president));
+                    .Returns(Task.FromResult(presidentDto));
 
                 instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
                     .Returns(Task.FromResult(presidentsToGetAll));
@@ -61,7 +63,7 @@ namespace Tnf.Architecture.Application.Tests
                     .Returns(Task.FromResult(ids));
 
                 instance.UpdatePresidentsAsync(Arg.Is<President>(p => p.Id == "1"))
-                    .Returns(Task.FromResult(builder.Build()));
+                    .Returns(Task.FromResult(president));
 
                 instance.DeletePresidentsAsync("1")
                     .Returns(Task.FromResult(true));

@@ -1,17 +1,17 @@
 ﻿using Tnf.Architecture.Domain.WhiteHouse;
 using Xunit;
 using System.Linq;
-using Tnf.App.Bus.Notifications;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
-    public class PresidentBuilderTests
+    public class PresidentBuilderTests : TnfAppIntegratedTestBase<TnfDomainModuleTests>
     {
         [Fact]
         public void Create_Valid_President()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName("George Washington")
                   .WithAddress("Rua de teste", "123", "APT 12", "99380000");
@@ -20,14 +20,14 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
         }
 
         [Fact]
         public void Create_President_With_Invalid_Name()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName(null)
                   .WithAddress("Rua de teste", "123", "APT 12", "99380000");
@@ -36,8 +36,8 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
         }
 
@@ -45,7 +45,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public void Create_President_With_Invalid_ZipCode()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName("George Washington")
                   .WithAddress("Rua de teste", "123", "APT 12", "993800021120");
@@ -54,8 +54,8 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
         }
 
@@ -63,7 +63,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public void Create_President_With_Invalid_Address()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName("George Washington")
                   .WithAddress(null, "123", "APT 12", "99380000");
@@ -72,8 +72,8 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
         }
 
@@ -81,7 +81,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public void Create_President_With_Invalid_Address_Number()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName("George Washington")
                   .WithAddress("Rua de teste", null, "APT 12", "99380000");
@@ -90,8 +90,8 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
         }
 
@@ -99,7 +99,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
         public void Create_President_With_Invalid_Address_Complement()
         {
             // Arrange
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(LocalNotification)
                   .WithId("1")
                   .WithName("George Washington")
                   .WithAddress("Rua de teste", "123", null, "99380000");
@@ -108,8 +108,8 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
         }
     }

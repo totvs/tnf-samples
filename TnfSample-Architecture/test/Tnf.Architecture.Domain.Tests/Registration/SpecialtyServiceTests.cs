@@ -33,9 +33,11 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var specialtyPaging = new ListDto<SpecialtyDto>();
             specialtyPaging.Items = specialtyList;
 
-            var builder = new SpecialtyBuilder()
-                .WithId(specialtyDto.Id)
-                .WithDescription(specialtyDto.Description);
+            var specialty = new Specialty()
+            {
+                Id = specialtyDto.Id,
+                Description = specialtyDto.Description
+            };
 
             _specialtyRepository.GetAllSpecialties(Arg.Any<GetAllSpecialtiesDto>())
                 .Returns(specialtyPaging);
@@ -47,7 +49,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                 .Returns(1);
 
             _specialtyRepository.UpdateSpecialty(Arg.Any<Specialty>())
-                .Returns(builder.Build());
+                .Returns(specialty);
 
             _specialtyRepository.DeleteSpecialty(Arg.Any<int>());
 
@@ -76,7 +78,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var allSpecialties = _specialtyService.GetAllSpecialties(requestDto);
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             Assert.True(allSpecialties.Items.Count == 1);
         }
 
@@ -87,7 +89,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var response = _specialtyService.GetSpecialty(new RequestDto<int>(1));
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             Assert.True(response.Id == 1);
             Assert.True(response.Description == "Cirurgia Vascular");
         }
@@ -99,8 +101,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var response = _specialtyService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
@@ -111,7 +113,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             _specialtyService.DeleteSpecialty(1);
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
         }
 
         [Fact]
@@ -121,8 +123,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             _specialtyService.DeleteSpecialty(99);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 
@@ -136,7 +138,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             Assert.True(responseBase.Description == "Cirurgia Vascular");
         }
 
@@ -147,8 +149,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var responseBase = _specialtyService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
@@ -163,7 +165,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             Assert.True(responseBase.Description == "Cirurgia Vascular");
         }
 
@@ -174,8 +176,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var responseBase = _specialtyService.UpdateSpecialty(new SpecialtyDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
         }
 
@@ -190,8 +192,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             });
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
         }
 

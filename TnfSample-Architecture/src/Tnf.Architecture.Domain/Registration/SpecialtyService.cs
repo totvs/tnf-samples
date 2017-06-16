@@ -2,14 +2,14 @@
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Domain.Services;
+using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    public class SpecialtyService : DomainService<ISpecialtyRepository>, ISpecialtyService
+    public class SpecialtyService : AppDomainService<ISpecialtyRepository>, ISpecialtyService
     {
         public SpecialtyService(ISpecialtyRepository repository)
             : base(repository)
@@ -38,7 +38,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SpecialtyDto CreateSpecialty(SpecialtyDto dto)
         {
-            var builder = new SpecialtyBuilder()
+            var builder = new SpecialtyBuilder(Notification)
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 
@@ -66,7 +66,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public SpecialtyDto UpdateSpecialty(SpecialtyDto dto)
         {
-            var specialtyBuilder = new SpecialtyBuilder()
+            var specialtyBuilder = new SpecialtyBuilder(Notification)
                    .WithId(dto.Id)
                    .WithDescription(dto.Description);
 

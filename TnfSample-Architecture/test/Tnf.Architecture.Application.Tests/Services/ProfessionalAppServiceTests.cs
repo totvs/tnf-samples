@@ -12,7 +12,6 @@ using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.App.Dto.Request;
 using System;
-using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -53,7 +52,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             response.Items.Count.ShouldBe(1);
         }
 
@@ -64,8 +63,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
 
             //Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
@@ -91,7 +90,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _professionalAppService.CreateProfessional(professionalDto);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             result.ProfessionalId.ShouldBe(2);
         }
 
@@ -102,8 +101,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.CreateProfessional(new ProfessionalDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
@@ -120,8 +119,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.CreateProfessional(null);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
@@ -147,7 +146,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var result = _professionalAppService.CreateProfessional(professionalDto);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
 
             result.ProfessionalId.ShouldBe(2);
 
@@ -157,7 +156,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             result = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(result.ProfessionalId, result.Code), result);
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             result.Name.ShouldBe("Nome Alterado Teste");
         }
 
@@ -183,8 +182,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
@@ -195,9 +194,10 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.Equal(notifications.Count, 2);
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -207,9 +207,10 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.Equal(notifications.Count, 1);
+            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -219,7 +220,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, _professionalPoco.Code)));
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             response.ProfessionalId.ShouldBe(1);
             response.Code.ShouldBe(_professionalPoco.Code);
         }
@@ -232,8 +233,8 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             // Assert
             Assert.Null(response);
-            Assert.True(Notification.HasNotification());
-            Assert.True(Notification.GetAll().Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
+            Assert.True(LocalNotification.HasNotification());
+            Assert.True(LocalNotification.GetAll().Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
 
         [Fact]
@@ -245,7 +246,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             var successResponse = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
             //Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
             successResponse.Items.ShouldBeEmpty();
         }
 
@@ -256,8 +257,8 @@ namespace Tnf.Architecture.Application.Tests.Services
             _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(99, _professionalPoco.Code));
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
         }
     }

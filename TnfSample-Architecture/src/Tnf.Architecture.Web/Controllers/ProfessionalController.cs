@@ -23,7 +23,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _professionalAppService.GetAllProfessionals(requestDto);
 
             return CreateResponse<ProfessionalDto>()
-                        .FromEnum(ProfessionalDto.Error.GetAllProfessional)
+                        .FromErrorEnum(ProfessionalDto.Error.GetAllProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetAllProfessional)
                         .WithDto(response)
                         .Build();
@@ -35,7 +35,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _professionalAppService.GetProfessional(requestDto.WithId(new ProfessionalKeysDto(professionalId, code)));
 
             return CreateResponse<ProfessionalDto>()
-                        .FromEnum(ProfessionalDto.Error.GetProfessional)
+                        .FromErrorEnum(ProfessionalDto.Error.GetProfessional)
                         .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetProfessional)
                         .WithDto(response)
@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _professionalAppService.CreateProfessional(professional);
 
             return CreateResponse<ProfessionalDto>()
-                        .FromEnum(ProfessionalDto.Error.PostProfessional)
+                        .FromErrorEnum(ProfessionalDto.Error.PostProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PostProfessional)
                         .WithDto(response)
                         .Build();
@@ -60,7 +60,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalId, code), professional);
 
             return CreateResponse<ProfessionalDto>()
-                        .FromEnum(ProfessionalDto.Error.PutProfessional)
+                        .FromErrorEnum(ProfessionalDto.Error.PutProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PutProfessional)
                         .WithDto(response)
                         .Build();
@@ -72,7 +72,7 @@ namespace Tnf.Architecture.Web.Controllers
             _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
 
             return CreateResponse<ProfessionalDto>()
-                        .FromEnum(ProfessionalDto.Error.DeleteProfessional)
+                        .FromErrorEnum(ProfessionalDto.Error.DeleteProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.DeleteProfessional)
                         .Build();
         }

@@ -34,7 +34,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
         }
 
@@ -48,7 +47,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 1);
             Assert.Equal(response.Items[0].Description, "Cirurgia Geral");
         }
@@ -63,7 +61,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Description, "Cirurgia Geral");
         }
@@ -78,7 +75,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Description, "Cirurgia Vascular");
         }
@@ -93,7 +89,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -110,7 +105,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Id, 1);
             Assert.Equal(response.Description, "Cirurgia Vascular");
         }
@@ -125,7 +119,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Id, 0);
             Assert.Equal(response.Description, "Cirurgia Vascular");
         }
@@ -140,7 +133,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -156,7 +148,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
@@ -181,7 +172,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Description, "Cirurgia Torácica");
         }
 
@@ -196,7 +186,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -216,7 +205,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidSpecialty");
             response.DetailedMessage.ShouldBe("InvalidSpecialty");
             Assert.True(response.Details.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
@@ -234,14 +222,18 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            var response = await PutResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
+            await PutResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
                 $"{RouteConsts.Specialty}/1",
                 specialtyDto,
                 HttpStatusCode.OK
             );
 
+            var response = await GetResponseAsObjectAsync<SpecialtyDto>(
+                $"{RouteConsts.Specialty}/1",
+                HttpStatusCode.OK
+            );
+
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Id, 1);
             Assert.Equal(response.Description, "Cirurgia Torácica");
         }
@@ -257,7 +249,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -274,7 +265,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -291,7 +281,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidSpecialty");
             response.DetailedMessage.ShouldBe("InvalidSpecialty");
             Assert.True(response.Details.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
@@ -315,7 +304,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));
@@ -326,13 +314,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var responseDelete = await DeleteResponseAsObjectAsync<object>(
+            var responseDelete = await DeleteResponseAsStringAsync(
                 $"{RouteConsts.Specialty}/1",
                 HttpStatusCode.OK
             );
-
-            // Assert
-            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -345,7 +330,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -361,7 +345,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Specialty.Error.CouldNotFindSpecialty.ToString()));

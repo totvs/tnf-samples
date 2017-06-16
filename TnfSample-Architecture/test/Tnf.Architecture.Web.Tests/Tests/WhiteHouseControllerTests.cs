@@ -35,7 +35,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 5);
         }
 
@@ -49,7 +48,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 6);
             Assert.Equal(response.Items[0].Name, "Abraham Lincoln");
         }
@@ -64,7 +62,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 6);
             Assert.Equal(response.Items[0].Name, "Thomas Jefferson");
         }
@@ -79,7 +76,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -96,7 +92,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.NotNull(response.Id == "1");
             Assert.NotNull(response.Name == "George Washington");
             Assert.NotNull(response.Address.Number == "12345678");
@@ -112,7 +107,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -128,7 +122,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
@@ -154,7 +147,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Name, "Lula");
         }
 
@@ -169,7 +161,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -186,7 +177,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidPresident");
             response.DetailedMessage.ShouldBe("InvalidPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
@@ -203,14 +193,18 @@ namespace Tnf.Architecture.Web.Tests.Tests
             var presidentDto = new PresidentDto("6", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
 
             // Act
-            var response = await PutResponseAsObjectAsync<PresidentDto, PresidentDto>(
+            await PutResponseAsObjectAsync<PresidentDto, PresidentDto>(
                 $"{RouteConsts.WhiteHouse}/6",
                 presidentDto,
                 HttpStatusCode.OK
             );
 
+            var response = await GetResponseAsObjectAsync<PresidentDto>(
+                $"{RouteConsts.WhiteHouse}/6",
+                HttpStatusCode.OK
+            );
+
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Id, "6");
             Assert.Equal(response.Name, "Ronald Reagan");
         }
@@ -226,7 +220,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -243,7 +236,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -260,7 +252,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidPresident");
             response.DetailedMessage.ShouldBe("InvalidPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
@@ -283,7 +274,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
@@ -294,13 +284,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<object>(
+            var response = await DeleteResponseAsStringAsync(
                 $"{RouteConsts.WhiteHouse}/1",
                 HttpStatusCode.OK
             );
-
-            // Assert
-            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -313,7 +300,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -329,7 +315,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));

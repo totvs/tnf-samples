@@ -2,14 +2,14 @@
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Domain.Services;
+using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    public class ProfessionalService : DomainService<IProfessionalRepository>, IProfessionalService
+    public class ProfessionalService : AppDomainService<IProfessionalRepository>, IProfessionalService
     {
         public ProfessionalService(IProfessionalRepository repository)
             : base(repository)
@@ -38,7 +38,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public ProfessionalDto CreateProfessional(ProfessionalDto dto)
         {
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(Notification)
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)
@@ -77,7 +77,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public ProfessionalDto UpdateProfessional(ProfessionalDto dto)
         {
-            var professionalBuilder = new ProfessionalBuilder()
+            var professionalBuilder = new ProfessionalBuilder(Notification)
                    .WithProfessionalId(dto.ProfessionalId)
                    .WithCode(dto.Code)
                    .WithName(dto.Name)

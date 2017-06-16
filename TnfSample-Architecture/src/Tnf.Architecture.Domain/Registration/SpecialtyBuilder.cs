@@ -1,17 +1,18 @@
 ﻿using Tnf.Architecture.Domain.Registration.Specifications;
 using Tnf.App.Builder;
+using Tnf.App.Bus.Notifications.Interfaces;
 
 namespace Tnf.Architecture.Domain.Registration
 {
     internal class SpecialtyBuilder : Builder<Specialty>
     {
-        public SpecialtyBuilder()
-            : base()
+        public SpecialtyBuilder(INotificationHandler notification)
+            : base(notification)
         {
         }
 
-        public SpecialtyBuilder(Specialty instance)
-            : base(instance)
+        public SpecialtyBuilder(Specialty instance, INotificationHandler notification)
+            : base(instance, notification)
         {
         }
 

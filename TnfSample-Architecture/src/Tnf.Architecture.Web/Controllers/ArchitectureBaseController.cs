@@ -1,4 +1,4 @@
-﻿using Tnf.App.Dto.Response;
+﻿using Tnf.App.AspNetCore.Mvc.Controllers;
 using Tnf.Architecture.Dto;
 using Tnf.Runtime.Validation;
 

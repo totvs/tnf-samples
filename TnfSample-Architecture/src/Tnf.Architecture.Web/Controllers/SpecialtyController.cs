@@ -22,7 +22,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _specialtyAppService.GetAllSpecialties(requestDto);
 
             return CreateResponse<SpecialtyDto>()
-                        .FromEnum(SpecialtyDto.Error.GetAllSpecialty)
+                        .FromErrorEnum(SpecialtyDto.Error.GetAllSpecialty)
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.GetAllSpecialty)
                         .WithDto(response)
                         .Build();
@@ -34,7 +34,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _specialtyAppService.GetSpecialty(requestDto.WithId(id));
 
             return CreateResponse<SpecialtyDto>()
-                        .FromEnum(SpecialtyDto.Error.GetSpecialty)
+                        .FromErrorEnum(SpecialtyDto.Error.GetSpecialty)
                         .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.GetSpecialty)
                         .WithDto(response)
@@ -47,7 +47,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _specialtyAppService.CreateSpecialty(specialty);
 
             return CreateResponse<SpecialtyDto>()
-                        .FromEnum(SpecialtyDto.Error.PostSpecialty)
+                        .FromErrorEnum(SpecialtyDto.Error.PostSpecialty)
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.PostSpecialty)
                         .WithDto(response)
                         .Build();
@@ -59,7 +59,7 @@ namespace Tnf.Architecture.Web.Controllers
             var response = _specialtyAppService.UpdateSpecialty(id, specialty);
 
             return CreateResponse<SpecialtyDto>()
-                        .FromEnum(SpecialtyDto.Error.PutSpecialty)
+                        .FromErrorEnum(SpecialtyDto.Error.PutSpecialty)
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.PutSpecialty)
                         .WithDto(response)
                         .Build();
@@ -71,7 +71,7 @@ namespace Tnf.Architecture.Web.Controllers
             _specialtyAppService.DeleteSpecialty(id);
 
             return CreateResponse<SpecialtyDto>()
-                        .FromEnum(SpecialtyDto.Error.DeleteSpecialty)
+                        .FromErrorEnum(SpecialtyDto.Error.DeleteSpecialty)
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.DeleteSpecialty)
                         .Build();
         }

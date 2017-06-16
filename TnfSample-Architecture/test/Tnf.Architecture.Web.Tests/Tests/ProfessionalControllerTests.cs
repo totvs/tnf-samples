@@ -37,7 +37,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
         }
 
@@ -51,7 +50,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 1);
             Assert.Equal(response.Items[0].Name, "José da Silva");
         }
@@ -66,7 +64,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Name, "João da Silva");
         }
@@ -81,7 +78,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Name, "José da Silva");
         }
@@ -96,7 +92,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -113,7 +108,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -136,7 +130,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 0);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -159,7 +152,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Name, "João da Silva");
             Assert.NotNull(response.Address);
@@ -182,7 +174,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -198,7 +189,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
@@ -226,7 +216,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.Name, "João da Silva");
             Assert.Equal(response.Address.Street, "Rua Do Comercio");
             Assert.Equal(response.Address.Number, "123");
@@ -245,7 +234,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -262,7 +250,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidProfessional");
             response.DetailedMessage.ShouldBe("InvalidProfessional");
             Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
@@ -298,8 +285,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.False(Notification.HasNotification());
-
             response.ProfessionalId.ShouldBe(2);
 
             response.Specialties.Clear();
@@ -313,14 +298,18 @@ namespace Tnf.Architecture.Web.Tests.Tests
             };
 
             // Act
-            response = await PutResponseAsObjectAsync<ProfessionalDto, ProfessionalDto>(
+            await PutResponseAsObjectAsync<ProfessionalDto, ProfessionalDto>(
                 $"/{RouteConsts.Professional}/{response.ProfessionalId}/{response.Code}",
                 updateParam,
                 HttpStatusCode.OK
             );
 
+            response = await GetResponseAsObjectAsync<ProfessionalDto>(
+                $"/{RouteConsts.Professional}/{response.ProfessionalId}/{response.Code}",
+                HttpStatusCode.OK
+            );
+
             //Assert
-            Assert.False(Notification.HasNotification());
             response.Name.ShouldBe("Nome Alterado Teste");
         }
 
@@ -345,7 +334,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.False(Notification.HasNotification());
             Assert.Equal(response.ProfessionalId, 1);
             Assert.Equal(response.Code.ToString(), "1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
             Assert.Equal(response.Name, "João da Silva");
@@ -362,7 +350,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -379,7 +366,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -396,7 +382,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidProfessional");
             response.DetailedMessage.ShouldBe("InvalidProfessional");
             Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
@@ -428,7 +413,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));
@@ -439,13 +423,10 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Professional_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsObjectAsync<object>(
+            var response = await DeleteResponseAsStringAsync(
                 $"/{RouteConsts.Professional}/1/1b92f96f-6a71-4655-a0b9-93c5f6ad9637",
                 HttpStatusCode.OK
             );
-
-            // Assert
-            Assert.False(Notification.HasNotification());
         }
 
         [Fact]
@@ -458,7 +439,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("InvalidParameter");
             response.DetailedMessage.ShouldBe("InvalidParameter");
             Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
@@ -474,7 +454,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            Assert.True(Notification.HasNotification());
             response.Message.ShouldBe("NotFound");
             response.DetailedMessage.ShouldBe("NotFound");
             Assert.True(response.Details.Any(a => a.Message == Professional.Error.CouldNotFindProfessional.ToString()));

@@ -2,18 +2,17 @@
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 using System.Linq;
-using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
+using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
-    public class ProfessionalBuilderTests
+    public class ProfessionalBuilderTests : TnfAppIntegratedTestBase<TnfDomainModuleTests>
     {
         [Fact]
         public void Create_Valid_Professional()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", "123", "APT 1", new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -23,14 +22,14 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.False(Notification.HasNotification());
+            Assert.False(LocalNotification.HasNotification());
         }
 
         [Fact]
         public void Create_Professional_With_Invalid_Name()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName(null)
                   .WithAddress("Rua do comercio", "123", "APT 1", new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -40,8 +39,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
         }
 
@@ -49,7 +48,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_ZipCode()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", "123", "APT 1", new ZipCode(null))
                   .WithEmail("professional@professional.com")
@@ -59,8 +58,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
         }
 
@@ -68,7 +67,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_Address()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress(null, "123", "APT 1", new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -78,8 +77,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
         }
 
@@ -87,7 +86,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_Address_Number()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", null, "APT 1", new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -97,8 +96,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
         }
 
@@ -106,7 +105,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_Address_Complement()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", "123", null, new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -116,8 +115,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
         }
 
@@ -125,7 +124,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_Phone()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", "123", "APT 1", new ZipCode("12345678"))
                   .WithEmail("professional@professional.com")
@@ -135,8 +134,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
         }
 
@@ -144,7 +143,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Create_Professional_With_Invalid_Email()
         {
             // Arrange
-            var builder = new ProfessionalBuilder()
+            var builder = new ProfessionalBuilder(LocalNotification)
                   .WithName("Professional 1")
                   .WithAddress("Rua do comercio", "123", "APT 1", new ZipCode("12345678"))
                   .WithEmail(null)
@@ -154,8 +153,8 @@ namespace Tnf.Architecture.Domain.Tests.Registration
             var build = builder.Build();
 
             // Assert
-            Assert.True(Notification.HasNotification());
-            var notifications = Notification.GetAll();
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
             Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
         }
     }

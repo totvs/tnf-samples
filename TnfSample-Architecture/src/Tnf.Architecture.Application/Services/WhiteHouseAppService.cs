@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Application.Services;
+using Tnf.App.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.App.Dto.Response;
@@ -8,11 +8,12 @@ using Tnf.App.Dto.Request;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
 using Tnf.App.Bus.Notifications;
+using Tnf.Application.Services;
 
 namespace Tnf.Architecture.Application.Services
 {
     [RemoteService(false)]
-    public class WhiteHouseAppService : ApplicationService, IWhiteHouseAppService
+    public class WhiteHouseAppService : AppApplicationService, IWhiteHouseAppService
     {
         private readonly IWhiteHouseService _whiteHouserService;
 
@@ -78,7 +79,7 @@ namespace Tnf.Architecture.Application.Services
                 await _whiteHouserService.DeletePresidentAsync(id);
         }
 
-        private static void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params string[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
