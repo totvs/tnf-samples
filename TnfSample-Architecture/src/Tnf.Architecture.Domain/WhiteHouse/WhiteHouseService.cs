@@ -17,7 +17,8 @@ namespace Tnf.Architecture.Domain.WhiteHouse
     {
         private readonly IEventBus _eventBus;
 
-        public WhiteHouseService(IWhiteHouseRepository repository,
+        public WhiteHouseService(
+            IWhiteHouseRepository repository,
             IEventBus eventBus)
             : base(repository)
         {

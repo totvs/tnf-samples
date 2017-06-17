@@ -5,7 +5,7 @@ using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
-    public class PresidentBuilderTests : TnfAppIntegratedTestBase<TnfDomainModuleTests>
+    public class PresidentBuilderTests : TnfAppIntegratedTestBase<DomainModuleTest>
     {
         [Fact]
         public void Create_Valid_President()

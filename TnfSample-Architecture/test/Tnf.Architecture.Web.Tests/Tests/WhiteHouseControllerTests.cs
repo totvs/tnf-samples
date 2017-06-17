@@ -76,9 +76,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("GetAllPresident");
+            response.DetailedMessage.ShouldBe("GetAllPresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
 
@@ -98,18 +98,18 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_President_With_Invalid_Parameter_Return_Bad_Request()
+        public async Task Get_President_With_Invalid_Parameter_Return_Not_Found()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/%20",
-                HttpStatusCode.BadRequest
+                HttpStatusCode.NotFound
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("GetPresident");
+            response.DetailedMessage.ShouldBe("GetPresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -122,8 +122,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
                            );
 
             // Assert
-            response.Message.ShouldBe("NotFound");
-            response.DetailedMessage.ShouldBe("NotFound");
+            response.Message.ShouldBe("GetPresident");
+            response.DetailedMessage.ShouldBe("GetPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
@@ -161,9 +161,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("PostPresident");
+            response.DetailedMessage.ShouldBe("PostPresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -177,8 +177,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidPresident");
-            response.DetailedMessage.ShouldBe("InvalidPresident");
+            response.Message.ShouldBe("PostPresident");
+            response.DetailedMessage.ShouldBe("PostPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
@@ -220,9 +220,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("PutPresident");
+            response.DetailedMessage.ShouldBe("PutPresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -236,9 +236,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("PutPresident");
+            response.DetailedMessage.ShouldBe("PutPresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -252,8 +252,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidPresident");
-            response.DetailedMessage.ShouldBe("InvalidPresident");
+            response.Message.ShouldBe("PutPresident");
+            response.DetailedMessage.ShouldBe("PutPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
             Assert.True(response.Details.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
@@ -274,8 +274,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("NotFound");
-            response.DetailedMessage.ShouldBe("NotFound");
+            response.Message.ShouldBe("PutPresident");
+            response.DetailedMessage.ShouldBe("PutPresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
 
@@ -300,9 +300,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("InvalidParameter");
-            response.DetailedMessage.ShouldBe("InvalidParameter");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameterDynamic.ToString()));
+            response.Message.ShouldBe("DeletePresident");
+            response.DetailedMessage.ShouldBe("DeletePresident");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
         [Fact]
@@ -315,8 +315,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("NotFound");
-            response.DetailedMessage.ShouldBe("NotFound");
+            response.Message.ShouldBe("DeletePresident");
+            response.DetailedMessage.ShouldBe("DeletePresident");
             Assert.True(response.Details.Any(a => a.Message == President.Error.CouldNotFindPresident.ToString()));
         }
     }

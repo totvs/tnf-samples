@@ -79,8 +79,8 @@ namespace Tnf.Architecture.Application.Services
         private void RaiseNotification(params string[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
-                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
-                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameterDynamic)
+                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
+                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
                                                 .WithMessageFormat(parameter)
                                                 .Build());
         }

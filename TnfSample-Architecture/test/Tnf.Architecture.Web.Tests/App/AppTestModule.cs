@@ -8,12 +8,13 @@ using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using System;
 using Tnf.Reflection.Extensions;
+using Tnf.App.AspNetCore.TestBase;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfAspNetCoreTestBaseModule))]
+        typeof(TnfAppAspNetCoreTestBaseModule))]
     public class AppTestModule : TnfModule
     {
         public override void PreInitialize()

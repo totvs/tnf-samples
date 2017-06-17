@@ -16,14 +16,14 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_Professional_To_ProfessionalPoco()
         {
-            var builder = new ProfessionalBuilder(LocalNotification)
-                                .WithAddress(new Address("Rua de teste", "123", "Complement", new ZipCode("12345678")))
-                                .WithProfessionalId(1)
-                                .WithCode(Guid.NewGuid())
-                                .WithEmail("email@email.com")
-                                .WithName("Professional");
-
-            Professional entity = builder.Build();
+            Professional entity = new Professional()
+            {
+                Address = new Address("Rua de teste", "123", "Complement", new ZipCode("12345678")),
+                ProfessionalId = 1,
+                Code = Guid.NewGuid(),
+                Email = "email@email.com",
+                Name = "Professional"
+            };
 
             ProfessionalPoco mappPoco = entity.MapTo<ProfessionalPoco>();
 
@@ -43,11 +43,11 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            var builder = new SpecialtyBuilder(LocalNotification)
-                                .WithId(1)
-                                .WithDescription("Cirurgia Geral");
-
-            Specialty entity = builder.Build();
+            Specialty entity = new Specialty()
+            {
+                Id = 1,
+                Description = "Cirurgia Geral"
+            };
 
             SpecialtyPoco mappPoco = entity.MapTo<SpecialtyPoco>();
 
@@ -59,12 +59,12 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            var builder = new PresidentBuilder(LocalNotification)
-                                .WithId("1234")
-                                .WithName("George")
-                                .WithAddress(new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678")));
-
-            President entity = builder.Build();
+            President entity = new President()
+            {
+                Id = "1234",
+                Name = "George",
+                Address = new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678"))
+            };
 
             PresidentPoco mappPoco = entity.MapTo<PresidentPoco>();
 

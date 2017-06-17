@@ -6,7 +6,7 @@ using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
-    public class ProfessionalBuilderTests : TnfAppIntegratedTestBase<TnfDomainModuleTests>
+    public class ProfessionalBuilderTests : TnfAppIntegratedTestBase<DomainModuleTest>
     {
         [Fact]
         public void Create_Valid_Professional()

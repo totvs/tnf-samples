@@ -14,14 +14,15 @@ namespace Tnf.Architecture.Web.Tests.App
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore()
-                .AddJsonFormatters()
-                .AddApplicationPart(typeof(TnfAspNetCoreModule).GetAssembly())
-                .AddApplicationPart(typeof(Startup.WebModule).GetAssembly());
+            // Add controllers in test
+            services
+                .AddMvcCore()
+                .AddApplicationPart(typeof(Tnf.Architecture.Web.Startup.WebModule).GetAssembly());
 
+            // Add support to Entity Framework In Memory
             services.AddEntityFrameworkInMemoryDatabase();
 
-            //Configure Tnf and Dependency Injection
+            // Configure Tnf and Dependency Injection
             return services.AddTnfApp<AppTestModule>(options =>
             {
                 //Test setup
@@ -29,7 +30,6 @@ namespace Tnf.Architecture.Web.Tests.App
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseTnf(); //Initializes Tnf framework.

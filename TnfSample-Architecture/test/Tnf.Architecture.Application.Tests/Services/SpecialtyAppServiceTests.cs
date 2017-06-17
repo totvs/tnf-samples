@@ -8,9 +8,7 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.App.Dto.Response;
 using Tnf.App.Dto.Request;
-using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {

@@ -5,7 +5,7 @@ using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
-    public class SpecialtyBuilderTests : TnfAppIntegratedTestBase<TnfDomainModuleTests>
+    public class SpecialtyBuilderTests : TnfAppIntegratedTestBase<DomainModuleTest>
     {
         [Fact]
         public void Create_Valid_Specialty()

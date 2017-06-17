@@ -1,62 +1,21 @@
-﻿using NSubstitute;
-using System.Collections.Generic;
-using Tnf.App.TestBase;
-using Tnf.Architecture.Domain.Interfaces.Repositories;
+﻿using Tnf.App.TestBase;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Domain.Registration;
 using Xunit;
 using Shouldly;
 using System.Linq;
-using Tnf.App.Dto.Response;
 using Tnf.App.Dto.Request;
-using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
-    public class SpecialtyServiceTests : TestBaseWithLocalIocManager
+    public class SpecialtyServiceTests : TnfAppIntegratedTestBase<DomainModuleTest>
     {
-        ISpecialtyService _specialtyService;
+        private readonly ISpecialtyService _specialtyService;
 
         public SpecialtyServiceTests()
         {
-            var _specialtyRepository = Substitute.For<ISpecialtyRepository>();
-
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 1,
-                Description = "Cirurgia Vascular"
-            };
-
-            var specialtyList = new List<SpecialtyDto>() { specialtyDto };
-
-            var specialtyPaging = new ListDto<SpecialtyDto>();
-            specialtyPaging.Items = specialtyList;
-
-            var specialty = new Specialty()
-            {
-                Id = specialtyDto.Id,
-                Description = specialtyDto.Description
-            };
-
-            _specialtyRepository.GetAllSpecialties(Arg.Any<GetAllSpecialtiesDto>())
-                .Returns(specialtyPaging);
-
-            _specialtyRepository.GetSpecialty(Arg.Any<RequestDto<int>>())
-                .Returns(specialtyDto);
-
-            _specialtyRepository.CreateSpecialty(Arg.Any<Specialty>())
-                .Returns(1);
-
-            _specialtyRepository.UpdateSpecialty(Arg.Any<Specialty>())
-                .Returns(specialty);
-
-            _specialtyRepository.DeleteSpecialty(Arg.Any<int>());
-
-            _specialtyRepository.ExistsSpecialty(Arg.Is(1))
-                .Returns(true);
-
-            _specialtyService = new SpecialtyService(_specialtyRepository);
+            _specialtyService = Resolve<ISpecialtyService>();
         }
 
         [Fact]

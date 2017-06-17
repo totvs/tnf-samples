@@ -2,7 +2,6 @@
 {
     public enum Error
     {
-        InvalidParameter = 0,
-        InvalidParameterDynamic = 1
+        InvalidParameter = 0
     }
 }
