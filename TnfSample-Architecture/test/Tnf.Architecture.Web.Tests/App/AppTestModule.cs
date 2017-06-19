@@ -1,5 +1,4 @@
-﻿using Tnf.AspNetCore.TestBase;
-using Tnf.Modules;
+﻿using Tnf.Modules;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Web.Tests.Mocks;

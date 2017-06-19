@@ -11,7 +11,6 @@ using System.Linq;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
 using Tnf.AspNetCore.Mvc.Response;
 
 namespace Tnf.Architecture.Web.Tests.Tests
@@ -67,7 +66,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Presidents_With_Invalid_Parameters()
+        public async Task GetAll_Presidents_With_Invalid_Parameters_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
@@ -98,12 +97,12 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_President_With_Invalid_Parameter_Return_Not_Found()
+        public async Task Get_President_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"{RouteConsts.WhiteHouse}/%20",
-                HttpStatusCode.NotFound
+                HttpStatusCode.BadRequest
             );
 
             // Assert
@@ -151,7 +150,46 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Null_President_And_Return_Notifications()
+        public async Task Post_President_Should_Be_Insert_And_Update_Item()
+        {
+            //Arrange
+            var presidentDto = new PresidentDto()
+            {
+                Id = "4",
+                Name = "Lula",
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306"))
+            };
+
+            // Act
+            var response = await PostResponseAsObjectAsync<PresidentDto, PresidentDto>(
+                $"/{RouteConsts.WhiteHouse}",
+                presidentDto,
+                HttpStatusCode.OK
+            );
+
+            var updateParam = new PresidentDto()
+            {
+                Address = response.Address,
+                Name = "Nome Alterado Teste"
+            };
+            
+            await PutResponseAsObjectAsync<PresidentDto, PresidentDto>(
+                $"/{RouteConsts.WhiteHouse}/{response.Id}",
+                updateParam,
+                HttpStatusCode.OK
+            );
+
+            response = await GetResponseAsObjectAsync<PresidentDto>(
+                $"/{RouteConsts.WhiteHouse}/{response.Id}",
+                HttpStatusCode.OK
+            );
+
+            //Assert
+            response.Name.ShouldBe("Nome Alterado Teste");
+        }
+
+        [Fact]
+        public async Task Post_Null_President_And_Return_Bad_Request()
         {
             // Act
             var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponse>(
@@ -167,7 +205,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_President_With_Invalid_Parameter_And_Return_Notifications()
+        public async Task Post_President_With_Invalid_Parameter_And_Return_Bad_Request()
         {
             // Act
             var response = await PostResponseAsObjectAsync<PresidentDto, ErrorResponse>(
@@ -226,7 +264,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Null_President_And_Return_Notifications()
+        public async Task Put_Null_President_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
@@ -242,7 +280,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Empty_President_And_Return_Notifications()
+        public async Task Put_Empty_President_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<PresidentDto, ErrorResponse>(
@@ -261,7 +299,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_President_When_Not_Exists_Return_Notifications()
+        public async Task Put_President_When_Not_Exists_Return_Not_Found()
         {
             //Arrange
             var presidentDto = new PresidentDto("99", "Ronald Reagan", new Address("Rua de teste", "123", "APT 12", new ZipCode("74125306")));
@@ -306,7 +344,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Delete_President_When_Not_Exists_Return_Notifications()
+        public async Task Delete_President_When_Not_Exists_Return_Not_Found()
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<ErrorResponse>(

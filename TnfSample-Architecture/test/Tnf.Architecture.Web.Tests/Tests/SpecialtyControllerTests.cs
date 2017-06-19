@@ -10,7 +10,6 @@ using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
 using Tnf.AspNetCore.Mvc.Response;
 
 namespace Tnf.Architecture.Web.Tests.Tests
@@ -80,7 +79,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Specialties_With_Invalid_Parameters()
+        public async Task GetAll_Specialties_With_Invalid_Parameters_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
@@ -124,12 +123,12 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_Specialty_With_Invalid_Parameter_Return_Not_Found()
+        public async Task Get_Specialty_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"/{RouteConsts.Specialty}/-1",
-                HttpStatusCode.NotFound
+                HttpStatusCode.BadRequest
             );
 
             // Assert
@@ -176,7 +175,48 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Null_Specialty_And_Return_Notifications()
+        public async Task Post_Specialty_Should_Be_Insert_And_Update_Item()
+        {
+            //Arrange
+            var specialtyDto = new SpecialtyDto()
+            {
+                Id = 3,
+                Description = "Cirurgia Torácica"
+            };
+
+            // Act
+            var response = await PostResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
+                $"/{RouteConsts.Specialty}",
+                specialtyDto,
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            response.Id.ShouldBe(3);
+
+            var updateParam = new SpecialtyDto()
+            {
+                Description = "Descrição Alterada Teste"
+            };
+
+            // Act
+            await PutResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
+                $"/{RouteConsts.Specialty}/{response.Id}",
+                updateParam,
+                HttpStatusCode.OK
+            );
+
+            response = await GetResponseAsObjectAsync<SpecialtyDto>(
+                $"/{RouteConsts.Specialty}/{response.Id}",
+                HttpStatusCode.OK
+            );
+
+            //Assert
+            response.Description.ShouldBe("Descrição Alterada Teste");
+        }
+
+        [Fact]
+        public async Task Post_Null_Specialty_And_Return_Bad_Request()
         {
             // Act
             var response = await PostResponseAsObjectAsync<SpecialtyDto, ErrorResponse>(
@@ -192,7 +232,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Empty_Specialty_And_Return_Notifications()
+        public async Task Post_Empty_Specialty_And_Return_Bad_Request()
         {
             //Arrange
             var specialtyDto = new SpecialtyDto();
@@ -255,7 +295,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Null_Specialty_And_Return_Notifications()
+        public async Task Put_Null_Specialty_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<SpecialtyDto, ErrorResponse>(
@@ -271,7 +311,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Empty_Specialty_And_Return_Notifications()
+        public async Task Put_Empty_Specialty_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<SpecialtyDto, ErrorResponse>(
@@ -287,7 +327,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Specialty_When_Not_Exists_Return_Notifications()
+        public async Task Put_Specialty_When_Not_Exists_Return_Not_Found()
         {
             //Arrange
             var specialtyDto = new SpecialtyDto()
@@ -336,7 +376,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Delete_Specialty_When_Not_Exists_Return_Notifications()
+        public async Task Delete_Specialty_When_Not_Exists_Return_Not_Found()
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<ErrorResponse>(

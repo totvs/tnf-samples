@@ -36,7 +36,6 @@ namespace Tnf.Architecture.Web.Controllers
 
             return CreateResponse<ProfessionalDto>()
                         .FromErrorEnum(ProfessionalDto.Error.GetProfessional)
-                        .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetProfessional)
                         .WithDto(response)
                         .Build();

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17168.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Tnf.Architecture.Carol\Tnf.Architecture.Carol.csproj" />
     <ProjectReference Include="..\Tnf.Architecture.EntityFrameworkCore\Tnf.Architecture.EntityFrameworkCore.csproj" />
   </ItemGroup>
