@@ -81,7 +81,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task GetAll_Professionals_With_Invalid_Parameters()
+        public async Task GetAll_Professionals_With_Invalid_Parameters_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
@@ -163,12 +163,12 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Get_Professional_With_Invalid_Parameter_Return_Not_Found()
+        public async Task Get_Professional_With_Invalid_Parameter_Return_Bad_Request()
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
                 $"/{RouteConsts.Professional}/%20/{Guid.Empty}",
-                HttpStatusCode.NotFound
+                HttpStatusCode.BadRequest
             );
 
             // Assert
@@ -222,46 +222,9 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Post_Null_Professional_And_Return_Notifications()
-        {
-            // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
-                $"{RouteConsts.Professional}",
-                null,
-                HttpStatusCode.BadRequest
-            );
-
-            // Assert
-            response.Message.ShouldBe("PostProfessional");
-            response.DetailedMessage.ShouldBe("PostProfessional");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
-        }
-
-        [Fact]
-        public async Task Post_Empty_Professional_And_Return_Notifications()
-        {
-            // Act
-            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
-                $"/{RouteConsts.Professional}",
-                new ProfessionalDto(),
-                HttpStatusCode.BadRequest
-            );
-
-            // Assert
-            response.Message.ShouldBe("PostProfessional");
-            response.DetailedMessage.ShouldBe("PostProfessional");
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
-            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
-        }
-
-        [Fact]
         public async Task Post_Professional_Should_Be_Insert_And_Update_Item()
         {
+            //Arrange
             var professionalDto = new ProfessionalDto()
             {
                 ProfessionalId = 2,
@@ -311,6 +274,44 @@ namespace Tnf.Architecture.Web.Tests.Tests
             response.Name.ShouldBe("Nome Alterado Teste");
         }
 
+        [Fact]
+        public async Task Post_Null_Professional_And_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
+                $"{RouteConsts.Professional}",
+                null,
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Message.ShouldBe("PostProfessional");
+            response.DetailedMessage.ShouldBe("PostProfessional");
+            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+        }
+
+        [Fact]
+        public async Task Post_Empty_Professional_And_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
+                $"/{RouteConsts.Professional}",
+                new ProfessionalDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Message.ShouldBe("PostProfessional");
+            response.DetailedMessage.ShouldBe("PostProfessional");
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+        }
+
 
         [Fact]
         public async Task Put_Professional_With_Success()
@@ -354,7 +355,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Null_Specialty_And_Return_Notifications()
+        public async Task Put_Null_Specialty_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
@@ -370,7 +371,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Empty_Professional_And_Return_Notifications()
+        public async Task Put_Empty_Professional_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
@@ -392,7 +393,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Professional_When_Not_Exists_Return_Notifications()
+        public async Task Put_Professional_When_Not_Exists_Return_Not_Found()
         {
             //Arrange
             var professionalDto = new ProfessionalDto()
@@ -443,7 +444,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Delete_Professional_When_Not_Exists_Return_Notifications()
+        public async Task Delete_Professional_When_Not_Exists_Return_Not_Found()
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<ErrorResponse>(

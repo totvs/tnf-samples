@@ -36,7 +36,6 @@ namespace Tnf.Architecture.Web.Controllers
 
             return CreateResponse<PresidentDto>()
                         .FromErrorEnum(PresidentDto.Error.GetPresident)
-                        .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetPresident)
                         .WithDto(response)
                         .Build();

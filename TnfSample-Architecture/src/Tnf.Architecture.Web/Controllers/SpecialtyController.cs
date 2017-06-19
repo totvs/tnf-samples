@@ -35,7 +35,6 @@ namespace Tnf.Architecture.Web.Controllers
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.GetSpecialty)
-                        .WithNotFoundStatus()
                         .WithMessage(AppConsts.LocalizationSourceName, SpecialtyDto.Error.GetSpecialty)
                         .WithDto(response)
                         .Build();

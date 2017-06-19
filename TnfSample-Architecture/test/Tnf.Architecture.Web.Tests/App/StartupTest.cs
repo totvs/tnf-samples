@@ -7,6 +7,7 @@ using Tnf.AspNetCore.TestBase;
 using Tnf.AspNetCore;
 using Tnf.Reflection.Extensions;
 using Tnf.App.AspNetCore;
+using Tnf.Architecture.Web.Startup;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -17,7 +18,7 @@ namespace Tnf.Architecture.Web.Tests.App
             // Add controllers in test
             services
                 .AddMvcCore()
-                .AddApplicationPart(typeof(Tnf.Architecture.Web.Startup.WebModule).GetAssembly());
+                .AddApplicationPart(typeof(WebModule).GetAssembly());
 
             // Add support to Entity Framework In Memory
             services.AddEntityFrameworkInMemoryDatabase();
