@@ -11,12 +11,12 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalService : AppDomainService<IProfessionalRepository>, IProfessionalService
     {
-        private readonly IProfessionalDapperRepository _repositoryDapper;
+        //private readonly IProfessionalDapperRepository _repositoryDapper;
 
-        public ProfessionalService(IProfessionalRepository repository, IProfessionalDapperRepository repositoryDapper)
+        public ProfessionalService(IProfessionalRepository repository)
             : base(repository)
         {
-            _repositoryDapper = repositoryDapper;
+            //_repositoryDapper = repositoryDapper;
         }
 
         public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
