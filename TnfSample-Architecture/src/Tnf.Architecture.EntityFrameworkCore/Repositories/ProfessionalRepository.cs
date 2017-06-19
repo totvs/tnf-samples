@@ -1,16 +1,16 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.EntityFrameworkCore.Repositories;
-using Tnf.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using Tnf.AutoMapper;
-using Tnf.Architecture.Dto.Registration;
-using Microsoft.EntityFrameworkCore;
-using Tnf.Domain.Repositories;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.AutoMapper;
+using Tnf.Domain.Repositories;
+using Tnf.EntityFrameworkCore;
+using Tnf.EntityFrameworkCore.Repositories;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {

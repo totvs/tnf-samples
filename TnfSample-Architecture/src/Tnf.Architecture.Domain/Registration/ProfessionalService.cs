@@ -1,19 +1,22 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Registration;
+﻿using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Domain.Interfaces.Services;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalService : AppDomainService<IProfessionalRepository>, IProfessionalService
     {
-        public ProfessionalService(IProfessionalRepository repository)
+        private readonly IProfessionalDapperRepository _repositoryDapper;
+
+        public ProfessionalService(IProfessionalRepository repository, IProfessionalDapperRepository repositoryDapper)
             : base(repository)
         {
+            _repositoryDapper = repositoryDapper;
         }
 
         public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
