@@ -5,12 +5,13 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Tnf.Dapper.Repositories;
+using Tnf.Data;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
     public class ProfessionalDapperRepository : DapperEfRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalDapperRepository
     {
-        public ProfessionalDapperRepository(Abp.Data.IActiveTransactionProvider activeTransactionProvider)
+        public ProfessionalDapperRepository(IActiveTransactionProvider activeTransactionProvider)
             : base(activeTransactionProvider)
         {
         }

@@ -1,13 +1,15 @@
-﻿using Tnf.Modules;
+﻿using System;
+using Tnf.App.AspNetCore.TestBase;
+using Tnf.App.EntityFrameworkCore;
+using Tnf.App.EntityFrameworkCore.Configuration;
+using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.Web.Tests.Mocks;
 using Tnf.Configuration.Startup;
-using Tnf.App.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
-using System;
+using Tnf.Modules;
 using Tnf.Reflection.Extensions;
-using Tnf.App.AspNetCore.TestBase;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -26,7 +28,9 @@ namespace Tnf.Architecture.Web.Tests.App
             Configuration
                 .TnfEfCoreInMemory(IocManager.Resolve<IServiceProvider>())
                 .RegisterDbContextInMemory<ArchitectureDbContext>()
-                .RegisterDbContextInMemory<LegacyDbContext>();
+                .RegisterDbContextInMemory<LegacyDbContext>()
+                .RegisterDbContextInMemory<TnfAppLocalizationDbContext>()
+                .RegisterDbContextInMemory<TnfAppSettingsDbContext>();
         }
 
         public override void Initialize()
