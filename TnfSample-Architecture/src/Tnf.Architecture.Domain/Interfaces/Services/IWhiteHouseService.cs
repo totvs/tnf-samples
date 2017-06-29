@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IWhiteHouseService : IDomainService
     {
-        Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request);
+        Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request);
         Task<PresidentDto> GetPresidentById(RequestDto<string> id);
         Task<PresidentDto> InsertPresidentAsync(PresidentDto request, bool sync = false);
         Task<PresidentDto> UpdatePresidentAsync(PresidentDto president);

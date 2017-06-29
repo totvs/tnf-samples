@@ -25,7 +25,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             _eventBus = eventBus;
         }
 
-        public Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request) => Repository.GetAllPresidents(request);
+        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request) => Repository.GetAllPresidents(request);
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {

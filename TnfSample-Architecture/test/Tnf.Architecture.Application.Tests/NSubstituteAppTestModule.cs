@@ -49,7 +49,7 @@ namespace Tnf.Architecture.Application.Tests
 
                 var ids = new List<string>() { "1" };
 
-                var presidentsToGetAll = new ListDto<PresidentDto>();
+                var presidentsToGetAll = new ListDto<PresidentDto, string>();
                 presidentsToGetAll.Items.Add(presidentDto);
                 presidentsToGetAll.Items.Add(presidentDto);
 

@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=5",
                                HttpStatusCode.OK
                            );
@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
@@ -55,7 +55,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Presidents_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
                                $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
@@ -63,21 +63,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.Equal(response.Items.Count, 6);
             Assert.Equal(response.Items[0].Name, "Thomas Jefferson");
-        }
-
-        [Fact]
-        public async Task GetAll_Presidents_With_Invalid_Parameters_Return_Bad_Request()
-        {
-            // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponse>(
-                $"{RouteConsts.WhiteHouse}",
-                HttpStatusCode.BadRequest
-                );
-
-            // Assert
-            response.Message.ShouldBe("GetAllPresident");
-            response.DetailedMessage.ShouldBe("GetAllPresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
 

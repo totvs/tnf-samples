@@ -6,7 +6,7 @@ using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class ProfessionalDto : IDto
+    public class ProfessionalDto : IDto<ProfessionalKeysDto>
     {
         public IList<string> _expandables { get; set; }
 
@@ -22,7 +22,10 @@ namespace Tnf.Architecture.Dto.Registration
         public string Phone { get; set; }
         public string Email { get; set; }
         public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
-        
+
+        [JsonIgnore]
+        public ProfessionalKeysDto Id { get; set; }
+
         public enum Error
         {
             GetAllProfessional = 1,

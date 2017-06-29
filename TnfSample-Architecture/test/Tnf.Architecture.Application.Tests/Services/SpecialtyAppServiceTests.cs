@@ -43,18 +43,6 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
-        public void Should_Get_All_Specialties_With_Error()
-        {
-            //Act
-            var response = _specialtyAppService.GetAllSpecialties(new GetAllSpecialtiesDto());
-
-            //Assert
-            Assert.True(LocalNotification.HasNotification());
-            var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
-        }
-
-        [Fact]
         public void Should_Insert_Specialty_With_Success()
         {
             //Arrange

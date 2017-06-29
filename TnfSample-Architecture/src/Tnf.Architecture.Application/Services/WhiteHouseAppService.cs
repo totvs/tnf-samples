@@ -22,16 +22,8 @@ namespace Tnf.Architecture.Application.Services
             _whiteHouserService = whiteHouserService;
         }
 
-        public async Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
-        {
-            if (request.PageSize <= 0)
-                RaiseNotification(nameof(request.PageSize));
-
-            if (Notification.HasNotification())
-                return new ListDto<PresidentDto>();
-
-            return await _whiteHouserService.GetAllPresidents(request);
-        }
+        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
+            => _whiteHouserService.GetAllPresidents(request);
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {

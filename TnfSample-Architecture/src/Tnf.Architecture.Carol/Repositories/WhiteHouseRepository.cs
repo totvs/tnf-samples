@@ -25,11 +25,11 @@ namespace Tnf.Architecture.Data.Repositories
             return await DeleteAsync(id);
         }
 
-        public async Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public async Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var response = new ListDto<PresidentDto>();
+            var response = new ListDto<PresidentDto, string>();
 
-            var query = Client.Queries<PresidentPoco>().ProcessFilter()
+            var query = Client.Query<PresidentPoco>().ProcessFilter()
                 .SkipAndTakeByRequestDto(request)
                 .OrderByRequestDto(request)
                 .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)

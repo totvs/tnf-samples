@@ -1,4 +1,6 @@
-﻿using Tnf.App.Dto.Request;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.Registration;
@@ -22,14 +24,20 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return professional != null;
         }
 
-        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
         {
             var professionalsPoco = GetAllPaged(w => request.Name == null || w.Name.Contains(request.Name) &&
                                                      request.ZipCode == null || w.ZipCode == request.ZipCode,
                 request.Page,
                 request.PageSize);
 
-            return professionalsPoco.MapTo<ListDto<ProfessionalDto>>();
+            var response = new ListDto<ProfessionalDto, ProfessionalKeysDto>();
+
+            response.Total = professionalsPoco.Count();
+            response.Items = professionalsPoco.MapTo<List<ProfessionalDto>>();
+            response.HasNext = professionalsPoco.Count() > ((request.Page - 1) * request.PageSize) + professionalsPoco.Count();
+
+            return response;
         }
 
         public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)

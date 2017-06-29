@@ -77,22 +77,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Description, "Cirurgia Vascular");
         }
-
-        [Fact]
-        public async Task GetAll_Specialties_With_Invalid_Parameters_Return_Bad_Request()
-        {
-            // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponse>(
-                $"/{RouteConsts.Specialty}",
-                HttpStatusCode.BadRequest
-                );
-
-            // Assert
-            response.Message.ShouldBe("GetAllSpecialty");
-            response.DetailedMessage.ShouldBe("GetAllSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
-        }
-
+        
 
         [Fact]
         public async Task Get_Specialty_With_Sucess()

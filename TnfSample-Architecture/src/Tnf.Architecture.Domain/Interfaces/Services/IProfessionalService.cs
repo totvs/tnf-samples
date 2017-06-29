@@ -7,7 +7,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IProfessionalService : IDomainService
     {
-        ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
+        ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request);
         ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
         ProfessionalDto CreateProfessional(ProfessionalDto dto);
         ProfessionalDto UpdateProfessional(ProfessionalDto dto);

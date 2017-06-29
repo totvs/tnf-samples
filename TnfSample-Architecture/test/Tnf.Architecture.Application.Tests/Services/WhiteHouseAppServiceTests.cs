@@ -40,18 +40,6 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
-        public async Task Should_Get_All_Presidents_With_Error()
-        {
-            //Act
-            var response = await _whiteHouseAppService.GetAllPresidents(new GetAllPresidentsDto());
-
-            //Assert
-            Assert.True(LocalNotification.HasNotification());
-            var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
-        }
-
-        [Fact]
         public async Task Should_Insert_President_With_Success()
         {
             // Act

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {
-    public class PresidentDto : IDto
+    public class PresidentDto : IDto<string>
     {
         public IList<string> _expandables { get; set; }
 

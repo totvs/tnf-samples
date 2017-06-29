@@ -20,15 +20,7 @@ namespace Tnf.Architecture.Application.Services
         }
 
         public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
-        {
-            if (request.PageSize <= 0)
-                RaiseNotification(nameof(request.PageSize));
-
-            if (Notification.HasNotification())
-                return new ListDto<SpecialtyDto>();
-
-            return _service.GetAllSpecialties(request);
-        }
+            => _service.GetAllSpecialties(request);
 
         public SpecialtyDto GetSpecialty(RequestDto<int> id)
         {

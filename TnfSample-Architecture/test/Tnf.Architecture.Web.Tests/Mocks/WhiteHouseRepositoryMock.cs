@@ -42,7 +42,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<ListDto<PresidentDto>> GetAllPresidents(GetAllPresidentsDto request)
+        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var presidents = _presidents
                 .Select(s => s.Value)
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .OrderByRequestDto(request)
                 .ToList();
 
-            var result = new ListDto<PresidentDto>();
+            var result = new ListDto<PresidentDto, string>();
             result.Items = presidents.MapTo<List<PresidentDto>>();
 
             return Task.FromResult(result);

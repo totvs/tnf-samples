@@ -54,7 +54,7 @@ namespace Tnf.Architecture.Domain.Tests
                 new PresidentDto("2", "Bill Clinton", new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321")))
             };
 
-            var presidentPaging = new ListDto<PresidentDto>();
+            var presidentPaging = new ListDto<PresidentDto, string>();
             presidentPaging.Items = presidentList;
 
             var president = new President()
@@ -147,7 +147,7 @@ namespace Tnf.Architecture.Domain.Tests
 
             var professionalList = new List<ProfessionalDto>() { professionalDto };
 
-            var professionalPaging = new ListDto<ProfessionalDto>();
+            var professionalPaging = new ListDto<ProfessionalDto, ProfessionalKeysDto>();
             professionalPaging.Items = professionalList;
 
             var professional = new Professional()

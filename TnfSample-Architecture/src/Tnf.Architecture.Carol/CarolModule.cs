@@ -1,8 +1,9 @@
 ﻿using Tnf.App.Carol;
-using Tnf.App.Carol.Configuration;
 using Tnf.Modules;
 using Tnf.Architecture.Domain;
 using Tnf.Reflection.Extensions;
+using Tnf.Architecture.Data.Entities;
+using Tnf.Provider.Misc;
 
 namespace Tnf.Architecture.Data
 {
@@ -15,14 +16,18 @@ namespace Tnf.Architecture.Data
         {
             Configuration.Modules
                 .TnfCarol()
-                .Configure(new TnfCarolConfig()
-                {
-                    ApplicationId = "21af0700038211e79daf4a8136534b63",
-                    TenantId = "8cd6e43115e9416eb23609486fa053e3",
-                    BaseAddress = "https://totvshealth.carol.ai/api/v1",
-                    Username = "josue.agnese@totvs.com.br",
-                    Password = "Totvs@123"
-                });
+                .Configure(config => config
+                    .SetBaseAddress(CarolIntegrationConfig.BaseAddress)
+                    .SetCredentials(new UsernamePasswordCredential
+                    (
+                        CarolIntegrationConfig.AppId,
+                        CarolIntegrationConfig.TenantId,
+                        CarolIntegrationConfig.Subdomain,
+                        CarolIntegrationConfig.Username,
+                        CarolIntegrationConfig.Password
+                    ))
+                    .AddMapper<PresidentPocoMapper>()
+                ).Register();
 
             base.PreInitialize();
         }

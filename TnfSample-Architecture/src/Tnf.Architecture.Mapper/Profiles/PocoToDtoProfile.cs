@@ -17,6 +17,7 @@ namespace Tnf.Architecture.Mapper.Profiles
                 .ForMember(d => d.Id, s => s.MapFrom(p => p.Id));
 
             CreateMap<ProfessionalPoco, ProfessionalDto>()
+                .ForMember(d => d.Id, s => s.Ignore())
                 .ForMember(d => d.Address, s => s.Ignore())
                 .ForMember(d => d.Specialties, s => s.Ignore())
                 .AfterMap((s, d) =>

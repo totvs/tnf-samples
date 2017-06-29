@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17170.10" />
-    <PackageReference Include="Tnf.Dapper" Version="1.0.17170.10" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17180.7" />
+    <PackageReference Include="Tnf.Dapper" Version="1.0.17180.7" />
   </ItemGroup>
 
   <ItemGroup>

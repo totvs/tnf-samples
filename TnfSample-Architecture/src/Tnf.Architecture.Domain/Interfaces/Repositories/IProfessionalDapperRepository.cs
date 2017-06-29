@@ -7,7 +7,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IProfessionalDapperRepository : IRepository
     {
-        ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
+        ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request);
         ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto);
         bool ExistsProfessional(ProfessionalKeysDto keys);
     }

@@ -9,34 +9,5 @@ namespace Tnf.Architecture.Data.Entities
     {
         public string Name { get; set; }
         public Address Address { get; set; }
-
-        public override object GetStagingMapping()
-        {
-            return new
-            {
-                properties = new
-                {
-                    name = "string",
-                    address = new
-                    {
-                        properties = new
-                        {
-                            street = "string",
-                            number = "string",
-                            complement = "string",
-                            zipCode = new
-                            {
-                                properties = new
-                                {
-                                    number = "string"
-                                },
-                                type = "nested"
-                            }
-                        },
-                        type = "nested"
-                    }
-                }
-            };
-        }
     }
 }

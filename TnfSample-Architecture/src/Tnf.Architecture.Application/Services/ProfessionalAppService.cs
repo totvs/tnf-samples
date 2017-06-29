@@ -20,16 +20,8 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
-        {
-            if (request.PageSize <= 0)
-                RaiseNotification(nameof(request.PageSize));
-
-            if (Notification.HasNotification())
-                return new ListDto<ProfessionalDto>();
-
-            return _service.GetAllProfessionals(request);
-        }
+        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
+            => _service.GetAllProfessionals(request);
 
         public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
         {

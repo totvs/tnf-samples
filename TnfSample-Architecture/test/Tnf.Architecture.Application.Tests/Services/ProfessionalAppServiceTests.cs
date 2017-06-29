@@ -57,18 +57,6 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
-        public void Should_Get_All_Professionals_With_Error()
-        {
-            //Act
-            var response = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto());
-
-            //Assert
-            Assert.True(LocalNotification.HasNotification());
-            var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
-        }
-
-        [Fact]
         public void Should_Insert_Professional_With_Success()
         {
             //Arrange

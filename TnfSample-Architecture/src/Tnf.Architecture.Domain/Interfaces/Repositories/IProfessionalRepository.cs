@@ -9,7 +9,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IProfessionalRepository : IRepository
     {
-        ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request);
+        ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request);
         ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto);
         ProfessionalKeysDto CreateProfessional(Professional entity);
         Professional UpdateProfessional(Professional dto);

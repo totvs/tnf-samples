@@ -82,25 +82,17 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return entity;
         }
 
-        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
         {
-            var response = new ListDto<ProfessionalDto>();
-
             var dbBaseQuery = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
                     .ThenInclude(i => i.Specialty)
                 .Where(w => request.Name == null || w.Name.Contains(request.Name));
 
-            var dbQuery = dbBaseQuery
+            return dbBaseQuery
                 .SkipAndTakeByRequestDto(request)
                 .OrderByRequestDto(request)
-                .ToArray();
-
-            response.Total = base.Count();
-            response.Items = dbQuery.MapTo<List<ProfessionalDto>>();
-            response.HasNext = response.Total > ((request.Page - 1) * request.PageSize) + response.Items.Count();
-
-            return response;
+                .ToListDto<ProfessionalPoco, ProfessionalDto, ProfessionalKeysDto>(request, base.Count());
         }
 
         public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)

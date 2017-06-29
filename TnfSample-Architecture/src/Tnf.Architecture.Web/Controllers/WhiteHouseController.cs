@@ -22,7 +22,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.GetAllPresidents(requestDto);
 
-            return CreateResponse<PresidentDto>()
+            return CreateResponse<PresidentDto, string>()
                         .FromErrorEnum(PresidentDto.Error.GetAllPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetAllPresident)
                         .WithDto(response)
@@ -34,7 +34,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.GetPresidentById(requestDto.WithId(id));
 
-            return CreateResponse<PresidentDto>()
+            return CreateResponse<PresidentDto, string>()
                         .FromErrorEnum(PresidentDto.Error.GetPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.GetPresident)
                         .WithDto(response)
@@ -46,7 +46,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.InsertPresidentAsync(president);
 
-            return CreateResponse<PresidentDto>()
+            return CreateResponse<PresidentDto, string>()
                         .FromErrorEnum(PresidentDto.Error.PostPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PostPresident)
                         .WithDto(response)
@@ -58,7 +58,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = await _whiteHouseAppService.UpdatePresidentAsync(id, president);
 
-            return CreateResponse<PresidentDto>()
+            return CreateResponse<PresidentDto, string>()
                         .FromErrorEnum(PresidentDto.Error.PutPresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.PutPresident)
                         .WithDto(response)
@@ -70,7 +70,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             await _whiteHouseAppService.DeletePresidentAsync(id);
 
-            return CreateResponse<PresidentDto>()
+            return CreateResponse<PresidentDto, string>()
                         .FromErrorEnum(PresidentDto.Error.DeletePresident)
                         .WithMessage(AppConsts.LocalizationSourceName, PresidentDto.Error.DeletePresident)
                         .Build();

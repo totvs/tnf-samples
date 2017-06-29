@@ -29,7 +29,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
                                $"/{RouteConsts.Professional}?pageSize=5",
                                HttpStatusCode.OK
                            );
@@ -42,7 +42,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Filtering_By_Name_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&name=Jos%C3%A9",
                                HttpStatusCode.OK
                            );
@@ -56,7 +56,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=name",
                                HttpStatusCode.OK
                            );
@@ -70,7 +70,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task GetAll_Professionals_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=-name",
                                HttpStatusCode.OK
                            );
@@ -78,21 +78,6 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Assert
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Name, "José da Silva");
-        }
-
-        [Fact]
-        public async Task GetAll_Professionals_With_Invalid_Parameters_Return_Bad_Request()
-        {
-            // Act
-            var response = await GetResponseAsObjectAsync<ErrorResponse>(
-                $"/{RouteConsts.Professional}",
-                HttpStatusCode.BadRequest
-                );
-
-            // Assert
-            response.Message.ShouldBe("GetAllProfessional");
-            response.DetailedMessage.ShouldBe("GetAllProfessional");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
 

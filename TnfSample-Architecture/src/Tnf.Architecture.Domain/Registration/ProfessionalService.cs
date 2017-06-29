@@ -19,7 +19,7 @@ namespace Tnf.Architecture.Domain.Registration
             //_repositoryDapper = repositoryDapper;
         }
 
-        public ListDto<ProfessionalDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
+        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
 
         public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
         {
