@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Tnf.App.Dapper.Repositories;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
-using Tnf.Dapper.Repositories;
 using Tnf.Data;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
-    public class ProfessionalDapperRepository : DapperEfRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalDapperRepository
+    public class ProfessionalDapperRepository : AppDapperEfRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalDapperRepository
     {
         public ProfessionalDapperRepository(IActiveTransactionProvider activeTransactionProvider)
             : base(activeTransactionProvider)

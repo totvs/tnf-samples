@@ -1,16 +1,25 @@
-﻿using Tnf.Application.Services;
+﻿using System.Linq;
+using Tnf.App.Crud;
+using Tnf.App.Domain.Repositories;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Domain.Repositories;
+using Tnf.Extensions;
 
 namespace Tnf.Architecture.Application.Services
 {
-    public class CountryAppService : AsyncCrudAppService<CountryPoco, CountryDto>, ICountryAppService
+    public class CountryAppService : AsyncCrudApplicationService<CountryPoco, CountryDto, int, GetAllCountriesDto>, ICountryAppService
     {
-        public CountryAppService(IRepository<CountryPoco> repository)
+        public CountryAppService(IAppRepository<CountryPoco> repository)
             : base(repository)
         {
+        }
+
+        protected override IQueryable<CountryPoco> CreateFilteredQuery(GetAllCountriesDto input)
+        {
+            return base.CreateFilteredQuery(input)
+                .Where(m => input.Name.IsNullOrWhiteSpace() || m.Name.Contains(input.Name));
         }
     }
 }

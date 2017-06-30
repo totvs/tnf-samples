@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
-using Tnf.Application.Services.Dto;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Web.Controllers
 {
@@ -18,82 +18,62 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Get(PagedAndSortedResultRequestDto requestDto)
+        public async Task<IActionResult> Get([FromQuery]GetAllCountriesDto requestDto)
         {
-            if (requestDto == null)
-                return BadRequest($"Invalid parameter: {nameof(requestDto)}");
+            var response = await _countryAppService.GetAll(requestDto);
 
-            if (requestDto.MaxResultCount <= 0)
-                return BadRequest($"Invalid parameter: {nameof(requestDto.MaxResultCount)}");
-
-            var pagedResult = await _countryAppService.GetAll(requestDto);
-
-            return Ok(pagedResult);
+            return CreateResponse<CountryDto>()
+                        .FromErrorEnum(CountryDto.Error.GetAllCountry)
+                        .WithMessage(AppConsts.LocalizationSourceName, CountryDto.Error.GetAllCountry)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto<int> request)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
+            var response = await _countryAppService.Get(request.WithId(id));
 
-            try
-            {
-                var country = await _countryAppService.Get(new EntityDto<int>(id));
-                return Ok(country);
-            }
-            catch (Exception)
-            {
-                return NotFound(L("CouldNotFindCountry"));
-            }
+            return CreateResponse<CountryDto>()
+                        .FromErrorEnum(CountryDto.Error.GetCountry)
+                        .WithMessage(AppConsts.LocalizationSourceName, CountryDto.Error.GetCountry)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CountryDto country)
         {
-            if (country == null)
-                return BadRequest($"Invalid parameter: {nameof(country)}");
+            var response = await _countryAppService.Create(country);
 
-            var result = await _countryAppService.Create(country);
-
-            return Ok(result);
+            return CreateResponse<CountryDto>()
+                        .FromErrorEnum(CountryDto.Error.PostCountry)
+                        .WithMessage(AppConsts.LocalizationSourceName, CountryDto.Error.PostCountry)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]CountryDto country)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
+            var response = await _countryAppService.Update(id, country);
 
-            if (country == null)
-                return BadRequest($"Invalid parameter: {nameof(country)}");
-
-            country.Id = id;
-            CountryDto result = null;
-
-            try
-            {
-                result = await _countryAppService.Update(country);
-            }
-            catch (Exception)
-            {
-                //TODO: Estourar exceção quando não achar?
-            }
-
-            if (result == null)
-                return NotFound(L("CouldNotFindCountry"));
-
-            return Ok(result);
+            return CreateResponse<CountryDto>()
+                        .FromErrorEnum(CountryDto.Error.PutCountry)
+                        .WithMessage(AppConsts.LocalizationSourceName, CountryDto.Error.PutCountry)
+                        .WithDto(response)
+                        .Build();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id <= 0)
-                return BadRequest($"Invalid parameter: {nameof(id)}");
+            await _countryAppService.Delete(id);
 
-            await _countryAppService.Delete(new EntityDto<int>(id));
-            return Ok();
+            return CreateResponse<CountryDto>()
+                        .FromErrorEnum(CountryDto.Error.DeleteCountry)
+                        .WithMessage(AppConsts.LocalizationSourceName, CountryDto.Error.DeleteCountry)
+                        .Build();
         }
     }
 }

@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
-using Tnf.Application.Services.Dto;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.App.Dto.Request;
+using System.Linq;
+using Tnf.App.Crud;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -23,6 +26,22 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public async Task Should_Get_All_Countries_With_Success()
+        {
+            var requestDto = new GetAllCountriesDto();
+
+            var result = await _countryAppService.GetAll(requestDto);
+
+            result.Items.Count.ShouldBe(5);
+
+            requestDto.PageSize = 4;
+
+            result = await _countryAppService.GetAll(requestDto);
+
+            result.Items.Count.ShouldBe(4);
+        }
+
+        [Fact]
         public async Task Should_Insert_Country_With_Success()
         {
             var result = await _countryAppService.Create(new CountryDto()
@@ -35,28 +54,16 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
-        public async Task Should_Get_All_Countries_With_Success()
+        public async Task Should_Insert_Null_Country_With_Error()
         {
-            var requestDto = new PagedAndSortedResultRequestDto();
+            // Act
+            var response = await _countryAppService.Create(null);
 
-            var result = await _countryAppService.GetAll(requestDto);
-
-            result.Items.Count.ShouldBe(5);
-
-            requestDto.MaxResultCount = 4;
-
-            result = await _countryAppService.GetAll(requestDto);
-
-            result.Items.Count.ShouldBe(4);
-        }
-
-        [Fact]
-        public async Task Should_Get_Country_With_Success()
-        {
-            var result = await _countryAppService.Get(new EntityDto<int>(1));
-
-            result.Id.ShouldBe(1);
-            result.Name.ShouldBe("Brasil");
+            // Assert
+            Assert.Null(response);
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -70,9 +77,8 @@ namespace Tnf.Architecture.Application.Tests.Services
 
             result.Name.ShouldBe("Mexico");
 
-            result = await _countryAppService.Update(new CountryDto()
+            result = await _countryAppService.Update(result.Id, new CountryDto()
             {
-                Id = result.Id,
                 Name = "Canada"
             });
 
@@ -80,18 +86,78 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public async Task Should_Update_Invalid_Id_With_Error()
+        {
+            // Act
+            var response = await _countryAppService.Update(0, new CountryDto());
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.Equal(notifications.Count, 1);
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Update_Null_Country_With_Error()
+        {
+            // Act
+            var response = await _countryAppService.Update(1, null);
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.Equal(notifications.Count, 1);
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Get_Country_With_Success()
+        {
+            var result = await _countryAppService.Get(new RequestDto<int>(1));
+
+            result.Id.ShouldBe(1);
+            result.Name.ShouldBe("Brasil");
+        }
+
+        [Fact]
+        public async Task Should_Get_Country_With_Error()
+        {
+            // Act
+            var response = await _countryAppService.Get(new RequestDto<int>(99));
+
+            // Assert
+            Assert.Null(response);
+            Assert.True(LocalNotification.HasNotification());
+            Assert.True(LocalNotification.GetAll().Any(a => a.Message == CrudOperations.TnfAppCrud_OnGetCouldNotFind.ToString()));
+        }
+
+        [Fact]
         public async Task Should_Delete_Country_With_Success()
         {
-            var result = await _countryAppService.Create(new CountryDto()
-            {
-                Id = 6,
-                Name = "Mexico"
-            });
+            var requestDto = new GetAllCountriesDto();
 
-            await _countryAppService.Delete(new EntityDto<int>(result.Id));
+            var result = await _countryAppService.GetAll(requestDto);
 
-            var pagedResult = await _countryAppService.GetAll(new PagedAndSortedResultRequestDto());
-            pagedResult.Items.Count.ShouldBe(5);
+            result.Items.Count.ShouldBe(5);
+
+            await _countryAppService.Delete(5);
+
+            result = await _countryAppService.GetAll(requestDto);
+
+            result.Items.Count.ShouldBe(4);
+        }
+
+        [Fact]
+        public async Task Should_Delete_Professional_With_Error()
+        {
+            // Act
+            await _countryAppService.Delete(0);
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
         }
     }
 }

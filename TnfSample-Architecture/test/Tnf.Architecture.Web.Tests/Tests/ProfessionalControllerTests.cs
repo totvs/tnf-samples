@@ -39,6 +39,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
+        public async Task GetAll_Professionals_With_Paginated()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+                $"/{RouteConsts.Professional}?pageSize=1",
+                HttpStatusCode.OK
+            );
+
+            // Assert
+            Assert.Equal(response.Total, 2);
+            Assert.Equal(response.HasNext, true);
+            Assert.Equal(response.Items.Count, 1);
+        }
+
+        [Fact]
         public async Task GetAll_Professionals_Filtering_By_Name_Success()
         {
             // Act
@@ -340,7 +355,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         }
 
         [Fact]
-        public async Task Put_Null_Specialty_And_Return_Bad_Request()
+        public async Task Put_Null_Professional_And_Return_Bad_Request()
         {
             // Act
             var response = await PutResponseAsObjectAsync<ProfessionalDto, ErrorResponse>(
