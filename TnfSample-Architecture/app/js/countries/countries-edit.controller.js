@@ -124,12 +124,12 @@
 		function save() {
 			if (self.country.id) {
 				countryFactory.updateRecord(self.country.id, self.country, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('countries.detail', { id: self.country.id }, { reload: true });
 				});
 			} else {
 				countryFactory.saveRecord(self.country, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('countries.start', {}, { reload: true });
 				});
 			}
@@ -138,12 +138,12 @@
 		function saveNew() {
 			if (self.country.id) {
 				countryFactory.updateRecord(self.country.id, self.country, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('countries.new', {}, { reload: true });
 				});
 			} else {
 				countryFactory.saveRecord(self.country, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go($state.current, {}, { reload: true });
 				});
 			}

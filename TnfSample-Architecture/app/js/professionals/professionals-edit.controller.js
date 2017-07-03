@@ -134,12 +134,12 @@
 			setSpecialties();
 			if (self.professional.professionalId) {
 				professionalFactory.updateRecord(self.professional.professionalId, self.professional.code, self.professional, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('professionals.detail', { professionalId: self.professional.professionalId, code: self.professional.code }, { reload: true });
 				});
 			} else {
 				professionalFactory.saveRecord(self.professional, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('professionals.start', {}, { reload: true });
 				});
 			}
@@ -149,12 +149,12 @@
 			setSpecialties();
 			if (self.professional.professionalId) {
 				professionalFactory.updateRecord(self.professional.professionalId, self.professional.code, self.professional, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('professional.new', {}, { reload: true });
 				});
 			} else {
 				professionalFactory.saveRecord(self.professional, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go($state.current, {}, { reload: true });
 				});
 			}
