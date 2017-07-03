@@ -6,7 +6,7 @@ namespace Tnf.Architecture.Data.Entities
     {
         public PresidentPocoMapper()
         {
-            StagingTypeName("Test_Entity");
+            StagingTypeName("president");
 
             LoadSchemaFromObject(new
             {
