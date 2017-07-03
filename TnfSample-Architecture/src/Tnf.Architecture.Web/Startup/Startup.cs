@@ -1,19 +1,19 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Tnf.AspNetCore;
-using Tnf.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
-using Tnf.App.EntityFrameworkCore.Localization;
-using Tnf.App.EntityFrameworkCore.Configuration;
-using Tnf.App.AspNetCore;
+using System;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+using Tnf.App.AspNetCore;
+using Tnf.App.EntityFrameworkCore.Configuration;
+using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.Domain.Configuration;
 using Tnf.Architecture.Dto;
+using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.AspNetCore;
+using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -69,7 +69,7 @@ namespace Tnf.Architecture.Web.Startup
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseTnf(); //Initializes Tnf framework.
-            
+
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
