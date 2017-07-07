@@ -42,21 +42,18 @@
                 totvsNotification.notify({
                     type: 'error',
                     title: value.message,
-                    detail: value.detailedMessage
+                    detail: value.code
                 });
             });
         }
 
         function encapsulateCallback(callback) {
-            return callback;
-            // var _callback = callback;
-            // return function (result) {
-            //     if (result.message)
-            //         self.showNotifications([result]);
-            //     if (result.Details)
-            //         self.showNotifications(result.Details);
-            //     _callback(result);
-            // }
+            var _callback = callback;
+            return function (result) {
+                if (result.details)
+                    self.showNotifications(result.details);
+                _callback(result);
+            }
         }
     }
 

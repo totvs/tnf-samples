@@ -22,9 +22,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
-    <PackageReference Include="Tnf.App" Version="1.1.17185.1" />
-    <PackageReference Include="Tnf.App.Builder" Version="1.1.17185.1" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.1.17185.1" />
+    <PackageReference Include="Tnf.App" Version="1.0.17188.2" />
+    <PackageReference Include="Tnf.App.Builder" Version="1.0.17188.2" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17188.2" />
   </ItemGroup>
 
   <ItemGroup>

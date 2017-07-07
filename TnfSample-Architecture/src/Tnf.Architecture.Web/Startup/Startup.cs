@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Tnf.App.AspNetCore;
 using Tnf.App.EntityFrameworkCore.Configuration;
+using Tnf.App.EntityFrameworkCore.Localization;
+using Tnf.Architecture.Domain.Configuration;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AspNetCore;
 using Tnf.EntityFrameworkCore;
@@ -14,8 +17,17 @@ namespace Tnf.Architecture.Web.Startup
 {
     public class Startup
     {
+        private readonly IConfigurationRoot _appConfiguration;
+
+        public Startup(IHostingEnvironment env)
+        {
+            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName);
+        }
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //var sqlConnection = new SqlConnection(_appConfiguration.GetConnectionString(AppConsts.ConnectionStringName));
+
             services.AddTnfDbContext<LegacyDbContext>(options =>
             {
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
@@ -26,11 +38,10 @@ namespace Tnf.Architecture.Web.Startup
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
-            //services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
-            //{
-            //    //options.DbContextOptions.UseSqlServer(sqlConnection);
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
+            services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
+            {
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            });
 
             services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
             {
@@ -47,22 +58,15 @@ namespace Tnf.Architecture.Web.Startup
             });
 
             services.AddMvc();
-            services.ConfigureSwaggerGen(x =>
-            {
-                x.IgnoreObsoleteProperties();
-                x.IgnoreObsoleteActions();
-                x.DescribeAllEnumsAsStrings();
-            });
             services.AddSwaggerGen();
 
-            // Configure Tnf and Dependency Injection
+            //Configure Tnf and Dependency Injection
             return services.AddTnfApp<WebModule>(options => { });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //Initializes Tnf framework.
-            app.UseTnf();
+            app.UseTnf(); //Initializes Tnf framework.
 
             loggerFactory.AddDebug();
 
@@ -86,7 +90,9 @@ namespace Tnf.Architecture.Web.Startup
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwaggerUi();
+            app.UseSwagger();
+            app.UseSwaggerUi(); //URL: /swagger/ui
+
             app.UseSwagger((httpRequest, swaggerDoc) =>
             {
                 swaggerDoc.Host = httpRequest.Host.Value;

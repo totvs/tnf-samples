@@ -4,10 +4,10 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <AssemblyName>Tnf.Architecture.Web.Tests</AssemblyName>
     <PackageId>Tnf.Architecture.Web.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
@@ -20,8 +20,8 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="Shouldly" Version="2.8.3" />
-    <PackageReference Include="Tnf.App.AspNetCore.TestBase" Version="1.1.17185.1" />
-    <PackageReference Include="Tnf.App.EntityFrameworkCore.TestBase" Version="1.1.17185.1" />
+    <PackageReference Include="Tnf.App.AspNetCore.TestBase" Version="1.0.17188.2" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore.TestBase" Version="1.0.17188.2" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="Microsoft.DotNet.InternalAbstractions" Version="1.0.0" />

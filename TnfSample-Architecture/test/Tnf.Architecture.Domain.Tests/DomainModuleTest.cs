@@ -16,6 +16,7 @@ using Castle.MicroKernel.Registration;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Domain.WhiteHouse;
 using System.Threading.Tasks;
+using Castle.Core.Logging;
 
 namespace Tnf.Architecture.Domain.Tests
 {
@@ -26,6 +27,8 @@ namespace Tnf.Architecture.Domain.Tests
     {
         public override void PreInitialize()
         {
+            IocManager.Register<ILogger, NullLogger>();
+
             Configuration.ReplaceService<IProfessionalRepository>(() =>
             {
                 ReplaceProfessionalRepository();

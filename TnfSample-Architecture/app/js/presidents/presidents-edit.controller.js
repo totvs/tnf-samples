@@ -120,12 +120,12 @@
 		function save() {
 			if (self.president.id) {
 				presidentFactory.updateRecord(self.president.id, self.president, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('presidents.detail', { id: self.president.id }, { reload: true });
 				});
 			} else {
 				presidentFactory.saveRecord(self.president, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('presidents.start', {}, { reload: true });
 				});
 			}
@@ -134,12 +134,12 @@
 		function saveNew() {
 			if (self.president.id) {
 				presidentFactory.updateRecord(self.president.id, self.president, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('president.new', {}, { reload: true });
 				});
 			} else {
 				presidentFactory.saveRecord(self.president, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go($state.current, {}, { reload: true });
 				});
 			}

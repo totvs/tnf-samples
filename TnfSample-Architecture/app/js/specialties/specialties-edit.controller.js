@@ -120,12 +120,12 @@
 		function save() {
 			if (self.specialty.id) {
 				specialtyFactory.updateRecord(self.specialty.id, self.specialty, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('specialties.detail', { id: self.specialty.id }, { reload: true });
 				});
 			} else {
 				specialtyFactory.saveRecord(self.specialty, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('specialties.start', {}, { reload: true });
 				});
 			}
@@ -134,12 +134,12 @@
 		function saveNew() {
 			if (self.specialty.id) {
 				specialtyFactory.updateRecord(self.specialty.id, self.specialty, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go('specialties.new', {}, { reload: true });
 				});
 			} else {
 				specialtyFactory.saveRecord(self.specialty, function (result) {
-					if (!result.messages)
+					if (!result.details)
 						$state.go($state.current, {}, { reload: true });
 				});
 			}
