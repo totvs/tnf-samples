@@ -1,22 +1,21 @@
-﻿using NSubstitute;
+﻿using Castle.MicroKernel.Registration;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.App.TestBase;
-using System.Linq;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Configuration.Startup;
 using Tnf.Modules;
 using Tnf.Reflection.Extensions;
-using Tnf.Configuration.Startup;
-using Castle.MicroKernel.Registration;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Domain.WhiteHouse;
-using System.Threading.Tasks;
-using Castle.Core.Logging;
 
 namespace Tnf.Architecture.Domain.Tests
 {
@@ -27,8 +26,6 @@ namespace Tnf.Architecture.Domain.Tests
     {
         public override void PreInitialize()
         {
-            IocManager.Register<ILogger, NullLogger>();
-
             Configuration.ReplaceService<IProfessionalRepository>(() =>
             {
                 ReplaceProfessionalRepository();
