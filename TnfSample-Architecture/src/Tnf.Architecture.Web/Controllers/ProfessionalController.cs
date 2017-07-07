@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.App.Dto.Request;
 
 namespace Tnf.Architecture.Web.Controllers
 {

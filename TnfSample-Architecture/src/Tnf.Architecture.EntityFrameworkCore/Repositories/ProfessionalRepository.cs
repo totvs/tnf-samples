@@ -86,13 +86,13 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbBaseQuery = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                    .ThenInclude(i => i.Specialty)
+                .ThenInclude(i => i.Specialty)
                 .Where(w => request.Name == null || w.Name.Contains(request.Name));
 
             return dbBaseQuery
                 .SkipAndTakeByRequestDto(request)
                 .OrderByRequestDto(request)
-                .ToListDto<ProfessionalPoco, ProfessionalDto, ProfessionalKeysDto>(request, base.Count());
+                .ToListDto<ProfessionalPoco, ProfessionalDto, ProfessionalKeysDto>(request, dbBaseQuery.Count());
         }
 
         public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)

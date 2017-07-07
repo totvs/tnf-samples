@@ -6,10 +6,10 @@
         {
         }
 
-        
-        public const string WhiteHouse = "api/white-house";
+
+        public const string WhiteHouse = "api/white-houses";
         public const string Country = "api/countries";
-        public const string Professional = "api/professional";
-        public const string Specialty = "api/specialty";
+        public const string Professional = "api/professionals";
+        public const string Specialty = "api/specialties";
     }
 }

@@ -35,13 +35,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Web.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application.Tests", "test\Tnf.Architecture.Application.Tests\Tnf.Architecture.Application.Tests.csproj", "{A0097654-C85D-4AA2-B78D-C260296A9F01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.Architecture.Mapper", "src\Tnf.Architecture.Mapper\Tnf.Architecture.Mapper.csproj", "{1B17DF1F-EA78-48BE-881E-10EBF15F5484}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Mapper", "src\Tnf.Architecture.Mapper\Tnf.Architecture.Mapper.csproj", "{1B17DF1F-EA78-48BE-881E-10EBF15F5484}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.Architecture.Mapper.Tests", "test\Tnf.Architecture.Mapper.Tests\Tnf.Architecture.Mapper.Tests.csproj", "{636461BC-8551-415C-B3CA-44C50337F007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Mapper.Tests", "test\Tnf.Architecture.Mapper.Tests\Tnf.Architecture.Mapper.Tests.csproj", "{636461BC-8551-415C-B3CA-44C50337F007}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.Architecture.Dto.Tests", "test\Tnf.Architecture.Dto.Tests\Tnf.Architecture.Dto.Tests.csproj", "{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Dto.Tests", "test\Tnf.Architecture.Dto.Tests\Tnf.Architecture.Dto.Tests.csproj", "{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

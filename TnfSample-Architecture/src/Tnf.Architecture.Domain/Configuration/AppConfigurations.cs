@@ -1,5 +1,5 @@
-﻿using System.Collections.Concurrent;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Concurrent;
 
 namespace Tnf.Architecture.Domain.Configuration
 {

@@ -6,6 +6,9 @@
     <PackageId>Tnf.Architecture.Web</PackageId>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <OutputType>Exe</OutputType>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <ApplicationInsightsResourceId>/subscriptions/8943eb62-b71c-459f-b7c7-ce0189670bcc/resourcegroups/tnf/providers/microsoft.insights/components/TnfArchitectureWeb</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/8943eb62-b71c-459f-b7c7-ce0189670bcc/resourceGroups/tnf/providers/microsoft.insights/components/TnfArchitectureWeb</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +16,11 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\TnfArchitecture - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\TnfSamples - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
@@ -42,7 +51,16 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
     <PackageReference Include="System.Net.Http" Version="4.3.2" />
-    <PackageReference Include="Tnf.App.AspNetCore" Version="1.0.17184.2" />
+    <PackageReference Include="Tnf.App.AspNetCore" Version="1.1.17185.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -11,12 +11,13 @@ namespace Tnf.Architecture.Web.Startup
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseUrls("http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000",
-                         "http://localhost:5050")
-                .Build();
+                .UseStartup<Startup>();
 
-            host.Run();
+#if DEBUG
+            host.UseUrls("http://10.51.4.36:1010");
+#endif
+
+            host.Build().Run();
         }
     }
 }
