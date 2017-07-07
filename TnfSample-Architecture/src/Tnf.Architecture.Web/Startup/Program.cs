@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -12,8 +12,7 @@ namespace Tnf.Architecture.Web.Startup
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://ec2-35-165-157-186.us-west-2.compute.amazonaws.com:5000",
-                         "http://localhost:5050")
+                .UseUrls("http://localhost:5050")
                 .Build();
 
             host.Run();

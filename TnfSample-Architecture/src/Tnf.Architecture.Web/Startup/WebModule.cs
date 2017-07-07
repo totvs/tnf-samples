@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Tnf.Modules;
+using Tnf.App.AspNetCore;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Domain.Configuration;
-using Tnf.App.Configuration;
-using Tnf.Reflection.Extensions;
 using Tnf.Architecture.Dto;
-using Tnf.App.AspNetCore;
+using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -33,7 +32,7 @@ namespace Tnf.Architecture.Web.Startup
         public override void PreInitialize()
         {
             // Inicializa a localização multiTenant, sendo o faultBack as localiações em arquivo
-            Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
+            //Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
         }
 

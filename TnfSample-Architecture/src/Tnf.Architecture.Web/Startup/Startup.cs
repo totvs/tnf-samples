@@ -5,12 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Data.SqlClient;
 using Tnf.App.AspNetCore;
 using Tnf.App.EntityFrameworkCore.Configuration;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.Domain.Configuration;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AspNetCore;
 using Tnf.EntityFrameworkCore;
@@ -28,26 +26,26 @@ namespace Tnf.Architecture.Web.Startup
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            var sqlConnection = new SqlConnection(_appConfiguration.GetConnectionString(AppConsts.ConnectionStringName));
+            //var sqlConnection = new SqlConnection(_appConfiguration.GetConnectionString(AppConsts.ConnectionStringName));
 
             services.AddTnfDbContext<LegacyDbContext>(options =>
             {
-                options.DbContextOptions.UseSqlServer(sqlConnection);
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
             services.AddTnfDbContext<ArchitectureDbContext>(options =>
             {
-                options.DbContextOptions.UseSqlServer(sqlConnection);
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
             services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
             {
-                options.DbContextOptions.UseSqlServer(sqlConnection);
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
             services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
             {
-                options.DbContextOptions.UseSqlServer(sqlConnection);
+                options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
             services.AddCors(options =>
