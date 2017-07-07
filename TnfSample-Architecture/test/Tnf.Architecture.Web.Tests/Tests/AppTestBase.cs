@@ -1,9 +1,9 @@
-﻿using Tnf.AspNetCore.TestBase;
-using Tnf.Architecture.Web.Tests.App;
+﻿using System;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using System;
+using Tnf.Architecture.Web.Tests.App;
+using Tnf.AspNetCore.TestBase;
 
 namespace Tnf.Architecture.Web.Tests
 {
