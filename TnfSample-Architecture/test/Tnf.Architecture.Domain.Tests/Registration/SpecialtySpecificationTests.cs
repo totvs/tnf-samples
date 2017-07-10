@@ -1,6 +1,5 @@
 ﻿using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.Registration.Specifications;
-using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.Registration

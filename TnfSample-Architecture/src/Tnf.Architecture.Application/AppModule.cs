@@ -1,11 +1,11 @@
-﻿using Tnf.Modules;
+﻿using Castle.Facilities.Logging;
+using Tnf.Architecture.Carol;
 using Tnf.Architecture.Domain;
-using Tnf.Architecture.Data;
 using Tnf.Architecture.EntityFrameworkCore;
-using Tnf.Reflection.Extensions;
-using Tnf.Castle.Log4Net;
-using Castle.Facilities.Logging;
 using Tnf.Architecture.Mapper;
+using Tnf.Castle.Log4Net;
+using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application
 {

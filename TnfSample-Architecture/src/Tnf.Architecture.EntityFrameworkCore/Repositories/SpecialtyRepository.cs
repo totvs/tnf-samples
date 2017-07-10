@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Tnf.AutoMapper;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.AutoMapper;
+using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
-using Tnf.Domain.Repositories;
-using Tnf.App.Dto.Response;
-using Tnf.App.Dto.Request;
-using Tnf.Architecture.Domain.Registration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
@@ -24,20 +24,20 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
-            return base.InsertAndGetId(dbEntity);
+            return InsertAndGetId(dbEntity);
         }
 
         public void DeleteSpecialty(int id)
         {
-            var dbEntity = base.GetAllIncluding(s => s.ProfessionalSpecialties)
+            var dbEntity = GetAllIncluding(s => s.ProfessionalSpecialties)
                                .SingleOrDefault(s => s.Id == id);
 
             dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
 
-            base.Delete(dbEntity);
+            Delete(dbEntity);
         }
 
-        public bool ExistsSpecialty(int id) => base.Count(s => s.Id == id) > 0;
+        public bool ExistsSpecialty(int id) => Count(s => s.Id == id) > 0;
 
         public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
@@ -49,7 +49,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                 .OrderByRequestDto(request)
                 .ToArray();
 
-            response.Total = base.Count();
+            response.Total = Count();
             response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
             response.HasNext = response.Total > ((request.Page - 1) * request.PageSize) + response.Items.Count();
 
@@ -60,7 +60,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             SpecialtyDto specialty = null;
 
-            var dbEntity = base.GetAll()
+            var dbEntity = GetAll()
                                .IncludeByRequestDto(requestDto)
                                .Where(w => w.Id == requestDto.GetId())
                                .SelectFieldsByRequestDto(requestDto)
@@ -75,7 +75,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
-            base.Update(dbEntity);
+            Update(dbEntity);
 
             return dto;
         }

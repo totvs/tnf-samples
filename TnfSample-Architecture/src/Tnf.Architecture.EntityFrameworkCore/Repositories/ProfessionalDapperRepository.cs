@@ -31,11 +31,16 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
                 request.Page,
                 request.PageSize);
 
-            var response = new ListDto<ProfessionalDto, ProfessionalKeysDto>();
+            var professionalPocos = professionalsPoco as ProfessionalPoco[] ?? professionalsPoco.ToArray();
 
-            response.Total = professionalsPoco.Count();
-            response.Items = professionalsPoco.MapTo<List<ProfessionalDto>>();
-            response.HasNext = professionalsPoco.Count() > ((request.Page - 1) * request.PageSize) + professionalsPoco.Count();
+            var response = new ListDto<ProfessionalDto, ProfessionalKeysDto>
+            {
+                Total = professionalPocos.Count(),
+                Items = professionalsPoco.MapTo<List<ProfessionalDto>>(),
+                HasNext = professionalPocos.Count() > ((request.Page - 1) * request.PageSize) +
+                          professionalPocos.Count()
+            };
+
 
             return response;
         }

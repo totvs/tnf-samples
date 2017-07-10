@@ -6,7 +6,6 @@
         {
         }
 
-
         public const string WhiteHouse = "api/white-houses";
         public const string Country = "api/countries";
         public const string Professional = "api/professionals";

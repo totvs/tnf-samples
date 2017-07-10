@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Tnf.Modules;
-using Tnf.Configuration.Startup;
-using Tnf.Architecture.Domain.Interfaces.Repositories;
-using NSubstitute;
+﻿using Castle.Core.Logging;
 using Castle.MicroKernel.Registration;
-using Tnf.Reflection.Extensions;
-using Castle.Core.Logging;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.App.Dto.Response;
+using NSubstitute;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
-using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.App.Dto.Response;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Configuration.Startup;
+using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application.Tests
 {

@@ -1,12 +1,12 @@
 ﻿using Tnf.App.Application.Services;
-using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto.Registration;
+using Tnf.App.Bus.Notifications;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using Tnf.App.Bus.Notifications;
+using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Application.Services
                 _service.DeleteSpecialty(id);
         }
 
-        private void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params object[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)

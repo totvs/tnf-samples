@@ -1,8 +1,8 @@
-using Tnf.Modules;
 using Tnf.App.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
-using Tnf.Reflection.Extensions;
 using Tnf.App.TestBase;
+using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Modules;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application.Tests
 {

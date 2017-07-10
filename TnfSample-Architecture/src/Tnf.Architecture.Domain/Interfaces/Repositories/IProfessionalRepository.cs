@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Repositories;
-using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {

@@ -1,8 +1,8 @@
 ﻿using System;
-using Tnf.Architecture.Domain.Registration.Specifications;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.App.Builder;
 using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.Architecture.Domain.Registration.Specifications;
+using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public override Professional Build()
         {
-            base.Validate();
+            Validate();
             return base.Build();
         }
 

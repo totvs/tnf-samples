@@ -4,11 +4,6 @@ namespace Tnf.Architecture.Dto.Registration
 {
     public class GetAllProfessionalsDto : RequestAllDto
     {
-        public GetAllProfessionalsDto()
-            : base()
-        {
-        }
-
         public string Name { get; set; }
         public string ZipCode { get; set; }
     }

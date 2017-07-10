@@ -1,6 +1,6 @@
 ﻿using Tnf.Provider.Carol.Mappers;
 
-namespace Tnf.Architecture.Data.Entities
+namespace Tnf.Architecture.Carol.Entities
 {
     public class PresidentPocoMapper : CarolMapper<PresidentPoco>
     {

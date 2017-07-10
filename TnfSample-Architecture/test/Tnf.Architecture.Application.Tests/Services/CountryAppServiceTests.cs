@@ -1,12 +1,11 @@
-using System.Threading.Tasks;
 using Shouldly;
-using Xunit;
-using Tnf.Architecture.Dto;
+using System.Linq;
+using System.Threading.Tasks;
+using Tnf.App.Crud;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.App.Dto.Request;
-using System.Linq;
-using Tnf.App.Crud;
+using Xunit;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -89,7 +88,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            var response = await _countryAppService.Update(0, new CountryDto());
+            await _countryAppService.Update(0, new CountryDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -102,7 +101,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_Null_Country_With_Error()
         {
             // Act
-            var response = await _countryAppService.Update(1, null);
+            await _countryAppService.Update(1, null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

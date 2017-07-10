@@ -1,13 +1,13 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Tnf.AspNetCore.TestBase;
-using Tnf.AspNetCore;
-using Tnf.Reflection.Extensions;
+using System;
 using Tnf.App.AspNetCore;
 using Tnf.Architecture.Web.Startup;
+using Tnf.AspNetCore;
+using Tnf.AspNetCore.TestBase;
+using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -37,9 +37,7 @@ namespace Tnf.Architecture.Web.Tests.App
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

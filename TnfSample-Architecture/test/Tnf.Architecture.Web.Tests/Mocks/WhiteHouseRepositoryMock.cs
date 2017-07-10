@@ -1,24 +1,22 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Tnf.Architecture.Dto;
-using Tnf.App.Dto;
 using System.Linq;
-using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Domain.Repositories;
-using Tnf.App.Dto.Response;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.AutoMapper;
-using Tnf.Architecture.Data.Entities;
+using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
     public class WhiteHouseRepositoryMock : IWhiteHouseRepository
     {
-        private readonly ConcurrentDictionary<string, PresidentPoco> _presidents = null;
+        private readonly ConcurrentDictionary<string, PresidentPoco> _presidents;
 
         public WhiteHouseRepositoryMock()
         {
@@ -37,7 +35,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
 
         public Task<bool> DeletePresidentsAsync(string id)
         {
-            var result = _presidents.TryRemove(id, out PresidentPoco presidentpoco);
+            var result = _presidents.TryRemove(id, out PresidentPoco _);
 
             return Task.FromResult(result);
         }
@@ -51,8 +49,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .OrderByRequestDto(request)
                 .ToList();
 
-            var result = new ListDto<PresidentDto, string>();
-            result.Items = presidents.MapTo<List<PresidentDto>>();
+            var result = new ListDto<PresidentDto, string> { Items = presidents.MapTo<List<PresidentDto>>() };
 
             return Task.FromResult(result);
         }
@@ -76,7 +73,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
 
         public Task<President> UpdatePresidentsAsync(President president)
         {
-            var deleted = _presidents.TryRemove(president.Id, out PresidentPoco removedPoco);
+            var deleted = _presidents.TryRemove(president.Id, out PresidentPoco _);
 
             if (deleted)
                 _presidents.TryAdd(president.Id, president.MapTo<PresidentPoco>());

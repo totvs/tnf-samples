@@ -1,11 +1,11 @@
-﻿using Tnf.App.TestBase;
-using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Domain.Registration;
-using Xunit;
-using Shouldly;
+﻿using Shouldly;
 using System.Linq;
 using Tnf.App.Dto.Request;
+using Tnf.App.TestBase;
+using Tnf.Architecture.Domain.Interfaces.Services;
+using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Dto.Registration;
+using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -57,7 +57,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Not_Return_Non_Existing_Specialty()
         {
             // Act
-            var response = _specialtyService.GetSpecialty(new RequestDto<int>(99));
+            _specialtyService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -105,7 +105,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Insert_Not_Accept_Invalid_Specialty()
         {
             // Act
-            var responseBase = _specialtyService.CreateSpecialty(new SpecialtyDto());
+            _specialtyService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -132,7 +132,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Update_Not_Accept_Invalid_Specialty()
         {
             // Act
-            var responseBase = _specialtyService.UpdateSpecialty(new SpecialtyDto());
+            _specialtyService.UpdateSpecialty(new SpecialtyDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -144,7 +144,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Update_Not_Accept_Non_Existing_Specialty()
         {
             // Act
-            var responseBase = _specialtyService.UpdateSpecialty(new SpecialtyDto()
+            _specialtyService.UpdateSpecialty(new SpecialtyDto()
             {
                 Id = 99,
                 Description = "Cirurgia Vascular"

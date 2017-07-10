@@ -2,7 +2,6 @@
 using Tnf.App.Crud;
 using Tnf.App.Domain.Repositories;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Extensions;
@@ -11,7 +10,7 @@ namespace Tnf.Architecture.Application.Services
 {
     public class CountryAppService : AsyncCrudApplicationService<CountryPoco, CountryDto, int, GetAllCountriesDto>, ICountryAppService
     {
-        public CountryAppService(IAppRepository<CountryPoco> repository)
+        public CountryAppService(IAppRepository<CountryPoco, int> repository)
             : base(repository)
         {
         }

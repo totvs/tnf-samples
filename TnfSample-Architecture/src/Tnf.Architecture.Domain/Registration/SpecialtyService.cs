@@ -1,11 +1,11 @@
-﻿using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Registration;
+﻿using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Domain.Interfaces.Services;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -72,19 +72,19 @@ namespace Tnf.Architecture.Domain.Registration
 
             var specialty = specialtyBuilder.Build();
 
-            if (!Notification.HasNotification())
-            {
-                if (!Repository.ExistsSpecialty(dto.Id))
-                {
-                    Notification.Raise(NotificationEvent.DefaultBuilder
-                                        .WithNotFoundStatus()
-                                        .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
-                                        .Build());
-                }
+            if (Notification.HasNotification())
+                return dto;
 
-                if (!Notification.HasNotification())
-                    Repository.UpdateSpecialty(specialty);
+            if (!Repository.ExistsSpecialty(dto.Id))
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                    .WithNotFoundStatus()
+                    .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
+                    .Build());
             }
+
+            if (!Notification.HasNotification())
+                Repository.UpdateSpecialty(specialty);
 
             return dto;
         }

@@ -1,17 +1,17 @@
-﻿using Xunit;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using Tnf.Application.Services.Dto;
-using Tnf.Architecture.Dto;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using Tnf.App.Crud;
+using Tnf.App.Dto.Response;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Web.Controllers;
 using Tnf.AspNetCore.Mvc.Response;
-using System.Linq;
-using Tnf.App.Dto.Response;
-using Tnf.App.Crud;
+using Xunit;
 
-namespace Tnf.Architecture.Web.Tests.Tests
+namespace Tnf.Architecture.Web.Tests
 {
     public class CountryControllerTests : AppTestBase
     {
@@ -26,8 +26,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CountryDto>>(
-                $"/{RouteConsts.Country}",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Country}"
             );
 
             // Assert
@@ -39,8 +38,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CountryDto>>(
-                $"/{RouteConsts.Country}?pageSize=3",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Country}?pageSize=3"
             );
 
             // Assert
@@ -54,8 +52,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CountryDto>>(
-                               $"{RouteConsts.Country}?name=EUA",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Country}?name=EUA"
                            );
 
             // Assert
@@ -68,8 +65,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CountryDto>>(
-                               $"{RouteConsts.Country}?order=name",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Country}?order=name"
                            );
 
             // Assert
@@ -82,8 +78,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CountryDto>>(
-                               $"{RouteConsts.Country}?order=-name",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Country}?order=-name"
                            );
 
             // Assert
@@ -97,8 +92,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<CountryDto>(
-                $"/{RouteConsts.Country}/1",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Country}/1"
             );
 
             // Assert
@@ -111,8 +105,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<CountryDto>(
-                               $"/{RouteConsts.Country}/1?fields=name",
-                               HttpStatusCode.OK
+                               $"/{RouteConsts.Country}/1?fields=name"
                            );
 
             // Assert
@@ -164,8 +157,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<CountryDto, CountryDto>(
                 $"/{RouteConsts.Country}",
-                countryDto,
-                HttpStatusCode.OK
+                countryDto
             );
 
             // Assert
@@ -186,8 +178,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<CountryDto, CountryDto>(
                 $"/{RouteConsts.Country}",
-                countryDto,
-                HttpStatusCode.OK
+                countryDto
             );
 
             // Assert
@@ -201,13 +192,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             await PutResponseAsObjectAsync<CountryDto, CountryDto>(
                 $"/{RouteConsts.Country}/{response.Id}",
-                updateParam,
-                HttpStatusCode.OK
+                updateParam
             );
 
             response = await GetResponseAsObjectAsync<CountryDto>(
-                $"/{RouteConsts.Country}/{response.Id}",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Country}/{response.Id}"
             );
 
             //Assert
@@ -244,8 +233,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PutResponseAsObjectAsync<CountryDto, CountryDto>(
                 $"/{RouteConsts.Country}/4",
-                countryDto,
-                HttpStatusCode.OK
+                countryDto
             );
 
             // Assert
@@ -315,8 +303,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             await DeleteResponseAsObjectAsync<string>(
-                $"/{RouteConsts.Country}/1",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Country}/1"
             );
         }
 

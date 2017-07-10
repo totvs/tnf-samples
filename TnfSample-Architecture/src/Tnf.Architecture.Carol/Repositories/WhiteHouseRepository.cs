@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Tnf.App.Carol.Repositories;
-using Tnf.Provider.Carol;
-using Tnf.Architecture.Domain.Interfaces.Repositories;
-using Tnf.Architecture.Data.Entities;
-using Tnf.AutoMapper;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.App.Dto.Response;
 using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using System.Linq;
+using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.AutoMapper;
+using Tnf.Provider.Carol;
 
-namespace Tnf.Architecture.Data.Repositories
+namespace Tnf.Architecture.Carol.Repositories
 {
     public class WhiteHouseRepository : CarolRepositoryBase<PresidentPoco>, IWhiteHouseRepository
     {
@@ -67,7 +67,7 @@ namespace Tnf.Architecture.Data.Repositories
         public async Task<President> UpdatePresidentsAsync(President president)
         {
             var poco = president.MapTo<PresidentPoco>();
-            var result = await UpdateAsync(poco);
+            await UpdateAsync(poco);
 
             return president;
         }

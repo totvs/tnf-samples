@@ -5,7 +5,7 @@ using Tnf.Domain.Entities;
 namespace Tnf.Architecture.EntityFrameworkCore.Entities
 {
     [Table("Countries")]
-    public class CountryPoco : Entity
+    public sealed class CountryPoco : Entity
     {
         public const int MaxNameLength = 256;
 

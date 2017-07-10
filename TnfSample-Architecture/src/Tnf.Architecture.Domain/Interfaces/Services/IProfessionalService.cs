@@ -1,7 +1,7 @@
-﻿using Tnf.Architecture.Dto.Registration;
-using Tnf.Domain.Services;
-using Tnf.App.Dto.Request;
+﻿using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Domain.Services;
 
 namespace Tnf.Architecture.Domain.Interfaces.Services
 {

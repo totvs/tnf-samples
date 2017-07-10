@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Tnf.App.Dto.Response;
 using Tnf.Runtime.Validation;
 
-namespace Tnf.Architecture.Dto
+namespace Tnf.Architecture.Dto.Registration
 {
     public class CountryDto : CustomValidate, IDto
     {

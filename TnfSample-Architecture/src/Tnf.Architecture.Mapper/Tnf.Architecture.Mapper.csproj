@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17188.4" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17191.1" />
   </ItemGroup>
 
   <ItemGroup>

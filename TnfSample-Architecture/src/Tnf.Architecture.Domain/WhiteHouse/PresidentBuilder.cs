@@ -58,7 +58,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public override President Build()
         {
-            base.Validate();
+            Validate();
             return base.Build();
         }
     }

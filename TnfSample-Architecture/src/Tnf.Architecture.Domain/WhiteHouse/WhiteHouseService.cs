@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
-using Tnf.Events.Bus;
-using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.App.Dto.Response;
-using Tnf.App.Dto.Request;
-using Tnf.App.Bus.Notifications;
+using Tnf.Events.Bus;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
@@ -51,14 +51,14 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
             var president = builder.Build();
 
-            if (!Notification.HasNotification())
-            {
-                var ids = await Repository.InsertPresidentsAsync(new List<President>() { president }, sync);
-                dto.Id = ids[0];
+            if (Notification.HasNotification())
+                return dto;
 
-                // Trigger president created event
-                _eventBus.Trigger(new PresidentCreatedEvent(president));
-            }
+            var ids = await Repository.InsertPresidentsAsync(new List<President>() { president }, sync);
+            dto.Id = ids[0];
+
+            // Trigger president created event
+            _eventBus.Trigger(new PresidentCreatedEvent(president));
 
             return dto;
         }
@@ -82,18 +82,18 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                 .WithAddress(dto.Address);
 
             var president = presidentBuilder.Build();
-            
-            if (!Notification.HasNotification())
-            {
-                var data = await Repository.UpdatePresidentsAsync(president);
 
-                if (data == null)
-                {
-                    Notification.Raise(NotificationEvent.DefaultBuilder
-                                        .WithNotFoundStatus()
-                                        .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
-                                        .Build());
-                }
+            if (Notification.HasNotification())
+                return dto;
+
+            var data = await Repository.UpdatePresidentsAsync(president);
+
+            if (data == null)
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                    .WithNotFoundStatus()
+                    .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
+                    .Build());
             }
 
             return dto;

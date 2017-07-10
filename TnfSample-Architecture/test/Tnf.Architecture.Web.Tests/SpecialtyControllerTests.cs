@@ -1,18 +1,18 @@
-﻿using System.Threading.Tasks;
-using Tnf.Architecture.Web.Controllers;
-using Xunit;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using Tnf.Architecture.Dto;
-using System.Net;
-using Microsoft.Extensions.DependencyInjection;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
-using Tnf.Architecture.Domain.Registration;
+using System.Net;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.Web.Controllers;
 using Tnf.AspNetCore.Mvc.Response;
+using Xunit;
 
-namespace Tnf.Architecture.Web.Tests.Tests
+namespace Tnf.Architecture.Web.Tests
 {
     public class SpecialtyControllerTests : AppTestBase
     {
@@ -28,8 +28,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
-                               $"/{RouteConsts.Specialty}?pageSize=5",
-                               HttpStatusCode.OK
+                               $"/{RouteConsts.Specialty}?pageSize=5"
                            );
 
             // Assert
@@ -41,8 +40,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
-                               $"{RouteConsts.Specialty}?pageSize=10&description=Geral",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Specialty}?pageSize=10&description=Geral"
                            );
 
             // Assert
@@ -55,8 +53,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
-                               $"{RouteConsts.Specialty}?pageSize=10&order=description",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Specialty}?pageSize=10&order=description"
                            );
 
             // Assert
@@ -69,23 +66,21 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
-                               $"{RouteConsts.Specialty}?pageSize=10&order=-description",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.Specialty}?pageSize=10&order=-description"
                            );
 
             // Assert
             Assert.Equal(response.Items.Count, 2);
             Assert.Equal(response.Items[0].Description, "Cirurgia Vascular");
         }
-        
+
 
         [Fact]
         public async Task Get_Specialty_With_Sucess()
         {
             // Act
             var response = await GetResponseAsObjectAsync<SpecialtyDto>(
-                               $"/{RouteConsts.Specialty}/1",
-                               HttpStatusCode.OK
+                               $"/{RouteConsts.Specialty}/1"
                            );
 
             // Assert
@@ -98,8 +93,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<SpecialtyDto>(
-                               $"/{RouteConsts.Specialty}/1?fields=description",
-                               HttpStatusCode.OK
+                               $"/{RouteConsts.Specialty}/1?fields=description"
                            );
 
             // Assert
@@ -151,8 +145,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
                 $"/{RouteConsts.Specialty}",
-                specialtyDto,
-                HttpStatusCode.OK
+                specialtyDto
             );
 
             // Assert
@@ -172,8 +165,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
                 $"/{RouteConsts.Specialty}",
-                specialtyDto,
-                HttpStatusCode.OK
+                specialtyDto
             );
 
             // Assert
@@ -187,13 +179,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             await PutResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
                 $"/{RouteConsts.Specialty}/{response.Id}",
-                updateParam,
-                HttpStatusCode.OK
+                updateParam
             );
 
             response = await GetResponseAsObjectAsync<SpecialtyDto>(
-                $"/{RouteConsts.Specialty}/{response.Id}",
-                HttpStatusCode.OK
+                $"/{RouteConsts.Specialty}/{response.Id}"
             );
 
             //Assert
@@ -249,13 +239,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             await PutResponseAsObjectAsync<SpecialtyDto, SpecialtyDto>(
                 $"{RouteConsts.Specialty}/1",
-                specialtyDto,
-                HttpStatusCode.OK
+                specialtyDto
             );
 
             var response = await GetResponseAsObjectAsync<SpecialtyDto>(
-                $"{RouteConsts.Specialty}/1",
-                HttpStatusCode.OK
+                $"{RouteConsts.Specialty}/1"
             );
 
             // Assert
@@ -339,9 +327,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_Specialty_With_Success()
         {
             // Act
-            var responseDelete = await DeleteResponseAsStringAsync(
-                $"{RouteConsts.Specialty}/1",
-                HttpStatusCode.OK
+            await DeleteResponseAsStringAsync(
+                $"{RouteConsts.Specialty}/1"
             );
         }
 

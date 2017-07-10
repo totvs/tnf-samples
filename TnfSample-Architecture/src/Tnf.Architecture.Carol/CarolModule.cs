@@ -1,14 +1,12 @@
 ﻿using Tnf.App.Carol;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Modules;
-using Tnf.Architecture.Domain;
-using Tnf.Reflection.Extensions;
-using Tnf.Architecture.Data.Entities;
 using Tnf.Provider.Misc;
+using Tnf.Reflection.Extensions;
 
-namespace Tnf.Architecture.Data
+namespace Tnf.Architecture.Carol
 {
     [DependsOn(
-        typeof(DomainModule),
         typeof(TnfCarolModule))]
     public class CarolModule : TnfModule
     {

@@ -18,12 +18,10 @@ namespace Tnf.Architecture.Web.Startup
 
         public WebModule(IHostingEnvironment env)
         {
-            var enviroment = env.EnvironmentName;
-
 #if DEBUG
-            enviroment = "Development";
+            var enviroment = "Development";
 #elif RELEASE
-            enviroment = "Release";
+            var enviroment = "Release";
 #endif
 
             _appConfiguration = AppConfigurations.Get(env.ContentRootPath, enviroment);

@@ -7,6 +7,7 @@ using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Domain
 {
+    [DependsOn(typeof(TnfKernelModule))]
     public class DomainModule : TnfModule
     {
         public override void PreInitialize()

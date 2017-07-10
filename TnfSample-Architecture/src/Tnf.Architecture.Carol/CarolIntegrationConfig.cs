@@ -1,4 +1,4 @@
-﻿namespace Tnf.Architecture.Data
+﻿namespace Tnf.Architecture.Carol
 {
     public static class CarolIntegrationConfig
     {

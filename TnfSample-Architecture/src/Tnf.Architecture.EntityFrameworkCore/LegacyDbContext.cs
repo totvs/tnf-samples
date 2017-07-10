@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tnf.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.EntityFrameworkCore
 {
@@ -10,7 +10,8 @@ namespace Tnf.Architecture.EntityFrameworkCore
         public DbSet<ProfessionalSpecialtiesPoco> ProfessionalSpecialties { get; set; }
         public DbSet<SpecialtyPoco> Specialties { get; set; }
 
-        public LegacyDbContext(DbContextOptions<LegacyDbContext> options) : base(options)
+        public LegacyDbContext(DbContextOptions<LegacyDbContext> options) 
+            : base(options)
         {
         }
 

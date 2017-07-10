@@ -1,18 +1,18 @@
-﻿using Tnf.App.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
-using Xunit;
-using Shouldly;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.Enumerables;
+﻿using Shouldly;
 using System.Linq;
-using Tnf.Architecture.Domain.Registration;
 using Tnf.App.Dto.Request;
+using Tnf.App.EntityFrameworkCore;
+using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Xunit;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
-    public class SpecialtyAppServiceTests : TnfEfCoreIntegratedTestBase<EfCoreAppTestModule>
+    public sealed class SpecialtyAppServiceTests : TnfEfCoreIntegratedTestBase<EfCoreAppTestModule>
     {
         private readonly ISpecialtyAppService _specialtyAppService;
         private readonly SpecialtyPoco _specialtyPoco;
@@ -64,7 +64,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Specialty_With_Error()
         {
             // Act
-            var response = _specialtyAppService.CreateSpecialty(new SpecialtyDto());
+            _specialtyAppService.CreateSpecialty(new SpecialtyDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -76,7 +76,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Null_Specialty_With_Error()
         {
             // Act
-            var response = _specialtyAppService.CreateSpecialty(null);
+            _specialtyAppService.CreateSpecialty(null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -122,7 +122,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             //Act
-            var response = _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
+            _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -134,7 +134,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            var response = _specialtyAppService.UpdateSpecialty(0, new SpecialtyDto());
+            _specialtyAppService.UpdateSpecialty(0, new SpecialtyDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -146,7 +146,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Null_Specialty_With_Error()
         {
             // Act
-            var response = _specialtyAppService.UpdateSpecialty(1, null);
+            _specialtyAppService.UpdateSpecialty(1, null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -170,7 +170,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Specialty_With_Error()
         {
             // Act
-            var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
+            _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

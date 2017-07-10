@@ -1,7 +1,7 @@
 ﻿using Tnf.App.Carol.Repositories;
 using Tnf.Architecture.Dto.ValueObjects;
 
-namespace Tnf.Architecture.Data.Entities
+namespace Tnf.Architecture.Carol.Entities
 {
     public class PresidentPoco : CarolEntity
     {

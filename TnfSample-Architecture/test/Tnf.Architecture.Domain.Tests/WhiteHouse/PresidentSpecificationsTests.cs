@@ -3,7 +3,7 @@ using Tnf.Architecture.Domain.WhiteHouse.Specifications;
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 
-namespace Tnf.Architecture.Domain.Tests.WhiteHouse.Specifications
+namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
     public class PresidentSpecificationsTests
     {

@@ -1,6 +1,6 @@
-﻿using Tnf.Architecture.Domain.Registration.Specifications;
-using Tnf.App.Builder;
+﻿using Tnf.App.Builder;
 using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.Architecture.Domain.Registration.Specifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -35,7 +35,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public override Specialty Build()
         {
-            base.Validate();
+            Validate();
             return base.Build();
         }
     }

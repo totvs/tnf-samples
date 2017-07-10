@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Tnf.Application.Services;
-using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.Application.Services;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Interfaces
 {

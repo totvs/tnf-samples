@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.Data.Entities;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
 
 namespace Tnf.Architecture.Mapper.Profiles
 {

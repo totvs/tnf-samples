@@ -15,7 +15,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithDescription("Pediatria");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -29,7 +29,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithDescription(null);
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

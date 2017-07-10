@@ -6,10 +6,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.Entities
 {
     public class ProfessionalPoco : Entity
     {
-        public ProfessionalPoco()
-        {
-        }
-
         public decimal ProfessionalId { get; set; }
         public string Name { get; set; }
         public Guid Code { get; set; }

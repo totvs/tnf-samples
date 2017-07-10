@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Tnf.Architecture.Data.Entities;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.EntityFrameworkCore.Entities;

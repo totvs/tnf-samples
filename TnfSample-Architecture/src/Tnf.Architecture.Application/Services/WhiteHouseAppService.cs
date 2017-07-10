@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
-using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.App.Application.Services;
-using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.App.Dto.Response;
+using Tnf.App.Bus.Notifications;
 using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
+using Tnf.Application.Services;
+using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using Tnf.App.Bus.Notifications;
-using Tnf.Application.Services;
+using Tnf.Architecture.Dto.WhiteHouse;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -71,7 +71,7 @@ namespace Tnf.Architecture.Application.Services
                 await _whiteHouserService.DeletePresidentAsync(id);
         }
 
-        private void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params object[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)

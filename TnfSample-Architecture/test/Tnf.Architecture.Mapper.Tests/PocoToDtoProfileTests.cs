@@ -1,15 +1,14 @@
-﻿using Tnf.Architecture.Dto;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Xunit;
-using Tnf.AutoMapper;
-using System;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Data.Entities;
-using Tnf.Architecture.Dto.Helpers;
-using Tnf.Architecture.Dto.ValueObjects;
+﻿using System;
 using System.Collections.Generic;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Dto.Helpers;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.AutoMapper;
+using Xunit;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
@@ -18,13 +17,13 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_CountryPoco_To_CountryDto()
         {
-            CountryPoco poco = new CountryPoco()
+            var poco = new CountryPoco()
             {
                 Id = 1,
                 Name = "Brasil"
             };
 
-            CountryDto mappDto = poco.MapTo<CountryDto>();
+            var mappDto = poco.MapTo<CountryDto>();
 
             Assert.NotNull(mappDto);
             Assert.Equal(mappDto.Id, poco.Id);
@@ -34,7 +33,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_ProfessionalPoco_To_ProfessionalDto()
         {
-            ProfessionalPoco poco = new ProfessionalPoco()
+            var poco = new ProfessionalPoco()
             {
                 Address = "Rua de teste",
                 AddressComplement = "Complement",
@@ -59,7 +58,7 @@ namespace Tnf.Architecture.Mapper.Tests
                 }
             };
 
-            ProfessionalDto mappDto = poco.MapTo<ProfessionalDto>();
+            var mappDto = poco.MapTo<ProfessionalDto>();
 
             Assert.NotNull(mappDto);
             Assert.Equal(poco.ProfessionalId, mappDto.ProfessionalId);
@@ -83,13 +82,13 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            SpecialtyPoco poco = new SpecialtyPoco()
+            var poco = new SpecialtyPoco()
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
             };
 
-            SpecialtyDto mappDto = poco.MapTo<SpecialtyDto>();
+            var mappDto = poco.MapTo<SpecialtyDto>();
 
             Assert.NotNull(mappDto);
             Assert.Equal(mappDto.Id, poco.Id);
@@ -99,14 +98,14 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            PresidentPoco poco = new PresidentPoco()
+            var poco = new PresidentPoco()
             {
                 Id = "1234",
                 Name = "George",
                 Address = new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
-            PresidentDto mappDto = poco.MapTo<PresidentDto>();
+            var mappDto = poco.MapTo<PresidentDto>();
 
             Assert.NotNull(mappDto);
             Assert.Equal(poco.Id, mappDto.Id);

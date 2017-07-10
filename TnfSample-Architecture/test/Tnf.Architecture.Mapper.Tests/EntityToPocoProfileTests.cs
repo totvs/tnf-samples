@@ -1,13 +1,13 @@
-﻿using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Xunit;
-using Tnf.AutoMapper;
-using System;
-using Tnf.Architecture.Data.Entities;
-using Tnf.Architecture.Dto.Helpers;
-using Tnf.Architecture.Dto.ValueObjects;
+﻿using System;
+using Tnf.App.TestBase;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.App.TestBase;
+using Tnf.Architecture.Dto.Helpers;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.AutoMapper;
+using Xunit;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
@@ -16,7 +16,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_Professional_To_ProfessionalPoco()
         {
-            Professional entity = new Professional()
+            var entity = new Professional()
             {
                 Address = new Address("Rua de teste", "123", "Complement", new ZipCode("12345678")),
                 ProfessionalId = 1,
@@ -25,7 +25,7 @@ namespace Tnf.Architecture.Mapper.Tests
                 Name = "Professional"
             };
 
-            ProfessionalPoco mappPoco = entity.MapTo<ProfessionalPoco>();
+            var mappPoco = entity.MapTo<ProfessionalPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(entity.ProfessionalId, mappPoco.ProfessionalId);
@@ -43,13 +43,13 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            Specialty entity = new Specialty()
+            var entity = new Specialty()
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
             };
 
-            SpecialtyPoco mappPoco = entity.MapTo<SpecialtyPoco>();
+            var mappPoco = entity.MapTo<SpecialtyPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(mappPoco.Id, entity.Id);
@@ -59,14 +59,14 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            President entity = new President()
+            var entity = new President()
             {
                 Id = "1234",
                 Name = "George",
                 Address = new Address("Rua de Teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
-            PresidentPoco mappPoco = entity.MapTo<PresidentPoco>();
+            var mappPoco = entity.MapTo<PresidentPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(entity.Id, mappPoco.Id);

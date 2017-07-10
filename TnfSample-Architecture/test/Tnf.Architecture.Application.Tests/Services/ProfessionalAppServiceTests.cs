@@ -1,21 +1,21 @@
-﻿using Tnf.App.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
-using Xunit;
-using Shouldly;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.Enumerables;
+﻿using Shouldly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tnf.Architecture.Domain.Registration;
 using Tnf.App.Dto.Request;
-using System;
+using Tnf.App.EntityFrameworkCore;
+using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Xunit;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
-    public class ProfessionalAppServiceTests : TnfEfCoreIntegratedTestBase<EfCoreAppTestModule>
+    public sealed class ProfessionalAppServiceTests : TnfEfCoreIntegratedTestBase<EfCoreAppTestModule>
     {
         private readonly IProfessionalAppService _professionalAppService;
         private readonly ProfessionalPoco _professionalPoco;
@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             UsingDbContext<LegacyDbContext>(context =>
             {
                 context.Professionals.Add(_professionalPoco);
-                context.Specialties.Add(new SpecialtyPoco() { Id = 1, Description = "Anestesiologia" });                
+                context.Specialties.Add(new SpecialtyPoco() { Id = 1, Description = "Anestesiologia" });
             });
         }
 
@@ -86,7 +86,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.CreateProfessional(new ProfessionalDto());
+            _professionalAppService.CreateProfessional(new ProfessionalDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -104,7 +104,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Null_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.CreateProfessional(null);
+            _professionalAppService.CreateProfessional(null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -167,7 +167,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             //Act
-            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
+            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -179,7 +179,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
+            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -192,7 +192,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Null_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
+            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

@@ -13,7 +13,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
 {
     public class ProfessionalServiceTests : TnfAppIntegratedTestBase<DomainModuleTest>
     {
-        IProfessionalService _profissionalService;
+        private readonly IProfessionalService _profissionalService;
 
         public ProfessionalServiceTests()
         {
@@ -60,7 +60,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Not_Return_Non_Existing_Professional()
         {
             // Act
-            var response = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
+            _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -110,7 +110,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Insert_Not_Accept_Invalid_Professional()
         {
             // Act
-            var responseBase = _profissionalService.CreateProfessional(new ProfessionalDto());
+            _profissionalService.CreateProfessional(new ProfessionalDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -147,7 +147,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Update_Not_Accept_Invalid_Professional()
         {
             // Act
-            var responseBase = _profissionalService.UpdateProfessional(new ProfessionalDto());
+            _profissionalService.UpdateProfessional(new ProfessionalDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -165,7 +165,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Update_Not_Accept_Non_Existing_Professional()
         {
             // Act
-            var responseBase = _profissionalService.UpdateProfessional(new ProfessionalDto()
+            _profissionalService.UpdateProfessional(new ProfessionalDto()
             {
                 ProfessionalId = 99,
                 Name = "João da Silva",

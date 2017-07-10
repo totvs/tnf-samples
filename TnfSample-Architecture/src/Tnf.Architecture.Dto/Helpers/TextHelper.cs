@@ -5,16 +5,17 @@ namespace Tnf.Architecture.Dto.Helpers
 {
     public static class TextHelper
     {
-        const string withAccents = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç'`´^~";
-        const string withoutAccents = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc     ";
-        const string allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmonopqrstuvwxyz0123456789-_";
+        private const string WithAccents = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç'`´^~";
+        private const string WithoutAccents = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc     ";
+        private const string Allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmonopqrstuvwxyz0123456789-_";
 
         public static string RemoveAccents(string text)
         {
-            if (text == null) return string.Empty;
+            if (text == null)
+                return string.Empty;
 
-            for (var i = 0; i < withAccents.Length; i++)
-                text = text.Replace(withAccents[i].ToString(), withoutAccents[i].ToString());
+            for (var i = 0; i < WithAccents.Length; i++)
+                text = text.Replace(WithAccents[i].ToString(), WithoutAccents[i].ToString());
 
             return text;
         }
@@ -27,33 +28,21 @@ namespace Tnf.Architecture.Dto.Helpers
 
             for (var i = 0; i < text.Length; i++)
             {
-                if (!allowed.Contains(text.Substring(i, 1)))
-                {
+                if (!Allowed.Contains(text.Substring(i, 1)))
                     returnText = returnText.Replace(text.Substring(i, 1), "");
-                }
             }
 
             return returnText.ToLower();
         }
 
         public static string GetNumbers(string text)
-        {
-            return string.IsNullOrEmpty(text) ? "" : new string(text.Where(char.IsDigit).ToArray());
-        }
+            => string.IsNullOrEmpty(text) ? "" : new string(text.Where(char.IsDigit).ToArray());
 
         public static string AjustText(string value, int length)
-        {
-            if (value.Length > length)
-            {
-                value = value.Substring(0, length);
-            }
-            return value;
-        }
+            => (value.Length > length) ? value.Substring(0, length) : value;
 
         public static string ToTitleCase(string text)
-        {
-            return ToTitleCase(text, false);
-        }
+            => ToTitleCase(text, false);
 
         public static string ToTitleCase(string text, bool keepUpperWords)
         {
@@ -64,18 +53,18 @@ namespace Tnf.Architecture.Dto.Helpers
 
             if (!keepUpperWords)
                 text = text.ToLower();
-
-            var textInfo = CultureInfo.CurrentCulture.TextInfo;
-            return textInfo.ToTitleCase(text);
+            
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
         }
 
         public static string ToTitleCase(this TextInfo info, string str)
         {
-            string auxStr = str.ToLower();
-            string[] auxArr = auxStr.Split(' ');
-            string result = "";
-            bool firstWord = true;
-            foreach (string word in auxArr)
+            var auxStr = str.ToLower();
+            var auxArr = auxStr.Split(' ');
+            var result = "";
+            var firstWord = true;
+
+            foreach (var word in auxArr)
             {
                 if (!firstWord)
                     result += " ";

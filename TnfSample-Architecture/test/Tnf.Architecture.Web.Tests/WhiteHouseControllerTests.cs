@@ -1,19 +1,19 @@
-﻿using System.Threading.Tasks;
-using Xunit;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using Tnf.Architecture.Dto;
-using System.Net;
-using Tnf.Architecture.Web.Controllers;
-using Microsoft.Extensions.DependencyInjection;
-using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.Dto.Enumerables;
 using System.Linq;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Domain.WhiteHouse;
+using System.Net;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Architecture.Dto;
+using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.Web.Controllers;
 using Tnf.AspNetCore.Mvc.Response;
+using Xunit;
 
-namespace Tnf.Architecture.Web.Tests.Tests
+namespace Tnf.Architecture.Web.Tests
 {
     public class WhiteHouseControllerTests : AppTestBase
     {
@@ -29,8 +29,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
-                               $"{RouteConsts.WhiteHouse}?pageSize=5",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.WhiteHouse}?pageSize=5"
                            );
 
             // Assert
@@ -42,8 +41,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
-                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=name",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=name"
                            );
 
             // Assert
@@ -56,8 +54,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<PresidentDto, string>>(
-                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.WhiteHouse}?pageSize=10&order=-name"
                            );
 
             // Assert
@@ -71,8 +68,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<PresidentDto>(
-                               $"{RouteConsts.WhiteHouse}/1",
-                               HttpStatusCode.OK
+                               $"{RouteConsts.WhiteHouse}/1"
                            );
 
             // Assert
@@ -126,8 +122,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<PresidentDto, PresidentDto>(
                 $"{RouteConsts.WhiteHouse}",
-                presidentDto,
-                HttpStatusCode.OK
+                presidentDto
             );
 
             // Assert
@@ -148,8 +143,7 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             var response = await PostResponseAsObjectAsync<PresidentDto, PresidentDto>(
                 $"/{RouteConsts.WhiteHouse}",
-                presidentDto,
-                HttpStatusCode.OK
+                presidentDto
             );
 
             var updateParam = new PresidentDto()
@@ -157,16 +151,14 @@ namespace Tnf.Architecture.Web.Tests.Tests
                 Address = response.Address,
                 Name = "Nome Alterado Teste"
             };
-            
+
             await PutResponseAsObjectAsync<PresidentDto, PresidentDto>(
                 $"/{RouteConsts.WhiteHouse}/{response.Id}",
-                updateParam,
-                HttpStatusCode.OK
+                updateParam
             );
 
             response = await GetResponseAsObjectAsync<PresidentDto>(
-                $"/{RouteConsts.WhiteHouse}/{response.Id}",
-                HttpStatusCode.OK
+                $"/{RouteConsts.WhiteHouse}/{response.Id}"
             );
 
             //Assert
@@ -218,13 +210,11 @@ namespace Tnf.Architecture.Web.Tests.Tests
             // Act
             await PutResponseAsObjectAsync<PresidentDto, PresidentDto>(
                 $"{RouteConsts.WhiteHouse}/6",
-                presidentDto,
-                HttpStatusCode.OK
+                presidentDto
             );
 
             var response = await GetResponseAsObjectAsync<PresidentDto>(
-                $"{RouteConsts.WhiteHouse}/6",
-                HttpStatusCode.OK
+                $"{RouteConsts.WhiteHouse}/6"
             );
 
             // Assert
@@ -307,9 +297,8 @@ namespace Tnf.Architecture.Web.Tests.Tests
         public async Task Delete_President_With_Success()
         {
             // Act
-            var response = await DeleteResponseAsStringAsync(
-                $"{RouteConsts.WhiteHouse}/1",
-                HttpStatusCode.OK
+            await DeleteResponseAsStringAsync(
+                $"{RouteConsts.WhiteHouse}/1"
             );
         }
 

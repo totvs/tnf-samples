@@ -1,7 +1,7 @@
-﻿using Tnf.Architecture.Domain.WhiteHouse;
-using Xunit;
-using System.Linq;
+﻿using System.Linq;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Domain.WhiteHouse;
+using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.WhiteHouse
 {
@@ -17,7 +17,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress("Rua de teste", "123", "APT 12", "99380000");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -33,7 +33,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress("Rua de teste", "123", "APT 12", "99380000");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress("Rua de teste", "123", "APT 12", "993800021120");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -69,7 +69,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress(null, "123", "APT 12", "99380000");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -87,7 +87,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress("Rua de teste", null, "APT 12", "99380000");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -105,7 +105,7 @@ namespace Tnf.Architecture.Domain.Tests.WhiteHouse
                   .WithAddress("Rua de teste", "123", null, "99380000");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

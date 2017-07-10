@@ -1,12 +1,13 @@
-﻿using Tnf.Modules;
-using Tnf.App.TestBase;
+﻿using Tnf.App.TestBase;
+using Tnf.Modules;
 using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
-    [DependsOn(typeof(MapperModule),
-               typeof(TnfAppTestBaseModule))]
-    public class MapperTestModule: TnfModule
+    [DependsOn(
+        typeof(MapperModule),
+        typeof(TnfAppTestBaseModule))]
+    public class MapperTestModule : TnfModule
     {
         public override void Initialize()
         {

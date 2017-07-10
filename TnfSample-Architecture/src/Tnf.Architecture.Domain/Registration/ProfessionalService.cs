@@ -51,15 +51,15 @@ namespace Tnf.Architecture.Domain.Registration
 
             var professional = builder.Build();
 
-            if (!Notification.HasNotification())
-            {
-                var keys = Repository.CreateProfessional(professional);
+            if (Notification.HasNotification())
+                return dto;
 
-                dto.ProfessionalId = keys.ProfessionalId;
-                dto.Code = keys.Code;
+            var keys = Repository.CreateProfessional(professional);
 
-                Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
-            }
+            dto.ProfessionalId = keys.ProfessionalId;
+            dto.Code = keys.Code;
+
+            Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
 
             return dto;
         }
@@ -92,22 +92,22 @@ namespace Tnf.Architecture.Domain.Registration
 
             var professional = professionalBuilder.Build();
 
-            if (!Notification.HasNotification())
-            {
-                if (!Repository.ExistsProfessional(keys))
-                {
-                    Notification.Raise(NotificationEvent.DefaultBuilder
-                                        .WithNotFoundStatus()
-                                        .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
-                                        .Build());
-                }
+            if (Notification.HasNotification())
+                return dto;
 
-                if (!Notification.HasNotification())
-                {
-                    Repository.UpdateProfessional(professional);
-                    Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
-                }
+            if (!Repository.ExistsProfessional(keys))
+            {
+                Notification.Raise(NotificationEvent.DefaultBuilder
+                    .WithNotFoundStatus()
+                    .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
+                    .Build());
             }
+
+            if (Notification.HasNotification())
+                return dto;
+
+            Repository.UpdateProfessional(professional);
+            Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
 
             return dto;
         }

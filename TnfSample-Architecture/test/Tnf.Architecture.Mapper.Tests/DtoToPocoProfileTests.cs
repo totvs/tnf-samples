@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Xunit;
-using Tnf.AutoMapper;
+using Tnf.App.TestBase;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Data.Entities;
-using Tnf.App.TestBase;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.AutoMapper;
+using Xunit;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
@@ -17,13 +16,13 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_CountryDto_To_CountryPoco()
         {
-            CountryDto dto = new CountryDto()
+            var dto = new CountryDto()
             {
                 Id = 1,
                 Name = "Brasil"
             };
 
-            CountryPoco mappPoco = dto.MapTo<CountryPoco>();
+            var mappPoco = dto.MapTo<CountryPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(mappPoco.Id, mappPoco.Id);
@@ -33,7 +32,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_ProfessionalDto_To_ProfessionalPoco()
         {
-            ProfessionalDto dto = new ProfessionalDto()
+            var dto = new ProfessionalDto()
             {
                 Address = new Address("Rua de teste", "123", "Compelemento", new ZipCode("12345678")),
                 Code = Guid.NewGuid(),
@@ -47,7 +46,7 @@ namespace Tnf.Architecture.Mapper.Tests
                 }
             };
 
-            ProfessionalPoco mappPoco = dto.MapTo<ProfessionalPoco>();
+            var mappPoco = dto.MapTo<ProfessionalPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(dto.ProfessionalId, mappPoco.ProfessionalId);
@@ -66,13 +65,13 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyDto_To_SpecialtyPoco()
         {
-            SpecialtyDto dto = new SpecialtyDto()
+            var dto = new SpecialtyDto()
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
             };
 
-            SpecialtyPoco mappPoco = dto.MapTo<SpecialtyPoco>();
+            var mappPoco = dto.MapTo<SpecialtyPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(mappPoco.Id, mappPoco.Id);
@@ -82,14 +81,14 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentDto_To_PresidentPoco()
         {
-            PresidentDto dto = new PresidentDto()
+            var dto = new PresidentDto()
             {
                 Id = "1234",
                 Name = "George",
                 Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))
             };
 
-            PresidentPoco mappPoco = dto.MapTo<PresidentPoco>();
+            var mappPoco = dto.MapTo<PresidentPoco>();
 
             Assert.NotNull(mappPoco);
             Assert.Equal(dto.Id, mappPoco.Id);

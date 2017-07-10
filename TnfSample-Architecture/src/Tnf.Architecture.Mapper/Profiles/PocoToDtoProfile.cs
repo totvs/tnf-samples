@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Tnf.Architecture.Dto;
+using System.Linq;
+using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.EntityFrameworkCore.Entities;
-using System.Linq;
-using Tnf.Architecture.Data.Entities;
 using Tnf.Architecture.Dto.WhiteHouse;
+using Tnf.Architecture.EntityFrameworkCore.Entities;
 
 namespace Tnf.Architecture.Mapper.Profiles
 {

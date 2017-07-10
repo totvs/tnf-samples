@@ -1,15 +1,13 @@
 ﻿using Shouldly;
+using System.Linq;
 using System.Threading.Tasks;
+using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Domain.WhiteHouse;
+using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.Architecture.Dto.Enumerables;
 using Xunit;
-using System.Linq;
-using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
-using Tnf.App.Bus.Notifications;
 
 namespace Tnf.Architecture.Application.Tests.Services
 {
@@ -43,7 +41,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Insert_President_With_Success()
         {
             // Act
-            var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))), true);
+            await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -53,7 +51,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Insert_President_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto());
+            await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -69,7 +67,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Insert_Null_President_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.InsertPresidentAsync(null);
+            await _whiteHouseAppService.InsertPresidentAsync(null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -81,7 +79,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_President_With_Success()
         {
             // Act
-            var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))), true);
+            var response = await _whiteHouseAppService.InsertPresidentAsync(new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
 
             Assert.False(LocalNotification.HasNotification());
 
@@ -102,7 +100,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_President_With_Error()
         {
             //Act
-            var response = await _whiteHouseAppService.UpdatePresidentAsync("99", new PresidentDto(
+            await _whiteHouseAppService.UpdatePresidentAsync("99", new PresidentDto(
                 "99",
                 "New President",
                 new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))));
@@ -117,7 +115,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.UpdatePresidentAsync("", new PresidentDto());
+            await _whiteHouseAppService.UpdatePresidentAsync("", new PresidentDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -129,7 +127,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_Null_President_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.UpdatePresidentAsync("1", null);
+            await _whiteHouseAppService.UpdatePresidentAsync("1", null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -153,7 +151,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Get_President_With_Error()
         {
             // Act
-            var response = await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("2"));
+            await _whiteHouseAppService.GetPresidentById(new RequestDto<string>("2"));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

@@ -1,13 +1,13 @@
-﻿using Tnf.App.Application.Services;
+﻿using System;
+using Tnf.App.Application.Services;
+using Tnf.App.Bus.Notifications;
+using Tnf.App.Dto.Request;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.App.Dto.Response;
-using Tnf.App.Dto.Request;
-using System;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Enumerables;
-using Tnf.App.Bus.Notifications;
+using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -34,10 +34,7 @@ namespace Tnf.Architecture.Application.Services
             if (keys.GetId().Code == Guid.Empty)
                 RaiseNotification(nameof(code));
 
-            if (Notification.HasNotification())
-                return new ProfessionalDto();
-
-            return _service.GetProfessional(keys);
+            return Notification.HasNotification() ? new ProfessionalDto() : _service.GetProfessional(keys);
         }
 
         public ProfessionalDto CreateProfessional(ProfessionalDto professional)
@@ -45,10 +42,7 @@ namespace Tnf.Architecture.Application.Services
             if (professional == null)
                 RaiseNotification(nameof(professional));
 
-            if (Notification.HasNotification())
-                return new ProfessionalDto();
-
-            return _service.CreateProfessional(professional);
+            return Notification.HasNotification() ? new ProfessionalDto() : _service.CreateProfessional(professional);
         }
 
         public ProfessionalDto UpdateProfessional(ProfessionalKeysDto keys, ProfessionalDto professional)
@@ -82,7 +76,7 @@ namespace Tnf.Architecture.Application.Services
                 _service.DeleteProfessional(keys);
         }
 
-        private void RaiseNotification(params string[] parameter)
+        private void RaiseNotification(params object[] parameter)
         {
             Notification.Raise(NotificationEvent.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)

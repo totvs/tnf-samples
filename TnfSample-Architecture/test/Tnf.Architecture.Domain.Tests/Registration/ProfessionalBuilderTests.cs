@@ -1,8 +1,8 @@
-﻿using Tnf.Architecture.Domain.Registration;
+﻿using System.Linq;
+using Tnf.App.TestBase;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
-using System.Linq;
-using Tnf.App.TestBase;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
 {
@@ -19,7 +19,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -36,7 +36,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -55,7 +55,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -74,7 +74,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -93,7 +93,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -112,7 +112,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -131,7 +131,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone(null);
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -150,7 +150,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
                   .WithPhone("5563524178");
 
             // Act
-            var build = builder.Build();
+            builder.Build();
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
