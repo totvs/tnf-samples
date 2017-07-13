@@ -30,10 +30,7 @@ namespace Tnf.Architecture.Application.Services
             if (string.IsNullOrWhiteSpace(id.GetId()))
                 RaiseNotification(nameof(id));
 
-            if (Notification.HasNotification())
-                return new PresidentDto();
-
-            return await _whiteHouserService.GetPresidentById(id);
+            return Notification.HasNotification() ? new PresidentDto() : await _whiteHouserService.GetPresidentById(id);
         }
 
         public async Task<PresidentDto> InsertPresidentAsync(PresidentDto president, bool sync = true)
@@ -41,10 +38,7 @@ namespace Tnf.Architecture.Application.Services
             if (president == null)
                 RaiseNotification(nameof(president));
 
-            if (Notification.HasNotification())
-                return new PresidentDto();
-
-            return await _whiteHouserService.InsertPresidentAsync(president, sync);
+            return Notification.HasNotification() ? new PresidentDto() : await _whiteHouserService.InsertPresidentAsync(president, sync);
         }
 
         public async Task<PresidentDto> UpdatePresidentAsync(string id, PresidentDto president)

@@ -1,28 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Tnf.App.Dto.Response;
-using Tnf.Runtime.Validation;
+﻿using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class CountryDto : CustomValidate, IDto
+    public class CountryDto : DtoBase
     {
         public string Name { get; set; }
 
-        public IList<string> _expandables { get; set; }
-
-        public CountryDto()
-        {
-            _expandables = new List<string>();
-        }
-
-        public override void AddValidationErrors(CustomValidationContext context)
-        {
-            if (string.IsNullOrWhiteSpace(Name))
-            {
-                context.Results.Add(new ValidationResult("Name is required"));
-            }
-        }
+        //public override void AddValidationErrors(CustomValidationContext context)
+        //{
+        //    if (string.IsNullOrWhiteSpace(Name))
+        //    {
+        //        context.Results.Add(new ValidationResult("Name is required"));
+        //    }
+        //}
         
         public enum Error
         {

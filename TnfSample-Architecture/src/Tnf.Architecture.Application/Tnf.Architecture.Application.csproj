@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.App.Crud" Version="1.0.17191.1" />
-    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.17191.1" />
+    <PackageReference Include="Tnf.App.Crud" Version="1.0.17194.1" />
+    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.17194.1" />
   </ItemGroup>
 
 </Project>

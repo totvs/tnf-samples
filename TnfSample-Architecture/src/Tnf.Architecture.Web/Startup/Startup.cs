@@ -32,10 +32,10 @@ namespace Tnf.Architecture.Web.Startup
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
-            services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
+            //services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
+            //{
+            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
+            //});
 
             services.AddCors(options =>
             {

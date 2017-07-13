@@ -10,7 +10,7 @@ using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Architecture.Web.Controllers;
-using Tnf.AspNetCore.Mvc.Response;
+using Tnf.App.AspNetCore.Mvc.Response;
 using Xunit;
 
 namespace Tnf.Architecture.Web.Tests

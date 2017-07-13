@@ -1,4 +1,4 @@
-using Tnf.App.EntityFrameworkCore;
+using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 

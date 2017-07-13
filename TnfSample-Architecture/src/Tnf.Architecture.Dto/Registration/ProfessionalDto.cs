@@ -6,13 +6,11 @@ using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class ProfessionalDto : IDto<ProfessionalKeysDto>
+    public class ProfessionalDto : DtoBase<ProfessionalKeysDto>
     {
-        public IList<string> _expandables { get; set; }
-
         public ProfessionalDto()
+            :base(new List<string> { "professionalSpecialties.specialty" })
         {
-            _expandables = new List<string>() { "professionalSpecialties.specialty" };
         }
 
         public decimal ProfessionalId { get; set; }
@@ -24,7 +22,7 @@ namespace Tnf.Architecture.Dto.Registration
         public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
 
         [JsonIgnore]
-        public ProfessionalKeysDto Id { get; set; }
+        public new ProfessionalKeysDto Id { get; set; }
 
         public enum Error
         {

@@ -62,7 +62,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.Null(response);
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
             Assert.Equal(notifications.Count, 1);
-            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
             Assert.Equal(notifications.Count, 1);
-            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -128,7 +128,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.Null(response);
             Assert.True(LocalNotification.HasNotification());
-            Assert.True(LocalNotification.GetAll().Any(a => a.Message == CrudOperations.TnfAppCrud_OnGetCouldNotFind.ToString()));
+            Assert.True(LocalNotification.GetAll().Any(a => a.Message == CrudOperations.TnfAppCrudOnGetCouldNotFind.ToString()));
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(notifications.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
     }
 }

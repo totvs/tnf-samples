@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Crud;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Dto;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Web.Controllers;
-using Tnf.AspNetCore.Mvc.Response;
 using Xunit;
 
 namespace Tnf.Architecture.Web.Tests
@@ -125,7 +125,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("GetCountry");
             response.DetailedMessage.ShouldBe("GetCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -140,7 +140,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("GetCountry");
             response.DetailedMessage.ShouldBe("GetCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_OnGetCouldNotFind.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudOnGetCouldNotFind.ToString()));
         }
 
 
@@ -216,7 +216,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PostCountry");
             response.DetailedMessage.ShouldBe("PostCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
 
@@ -254,7 +254,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutCountry");
             response.DetailedMessage.ShouldBe("PutCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -271,7 +271,7 @@ namespace Tnf.Architecture.Web.Tests
             response.Message.ShouldBe("PutCountry");
             response.DetailedMessage.ShouldBe("PutCountry");
             response.Details.Count.ShouldBe(2);
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
         [Fact]
@@ -294,7 +294,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutCountry");
             response.DetailedMessage.ShouldBe("PutCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_OnGetCouldNotFind.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudOnGetCouldNotFind.ToString()));
         }
 
 
@@ -319,7 +319,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("DeleteCountry");
             response.DetailedMessage.ShouldBe("DeleteCountry");
-            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrud_InvalidParameterError.ToString()));
+            Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
     }
 }

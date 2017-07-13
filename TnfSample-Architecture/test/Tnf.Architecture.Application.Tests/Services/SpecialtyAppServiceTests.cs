@@ -1,7 +1,7 @@
 ﻿using Shouldly;
 using System.Linq;
 using Tnf.App.Dto.Request;
-using Tnf.App.EntityFrameworkCore;
+using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Enumerables;

@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using Tnf.App.Dto.Response;
+﻿using Tnf.App.Dto.Response;
 using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {
-    public class PresidentDto : IDto<string>
+    public class PresidentDto : DtoBase<string>
     {
-        public IList<string> _expandables { get; set; }
-
         public PresidentDto()
         {
         }
@@ -19,7 +16,6 @@ namespace Tnf.Architecture.Dto.WhiteHouse
             Address = address;
         }
 
-        public string Id { get; set; }
         public string Name { get; set; }
         public Address Address { get; set; }
 

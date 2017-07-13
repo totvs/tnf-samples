@@ -97,7 +97,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
         public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)
         {
-            var request = new RequestDto<ProfessionalKeysDto>(keys) { Expand = new ProfessionalDto()._expandables[0] };
+            var request = new RequestDto<ProfessionalKeysDto>(keys) { Expand = new ProfessionalDto().Expandables[0] };
 
             var dbProfessional = GetProfessionalPoco(request);
 
