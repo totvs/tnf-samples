@@ -113,7 +113,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public async Task Should_Get_Country_With_Success()
         {
-            var result = await _countryAppService.Get(new RequestDto<int>(1));
+            var result = await _countryAppService.Get(new RequestDto(1));
 
             result.Id.ShouldBe(1);
             result.Name.ShouldBe("Brasil");
@@ -123,7 +123,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Get_Country_With_Error()
         {
             // Act
-            var response = await _countryAppService.Get(new RequestDto<int>(99));
+            var response = await _countryAppService.Get(new RequestDto(99));
 
             // Assert
             Assert.Null(response);

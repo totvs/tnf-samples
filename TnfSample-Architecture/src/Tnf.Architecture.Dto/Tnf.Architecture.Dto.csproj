@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf" Version="1.0.17194.1" />
-    <PackageReference Include="Tnf.App.Dto" Version="1.0.17194.1" />
+    <PackageReference Include="Tnf" Version="1.0.17199.6" />
+    <PackageReference Include="Tnf.App.Dto" Version="1.0.17199.6" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,8 @@ namespace Tnf.Architecture.Application.Interfaces
 {
     public interface ISpecialtyAppService : IApplicationService
     {
-        ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
-        SpecialtyDto GetSpecialty(RequestDto<int> id);
+        ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request);
+        SpecialtyDto GetSpecialty(RequestDto id);
         void DeleteSpecialty(int id);
         SpecialtyDto CreateSpecialty(SpecialtyDto specialty);
         SpecialtyDto UpdateSpecialty(int id, SpecialtyDto specialty);

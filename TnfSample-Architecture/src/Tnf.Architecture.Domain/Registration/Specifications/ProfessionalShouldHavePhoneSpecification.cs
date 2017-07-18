@@ -7,8 +7,8 @@ namespace Tnf.Architecture.Domain.Registration.Specifications
 {
     internal class ProfessionalShouldHavePhoneSpecification : Specification<Professional>
     {
-        public override string LocalizationSource => AppConsts.LocalizationSourceName;
-        public override Enum LocalizationKey => Professional.Error.ProfessionalPhoneMustHaveValue;
+        public override string LocalizationSource { get; protected set; } = AppConsts.LocalizationSourceName;
+        public override Enum LocalizationKey { get; protected set; } = Professional.Error.ProfessionalPhoneMustHaveValue;
 
         public override Expression<Func<Professional, bool>> ToExpression()
         {

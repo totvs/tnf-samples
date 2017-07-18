@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
@@ -10,11 +11,10 @@ using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
-using Tnf.EntityFrameworkCore.Repositories;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
-    public class ProfessionalRepository : EfCoreRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalRepository
+    public class ProfessionalRepository : AppEfCoreRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalRepository
     {
         public ProfessionalRepository(IDbContextProvider<LegacyDbContext> dbContextProvider)
             : base(dbContextProvider)
@@ -51,7 +51,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)
         {
             var dbEntity = GetProfessionalPoco(requestDto);
-            var dto = dbEntity != null ? dbEntity.MapTo<ProfessionalDto>() : null;
+
+            if (dbEntity == null)
+                return null;
+
+            var dto = dbEntity.MapTo<ProfessionalDto>();
 
             dto.RemoveExpandable(requestDto);
 

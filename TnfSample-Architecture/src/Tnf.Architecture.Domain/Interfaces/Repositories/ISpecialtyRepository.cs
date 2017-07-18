@@ -8,8 +8,8 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface ISpecialtyRepository : IRepository
     {
-        ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request);
-        SpecialtyDto GetSpecialty(RequestDto<int> requestDto);
+        ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request);
+        SpecialtyDto GetSpecialty(RequestDto requestDto);
         int CreateSpecialty(Specialty dto);
         Specialty UpdateSpecialty(Specialty dto);
         void DeleteSpecialty(int id);

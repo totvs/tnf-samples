@@ -19,10 +19,10 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
+        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
             => _service.GetAllSpecialties(request);
 
-        public SpecialtyDto GetSpecialty(RequestDto<int> id)
+        public SpecialtyDto GetSpecialty(RequestDto id)
         {
             if (id.GetId() <= 0)
                 RaiseNotification(nameof(id));

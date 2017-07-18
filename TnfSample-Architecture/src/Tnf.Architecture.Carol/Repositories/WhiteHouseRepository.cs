@@ -27,8 +27,6 @@ namespace Tnf.Architecture.Carol.Repositories
 
         public async Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
         {
-            var response = new ListDto<PresidentDto, string>();
-
             var query = Client.Query<PresidentPoco>().ProcessFilter()
                 .SkipAndTakeByRequestDto(request)
                 .OrderByRequestDto(request)
@@ -39,11 +37,7 @@ namespace Tnf.Architecture.Carol.Repositories
 
             var resultData = await GetAllAsync(query);
 
-            response.Total = resultData.TotalHits;
-            response.Items = resultData.Hits.MapTo<List<PresidentDto>>();
-            response.HasNext = resultData.TotalHits > ((request.Page - 1) * request.PageSize) + response.Items.Count();
-
-            return response;
+            return resultData.ToListDto<PresidentPoco, PresidentDto, string>(request);
         }
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)

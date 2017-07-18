@@ -158,7 +158,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Specialty_With_Success()
         {
             //Act
-            var response = _specialtyAppService.GetSpecialty(new RequestDto<int>(1));
+            var response = _specialtyAppService.GetSpecialty(new RequestDto(1));
 
             //Assert
             Assert.False(LocalNotification.HasNotification());
@@ -170,7 +170,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Specialty_With_Error()
         {
             // Act
-            _specialtyAppService.GetSpecialty(new RequestDto<int>(99));
+            _specialtyAppService.GetSpecialty(new RequestDto(99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

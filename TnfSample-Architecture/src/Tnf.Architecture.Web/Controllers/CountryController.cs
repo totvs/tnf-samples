@@ -30,7 +30,7 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto<int> request)
+        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto request)
         {
             var response = await _countryAppService.Get(request.WithId(id));
 

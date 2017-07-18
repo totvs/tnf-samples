@@ -27,7 +27,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Specialties_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto, int>>(
                                $"/{RouteConsts.Specialty}?pageSize=5"
                            );
 
@@ -39,7 +39,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Specialties_Filtering_By_Description_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto, int>>(
                                $"{RouteConsts.Specialty}?pageSize=10&description=Geral"
                            );
 
@@ -52,7 +52,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Specialties_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto, int>>(
                                $"{RouteConsts.Specialty}?pageSize=10&order=description"
                            );
 
@@ -65,7 +65,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Specialties_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<SpecialtyDto, int>>(
                                $"{RouteConsts.Specialty}?pageSize=10&order=-description"
                            );
 

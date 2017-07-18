@@ -16,9 +16,9 @@ namespace Tnf.Architecture.Domain.Registration
         {
         }
 
-        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
+        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
 
-        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
+        public SpecialtyDto GetSpecialty(RequestDto requestDto)
         {
             SpecialtyDto dto = null;
 

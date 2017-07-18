@@ -45,7 +45,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Return_Specialty()
         {
             // Act
-            var response = _specialtyService.GetSpecialty(new RequestDto<int>(1));
+            var response = _specialtyService.GetSpecialty(new RequestDto(1));
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -57,7 +57,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Specialty_Service_Not_Return_Non_Existing_Specialty()
         {
             // Act
-            _specialtyService.GetSpecialty(new RequestDto<int>(99));
+            _specialtyService.GetSpecialty(new RequestDto(99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

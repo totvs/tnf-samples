@@ -29,9 +29,10 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id, [FromQuery]RequestDto<int> requestDto)
+        public IActionResult Get(int id, [FromQuery]RequestDto requestDto)
         {
-            var response = _specialtyAppService.GetSpecialty(requestDto.WithId(id));
+            requestDto.WithId(id);
+            var response = _specialtyAppService.GetSpecialty(requestDto);
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.GetSpecialty)

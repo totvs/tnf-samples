@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
@@ -9,11 +9,10 @@ using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
-using Tnf.EntityFrameworkCore.Repositories;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
-    public class SpecialtyRepository : EfCoreRepositoryBase<LegacyDbContext, SpecialtyPoco>, ISpecialtyRepository
+    public class SpecialtyRepository : AppEfCoreRepositoryBase<LegacyDbContext, SpecialtyPoco>, ISpecialtyRepository
     {
         public SpecialtyRepository(IDbContextProvider<LegacyDbContext> dbContextProvider)
             : base(dbContextProvider)
@@ -37,34 +36,24 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             Delete(dbEntity);
         }
 
-        public bool ExistsSpecialty(int id) => Count(s => s.Id == id) > 0;
+        public bool ExistsSpecialty(int id) 
+            => Count(s => s.Id == id) > 0;
 
-        public ListDto<SpecialtyDto> GetAllSpecialties(GetAllSpecialtiesDto request)
+        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
         {
-            var response = new ListDto<SpecialtyDto>();
-
-            var dbQuery = GetAll()
+            return GetAll()
                 .Where(w => request.Description == null || w.Description.Contains(request.Description))
                 .SkipAndTakeByRequestDto(request)
                 .OrderByRequestDto(request)
-                .ToArray();
-
-            response.Total = Count();
-            response.Items = dbQuery.MapTo<List<SpecialtyDto>>();
-            response.HasNext = response.Total > ((request.Page - 1) * request.PageSize) + response.Items.Count();
-
-            return response;
+                .ToListDto<SpecialtyPoco, SpecialtyDto>(request, Count());
         }
 
-        public SpecialtyDto GetSpecialty(RequestDto<int> requestDto)
+        public SpecialtyDto GetSpecialty(RequestDto requestDto)
         {
             SpecialtyDto specialty = null;
 
-            var dbEntity = GetAll()
-                               .IncludeByRequestDto(requestDto)
-                               .Where(w => w.Id == requestDto.GetId())
-                               .SelectFieldsByRequestDto(requestDto)
-                               .SingleOrDefault();
+            var dbEntity = Get(requestDto);
+
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<SpecialtyDto>();
 

@@ -88,7 +88,7 @@ namespace Tnf.Architecture.Domain.Tests
 
             var specialtyList = new List<SpecialtyDto>() { specialtyDto };
 
-            var specialtyPaging = new ListDto<SpecialtyDto> { Items = specialtyList };
+            var specialtyPaging = new ListDto<SpecialtyDto, int> { Items = specialtyList };
 
             var specialty = new Specialty()
             {
@@ -99,7 +99,7 @@ namespace Tnf.Architecture.Domain.Tests
             specialtyRepository.GetAllSpecialties(Arg.Any<GetAllSpecialtiesDto>())
                 .Returns(specialtyPaging);
 
-            specialtyRepository.GetSpecialty(Arg.Any<RequestDto<int>>())
+            specialtyRepository.GetSpecialty(Arg.Any<RequestDto>())
                 .Returns(specialtyDto);
 
             specialtyRepository.CreateSpecialty(Arg.Any<Specialty>())
