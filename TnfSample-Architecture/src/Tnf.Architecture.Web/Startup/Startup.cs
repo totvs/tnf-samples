@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Tnf.App.AspNetCore;
-using Tnf.App.EntityFrameworkCore.Configuration;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AspNetCore;

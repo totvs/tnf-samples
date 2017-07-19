@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using Tnf.App.Crud;
 using Tnf.App.Domain.Repositories;
+using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
@@ -15,10 +16,7 @@ namespace Tnf.Architecture.Application.Services
         {
         }
 
-        protected override IQueryable<CountryPoco> CreateFilteredQuery(GetAllCountriesDto input)
-        {
-            return base.CreateFilteredQuery(input)
-                .Where(m => input.Name.IsNullOrWhiteSpace() || m.Name.Contains(input.Name));
-        }
+        protected override async Task<ListDto<CountryDto, int>> CreateFilteredQueryAsync(GetAllCountriesDto input)
+            => await CreateFilteredQueryAsync(m => input.Name.IsNullOrWhiteSpace() || m.Name.Contains(input.Name), input);
     }
 }

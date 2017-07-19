@@ -35,10 +35,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             var response = new ListDto<ProfessionalDto, ProfessionalKeysDto>
             {
-                Total = professionalPocos.Count(),
+                Total = professionalPocos.Length,
                 Items = professionalsPoco.MapTo<List<ProfessionalDto>>(),
-                HasNext = professionalPocos.Count() > ((request.Page - 1) * request.PageSize) +
-                          professionalPocos.Count()
+                HasNext = professionalPocos.Length > (request.Page - 1) * request.PageSize +
+                          professionalPocos.Length
             };
 
 

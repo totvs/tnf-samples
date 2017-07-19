@@ -7,7 +7,6 @@ using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
-using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
@@ -40,13 +39,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             => Count(s => s.Id == id) > 0;
 
         public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
-        {
-            return GetAll()
-                .Where(w => request.Description == null || w.Description.Contains(request.Description))
-                .SkipAndTakeByRequestDto(request)
-                .OrderByRequestDto(request)
-                .ToListDto<SpecialtyPoco, SpecialtyDto>(request, Count());
-        }
+            => GetAll<SpecialtyDto>(w => request.Description == null || w.Description.Contains(request.Description), request);
 
         public SpecialtyDto GetSpecialty(RequestDto requestDto)
         {
