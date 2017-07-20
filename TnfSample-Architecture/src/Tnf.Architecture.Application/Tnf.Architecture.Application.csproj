@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Tnf.App.Crud" Version="1.0.17200.1" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.0.17200.1" />
     <PackageReference Include="Tnf.Castle.Log4Net" Version="1.0.17200.1" />
   </ItemGroup>
 

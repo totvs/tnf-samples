@@ -1,40 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tnf.App.Application.Services;
 using Tnf.App.Bus.Notifications;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.Enumerables;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Enumerables;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
+using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
     public class ProfessionalAppService : AppApplicationService, IProfessionalAppService
     {
         private readonly IProfessionalService _service;
+        private readonly IProfessionalReadRepository _readRepository;
 
-        public ProfessionalAppService(IProfessionalService service)
+        public ProfessionalAppService(IProfessionalService service, IProfessionalReadRepository readRepository)
         {
             _service = service;
+            _readRepository = readRepository;
         }
 
-        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
-            => _service.GetAllProfessionals(request);
+        public ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
+            => _readRepository.GetAllProfessionals(request);
 
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
+        public ProfessionalDto GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
         {
-            var professionalId = keys.GetId().ProfessionalId;
-            var code = keys.GetId().Code;
+            var professionalId = keys.GetId().SecundaryKey;
+            var code = keys.GetId().PrimaryKey;
 
-            if (keys.GetId().ProfessionalId <= 0)
+            if (professionalId <= 0)
                 RaiseNotification(nameof(professionalId));
 
-            if (keys.GetId().Code == Guid.Empty)
+            if (code == Guid.Empty)
                 RaiseNotification(nameof(code));
 
-            return Notification.HasNotification() ? new ProfessionalDto() : _service.GetProfessional(keys);
+            if(Notification.HasNotification())
+                return new ProfessionalDto();
+
+            var entity = _service.GetProfessional(keys);
+            var dto = entity.MapTo<ProfessionalDto>();
+
+            dto.RemoveExpandable(keys);
+
+            return dto;
         }
 
         public ProfessionalDto CreateProfessional(ProfessionalDto professional)
@@ -42,35 +58,69 @@ namespace Tnf.Architecture.Application.Services
             if (professional == null)
                 RaiseNotification(nameof(professional));
 
-            return Notification.HasNotification() ? new ProfessionalDto() : _service.CreateProfessional(professional);
+            if (Notification.HasNotification())
+                return new ProfessionalDto();
+
+            var professionalBuilder = new ProfessionalBuilder(Notification)
+                .WithProfessionalId(professional.ProfessionalId)
+                .WithCode(professional.Code)
+                .WithName(professional.Name)
+                .WithPhone(professional.Phone)
+                .WithEmail(professional.Email)
+                .WithAddress(professional.Address)
+                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder(Notification).WithId(s.Id).WithDescription(s.Description).Build()).ToList());
+
+            var id = _service.CreateProfessional(professionalBuilder);
+
+            professional.ProfessionalId = id.SecundaryKey;
+            professional.Code = id.PrimaryKey;
+
+            return professional;
         }
 
-        public ProfessionalDto UpdateProfessional(ProfessionalKeysDto keys, ProfessionalDto professional)
+        public ProfessionalDto UpdateProfessional(ComposeKey<Guid, decimal> keys, ProfessionalDto professional)
         {
-            if (keys.ProfessionalId <= 0)
-                RaiseNotification(nameof(keys.ProfessionalId));
+            var professionalId = keys.SecundaryKey;
+            var code = keys.PrimaryKey;
 
-            if (keys.Code == Guid.Empty)
-                RaiseNotification(nameof(keys.Code));
+            if (professionalId <= 0)
+                RaiseNotification(nameof(professionalId));
+
+            if (code == Guid.Empty)
+                RaiseNotification(nameof(code));
 
             if (professional == null)
                 RaiseNotification(nameof(professional));
 
             if (Notification.HasNotification())
                 return new ProfessionalDto();
+            
+            var professionalBuilder = new ProfessionalBuilder(Notification)
+                .WithProfessionalId(keys.SecundaryKey)
+                .WithCode(keys.PrimaryKey)
+                .WithName(professional.Name)
+                .WithPhone(professional.Phone)
+                .WithEmail(professional.Email)
+                .WithAddress(professional.Address)
+                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder(Notification).WithId(s.Id).WithDescription(s.Description).Build()).ToList());
 
-            professional.ProfessionalId = keys.ProfessionalId;
-            professional.Code = keys.Code;
-            return _service.UpdateProfessional(professional);
+            _service.UpdateProfessional(professionalBuilder);
+
+            professional.ProfessionalId = keys.SecundaryKey;
+            professional.Code = keys.PrimaryKey;
+            return professional;
         }
 
-        public void DeleteProfessional(ProfessionalKeysDto keys)
+        public void DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
-            if (keys.ProfessionalId <= 0)
-                RaiseNotification(nameof(keys.ProfessionalId));
+            var professionalId = keys.SecundaryKey;
+            var code = keys.PrimaryKey;
 
-            if (keys.Code == Guid.Empty)
-                RaiseNotification(nameof(keys.Code));
+            if (professionalId <= 0)
+                RaiseNotification(nameof(professionalId));
+
+            if (code == Guid.Empty)
+                RaiseNotification(nameof(code));
 
             if (!Notification.HasNotification())
                 _service.DeleteProfessional(keys);

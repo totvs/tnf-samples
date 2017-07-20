@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Tnf.App.Specifications;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Common;
 
 namespace Tnf.Architecture.Domain.WhiteHouse.Specifications
 {

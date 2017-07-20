@@ -4,7 +4,6 @@ using Tnf.App.Dto.Request;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Registration;
 using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
@@ -22,23 +21,6 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Service_Should_Not_Be_Null()
         {
             _specialtyService.ShouldNotBeNull();
-        }
-
-        [Fact]
-        public void Specialty_Service_Return_All_Values()
-        {
-            // Arrange
-            var requestDto = new GetAllSpecialtiesDto()
-            {
-                PageSize = 2
-            };
-
-            // Act
-            var allSpecialties = _specialtyService.GetAllSpecialties(requestDto);
-
-            // Assert
-            Assert.False(LocalNotification.HasNotification());
-            Assert.True(allSpecialties.Items.Count == 1);
         }
 
         [Fact]
@@ -90,22 +72,23 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Specialty_Service_Insert_Valid_Specialty()
         {
+            // Arrange
+            var specialtyBuilder = new SpecialtyBuilder(LocalNotification)
+                .WithDescription("Cirurgia Vascular");
+
             // Act
-            var responseBase = _specialtyService.CreateSpecialty(new SpecialtyDto()
-            {
-                Description = "Cirurgia Vascular"
-            });
+            var responseBase = _specialtyService.CreateSpecialty(specialtyBuilder);
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.True(responseBase.Description == "Cirurgia Vascular");
+            Assert.NotEqual(responseBase, 0);
         }
 
         [Fact]
         public void Specialty_Service_Insert_Not_Accept_Invalid_Specialty()
         {
             // Act
-            _specialtyService.CreateSpecialty(new SpecialtyDto());
+            _specialtyService.CreateSpecialty(new SpecialtyBuilder(LocalNotification));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -116,23 +99,23 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Specialty_Service_Update_Valid_Specialty()
         {
+            // Arrange
+            var specialtyBuilder = new SpecialtyBuilder(LocalNotification)
+                .WithId(1)
+                .WithDescription("Cirurgia Vascular");
+
             // Act
-            var responseBase = _specialtyService.UpdateSpecialty(new SpecialtyDto()
-            {
-                Id = 1,
-                Description = "Cirurgia Vascular"
-            });
+            _specialtyService.UpdateSpecialty(specialtyBuilder);
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.True(responseBase.Description == "Cirurgia Vascular");
         }
 
         [Fact]
         public void Specialty_Service_Update_Not_Accept_Invalid_Specialty()
         {
             // Act
-            _specialtyService.UpdateSpecialty(new SpecialtyDto());
+            _specialtyService.UpdateSpecialty(new SpecialtyBuilder(LocalNotification));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -143,12 +126,13 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Specialty_Service_Update_Not_Accept_Non_Existing_Specialty()
         {
+            // Arrange
+            var specialtyBuilder = new SpecialtyBuilder(LocalNotification)
+                .WithId(99)
+                .WithDescription("Cirurgia Vascular");
+
             // Act
-            _specialtyService.UpdateSpecialty(new SpecialtyDto()
-            {
-                Id = 99,
-                Description = "Cirurgia Vascular"
-            });
+            _specialtyService.UpdateSpecialty(specialtyBuilder);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

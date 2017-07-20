@@ -1,9 +1,6 @@
-﻿using Tnf.Architecture.Dto.Helpers;
-using Tnf.Domain.Values;
-
-namespace Tnf.Architecture.Dto.ValueObjects
+﻿namespace Tnf.Architecture.Common.ValueObjects
 {
-    public class Address : ValueObject<Address>
+    public class Address
     {
         public const int MaxAddressLength = 50;
         public const int MaxAddressNumberLength = 9;

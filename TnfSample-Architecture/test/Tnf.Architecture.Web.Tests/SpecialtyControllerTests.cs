@@ -3,13 +3,13 @@ using Shouldly;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Web.Controllers;
-using Tnf.App.AspNetCore.Mvc.Response;
 using Xunit;
 
 namespace Tnf.Architecture.Web.Tests

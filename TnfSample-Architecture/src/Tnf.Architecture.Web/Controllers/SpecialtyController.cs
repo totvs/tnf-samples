@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Common;
 using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Web.Controllers

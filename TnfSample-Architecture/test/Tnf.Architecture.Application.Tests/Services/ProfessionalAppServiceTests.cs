@@ -5,10 +5,10 @@ using System.Linq;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Common.Enumerables;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Xunit;
@@ -60,7 +60,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalDto()
+            var professionalDto = new ProfessionalDto
             {
                 ProfessionalId = 2,
                 Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
@@ -68,9 +68,9 @@ namespace Tnf.Architecture.Application.Tests.Services
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",
                 Phone = "58962348",
-                Specialties = new List<SpecialtyDto>()
+                Specialties = new List<SpecialtyDto>
                 {
-                    new SpecialtyDto() { Id = 1, Description = "Anestesiologia" }
+                    new SpecialtyDto { Id = 1, Description = "Anestesiologia" }
                 }
             };
 
@@ -141,7 +141,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             result.Name = "Nome Alterado Teste";
 
             result.Specialties.Clear();
-            result = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(result.ProfessionalId, result.Code), result);
+            result = _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(result.Code, result.ProfessionalId), result);
 
             //Assert
             Assert.False(LocalNotification.HasNotification());
@@ -167,7 +167,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             };
 
             //Act
-            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalDto.ProfessionalId, professionalDto.Code), professionalDto);
+            _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(professionalDto.Code, professionalDto.ProfessionalId), professionalDto);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -179,7 +179,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(0, Guid.Empty), new ProfessionalDto());
+            _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(Guid.Empty, 0), new ProfessionalDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -192,7 +192,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Update_Null_Professional_With_Error()
         {
             // Act
-            _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(1, Guid.NewGuid()), null);
+            _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(Guid.NewGuid(), 1), null);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -205,7 +205,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Professional_With_Success()
         {
             //Act
-            var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, _professionalPoco.Code)));
+            var response = _professionalAppService.GetProfessional(new RequestDto<ComposeKey<Guid, decimal>>(new ComposeKey<Guid, decimal>(_professionalPoco.Code, 1)));
 
             //Assert
             Assert.False(LocalNotification.HasNotification());
@@ -217,7 +217,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Get_Professional_With_Error()
         {
             // Act
-            var response = _professionalAppService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, _professionalPoco.Code)));
+            var response = _professionalAppService.GetProfessional(new RequestDto<ComposeKey<Guid, decimal>>(new ComposeKey<Guid, decimal>(_professionalPoco.Code, 99)));
 
             // Assert
             Assert.Null(response);
@@ -229,7 +229,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Delete_Professional_With_Success()
         {
             //Act
-            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(1, _professionalPoco.Code));
+            _professionalAppService.DeleteProfessional(new ComposeKey<Guid, decimal>(_professionalPoco.Code, 1));
 
             var successResponse = _professionalAppService.GetAllProfessionals(new GetAllProfessionalsDto() { PageSize = 10 });
 
@@ -242,7 +242,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Delete_Professional_With_Error()
         {
             // Act
-            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(99, _professionalPoco.Code));
+            _professionalAppService.DeleteProfessional(new ComposeKey<Guid, decimal>(_professionalPoco.Code, 99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

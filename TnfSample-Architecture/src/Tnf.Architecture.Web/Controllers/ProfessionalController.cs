@@ -2,7 +2,8 @@
 using System;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Web.Controllers
@@ -22,7 +23,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.GetAllProfessionals(requestDto);
 
-            return CreateResponse<ProfessionalDto, ProfessionalKeysDto>()
+            return CreateResponse<ProfessionalDto, ComposeKey<Guid, decimal>>()
                         .FromErrorEnum(ProfessionalDto.Error.GetAllProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetAllProfessional)
                         .WithDto(response)
@@ -30,11 +31,11 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{professionalId}/{code}")]
-        public IActionResult Get(decimal professionalId, Guid code, [FromQuery]RequestDto<ProfessionalKeysDto> requestDto)
+        public IActionResult Get(decimal professionalId, Guid code, [FromQuery]RequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
-            var response = _professionalAppService.GetProfessional(requestDto.WithId(new ProfessionalKeysDto(professionalId, code)));
+            var response = _professionalAppService.GetProfessional(requestDto.WithId(new ComposeKey<Guid, decimal>(code, professionalId)));
 
-            return CreateResponse<ProfessionalDto, ProfessionalKeysDto>()
+            return CreateResponse<ProfessionalDto, ComposeKey<Guid, decimal>>()
                         .FromErrorEnum(ProfessionalDto.Error.GetProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.GetProfessional)
                         .WithDto(response)
@@ -46,7 +47,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _professionalAppService.CreateProfessional(professional);
 
-            return CreateResponse<ProfessionalDto, ProfessionalKeysDto>()
+            return CreateResponse<ProfessionalDto, ComposeKey<Guid, decimal>>()
                         .FromErrorEnum(ProfessionalDto.Error.PostProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PostProfessional)
                         .WithDto(response)
@@ -56,9 +57,9 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpPut("{professionalId}/{code}")]
         public IActionResult Put(decimal professionalId, Guid code, [FromBody]ProfessionalDto professional)
         {
-            var response = _professionalAppService.UpdateProfessional(new ProfessionalKeysDto(professionalId, code), professional);
+            var response = _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(code, professionalId), professional);
 
-            return CreateResponse<ProfessionalDto, ProfessionalKeysDto>()
+            return CreateResponse<ProfessionalDto, ComposeKey<Guid, decimal>>()
                         .FromErrorEnum(ProfessionalDto.Error.PutProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.PutProfessional)
                         .WithDto(response)
@@ -68,9 +69,9 @@ namespace Tnf.Architecture.Web.Controllers
         [HttpDelete("{professionalId}/{code}")]
         public IActionResult Delete(decimal professionalId, Guid code)
         {
-            _professionalAppService.DeleteProfessional(new ProfessionalKeysDto(professionalId, code));
+            _professionalAppService.DeleteProfessional(new ComposeKey<Guid, decimal>(code, professionalId));
 
-            return CreateResponse<ProfessionalDto, ProfessionalKeysDto>()
+            return CreateResponse<ProfessionalDto, ComposeKey<Guid, decimal>>()
                         .FromErrorEnum(ProfessionalDto.Error.DeleteProfessional)
                         .WithMessage(AppConsts.LocalizationSourceName, ProfessionalDto.Error.DeleteProfessional)
                         .Build();

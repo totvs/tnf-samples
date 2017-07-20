@@ -7,11 +7,11 @@ using System.Net;
 using System.Threading.Tasks;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.Enumerables;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Web.Controllers;
 using Xunit;
 
@@ -29,7 +29,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Professionals_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>>(
                                $"/{RouteConsts.Professional}?pageSize=5"
                            );
 
@@ -41,7 +41,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Professionals_With_Paginated()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>>(
                 $"/{RouteConsts.Professional}?pageSize=1"
             );
 
@@ -55,7 +55,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Professionals_Filtering_By_Name_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>>(
                                $"{RouteConsts.Professional}?pageSize=10&name=Jos%C3%A9"
                            );
 
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Professionals_Sorted_ASC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=name"
                            );
 
@@ -81,7 +81,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task GetAll_Professionals_Sorted_DESC_With_Success()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ProfessionalKeysDto>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>>(
                                $"{RouteConsts.Professional}?pageSize=10&order=-name"
                            );
 
@@ -108,8 +108,7 @@ namespace Tnf.Architecture.Web.Tests
             Assert.Equal(response.Address.Complement, "APT 123");
             Assert.NotNull(response.Address.ZipCode);
             Assert.Equal(response.Address.ZipCode.Number, "99888777");
-            Assert.NotNull(response.Specialties);
-            Assert.Equal(response.Specialties.Count, 0);
+            Assert.Null(response.Specialties);
         }
 
         [Fact]
@@ -129,8 +128,7 @@ namespace Tnf.Architecture.Web.Tests
             Assert.Equal(response.Address.Complement, null);
             Assert.NotNull(response.Address.ZipCode);
             Assert.Equal(response.Address.ZipCode.Number, "");
-            Assert.NotNull(response.Specialties);
-            Assert.Equal(response.Specialties.Count, 0);
+            Assert.Null(response.Specialties);
         }
 
         [Fact]
@@ -305,7 +303,7 @@ namespace Tnf.Architecture.Web.Tests
         public async Task Put_Professional_With_Success()
         {
             //Arrange
-            var professionalDto = new ProfessionalDto()
+            var professionalDto = new ProfessionalDto
             {
                 Address = new Address("Rua do comercio", "123", "APT 123", new ZipCode("99888777")),
                 Email = "email@email.com",

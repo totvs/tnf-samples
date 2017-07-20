@@ -1,5 +1,5 @@
 ﻿using Tnf.App.Dto.Response;
-using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Common.ValueObjects;
 
 namespace Tnf.Architecture.Dto.WhiteHouse
 {

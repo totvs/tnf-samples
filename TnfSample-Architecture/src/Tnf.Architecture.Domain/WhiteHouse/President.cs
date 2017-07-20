@@ -1,4 +1,4 @@
-﻿using Tnf.Architecture.Dto.ValueObjects;
+﻿using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Domain.Entities;
 
 namespace Tnf.Architecture.Domain.WhiteHouse

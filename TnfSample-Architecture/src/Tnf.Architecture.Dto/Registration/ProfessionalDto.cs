@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using Tnf.App.Dto.Response;
-using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Common.ValueObjects;
 
 namespace Tnf.Architecture.Dto.Registration
 {
-    public class ProfessionalDto : DtoBase<ProfessionalKeysDto>
+    public class ProfessionalDto : DtoBase<ComposeKey<Guid, decimal>>
     {
         public ProfessionalDto()
             :base(new List<string> { "professionalSpecialties.specialty" })
@@ -19,10 +19,10 @@ namespace Tnf.Architecture.Dto.Registration
         public Address Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
+        public IList<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
 
         [JsonIgnore]
-        public new ProfessionalKeysDto Id { get; set; }
+        public new ComposeKey<Guid, decimal> Id { get; set; }
 
         public enum Error
         {

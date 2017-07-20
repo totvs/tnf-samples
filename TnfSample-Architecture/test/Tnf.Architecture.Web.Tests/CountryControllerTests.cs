@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Crud;
 using Tnf.App.Dto.Response;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Common;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Web.Controllers;
 using Xunit;

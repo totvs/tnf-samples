@@ -41,10 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Mapper.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Dto.Tests", "test\Tnf.Architecture.Dto.Tests\Tnf.Architecture.Dto.Tests.csproj", "{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Common", "src\Tnf.Architecture.Common\Tnf.Architecture.Common.csproj", "{F00101BC-5393-4AC8-BC93-602C09EB7686}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -98,6 +97,10 @@ Global
 		{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00101BC-5393-4AC8-BC93-602C09EB7686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00101BC-5393-4AC8-BC93-602C09EB7686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00101BC-5393-4AC8-BC93-602C09EB7686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00101BC-5393-4AC8-BC93-602C09EB7686}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +123,10 @@ Global
 		{1B17DF1F-EA78-48BE-881E-10EBF15F5484} = {00C9C500-F532-493C-9741-301F540E69C7}
 		{636461BC-8551-415C-B3CA-44C50337F007} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
+		{F00101BC-5393-4AC8-BC93-602C09EB7686} = {00C9C500-F532-493C-9741-301F540E69C7}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.AutoMapper;
 using Tnf.Domain.Repositories;
@@ -40,35 +40,18 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
-        {
-            var presidents = _presidents
-                .Select(s => s.Value)
-                .AsQueryable()
-                .SkipAndTakeByRequestDto(request)
-                .OrderByRequestDto(request)
-                .ToList();
-
-            var result = new ListDto<PresidentDto, string> { Items = presidents.MapTo<List<PresidentDto>>() };
-
-            return Task.FromResult(result);
-        }
-
-        public Task<PresidentDto> GetPresidentById(RequestDto<string> requestDto)
+        public Task<President> GetPresidentById(RequestDto<string> requestDto)
         {
             _presidents.TryGetValue(requestDto.GetId(), out PresidentPoco presidentpoco);
 
-            return Task.FromResult(presidentpoco.MapTo<PresidentDto>());
+            return Task.FromResult(presidentpoco.MapTo<President>());
         }
 
-        public Task<List<string>> InsertPresidentsAsync(List<President> presidents, bool sync = false)
+        public Task<string> InsertPresidentsAsync(President president)
         {
-            foreach (var item in presidents)
-                _presidents.TryAdd(item.Id, item.MapTo<PresidentPoco>());
-
-            var allInsertedDtos = _presidents.Select(s => s.Value).ToList();
-
-            return Task.FromResult(allInsertedDtos.Select(p => p.Id).ToList());
+            _presidents.TryAdd(president.Id, president.MapTo<PresidentPoco>());
+            
+            return Task.FromResult(president.Id);
         }
 
         public Task<President> UpdatePresidentsAsync(President president)

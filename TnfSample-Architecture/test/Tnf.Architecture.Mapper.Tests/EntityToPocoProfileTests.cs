@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.Helpers;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Xunit;
@@ -22,7 +22,11 @@ namespace Tnf.Architecture.Mapper.Tests
                 ProfessionalId = 1,
                 Code = Guid.NewGuid(),
                 Email = "email@email.com",
-                Name = "Professional"
+                Name = "Professional",
+                Specialties = new List<Specialty>
+                {
+                    new Specialty { Id = 1, Description = "Especialidade" }
+                }
             };
 
             var mappPoco = entity.MapTo<ProfessionalPoco>();
@@ -38,6 +42,7 @@ namespace Tnf.Architecture.Mapper.Tests
             Assert.Equal(entity.Address.Number, mappPoco.AddressNumber);
             Assert.Equal(entity.Address.Street, TextHelper.ToTitleCase(mappPoco.Address));
             Assert.Equal(entity.Address.ZipCode.Number, mappPoco.ZipCode);
+            Assert.Null(mappPoco.ProfessionalSpecialties);
         }
 
         [Fact]

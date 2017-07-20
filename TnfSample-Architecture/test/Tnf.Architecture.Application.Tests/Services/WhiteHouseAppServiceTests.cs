@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Common.Enumerables;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.Enumerables;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Xunit;
 

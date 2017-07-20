@@ -1,11 +1,9 @@
 ﻿using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -15,39 +13,27 @@ namespace Tnf.Architecture.Domain.Registration
             : base(repository)
         {
         }
-
-        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request) => Repository.GetAllSpecialties(request);
-
-        public SpecialtyDto GetSpecialty(RequestDto requestDto)
+        
+        public Specialty GetSpecialty(RequestDto requestDto)
         {
-            SpecialtyDto dto = null;
-
             if (!Repository.ExistsSpecialty(requestDto.GetId()))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
                                     .Build());
+
+                return null;
             }
 
-            if (!Notification.HasNotification())
-                dto = Repository.GetSpecialty(requestDto);
-
-            return dto;
+            return Repository.GetSpecialty(requestDto);
         }
 
-        public SpecialtyDto CreateSpecialty(SpecialtyDto dto)
+        public int CreateSpecialty(SpecialtyBuilder builder)
         {
-            var builder = new SpecialtyBuilder(Notification)
-                   .WithId(dto.Id)
-                   .WithDescription(dto.Description);
-
             var specialty = builder.Build();
 
-            if (!Notification.HasNotification())
-                dto.Id = Repository.CreateSpecialty(specialty);
-
-            return dto;
+            return Notification.HasNotification() ? 0 : Repository.CreateSpecialty(specialty);
         }
 
         public void DeleteSpecialty(int id)
@@ -64,18 +50,14 @@ namespace Tnf.Architecture.Domain.Registration
                 Repository.DeleteSpecialty(id);
         }
 
-        public SpecialtyDto UpdateSpecialty(SpecialtyDto dto)
+        public void UpdateSpecialty(SpecialtyBuilder builder)
         {
-            var specialtyBuilder = new SpecialtyBuilder(Notification)
-                   .WithId(dto.Id)
-                   .WithDescription(dto.Description);
-
-            var specialty = specialtyBuilder.Build();
+            var specialty = builder.Build();
 
             if (Notification.HasNotification())
-                return dto;
+                return;
 
-            if (!Repository.ExistsSpecialty(dto.Id))
+            if (!Repository.ExistsSpecialty(specialty.Id))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                     .WithNotFoundStatus()
@@ -85,8 +67,6 @@ namespace Tnf.Architecture.Domain.Registration
 
             if (!Notification.HasNotification())
                 Repository.UpdateSpecialty(specialty);
-
-            return dto;
         }
     }
 }

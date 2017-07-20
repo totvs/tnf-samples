@@ -1,5 +1,6 @@
 ﻿using System;
-using Tnf.Architecture.Dto.ValueObjects;
+using System.Collections.Generic;
+using Tnf.Architecture.Common.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -11,6 +12,8 @@ namespace Tnf.Architecture.Domain.Registration
         public Address Address { get; internal set; }
         public string Phone { get; internal set; }
         public string Email { get; internal set; }
+
+        public IList<Specialty> Specialties { get; internal set; }
 
         public enum Error
         {

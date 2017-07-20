@@ -4,7 +4,7 @@ using Tnf.Architecture.Domain.Registration.Specifications;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    internal class SpecialtyBuilder : Builder<Specialty>
+    public class SpecialtyBuilder : Builder<Specialty>
     {
         public SpecialtyBuilder(INotificationHandler notification)
             : base(notification)

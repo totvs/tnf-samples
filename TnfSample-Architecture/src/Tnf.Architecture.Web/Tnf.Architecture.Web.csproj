@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tnf.Architecture.Application\Tnf.Architecture.Application.csproj" />
-    <ProjectReference Include="..\Tnf.Architecture.EntityFrameworkCore\Tnf.Architecture.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

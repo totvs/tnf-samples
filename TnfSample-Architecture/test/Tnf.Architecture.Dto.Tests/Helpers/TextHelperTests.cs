@@ -1,4 +1,4 @@
-﻿using Tnf.Architecture.Dto.Helpers;
+﻿using Tnf.Architecture.Common.ValueObjects;
 using Xunit;
 
 namespace Tnf.Architecture.Dto.Tests.Helpers

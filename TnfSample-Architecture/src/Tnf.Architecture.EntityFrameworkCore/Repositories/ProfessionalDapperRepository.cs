@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tnf.App.Dapper.Repositories;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
+using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
 using Tnf.AutoMapper;
 using Tnf.Data;
 
@@ -18,13 +22,13 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
         }
 
-        public bool ExistsProfessional(ProfessionalKeysDto keys)
+        public bool ExistsProfessional(ComposeKey<Guid, decimal> keys)
         {
-            var professional = FirstOrDefault(w => w.ProfessionalId == keys.ProfessionalId && w.Code == keys.Code);
+            var professional = FirstOrDefault(w => w.ProfessionalId == keys.SecundaryKey && w.Code == keys.PrimaryKey);
             return professional != null;
         }
 
-        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
         {
             var professionalsPoco = GetAllPaged(w => request.Name == null || w.Name.Contains(request.Name) &&
                                                      request.ZipCode == null || w.ZipCode == request.ZipCode,
@@ -33,7 +37,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             var professionalPocos = professionalsPoco as ProfessionalPoco[] ?? professionalsPoco.ToArray();
 
-            var response = new ListDto<ProfessionalDto, ProfessionalKeysDto>
+            var response = new ListDto<ProfessionalDto, ComposeKey<Guid, decimal>>
             {
                 Total = professionalPocos.Length,
                 Items = professionalsPoco.MapTo<List<ProfessionalDto>>(),
@@ -45,10 +49,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return response;
         }
 
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)
+        public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
-            var professional = FirstOrDefault(w => w.ProfessionalId == requestDto.GetId().ProfessionalId && w.Code == requestDto.GetId().Code);
-            return professional.MapTo<ProfessionalDto>();
+            var professional = FirstOrDefault(w => w.ProfessionalId == requestDto.GetId().SecundaryKey && w.Code == requestDto.GetId().PrimaryKey);
+            return professional.MapTo<Professional>();
         }
     }
 }

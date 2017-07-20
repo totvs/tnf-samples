@@ -1,4 +1,5 @@
-﻿using Tnf.Architecture.Dto;
+﻿using Tnf.App;
+using Tnf.Architecture.Common;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 using Tnf.Localization.Dictionaries.Json;
@@ -7,7 +8,7 @@ using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Domain
 {
-    [DependsOn(typeof(TnfKernelModule))]
+    [DependsOn(typeof(TnfAppModule))]
     public class DomainModule : TnfModule
     {
         public override void PreInitialize()

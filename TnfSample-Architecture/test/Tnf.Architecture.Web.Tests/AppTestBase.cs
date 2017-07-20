@@ -24,7 +24,7 @@ namespace Tnf.Architecture.Web.Tests
             IocManager.UsingDbContext<LegacyDbContext>(
                 context =>
                 {
-                    context.Professionals.Add(new ProfessionalPoco()
+                    context.Professionals.Add(new ProfessionalPoco
                     {
                         ProfessionalId = 1,
                         Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
@@ -37,7 +37,7 @@ namespace Tnf.Architecture.Web.Tests
                         ZipCode = "99888777"
                     });
 
-                    context.Professionals.Add(new ProfessionalPoco()
+                    context.Professionals.Add(new ProfessionalPoco
                     {
                         ProfessionalId = 2,
                         Code = Guid.Parse("f31a6ed8-9d0e-4a02-8b66-0c067981d72e"),

@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Registration;
 using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IProfessionalRepository : IRepository
     {
-        ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request);
-        ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto);
-        ProfessionalKeysDto CreateProfessional(Professional entity);
-        Professional UpdateProfessional(Professional dto);
-        bool DeleteProfessional(ProfessionalKeysDto keys);
-        void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto);
-        bool ExistsProfessional(ProfessionalKeysDto keys);
+        Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> requestDto);
+        ComposeKey<Guid, decimal> CreateProfessional(Professional entity);
+        void UpdateProfessional(Professional entity);
+        bool DeleteProfessional(ComposeKey<Guid, decimal> keys);
+        void AddOrRemoveSpecialties(ComposeKey<Guid, decimal> keys, IList<Specialty> specialties);
+        bool ExistsProfessional(ComposeKey<Guid, decimal> keys);
     }
 }

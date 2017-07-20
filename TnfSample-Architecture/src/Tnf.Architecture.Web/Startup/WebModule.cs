@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Tnf.App.AspNetCore;
 using Tnf.App.Security.Identity;
 using Tnf.Architecture.Application;
+using Tnf.Architecture.Common;
 using Tnf.Architecture.Domain.Configuration;
-using Tnf.Architecture.Dto;
 using Tnf.Modules;
 using Tnf.Reflection.Extensions;
 

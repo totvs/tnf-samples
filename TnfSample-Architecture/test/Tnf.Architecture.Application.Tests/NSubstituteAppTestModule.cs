@@ -1,14 +1,14 @@
 ﻿using Castle.Core.Logging;
 using Castle.MicroKernel.Registration;
 using NSubstitute;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Carol.ReadInterfaces;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;
@@ -40,27 +40,22 @@ namespace Tnf.Architecture.Application.Tests
 
                 var presidentDto = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
-                var president = new President()
+                var president = new President
                 {
                     Id = presidentDto.Id,
-                    Name = "Alter President",
+                    Name = presidentDto.Name,
                     Address = presidentDto.Address
                 };
-
-                var ids = new List<string>() { "1" };
 
                 var presidentsToGetAll = new ListDto<PresidentDto, string>();
                 presidentsToGetAll.Items.Add(presidentDto);
                 presidentsToGetAll.Items.Add(presidentDto);
 
                 instance.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.GetId() == "1"))
-                    .Returns(Task.FromResult(presidentDto));
+                    .Returns(Task.FromResult(president));
 
-                instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
-                    .Returns(Task.FromResult(presidentsToGetAll));
-
-                instance.InsertPresidentsAsync(Arg.Any<List<President>>(), true)
-                    .Returns(Task.FromResult(ids));
+                instance.InsertPresidentsAsync(Arg.Any<President>())
+                    .Returns(Task.FromResult(presidentDto.Id));
 
                 instance.UpdatePresidentsAsync(Arg.Is<President>(p => p.Id == "1"))
                     .Returns(Task.FromResult(president));
@@ -70,9 +65,30 @@ namespace Tnf.Architecture.Application.Tests
 
                 IocManager.IocContainer.Register(
                     Component
-                    .For<IWhiteHouseRepository>()
-                    .Instance(instance)
-                    .LifestyleTransient()
+                        .For<IWhiteHouseRepository>()
+                        .Instance(instance)
+                        .LifestyleTransient()
+                );
+            });
+
+            Configuration.ReplaceService<IWhiteHouseReadRepository>(() =>
+            {
+                var instance = Substitute.For<IWhiteHouseReadRepository>();
+
+                var presidentDto = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
+
+                var presidentsToGetAll = new ListDto<PresidentDto, string>();
+                presidentsToGetAll.Items.Add(presidentDto);
+                presidentsToGetAll.Items.Add(presidentDto);
+
+                instance.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
+                    .Returns(Task.FromResult(presidentsToGetAll));
+
+                IocManager.IocContainer.Register(
+                    Component
+                        .For<IWhiteHouseReadRepository>()
+                        .Instance(instance)
+                        .LifestyleTransient()
                 );
             });
         }

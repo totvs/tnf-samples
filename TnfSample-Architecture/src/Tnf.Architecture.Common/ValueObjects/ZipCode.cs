@@ -1,9 +1,6 @@
-﻿using Tnf.Architecture.Dto.Helpers;
-using Tnf.Domain.Values;
-
-namespace Tnf.Architecture.Dto.ValueObjects
+﻿namespace Tnf.Architecture.Common.ValueObjects
 {
-    public class ZipCode : ValueObject<ZipCode>
+    public class ZipCode
     {
         public const int Length = 8;
         public string Number { get; private set; }

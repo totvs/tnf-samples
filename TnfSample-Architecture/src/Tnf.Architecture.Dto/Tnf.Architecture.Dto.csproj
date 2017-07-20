@@ -10,4 +10,8 @@
     <PackageReference Include="Tnf.App.Dto" Version="1.0.17200.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tnf.Architecture.Common\Tnf.Architecture.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tnf.Architecture.Domain\Tnf.Architecture.Domain.csproj" />
+    <ProjectReference Include="..\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
   </ItemGroup>
 
 </Project>

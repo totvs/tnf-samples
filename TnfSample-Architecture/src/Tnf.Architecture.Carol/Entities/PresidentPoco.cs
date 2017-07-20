@@ -1,5 +1,5 @@
 ﻿using Tnf.App.Carol.Repositories;
-using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Common.ValueObjects;
 
 namespace Tnf.Architecture.Carol.Entities
 {

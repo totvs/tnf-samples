@@ -1,4 +1,4 @@
-﻿namespace Tnf.Architecture.Dto
+﻿namespace Tnf.Architecture.Common
 {
     public class AppConsts
     {

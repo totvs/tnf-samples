@@ -1,5 +1,5 @@
 ﻿using Tnf.App.AspNetCore.Mvc.Controllers;
-using Tnf.Architecture.Dto;
+using Tnf.Architecture.Common;
 using Tnf.Runtime.Validation;
 
 namespace Tnf.Architecture.Web.Controllers

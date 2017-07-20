@@ -1,18 +1,13 @@
 ﻿using Castle.MicroKernel.Registration;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
-using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;
 using Tnf.Reflection.Extensions;
@@ -36,35 +31,22 @@ namespace Tnf.Architecture.Domain.Tests
         private void ReplaceWhiteHouseRepository()
         {
             var whiteHouseRepository = Substitute.For<IWhiteHouseRepository>();
-
-            var presidentDto = new PresidentDto("1", "George Washington", new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678")));
-
-            var presidentList = new List<PresidentDto>()
+            
+            var president = new President
             {
-                presidentDto,
-                new PresidentDto("2", "Bill Clinton", new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321")))
+                Id = "1",
+                Name = "George Washington",
+                Address = new Address("Rua de teste", "123", "APT 12", new ZipCode("12345678"))
             };
-
-            var presidentPaging = new ListDto<PresidentDto, string> { Items = presidentList };
-
-            var president = new President()
-            {
-                Id = presidentDto.Id,
-                Name = presidentDto.Name,
-                Address = presidentDto.Address
-            };
-
-            whiteHouseRepository.GetAllPresidents(Arg.Any<GetAllPresidentsDto>())
-                .Returns(Task.FromResult(presidentPaging));
 
             whiteHouseRepository.GetPresidentById(Arg.Is<RequestDto<string>>(p => p.GetId() == "1"))
-                .Returns(Task.FromResult(presidentDto));
+                .Returns(Task.FromResult(president));
 
-            whiteHouseRepository.InsertPresidentsAsync(Arg.Any<List<President>>())
-                .Returns(Task.FromResult(presidentList.Select(p => p.Id).ToList()));
+            whiteHouseRepository.InsertPresidentsAsync(Arg.Any<President>())
+                .Returns(Task.FromResult(president.Id));
 
             whiteHouseRepository.UpdatePresidentsAsync(Arg.Is<President>(p => p.Id == "1"))
-                .Returns(president);
+                .Returns(Task.FromResult(president));
 
             whiteHouseRepository.DeletePresidentsAsync(Arg.Is("1"))
                 .Returns(Task.FromResult(true));
@@ -79,34 +61,20 @@ namespace Tnf.Architecture.Domain.Tests
         private void ReplaceSpecialtyRepository()
         {
             var specialtyRepository = Substitute.For<ISpecialtyRepository>();
-
-            var specialtyDto = new SpecialtyDto()
+            
+            var specialty = new Specialty
             {
                 Id = 1,
                 Description = "Cirurgia Vascular"
             };
 
-            var specialtyList = new List<SpecialtyDto>() { specialtyDto };
-
-            var specialtyPaging = new ListDto<SpecialtyDto, int> { Items = specialtyList };
-
-            var specialty = new Specialty()
-            {
-                Id = specialtyDto.Id,
-                Description = specialtyDto.Description
-            };
-
-            specialtyRepository.GetAllSpecialties(Arg.Any<GetAllSpecialtiesDto>())
-                .Returns(specialtyPaging);
-
             specialtyRepository.GetSpecialty(Arg.Any<RequestDto>())
-                .Returns(specialtyDto);
+                .Returns(specialty);
 
             specialtyRepository.CreateSpecialty(Arg.Any<Specialty>())
                 .Returns(1);
 
-            specialtyRepository.UpdateSpecialty(Arg.Any<Specialty>())
-                .Returns(specialty);
+            specialtyRepository.UpdateSpecialty(Arg.Any<Specialty>());
 
             specialtyRepository.DeleteSpecialty(Arg.Any<int>());
 
@@ -123,8 +91,8 @@ namespace Tnf.Architecture.Domain.Tests
         private void ReplaceProfessionalRepository()
         {
             var profissionalRepository = Substitute.For<IProfessionalRepository>();
-
-            var professionalDto = new ProfessionalDto()
+            
+            var professional = new Professional
             {
                 ProfessionalId = 1,
                 Name = "João da Silva",
@@ -133,37 +101,19 @@ namespace Tnf.Architecture.Domain.Tests
                 Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
                 Address = new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321"))
             };
-
-            var professionalList = new List<ProfessionalDto>() { professionalDto };
-
-            var professionalPaging = new ListDto<ProfessionalDto, ProfessionalKeysDto> { Items = professionalList };
-
-            var professional = new Professional()
-            {
-                ProfessionalId = professionalDto.ProfessionalId,
-                Code = professionalDto.Code,
-                Name = professionalDto.Name,
-                Address = professionalDto.Address,
-                Phone = professionalDto.Phone,
-                Email = professionalDto.Email
-            };
-
-            profissionalRepository.GetAllProfessionals(Arg.Any<GetAllProfessionalsDto>())
-                .Returns(professionalPaging);
-
-            profissionalRepository.GetProfessional(Arg.Is<RequestDto<ProfessionalKeysDto>>(p => p.GetId().ProfessionalId == 1 && p.GetId().Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
-                .Returns(professionalDto);
-
-            profissionalRepository.CreateProfessional(Arg.Any<Professional>())
-                .Returns(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")));
-
-            profissionalRepository.UpdateProfessional(Arg.Any<Professional>())
+            
+            profissionalRepository.GetProfessional(Arg.Is<RequestDto<ComposeKey<Guid, decimal>>>(p => p.GetId().SecundaryKey == 1 && p.GetId().PrimaryKey == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(professional);
 
-            profissionalRepository.DeleteProfessional(Arg.Is<ProfessionalKeysDto>(p => p.ProfessionalId == 1 && p.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
+            profissionalRepository.CreateProfessional(Arg.Any<Professional>())
+                .Returns(new ComposeKey<Guid, decimal>(Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"), 1));
+
+            profissionalRepository.UpdateProfessional(Arg.Any<Professional>());
+
+            profissionalRepository.DeleteProfessional(Arg.Is<ComposeKey<Guid, decimal>>(p => p.SecundaryKey == 1 && p.PrimaryKey == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(true);
 
-            profissionalRepository.ExistsProfessional(Arg.Is<ProfessionalKeysDto>(p => p.ProfessionalId == 1 && p.Code == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
+            profissionalRepository.ExistsProfessional(Arg.Is<ComposeKey<Guid, decimal>>(p => p.SecundaryKey == 1 && p.PrimaryKey == Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")))
                 .Returns(true);
 
             IocManager.IocContainer.Register(

@@ -1,11 +1,11 @@
 ﻿using Tnf.App.Builder;
 using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.WhiteHouse.Specifications;
-using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
-    internal class PresidentBuilder : Builder<President>
+    public class PresidentBuilder : Builder<President>
     {
         public PresidentBuilder(INotificationHandler notification)
             : base(notification)

@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Tnf.EntityFrameworkCore;
@@ -38,28 +36,23 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public bool ExistsSpecialty(int id) 
             => Count(s => s.Id == id) > 0;
 
-        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
-            => GetAll<SpecialtyDto>(w => request.Description == null || w.Description.Contains(request.Description), request);
-
-        public SpecialtyDto GetSpecialty(RequestDto requestDto)
+        public Specialty GetSpecialty(RequestDto requestDto)
         {
-            SpecialtyDto specialty = null;
+            Specialty specialty = null;
 
             var dbEntity = Get(requestDto);
 
             if (dbEntity != null)
-                specialty = dbEntity.MapTo<SpecialtyDto>();
+                specialty = dbEntity.MapTo<Specialty>();
 
             return specialty;
         }
         
-        public Specialty UpdateSpecialty(Specialty dto)
+        public void UpdateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
             Update(dbEntity);
-
-            return dto;
         }
     }
 }

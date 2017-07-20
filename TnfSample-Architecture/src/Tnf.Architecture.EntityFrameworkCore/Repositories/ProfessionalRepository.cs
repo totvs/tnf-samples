@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 using Tnf.App.EntityFrameworkCore.Repositories;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
@@ -21,11 +22,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
         }
 
-        public bool DeleteProfessional(ProfessionalKeysDto keys)
+        public bool DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
             var dbEntity = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)
-                .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
+                .SingleOrDefault(s => s.ProfessionalId == keys.SecundaryKey && s.Code == keys.PrimaryKey);
 
             if (dbEntity == null)
                 return false;
@@ -37,32 +38,30 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return true;
         }
 
-        private ProfessionalPoco GetProfessionalPoco(RequestDto<ProfessionalKeysDto> requestDto)
+        private ProfessionalPoco GetProfessionalPoco(RequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
             var dbEntity = Context.Professionals
                 .IncludeByRequestDto(requestDto)
-                .Where(w => w.ProfessionalId == requestDto.GetId().ProfessionalId && w.Code == requestDto.GetId().Code)
+                .Where(w => w.ProfessionalId == requestDto.GetId().SecundaryKey && w.Code == requestDto.GetId().PrimaryKey)
                 .SelectFieldsByRequestDto(requestDto)
                 .SingleOrDefault();
 
             return dbEntity;
         }
 
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> requestDto)
+        public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
             var dbEntity = GetProfessionalPoco(requestDto);
 
             if (dbEntity == null)
                 return null;
 
-            var dto = dbEntity.MapTo<ProfessionalDto>();
-
-            dto.RemoveExpandable(requestDto);
+            var dto = dbEntity.MapTo<Professional>();
 
             return dto;
         }
 
-        public ProfessionalKeysDto CreateProfessional(Professional entity)
+        public ComposeKey<Guid, decimal> CreateProfessional(Professional entity)
         {
             var dbEntity = entity.MapTo<ProfessionalPoco>();
 
@@ -70,72 +69,57 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 
             Context.SaveChanges();
 
-            return new ProfessionalKeysDto(dbEntity.ProfessionalId, dbEntity.Code);
+            return new ComposeKey<Guid, decimal>(dbEntity.Code, dbEntity.ProfessionalId);
         }
 
-        public Professional UpdateProfessional(Professional entity)
+        public void UpdateProfessional(Professional entity)
         {
-            var mappedEntity = GetProfessionalPoco(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(entity.ProfessionalId, entity.Code)));
+            var mappedEntity = GetProfessionalPoco(new RequestDto<ComposeKey<Guid, decimal>>(new ComposeKey<Guid, decimal>(entity.Code, entity.ProfessionalId)));
 
             entity.MapTo(mappedEntity);
 
             Context.Professionals.Update(mappedEntity);
 
             Context.SaveChanges();
-
-            return entity;
         }
 
-        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request)
+        public void AddOrRemoveSpecialties(ComposeKey<Guid, decimal> keys, IList<Specialty> specialties)
         {
-            var dbBaseQuery = Context.Professionals
-                .Include(i => i.ProfessionalSpecialties)
-                .ThenInclude(i => i.Specialty)
-                .Where(w => request.Name == null || w.Name.Contains(request.Name));
-
-            return dbBaseQuery
-                .SkipAndTakeByRequestDto(request)
-                .OrderByRequestDto(request)
-                .ToListDto<ProfessionalPoco, ProfessionalDto, ProfessionalKeysDto>(request, dbBaseQuery.Count());
-        }
-
-        public void AddOrRemoveSpecialties(ProfessionalKeysDto keys, List<SpecialtyDto> dto)
-        {
-            var request = new RequestDto<ProfessionalKeysDto>(keys) { Expand = new ProfessionalDto().Expandables[0] };
+            var request = new RequestDto<ComposeKey<Guid, decimal>>(keys) { Expand = new ProfessionalDto().Expandables[0] };
 
             var dbProfessional = GetProfessionalPoco(request);
 
             if (dbProfessional == null)
                 return;
 
-            var idsToAdd = dto.Select(s => s.Id).ToArray();
+            var idsToAdd = specialties.Select(s => s.Id).ToArray();
 
             if (dbProfessional.ProfessionalSpecialties == null)
                 dbProfessional.ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>();
 
             dbProfessional.ProfessionalSpecialties.RemoveAll(w => !idsToAdd.Contains(w.SpecialtyId));
 
-            dto.ForEach(w =>
+            foreach (var specialty in specialties)
             {
                 var dbProfessionalSpecialties = dbProfessional.ProfessionalSpecialties
-                    .FirstOrDefault(s => s.SpecialtyId == w.Id);
+                    .FirstOrDefault(s => s.SpecialtyId == specialty.Id);
 
                 if (dbProfessionalSpecialties == null)
                 {
-                    dbProfessional.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco()
+                    dbProfessional.ProfessionalSpecialties.Add(new ProfessionalSpecialtiesPoco
                     {
                         ProfessionalId = dbProfessional.ProfessionalId,
                         Code = dbProfessional.Code,
-                        SpecialtyId = w.Id
+                        SpecialtyId = specialty.Id
                     });
                 }
-            });
+            }
         }
 
-        public bool ExistsProfessional(ProfessionalKeysDto keys)
+        public bool ExistsProfessional(ComposeKey<Guid, decimal> keys)
         {
             var dbEntity = Context.Professionals
-                .SingleOrDefault(s => s.ProfessionalId == keys.ProfessionalId && s.Code == keys.Code);
+                .SingleOrDefault(s => s.ProfessionalId == keys.SecundaryKey && s.Code == keys.PrimaryKey);
 
             return dbEntity != null;
         }

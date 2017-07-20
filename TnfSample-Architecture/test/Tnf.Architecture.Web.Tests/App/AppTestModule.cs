@@ -4,6 +4,7 @@ using Tnf.App.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Configuration;
 using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.Application;
+using Tnf.Architecture.Carol.ReadInterfaces;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.Web.Tests.Mocks;
@@ -24,6 +25,7 @@ namespace Tnf.Architecture.Web.Tests.App
 
             // Mock repositories
             Configuration.ReplaceService<IWhiteHouseRepository, WhiteHouseRepositoryMock>();
+            Configuration.ReplaceService<IWhiteHouseReadRepository, WhiteHouseReadRepositoryMock>();
 
             Configuration
                 .TnfEfCoreInMemory(IocManager.Resolve<IServiceProvider>())

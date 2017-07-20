@@ -3,10 +3,9 @@ using System;
 using System.Linq;
 using Tnf.App.Dto.Request;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.Registration
@@ -27,27 +26,10 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         }
 
         [Fact]
-        public void Professional_Service_Return_All_Values()
-        {
-            // Arrange
-            var requestDto = new GetAllProfessionalsDto()
-            {
-                PageSize = 2
-            };
-
-            // Act
-            var allProfessionals = _profissionalService.GetAllProfessionals(requestDto);
-
-            // Assert
-            Assert.False(LocalNotification.HasNotification());
-            Assert.True(allProfessionals.Items.Count == 1);
-        }
-
-        [Fact]
         public void Professional_Service_Return_Professional()
         {
             // Act
-            var response = _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"))));
+            var response = _profissionalService.GetProfessional(new RequestDto<ComposeKey<Guid, decimal>>(new ComposeKey<Guid, decimal>(Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"), 1)));
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -60,7 +42,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Not_Return_Non_Existing_Professional()
         {
             // Act
-            _profissionalService.GetProfessional(new RequestDto<ProfessionalKeysDto>(new ProfessionalKeysDto(99, Guid.NewGuid())));
+            _profissionalService.GetProfessional(new RequestDto<ComposeKey<Guid, decimal>>(new ComposeKey<Guid, decimal>(Guid.NewGuid(), 99)));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -71,7 +53,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Delete_Professional()
         {
             // Act
-            _profissionalService.DeleteProfessional(new ProfessionalKeysDto(1, Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637")));
+            _profissionalService.DeleteProfessional(new ComposeKey<Guid, decimal>(Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"), 1));
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -81,7 +63,7 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         public void Professional_Service_Delete_Not_Accept_Non_Existing_Professional()
         {
             // Act
-            _profissionalService.DeleteProfessional(new ProfessionalKeysDto(99, Guid.NewGuid()));
+            _profissionalService.DeleteProfessional(new ComposeKey<Guid, decimal>(Guid.NewGuid(), 99));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -92,25 +74,27 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Professional_Service_Insert_Valid_Professional()
         {
+            // Arrange
+            var professionalBuilder = new ProfessionalBuilder(LocalNotification)
+                .WithName("João da Silva")
+                .WithPhone("15398264438")
+                .WithEmail("email2@email2.com")
+                .WithAddress(new Address("Rua do comercio 2", "1233", "APT 1234", new ZipCode("22888888")));
+
             // Act
-            var responseBase = _profissionalService.CreateProfessional(new ProfessionalDto()
-            {
-                Address = new Address("Rua do comercio 2", "1233", "APT 1234", new ZipCode("22888888")),
-                Email = "email2@email2.com",
-                Name = "João da Silva",
-                Phone = "15398264438"
-            });
+            var responseBase = _profissionalService.CreateProfessional(professionalBuilder);
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.True(responseBase.Name == "João da Silva");
+            Assert.NotEqual(responseBase.PrimaryKey, Guid.Empty);
+            Assert.NotEqual(responseBase.SecundaryKey, 0);
         }
 
         [Fact]
         public void Professional_Service_Insert_Not_Accept_Invalid_Professional()
         {
             // Act
-            _profissionalService.CreateProfessional(new ProfessionalDto());
+            _profissionalService.CreateProfessional(new ProfessionalBuilder(LocalNotification));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -127,27 +111,27 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Professional_Service_Update_Valid_Professional()
         {
+            // Arrange
+            var professionalBuilder = new ProfessionalBuilder(LocalNotification)
+                .WithProfessionalId(1)
+                .WithCode(Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"))
+                .WithName("João da Silva")
+                .WithPhone("15398264438")
+                .WithEmail("email2@email2.com")
+                .WithAddress(new Address("Rua do comercio 2", "1233", "APT 1234", new ZipCode("22888888")));
+
             // Act
-            var responseBase = _profissionalService.UpdateProfessional(new ProfessionalDto()
-            {
-                ProfessionalId = 1,
-                Name = "João da Silva",
-                Phone = "99997654",
-                Email = "email@email.com",
-                Code = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637"),
-                Address = new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321"))
-            });
+            _profissionalService.UpdateProfessional(professionalBuilder);
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.True(responseBase.Name == "João da Silva");
         }
 
         [Fact]
         public void Professional_Service_Update_Not_Accept_Invalid_Professional()
         {
             // Act
-            _profissionalService.UpdateProfessional(new ProfessionalDto());
+            _profissionalService.UpdateProfessional(new ProfessionalBuilder(LocalNotification));
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
@@ -164,16 +148,17 @@ namespace Tnf.Architecture.Domain.Tests.Registration
         [Fact]
         public void Professional_Service_Update_Not_Accept_Non_Existing_Professional()
         {
+            // Arrange
+            var professionalBuilder = new ProfessionalBuilder(LocalNotification)
+                .WithProfessionalId(99)
+                .WithCode(Guid.NewGuid())
+                .WithName("João da Silva")
+                .WithPhone("15398264438")
+                .WithEmail("email2@email2.com")
+                .WithAddress(new Address("Rua do comercio 2", "1233", "APT 1234", new ZipCode("22888888")));
+
             // Act
-            _profissionalService.UpdateProfessional(new ProfessionalDto()
-            {
-                ProfessionalId = 99,
-                Name = "João da Silva",
-                Phone = "99997654",
-                Email = "email@email.com",
-                Code = Guid.NewGuid(),
-                Address = new Address("Rua de teste", "321", "APT 32", new ZipCode("87654321"))
-            });
+            _profissionalService.UpdateProfessional(professionalBuilder);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

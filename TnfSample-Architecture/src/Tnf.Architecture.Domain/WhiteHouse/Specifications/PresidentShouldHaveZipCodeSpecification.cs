@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Tnf.App.Specifications;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.ValueObjects;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.ValueObjects;
 
 namespace Tnf.Architecture.Domain.WhiteHouse.Specifications
 {

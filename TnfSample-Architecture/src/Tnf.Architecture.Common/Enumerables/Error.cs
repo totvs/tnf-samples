@@ -1,4 +1,4 @@
-﻿namespace Tnf.Architecture.Dto.Enumerables
+﻿namespace Tnf.Architecture.Common.Enumerables
 {
     public enum Error
     {

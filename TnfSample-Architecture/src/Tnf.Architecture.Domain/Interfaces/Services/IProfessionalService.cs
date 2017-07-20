@@ -1,16 +1,16 @@
-﻿using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
-using Tnf.Architecture.Dto.Registration;
+﻿using System;
+using Tnf.App.Dto.Request;
+using Tnf.Architecture.Common.ValueObjects;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Domain.Services;
 
 namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IProfessionalService : IDomainService
     {
-        ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request);
-        ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys);
-        ProfessionalDto CreateProfessional(ProfessionalDto dto);
-        ProfessionalDto UpdateProfessional(ProfessionalDto dto);
-        void DeleteProfessional(ProfessionalKeysDto keys);
+        Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> key);
+        ComposeKey<Guid, decimal> CreateProfessional(ProfessionalBuilder builder);
+        void UpdateProfessional(ProfessionalBuilder builder);
+        void DeleteProfessional(ComposeKey<Guid, decimal> key);
     }
 }

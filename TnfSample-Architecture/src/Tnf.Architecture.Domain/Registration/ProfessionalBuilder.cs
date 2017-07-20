@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tnf.App.Builder;
 using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration.Specifications;
-using Tnf.Architecture.Dto.ValueObjects;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    internal class ProfessionalBuilder : Builder<Professional>
+    public class ProfessionalBuilder : Builder<Professional>
     {
         public ProfessionalBuilder(INotificationHandler notification)
             : base(notification)
@@ -16,6 +17,15 @@ namespace Tnf.Architecture.Domain.Registration
         public ProfessionalBuilder(Professional instance, INotificationHandler notification)
             : base(instance, notification)
         {
+        }
+
+        
+
+        public ProfessionalBuilder WithIds(ComposeKey<Guid, decimal> keys)
+        {
+            Instance.Code = keys.PrimaryKey;
+            Instance.ProfessionalId = keys.SecundaryKey;
+            return this;
         }
 
         public ProfessionalBuilder WithProfessionalId(decimal id)
@@ -63,6 +73,12 @@ namespace Tnf.Architecture.Domain.Registration
         public ProfessionalBuilder WithEmail(string email)
         {
             Instance.Email = email;
+            return this;
+        }
+
+        public ProfessionalBuilder WithSpecialties(IList<Specialty> specialties)
+        {
+            Instance.Specialties = specialties;
             return this;
         }
 

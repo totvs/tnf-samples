@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Tnf.App.TestBase;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.ValueObjects;
 using Xunit;
 
 namespace Tnf.Architecture.Domain.Tests.Registration

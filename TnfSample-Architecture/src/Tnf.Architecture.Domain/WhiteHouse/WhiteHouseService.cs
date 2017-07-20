@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common;
 using Tnf.Architecture.Domain.Events.WhiteHouse;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Events.Bus;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
@@ -25,9 +22,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             _eventBus = eventBus;
         }
 
-        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request) => Repository.GetAllPresidents(request);
-
-        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
+        public async Task<President> GetPresidentById(RequestDto<string> id)
         {
             var president = await Repository.GetPresidentById(id);
 
@@ -42,30 +37,24 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             return president;
         }
 
-        public async Task<PresidentDto> InsertPresidentAsync(PresidentDto dto, bool sync = false)
+        public async Task<string> InsertPresidentAsync(PresidentBuilder builder)
         {
-            var builder = new PresidentBuilder(Notification)
-               .WithId(dto.Id)
-               .WithName(dto.Name)
-               .WithAddress(dto.Address);
-
             var president = builder.Build();
 
             if (Notification.HasNotification())
-                return dto;
+                return "";
 
-            var ids = await Repository.InsertPresidentsAsync(new List<President>() { president }, sync);
-            dto.Id = ids[0];
+            var id = await Repository.InsertPresidentsAsync(president);
 
             // Trigger president created event
             _eventBus.Trigger(new PresidentCreatedEvent(president));
 
-            return dto;
+            return id;
         }
 
         public async Task DeletePresidentAsync(string id)
         {
-            if (!(await Repository.DeletePresidentsAsync(id)))
+            if (!await Repository.DeletePresidentsAsync(id))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -74,17 +63,12 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             }
         }
 
-        public async Task<PresidentDto> UpdatePresidentAsync(PresidentDto dto)
+        public async Task UpdatePresidentAsync(PresidentBuilder builder)
         {
-            var presidentBuilder = new PresidentBuilder(Notification)
-                .WithId(dto.Id)
-                .WithName(dto.Name)
-                .WithAddress(dto.Address);
-
-            var president = presidentBuilder.Build();
+            var president = builder.Build();
 
             if (Notification.HasNotification())
-                return dto;
+                return;
 
             var data = await Repository.UpdatePresidentsAsync(president);
 
@@ -95,8 +79,6 @@ namespace Tnf.Architecture.Domain.WhiteHouse
                     .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
                     .Build());
             }
-
-            return dto;
         }
     }
 }

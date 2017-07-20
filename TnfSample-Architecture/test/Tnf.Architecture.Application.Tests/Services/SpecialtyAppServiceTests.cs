@@ -3,8 +3,8 @@ using System.Linq;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.Application.Interfaces;
+using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Registration;
-using Tnf.Architecture.Dto.Enumerables;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
@@ -21,7 +21,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         {
             _specialtyAppService = Resolve<ISpecialtyAppService>();
 
-            _specialtyPoco = new SpecialtyPoco()
+            _specialtyPoco = new SpecialtyPoco
             {
                 Id = 1,
                 Description = "Anestesiologia"
@@ -46,7 +46,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Insert_Specialty_With_Success()
         {
             //Arrange
-            var specialtyDto = new SpecialtyDto()
+            var specialtyDto = new SpecialtyDto
             {
                 Id = 2,
                 Description = "Cirurgia Geral"
@@ -182,7 +182,7 @@ namespace Tnf.Architecture.Application.Tests.Services
         public void Should_Delete_Specialty_With_Success()
         {
             //Arrange
-            var specialtyDto = new SpecialtyDto()
+            var specialtyDto = new SpecialtyDto
             {
                 Id = 2,
                 Description = "Cirurgia Geral"

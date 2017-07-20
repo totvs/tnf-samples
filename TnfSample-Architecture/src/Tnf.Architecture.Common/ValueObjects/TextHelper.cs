@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
 
-namespace Tnf.Architecture.Dto.Helpers
+namespace Tnf.Architecture.Common.ValueObjects
 {
     public static class TextHelper
     {

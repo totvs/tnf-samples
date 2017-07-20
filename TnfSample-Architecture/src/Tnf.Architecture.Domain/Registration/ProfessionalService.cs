@@ -1,11 +1,11 @@
-﻿using Tnf.App.Bus.Notifications;
+﻿using System;
+using Tnf.App.Bus.Notifications;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
+using Tnf.Architecture.Common;
+using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Services;
-using Tnf.Architecture.Dto;
-using Tnf.Architecture.Dto.Registration;
 
 namespace Tnf.Architecture.Domain.Registration
 {
@@ -19,52 +19,36 @@ namespace Tnf.Architecture.Domain.Registration
             //_repositoryDapper = repositoryDapper;
         }
 
-        public ListDto<ProfessionalDto, ProfessionalKeysDto> GetAllProfessionals(GetAllProfessionalsDto request) => Repository.GetAllProfessionals(request);
-
-        public ProfessionalDto GetProfessional(RequestDto<ProfessionalKeysDto> keys)
+        public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
         {
-            ProfessionalDto dto = null;
-
             if (!Repository.ExistsProfessional(keys.GetId()))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
                                     .Build());
+
+                return null;
             }
 
-            if (!Notification.HasNotification())
-                dto = Repository.GetProfessional(keys);
-
-            return dto;
+            return Repository.GetProfessional(keys);
         }
 
-        public ProfessionalDto CreateProfessional(ProfessionalDto dto)
+        public ComposeKey<Guid, decimal> CreateProfessional(ProfessionalBuilder builder)
         {
-            var builder = new ProfessionalBuilder(Notification)
-                   .WithProfessionalId(dto.ProfessionalId)
-                   .WithCode(dto.Code)
-                   .WithName(dto.Name)
-                   .WithPhone(dto.Phone)
-                   .WithEmail(dto.Email)
-                   .WithAddress(dto.Address);
-
             var professional = builder.Build();
 
             if (Notification.HasNotification())
-                return dto;
+                return new ComposeKey<Guid, decimal>();
 
             var keys = Repository.CreateProfessional(professional);
 
-            dto.ProfessionalId = keys.ProfessionalId;
-            dto.Code = keys.Code;
+            Repository.AddOrRemoveSpecialties(keys, professional.Specialties);
 
-            Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
-
-            return dto;
+            return keys;
         }
 
-        public void DeleteProfessional(ProfessionalKeysDto keys)
+        public void DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
             if (!Repository.ExistsProfessional(keys))
             {
@@ -78,22 +62,14 @@ namespace Tnf.Architecture.Domain.Registration
                 Repository.DeleteProfessional(keys);
         }
 
-        public ProfessionalDto UpdateProfessional(ProfessionalDto dto)
+        public void UpdateProfessional(ProfessionalBuilder builder)
         {
-            var professionalBuilder = new ProfessionalBuilder(Notification)
-                   .WithProfessionalId(dto.ProfessionalId)
-                   .WithCode(dto.Code)
-                   .WithName(dto.Name)
-                   .WithPhone(dto.Phone)
-                   .WithEmail(dto.Email)
-                   .WithAddress(dto.Address);
+            var professional = builder.Build();
 
-            var keys = new ProfessionalKeysDto(dto.ProfessionalId, dto.Code);
-
-            var professional = professionalBuilder.Build();
+            var keys = new ComposeKey<Guid, decimal>(professional.Code, professional.ProfessionalId);
 
             if (Notification.HasNotification())
-                return dto;
+                return;
 
             if (!Repository.ExistsProfessional(keys))
             {
@@ -104,12 +80,10 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (Notification.HasNotification())
-                return dto;
+                return;
 
             Repository.UpdateProfessional(professional);
-            Repository.AddOrRemoveSpecialties(keys, dto.Specialties);
-
-            return dto;
+            Repository.AddOrRemoveSpecialties(keys, professional.Specialties);
         }
     }
 }
