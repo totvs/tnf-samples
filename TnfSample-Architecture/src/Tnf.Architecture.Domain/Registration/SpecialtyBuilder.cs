@@ -32,11 +32,5 @@ namespace Tnf.Architecture.Domain.Registration
         {
             AddSpecification(new SpecialtyShouldHaveDescriptionSpecification());
         }
-
-        public override Specialty Build()
-        {
-            Validate();
-            return base.Build();
-        }
     }
 }

@@ -9,6 +9,11 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalBuilder : Builder<Professional>
     {
+        public ProfessionalBuilder(Professional instance)
+            : base(instance)
+        {
+        }
+
         public ProfessionalBuilder(INotificationHandler notification)
             : base(notification)
         {
@@ -80,12 +85,6 @@ namespace Tnf.Architecture.Domain.Registration
         {
             Instance.Specialties = specialties;
             return this;
-        }
-
-        public override Professional Build()
-        {
-            Validate();
-            return base.Build();
         }
 
         protected override void Specifications()

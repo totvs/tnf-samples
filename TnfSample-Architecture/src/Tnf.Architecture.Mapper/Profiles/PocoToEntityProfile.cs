@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Tnf.App.Bus.Notifications;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
@@ -26,7 +25,7 @@ namespace Tnf.Architecture.Mapper.Profiles
                         specialties = s.ProfessionalSpecialties.Select(w => w.Specialty.MapTo<Specialty>()).ToList();
                     }
 
-                    new ProfessionalBuilder(d, new NullNotificationHandler())
+                    new ProfessionalBuilder(d)
                         .WithAddress(new Address(s.Address, s.AddressNumber, s.AddressComplement,
                             new ZipCode(s.ZipCode)))
                         .WithSpecialties(specialties)

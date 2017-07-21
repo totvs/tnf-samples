@@ -55,11 +55,5 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             AddSpecification(new PresidentShouldHaveAddressComplementSpecification());
             AddSpecification(new PresidentShouldHaveZipCodeSpecification());
         }
-
-        public override President Build()
-        {
-            Validate();
-            return base.Build();
-        }
     }
 }
