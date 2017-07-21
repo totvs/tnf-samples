@@ -166,7 +166,7 @@ namespace Tnf.Architecture.Web.Tests
         }
 
         [Fact]
-        public async Task Post_Professional_Should_Be_Insert_And_Update_Item()
+        public async Task Post_Country_Should_Be_Insert_And_Update_Item()
         {
             //Arrange
             var countryDto = new CountryDto()
@@ -217,6 +217,22 @@ namespace Tnf.Architecture.Web.Tests
             response.Message.ShouldBe("PostCountry");
             response.DetailedMessage.ShouldBe("PostCountry");
             Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
+        }
+
+        [Fact]
+        public async Task Post_Empty_Country_And_Return_Bad_Request()
+        {
+            // Act
+            var response = await PostResponseAsObjectAsync<CountryDto, ErrorResponse>(
+                $"/{RouteConsts.Country}",
+                new CountryDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Message.ShouldBe("PostCountry");
+            response.DetailedMessage.ShouldBe("PostCountry");
+            Assert.True(response.Details.Any(a => a.Message == CountryDto.Error.CountryNameMustHaveValue.ToString()));
         }
 
 
@@ -270,8 +286,23 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutCountry");
             response.DetailedMessage.ShouldBe("PutCountry");
-            response.Details.Count.ShouldBe(2);
             Assert.True(response.Details.Any(a => a.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
+        }
+
+        [Fact]
+        public async Task Put_Empty_Country_And_Return_Bad_Request()
+        {
+            // Act
+            var response = await PutResponseAsObjectAsync<CountryDto, ErrorResponse>(
+                $"/{RouteConsts.Country}/1",
+                new CountryDto(),
+                HttpStatusCode.BadRequest
+            );
+
+            // Assert
+            response.Message.ShouldBe("PutCountry");
+            response.DetailedMessage.ShouldBe("PutCountry");
+            Assert.True(response.Details.Any(a => a.Message == CountryDto.Error.CountryNameMustHaveValue.ToString()));
         }
 
         [Fact]

@@ -20,7 +20,8 @@ namespace Tnf.Architecture.Dto.Registration
             GetCountry = 2,
             PostCountry = 3,
             PutCountry = 4,
-            DeleteCountry = 5
+            DeleteCountry = 5,
+            CountryNameMustHaveValue = 6
         }
     }
 }

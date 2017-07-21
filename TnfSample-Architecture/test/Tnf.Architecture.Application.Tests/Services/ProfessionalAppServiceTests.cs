@@ -151,23 +151,36 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public void Should_Update_Professional_With_Error()
         {
-            // Arrange
-            var professionalDto = new ProfessionalDto()
+            //Act
+            _professionalAppService.CreateProfessional(new ProfessionalDto());
+
+            //Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressComplementMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalAddressNumberMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalEmailMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalNameMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalPhoneMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == Professional.Error.ProfessionalZipCodeMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Professional_Not_Found()
+        {
+            //Act
+            _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(Guid.NewGuid(), 99), new ProfessionalDto()
             {
-                ProfessionalId = 99,
-                Code = Guid.NewGuid(),
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",
                 Phone = "58962348",
-                Specialties = new List<SpecialtyDto>()
+                Specialties = new List<SpecialtyDto>
                 {
-                    new SpecialtyDto() { Id = 1, Description = "Anestesiologia" }
+                    new SpecialtyDto { Id = 1, Description = "Anestesiologia" }
                 }
-            };
-
-            //Act
-            _professionalAppService.UpdateProfessional(new ComposeKey<Guid, decimal>(professionalDto.Code, professionalDto.ProfessionalId), professionalDto);
+            });
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

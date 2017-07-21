@@ -114,15 +114,20 @@ namespace Tnf.Architecture.Application.Tests.Services
         [Fact]
         public void Should_Update_Specialty_With_Error()
         {
-            // Arrange
-            var specialtyDto = new SpecialtyDto()
-            {
-                Id = 99,
-                Description = "Cirurgia Geral"
-            };
-
             //Act
-            _specialtyAppService.UpdateSpecialty(specialtyDto.Id, specialtyDto);
+            _specialtyAppService.UpdateSpecialty(1, new SpecialtyDto());
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == Specialty.Error.SpecialtyDescriptionMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public void Should_Update_Specialty_Not_Found()
+        {
+            //Act
+            _specialtyAppService.UpdateSpecialty(99, new SpecialtyDto() { Description = "Especialidade Teste" });
 
             // Assert
             Assert.True(LocalNotification.HasNotification());

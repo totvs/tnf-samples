@@ -100,6 +100,22 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_President_With_Error()
         {
             //Act
+            await _whiteHouseAppService.UpdatePresidentAsync("1", new PresidentDto());
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressComplementMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentAddressNumberMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentNameMustHaveValue.ToString()));
+            Assert.True(notifications.Any(a => a.Message == President.Error.PresidentZipCodeMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Update_President_Not_Found()
+        {
+            //Act
             await _whiteHouseAppService.UpdatePresidentAsync("99", new PresidentDto(
                 "99",
                 "New President",

@@ -37,6 +37,12 @@
     "PutSpecialty": "Erro ao atualizar Especialidade",
     "DeleteSpecialty": "Erro ao deletar Especialidade",
 
-    "CouldNotFindCountry": "Não foi possível encontrar o País"
+    "CountryNameMustHaveValue": "Um país deve ter um nome",
+    "CouldNotFindCountry": "Não foi possível encontrar o País",
+    "GetAllCountry": "Erro ao buscar Países",
+    "GetCountry": "Erro ao buscar País",
+    "PostCountry": "Erro ao salvar País",
+    "PutCountry": "Erro ao atualizar País",
+    "DeleteCountry": "Erro ao deletar País"
   }
 }

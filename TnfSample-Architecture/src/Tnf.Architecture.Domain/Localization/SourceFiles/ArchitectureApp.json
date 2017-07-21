@@ -37,6 +37,12 @@
     "PutSpecialty": "Error updating Specialty",
     "DeleteSpecialty": "Error deleting Specialty",
 
-    "CouldNotFindCountry": "Could not find Country"
+    "CountryNameMustHaveValue": "A country must have a name",
+    "CouldNotFindCountry": "Could not find Country",
+    "GetAllCountry": "Error fetching Countries",
+    "GetCountry": "Error fetching Country",
+    "PostCountry": "Error salving Country",
+    "PutCountry": "Error updating Country",
+    "DeleteCountry": "Error deleting Country"
   }
 }

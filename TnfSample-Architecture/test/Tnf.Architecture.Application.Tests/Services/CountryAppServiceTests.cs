@@ -53,6 +53,18 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public async Task Should_Insert_Country_With_Error()
+        {
+            // Act
+            await _countryAppService.Create(new CountryDto());
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == CountryDto.Error.CountryNameMustHaveValue.ToString()));
+        }
+
+        [Fact]
         public async Task Should_Insert_Null_Country_With_Error()
         {
             // Act
@@ -85,6 +97,30 @@ namespace Tnf.Architecture.Application.Tests.Services
         }
 
         [Fact]
+        public async Task Should_Update_Country_With_Error()
+        {
+            //Act
+            await _countryAppService.Update(1, new CountryDto());
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == CountryDto.Error.CountryNameMustHaveValue.ToString()));
+        }
+
+        [Fact]
+        public async Task Should_Update_Country_Not_Found()
+        {
+            //Act
+            await _countryAppService.Update(99, new CountryDto() { Name = "País Teste" });
+
+            // Assert
+            Assert.True(LocalNotification.HasNotification());
+            var notifications = LocalNotification.GetAll();
+            Assert.True(notifications.Any(a => a.Message == CrudOperations.TnfAppCrudOnGetCouldNotFind.ToString()));
+        }
+
+        [Fact]
         public async Task Should_Update_Invalid_Id_With_Error()
         {
             // Act
@@ -93,7 +129,6 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.Equal(notifications.Count, 1);
             Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
@@ -106,7 +141,6 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.Equal(notifications.Count, 1);
             Assert.True(notifications.Any(n => n.Message == CrudOperations.TnfAppCrudInvalidParameterError.ToString()));
         }
 
