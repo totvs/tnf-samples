@@ -1,8 +1,0 @@
-{
-  "option1": "value1_from_json",
-  "option2": "value2_from_json",
-
-  "subsection": {
-    "suboption1": "subvalue1_from_json"
-  }
-}
