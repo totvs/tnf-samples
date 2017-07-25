@@ -13,12 +13,6 @@ namespace Tnf.Architecture.Domain
     {
         public override void PreInitialize()
         {
-#if DEBUG
-            Configuration.Auditing.IsEnabledForAnonymousUsers = true;
-#elif RELEASE
-            Configuration.Auditing.IsEnabled = false;
-#endif
-
             Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", "famfamfam-flags england", isDefault: true));
             Configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português", "famfamfam-flags br"));
 

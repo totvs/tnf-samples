@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Common.Helpers;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
@@ -65,7 +66,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_Specialty()
         {
-            var poco = new SpecialtyPoco()
+            var poco = new SpecialtyPoco
             {
                 Id = 1,
                 Description = "Cirurgia Geral"

@@ -1,7 +1,7 @@
-﻿using Tnf.Architecture.Common.ValueObjects;
+﻿using Tnf.Architecture.Common.Helpers;
 using Xunit;
 
-namespace Tnf.Architecture.Dto.Tests.Helpers
+namespace Tnf.Architecture.Common.Tests.Helpers
 {
     public class TextHelperTests
     {

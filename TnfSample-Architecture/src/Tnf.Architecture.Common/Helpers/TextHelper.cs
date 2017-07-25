@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
 
-namespace Tnf.Architecture.Common.ValueObjects
+namespace Tnf.Architecture.Common.Helpers
 {
     public static class TextHelper
     {
@@ -39,7 +39,7 @@ namespace Tnf.Architecture.Common.ValueObjects
             => string.IsNullOrEmpty(text) ? "" : new string(text.Where(char.IsDigit).ToArray());
 
         public static string AjustText(string value, int length)
-            => (value.Length > length) ? value.Substring(0, length) : value;
+            => value.Length > length ? value.Substring(0, length) : value;
 
         public static string ToTitleCase(string text)
             => ToTitleCase(text, false);

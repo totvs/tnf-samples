@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Common.Helpers;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
@@ -16,7 +17,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_Professional_To_ProfessionalPoco()
         {
-            var entity = new Professional()
+            var entity = new Professional
             {
                 Address = new Address("Rua de teste", "123", "Complement", new ZipCode("12345678")),
                 ProfessionalId = 1,
@@ -48,7 +49,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            var entity = new Specialty()
+            var entity = new Specialty
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
@@ -64,7 +65,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            var entity = new President()
+            var entity = new President
             {
                 Id = "1234",
                 Name = "George",

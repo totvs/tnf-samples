@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <AssemblyName>Tnf.Architecture.Dto.Tests</AssemblyName>
-    <PackageId>Tnf.Architecture.Dto.Tests</PackageId>
+    <AssemblyName>Tnf.Architecture.Common.Tests</AssemblyName>
+    <PackageId>Tnf.Architecture.Common.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -12,13 +12,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="Tnf.App.TestBase" Version="1.0.17201.6" />
+    <PackageReference Include="Tnf.App.TestBase" Version="1.0.17206.4" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Tnf.Architecture.Dto\Tnf.Architecture.Dto.csproj" />
+    <ProjectReference Include="..\..\src\Tnf.Architecture.Common\Tnf.Architecture.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Tnf.App.Application.Services;
 using Tnf.App.Bus.Notifications;

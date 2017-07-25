@@ -1,7 +1,7 @@
 ﻿using Tnf.Architecture.Common.ValueObjects;
 using Xunit;
 
-namespace Tnf.Architecture.Dto.Tests.ValueObjects
+namespace Tnf.Architecture.Helpers.Tests.ValueObjects
 {
     public class ZipCodeTests
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Carol.Entities;
+using Tnf.Architecture.Common.Helpers;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.WhiteHouse;
@@ -16,7 +17,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_CountryPoco_To_CountryDto()
         {
-            var poco = new CountryPoco()
+            var poco = new CountryPoco
             {
                 Id = 1,
                 Name = "Brasil"
@@ -32,7 +33,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_ProfessionalPoco_To_ProfessionalDto()
         {
-            var poco = new ProfessionalPoco()
+            var poco = new ProfessionalPoco
             {
                 Address = "Rua de teste",
                 AddressComplement = "Complement",
@@ -43,11 +44,11 @@ namespace Tnf.Architecture.Mapper.Tests
                 Name = "Professional",
                 Phone = "987456321",
                 ProfessionalId = 1,
-                ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>()
+                ProfessionalSpecialties = new List<ProfessionalSpecialtiesPoco>
                 {
-                    new ProfessionalSpecialtiesPoco()
+                    new ProfessionalSpecialtiesPoco
                     {
-                        Specialty = new SpecialtyPoco()
+                        Specialty = new SpecialtyPoco
                         {
                             Id = 1,
                             Description = "Especialidade teste"
@@ -81,7 +82,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyPoco_To_SpecialtyDto()
         {
-            var poco = new SpecialtyPoco()
+            var poco = new SpecialtyPoco
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
@@ -97,7 +98,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentPoco_To_PresidentDto()
         {
-            var poco = new PresidentPoco()
+            var poco = new PresidentPoco
             {
                 Id = "1234",
                 Name = "George",

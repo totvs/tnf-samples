@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Mapper", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Mapper.Tests", "test\Tnf.Architecture.Mapper.Tests\Tnf.Architecture.Mapper.Tests.csproj", "{636461BC-8551-415C-B3CA-44C50337F007}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Dto.Tests", "test\Tnf.Architecture.Dto.Tests\Tnf.Architecture.Dto.Tests.csproj", "{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Common.Tests", "test\Tnf.Architecture.Common.Tests\Tnf.Architecture.Common.Tests.csproj", "{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Common", "src\Tnf.Architecture.Common\Tnf.Architecture.Common.csproj", "{F00101BC-5393-4AC8-BC93-602C09EB7686}"
 EndProject

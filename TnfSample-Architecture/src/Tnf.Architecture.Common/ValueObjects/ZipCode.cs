@@ -1,4 +1,6 @@
-﻿namespace Tnf.Architecture.Common.ValueObjects
+﻿using Tnf.Architecture.Common.Helpers;
+
+namespace Tnf.Architecture.Common.ValueObjects
 {
     public class ZipCode
     {

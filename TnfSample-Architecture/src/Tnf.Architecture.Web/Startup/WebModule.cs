@@ -21,9 +21,9 @@ namespace Tnf.Architecture.Web.Startup
         public WebModule(IHostingEnvironment env)
         {
 #if DEBUG
-            var enviroment = "Development";
+            const string enviroment = "Development";
 #elif RELEASE
-            var enviroment = "Release";
+            const string enviroment = "Release";
 #endif
 
             _appConfiguration = AppConfigurations.Get(env.ContentRootPath, enviroment);
@@ -31,7 +31,6 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void PreInitialize()
         {
-            Configuration.Auditing.IsEnabled = true;
             // Inicializa a localização multiTenant, sendo o faultBack as localiações em arquivo
             //Configuration.Modules.TnfApp().LanguageManagement.EnableDbLocalization();
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);

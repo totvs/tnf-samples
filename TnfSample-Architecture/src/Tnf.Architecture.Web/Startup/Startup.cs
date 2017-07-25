@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Tnf.App.AspNetCore;
-using Tnf.App.EntityFrameworkCore.Localization;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AspNetCore;
 using Tnf.EntityFrameworkCore;
@@ -26,16 +25,6 @@ namespace Tnf.Architecture.Web.Startup
                 options.DbContextOptions.UseSqlServer(options.ConnectionString);
             });
 
-            services.AddTnfDbContext<TnfAppLocalizationDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
-
-            //services.AddTnfDbContext<TnfAppSettingsDbContext>(options =>
-            //{
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
-
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -45,10 +34,9 @@ namespace Tnf.Architecture.Web.Startup
                     .AllowCredentials());
             });
 
-            services.AddMvc();
             services.AddSwaggerGen();
 
-            //Configure Tnf and Dependency Injection
+            // Configure Tnf and Dependency Injection
             return services.AddTnfApp<WebModule>(options => { });
         }
 
