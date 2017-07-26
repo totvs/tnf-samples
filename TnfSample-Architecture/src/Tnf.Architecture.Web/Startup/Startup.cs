@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Tnf.App.AspNetCore;
-using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.AspNetCore;
-using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -15,16 +12,6 @@ namespace Tnf.Architecture.Web.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddTnfDbContext<LegacyDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
-
-            services.AddTnfDbContext<ArchitectureDbContext>(options =>
-            {
-                options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            });
-
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -49,7 +36,6 @@ namespace Tnf.Architecture.Web.Startup
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

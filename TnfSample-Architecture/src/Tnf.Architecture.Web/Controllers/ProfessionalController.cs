@@ -18,7 +18,7 @@ namespace Tnf.Architecture.Web.Controllers
             _professionalAppService = professionalAppService;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public IActionResult Get([FromQuery]GetAllProfessionalsDto requestDto)
         {
             var response = _professionalAppService.GetAllProfessionals(requestDto);

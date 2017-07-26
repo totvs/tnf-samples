@@ -16,7 +16,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_CountryDto_To_CountryPoco()
         {
-            var dto = new CountryDto()
+            var dto = new CountryDto
             {
                 Id = 1,
                 Name = "Brasil"
@@ -32,17 +32,17 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_ProfessionalDto_To_ProfessionalPoco()
         {
-            var dto = new ProfessionalDto()
+            var dto = new ProfessionalDto
             {
-                Address = new Address("Rua de teste", "123", "Compelemento", new ZipCode("12345678")),
+                Address = new Address("Rua de teste", "123", "Complemento", new ZipCode("12345678")),
                 Code = Guid.NewGuid(),
                 Email = "email@email.com",
                 Name = "Professional teste",
                 Phone = "988765541",
                 ProfessionalId = 1,
-                Specialties = new List<SpecialtyDto>()
+                Specialties = new List<SpecialtyDto>
                 {
-                    new SpecialtyDto() { Id = 1, Description = "Especialidade" }
+                    new SpecialtyDto { Id = 1, Description = "Especialidade" }
                 }
             };
 
@@ -65,7 +65,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_SpecialtyDto_To_SpecialtyPoco()
         {
-            var dto = new SpecialtyDto()
+            var dto = new SpecialtyDto
             {
                 Id = 1,
                 Description = "Cirurgia Geral"
@@ -81,7 +81,7 @@ namespace Tnf.Architecture.Mapper.Tests
         [Fact]
         public void MapTo_PresidentDto_To_PresidentPoco()
         {
-            var dto = new PresidentDto()
+            var dto = new PresidentDto
             {
                 Id = "1234",
                 Name = "George",

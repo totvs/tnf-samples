@@ -5,6 +5,7 @@ using Tnf.Architecture.Application;
 using Tnf.Architecture.Carol.ReadInterfaces;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.Web.Tests.Mocks;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;

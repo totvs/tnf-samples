@@ -16,7 +16,7 @@ namespace Tnf.Architecture.Web.Controllers
             _specialtyAppService = specialtyAppService;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public IActionResult Get([FromQuery]GetAllSpecialtiesDto requestDto)
         {
             var response = _specialtyAppService.GetAllSpecialties(requestDto);

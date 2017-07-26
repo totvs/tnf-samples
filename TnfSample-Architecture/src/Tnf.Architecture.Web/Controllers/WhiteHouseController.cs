@@ -17,7 +17,7 @@ namespace Tnf.Architecture.Web.Controllers
             _whiteHouseAppService = whiteHouseAppService;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromQuery]GetAllPresidentsDto requestDto)
         {
             var response = await _whiteHouseAppService.GetAllPresidents(requestDto);

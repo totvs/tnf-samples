@@ -1,6 +1,7 @@
 using Tnf.App.EntityFrameworkCore;
 using Tnf.App.TestBase;
 using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Modules;
 using Tnf.Reflection.Extensions;
 

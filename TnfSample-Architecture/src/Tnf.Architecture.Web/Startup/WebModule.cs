@@ -20,13 +20,7 @@ namespace Tnf.Architecture.Web.Startup
 
         public WebModule(IHostingEnvironment env)
         {
-#if DEBUG
-            const string enviroment = "Development";
-#elif RELEASE
-            const string enviroment = "Release";
-#endif
-
-            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, enviroment);
+            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName);
         }
 
         public override void PreInitialize()

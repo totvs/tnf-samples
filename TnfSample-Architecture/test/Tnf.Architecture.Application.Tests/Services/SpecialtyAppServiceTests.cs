@@ -7,6 +7,7 @@ using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Xunit;
 

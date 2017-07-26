@@ -17,7 +17,7 @@ namespace Tnf.Architecture.Web.Controllers
             _countryAppService = countryAppService;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromQuery]GetAllCountriesDto requestDto)
         {
             var response = await _countryAppService.GetAll(requestDto);

@@ -1,11 +1,12 @@
 ﻿using Tnf.App.Dto.Response;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
 using Tnf.EntityFrameworkCore;
 
-namespace Tnf.Architecture.EntityFrameworkCore.Repositories
+namespace Tnf.Architecture.EntityFrameworkCore.ReadRepositories
 {
     public class SpecialtyReadRepository : AppEfCoreRepositoryBase<LegacyDbContext, SpecialtyPoco>, ISpecialtyReadRepository
     {

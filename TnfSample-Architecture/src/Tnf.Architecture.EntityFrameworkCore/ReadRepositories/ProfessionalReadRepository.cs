@@ -1,16 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Tnf.App.Dto.Response;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
 using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
 
-namespace Tnf.Architecture.EntityFrameworkCore.Repositories
+namespace Tnf.Architecture.EntityFrameworkCore.ReadRepositories
 {
     public class ProfessionalReadRepository : AppEfCoreRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalReadRepository
     {

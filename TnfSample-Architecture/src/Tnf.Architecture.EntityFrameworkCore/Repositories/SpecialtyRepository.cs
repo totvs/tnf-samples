@@ -3,6 +3,7 @@ using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Tnf.EntityFrameworkCore;

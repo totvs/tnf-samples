@@ -2,7 +2,7 @@
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.EntityFrameworkCore;
 
-namespace Tnf.Architecture.EntityFrameworkCore
+namespace Tnf.Architecture.EntityFrameworkCore.Contexts
 {
     public class LegacyDbContext : TnfDbContext
     {

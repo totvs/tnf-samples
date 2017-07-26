@@ -8,6 +8,7 @@ using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
 using Tnf.AutoMapper;

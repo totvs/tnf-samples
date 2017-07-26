@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Concurrent;
+using Tnf.Extensions;
 
 namespace Tnf.Architecture.Domain.Configuration
 {
@@ -25,11 +26,13 @@ namespace Tnf.Architecture.Domain.Configuration
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(path)
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile("appsettings.json", true, true);
+
+            if (!environmentName.IsNullOrWhiteSpace())
+                builder = builder.AddJsonFile($"appsettings.{environmentName}.json", true);
 
             builder = builder.AddEnvironmentVariables();
-
+            
             return builder.Build();
         }
     }

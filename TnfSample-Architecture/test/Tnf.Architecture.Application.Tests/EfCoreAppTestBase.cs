@@ -1,5 +1,5 @@
 using Tnf.App.EntityFrameworkCore.TestBase;
-using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 
 namespace Tnf.Architecture.Application.Tests
