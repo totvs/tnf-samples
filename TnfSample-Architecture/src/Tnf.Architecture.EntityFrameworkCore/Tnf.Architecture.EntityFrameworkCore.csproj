@@ -9,6 +9,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <OutputType>Exe</OutputType>
+    <RootNamespace>Tnf.Architecture.EntityFrameworkCore</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,13 +19,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet">
+      <Version>1.0.0-*</Version>
+    </DotNetCliToolReference>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
-    <PackageReference Include="Tnf.App.Dapper" Version="1.0.17207.28" />
-    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17207.28" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
+    <PackageReference Include="Tnf.App.Dapper" Version="1.0.17209.6" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.0.17209.6" />
   </ItemGroup>
 
   <ItemGroup>
