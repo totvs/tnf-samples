@@ -7,16 +7,18 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    public class SpecialtyService : AppDomainService<ISpecialtyRepository>, ISpecialtyService
+    public class SpecialtyService : AppDomainService, ISpecialtyService
     {
+        private readonly ISpecialtyRepository _specialtyRepository;
+
         public SpecialtyService(ISpecialtyRepository repository)
-            : base(repository)
         {
+            _specialtyRepository = repository;
         }
-        
+
         public Specialty GetSpecialty(RequestDto requestDto)
         {
-            if (!Repository.ExistsSpecialty(requestDto.GetId()))
+            if (!_specialtyRepository.ExistsSpecialty(requestDto.GetId()))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -26,19 +28,19 @@ namespace Tnf.Architecture.Domain.Registration
                 return null;
             }
 
-            return Repository.GetSpecialty(requestDto);
+            return _specialtyRepository.GetSpecialty(requestDto);
         }
 
         public int CreateSpecialty(SpecialtyBuilder builder)
         {
             var specialty = builder.Build();
 
-            return Notification.HasNotification() ? 0 : Repository.CreateSpecialty(specialty);
+            return Notification.HasNotification() ? 0 : _specialtyRepository.CreateSpecialty(specialty);
         }
 
         public void DeleteSpecialty(int id)
         {
-            if (!Repository.ExistsSpecialty(id))
+            if (!_specialtyRepository.ExistsSpecialty(id))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -47,7 +49,7 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (!Notification.HasNotification())
-                Repository.DeleteSpecialty(id);
+                _specialtyRepository.DeleteSpecialty(id);
         }
 
         public void UpdateSpecialty(SpecialtyBuilder builder)
@@ -57,7 +59,7 @@ namespace Tnf.Architecture.Domain.Registration
             if (Notification.HasNotification())
                 return;
 
-            if (!Repository.ExistsSpecialty(specialty.Id))
+            if (!_specialtyRepository.ExistsSpecialty(specialty.Id))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                     .WithNotFoundStatus()
@@ -66,7 +68,7 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (!Notification.HasNotification())
-                Repository.UpdateSpecialty(specialty);
+                _specialtyRepository.UpdateSpecialty(specialty);
         }
     }
 }

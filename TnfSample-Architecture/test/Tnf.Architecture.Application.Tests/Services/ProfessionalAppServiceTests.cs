@@ -9,7 +9,6 @@ using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Xunit;
@@ -198,7 +197,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.Equal(notifications.Count, 2);
+            Assert.Equal(notifications.Count(), 2);
             Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 
@@ -211,7 +210,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.Equal(notifications.Count, 1);
+            Assert.Equal(notifications.Count(), 1);
             Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
         }
 

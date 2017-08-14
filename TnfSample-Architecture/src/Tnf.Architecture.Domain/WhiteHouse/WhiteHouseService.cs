@@ -10,21 +10,22 @@ using Tnf.Events.Bus;
 
 namespace Tnf.Architecture.Domain.WhiteHouse
 {
-    internal class WhiteHouseService : AppDomainService<IWhiteHouseRepository>, IWhiteHouseService
+    internal class WhiteHouseService : AppDomainService, IWhiteHouseService
     {
+        private readonly IWhiteHouseRepository _whiteHouseRepository;
         private readonly IEventBus _eventBus;
 
         public WhiteHouseService(
             IWhiteHouseRepository repository,
             IEventBus eventBus)
-            : base(repository)
         {
+            _whiteHouseRepository = repository;
             _eventBus = eventBus;
         }
 
         public async Task<President> GetPresidentById(RequestDto<string> id)
         {
-            var president = await Repository.GetPresidentById(id);
+            var president = await _whiteHouseRepository.GetPresidentById(id);
 
             if (president == null)
             {
@@ -44,7 +45,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             if (Notification.HasNotification())
                 return "";
 
-            var id = await Repository.InsertPresidentsAsync(president);
+            var id = await _whiteHouseRepository.InsertPresidentsAsync(president);
 
             // Trigger president created event
             _eventBus.Trigger(new PresidentCreatedEvent(president));
@@ -54,7 +55,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
         public async Task DeletePresidentAsync(string id)
         {
-            if (!await Repository.DeletePresidentsAsync(id))
+            if (!await _whiteHouseRepository.DeletePresidentsAsync(id))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -70,7 +71,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             if (Notification.HasNotification())
                 return;
 
-            var data = await Repository.UpdatePresidentsAsync(president);
+            var data = await _whiteHouseRepository.UpdatePresidentsAsync(president);
 
             if (data == null)
             {

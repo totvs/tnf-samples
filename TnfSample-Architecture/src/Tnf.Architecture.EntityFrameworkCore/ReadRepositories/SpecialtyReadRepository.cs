@@ -16,6 +16,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.ReadRepositories
         }
 
         public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
-            => GetAll<SpecialtyDto>(w => request.Description == null || w.Description.Contains(request.Description), request);
+            => GetAll<SpecialtyDto>(request, w => request.Description == null || w.Description.Contains(request.Description));
     }
 }

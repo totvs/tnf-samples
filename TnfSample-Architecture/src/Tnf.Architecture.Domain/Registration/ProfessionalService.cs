@@ -9,19 +9,18 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 
 namespace Tnf.Architecture.Domain.Registration
 {
-    public class ProfessionalService : AppDomainService<IProfessionalRepository>, IProfessionalService
+    public class ProfessionalService : AppDomainService, IProfessionalService
     {
-        //private readonly IProfessionalDapperRepository _repositoryDapper;
+        private readonly IProfessionalRepository _professionalRepository;
 
         public ProfessionalService(IProfessionalRepository repository)
-            : base(repository)
         {
-            //_repositoryDapper = repositoryDapper;
+            _professionalRepository = repository;
         }
 
         public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
         {
-            if (!Repository.ExistsProfessional(keys.GetId()))
+            if (!_professionalRepository.ExistsProfessional(keys.GetId()))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -31,7 +30,7 @@ namespace Tnf.Architecture.Domain.Registration
                 return null;
             }
 
-            return Repository.GetProfessional(keys);
+            return _professionalRepository.GetProfessional(keys);
         }
 
         public ComposeKey<Guid, decimal> CreateProfessional(ProfessionalBuilder builder)
@@ -41,16 +40,16 @@ namespace Tnf.Architecture.Domain.Registration
             if (Notification.HasNotification())
                 return new ComposeKey<Guid, decimal>();
 
-            var keys = Repository.CreateProfessional(professional);
+            var keys = _professionalRepository.CreateProfessional(professional);
 
-            Repository.AddOrRemoveSpecialties(keys, professional.Specialties);
+            _professionalRepository.AddOrRemoveSpecialties(keys, professional.Specialties);
 
             return keys;
         }
 
         public void DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
-            if (!Repository.ExistsProfessional(keys))
+            if (!_professionalRepository.ExistsProfessional(keys))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -59,19 +58,19 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (!Notification.HasNotification())
-                Repository.DeleteProfessional(keys);
+                _professionalRepository.DeleteProfessional(keys);
         }
 
         public void UpdateProfessional(ProfessionalBuilder builder)
         {
             var professional = builder.Build();
 
-            var keys = new ComposeKey<Guid, decimal>(professional.Code, professional.ProfessionalId);
-
             if (Notification.HasNotification())
                 return;
 
-            if (!Repository.ExistsProfessional(keys))
+            var keys = new ComposeKey<Guid, decimal>(professional.Code, professional.ProfessionalId);
+
+            if (!_professionalRepository.ExistsProfessional(keys))
             {
                 Notification.Raise(NotificationEvent.DefaultBuilder
                     .WithNotFoundStatus()
@@ -82,8 +81,8 @@ namespace Tnf.Architecture.Domain.Registration
             if (Notification.HasNotification())
                 return;
 
-            Repository.UpdateProfessional(professional);
-            Repository.AddOrRemoveSpecialties(keys, professional.Specialties);
+            _professionalRepository.UpdateProfessional(professional);
+            _professionalRepository.AddOrRemoveSpecialties(keys, professional.Specialties);
         }
     }
 }

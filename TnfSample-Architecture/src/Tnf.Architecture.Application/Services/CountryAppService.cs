@@ -20,6 +20,6 @@ namespace Tnf.Architecture.Application.Services
         }
 
         protected override async Task<ListDto<CountryDto, int>> CreateFilteredQueryAsync(GetAllCountriesDto input)
-            => await CreateFilteredQueryAsync(m => input.Name.IsNullOrWhiteSpace() || m.Name.Contains(input.Name), input);
+            => await CreateFilteredQueryAsync(input, m => input.Name.IsNullOrWhiteSpace() || m.Name.Contains(input.Name));
     }
 }

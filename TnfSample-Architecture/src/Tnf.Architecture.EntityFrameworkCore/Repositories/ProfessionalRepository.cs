@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tnf.App.Dto.Request;
+using Tnf.App.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
@@ -11,7 +12,6 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
-using Tnf.Domain.Repositories;
 using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories

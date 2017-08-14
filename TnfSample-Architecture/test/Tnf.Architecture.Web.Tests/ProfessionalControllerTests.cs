@@ -108,7 +108,7 @@ namespace Tnf.Architecture.Web.Tests
             Assert.Equal(response.Address.Complement, "APT 123");
             Assert.NotNull(response.Address.ZipCode);
             Assert.Equal(response.Address.ZipCode.Number, "99888777");
-            Assert.Null(response.Specialties);
+            Assert.Empty(response.Specialties);
         }
 
         [Fact]
@@ -128,7 +128,7 @@ namespace Tnf.Architecture.Web.Tests
             Assert.Equal(response.Address.Complement, null);
             Assert.NotNull(response.Address.ZipCode);
             Assert.Equal(response.Address.ZipCode.Number, "");
-            Assert.Null(response.Specialties);
+            Assert.Empty(response.Specialties);
         }
 
         [Fact]
