@@ -1,0 +1,11 @@
+{
+  "culture": "en",
+  "texts": {
+    "AppApplicationErrorsInvalidId": "Invalid Id. Name of parameter: '{0}'",
+    "AppApplicationErrorsInvalidDto": "Invalid Dto. Name of parameter: '{0}'",
+
+    "TnfAppDomainErrorOnGetCouldNotFind": "Could not find '{0}' on get",
+    "TnfAppDomainErrorOnUpdateCouldNotFind": "Could not find '{0}' on update",
+    "TnfAppDomainErrorOnDeleteCouldNotFind": "Could not find '{0}' on delete"
+  }
+}

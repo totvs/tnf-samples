@@ -18,8 +18,7 @@ namespace Tnf.Architecture.Domain.Registration
 
         public enum Error
         {
-            PersonNameMustHaveValue = 1,
-            CouldNotFindPerson = 2
+            PersonNameMustHaveValue = 1
         }
     }
 }

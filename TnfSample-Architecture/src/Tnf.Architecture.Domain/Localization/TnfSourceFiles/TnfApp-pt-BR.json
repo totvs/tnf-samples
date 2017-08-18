@@ -1,0 +1,11 @@
+{
+  "culture": "pt-BR",
+  "texts": {
+    "AppApplicationErrorsInvalidId": "Id Inválido. Nome do parâmetro: '{0}'",
+    "AppApplicationErrorsInvalidDto": "Dto Inválido. Nome do parâmetro: '{0}'",
+
+    "TnfAppDomainErrorOnGetCouldNotFind": "Não foi possível achar '{0}' na busca",
+    "TnfAppDomainErrorOnUpdateCouldNotFind": "Não foi possível achar '{0}' ao atualizar",
+    "TnfAppDomainErrorOnDeleteCouldNotFind": "Não foi possível achar '{0}' ao deletar"
+  }
+}

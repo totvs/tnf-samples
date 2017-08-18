@@ -38,7 +38,6 @@
     "DeleteSpecialty": "Error deleting Specialty",
 
     "PersonNameMustHaveValue": "A person must have a name",
-    "CouldNotFindPerson": "Could not find Person",
     "GetAllPerson": "Error fetching People",
     "GetPerson": "Error fetching Person",
     "PostPerson": "Error salving Person",

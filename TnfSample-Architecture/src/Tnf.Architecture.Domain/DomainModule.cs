@@ -25,6 +25,15 @@ namespace Tnf.Architecture.Domain
                 )
             );
 
+            Configuration.Localization.Sources.Add(
+                new DictionaryBasedLocalizationSource(TnfAppConsts.LocalizationSourceName,
+                    new JsonEmbeddedFileLocalizationDictionaryProvider(
+                        typeof(DomainModule).GetAssembly(),
+                        "Tnf.Architecture.Domain.Localization.TnfSourceFiles"
+                    )
+                )
+            );
+
             base.PreInitialize();
         }
 
