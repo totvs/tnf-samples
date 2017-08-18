@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.App.Carol" Version="1.0.17226.2" />
+    <PackageReference Include="Tnf.App.Carol" Version="1.0.17230.3" />
   </ItemGroup>
 
   <ItemGroup>

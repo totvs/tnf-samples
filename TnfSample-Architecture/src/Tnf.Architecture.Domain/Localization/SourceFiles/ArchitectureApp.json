@@ -29,13 +29,21 @@
     "PutProfessional": "Error updating Professional",
     "DeleteProfessional": "Error deleting Professional",
 
-    "SpecialtyDescriptionMustHaveValue": "A specialty must have a name",
+    "SpecialtyDescriptionMustHaveValue": "A specialty must have a description",
     "CouldNotFindSpecialty": "Could not find Specialty",
     "GetAllSpecialty": "Error fetching Specialties",
     "GetSpecialty": "Error fetching Specialty",
     "PostSpecialty": "Error salving Specialty",
     "PutSpecialty": "Error updating Specialty",
     "DeleteSpecialty": "Error deleting Specialty",
+
+    "PersonNameMustHaveValue": "A person must have a name",
+    "CouldNotFindPerson": "Could not find Person",
+    "GetAllPerson": "Error fetching People",
+    "GetPerson": "Error fetching Person",
+    "PostPerson": "Error salving Person",
+    "PutPerson": "Error updating Person",
+    "DeletePerson": "Error deleting Person",
 
     "CountryNameMustHaveValue": "A country must have a name",
     "CouldNotFindCountry": "Could not find Country",

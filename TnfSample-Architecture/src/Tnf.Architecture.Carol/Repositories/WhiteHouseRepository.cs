@@ -12,7 +12,7 @@ using Tnf.Provider.Carol;
 
 namespace Tnf.Architecture.Carol.Repositories
 {
-    public class WhiteHouseRepository : CarolRepositoryBase<PresidentPoco>, IWhiteHouseRepository, IWhiteHouseReadRepository
+    public class WhiteHouseRepository : CarolRepositoryBase<PresidentPoco>, IWhiteHouseRepository
     {
         public WhiteHouseRepository(ICarolClient client) :
             base(client)
@@ -22,21 +22,6 @@ namespace Tnf.Architecture.Carol.Repositories
         public async Task<bool> DeletePresidentsAsync(string id)
         {
             return await DeleteAsync(id);
-        }
-
-        public async Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
-        {
-            var query = Client.Query<PresidentPoco>().ProcessFilter()
-                .SkipAndTakeByRequestDto(request)
-                .OrderByRequestDto(request)
-                .IndexType(Provider.Carol.Messages.ProcessFilter.IndexType.STAGING)
-                .MustList((m) => m.TypeFilter()
-                                  .MatchFilter(p => p.Name, request.Name)
-                                  .TermFilter(p => p.Address.ZipCode.Number, request.ZipCode));
-
-            var resultData = await GetAllAsync(query);
-
-            return resultData.ToListDto<PresidentPoco, PresidentDto, string>(request);
         }
 
         public async Task<President> GetPresidentById(RequestDto<string> requestDto)

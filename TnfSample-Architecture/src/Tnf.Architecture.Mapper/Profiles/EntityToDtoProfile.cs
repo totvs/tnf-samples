@@ -13,6 +13,9 @@ namespace Tnf.Architecture.Mapper.Profiles
             CreateMap<Professional, ProfessionalDto>();
             CreateMap<Specialty, SpecialtyDto>();
             CreateMap<President, PresidentDto>();
+            
+            CreateMap<Person, PersonDto>()
+                .ForMember(d => d.Id, s => s.MapFrom(p => p.Id));
         }
     }
 }

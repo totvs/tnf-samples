@@ -1,6 +1,6 @@
 ﻿using System;
 using Tnf.App.EntityFrameworkCore;
-using Tnf.Architecture.EntityFrameworkCore;
+using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Architecture.Web.Tests.App;
@@ -20,6 +20,12 @@ namespace Tnf.Architecture.Web.Tests
                     context.Countries.Add(new CountryPoco(3, "Uruguai"));
                     context.Countries.Add(new CountryPoco(4, "Paraguai"));
                     context.Countries.Add(new CountryPoco(5, "Venezuela"));
+
+                    context.People.Add(new Person(1, "John Doe"));
+                    context.People.Add(new Person(2, "Mary Doe"));
+                    context.People.Add(new Person(3, "James Gunn"));
+                    context.People.Add(new Person(4, "Abraham"));
+                    context.People.Add(new Person(5, "Chloe"));
                 });
 
             IocManager.UsingDbContext<LegacyDbContext>(

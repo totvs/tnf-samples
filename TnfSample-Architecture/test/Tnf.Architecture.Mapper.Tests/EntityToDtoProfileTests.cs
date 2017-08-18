@@ -84,5 +84,21 @@ namespace Tnf.Architecture.Mapper.Tests
             Assert.Equal(entity.Address.Street, mappDto.Address.Street);
             Assert.Equal(entity.Address.ZipCode.Number, mappDto.Address.ZipCode.Number);
         }
+
+        [Fact]
+        public void MapTo_Person_To_PersonDto()
+        {
+            var entity = new Person
+            {
+                Id = 1,
+                Name = "John Doe"
+            };
+
+            var mappDto = entity.MapTo<PersonDto>();
+
+            Assert.NotNull(mappDto);
+            Assert.Equal(mappDto.Id, entity.Id);
+            Assert.Equal(mappDto.Name, entity.Name);
+        }
     }
 }

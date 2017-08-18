@@ -13,8 +13,8 @@ namespace Tnf.Architecture.Domain
     {
         public override void PreInitialize()
         {
-            Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", "famfamfam-flags england", isDefault: true));
-            Configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português", "famfamfam-flags br"));
+            Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", isDefault: true));
+            Configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português"));
 
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(AppConsts.LocalizationSourceName,

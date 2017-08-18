@@ -37,6 +37,14 @@
     "PutSpecialty": "Erro ao atualizar Especialidade",
     "DeleteSpecialty": "Erro ao deletar Especialidade",
 
+    "PersonNameMustHaveValue": "Uma pessoa deve ter um nome",
+    "CouldNotFindPerson": "Não foi possível encontrar a Pessoa",
+    "GetAllPerson": "Erro ao buscar Pessoas",
+    "GetPerson": "Erro ao buscar Pessoa",
+    "PostPerson": "Erro ao salvar Pessoa",
+    "PutPerson": "Erro ao atualizar Pessoa",
+    "DeletePerson": "Erro ao deletar Pessoa",
+
     "CountryNameMustHaveValue": "Um país deve ter um nome",
     "CouldNotFindCountry": "Não foi possível encontrar o País",
     "GetAllCountry": "Erro ao buscar Países",

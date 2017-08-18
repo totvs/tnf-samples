@@ -8,9 +8,10 @@ using Tnf.Architecture.EntityFrameworkCore.Contexts;
 namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
 {
     [DbContext(typeof(ArchitectureDbContext))]
-    partial class ArchitectureDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170816163300_Add_Person")]
+    partial class Add_Person
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
