@@ -42,14 +42,6 @@
     "GetPerson": "Erro ao buscar Pessoa",
     "PostPerson": "Erro ao salvar Pessoa",
     "PutPerson": "Erro ao atualizar Pessoa",
-    "DeletePerson": "Erro ao deletar Pessoa",
-
-    "CountryNameMustHaveValue": "Um país deve ter um nome",
-    "CouldNotFindCountry": "Não foi possível encontrar o País",
-    "GetAllCountry": "Erro ao buscar Países",
-    "GetCountry": "Erro ao buscar País",
-    "PostCountry": "Erro ao salvar País",
-    "PutCountry": "Erro ao atualizar País",
-    "DeleteCountry": "Erro ao deletar País"
+    "DeletePerson": "Erro ao deletar Pessoa"
   }
 }

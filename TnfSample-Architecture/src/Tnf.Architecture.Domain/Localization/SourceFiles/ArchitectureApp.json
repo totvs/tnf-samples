@@ -42,14 +42,6 @@
     "GetPerson": "Error fetching Person",
     "PostPerson": "Error salving Person",
     "PutPerson": "Error updating Person",
-    "DeletePerson": "Error deleting Person",
-
-    "CountryNameMustHaveValue": "A country must have a name",
-    "CouldNotFindCountry": "Could not find Country",
-    "GetAllCountry": "Error fetching Countries",
-    "GetCountry": "Error fetching Country",
-    "PostCountry": "Error salving Country",
-    "PutCountry": "Error updating Country",
-    "DeleteCountry": "Error deleting Country"
+    "DeletePerson": "Error deleting Person"
   }
 }

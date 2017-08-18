@@ -12,9 +12,6 @@ namespace Tnf.Architecture.Mapper.Profiles
     {
         public PocoToDtoProfile()
         {
-            CreateMap<CountryPoco, CountryDto>()
-                .ForMember(d => d.Id, s => s.MapFrom(p => p.Id));
-
             CreateMap<ProfessionalPoco, ProfessionalDto>()
                 .ForMember(d => d.Id, s => s.Ignore())
                 .ForMember(d => d.Address, s => s.Ignore())

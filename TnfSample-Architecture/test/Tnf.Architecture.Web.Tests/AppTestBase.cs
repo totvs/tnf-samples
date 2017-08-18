@@ -15,12 +15,6 @@ namespace Tnf.Architecture.Web.Tests
             IocManager.UsingDbContext<ArchitectureDbContext>(
                 context =>
                 {
-                    context.Countries.Add(new CountryPoco(1, "Brasil"));
-                    context.Countries.Add(new CountryPoco(2, "EUA"));
-                    context.Countries.Add(new CountryPoco(3, "Uruguai"));
-                    context.Countries.Add(new CountryPoco(4, "Paraguai"));
-                    context.Countries.Add(new CountryPoco(5, "Venezuela"));
-
                     context.People.Add(new Person(1, "John Doe"));
                     context.People.Add(new Person(2, "Mary Doe"));
                     context.People.Add(new Person(3, "James Gunn"));

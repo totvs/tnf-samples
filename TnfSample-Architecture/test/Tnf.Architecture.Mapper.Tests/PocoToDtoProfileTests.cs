@@ -15,22 +15,6 @@ namespace Tnf.Architecture.Mapper.Tests
     public class PocoToDtoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {
         [Fact]
-        public void MapTo_CountryPoco_To_CountryDto()
-        {
-            var poco = new CountryPoco
-            {
-                Id = 1,
-                Name = "Brasil"
-            };
-
-            var mappDto = poco.MapTo<CountryDto>();
-
-            Assert.NotNull(mappDto);
-            Assert.Equal(mappDto.Id, poco.Id);
-            Assert.Equal(mappDto.Name, poco.Name);
-        }
-
-        [Fact]
         public void MapTo_ProfessionalPoco_To_ProfessionalDto()
         {
             var poco = new ProfessionalPoco
