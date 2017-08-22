@@ -10,7 +10,7 @@ using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
 using Xunit;
 
-namespace Tnf.Architecture.Mapper.Tests
+namespace Tnf.Architecture.Mapper.Tests.Profiles
 {
     public class EntityToPocoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {

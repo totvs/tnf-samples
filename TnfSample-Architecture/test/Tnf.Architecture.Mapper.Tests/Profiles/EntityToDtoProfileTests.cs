@@ -9,7 +9,7 @@ using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.AutoMapper;
 using Xunit;
 
-namespace Tnf.Architecture.Mapper.Tests
+namespace Tnf.Architecture.Mapper.Tests.Profiles
 {
     public class EntityToDtoProfileTests : TnfAppIntegratedTestBase<MapperTestModule>
     {
