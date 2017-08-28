@@ -1,11 +1,9 @@
-﻿using Tnf.App.Application.Services;
-using Tnf.App.Bus.Notifications;
+﻿using System.Linq;
+using Tnf.App.Application.Services;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Common;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.AutoMapper;
@@ -45,8 +43,9 @@ namespace Tnf.Architecture.Application.Services
                 return new PersonDto();
 
             var personBuilder = new PersonBuilder(Notification)
-                .WithId(person.Id)
-                .WithName(person.Name);
+                    .WithId(person.Id)
+                    .WithName(person.Name)
+                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
 
             person.Id = _service.InsertAndGetId(personBuilder);
 
@@ -61,8 +60,9 @@ namespace Tnf.Architecture.Application.Services
                 return new PersonDto();
 
             var personBuilder = new PersonBuilder(Notification)
-                .WithId(id)
-                .WithName(person.Name);
+                    .WithId(id)
+                    .WithName(person.Name)
+                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
 
             _service.Update(personBuilder);
 

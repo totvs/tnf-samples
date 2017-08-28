@@ -10,6 +10,7 @@ namespace Tnf.Architecture.Web.Controllers
     public class PersonController : ArchitectureControllerBase
     {
         private readonly IPersonAppService _personAppService;
+        private const string PERSON_NAME = "Person";
 
         public PersonController(IPersonAppService personAppService)
         {
@@ -21,11 +22,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _personAppService.GetAll(requestDto);
 
-            return CreateResponse<PersonDto>()
-                        .FromErrorEnum(PersonDto.Error.GetAllPeople)
-                        .WithMessage(AppConsts.LocalizationSourceName, PersonDto.Error.GetAllPeople)
-                        .WithDto(response)
-                        .Build();
+            return CreateResponseOnGetAll(response, PERSON_NAME);
         }
 
         [HttpGet("{id}")]
@@ -33,12 +30,8 @@ namespace Tnf.Architecture.Web.Controllers
         {
             requestDto.WithId(id);
             var response = _personAppService.Get(requestDto);
-
-            return CreateResponse<PersonDto>()
-                        .FromErrorEnum(PersonDto.Error.GetPerson)
-                        .WithMessage(AppConsts.LocalizationSourceName, PersonDto.Error.GetPerson)
-                        .WithDto(response)
-                        .Build();
+            
+            return CreateResponseOnGet(response, PERSON_NAME);
         }
 
         [HttpPost]
@@ -46,11 +39,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _personAppService.Create(person);
 
-            return CreateResponse<PersonDto>()
-                        .FromErrorEnum(PersonDto.Error.PostPerson)
-                        .WithMessage(AppConsts.LocalizationSourceName, PersonDto.Error.PostPerson)
-                        .WithDto(response)
-                        .Build();
+            return CreateResponseOnPost(response, PERSON_NAME);
         }
 
         [HttpPut("{id}")]
@@ -58,11 +47,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             var response = _personAppService.Update(id, person);
 
-            return CreateResponse<PersonDto>()
-                        .FromErrorEnum(PersonDto.Error.PutPerson)
-                        .WithMessage(AppConsts.LocalizationSourceName, PersonDto.Error.PutPerson)
-                        .WithDto(response)
-                        .Build();
+            return CreateResponseOnPut(response, PERSON_NAME);
         }
 
         [HttpDelete("{id}")]
@@ -70,10 +55,7 @@ namespace Tnf.Architecture.Web.Controllers
         {
             _personAppService.Delete(id);
 
-            return CreateResponse<PersonDto>()
-                        .FromErrorEnum(PersonDto.Error.DeletePerson)
-                        .WithMessage(AppConsts.LocalizationSourceName, PersonDto.Error.DeletePerson)
-                        .Build();
+            return CreateResponseOnDelete<PersonDto>(PERSON_NAME);
         }
     }
 }

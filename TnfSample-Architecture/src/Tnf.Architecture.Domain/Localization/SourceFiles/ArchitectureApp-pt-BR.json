@@ -37,11 +37,6 @@
     "PutSpecialty": "Erro ao atualizar Especialidade",
     "DeleteSpecialty": "Erro ao deletar Especialidade",
 
-    "PersonNameMustHaveValue": "Uma pessoa deve ter um nome",
-    "GetAllPerson": "Erro ao buscar Pessoas",
-    "GetPerson": "Erro ao buscar Pessoa",
-    "PostPerson": "Erro ao salvar Pessoa",
-    "PutPerson": "Erro ao atualizar Pessoa",
-    "DeletePerson": "Erro ao deletar Pessoa"
+    "PersonNameMustHaveValue": "Uma pessoa deve ter um nome"
   }
 }

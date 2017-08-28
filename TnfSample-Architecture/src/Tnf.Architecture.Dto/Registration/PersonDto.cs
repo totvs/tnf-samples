@@ -1,10 +1,12 @@
-﻿using Tnf.App.Dto.Response;
+﻿using System.Collections.Generic;
+using Tnf.App.Dto.Response;
 
 namespace Tnf.Architecture.Dto.Registration
 {
     public class PersonDto : DtoBase
     {
         public string Name { get; set; }
+        public IList<PersonDto> Children { get; set; } = new List<PersonDto>();
 
         public enum Error
         {

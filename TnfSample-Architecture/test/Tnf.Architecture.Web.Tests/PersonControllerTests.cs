@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.App.Application.Enums;
+using Tnf.App.AspNetCore.Mvc.Controllers;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Domain.Enums;
 using Tnf.App.Dto.Response;
@@ -113,8 +114,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("GetPerson");
-            response.DetailedMessage.ShouldBe("GetPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
             Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
         }
 
@@ -128,8 +129,8 @@ namespace Tnf.Architecture.Web.Tests
                            );
 
             // Assert
-            response.Message.ShouldBe("GetPerson");
-            response.DetailedMessage.ShouldBe("GetPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
             Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnGetCouldNotFind.ToString()));
         }
 
@@ -203,8 +204,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PostPerson");
-            response.DetailedMessage.ShouldBe("PostPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
             Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
         }
 
@@ -222,8 +223,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PostPerson");
-            response.DetailedMessage.ShouldBe("PostPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
             Assert.True(response.Details.Any(a => a.Message == Person.Error.PersonNameMustHaveValue.ToString()));
         }
 
@@ -264,8 +265,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PutPerson");
-            response.DetailedMessage.ShouldBe("PutPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
             Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
         }
 
@@ -280,8 +281,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PutPerson");
-            response.DetailedMessage.ShouldBe("PutPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
             Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
         }
 
@@ -296,8 +297,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PutPerson");
-            response.DetailedMessage.ShouldBe("PutPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
             Assert.True(response.Details.Any(a => a.Message == Person.Error.PersonNameMustHaveValue.ToString()));
         }
 
@@ -319,8 +320,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("PutPerson");
-            response.DetailedMessage.ShouldBe("PutPerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
             Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnUpdateCouldNotFind.ToString()));
         }
 
@@ -344,8 +345,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("DeletePerson");
-            response.DetailedMessage.ShouldBe("DeletePerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
             Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
         }
 
@@ -359,8 +360,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe("DeletePerson");
-            response.DetailedMessage.ShouldBe("DeletePerson");
+            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
             Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnDeleteCouldNotFind.ToString()));
         }
     }

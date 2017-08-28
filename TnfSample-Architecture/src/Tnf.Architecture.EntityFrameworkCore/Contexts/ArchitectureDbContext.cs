@@ -12,5 +12,19 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>(m =>
+            {
+                // PKs
+                m.HasKey(i => i.Id);
+                
+                m.HasOne(o => o.Parent)
+                    .WithMany(w => w.Children)
+                    .HasPrincipalKey(k => k.Id)
+                    .HasForeignKey(k => k.ParentId);
+            });
+        }
     }
 }

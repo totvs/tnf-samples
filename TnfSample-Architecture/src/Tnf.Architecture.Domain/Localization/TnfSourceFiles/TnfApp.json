@@ -6,6 +6,12 @@
 
     "TnfAppDomainErrorOnGetCouldNotFind": "Could not find '{0}' on get",
     "TnfAppDomainErrorOnUpdateCouldNotFind": "Could not find '{0}' on update",
-    "TnfAppDomainErrorOnDeleteCouldNotFind": "Could not find '{0}' on delete"
+    "TnfAppDomainErrorOnDeleteCouldNotFind": "Could not find '{0}' on delete",
+
+    "TnfAppControllerOnGetAllError": "Error fetching '{0}'",
+    "TnfAppControllerOnGetError": "Error fetching '{0}'",
+    "TnfAppControllerOnPostError": "Error salving '{0}'",
+    "TnfAppControllerOnPutError": "Error updating '{0}'",
+    "TnfAppControllerOnDeleteError": "Error deleting '{0}'"
   }
 }

@@ -6,6 +6,12 @@
 
     "TnfAppDomainErrorOnGetCouldNotFind": "Não foi possível achar '{0}' na busca",
     "TnfAppDomainErrorOnUpdateCouldNotFind": "Não foi possível achar '{0}' ao atualizar",
-    "TnfAppDomainErrorOnDeleteCouldNotFind": "Não foi possível achar '{0}' ao deletar"
+    "TnfAppDomainErrorOnDeleteCouldNotFind": "Não foi possível achar '{0}' ao deletar",
+
+    "TnfAppControllerOnGetAllError": "Erro ao buscar '{0}'",
+    "TnfAppControllerOnGetError": "Erro ao buscar '{0}'",
+    "TnfAppControllerOnPostError": "Erro ao salvar '{0}'",
+    "TnfAppControllerOnPutError": "Erro ao atualizar '{0}'",
+    "TnfAppControllerOnDeleteError": "Erro ao deletar '{0}'"
   }
 }

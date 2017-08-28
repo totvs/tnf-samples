@@ -37,11 +37,6 @@
     "PutSpecialty": "Error updating Specialty",
     "DeleteSpecialty": "Error deleting Specialty",
 
-    "PersonNameMustHaveValue": "A person must have a name",
-    "GetAllPerson": "Error fetching People",
-    "GetPerson": "Error fetching Person",
-    "PostPerson": "Error salving Person",
-    "PutPerson": "Error updating Person",
-    "DeletePerson": "Error deleting Person"
+    "PersonNameMustHaveValue": "A person must have a name"
   }
 }
