@@ -82,7 +82,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnUpdateCouldNotFind.ToString()));
+            Assert.True(notifications.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnUpdateCouldNotFindError.ToString()));
         }
 
         [Fact]
@@ -145,7 +145,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -181,7 +181,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnGetCouldNotFind.ToString()));
+            Assert.True(notifications.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnGetCouldNotFindError.ToString()));
         }
 
         [Fact]
@@ -217,7 +217,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnDeleteCouldNotFind.ToString()));
+            Assert.True(notifications.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnDeleteCouldNotFindError.ToString()));
         }
     }
 }

@@ -114,9 +114,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
-            Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnGetError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnGetError.ToString());
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -129,9 +129,9 @@ namespace Tnf.Architecture.Web.Tests
                            );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnGetError.ToString());
-            Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnGetCouldNotFind.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnGetError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnGetError.ToString());
+            Assert.True(response.Details.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnGetCouldNotFindError.ToString()));
         }
 
 
@@ -204,9 +204,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
-            Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPostError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPostError.ToString());
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -223,8 +223,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPostError.ToString());
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPostError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPostError.ToString());
             Assert.True(response.Details.Any(a => a.Message == Person.Error.PersonNameMustHaveValue.ToString()));
         }
 
@@ -265,9 +265,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -281,9 +281,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidDto.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -297,8 +297,8 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
             Assert.True(response.Details.Any(a => a.Message == Person.Error.PersonNameMustHaveValue.ToString()));
         }
 
@@ -320,9 +320,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnPutError.ToString());
-            Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnUpdateCouldNotFind.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnPutError.ToString());
+            Assert.True(response.Details.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnUpdateCouldNotFindError.ToString()));
         }
 
 
@@ -345,9 +345,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
-            Assert.True(response.Details.Any(n => n.Message == AppApplicationErrors.AppApplicationErrorsInvalidId.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnDeleteError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnDeleteError.ToString());
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -360,9 +360,9 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.Message.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
-            response.DetailedMessage.ShouldBe(TnfAppControllerError.TnfAppControllerOnDeleteError.ToString());
-            Assert.True(response.Details.Any(a => a.Message == AppDomainErrors.TnfAppDomainErrorOnDeleteCouldNotFind.ToString()));
+            response.Message.ShouldBe(TnfAppControllerErrors.AppControllerOnDeleteError.ToString());
+            response.DetailedMessage.ShouldBe(TnfAppControllerErrors.AppControllerOnDeleteError.ToString());
+            Assert.True(response.Details.Any(a => a.Message == TnfAppDomainErrors.AppDomainOnDeleteCouldNotFindError.ToString()));
         }
     }
 }

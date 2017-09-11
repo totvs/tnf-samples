@@ -27,8 +27,8 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="Shouldly" Version="2.8.3" />
-    <PackageReference Include="Tnf.App.AspNetCore.TestBase" Version="1.0.17240.7" />
-    <PackageReference Include="Tnf.App.EntityFrameworkCore.TestBase" Version="1.0.17240.7" />
+    <PackageReference Include="Tnf.App.AspNetCore.TestBase" Version="1.3.17254.1" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore.TestBase" Version="1.3.17254.1" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="Microsoft.DotNet.InternalAbstractions" Version="1.0.0" />
