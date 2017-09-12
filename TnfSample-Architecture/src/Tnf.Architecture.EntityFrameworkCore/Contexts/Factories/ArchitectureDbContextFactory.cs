@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
@@ -9,9 +9,9 @@ using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Factories
 {
-    public class ArchitectureDbContextFactory : IDbContextFactory<ArchitectureDbContext>
+    public class ArchitectureDbContextFactory : IDesignTimeDbContextFactory<ArchitectureDbContext>
     {
-        public ArchitectureDbContext Create(DbContextFactoryOptions options)
+        public ArchitectureDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<ArchitectureDbContext>();
 
