@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new PresidentDto();
 
-            var builder = new PresidentBuilder(Notification)
+            var builder = new PresidentBuilder()
                 .WithId(dto.Id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);
@@ -72,7 +72,7 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new PresidentDto();
 
-            var builder = new PresidentBuilder(Notification)
+            var builder = new PresidentBuilder()
                 .WithId(id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);

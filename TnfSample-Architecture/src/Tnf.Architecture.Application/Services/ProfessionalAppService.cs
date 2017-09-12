@@ -60,14 +60,14 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new ProfessionalDto();
 
-            var professionalBuilder = new ProfessionalBuilder(Notification)
+            var professionalBuilder = new ProfessionalBuilder()
                 .WithProfessionalId(professional.ProfessionalId)
                 .WithCode(professional.Code)
                 .WithName(professional.Name)
                 .WithPhone(professional.Phone)
                 .WithEmail(professional.Email)
                 .WithAddress(professional.Address)
-                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder(Notification).WithId(s.Id).WithDescription(s.Description).Build()).ToList());
+                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder().WithId(s.Id).WithDescription(s.Description).Build()).ToList());
 
             var id = _service.CreateProfessional(professionalBuilder);
 
@@ -94,14 +94,14 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new ProfessionalDto();
             
-            var professionalBuilder = new ProfessionalBuilder(Notification)
+            var professionalBuilder = new ProfessionalBuilder()
                 .WithProfessionalId(keys.SecundaryKey)
                 .WithCode(keys.PrimaryKey)
                 .WithName(professional.Name)
                 .WithPhone(professional.Phone)
                 .WithEmail(professional.Email)
                 .WithAddress(professional.Address)
-                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder(Notification).WithId(s.Id).WithDescription(s.Description).Build()).ToList());
+                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder().WithId(s.Id).WithDescription(s.Description).Build()).ToList());
 
             _service.UpdateProfessional(professionalBuilder);
 

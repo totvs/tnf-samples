@@ -42,10 +42,10 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new PersonDto();
 
-            var personBuilder = new PersonBuilder(Notification)
+            var personBuilder = new PersonBuilder()
                     .WithId(person.Id)
                     .WithName(person.Name)
-                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
+                    .WithChildren(person.Children.Select(p => new PersonBuilder().WithId(p.Id).WithName(p.Name)).ToList());
 
             person.Id = _service.InsertAndGetId(personBuilder);
 
@@ -59,10 +59,10 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new PersonDto();
 
-            var personBuilder = new PersonBuilder(Notification)
+            var personBuilder = new PersonBuilder()
                     .WithId(id)
                     .WithName(person.Name)
-                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
+                    .WithChildren(person.Children.Select(p => new PersonBuilder().WithId(p.Id).WithName(p.Name)).ToList());
 
             _service.Update(personBuilder);
 

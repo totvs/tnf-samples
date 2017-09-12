@@ -7,6 +7,10 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 {
     public class PresidentBuilder : Builder<President>
     {
+        public PresidentBuilder()
+        {
+        }
+
         public PresidentBuilder(INotificationHandler notification)
             : base(notification)
         {

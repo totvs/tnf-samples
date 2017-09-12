@@ -6,6 +6,10 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class SpecialtyBuilder : Builder<Specialty>
     {
+        public SpecialtyBuilder()
+        {
+        }
+
         public SpecialtyBuilder(INotificationHandler notification)
             : base(notification)
         {

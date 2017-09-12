@@ -9,6 +9,10 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalBuilder : Builder<Professional>
     {
+        public ProfessionalBuilder()
+        {
+        }
+
         public ProfessionalBuilder(Professional instance)
             : base(instance)
         {

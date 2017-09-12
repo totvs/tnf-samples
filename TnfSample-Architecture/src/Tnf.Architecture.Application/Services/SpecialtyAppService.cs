@@ -48,7 +48,7 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new SpecialtyDto();
 
-            var specialtyBuilder = new SpecialtyBuilder(Notification)
+            var specialtyBuilder = new SpecialtyBuilder()
                 .WithId(specialty.Id)
                 .WithDescription(specialty.Description);
 
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return new SpecialtyDto();
 
-            var specialtyBuilder = new SpecialtyBuilder(Notification)
+            var specialtyBuilder = new SpecialtyBuilder()
                 .WithId(id)
                 .WithDescription(specialty.Description);
 
