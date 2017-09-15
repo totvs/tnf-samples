@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="Tnf.App.Crud" Version="1.4.17254.4" />
-    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.4.17257.5" />
+    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.4.17258.2" />
   </ItemGroup>
 
 </Project>
