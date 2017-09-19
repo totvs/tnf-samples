@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Common;
@@ -77,4 +77,4 @@ namespace Tnf.Architecture.Web.Controllers
                         .Build();
         }
     }
-}
+}                                                                                        

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.Architecture.Application", "src\Tnf.Architecture.Application\Tnf.Architecture.Application.csproj", "{CA7C6730-1500-499D-A66D-C4A6981B4BA8}"
 EndProject
@@ -124,6 +124,9 @@ Global
 		{636461BC-8551-415C-B3CA-44C50337F007} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{7E9EB56B-1478-409F-AA7D-EDE00B73F6A4} = {5F4DBC7A-0474-4B2B-965A-6CDDF2E7B201}
 		{F00101BC-5393-4AC8-BC93-602C09EB7686} = {00C9C500-F532-493C-9741-301F540E69C7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A3019B8-412C-4080-9F4B-B2D48464DE4D}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
