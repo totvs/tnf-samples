@@ -4,7 +4,6 @@ using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Dapper;
 using Tnf.EntityFrameworkCore.Configuration;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.EntityFrameworkCore
 {
@@ -28,7 +27,7 @@ namespace Tnf.Architecture.EntityFrameworkCore
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(EntityFrameworkModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(EntityFrameworkModule).Assembly);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Tnf.Architecture.Domain.Registration.Specifications
             return (p) =>
                 p.Address != null &&
                 p.Address.ZipCode != null &&
-                !string.IsNullOrWhiteSpace(p.Address.ZipCode.Number) &&
+                !p.Address.ZipCode.Number.IsNullOrWhiteSpace() &&
                 p.Address.ZipCode.Number.Length == ZipCode.Length;
         }
     }

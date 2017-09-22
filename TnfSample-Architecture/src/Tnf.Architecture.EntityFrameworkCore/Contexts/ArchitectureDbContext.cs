@@ -23,7 +23,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts
                 m.HasOne(o => o.Parent)
                     .WithMany(w => w.Children)
                     .HasPrincipalKey(k => k.Id)
-                    .HasForeignKey(k => k.ParentId);
+                    .HasForeignKey(k => k.ParentId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

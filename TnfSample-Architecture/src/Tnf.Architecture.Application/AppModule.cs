@@ -5,7 +5,6 @@ using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.Mapper;
 using Tnf.Castle.Log4Net;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application
 {
@@ -28,7 +27,7 @@ namespace Tnf.Architecture.Application
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(AppModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AppModule).Assembly);
         }
     }
 }

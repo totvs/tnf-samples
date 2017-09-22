@@ -8,7 +8,6 @@ using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.Web.Tests.Mocks;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Tests.App
 {
@@ -31,7 +30,7 @@ namespace Tnf.Architecture.Web.Tests.App
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AppTestModule).Assembly);
         }
     }
 }

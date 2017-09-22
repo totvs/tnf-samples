@@ -1,6 +1,5 @@
 ﻿using Tnf.App.TestBase;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Mapper.Tests
 {
@@ -13,7 +12,7 @@ namespace Tnf.Architecture.Mapper.Tests
         {
             base.Initialize();
 
-            IocManager.RegisterAssemblyByConvention(typeof(MapperTestModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(MapperTestModule).Assembly);
         }
     }
 }

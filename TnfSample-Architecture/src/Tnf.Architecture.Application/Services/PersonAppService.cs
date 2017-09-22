@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Tnf.App.Application.Services;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
@@ -7,7 +8,6 @@ using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.AutoMapper;
-using Tnf.Extensions;
 
 namespace Tnf.Architecture.Application.Services
 {

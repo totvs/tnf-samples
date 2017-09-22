@@ -12,7 +12,6 @@ using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Application.Tests
 {
@@ -95,7 +94,7 @@ namespace Tnf.Architecture.Application.Tests
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(NSubstituteAppTestModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(NSubstituteAppTestModule).Assembly);
         }
     }
 }

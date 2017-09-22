@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using Tnf.Architecture.Common;
 using Tnf.Architecture.Domain.Configuration;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Factories
 {
@@ -15,8 +14,8 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Factories
         {
             var builder = new DbContextOptionsBuilder<LegacyDbContext>();
 
-            var assemblyPath = typeof(EntityFrameworkModule).GetAssembly().Location;
-            var assemblyName = typeof(EntityFrameworkModule).GetAssembly().GetName().Name;
+            var assemblyPath = typeof(EntityFrameworkModule).Assembly.Location;
+            var assemblyName = typeof(EntityFrameworkModule).Assembly.GetName().Name;
 
             var assemblyConfig = assemblyPath.Substring(0, assemblyPath.IndexOf(@"\src\", StringComparison.Ordinal) + 5);
             assemblyConfig = Path.Combine(assemblyConfig, assemblyName);

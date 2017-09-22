@@ -12,7 +12,7 @@ namespace Tnf.Architecture.Domain.Registration.Specifications
 
         public override Expression<Func<Professional, bool>> ToExpression()
         {
-            return (p) => p.Address != null && !string.IsNullOrWhiteSpace(p.Address.Street);
+            return (p) => p.Address != null && !p.Address.Street.IsNullOrWhiteSpace();
         }
     }
 }

@@ -2,7 +2,6 @@
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Modules;
 using Tnf.Provider.Misc;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Carol
 {
@@ -32,7 +31,7 @@ namespace Tnf.Architecture.Carol
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(CarolModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(CarolModule).Assembly);
         }
     }
 }

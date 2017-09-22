@@ -10,7 +10,6 @@ using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Configuration.Startup;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Domain.Tests
 {
@@ -127,7 +126,7 @@ namespace Tnf.Architecture.Domain.Tests
         {
             base.Initialize();
 
-            IocManager.RegisterAssemblyByConvention(typeof(DomainModuleTest).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(DomainModuleTest).Assembly);
         }
     }
 }

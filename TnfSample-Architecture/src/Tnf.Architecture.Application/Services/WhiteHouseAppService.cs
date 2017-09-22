@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Tnf.App.Application.Services;
 using Tnf.App.Bus.Notifications;
 using Tnf.App.Dto.Request;
@@ -32,7 +33,7 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {
-            if (string.IsNullOrWhiteSpace(id.GetId()))
+            if (id.GetId().IsNullOrWhiteSpace())
                 RaiseNotification(nameof(id));
 
             if (Notification.HasNotification())
@@ -63,7 +64,7 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> UpdatePresidentAsync(string id, PresidentDto dto)
         {
-            if (string.IsNullOrEmpty(id))
+            if (id.IsNullOrEmpty())
                 RaiseNotification(nameof(id));
 
             if (dto == null)
@@ -85,7 +86,7 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task DeletePresidentAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (id.IsNullOrWhiteSpace())
                 RaiseNotification(nameof(id));
 
             if (!Notification.HasNotification())

@@ -4,7 +4,6 @@ using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 using Tnf.Localization.Dictionaries.Json;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Domain
 {
@@ -19,7 +18,7 @@ namespace Tnf.Architecture.Domain
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(AppConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(
-                        typeof(DomainModule).GetAssembly(),
+                        typeof(DomainModule).Assembly,
                         "Tnf.Architecture.Domain.Localization.SourceFiles"
                     )
                 )
@@ -28,7 +27,7 @@ namespace Tnf.Architecture.Domain
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(TnfAppConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(
-                        typeof(DomainModule).GetAssembly(),
+                        typeof(DomainModule).Assembly,
                         "Tnf.Architecture.Domain.Localization.TnfSourceFiles"
                     )
                 )
@@ -39,7 +38,7 @@ namespace Tnf.Architecture.Domain
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(DomainModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(DomainModule).Assembly);
         }
     }
 }

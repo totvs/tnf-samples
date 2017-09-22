@@ -12,7 +12,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse.Specifications
 
         public override Expression<Func<President, bool>> ToExpression()
         {
-            return (p) => p.Address != null && !string.IsNullOrWhiteSpace(p.Address.Complement);
+            return (p) => p.Address != null && !p.Address.Complement.IsNullOrWhiteSpace();
         }
     }
 }

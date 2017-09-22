@@ -13,7 +13,6 @@ using Tnf.Architecture.Application.Events;
 using Tnf.Architecture.Common;
 using Tnf.Architecture.Domain.Configuration;
 using Tnf.Modules;
-using Tnf.Reflection.Extensions;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -93,7 +92,7 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(WebModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(WebModule).Assembly);
         }
     }
 }
