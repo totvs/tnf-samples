@@ -19,12 +19,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts
             {
                 // PKs
                 m.HasKey(i => i.Id);
-                
-                m.HasOne(o => o.Parent)
-                    .WithMany(w => w.Children)
-                    .HasPrincipalKey(k => k.Id)
-                    .HasForeignKey(k => k.ParentId)
-                    .OnDelete(DeleteBehavior.Cascade);
+
+                m.HasOne(d => d.Parent)
+                    .WithMany(p => p.Children)
+                    .HasForeignKey(d => d.ParentId);
             });
         }
     }

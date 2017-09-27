@@ -3,10 +3,10 @@ using Shouldly;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Common;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
@@ -89,7 +89,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("GetPresident");
             response.DetailedMessage.ShouldBe("GetPresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PostPresident");
             response.DetailedMessage.ShouldBe("PostPresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutPresident");
             response.DetailedMessage.ShouldBe("PutPresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -251,7 +251,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutPresident");
             response.DetailedMessage.ShouldBe("PutPresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -314,7 +314,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("DeletePresident");
             response.DetailedMessage.ShouldBe("DeletePresident");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]

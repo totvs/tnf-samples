@@ -1,14 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
-using Tnf.App.Bus.Notifications;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Application.Services;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Carol.ReadInterfaces;
-using Tnf.Architecture.Common;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
@@ -33,11 +30,13 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
         {
-            if (id.GetId().IsNullOrWhiteSpace())
-                RaiseNotification(nameof(id));
+            ValidateRequestDto<RequestDto<string>, string>(id);
+
+            if (string.IsNullOrWhiteSpace(id.GetId()))
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
 
             if (Notification.HasNotification())
-                return new PresidentDto();
+                return PresidentDto.NullInstance;
 
             var entity = await _whiteHouserService.GetPresidentById(id);
 
@@ -46,34 +45,32 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> InsertPresidentAsync(PresidentDto dto)
         {
-            if (dto == null)
-                RaiseNotification(nameof(dto));
+            ValidateDto(dto);
 
             if (Notification.HasNotification())
-                return new PresidentDto();
+                return PresidentDto.NullInstance;
 
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(Notification)
                 .WithId(dto.Id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);
 
             dto.Id = await _whiteHouserService.InsertPresidentAsync(builder);
-
             return dto;
         }
 
         public async Task<PresidentDto> UpdatePresidentAsync(string id, PresidentDto dto)
         {
-            if (id.IsNullOrEmpty())
-                RaiseNotification(nameof(id));
+            ValidateId(id);
+            ValidateDto(dto);
 
-            if (dto == null)
-                RaiseNotification(nameof(dto));
+            if (string.IsNullOrWhiteSpace(id))
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
 
             if (Notification.HasNotification())
-                return new PresidentDto();
+                return PresidentDto.NullInstance;
 
-            var builder = new PresidentBuilder()
+            var builder = new PresidentBuilder(Notification)
                 .WithId(id)
                 .WithName(dto.Name)
                 .WithAddress(dto.Address);
@@ -86,20 +83,15 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task DeletePresidentAsync(string id)
         {
-            if (id.IsNullOrWhiteSpace())
-                RaiseNotification(nameof(id));
+            ValidateId(id);
 
-            if (!Notification.HasNotification())
-                await _whiteHouserService.DeletePresidentAsync(id);
-        }
+            if (string.IsNullOrWhiteSpace(id))
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
 
-        private void RaiseNotification(params object[] parameter)
-        {
-            Notification.Raise(NotificationEvent.DefaultBuilder
-                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
-                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
-                                                .WithMessageFormat(parameter)
-                                                .Build());
+            if (Notification.HasNotification())
+                return;
+
+            await _whiteHouserService.DeletePresidentAsync(id);
         }
     }
 }

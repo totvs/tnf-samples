@@ -1,15 +1,12 @@
-﻿using System.IO;
+﻿using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
 using Tnf.App.Bus.Client;
-using Tnf.App.Bus.Notifications;
 using Tnf.App.Bus.Queue.Interfaces;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Commands;
 using Tnf.Architecture.Application.Events;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Common;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
@@ -36,11 +33,16 @@ namespace Tnf.Architecture.Application.Services
 
         public SpecialtyDto GetSpecialty(RequestDto id)
         {
-            if (id.GetId() <= 0)
-                RaiseNotification(nameof(id));
+            ValidateId(id);
 
             if (Notification.HasNotification())
-                return new SpecialtyDto();
+                return SpecialtyDto.NullInstance;
+
+            if (id.GetId() <= 0)
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
+
+            if (Notification.HasNotification())
+                return SpecialtyDto.NullInstance;
 
             var entity = _service.GetSpecialty(id);
 
@@ -49,13 +51,12 @@ namespace Tnf.Architecture.Application.Services
 
         public SpecialtyDto CreateSpecialty(SpecialtyDto specialty)
         {
-            if (specialty == null)
-                RaiseNotification(nameof(specialty));
+            ValidateDto(specialty);
 
             if (Notification.HasNotification())
-                return new SpecialtyDto();
+                return SpecialtyDto.NullInstance;
 
-            var specialtyBuilder = new SpecialtyBuilder()
+            var specialtyBuilder = new SpecialtyBuilder(Notification)
                 .WithId(specialty.Id)
                 .WithDescription(specialty.Description);
 
@@ -66,16 +67,16 @@ namespace Tnf.Architecture.Application.Services
 
         public SpecialtyDto UpdateSpecialty(int id, SpecialtyDto specialty)
         {
-            if (id <= 0)
-                RaiseNotification(nameof(id));
+            ValidateId(id);
+            ValidateDto(specialty);
 
-            if (specialty == null)
-                RaiseNotification(nameof(specialty));
+            if (id <= 0)
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
 
             if (Notification.HasNotification())
-                return new SpecialtyDto();
+                return SpecialtyDto.NullInstance;
 
-            var specialtyBuilder = new SpecialtyBuilder()
+            var specialtyBuilder = new SpecialtyBuilder(Notification)
                 .WithId(id)
                 .WithDescription(specialty.Description);
 
@@ -87,20 +88,15 @@ namespace Tnf.Architecture.Application.Services
 
         public void DeleteSpecialty(int id)
         {
+            ValidateId(id);
+
             if (id <= 0)
-                RaiseNotification(nameof(id));
+                RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
 
-            if (!Notification.HasNotification())
-                _service.DeleteSpecialty(id);
-        }
+            if (Notification.HasNotification())
+                return;
 
-        private void RaiseNotification(params object[] parameter)
-        {
-            Notification.Raise(NotificationEvent.DefaultBuilder
-                                                .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
-                                                .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
-                                                .WithMessageFormat(parameter)
-                                                .Build());
+            _service.DeleteSpecialty(id);
         }
 
         public void Handle(SpecialtyCreateCommand message)

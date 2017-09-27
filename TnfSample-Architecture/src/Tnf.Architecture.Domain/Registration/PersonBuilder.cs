@@ -8,17 +8,13 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class PersonBuilder : Builder<Person>
     {
-        public PersonBuilder()
-        {
-        }
-
         public PersonBuilder(INotificationHandler notification)
             : base(notification)
         {
         }
 
-        public PersonBuilder(Person instance, INotificationHandler notification)
-            : base(instance, notification)
+        public PersonBuilder(INotificationHandler notification, Person instance)
+            : base(notification, instance)
         {
         }
 

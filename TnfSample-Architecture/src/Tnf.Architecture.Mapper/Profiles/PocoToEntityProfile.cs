@@ -25,11 +25,8 @@ namespace Tnf.Architecture.Mapper.Profiles
                         specialties = s.ProfessionalSpecialties.Select(w => w.Specialty.MapTo<Specialty>()).ToList();
                     }
 
-                    new ProfessionalBuilder(d)
-                        .WithAddress(new Address(s.Address, s.AddressNumber, s.AddressComplement,
-                            new ZipCode(s.ZipCode)))
-                        .WithSpecialties(specialties)
-                        .Build();
+                    d.Address = new Address(s.Address, s.AddressNumber, s.AddressComplement, new ZipCode(s.ZipCode));
+                    d.Specialties = specialties;
                 });
 
             CreateMap<SpecialtyPoco, Specialty>();

@@ -7,17 +7,13 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 {
     public class PresidentBuilder : Builder<President>
     {
-        public PresidentBuilder()
-        {
-        }
-
         public PresidentBuilder(INotificationHandler notification)
             : base(notification)
         {
         }
 
-        public PresidentBuilder(President instance, INotificationHandler notification)
-            : base(instance, notification)
+        public PresidentBuilder(INotificationHandler notification, President instance)
+            : base(notification, instance)
         {
         }
 

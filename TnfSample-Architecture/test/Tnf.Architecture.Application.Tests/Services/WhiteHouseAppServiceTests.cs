@@ -1,9 +1,9 @@
 ﻿using Shouldly;
 using System.Linq;
 using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
@@ -72,7 +72,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -131,12 +131,12 @@ namespace Tnf.Architecture.Application.Tests.Services
         public async Task Should_Update_Invalid_Id_With_Error()
         {
             // Act
-            await _whiteHouseAppService.UpdatePresidentAsync("", new PresidentDto());
+            await _whiteHouseAppService.UpdatePresidentAsync(string.Empty, new PresidentDto());
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]

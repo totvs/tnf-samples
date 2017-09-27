@@ -5,6 +5,8 @@ namespace Tnf.Architecture.Dto.WhiteHouse
 {
     public class PresidentDto : DtoBase<string>
     {
+        public static PresidentDto NullInstance = new PresidentDto().AsNullable<PresidentDto, string>();
+
         public PresidentDto()
         {
         }

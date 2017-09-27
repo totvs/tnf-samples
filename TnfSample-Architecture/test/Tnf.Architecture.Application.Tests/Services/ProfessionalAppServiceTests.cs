@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tnf.App.Application.Enums;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.TestBase;
 using Tnf.Architecture.Application.Interfaces;
@@ -109,7 +110,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             // Assert
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -211,7 +212,7 @@ namespace Tnf.Architecture.Application.Tests.Services
             Assert.True(LocalNotification.HasNotification());
             var notifications = LocalNotification.GetAll();
             Assert.Equal(notifications.Count(), 1);
-            Assert.True(notifications.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(notifications.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]

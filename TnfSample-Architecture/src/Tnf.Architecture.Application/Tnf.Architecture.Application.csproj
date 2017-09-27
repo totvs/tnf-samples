@@ -19,9 +19,9 @@
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="Tnf.App.Bus.Client" Version="1.4.17269.1" />
-    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17269.1" />
-    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.4.17269.1" />
+    <PackageReference Include="Tnf.App.Bus.Client" Version="1.4.17270.4" />
+    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17270.4" />
+    <PackageReference Include="Tnf.Castle.Log4Net" Version="1.4.17270.4" />
   </ItemGroup>
 
 </Project>

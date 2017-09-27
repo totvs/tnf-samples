@@ -8,8 +8,10 @@ namespace Tnf.Architecture.Dto.Registration
 {
     public class ProfessionalDto : DtoBase<ComposeKey<Guid, decimal>>
     {
+        public static ProfessionalDto NullInstance = new ProfessionalDto().AsNullable<ProfessionalDto, ComposeKey<Guid, decimal>>();
+
         public ProfessionalDto()
-            :base(new List<string> { "professionalSpecialties.specialty" })
+            : base(new List<string> { "professionalSpecialties.specialty" })
         {
         }
 

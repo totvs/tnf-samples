@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tnf.App.Dapper;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
-using Tnf.Dapper;
 using Tnf.EntityFrameworkCore.Configuration;
 using Tnf.Modules;
 
 namespace Tnf.Architecture.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(TnfDapperModule),
+        typeof(TnfAppDapperModule),
         typeof(TnfAppEntityFrameworkCoreModule))]
     public class EntityFrameworkModule : TnfModule
     {

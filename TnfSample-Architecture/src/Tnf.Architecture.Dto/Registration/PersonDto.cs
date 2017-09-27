@@ -5,6 +5,8 @@ namespace Tnf.Architecture.Dto.Registration
 {
     public class PersonDto : DtoBase
     {
+        public static PersonDto NullInstance = new PersonDto().AsNullable();
+
         public string Name { get; set; }
         public IList<PersonDto> Children { get; set; } = new List<PersonDto>();
 

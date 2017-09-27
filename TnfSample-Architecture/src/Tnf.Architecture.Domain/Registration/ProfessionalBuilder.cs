@@ -9,26 +9,15 @@ namespace Tnf.Architecture.Domain.Registration
 {
     public class ProfessionalBuilder : Builder<Professional>
     {
-        public ProfessionalBuilder()
-        {
-        }
-
-        public ProfessionalBuilder(Professional instance)
-            : base(instance)
-        {
-        }
-
         public ProfessionalBuilder(INotificationHandler notification)
             : base(notification)
         {
         }
 
-        public ProfessionalBuilder(Professional instance, INotificationHandler notification)
-            : base(instance, notification)
+        public ProfessionalBuilder(INotificationHandler notification, Professional instance)
+            : base(notification, instance)
         {
         }
-
-        
 
         public ProfessionalBuilder WithIds(ComposeKey<Guid, decimal> keys)
         {

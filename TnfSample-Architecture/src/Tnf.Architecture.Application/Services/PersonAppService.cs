@@ -28,7 +28,7 @@ namespace Tnf.Architecture.Application.Services
             ValidateRequestDto(id, nameof(id));
 
             if (Notification.HasNotification())
-                return new PersonDto();
+                return PersonDto.NullInstance;
 
             var entity = _service.Get(id);
 
@@ -40,12 +40,12 @@ namespace Tnf.Architecture.Application.Services
             ValidateDto(person, nameof(person));
 
             if (Notification.HasNotification())
-                return new PersonDto();
+                return PersonDto.NullInstance;
 
-            var personBuilder = new PersonBuilder()
+            var personBuilder = new PersonBuilder(Notification)
                     .WithId(person.Id)
                     .WithName(person.Name)
-                    .WithChildren(person.Children.Select(p => new PersonBuilder().WithId(p.Id).WithName(p.Name)).ToList());
+                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
 
             person.Id = _service.InsertAndGetId(personBuilder);
 
@@ -57,12 +57,12 @@ namespace Tnf.Architecture.Application.Services
             ValidateDtoAndId(person, id, nameof(person), nameof(id));
 
             if (Notification.HasNotification())
-                return new PersonDto();
+                return PersonDto.NullInstance;
 
-            var personBuilder = new PersonBuilder()
+            var personBuilder = new PersonBuilder(Notification)
                     .WithId(id)
                     .WithName(person.Name)
-                    .WithChildren(person.Children.Select(p => new PersonBuilder().WithId(p.Id).WithName(p.Name)).ToList());
+                    .WithChildren(person.Children.Select(p => new PersonBuilder(Notification).WithId(p.Id).WithName(p.Name)).ToList());
 
             _service.Update(personBuilder);
 
@@ -74,8 +74,10 @@ namespace Tnf.Architecture.Application.Services
         {
             ValidateId(id, nameof(id));
 
-            if (!Notification.HasNotification())
-                _service.Delete(id);
+            if (Notification.HasNotification())
+                return;
+
+            _service.Delete(id);
         }
     }
 }

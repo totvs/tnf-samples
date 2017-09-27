@@ -3,10 +3,10 @@ using Shouldly;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Common;
-using Tnf.Architecture.Common.Enumerables;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Web.Controllers;
@@ -113,7 +113,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("GetSpecialty");
             response.DetailedMessage.ShouldBe("GetSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PostSpecialty");
             response.DetailedMessage.ShouldBe("PostSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -264,7 +264,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutSpecialty");
             response.DetailedMessage.ShouldBe("PutSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]
@@ -280,7 +280,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutSpecialty");
             response.DetailedMessage.ShouldBe("PutSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -344,7 +344,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("DeleteSpecialty");
             response.DetailedMessage.ShouldBe("DeleteSpecialty");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidIdError.ToString()));
         }
 
         [Fact]

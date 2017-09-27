@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
+[assembly: InternalsVisibleTo("Tnf.Architecture.Mapper")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Domain.Tests")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Mapper.Tests")]
 [assembly: InternalsVisibleTo("Tnf.Architecture.Web.Tests")]

@@ -45,6 +45,11 @@ namespace Tnf.Architecture.Application.Services
 
         public ProfessionalDto GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
         {
+            ValidateRequestDto<RequestDto<ComposeKey<Guid, decimal>>, ComposeKey<Guid, decimal>>(keys);
+
+            if (Notification.HasNotification())
+                return ProfessionalDto.NullInstance;
+
             var professionalId = keys.GetId().SecundaryKey;
             var code = keys.GetId().PrimaryKey;
 
@@ -55,7 +60,7 @@ namespace Tnf.Architecture.Application.Services
                 RaiseNotification(nameof(code));
 
             if (Notification.HasNotification())
-                return new ProfessionalDto();
+                return ProfessionalDto.NullInstance;
 
             var entity = _service.GetProfessional(keys);
             var dto = entity.MapTo<ProfessionalDto>();
@@ -67,13 +72,12 @@ namespace Tnf.Architecture.Application.Services
 
         public ProfessionalDto CreateProfessional(ProfessionalDto professional)
         {
-            if (professional == null)
-                RaiseNotification(nameof(professional));
+            ValidateDto(professional);
 
             if (Notification.HasNotification())
-                return new ProfessionalDto();
+                return ProfessionalDto.NullInstance;
 
-            var professionalBuilder = new ProfessionalBuilder()
+            var professionalBuilder = new ProfessionalBuilder(Notification)
                 .WithProfessionalId(professional.ProfessionalId)
                 .WithCode(professional.Code)
                 .WithName(professional.Name)
@@ -101,8 +105,8 @@ namespace Tnf.Architecture.Application.Services
              * -> ProfessionalAppService - Libera looping while e finaliza processo de criação de novo Professional
              */
 
-            // Verifica se SpecialyId = 0
-            if (professional.Specialties.First().Id == 0)
+            if (professional.Specialties.Count > 0 &&
+                professional.Specialties.First().Id == 0)
             {
                 // Cria Command para solicitar criação de Specialty
                 var specialtyCreateCommand = new SpecialtyCreateCommand
@@ -123,23 +127,24 @@ namespace Tnf.Architecture.Application.Services
                     professional
                     .Specialties
                     .Select(s =>
-                        new SpecialtyBuilder()
+                        new SpecialtyBuilder(Notification)
                             .WithId(SpecialtyCreatedEventIdHelper)
                             .WithDescription(s.Description)
                             .Build())
                             .ToList());
             }
             else
-                // Se SpecialtyId != 0 processa sem Fila
+            {
                 professionalBuilder.WithSpecialties(
                     professional
                     .Specialties
                     .Select(s =>
-                        new SpecialtyBuilder()
+                        new SpecialtyBuilder(Notification)
                             .WithId(s.Id)
                             .WithDescription(s.Description)
                             .Build())
                             .ToList());
+            }
 
             var id = _service.CreateProfessional(professionalBuilder);
 
@@ -151,6 +156,12 @@ namespace Tnf.Architecture.Application.Services
 
         public ProfessionalDto UpdateProfessional(ComposeKey<Guid, decimal> keys, ProfessionalDto professional)
         {
+            ValidateDto(keys);
+            ValidateDto(professional);
+
+            if (Notification.HasNotification())
+                return ProfessionalDto.NullInstance;
+
             var professionalId = keys.SecundaryKey;
             var code = keys.PrimaryKey;
 
@@ -164,16 +175,16 @@ namespace Tnf.Architecture.Application.Services
                 RaiseNotification(nameof(professional));
 
             if (Notification.HasNotification())
-                return new ProfessionalDto();
+                return ProfessionalDto.NullInstance;
 
-            var professionalBuilder = new ProfessionalBuilder()
+            var professionalBuilder = new ProfessionalBuilder(Notification)
                 .WithProfessionalId(keys.SecundaryKey)
                 .WithCode(keys.PrimaryKey)
                 .WithName(professional.Name)
                 .WithPhone(professional.Phone)
                 .WithEmail(professional.Email)
                 .WithAddress(professional.Address)
-                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder().WithId(s.Id).WithDescription(s.Description).Build()).ToList());
+                .WithSpecialties(professional.Specialties.Select(s => new SpecialtyBuilder(Notification).WithId(s.Id).WithDescription(s.Description).Build()).ToList());
 
             _service.UpdateProfessional(professionalBuilder);
 
@@ -184,6 +195,11 @@ namespace Tnf.Architecture.Application.Services
 
         public void DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
+            ValidateDto(keys);
+
+            if (Notification.HasNotification())
+                return;
+
             var professionalId = keys.SecundaryKey;
             var code = keys.PrimaryKey;
 
@@ -193,8 +209,10 @@ namespace Tnf.Architecture.Application.Services
             if (code == Guid.Empty)
                 RaiseNotification(nameof(code));
 
-            if (!Notification.HasNotification())
-                _service.DeleteProfessional(keys);
+            if (Notification.HasNotification())
+                return;
+
+            _service.DeleteProfessional(keys);
         }
 
         private void RaiseNotification(params object[] parameter)
@@ -212,7 +230,7 @@ namespace Tnf.Architecture.Application.Services
         /// <param name="message">Mensagem que será publicada</param>
         public void Handle(SpecialtyCreateCommand message) =>
             // Método de extensão para publicação da mensagem
-            message.Publish(); 
+            message.Publish();
 
         /// <summary>
         /// Processa uma mensagem assinada

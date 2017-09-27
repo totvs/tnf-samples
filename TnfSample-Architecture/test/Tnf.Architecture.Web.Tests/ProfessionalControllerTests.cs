@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.AspNetCore.Mvc.Response;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Common;
@@ -273,7 +274,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PostProfessional");
             response.DetailedMessage.ShouldBe("PostProfessional");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]
@@ -352,7 +353,7 @@ namespace Tnf.Architecture.Web.Tests
             // Assert
             response.Message.ShouldBe("PutProfessional");
             response.DetailedMessage.ShouldBe("PutProfessional");
-            Assert.True(response.Details.Any(n => n.Message == Error.InvalidParameter.ToString()));
+            Assert.True(response.Details.Any(n => n.Message == TnfAppApplicationErrors.AppApplicationOnInvalidDtoError.ToString()));
         }
 
         [Fact]

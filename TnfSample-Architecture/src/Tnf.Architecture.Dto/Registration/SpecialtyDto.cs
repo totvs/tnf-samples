@@ -4,6 +4,8 @@ namespace Tnf.Architecture.Dto.Registration
 {
     public class SpecialtyDto : DtoBase
     {
+        public static SpecialtyDto NullInstance = new SpecialtyDto().AsNullable();
+
         public string Description { get; set; }
 
         public enum Error
