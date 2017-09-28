@@ -31,6 +31,7 @@ namespace Tnf.Architecture.Web.Startup
         {
             app.UseTnf(); //Initializes Tnf framework.
 
+            loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())

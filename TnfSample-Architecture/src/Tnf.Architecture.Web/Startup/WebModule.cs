@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using Tnf.App.AspNetCore;
 using Tnf.App.Bus.Client;
 using Tnf.App.Bus.Client.Configuration.Startup;
 using Tnf.App.Bus.Queue;
 using Tnf.App.Bus.Queue.Enums;
 using Tnf.App.Bus.Queue.RabbitMQ;
+using Tnf.App.Configuration;
 using Tnf.App.Security.Identity;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Application.Commands;
@@ -29,11 +31,15 @@ namespace Tnf.Architecture.Web.Startup
         public WebModule(IHostingEnvironment env)
         {
             _appConfiguration = AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName);
+
+            SettingsFileProvider.BasePath = env.ContentRootPath;
         }
 
         public override void PreInitialize()
         {
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
+
+            Configuration.Settings.Providers.Add<AppSettingFileProvider>();
 
             #region Setup Mensageria via Builder - Veja documentação TDN
 
@@ -93,6 +99,18 @@ namespace Tnf.Architecture.Web.Startup
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(WebModule).Assembly);
+        }
+    }
+
+    public class AppSettingFileProvider : SettingsFileProvider
+    {
+        protected override IEnumerable<string> GetJsonFiles()
+        {
+#if DEBUG
+            return new[] { "appsettings.Development.json" };
+#else
+            return new[] { "appsettings.Release.json" };
+#endif
         }
     }
 }
