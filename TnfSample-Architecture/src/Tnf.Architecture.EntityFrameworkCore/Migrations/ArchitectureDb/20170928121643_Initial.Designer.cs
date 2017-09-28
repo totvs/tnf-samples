@@ -11,8 +11,8 @@ using Tnf.Architecture.EntityFrameworkCore.Contexts;
 namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
 {
     [DbContext(typeof(ArchitectureDbContext))]
-    [Migration("20170913163853_Initialize")]
-    partial class Initialize
+    [Migration("20170928121643_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("ParentId");
+                    b.Property<int?>("ParentId");
 
                     b.HasKey("Id");
 
@@ -41,8 +41,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
                 {
                     b.HasOne("Tnf.Architecture.Domain.Registration.Person", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ParentId");
                 });
 #pragma warning restore 612, 618
         }

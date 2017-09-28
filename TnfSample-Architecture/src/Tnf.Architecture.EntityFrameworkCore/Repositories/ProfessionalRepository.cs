@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Repositories;
@@ -12,15 +13,19 @@ using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.AutoMapper;
+using Tnf.Domain.Uow;
 using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
 {
     public class ProfessionalRepository : AppEfCoreRepositoryBase<LegacyDbContext, ProfessionalPoco>, IProfessionalRepository
     {
-        public ProfessionalRepository(IDbContextProvider<LegacyDbContext> dbContextProvider)
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
+
+        public ProfessionalRepository(IDbContextProvider<LegacyDbContext> dbContextProvider, IUnitOfWorkManager unitOfWorkManager)
             : base(dbContextProvider)
         {
+            _unitOfWorkManager = unitOfWorkManager;
         }
 
         public bool DeleteProfessional(ComposeKey<Guid, decimal> keys)
@@ -66,11 +71,23 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
             var dbEntity = entity.MapTo<ProfessionalPoco>();
 
+            dbEntity.ProfessionalId = GetNextKeyProfessional();
+
             Context.Professionals.Add(dbEntity);
 
             Context.SaveChanges();
 
             return new ComposeKey<Guid, decimal>(dbEntity.Code, dbEntity.ProfessionalId);
+        }
+
+
+        private decimal GetNextKeyProfessional()
+        {
+            using (var uow = _unitOfWorkManager.Begin(TransactionScopeOption.RequiresNew))
+            {
+                var lastKey = Context.Professionals.Select(s => s.ProfessionalId).DefaultIfEmpty(0).Max();
+                return (lastKey + 1);
+            }
         }
 
         public void UpdateProfessional(Professional entity)

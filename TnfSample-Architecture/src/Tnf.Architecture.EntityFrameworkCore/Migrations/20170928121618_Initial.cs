@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Migrations
 {
-    public partial class Initialize : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,15 +13,15 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations
                 name: "SYS009_PROFESSIONAL",
                 columns: table => new
                 {
-                    SYS009_PROFESSIONAL_ID = table.Column<decimal>(nullable: false),
-                    SYS009_PROFESSIONAL_CODE = table.Column<Guid>(nullable: false),
-                    SYS009_ADDRESS = table.Column<string>(maxLength: 50, nullable: false),
-                    SYS009_ADDRESS_COMPLEMENT = table.Column<string>(maxLength: 100, nullable: false),
-                    SYS009_ADDRESS_NUMBER = table.Column<string>(maxLength: 9, nullable: false),
-                    SYS009_EMAIL = table.Column<string>(maxLength: 50, nullable: false),
-                    SYS009_NAME = table.Column<string>(maxLength: 50, nullable: false),
-                    SYS009_PHONE = table.Column<string>(maxLength: 50, nullable: false),
-                    SYS009_ZIP_CODE = table.Column<string>(maxLength: 15, nullable: false)
+                    SYS009_PROFESSIONAL_ID = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    SYS009_PROFESSIONAL_CODE = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SYS009_ADDRESS = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SYS009_ADDRESS_COMPLEMENT = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SYS009_ADDRESS_NUMBER = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    SYS009_EMAIL = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SYS009_NAME = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SYS009_PHONE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SYS009_ZIP_CODE = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,9 +32,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations
                 name: "SYS011_SPECIALTIES",
                 columns: table => new
                 {
-                    SYS011_SPECIALTIES_ID = table.Column<int>(nullable: false)
+                    SYS011_SPECIALTIES_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SYS011_SPECIALTIES_DESCRIPTION = table.Column<string>(maxLength: 100, nullable: false)
+                    SYS011_SPECIALTIES_DESCRIPTION = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +45,9 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations
                 name: "SYS010_PROFESSIONAL_SPECIALTIES",
                 columns: table => new
                 {
-                    SYS009_PROFESSIONAL_ID = table.Column<decimal>(nullable: false),
-                    SYS009_PROFESSIONAL_CODE = table.Column<Guid>(nullable: false),
-                    SYS011_SPECIALTIES_ID = table.Column<int>(nullable: false)
+                    SYS009_PROFESSIONAL_ID = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    SYS009_PROFESSIONAL_CODE = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SYS011_SPECIALTIES_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

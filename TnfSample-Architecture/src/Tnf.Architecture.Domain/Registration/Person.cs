@@ -6,7 +6,7 @@ namespace Tnf.Architecture.Domain.Registration
     public class Person : Entity
     {
         public string Name { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public Person Parent { get; set; }
         public virtual List<Person> Children { get; set; }
 

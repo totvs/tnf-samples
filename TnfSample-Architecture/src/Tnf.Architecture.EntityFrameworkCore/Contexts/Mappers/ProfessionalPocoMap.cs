@@ -15,8 +15,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Mappers
 
                 // Configure PKs auto generated
                 m.Property(i => i.Code).ValueGeneratedOnAdd().HasColumnName("SYS009_PROFESSIONAL_CODE");
-                // Hack pois o método ValueGeneratedOnAdd do EF Core ainda não aceita propriedades decimal
-                m.Property(i => i.ProfessionalId).HasDefaultValueSql("SELECT ISNULL(MAX(SYS009_PROFESSIONAL_ID), 1) FROM SYS009_PROFESSIONAL").HasColumnName("SYS009_PROFESSIONAL_ID");
+                m.Property(i => i.ProfessionalId).HasColumnName("SYS009_PROFESSIONAL_ID");
 
                 m.Property(p => p.Name).HasColumnName("SYS009_NAME").HasMaxLength(50).IsRequired();
                 m.Property(p => p.Address).HasColumnName("SYS009_ADDRESS").HasMaxLength(50).IsRequired();

@@ -27,7 +27,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("ParentId");
+                    b.Property<int?>("ParentId");
 
                     b.HasKey("Id");
 
@@ -40,8 +40,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Migrations.ArchitectureDb
                 {
                     b.HasOne("Tnf.Architecture.Domain.Registration.Person", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ParentId");
                 });
 #pragma warning restore 612, 618
         }
