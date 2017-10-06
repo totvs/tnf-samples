@@ -1,13 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Tnf.App.AutoMapper;
 using Tnf.App.Carol.Repositories;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 using Tnf.Architecture.Carol.Entities;
-using Tnf.Architecture.Carol.ReadInterfaces;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.AutoMapper;
 using Tnf.Provider.Carol;
 
 namespace Tnf.Architecture.Carol.Repositories
@@ -24,7 +21,7 @@ namespace Tnf.Architecture.Carol.Repositories
             return await DeleteAsync(id);
         }
 
-        public async Task<President> GetPresidentById(RequestDto<string> requestDto)
+        public async Task<President> GetPresidentById(IRequestDto<string> requestDto)
         {
             var presidentData = await GetAsync(requestDto.GetId());
 

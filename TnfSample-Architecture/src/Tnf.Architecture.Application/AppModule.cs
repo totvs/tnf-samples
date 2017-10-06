@@ -1,9 +1,9 @@
 ﻿using Castle.Facilities.Logging;
+using Tnf.App.Castle.Log4Net;
 using Tnf.Architecture.Carol;
 using Tnf.Architecture.Domain;
 using Tnf.Architecture.EntityFrameworkCore;
 using Tnf.Architecture.Mapper;
-using Tnf.Castle.Log4Net;
 using Tnf.Modules;
 
 namespace Tnf.Architecture.Application

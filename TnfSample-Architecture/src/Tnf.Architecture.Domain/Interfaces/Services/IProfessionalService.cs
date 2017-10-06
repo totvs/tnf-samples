@@ -8,7 +8,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IProfessionalService : IDomainService
     {
-        Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> key);
+        Professional GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> key);
         ComposeKey<Guid, decimal> CreateProfessional(ProfessionalBuilder builder);
         void UpdateProfessional(ProfessionalBuilder builder);
         void DeleteProfessional(ComposeKey<Guid, decimal> key);

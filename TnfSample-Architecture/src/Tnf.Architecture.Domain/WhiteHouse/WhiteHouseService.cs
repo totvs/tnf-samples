@@ -23,13 +23,13 @@ namespace Tnf.Architecture.Domain.WhiteHouse
             _eventBus = eventBus;
         }
 
-        public async Task<President> GetPresidentById(RequestDto<string> id)
+        public async Task<President> GetPresidentById(IRequestDto<string> id)
         {
             var president = await _whiteHouseRepository.GetPresidentById(id);
 
             if (president == null)
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
                                     .Build());
@@ -57,7 +57,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
         {
             if (!await _whiteHouseRepository.DeletePresidentsAsync(id))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
                                     .Build());
@@ -75,7 +75,7 @@ namespace Tnf.Architecture.Domain.WhiteHouse
 
             if (data == null)
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                     .WithNotFoundStatus()
                     .WithMessage(AppConsts.LocalizationSourceName, President.Error.CouldNotFindPresident)
                     .Build());

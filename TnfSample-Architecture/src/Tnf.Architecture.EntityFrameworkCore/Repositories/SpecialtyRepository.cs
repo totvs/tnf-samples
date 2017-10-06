@@ -1,11 +1,11 @@
 ﻿using System.Linq;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.AutoMapper;
 using Tnf.EntityFrameworkCore;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories
@@ -37,7 +37,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         public bool ExistsSpecialty(int id) 
             => Count(s => s.Id == id) > 0;
 
-        public Specialty GetSpecialty(RequestDto requestDto)
+        public Specialty GetSpecialty(IRequestDto requestDto)
         {
             Specialty specialty = null;
 

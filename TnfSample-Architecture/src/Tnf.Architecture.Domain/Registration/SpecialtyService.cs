@@ -16,11 +16,11 @@ namespace Tnf.Architecture.Domain.Registration
             _specialtyRepository = repository;
         }
 
-        public Specialty GetSpecialty(RequestDto requestDto)
+        public Specialty GetSpecialty(IRequestDto requestDto)
         {
             if (!_specialtyRepository.ExistsSpecialty(requestDto.GetId()))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
                                     .Build());
@@ -42,7 +42,7 @@ namespace Tnf.Architecture.Domain.Registration
         {
             if (!_specialtyRepository.ExistsSpecialty(id))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
                                     .Build());
@@ -61,7 +61,7 @@ namespace Tnf.Architecture.Domain.Registration
 
             if (!_specialtyRepository.ExistsSpecialty(specialty.Id))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                     .WithNotFoundStatus()
                     .WithMessage(AppConsts.LocalizationSourceName, Specialty.Error.CouldNotFindSpecialty)
                     .Build());

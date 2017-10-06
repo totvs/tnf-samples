@@ -20,7 +20,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.ReadRepositories
         {
         }
         
-        public ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
+        public IListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
         {
             var dbBaseQuery = Context.Professionals
                 .Include(i => i.ProfessionalSpecialties)

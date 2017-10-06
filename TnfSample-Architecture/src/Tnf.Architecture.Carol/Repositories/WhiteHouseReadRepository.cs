@@ -14,7 +14,7 @@ namespace Tnf.Architecture.Carol.Repositories
         {
         }
 
-        public async Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
+        public async Task<IListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var query = Client.Query<PresidentPoco>().ProcessFilter()
                 .SkipAndTakeByRequestDto(request)

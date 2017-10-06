@@ -7,7 +7,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface IWhiteHouseService : IDomainService
     {
-        Task<President> GetPresidentById(RequestDto<string> id);
+        Task<President> GetPresidentById(IRequestDto<string> id);
         Task<string> InsertPresidentAsync(PresidentBuilder builder);
         Task UpdatePresidentAsync(PresidentBuilder builder);
         Task DeletePresidentAsync(string id);

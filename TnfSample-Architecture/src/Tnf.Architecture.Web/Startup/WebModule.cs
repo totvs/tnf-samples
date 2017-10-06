@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using Tnf.App.AspNetCore;
 using Tnf.App.Bus.Client;
 using Tnf.App.Bus.Client.Configuration.Startup;
@@ -13,7 +12,6 @@ using Tnf.Architecture.Application;
 using Tnf.Architecture.Application.Commands;
 using Tnf.Architecture.Application.Events;
 using Tnf.Architecture.Common;
-using Tnf.Architecture.Domain.Configuration;
 using Tnf.Modules;
 
 namespace Tnf.Architecture.Web.Startup
@@ -26,34 +24,33 @@ namespace Tnf.Architecture.Web.Startup
         typeof(TnfAppAspNetCoreModule))]
     public class WebModule : TnfModule
     {
-        private readonly IConfigurationRoot _appConfiguration;
-
+        private IHostingEnvironment _env;
         public WebModule(IHostingEnvironment env)
         {
-            _appConfiguration = AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName);
-
-            SettingsFileProvider.BasePath = env.ContentRootPath;
+            _env = env;
         }
 
         public override void PreInitialize()
         {
-            Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(AppConsts.ConnectionStringName);
+            var configuration = Configuration
+                                    .Settings
+                                    .FromJsonFiles(_env.ContentRootPath, $"appsettings.{_env.EnvironmentName}.json");
 
-            Configuration.Settings.Providers.Add<AppSettingFileProvider>();
-
+            Configuration.DefaultNameOrConnectionString = configuration.GetConnectionString(AppConsts.ConnectionStringName);
+            
             #region Setup Mensageria via Builder - Veja documentação TDN
 
             // Cria um Tópico da mensagem SpecialtyCreateCommand
             var specialtyCreateCommandTopic = TopicSetup.Builder
                 .Factory()
-                .Message(typeof(SpecialtyCreateCommand))
+                .Message<SpecialtyCreateCommand>()
                 .AddKey("Specialty.Create.Command")
                 .Build();
 
             // Cria um Tópico da mensagem SpecialtyCreatedEvent
             var specialtyCreatedEventTopic = TopicSetup.Builder
                 .Factory()
-                .Message(typeof(SpecialtyCreatedEvent))
+                .Message<SpecialtyCreatedEvent>()
                 .AddKey("Specialty.Created.Event")
                 .Build();
 
@@ -88,29 +85,15 @@ namespace Tnf.Architecture.Web.Startup
 
             // Configura Módulo Mensageria
             Configuration.BusClientSetup()
-                .SetIocManager(IocManager)
                 .SetExchangeRouter("default", e => exchangeRouter)
                 .AddPublishers(() => new PublisherListener(Configuration.BusClientSetup().GetExchangeRouterInstance("default")))
                 .AddSubscribers(() => new SubscriberListener(Configuration.BusClientSetup().GetExchangeRouterInstance("default")))
-                .Verify(this)
                 .Run();
         }
 
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(WebModule).Assembly);
-        }
-    }
-
-    public class AppSettingFileProvider : SettingsFileProvider
-    {
-        protected override IEnumerable<string> GetJsonFiles()
-        {
-#if DEBUG
-            return new[] { "appsettings.Development.json" };
-#else
-            return new[] { "appsettings.Release.json" };
-#endif
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.ReadInterfaces
 {
     public interface ISpecialtyReadRepository : IRepository
     {
-        ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request);
+        IListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request);
     }
 }

@@ -9,7 +9,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface IProfessionalRepository : IRepository
     {
-        Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> requestDto);
+        Professional GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> requestDto);
         ComposeKey<Guid, decimal> CreateProfessional(Professional entity);
         void UpdateProfessional(Professional entity);
         bool DeleteProfessional(ComposeKey<Guid, decimal> keys);

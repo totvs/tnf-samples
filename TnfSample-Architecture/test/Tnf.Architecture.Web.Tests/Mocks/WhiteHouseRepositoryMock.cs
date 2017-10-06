@@ -1,16 +1,12 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Request;
-using Tnf.App.Dto.Response;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.AutoMapper;
-using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -40,7 +36,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             return Task.FromResult(result);
         }
 
-        public Task<President> GetPresidentById(RequestDto<string> requestDto)
+        public Task<President> GetPresidentById(IRequestDto<string> requestDto)
         {
             _presidents.TryGetValue(requestDto.GetId(), out PresidentPoco presidentpoco);
 

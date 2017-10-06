@@ -8,6 +8,6 @@ namespace Tnf.Architecture.EntityFrameworkCore.ReadInterfaces
 {
     public interface IProfessionalReadRepository : IRepository
     {
-        ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request);
+        IListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request);
     }
 }

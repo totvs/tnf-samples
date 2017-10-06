@@ -217,14 +217,14 @@ namespace Tnf.Architecture.Web.Tests
             //Arrange
             var professionalDto = new ProfessionalDto()
             {
-                ProfessionalId = 2,
+                ProfessionalId = 3,
                 Address = new Address("Rua teste", "98765", "APT 9876", new ZipCode("23156478")),
                 Email = "email1234@email.com",
                 Name = "Jose da Silva",
                 Phone = "58962348",
                 Specialties = new List<SpecialtyDto>()
                 {
-                    new SpecialtyDto() { Id = 1, Description = "Anestesiologia" }
+                    new SpecialtyDto() { Id = 3, Description = "Anestesiologia" }
                 }
             };
 
@@ -235,7 +235,7 @@ namespace Tnf.Architecture.Web.Tests
             );
 
             // Assert
-            response.ProfessionalId.ShouldBe(2);
+            response.ProfessionalId.ShouldBe(3);
 
             response.Specialties.Clear();
 

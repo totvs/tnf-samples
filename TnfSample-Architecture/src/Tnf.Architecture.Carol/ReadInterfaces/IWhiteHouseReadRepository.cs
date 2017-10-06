@@ -7,6 +7,6 @@ namespace Tnf.Architecture.Carol.ReadInterfaces
 {
     public interface IWhiteHouseReadRepository : IRepository
     {
-        Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request);
+        Task<IListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request);
     }
 }

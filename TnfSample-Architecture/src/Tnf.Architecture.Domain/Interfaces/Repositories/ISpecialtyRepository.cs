@@ -6,7 +6,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Repositories
 {
     public interface ISpecialtyRepository : IRepository
     {
-        Specialty GetSpecialty(RequestDto requestDto);
+        Specialty GetSpecialty(IRequestDto requestDto);
         int CreateSpecialty(Specialty entity);
         void UpdateSpecialty(Specialty entity);
         void DeleteSpecialty(int id);

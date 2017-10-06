@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.App.EntityFrameworkCore.Repositories;
@@ -12,7 +13,6 @@ using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.AutoMapper;
 using Tnf.Domain.Uow;
 using Tnf.EntityFrameworkCore;
 
@@ -44,7 +44,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return true;
         }
 
-        private ProfessionalPoco GetProfessionalPoco(RequestDto<ComposeKey<Guid, decimal>> requestDto)
+        private ProfessionalPoco GetProfessionalPoco(IRequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
             var dbEntity = Context.Professionals
                 .IncludeByRequestDto(requestDto)
@@ -55,7 +55,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return dbEntity;
         }
 
-        public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> requestDto)
+        public Professional GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> requestDto)
         {
             var dbEntity = GetProfessionalPoco(requestDto);
 

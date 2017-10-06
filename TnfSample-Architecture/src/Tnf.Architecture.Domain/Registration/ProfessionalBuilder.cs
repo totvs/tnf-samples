@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tnf.App.Builder;
-using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.App.Bus.Notifications;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration.Specifications;
 

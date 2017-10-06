@@ -1,10 +1,10 @@
 ﻿using System;
+using Tnf.App.AspNetCore.TestBase;
 using Tnf.App.EntityFrameworkCore;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
 using Tnf.Architecture.Web.Tests.App;
-using Tnf.AspNetCore.TestBase;
 
 namespace Tnf.Architecture.Web.Tests
 {

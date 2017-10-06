@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Tnf.App.Application.Services;
+using Tnf.App.AutoMapper;
 using Tnf.App.Bus.Client;
-using Tnf.App.Bus.Notifications;
 using Tnf.App.Bus.Queue.Interfaces;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
@@ -17,7 +17,6 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -40,12 +39,12 @@ namespace Tnf.Architecture.Application.Services
             _readRepository = readRepository;
         }
 
-        public ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
+        public IListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request)
             => _readRepository.GetAllProfessionals(request);
 
-        public ProfessionalDto GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
+        public ProfessionalDto GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> keys)
         {
-            ValidateRequestDto<RequestDto<ComposeKey<Guid, decimal>>, ComposeKey<Guid, decimal>>(keys);
+            ValidateRequestDto<IRequestDto<ComposeKey<Guid, decimal>>, ComposeKey<Guid, decimal>>(keys);
 
             if (Notification.HasNotification())
                 return ProfessionalDto.NullInstance;
@@ -72,7 +71,7 @@ namespace Tnf.Architecture.Application.Services
 
         public ProfessionalDto CreateProfessional(ProfessionalDto professional)
         {
-            ValidateDto(professional);
+            ValidateDto<ProfessionalDto, ComposeKey<Guid, decimal>>(professional);
 
             if (Notification.HasNotification())
                 return ProfessionalDto.NullInstance;
@@ -156,8 +155,7 @@ namespace Tnf.Architecture.Application.Services
 
         public ProfessionalDto UpdateProfessional(ComposeKey<Guid, decimal> keys, ProfessionalDto professional)
         {
-            ValidateDto(keys);
-            ValidateDto(professional);
+            ValidateDtoAndId(professional, keys);
 
             if (Notification.HasNotification())
                 return ProfessionalDto.NullInstance;
@@ -195,7 +193,7 @@ namespace Tnf.Architecture.Application.Services
 
         public void DeleteProfessional(ComposeKey<Guid, decimal> keys)
         {
-            ValidateDto(keys);
+            ValidateId(keys);
 
             if (Notification.HasNotification())
                 return;
@@ -217,7 +215,7 @@ namespace Tnf.Architecture.Application.Services
 
         private void RaiseNotification(params object[] parameter)
         {
-            Notification.Raise(NotificationEvent.DefaultBuilder
+            Notification.Raise(Notification.DefaultBuilder
                                                 .WithMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
                                                 .WithDetailedMessage(AppConsts.LocalizationSourceName, Error.InvalidParameter)
                                                 .WithMessageFormat(parameter)

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tnf.App.AutoMapper;
 using Tnf.App.TestBase;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.AutoMapper;
 using Xunit;
 
 namespace Tnf.Architecture.Mapper.Tests.Profiles

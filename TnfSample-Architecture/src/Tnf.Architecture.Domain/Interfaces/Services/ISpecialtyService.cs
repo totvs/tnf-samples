@@ -6,7 +6,7 @@ namespace Tnf.Architecture.Domain.Interfaces.Services
 {
     public interface ISpecialtyService : IDomainService
     {
-        Specialty GetSpecialty(RequestDto requestDto);
+        Specialty GetSpecialty(IRequestDto requestDto);
         void DeleteSpecialty(int id);
         int CreateSpecialty(SpecialtyBuilder builder);
         void UpdateSpecialty(SpecialtyBuilder builder);

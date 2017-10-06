@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using Tnf.Architecture.Common;
-using Tnf.Architecture.Domain.Configuration;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Factories
 {
@@ -20,7 +19,10 @@ namespace Tnf.Architecture.EntityFrameworkCore.Contexts.Factories
             var assemblyConfig = assemblyPath.Substring(0, assemblyPath.IndexOf(@"\src\", StringComparison.Ordinal) + 5);
             assemblyConfig = Path.Combine(assemblyConfig, assemblyName);
 
-            var configuration = AppConfigurations.Get(assemblyConfig);
+            var configuration = new ConfigurationBuilder()
+                                    .SetBasePath(assemblyConfig)
+                                    .AddJsonFile($"appsettings.json", true)
+                                    .Build();
 
             DbContextConfigurer.Configure(builder, configuration.GetConnectionString(AppConsts.ConnectionStringName));
 

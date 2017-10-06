@@ -1,5 +1,5 @@
-﻿using Tnf.Architecture.Mapper.Profiles;
-using Tnf.AutoMapper;
+﻿using Tnf.App.AutoMapper;
+using Tnf.Architecture.Mapper.Profiles;
 using Tnf.Modules;
 
 namespace Tnf.Architecture.Mapper

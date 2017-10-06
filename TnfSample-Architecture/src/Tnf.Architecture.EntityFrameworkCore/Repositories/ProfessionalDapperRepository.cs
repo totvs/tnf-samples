@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dapper.Repositories;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
@@ -10,8 +11,6 @@ using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
-using Tnf.AutoMapper;
 using Tnf.Data;
 
 namespace Tnf.Architecture.EntityFrameworkCore.Repositories

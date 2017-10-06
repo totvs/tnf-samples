@@ -76,7 +76,7 @@ namespace Tnf.Architecture.Application.Tests
 
                 var presidentDto = new PresidentDto("1", "New President", new Address("Rua de teste", "123", "APT 12", new ZipCode("55833479")));
 
-                var presidentsToGetAll = new ListDto<PresidentDto, string>();
+                IListDto<PresidentDto, string> presidentsToGetAll = new ListDto<PresidentDto, string>();
                 presidentsToGetAll.Items.Add(presidentDto);
                 presidentsToGetAll.Items.Add(presidentDto);
 

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Carol.ReadInterfaces;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.AutoMapper;
-using Tnf.Domain.Repositories;
 
 namespace Tnf.Architecture.Web.Tests.Mocks
 {
@@ -31,7 +30,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
             _presidents = new ConcurrentDictionary<string, PresidentPoco>(source);
         }
 
-        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
+        public Task<IListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
         {
             var presidents = _presidents
                 .Select(s => s.Value)
@@ -40,7 +39,7 @@ namespace Tnf.Architecture.Web.Tests.Mocks
                 .OrderByRequestDto(request)
                 .ToList();
 
-            var result = new ListDto<PresidentDto, string> { Items = presidents.MapTo<List<PresidentDto>>() };
+            IListDto<PresidentDto, string> result = new ListDto<PresidentDto, string> { Items = presidents.MapTo<List<PresidentDto>>() };
 
             return Task.FromResult(result);
         }

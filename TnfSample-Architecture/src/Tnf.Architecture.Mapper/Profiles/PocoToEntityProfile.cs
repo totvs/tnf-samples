@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Tnf.App.AutoMapper;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Common.ValueObjects;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.EntityFrameworkCore.Entities;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Mapper.Profiles
 {

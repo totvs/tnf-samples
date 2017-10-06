@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
+using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Application.Services;
@@ -9,7 +10,6 @@ using Tnf.Architecture.Carol.ReadInterfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.WhiteHouse;
 using Tnf.Architecture.Dto.WhiteHouse;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -25,12 +25,12 @@ namespace Tnf.Architecture.Application.Services
             _readRepository = readRepository;
         }
 
-        public Task<ListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
+        public Task<IListDto<PresidentDto, string>> GetAllPresidents(GetAllPresidentsDto request)
             => _readRepository.GetAllPresidents(request);
 
-        public async Task<PresidentDto> GetPresidentById(RequestDto<string> id)
+        public async Task<PresidentDto> GetPresidentById(IRequestDto<string> id)
         {
-            ValidateRequestDto<RequestDto<string>, string>(id);
+            ValidateRequestDto<IRequestDto<string>, string>(id);
 
             if (string.IsNullOrWhiteSpace(id.GetId()))
                 RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);
@@ -45,7 +45,7 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> InsertPresidentAsync(PresidentDto dto)
         {
-            ValidateDto(dto);
+            ValidateDto<PresidentDto, string>(dto);
 
             if (Notification.HasNotification())
                 return PresidentDto.NullInstance;
@@ -61,8 +61,7 @@ namespace Tnf.Architecture.Application.Services
 
         public async Task<PresidentDto> UpdatePresidentAsync(string id, PresidentDto dto)
         {
-            ValidateId(id);
-            ValidateDto(dto);
+            ValidateDtoAndId(dto, id);
 
             if (string.IsNullOrWhiteSpace(id))
                 RaiseNotification(TnfAppApplicationErrors.AppApplicationOnInvalidIdError);

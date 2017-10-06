@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using Tnf.App.Application.Services;
+using Tnf.App.AutoMapper;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -20,10 +20,10 @@ namespace Tnf.Architecture.Application.Services
             _service = service;
         }
 
-        public ListDto<PersonDto, int> GetAll(GetAllPeopleDto request)
+        public IListDto<PersonDto, int> GetAll(GetAllPeopleDto request)
             => _service.GetAll<PersonDto>(request, p => request.Name.IsNullOrEmpty() || p.Name.Contains(request.Name));
 
-        public PersonDto Get(RequestDto<int> id)
+        public PersonDto Get(IRequestDto<int> id)
         {
             ValidateRequestDto(id, nameof(id));
 

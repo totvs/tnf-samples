@@ -18,11 +18,11 @@ namespace Tnf.Architecture.Domain.Registration
             _professionalRepository = repository;
         }
 
-        public Professional GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys)
+        public Professional GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> keys)
         {
             if (!_professionalRepository.ExistsProfessional(keys.GetId()))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
                                     .Build());
@@ -51,7 +51,7 @@ namespace Tnf.Architecture.Domain.Registration
         {
             if (!_professionalRepository.ExistsProfessional(keys))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
                                     .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
                                     .Build());
@@ -72,7 +72,7 @@ namespace Tnf.Architecture.Domain.Registration
 
             if (!_professionalRepository.ExistsProfessional(keys))
             {
-                Notification.Raise(NotificationEvent.DefaultBuilder
+                Notification.Raise(Notification.DefaultBuilder
                     .WithNotFoundStatus()
                     .WithMessage(AppConsts.LocalizationSourceName, Professional.Error.CouldNotFindProfessional)
                     .Build());

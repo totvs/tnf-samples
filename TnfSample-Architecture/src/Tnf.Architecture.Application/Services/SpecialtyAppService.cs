@@ -1,5 +1,6 @@
 ﻿using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
+using Tnf.App.AutoMapper;
 using Tnf.App.Bus.Client;
 using Tnf.App.Bus.Queue.Interfaces;
 using Tnf.App.Dto.Request;
@@ -11,7 +12,6 @@ using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
-using Tnf.AutoMapper;
 
 namespace Tnf.Architecture.Application.Services
 {
@@ -28,10 +28,10 @@ namespace Tnf.Architecture.Application.Services
             _readRepository = readRepository;
         }
 
-        public ListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
+        public IListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
             => _readRepository.GetAllSpecialties(request);
 
-        public SpecialtyDto GetSpecialty(RequestDto id)
+        public SpecialtyDto GetSpecialty(IRequestDto id)
         {
             ValidateId(id);
 

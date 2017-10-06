@@ -9,8 +9,8 @@ namespace Tnf.Architecture.Application.Interfaces
 {
     public interface IProfessionalAppService : IApplicationService
     {
-        ListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request);
-        ProfessionalDto GetProfessional(RequestDto<ComposeKey<Guid, decimal>> keys);
+        IListDto<ProfessionalDto, ComposeKey<Guid, decimal>> GetAllProfessionals(GetAllProfessionalsDto request);
+        ProfessionalDto GetProfessional(IRequestDto<ComposeKey<Guid, decimal>> keys);
         ProfessionalDto CreateProfessional(ProfessionalDto professional);
         ProfessionalDto UpdateProfessional(ComposeKey<Guid, decimal> keys, ProfessionalDto professional);
         void DeleteProfessional(ComposeKey<Guid, decimal> keys);

@@ -1,5 +1,5 @@
 ﻿using Tnf.App.Builder;
-using Tnf.App.Bus.Notifications.Interfaces;
+using Tnf.App.Bus.Notifications;
 using Tnf.Architecture.Domain.Registration.Specifications;
 
 namespace Tnf.Architecture.Domain.Registration
