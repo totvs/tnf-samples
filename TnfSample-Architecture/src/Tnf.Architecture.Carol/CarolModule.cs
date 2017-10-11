@@ -1,7 +1,7 @@
 ﻿using Tnf.App.Carol;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Modules;
-using Tnf.Provider.Misc;
+using Tnf.App.Provider.Misc;
 
 namespace Tnf.Architecture.Carol
 {

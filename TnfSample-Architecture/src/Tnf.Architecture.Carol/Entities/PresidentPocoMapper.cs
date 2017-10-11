@@ -1,4 +1,4 @@
-﻿using Tnf.Provider.Carol.Mappers;
+﻿using Tnf.App.Provider.Carol.Mappers;
 
 namespace Tnf.Architecture.Carol.Entities
 {

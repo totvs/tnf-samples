@@ -27,8 +27,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="Tnf.App" Version="1.4.17279.2" />
-    <PackageReference Include="Tnf.App.Builder" Version="1.4.17279.2" />
+    <PackageReference Include="Tnf.App" Version="1.4.17284.4" />
+    <PackageReference Include="Tnf.App.Builder" Version="1.4.17284.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ using Tnf.App.Dto.Request;
 using Tnf.Architecture.Carol.Entities;
 using Tnf.Architecture.Domain.Interfaces.Repositories;
 using Tnf.Architecture.Domain.WhiteHouse;
-using Tnf.Provider.Carol;
+using Tnf.App.Provider.Carol;
 
 namespace Tnf.Architecture.Carol.Repositories
 {
