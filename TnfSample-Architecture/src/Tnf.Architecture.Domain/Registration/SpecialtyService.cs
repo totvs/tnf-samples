@@ -1,4 +1,4 @@
-﻿using Tnf.App.Bus.Notifications;
+﻿using System.Threading.Tasks;
 using Tnf.App.Domain.Services;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Common;
@@ -16,9 +16,9 @@ namespace Tnf.Architecture.Domain.Registration
             _specialtyRepository = repository;
         }
 
-        public Specialty GetSpecialty(IRequestDto requestDto)
+        public async Task<Specialty> GetSpecialty(IRequestDto requestDto)
         {
-            if (!_specialtyRepository.ExistsSpecialty(requestDto.GetId()))
+            if (!await _specialtyRepository.ExistsSpecialty(requestDto.GetId()).ForAwait())
             {
                 Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -28,19 +28,19 @@ namespace Tnf.Architecture.Domain.Registration
                 return null;
             }
 
-            return _specialtyRepository.GetSpecialty(requestDto);
+            return await _specialtyRepository.GetSpecialty(requestDto).ForAwait();
         }
 
-        public int CreateSpecialty(SpecialtyBuilder builder)
+        public async Task<int> CreateSpecialty(SpecialtyBuilder builder)
         {
             var specialty = builder.Build();
 
-            return Notification.HasNotification() ? 0 : _specialtyRepository.CreateSpecialty(specialty);
+            return Notification.HasNotification() ? 0 : await _specialtyRepository.CreateSpecialty(specialty).ForAwait();
         }
 
-        public void DeleteSpecialty(int id)
+        public async Task DeleteSpecialty(int id)
         {
-            if (!_specialtyRepository.ExistsSpecialty(id))
+            if (!await _specialtyRepository.ExistsSpecialty(id).ForAwait())
             {
                 Notification.Raise(Notification.DefaultBuilder
                                     .WithNotFoundStatus()
@@ -49,17 +49,17 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (!Notification.HasNotification())
-                _specialtyRepository.DeleteSpecialty(id);
+                await _specialtyRepository.DeleteSpecialty(id).ForAwait();
         }
 
-        public void UpdateSpecialty(SpecialtyBuilder builder)
+        public async Task UpdateSpecialty(SpecialtyBuilder builder)
         {
             var specialty = builder.Build();
 
             if (Notification.HasNotification())
                 return;
 
-            if (!_specialtyRepository.ExistsSpecialty(specialty.Id))
+            if (!await _specialtyRepository.ExistsSpecialty(specialty.Id).ForAwait())
             {
                 Notification.Raise(Notification.DefaultBuilder
                     .WithNotFoundStatus()
@@ -68,7 +68,7 @@ namespace Tnf.Architecture.Domain.Registration
             }
 
             if (!Notification.HasNotification())
-                _specialtyRepository.UpdateSpecialty(specialty);
+                await _specialtyRepository.UpdateSpecialty(specialty).ForAwait();
         }
     }
 }

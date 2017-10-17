@@ -1,4 +1,5 @@
-﻿using Tnf.App.Application.Enums;
+﻿using System.Threading.Tasks;
+using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
 using Tnf.App.AutoMapper;
 using Tnf.App.Bus.Client;
@@ -28,10 +29,10 @@ namespace Tnf.Architecture.Application.Services
             _readRepository = readRepository;
         }
 
-        public IListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
-            => _readRepository.GetAllSpecialties(request);
+        public async Task<IListDto<SpecialtyDto, int>> GetAllSpecialties(GetAllSpecialtiesDto request)
+            => await _readRepository.GetAllSpecialties(request).ForAwait();
 
-        public SpecialtyDto GetSpecialty(IRequestDto id)
+        public async Task<SpecialtyDto> GetSpecialty(IRequestDto id)
         {
             ValidateId(id);
 
@@ -44,12 +45,12 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return SpecialtyDto.NullInstance;
 
-            var entity = _service.GetSpecialty(id);
+            var entity = await _service.GetSpecialty(id).ForAwait();
 
             return entity.MapTo<SpecialtyDto>();
         }
 
-        public SpecialtyDto CreateSpecialty(SpecialtyDto specialty)
+        public async Task<SpecialtyDto> CreateSpecialty(SpecialtyDto specialty)
         {
             ValidateDto(specialty);
 
@@ -60,12 +61,12 @@ namespace Tnf.Architecture.Application.Services
                 .WithId(specialty.Id)
                 .WithDescription(specialty.Description);
 
-            specialty.Id = _service.CreateSpecialty(specialtyBuilder);
+            specialty.Id = await _service.CreateSpecialty(specialtyBuilder).ForAwait();
 
             return specialty;
         }
 
-        public SpecialtyDto UpdateSpecialty(int id, SpecialtyDto specialty)
+        public async Task<SpecialtyDto> UpdateSpecialty(int id, SpecialtyDto specialty)
         {
             ValidateId(id);
             ValidateDto(specialty);
@@ -80,13 +81,13 @@ namespace Tnf.Architecture.Application.Services
                 .WithId(id)
                 .WithDescription(specialty.Description);
 
-            _service.UpdateSpecialty(specialtyBuilder);
+            await _service.UpdateSpecialty(specialtyBuilder).ForAwait();
 
             specialty.Id = id;
             return specialty;
         }
 
-        public void DeleteSpecialty(int id)
+        public async Task DeleteSpecialty(int id)
         {
             ValidateId(id);
 
@@ -96,7 +97,7 @@ namespace Tnf.Architecture.Application.Services
             if (Notification.HasNotification())
                 return;
 
-            _service.DeleteSpecialty(id);
+            await _service.DeleteSpecialty(id).ForAwait();
         }
 
         public void Handle(SpecialtyCreateCommand message)

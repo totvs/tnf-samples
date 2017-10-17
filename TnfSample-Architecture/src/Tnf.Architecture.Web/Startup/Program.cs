@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using System.IO;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Tnf.Architecture.Web.Startup
 {
@@ -7,17 +7,13 @@ namespace Tnf.Architecture.Web.Startup
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>();
-
-#if DEBUG
-            host.UseUrls("http://10.51.4.36:1010");
-#endif
-
-            host.Build().Run();
+            BuildWebHost(args).Run();
         }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseUrls("https://*:5050")
+                .Build();
     }
 }

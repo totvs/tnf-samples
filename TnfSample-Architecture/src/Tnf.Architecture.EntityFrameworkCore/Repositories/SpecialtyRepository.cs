@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Tnf.App.AutoMapper;
 using Tnf.App.Dto.Request;
 using Tnf.App.EntityFrameworkCore.Repositories;
@@ -17,31 +18,31 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
         {
         }
 
-        public int CreateSpecialty(Specialty dto)
+        public async Task<int> CreateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
-            return InsertAndGetId(dbEntity);
+            return await InsertAndGetIdAsync(dbEntity).ForAwait();
         }
 
-        public void DeleteSpecialty(int id)
+        public async Task DeleteSpecialty(int id)
         {
             var dbEntity = GetAllIncluding(s => s.ProfessionalSpecialties)
                                .SingleOrDefault(s => s.Id == id);
 
             dbEntity.ProfessionalSpecialties.ForEach(w => Context.ProfessionalSpecialties.Remove(w));
 
-            Delete(dbEntity);
+            await DeleteAsync(dbEntity).ForAwait();
         }
 
-        public bool ExistsSpecialty(int id) 
-            => Count(s => s.Id == id) > 0;
+        public async Task<bool> ExistsSpecialty(int id) 
+            => await CountAsync(s => s.Id == id).ForAwait() > 0;
 
-        public Specialty GetSpecialty(IRequestDto requestDto)
+        public async Task<Specialty> GetSpecialty(IRequestDto requestDto)
         {
             Specialty specialty = null;
 
-            var dbEntity = Get(requestDto);
+            var dbEntity = await GetAsync(requestDto).ForAwait();
 
             if (dbEntity != null)
                 specialty = dbEntity.MapTo<Specialty>();
@@ -49,11 +50,11 @@ namespace Tnf.Architecture.EntityFrameworkCore.Repositories
             return specialty;
         }
         
-        public void UpdateSpecialty(Specialty dto)
+        public async Task UpdateSpecialty(Specialty dto)
         {
             var dbEntity = dto.MapTo<SpecialtyPoco>();
 
-            Update(dbEntity);
+            await UpdateAsync(dbEntity).ForAwait();
         }
     }
 }

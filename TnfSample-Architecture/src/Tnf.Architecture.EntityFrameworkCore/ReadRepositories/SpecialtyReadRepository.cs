@@ -1,4 +1,5 @@
-﻿using Tnf.App.Dto.Response;
+﻿using System.Threading.Tasks;
+using Tnf.App.Dto.Response;
 using Tnf.App.EntityFrameworkCore.Repositories;
 using Tnf.Architecture.Dto.Registration;
 using Tnf.Architecture.EntityFrameworkCore.Contexts;
@@ -15,7 +16,7 @@ namespace Tnf.Architecture.EntityFrameworkCore.ReadRepositories
         {
         }
 
-        public IListDto<SpecialtyDto, int> GetAllSpecialties(GetAllSpecialtiesDto request)
-            => GetAll<SpecialtyDto>(request, w => request.Description == null || w.Description.Contains(request.Description));
+        public async Task<IListDto<SpecialtyDto, int>> GetAllSpecialties(GetAllSpecialtiesDto request)
+            => await GetAllAsync<SpecialtyDto>(request, w => request.Description == null || w.Description.Contains(request.Description)).ForAwait();
     }
 }

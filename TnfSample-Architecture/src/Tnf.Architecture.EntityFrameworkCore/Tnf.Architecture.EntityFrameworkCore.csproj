@@ -26,8 +26,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
-    <PackageReference Include="Tnf.App.Dapper" Version="1.4.17284.4" />
-    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.4.17284.4" />
+    <PackageReference Include="Tnf.App.Dapper" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.EntityFrameworkCore" Version="1.4.17290.4" />
   </ItemGroup>
 
   <ItemGroup>

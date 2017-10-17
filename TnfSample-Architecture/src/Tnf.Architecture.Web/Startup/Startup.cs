@@ -24,7 +24,7 @@ namespace Tnf.Architecture.Web.Startup
             services.AddSwaggerGen();
 
             // Configure Tnf and Dependency Injection
-            return services.AddTnfApp<WebModule>(options => { });
+            return services.AddTnfApp<WebModule>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
@@ -39,11 +40,11 @@
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.2" />
-    <PackageReference Include="Tnf.App.AspNetCore" Version="1.4.17284.4" />
-    <PackageReference Include="Tnf.App.Bus.Notifications" Version="1.4.17284.4" />
-    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17284.4" />
-    <PackageReference Include="Tnf.App.Bus.Queue.RabbitMQ" Version="1.4.17284.4" />
-    <PackageReference Include="Tnf.App.Security.Identity" Version="1.4.17284.4" />
+    <PackageReference Include="Tnf.App.AspNetCore" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.Bus.Notifications" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.Bus.Queue.RabbitMQ" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.Security.Identity" Version="1.4.17290.4" />
   </ItemGroup>
 
 </Project>

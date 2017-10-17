@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Tnf.App.Dto.Request;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Common;
@@ -17,9 +18,9 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery]GetAllSpecialtiesDto requestDto)
+        public async Task<IActionResult> Get([FromQuery]GetAllSpecialtiesDto requestDto)
         {
-            var response = _specialtyAppService.GetAllSpecialties(requestDto);
+            var response = await _specialtyAppService.GetAllSpecialties(requestDto).ForAwait();
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.GetAllSpecialty)
@@ -29,10 +30,10 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id, [FromQuery]RequestDto requestDto)
+        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto requestDto)
         {
             requestDto.WithId(id);
-            var response = _specialtyAppService.GetSpecialty(requestDto);
+            var response = await _specialtyAppService.GetSpecialty(requestDto).ForAwait();
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.GetSpecialty)
@@ -42,9 +43,9 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]SpecialtyDto specialty)
+        public async Task<IActionResult> Post([FromBody]SpecialtyDto specialty)
         {
-            var response = _specialtyAppService.CreateSpecialty(specialty);
+            var response = await _specialtyAppService.CreateSpecialty(specialty).ForAwait();
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.PostSpecialty)
@@ -54,9 +55,9 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]SpecialtyDto specialty)
+        public async Task<IActionResult> Put(int id, [FromBody]SpecialtyDto specialty)
         {
-            var response = _specialtyAppService.UpdateSpecialty(id, specialty);
+            var response = await _specialtyAppService.UpdateSpecialty(id, specialty).ForAwait();
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.PutSpecialty)
@@ -66,9 +67,9 @@ namespace Tnf.Architecture.Web.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _specialtyAppService.DeleteSpecialty(id);
+            await _specialtyAppService.DeleteSpecialty(id).ForAwait();
 
             return CreateResponse<SpecialtyDto>()
                         .FromErrorEnum(SpecialtyDto.Error.DeleteSpecialty)
