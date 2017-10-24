@@ -2,12 +2,8 @@
 using Tnf.App.Application.Enums;
 using Tnf.App.Application.Services;
 using Tnf.App.AutoMapper;
-using Tnf.App.Bus.Client;
-using Tnf.App.Bus.Queue.Interfaces;
 using Tnf.App.Dto.Request;
 using Tnf.App.Dto.Response;
-using Tnf.Architecture.Application.Commands;
-using Tnf.Architecture.Application.Events;
 using Tnf.Architecture.Application.Interfaces;
 using Tnf.Architecture.Domain.Interfaces.Services;
 using Tnf.Architecture.Domain.Registration;
@@ -16,9 +12,7 @@ using Tnf.Architecture.EntityFrameworkCore.ReadInterfaces;
 
 namespace Tnf.Architecture.Application.Services
 {
-    public class SpecialtyAppService : AppApplicationService, ISpecialtyAppService,
-        ISubscribe<SpecialtyCreateCommand>,
-        IPublish<SpecialtyCreatedEvent>
+    public class SpecialtyAppService : AppApplicationService, ISpecialtyAppService
     {
         private readonly ISpecialtyService _service;
         private readonly ISpecialtyReadRepository _readRepository;
@@ -99,14 +93,5 @@ namespace Tnf.Architecture.Application.Services
 
             await _service.DeleteSpecialty(id).ForAwait();
         }
-
-        public void Handle(SpecialtyCreateCommand message)
-        {
-            var dto = CreateSpecialty(new SpecialtyDto() { Description = message.Description });
-
-            Handle(new SpecialtyCreatedEvent() { SpecialtyId = dto.Id });
-        }
-
-        public void Handle(SpecialtyCreatedEvent message) => message.Publish();
     }
 }
