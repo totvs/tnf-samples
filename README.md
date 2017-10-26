@@ -40,6 +40,6 @@ O TnfSample-Architecture está implementado com uma solução de messaging com R
 
 ###### Para habilitar: ######
 
-1. Instale o RabbitMQ de https://www.rabbitmq.com/download.html
+1. Instale o RabbitMQ de https://www.rabbitmq.com/download.html ou obtenha uma conexão com RabbitMQ Válida
 2. Descomente as linhas 87-91 do módulo em src/Tnf.Architecture.Web/Startup/WebModule.cs
 3. Leia sobre o fluxo utilizado para o sample com messaging src/Tnf.Architecture.Application/Services/ProfessionalAppService.cs
