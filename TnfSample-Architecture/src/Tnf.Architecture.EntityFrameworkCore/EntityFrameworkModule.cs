@@ -27,7 +27,10 @@ namespace Tnf.Architecture.EntityFrameworkCore
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(EntityFrameworkModule).Assembly);
+            base.Initialize();
+
+            // Register all the interfaces and its implmentations on this assembly
+            IocManager.RegisterAssemblyByConvention<EntityFrameworkModule>();
         }
     }
 }

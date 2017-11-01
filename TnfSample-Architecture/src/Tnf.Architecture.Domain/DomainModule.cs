@@ -12,9 +12,12 @@ namespace Tnf.Architecture.Domain
     {
         public override void PreInitialize()
         {
+            base.PreInitialize();
+
             Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", isDefault: true));
             Configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português"));
 
+            // Set the localization file for the solution errors
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(AppConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(
@@ -24,6 +27,7 @@ namespace Tnf.Architecture.Domain
                 )
             );
 
+            // Set the localization file for the Tnf errors
             Configuration.Localization.Sources.Add(
                 new DictionaryBasedLocalizationSource(TnfAppConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(
@@ -32,13 +36,14 @@ namespace Tnf.Architecture.Domain
                     )
                 )
             );
-
-            base.PreInitialize();
         }
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(DomainModule).Assembly);
+            base.Initialize();
+
+            // Register all the interfaces and its implmentations on this assembly
+            IocManager.RegisterAssemblyByConvention<DomainModule>();
         }
     }
 }

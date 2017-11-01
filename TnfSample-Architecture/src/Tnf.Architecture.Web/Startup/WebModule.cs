@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Tnf.App.AspNetCore;
+using Tnf.App.AspNetCore.Security;
 using Tnf.App.Bus.Client;
 using Tnf.App.Bus.Client.Configuration.Startup;
 using Tnf.App.Bus.Queue;
 using Tnf.App.Bus.Queue.Enums;
 using Tnf.App.Bus.Queue.RabbitMQ;
 using Tnf.App.Configuration;
-using Tnf.App.Security.Identity;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Application.Commands;
 using Tnf.Architecture.Application.Events;
@@ -18,10 +17,10 @@ namespace Tnf.Architecture.Web.Startup
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfAppSecurityIdentityModule),
+        typeof(TnfAppAspNetCoreSecurityModule),
         typeof(TnfAppBusQueueModule), // <- Módulo para Fila
-        typeof(TnfAppBusClientModule), // <- Módulo para manipulação da Fila
-        typeof(TnfAppAspNetCoreModule))]
+        typeof(TnfAppBusClientModule) // <- Módulo para manipulação da Fila
+        )]
     public class WebModule : TnfModule
     {
         private IHostingEnvironment _env;
@@ -32,10 +31,14 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void PreInitialize()
         {
+            base.PreInitialize();
+
+            // Gets the configuration based on the settings json file
             var configuration = Configuration
                                     .Settings
                                     .FromJsonFiles(_env.ContentRootPath, $"appsettings.{_env.EnvironmentName}.json");
 
+            // Set the connectionstring
             Configuration.DefaultNameOrConnectionString = configuration.GetConnectionString(AppConsts.ConnectionStringName);
             
             #region Setup Mensageria via Builder - Veja documentação TDN
@@ -93,7 +96,10 @@ namespace Tnf.Architecture.Web.Startup
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(WebModule).Assembly);
+            base.Initialize();
+
+            // Register all the interfaces and its implmentations on this assembly
+            IocManager.RegisterAssemblyByConvention<WebModule>();
         }
     }
 }

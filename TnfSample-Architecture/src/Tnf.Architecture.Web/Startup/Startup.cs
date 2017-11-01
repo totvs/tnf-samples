@@ -50,14 +50,12 @@ namespace Tnf.Architecture.Web.Startup
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseSwagger();
-            app.UseSwaggerUi(); //URL: /swagger/ui
-
+            
             app.UseSwagger((httpRequest, swaggerDoc) =>
             {
                 swaggerDoc.Host = httpRequest.Host.Value;
             });
+            app.UseSwaggerUi(); //URL: /swagger/ui
         }
     }
 }

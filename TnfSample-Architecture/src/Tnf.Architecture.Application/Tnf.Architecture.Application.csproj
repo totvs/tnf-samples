@@ -10,18 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Tnf.Architecture.Mapper\Tnf.Architecture.Mapper.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="Tnf.App.Bus.Client" Version="1.4.17290.4" />
-    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17290.4" />
-    <PackageReference Include="Tnf.App.Castle.Log4Net" Version="1.4.17290.4" />
+    <PackageReference Include="Tnf.App.Bus.Client" Version="1.4.17304.6" />
+    <PackageReference Include="Tnf.App.Bus.Queue" Version="1.4.17304.6" />
+    <PackageReference Include="Tnf.App.Castle.Log4Net" Version="1.4.17304.6" />
   </ItemGroup>
 
 </Project>

@@ -27,7 +27,10 @@ namespace Tnf.Architecture.Application
 
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(AppModule).Assembly);
+            base.Initialize();
+
+            // Register all the interfaces and its implmentations on this assembly
+            IocManager.RegisterAssemblyByConvention<AppModule>();
         }
     }
 }
