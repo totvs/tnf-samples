@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Tnf.App.AspNetCore.Security;
+using Tnf.App.AspNetCore;
 using Tnf.App.Bus.Client;
 using Tnf.App.Bus.Client.Configuration.Startup;
 using Tnf.App.Bus.Queue;
@@ -17,7 +17,7 @@ namespace Tnf.Architecture.Web.Startup
 {
     [DependsOn(
         typeof(AppModule),
-        typeof(TnfAppAspNetCoreSecurityModule),
+        typeof(TnfAppAspNetCoreModule),
         typeof(TnfAppBusQueueModule), // <- Módulo para Fila
         typeof(TnfAppBusClientModule) // <- Módulo para manipulação da Fila
         )]
