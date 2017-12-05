@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Castle.Facilities.Logging;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Tnf.App.AspNetCore;
 using Tnf.App.Bus.Client;
@@ -6,6 +7,7 @@ using Tnf.App.Bus.Client.Configuration.Startup;
 using Tnf.App.Bus.Queue;
 using Tnf.App.Bus.Queue.Enums;
 using Tnf.App.Bus.Queue.RabbitMQ;
+using Tnf.App.Castle.Log4Net;
 using Tnf.App.Configuration;
 using Tnf.Architecture.Application;
 using Tnf.Architecture.Application.Commands;
@@ -32,6 +34,11 @@ namespace Tnf.Architecture.Web.Startup
         public override void PreInitialize()
         {
             base.PreInitialize();
+
+            //Configure Log4Net logging
+            IocManager.IocContainer.AddFacility<LoggingFacility>(
+                f => f.UseTnfLog4Net().WithConfig("log4net.config")
+            );
 
             // Gets the configuration based on the settings json file
             var configuration = Configuration
