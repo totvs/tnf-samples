@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\SourceFiles\Case1-en.json" />
+    <None Remove="Localization\SourceFiles\Case1-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Case1-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Case1-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Notifications" Version="1.9.18012.2" />
+  </ItemGroup>
+
+</Project>
