@@ -46,7 +46,7 @@ namespace Case2.Web
                 // Gets the configuration based on the settings json file
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.json");
 
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(Case2Consts.ConnectionStringName);
+                options.DefaultNameOrConnectionString = configuration.GetConnectionString(InfraConsts.ConnectionStringName);
             });
 
             app.UseTnfUnitOfWork();

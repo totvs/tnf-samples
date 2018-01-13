@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Tnf.Runtime.Session;
 
-namespace Case2.Infra.Context.Factories
+namespace Case2.Infra.Context.Migration
 {
     public class EmployeeDbContextFactory : IDesignTimeDbContextFactory<EmployeeDbContext>
     {
@@ -19,7 +19,7 @@ namespace Case2.Infra.Context.Factories
                                     .AddJsonFile($"appsettings.json", true)
                                     .Build();
 
-            builder.UseSqlServer(configuration.GetConnectionString(Case2Consts.ConnectionStringName));
+            builder.UseSqlServer(configuration.GetConnectionString(InfraConsts.ConnectionStringName));
 
             return new EmployeeDbContext(builder.Options, NullTnfSession.Instance);
         }

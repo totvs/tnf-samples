@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Case2.Infra.Migrations
+namespace Case2.Infra.Migrations.CustomerDb
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

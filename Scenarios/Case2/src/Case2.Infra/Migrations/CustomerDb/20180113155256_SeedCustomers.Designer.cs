@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Case2.Infra.Migrations.EmployeeDb
+namespace Case2.Infra.Migrations.CustomerDb
 {
-    [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20180111132219_Seed")]
-    partial class Seed
+    [DbContext(typeof(CustomerDbContext))]
+    [Migration("20180113155256_SeedCustomers")]
+    partial class SeedCustomers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Case2.Infra.Migrations.EmployeeDb
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Case2.Infra.Entities.Employee", b =>
+            modelBuilder.Entity("Case2.Infra.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -33,7 +33,7 @@ namespace Case2.Infra.Migrations.EmployeeDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Customers");
                 });
 #pragma warning restore 612, 618
         }

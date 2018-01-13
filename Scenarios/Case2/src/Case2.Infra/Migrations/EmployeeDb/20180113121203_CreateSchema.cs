@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Case2.Infra.Migrations.EmployeeDb
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

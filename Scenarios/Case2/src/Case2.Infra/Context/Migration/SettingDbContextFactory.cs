@@ -4,22 +4,22 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Tnf.Runtime.Session;
 
-namespace Case2.Infra.Context.Factories
+namespace Case2.Infra.Context.Migration
 {
-    public class CustomerDbContextFactory : IDesignTimeDbContextFactory<CustomerDbContext>
+    public class SettingDbContextFactory : IDesignTimeDbContextFactory<SettingDbContext>
     {
-        public CustomerDbContext CreateDbContext(string[] args)
+        public SettingDbContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<CustomerDbContext>();
+            var builder = new DbContextOptionsBuilder<SettingDbContext>();
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
                                     .AddJsonFile($"appsettings.json", true)
                                     .Build();
 
-            builder.UseSqlServer(configuration.GetConnectionString(Case2Consts.ConnectionStringName));
+            builder.UseSqlServer(configuration.GetConnectionString(InfraConsts.ConnectionStringName));
 
-            return new CustomerDbContext(builder.Options, NullTnfSession.Instance);
+            return new SettingDbContext(builder.Options, NullTnfSession.Instance);
         }
     }
 }

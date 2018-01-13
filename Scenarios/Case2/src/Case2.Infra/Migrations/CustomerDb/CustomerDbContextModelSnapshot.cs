@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Case2.Infra.Migrations
+namespace Case2.Infra.Migrations.CustomerDb
 {
     [DbContext(typeof(CustomerDbContext))]
     partial class CustomerDbContextModelSnapshot : ModelSnapshot

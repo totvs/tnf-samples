@@ -1,8 +1,6 @@
 ﻿using Case2.Infra.Context;
 using Case2.Infra.Dapper;
 using Case2.Infra.Mapper;
-using Tnf.Localization.EntityFrameworkCore;
-using Tnf.Settings.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -25,8 +23,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddTnfEntityFrameworkCore()
                 .AddTnfDbContext<CustomerDbContext>(config => DbContextConfigurer.Configure(config))
                 .AddTnfDbContext<EmployeeDbContext>(config => DbContextConfigurer.Configure(config))
-                .AddTnfDbContext<TnfLocalizationDbContext>(config => DbContextConfigurer.Configure(config))
-                .AddTnfDbContext<TnfSettingsDbContext>(config => DbContextConfigurer.Configure(config));
+                .AddTnfDbContext<LocalizationDbContext>(config => DbContextConfigurer.Configure(config)) // Contexto de localização
+                .AddTnfDbContext<SettingDbContext>(config => DbContextConfigurer.Configure(config));     // Contexto de Settings
 
             // Configura o uso do Dapper
             // Por default procura o mapeamentos nesse assembly

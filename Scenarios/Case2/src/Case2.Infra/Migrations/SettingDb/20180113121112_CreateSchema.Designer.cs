@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Case2.Infra.Migrations.EmployeeDb
+namespace Case2.Infra.Migrations.SettingDb
 {
-    [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20180111132141_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(SettingDbContext))]
+    [Migration("20180113121112_CreateSchema")]
+    partial class CreateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,19 +21,33 @@ namespace Case2.Infra.Migrations.EmployeeDb
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Case2.Infra.Entities.Employee", b =>
+            modelBuilder.Entity("Tnf.Settings.Management.TnfSettings", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<int?>("TenantId");
+
+                    b.Property<long?>("UserId");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(2000);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("TnfSettings");
                 });
 #pragma warning restore 612, 618
         }
