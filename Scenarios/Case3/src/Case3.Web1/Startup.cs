@@ -43,8 +43,9 @@ namespace Case2.Web
                 options.BusClient()
                    .AddPublisher(
                         exBuilder: e => exchangeRouter,
-                        listener: er => new PublisherListener(exchangeRouter: er))
-                        .Run();
+                        listener: er => new PublisherListener(
+                            exchangeRouter: er,
+                            serviceProvider: options.ServiceProvider));
             });
 
             if (env.IsDevelopment())
