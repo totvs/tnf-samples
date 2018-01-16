@@ -10,6 +10,7 @@ namespace Case2.Infra.Context
     /// </summary>
     public class LocalizationDbContext : TnfLocalizationDbContext<LocalizationDbContext>
     {
+        // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
         public LocalizationDbContext(DbContextOptions<LocalizationDbContext> options, ITnfSession tnfSession)
             : base(options, tnfSession)
         {

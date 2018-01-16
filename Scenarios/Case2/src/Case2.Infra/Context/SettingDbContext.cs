@@ -10,6 +10,7 @@ namespace Case2.Infra.Context
     /// </summary>
     public class SettingDbContext : TnfSettingsDbContext<SettingDbContext>
     {
+        // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
         public SettingDbContext(DbContextOptions<SettingDbContext> options, ITnfSession tnfSession)
             : base(options, tnfSession)
         {

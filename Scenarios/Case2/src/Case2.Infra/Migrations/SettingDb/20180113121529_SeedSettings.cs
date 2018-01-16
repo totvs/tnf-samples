@@ -1,6 +1,5 @@
 ﻿using Case2.Infra.Context.Migration;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Tnf.Runtime.MultiTenancy;
 using Tnf.Settings.EntityFrameworkCore;
 
 namespace Case2.Infra.Migrations.SettingDb
@@ -17,9 +16,10 @@ namespace Case2.Infra.Migrations.SettingDb
 
             using (var db = designFactory.CreateDbContext(new string[] { }))
             {
+                // Inclui as configurações a nível de aplicação por isso não é passado o TenantID
                 TnfSettingDbContextSeedHelper.CreateDefaultSettings(
                     db,
-                    MultiTenancyConsts.DefaultTenantId);
+                    null);
 
                 db.SaveChanges();
             }
@@ -33,7 +33,7 @@ namespace Case2.Infra.Migrations.SettingDb
             {
                 TnfSettingDbContextSeedHelper.RemoveDefaultSettings(
                     db,
-                    MultiTenancyConsts.DefaultTenantId);
+                    null);
 
                 db.SaveChanges();
             }

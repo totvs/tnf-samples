@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Tnf;
 
@@ -14,19 +15,20 @@ namespace Case2.Web
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+                })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    logging.SetMinimumLevel(LogLevel.Trace);
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddConsole();
                     logging.AddDebug();
 
-                    logging.AddFilter("Microsoft", LogLevel.Warning);
-                    logging.AddFilter("System", LogLevel.Warning);
-                    logging.AddFilter("Engine", LogLevel.Warning);
-
-                    logging.AddFilter(LoggingEvents.Localization.ToString(), (level) => true);
-                    logging.AddFilter(LoggingEvents.Settings.ToString(), (level) => true);
-                    logging.AddFilter(LoggingEvents.Tenant.ToString(), (level) => true);
+                    logging.AddFilter(LoggingEvents.FilterByTnfCategories);
                 })
                 .UseStartup<Startup>()
                 .Build();

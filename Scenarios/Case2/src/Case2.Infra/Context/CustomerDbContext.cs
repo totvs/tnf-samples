@@ -9,7 +9,8 @@ namespace Case2.Infra.Context
     {
         public DbSet<Customer> Customers { get; set; }
 
-        public CustomerDbContext(DbContextOptions options, ITnfSession session)
+        // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
+        public CustomerDbContext(DbContextOptions<CustomerDbContext> options, ITnfSession session)
             : base(options, session)
         {
         }

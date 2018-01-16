@@ -41,11 +41,10 @@ namespace Case2.Web
                 // Adiciona as configurações de localização da aplicação localizadas na camada de Domain: Case1.Domain
                 options.AddInfraLocalization();
 
-                options.MultiTenancy().IsEnabled = false;
-
-                // Gets the configuration based on the settings json file
+                // Recupera a configuração da aplicação
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.json");
 
+                // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = configuration.GetConnectionString(InfraConsts.ConnectionStringName);
             });
 

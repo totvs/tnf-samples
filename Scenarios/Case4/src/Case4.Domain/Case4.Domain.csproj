@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\SourceFiles\Case4-en.json" />
+    <None Remove="Localization\SourceFiles\Case4-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Case4-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Case4-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Domain" Version="1.9.18015.4" />
+  </ItemGroup>
+
+</Project>
