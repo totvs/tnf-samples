@@ -1,45 +1,59 @@
-# TNF Samples (TnfSample-Architecture)
+# Como estão divididos os pacotes
 
-Exemplo da arquitetura e padrões de design do framework TNF.
+Alguns cenários de utilização estão disponíveis em nosso repositório.
+Primeiro é necessário conhecer um pouco da divisão dos pacotes disponibilizados pelo Tnf
 
-- Camadas de API
-- Camadas de Aplicação
-- Camadas de Domínio
-- Camadas de Repositório
-- Migrations
-- Configurações
-- Builders
-- Entidades de domínio
-- Injeção de dependência
-- Testes unitários
-- Localização
-- DTOs
-- Mappers
-- Validação de especificações
-- Notificações de Domínio
-- Mensageria com RabbitMQ
-- Repositório com Carol
-	
-## Get started ##
+![Diagramas de pacotes do Tnf](tnf_packages_diagram.png)
 
-Os passos abaixo guiam a configuração e execução do TnfSample.
+###### Conteúdo dos pacotes
 
-1. Instale o SQL Server ou obtenha uma connection string válida
-2. Crie uma base de dados (nome sugerido TnfZero)
-3. Configure a conexão com o bando de dados, alterando os arquivos abaixo:
-   - appsettings.Development.json no projeto Tnf.Architecture.Web
-   - appsettings.json no projeto Tnf.Architecture.EntityFrameworkCore (configuração migrations)
-   - Exemplo de ConnectionString: "Server=(localdb)\\MSSQLLocalDB;Database=TnfZero;Trusted_Connection=True;MultipleActiveResultSets=true"		
-4. Acesso Package Manager Console no Visual Studio (Tools/Nuget Package Manager)
-5. Execute a atualização do banco de dados baseado nas migrations
-   - Update-Database -C LegacyDbContext -Project 'src\3 - Data\Tnf.Architecture.EntityFrameworkCore'	
-	
-## Messaging com RabbitMQ ##
+**Tnf.Kernel**: Pacote principal do framework contém as dependências mais primitivas:
+	- Localization
+	- Setting (apenas arquivo)
+	- Dependency Injection (Extensões): Toda infra de injeção de dependência do Tnf é utilizando o **Microsoft.Extensions.DependencyInjection**.
 
-O TnfSample-Architecture está implementado com uma solução de messaging com RabbitMQ.
+**Tnf.Runtime**: abstrações para Multi-Tenancy, segurança e sessão da aplicação.
 
-###### Para habilitar: ######
+**Tnf.Notifications**: pattern de notificação.
 
-1. Instale o RabbitMQ de https://www.rabbitmq.com/download.html ou obtenha uma conexão com RabbitMQ Válida
-2. Descomente as linhas 87-91 do módulo em src/Tnf.Architecture.Web/Startup/WebModule.cs
-3. Leia sobre o fluxo utilizado para o sample com messaging src/Tnf.Architecture.Application/Services/ProfessionalAppService.cs
+**Tnf.Dto**: objetos de dto do framework utilizados para o padrão de API da TOTVS. (Compilado para ter compatibilidade com versões anteriores do framework: .NETStandard, .NETFramework 4.6, e .NETFramework 4.5).
+
+**Tnf.Repositories:** abstrações para entidades, multi-organização, multi-tenancy e pattern de UnitOfWork.
+
+**Tnf.AspNetCore:** prove suporte ao AspNetCore com a infra-estrutura do Tnf para retorno de mensagem, sessão, tratamento de notificações geradas através do notification pattern.
+
+**Tnf.Repositories.AspNetCore:** infra-estrutura para utilizar o UnitOfWork (middleware) em cada request da aplicação AspNet.
+
+**Tnf.EntityFrameworkCore:** suporte ao EntityFrameworkCore com implementações de gerencia de transações (Uow), filtros automaticos de multi-tenancy, softdelete e audit.
+
+**Tnf.Dapper:** suporte ao Dapper. Para utilização deste pacote é preciso também o Tnf.EntityFrameworkCore. O framework realiza a gerencia das transações abertas de cada contexto reaproveitando elas na utilização do Dapper.
+
+**Tnf.Localization.Manager:** gerencia de localização via banco de dados.
+
+**Tnf.Localization.Manager.EntityFrameworkCore:** gerencia de localização com o suporte do EntityFrameworkCore.
+
+**Tnf.Settings.Manager:** gerencia de configuração via banco de dados.
+
+**Tnf.Settings.Manager.EntityFrameworkCore:** gerencia de configuração com o suporte do EntityFrameworkCore.
+
+**Tnf.Settings.AspNetCore:** apis para gerencia da configurações via banco de dados.
+
+**Tnf.Domain:** infra-estrutura para trabalhar com Domain Drive Design e alguns serviços como de DomainService genéricos.
+
+**Tnf.Domain.Events:** implementação do padrão de domain events.
+
+**Tnf.Caching.Abstractions:** abstração de cache do framework. Por default este pacote contém o TnfMemoryCache.
+
+**Tnf.Caching.Redis:** implementação do suporte ao Redis como cache.
+
+**Tnf.Caching.Redis.JsonSerializer:** implementação do suporte a serialização via JSON para o Redis.
+
+**Tnf.ObjectMapping.Abstractions:** abstração utilização de mappers dentro do framework.
+
+**Tnf.AutoMapper:** implementação de mapper utilizando o AutoMapper.
+
+**Tnf.Bus.Queue:** abstração de fila.
+
+**Tnf.Bus.Client:** abstração de gerencia de fila.
+
+**Tnf.Bus.Queue.RabbitMQ:** implementação do suporte a fila com o RabbitMQ.
