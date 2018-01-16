@@ -50,10 +50,10 @@ namespace Case4.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]CustomerDto customerDto)
+        public async Task<IActionResult> Put(Guid id, [FromBody]CustomerDto customerDto)
         {
             var build = Customer.Create(Notification)
-                .WithId(customerDto.Id)
+                .WithId(id)
                 .WithName(customerDto.Name)
                 .WithEmail(customerDto.Email);
 

@@ -1,6 +1,6 @@
 ﻿{
   "culture": "pt-BR",
   "texts": {
-    "CalculateHashInvalidValue": "Informe um valor válido para calcular o hash"
+    "CustomerShouldHaveName": "Um cliente precisa ter um nome informado."
   }
 }
