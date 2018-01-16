@@ -55,7 +55,7 @@ namespace Case4.Domain
 
             protected override void Specifications()
             {
-                AddSpecification(new CustomerShouldHaveNameSpecification());
+                AddSpecificationWithParamsForLocalizationKey(new CustomerShouldHaveNameSpecification(), "Customer");
             }
         }
     }

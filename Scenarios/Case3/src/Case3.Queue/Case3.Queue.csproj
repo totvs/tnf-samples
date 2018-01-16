@@ -5,6 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Bus.Client" Version="1.9.18015.4" />
+    <PackageReference Include="Tnf.Bus.Client" Version="1.9.18016.2" />
   </ItemGroup>
 </Project>
