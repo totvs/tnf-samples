@@ -1,59 +1,46 @@
-# Casos de utilização do Tnf
+### Exemplos que serão vistos a seguir:
+#### Case1
+Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo, log e registro de dependências:
 
-Alguns cenários de utilização estão disponíveis em nosso repositório.
-Primeiro é necessário conhecer um pouco da divisão dos pacotes disponibilizados pelo Tnf
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore
+	- Tnf.Notifications
 
-![Diagramas de pacotes do Tnf](tnf_packages_diagram.png)
+#### Case2
+Exemplo de criação de uma aplicação utilizando EntityFrameworkCore com Dapper e configuração de localização via banco de dados. Para rodar essa aplicação é necessário configurar nos arquivos appsettings qual é a string de conexão que será utilizada (default é utizando o LocalDb).
+Para rodar a aplicação primeiro você deve rodar as migração executando o comando no seu Package Manager Console do visual studio 2017 para os contextos:
+- Update-Database -Context:CustomerDbContext
+- Update-Database -Context:EmployeeDbContext
+- Update-Database -Context:LocalizationDbContext
+- Update-Database -Context:SettingDbContext
 
-###### Conteúdo dos pacotes
+- Pacotes que foram instalados:
+	- Tnf.AutoMapper
+	- Tnf.Dapper
+	- Tnf.EntityFrameworkCore
+	- Tnf.Localization.EntityFrameworkCore
+	- Tnf.Settings.EntityFrameworkCore
+	- Tnf.Repositories.AspNetCore
+	
+#### Case3
+Exemplo de criação de uma aplicação utilizando o supporte a fila.
+Este exemplo contém duas APIs separadas, onde uma fará o papel do Publish da mensagem e a outra do Subscriber. Para fins de visualização as mensagens recebidas pelo API que faz a sobrescrita persiste estas em um cache em memoria que pode ser consultado através do swagger.
 
-**Tnf.Kernel**: Pacote principal do framework contém as dependências mais primitivas:
-	- Localization
-	- Setting (apenas arquivo)
-	- Dependency Injection (Extensões): Toda infra de injeção de dependência do Tnf é utilizando o **Microsoft.Extensions.DependencyInjection**.
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore
+	- Tnf.Bus.Queue.RabbitMQ
+	- Tnf.Caching.Abstractions
+	- Tnf.Bus.Client
+	
+#### Case4
+Exemplo de criação de uma aplicação utilizando a infra-estrutura de serviços de domínio com EntityFrameworkCore.
+Para rodar a aplicação primeiro você deve rodar as migração executando o comando no seu Package Manager Console do visual studio 2017 para os contextos:
+- Update-Database -Context:CustomerDbContext
 
-**Tnf.Runtime**: abstrações para Multi-Tenancy, segurança e sessão da aplicação.
+- Pacotes que foram instalados:
+	- Tnf.Domain
+	- Tnf.AutoMapper
+	- Tnf.EntityFrameworkCore
+	- Tnf.Repositories.AspNetCore
 
-**Tnf.Notifications**: pattern de notificação.
 
-**Tnf.Dto**: objetos de dto do framework utilizados para o padrão de API da TOTVS. (Compilado para ter compatibilidade com versões anteriores do framework: .NETStandard, .NETFramework 4.6, e .NETFramework 4.5).
-
-**Tnf.Repositories:** abstrações para entidades, multi-organização, multi-tenancy e pattern de UnitOfWork.
-
-**Tnf.AspNetCore:** prove suporte ao AspNetCore com a infra-estrutura do Tnf para retorno de mensagem, sessão, tratamento de notificações geradas através do notification pattern.
-
-**Tnf.Repositories.AspNetCore:** infra-estrutura para utilizar o UnitOfWork (middleware) em cada request da aplicação AspNet.
-
-**Tnf.EntityFrameworkCore:** suporte ao EntityFrameworkCore com implementações de gerencia de transações (Uow), filtros automaticos de multi-tenancy, softdelete e audit.
-
-**Tnf.Dapper:** suporte ao Dapper. Para utilização deste pacote é preciso também o Tnf.EntityFrameworkCore. O framework realiza a gerencia das transações abertas de cada contexto reaproveitando elas na utilização do Dapper.
-
-**Tnf.Localization.Manager:** gerencia de localização via banco de dados.
-
-**Tnf.Localization.Manager.EntityFrameworkCore:** gerencia de localização com o suporte do EntityFrameworkCore.
-
-**Tnf.Settings.Manager:** gerencia de configuração via banco de dados.
-
-**Tnf.Settings.Manager.EntityFrameworkCore:** gerencia de configuração com o suporte do EntityFrameworkCore.
-
-**Tnf.Settings.AspNetCore:** apis para gerencia da configurações via banco de dados.
-
-**Tnf.Domain:** infra-estrutura para trabalhar com Domain Drive Design e alguns serviços como de DomainService genéricos.
-
-**Tnf.Domain.Events:** implementação do padrão de domain events.
-
-**Tnf.Caching.Abstractions:** abstração de cache do framework. Por default este pacote contém o TnfMemoryCache.
-
-**Tnf.Caching.Redis:** implementação do suporte ao Redis como cache.
-
-**Tnf.Caching.Redis.JsonSerializer:** implementação do suporte a serialização via JSON para o Redis.
-
-**Tnf.ObjectMapping.Abstractions:** abstração utilização de mappers dentro do framework.
-
-**Tnf.AutoMapper:** implementação de mapper utilizando o AutoMapper.
-
-**Tnf.Bus.Queue:** abstração de fila.
-
-**Tnf.Bus.Client:** abstração de gerencia de fila.
-
-**Tnf.Bus.Queue.RabbitMQ:** implementação do suporte a fila com o RabbitMQ.
