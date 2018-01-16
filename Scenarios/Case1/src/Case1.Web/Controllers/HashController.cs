@@ -21,7 +21,7 @@ namespace Case1.Web.Controllers
         {
             var response = _hashService.CalculateHash(value);
 
-            return CreateResponseOnGet(new HashResponseDto(response), "api/hash");
+            return CreateResponseOnGet(new HashResponseDto(response));
         }
     }
 }

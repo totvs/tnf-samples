@@ -25,11 +25,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
-    <PackageReference Include="Tnf.AutoMapper" Version="1.9.18015.4" />
-    <PackageReference Include="Tnf.Dapper" Version="1.9.18015.4" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="1.9.18015.4" />
-    <PackageReference Include="Tnf.Localization.EntityFrameworkCore" Version="1.9.18015.4" />
-    <PackageReference Include="Tnf.Settings.EntityFrameworkCore" Version="1.9.18015.4" />
+    <PackageReference Include="Tnf.AutoMapper" Version="1.9.18016.2" />
+    <PackageReference Include="Tnf.Dapper" Version="1.9.18016.2" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="1.9.18016.2" />
+    <PackageReference Include="Tnf.Localization.EntityFrameworkCore" Version="1.9.18016.2" />
+    <PackageReference Include="Tnf.Settings.EntityFrameworkCore" Version="1.9.18016.2" />
   </ItemGroup>
 
 </Project>
