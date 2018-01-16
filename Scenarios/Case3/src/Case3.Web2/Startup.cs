@@ -48,8 +48,7 @@ namespace Case2.Web
                         exBuilder: e => exchangeRouter,
                         listener: er => new SubscriberListener(
                             exchangeRouter: er,
-                            serviceProvider: app.ApplicationServices))
-                            .Run();
+                            serviceProvider: app.ApplicationServices));
             });
 
             if (env.IsDevelopment())
