@@ -3,7 +3,7 @@
 Alguns cenários de utilização estão disponíveis em nosso repositório.
 Primeiro é necessário conhecer um pouco da divisão dos pacotes disponibilizados pelo Tnf
 
-![Diagramas de pacotes do Tnf](tnf_packages_diagram.png)
+![Diagramas de pacotes do Tnf](https://github.com/totvsnetcore/tnf-samples/blob/master/Scenarios/tnf_packages_diagram.png)
 
 ###### Conteúdo dos pacotes
 
