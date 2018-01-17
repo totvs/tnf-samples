@@ -4,9 +4,11 @@
 ###### Conteúdo dos pacotes
 
 **Tnf.Kernel**: Pacote principal do framework contém as dependências mais primitivas:
-	- Localization
-	- Setting (apenas arquivo)
-	- Dependency Injection (Extensões): Toda infra de injeção de dependência do Tnf é utilizando o **Microsoft.Extensions.DependencyInjection**.
+- Localization.
+- Setting (apenas arquivo).
+- Dependency Injection (Extensões).
+
+**OBS**: Toda infra de injeção de dependência do Tnf é utilizando as abstrações do **Microsoft.Extensions.DependencyInjection** o que possibilita que você utilize outro container de injeção de dependência (O exemplo <a href="https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Case4">Scenarios\Case4</a> utiliza o AutoFact);
 
 **Tnf.Runtime**: abstrações para Multi-Tenancy, segurança e sessão da aplicação.
 
