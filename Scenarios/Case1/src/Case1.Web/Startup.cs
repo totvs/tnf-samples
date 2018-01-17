@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Tnf.Localization;
 
 namespace Case1.Web
@@ -39,11 +40,6 @@ namespace Case1.Web
                 options.AddDomainLocalization();
             });
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             // Add CORS middleware before MVC
             app.UseCors("AllowAll");
 
@@ -57,6 +53,12 @@ namespace Case1.Web
                 swaggerDoc.Host = httpRequest.Host.Value;
             });
             app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.Run(context =>
+            {
+                context.Response.Redirect("swagger/ui");
+                return Task.CompletedTask;
+            });
         }
     }
 }

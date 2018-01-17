@@ -25,8 +25,13 @@ namespace Case4.Web
                 .ConfigureLogging((hostingContext, logging) =>
                 {
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                    logging.AddConsole();
-                    logging.AddDebug();
+
+                    var env = hostingContext.HostingEnvironment;
+                    if (env.IsDevelopment())
+                    {
+                        logging.AddConsole();
+                        logging.AddDebug();
+                    }
 
                     logging.AddFilter(LoggingEvents.FilterByTnfCategories);
                 })

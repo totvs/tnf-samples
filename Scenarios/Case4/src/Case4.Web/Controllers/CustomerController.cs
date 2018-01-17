@@ -31,10 +31,9 @@ namespace Case4.Web.Controllers
         {
             requestDto.WithId(id);
 
-            var response = await _crudService.GetAsync(requestDto);
-            var customerDto = response.MapTo<CustomerDto>();
+            var response = await _crudService.GetAsync<CustomerDto>(requestDto);
 
-            return CreateResponseOnGet<CustomerDto, Guid>(customerDto);
+            return CreateResponseOnGet<CustomerDto, Guid>(response);
         }
 
         [HttpPost]
@@ -69,7 +68,7 @@ namespace Case4.Web.Controllers
         {
             await _crudService.DeleteAsync(id);
 
-            return CreateResponseOnDelete<CustomerDto, Guid>();
+            return CreateResponseOnDelete();
         }
     }
 }

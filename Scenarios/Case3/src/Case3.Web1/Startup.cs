@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Tnf.Bus.Queue.RabbitMQ;
+using Tnf.Localization;
 
 namespace Case2.Web
 {
@@ -36,6 +38,8 @@ namespace Case2.Web
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
+                options.AddInfraLocalization();
+
                 // Recupera as configurações da fila
                 var exchangeRouter = QueuConfiguration.GetExchangeRouterConfiguration();
 
@@ -66,6 +70,12 @@ namespace Case2.Web
                 swaggerDoc.Host = httpRequest.Host.Value;
             });
             app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.Run(context =>
+            {
+                context.Response.Redirect("swagger/ui");
+                return Task.CompletedTask;
+            });
         }
     }
 }

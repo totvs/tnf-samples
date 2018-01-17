@@ -1,5 +1,4 @@
 ﻿using Case1.Domain;
-using Case1.Web.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Case1.Web.Controllers
@@ -21,7 +20,7 @@ namespace Case1.Web.Controllers
         {
             var response = _hashService.CalculateHash(value);
 
-            return CreateResponseOnGet(new HashResponseDto(response));
+            return CreateResponseOnGet(response);
         }
     }
 }

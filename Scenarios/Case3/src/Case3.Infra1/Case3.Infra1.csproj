@@ -5,6 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Localization\SourceFiles\Case3Infra1-en.json" />
+    <None Remove="Localization\SourceFiles\Case3Infra1-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Case3Infra1-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Case3Infra1-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Notifications" Version="1.9.18017.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Case3.Queue\Case3.Queue.csproj" />
   </ItemGroup>
 

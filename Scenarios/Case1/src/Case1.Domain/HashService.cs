@@ -15,10 +15,10 @@ namespace Case1.Domain
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                _notificationHandler.Raise(_notificationHandler.DefaultBuilder
+                _notificationHandler.DefaultBuilder
                     .AsError()
                     .WithMessage(Case1Consts.LocalizationSourceName, Error.CalculateHashInvalidValue)
-                    .Build());
+                    .Raise();
 
                 return string.Empty;
             }

@@ -1,4 +1,5 @@
 ﻿using Case3.Infra1.Services;
+using Case3.Web1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -14,12 +15,12 @@ namespace Case2.Web.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Post(string message)
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]NotificationMessage content)
         {
-            await _customerService.Notify(message);
+            await _customerService.Notify(content?.Message);
 
-            return Ok();
+            return CreateResponseOnPost();
         }
     }
 }

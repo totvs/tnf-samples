@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Tnf.Configuration;
 using Tnf.Localization;
 
@@ -72,6 +73,12 @@ namespace Case4.Web
                 swaggerDoc.Host = httpRequest.Host.Value;
             });
             app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.Run(context =>
+            {
+                context.Response.Redirect("swagger/ui");
+                return Task.CompletedTask;
+            });
         }
     }
 }
