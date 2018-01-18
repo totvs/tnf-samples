@@ -1,4 +1,6 @@
-﻿using Case2.Infra;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Case2.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +33,11 @@ namespace Case2.Web
 
             services.AddSwaggerGen();
 
-            return services.BuildServiceProvider();
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.Populate(services);
+
+            var container = containerBuilder.Build();
+            return new AutofacServiceProvider(container);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
