@@ -23,7 +23,7 @@ namespace Case3.Queue
                .Factory()
                .QueueName("General")
                .QueueReliabilitySetup(r => r
-                   .AckIsMandatory(true)
+                   .AutoAck(true)
                    .AutoDeleteQueue(true)
                    .MaxMessageSize(256)
                    .PersistMessage(false)

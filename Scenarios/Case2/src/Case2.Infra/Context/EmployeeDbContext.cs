@@ -17,6 +17,8 @@ namespace Case2.Infra.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Employee>(m =>
             {
                 m.HasKey(k => k.Id);

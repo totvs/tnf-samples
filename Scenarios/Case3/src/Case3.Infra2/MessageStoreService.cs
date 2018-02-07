@@ -26,9 +26,9 @@ namespace Case3.Infra2
             return valuesInCache;
         }
 
-        public void Handle(NotificationMessage message)
+        public async Task Handle(NotificationMessage message)
         {
-            var valuesInCache = _cache.Get<List<string>>(MESSAGE_STORE_CACHE_KEY);
+            var valuesInCache = await _cache.GetAsync<List<string>>(MESSAGE_STORE_CACHE_KEY);
             if (valuesInCache == null)
                 valuesInCache = new List<string>();
 

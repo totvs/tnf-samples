@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-    <PackageReference Include="Tnf.AspNetCore" Version="1.9.18017.5" />
+    <PackageReference Include="Tnf.AspNetCore" Version="2.0.18037.1" />
   </ItemGroup>
 
   <ItemGroup>

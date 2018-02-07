@@ -17,10 +17,7 @@ namespace Case3.Infra1.Services
             _notificationHandler = notificationHandler;
         }
 
-        public void Handle(NotificationMessage message)
-            => message.Publish();
-
-        public Task Notify(string message)
+        public async Task Notify(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -28,13 +25,12 @@ namespace Case3.Infra1.Services
                     .AsError()
                     .WithMessage(Infra3Consts.LocalizationSourceName, LocalizationKeys.UndefinedMessage)
                     .Raise();
-
-                return Task.CompletedTask;
             }
 
-            Handle(new NotificationMessage(message));
-
-            return Task.CompletedTask;
+            await Handle(new NotificationMessage(message));
         }
+
+        public async Task Handle(NotificationMessage message)
+            => await message.Publish();
     }
 }
