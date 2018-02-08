@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Caching.Abstractions" Version="2.0.18037.1" />
+    <PackageReference Include="Tnf.Caching.Abstractions" Version="2.0.18038.4" />
   </ItemGroup>
 
   <ItemGroup>

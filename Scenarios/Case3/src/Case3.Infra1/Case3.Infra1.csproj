@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Notifications" Version="2.0.18037.1" />
+    <PackageReference Include="Tnf.Notifications" Version="2.0.18038.4" />
   </ItemGroup>
 
   <ItemGroup>

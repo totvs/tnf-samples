@@ -28,6 +28,7 @@ namespace Case3.Queue
                    .MaxMessageSize(256)
                    .PersistMessage(false)
                    .Build())
+                   .QueueQosSetup(s => s.PrefetchGlobalLimit(false).PrefetchLimit(100).PrefetchSize(0).Build())
                .AddTopics(customerCreatedEventTopic)
                .Build();
 
