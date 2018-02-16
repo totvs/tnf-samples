@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tnf.Bus.Client;
 using Tnf.Bus.Queue.Interfaces;
 using Tnf.Caching;
 
@@ -35,6 +36,8 @@ namespace Case3.Infra2
             valuesInCache.Add(message.Value);
 
             _cache.Add(MESSAGE_STORE_CACHE_KEY, valuesInCache, TimeSpan.FromMinutes(10));
+
+            message.DoAck();
         }
     }
 }

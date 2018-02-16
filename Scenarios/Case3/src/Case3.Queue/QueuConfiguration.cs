@@ -23,12 +23,17 @@ namespace Case3.Queue
                .Factory()
                .QueueName("General")
                .QueueReliabilitySetup(r => r
-                   .AutoAck(true)
+                   .AutoAck(false)
                    .AutoDeleteQueue(true)
                    .MaxMessageSize(256)
                    .PersistMessage(false)
                    .Build())
-               .AddTopics(customerCreatedEventTopic)
+                .QueueQosSetup(q => q
+                    .PrefetchGlobalLimit(true)
+                    .PrefetchLimit(100)
+                    .PrefetchSize(0)
+                    .Build())
+               .AddTopics(customerCreatedEventTopic) 
                .Build();
 
             // Cria um Exchange Router
