@@ -35,6 +35,7 @@ namespace Case2.Web
 
                     logging.AddFilter(LoggingEvents.FilterByTnfCategories);
                 })
+                .UseUrls("http://*:5000")
                 .UseStartup<Startup>()
                 .Build();
     }

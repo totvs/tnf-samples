@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.0.18037.1" />
+    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.0.18038.4" />
   </ItemGroup>
 
   <ItemGroup>
