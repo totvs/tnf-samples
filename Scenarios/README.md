@@ -45,7 +45,7 @@ Para rodar a aplicação primeiro você deve rodar as migração executando o co
 	- Tnf.EntityFrameworkCore
 	- Tnf.Repositories.AspNetCore
 
-#### Case4 ####
+#### Case5 ####
 Exemplo do suporte ao banco de dados Oracle, utilizando dapper e EntityFramework Core.
 
 ##### Executar #####
