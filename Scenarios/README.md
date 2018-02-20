@@ -45,4 +45,15 @@ Para rodar a aplicação primeiro você deve rodar as migração executando o co
 	- Tnf.EntityFrameworkCore
 	- Tnf.Repositories.AspNetCore
 
+#### Case4 ####
+Exemplo do suporte ao banco de dados Oracle, utilizando dapper e EntityFramework Core.
 
+##### Executar #####
+- Configurar a connection string nos arquivos appsettings.json dos projetos Case5.Web e Case5.Infra
+- Criar a base de dados no Oracle
+- Rodar migração dos contextos CustomerDbContext, EmployeeDbContext, LocalizationDbContext e SettingDbContext
+
+> O schema padrão do EntityFramework Core é **DBO**. Caso o schema criado para o banco de dados não seja DBO, é necessário alterar os arquivos abaixo: 1. CustomerDbContext.cs 2. EmployeeDbContext.cs 3. LocalizationDbContext.cs 4. SettingDbContext.cs
+
+Dicas sobre Oracle XE
+> Instalar utilizando um usuário e senha local (Windows)
