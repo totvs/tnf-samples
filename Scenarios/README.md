@@ -53,11 +53,7 @@ Exemplo do suporte ao banco de dados Oracle, utilizando dapper e EntityFramework
 - Criar a base de dados no Oracle
 - Rodar migração dos contextos CustomerDbContext, EmployeeDbContext, LocalizationDbContext e SettingDbContext
 
-> O schema padrão do EntityFramework Core é **DBO**. Caso o schema criado para o banco de dados não seja DBO, é necessário alterar os arquivos abaixo:
-1. CustomerDbContext.cs
-2. EmployeeDbContext.cs
-3. LocalizationDbContext.cs
-4. SettingDbContext.cs
+> O schema padrão do EntityFramework Core é **DBO**. Caso o schema criado para o banco de dados não seja DBO, é necessário alterar os arquivos abaixo: - CustomerDbContext.cs - EmployeeDbContext.cs - LocalizationDbContext.cs - SettingDbContext.cs
 
 Dicas sobre Oracle XE
 > Instalar utilizando um usuário e senha local (Windows)
