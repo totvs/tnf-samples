@@ -1,0 +1,26 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Tnf.Runtime.Session;
+using Tnf.Settings.EntityFrameworkCore;
+
+namespace Case5.Infra.Context
+{
+    /// <summary>
+    /// Para utilizar as settings via banco de dados é preciso implementar um DbContext que irá fazer a herança da classe
+    /// TnfSettingsDbContext. Dessa forma poderá ser inclusa a migração na aplicação
+    /// </summary>
+    public class SettingDbContext : TnfSettingsDbContext<SettingDbContext>
+    {
+        // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
+        public SettingDbContext(DbContextOptions<SettingDbContext> options, ITnfSession tnfSession)
+            : base(options, tnfSession)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.HasDefaultSchema("DBO");
+        }
+    }
+}
