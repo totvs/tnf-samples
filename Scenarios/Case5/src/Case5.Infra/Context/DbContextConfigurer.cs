@@ -12,9 +12,9 @@ namespace Case5.Infra.Context
             where TDbContext : DbContext
         {
             if (config.ExistingConnection != null)
-                config.DbContextOptions.UseOracle(config.ExistingConnection, a => a.MigrationsAssembly(typeof(DbContextConfigurer).Assembly.FullName));
+                config.DbContextOptions.UseOracle(config.ExistingConnection);
             else
-                config.DbContextOptions.UseOracle(config.ConnectionString, a => a.MigrationsAssembly(typeof(DbContextConfigurer).Assembly.FullName));
+                config.DbContextOptions.UseOracle(config.ConnectionString);
         }
     }
 }

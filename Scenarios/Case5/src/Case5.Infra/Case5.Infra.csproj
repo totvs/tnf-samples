@@ -30,10 +30,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Tnf.AutoMapper" Version="2.0.18038.4" />
-    <PackageReference Include="Tnf.Dapper" Version="2.0.18038.4" />
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.0.18038.4" />
-    <PackageReference Include="Tnf.Localization.EntityFrameworkCore" Version="2.0.18038.4" />
-    <PackageReference Include="Tnf.Settings.EntityFrameworkCore" Version="2.0.18038.4" />
     <PackageReference Include="Devart.Data.Oracle.EFCore" Version="9.5.454" />    
   </ItemGroup>
 

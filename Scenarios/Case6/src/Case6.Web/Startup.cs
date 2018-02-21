@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Tnf.Configuration;
-using Tnf.Localization;
-using System.Transactions;
+using Devart.Data.Oracle;
+using System.Data;
+using Tnf.Repositories.Uow;
+using System.Data.Common;
 
 namespace Case5.Web
 {
@@ -16,9 +18,18 @@ namespace Case5.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
-                .AddTnfAspNetCore()    
-                .AddInfraDependency()    
-                .AddSwaggerGen();       
+                .AddTnfAspNetCore()
+                .AddInfra6Dependency()
+                .AddTnfRepository()
+                .AddSwaggerGen();
+
+            services.AddTransient<DbProviderFactory>((provider) =>
+            {
+                var tnfConfiguration = provider.GetRequiredService<ITnfConfiguration>();
+                var oracleConnection = new OracleProviderFactory();
+
+                return oracleConnection;
+            });
 
             services.AddCors(options =>
                 options
@@ -39,9 +50,6 @@ namespace Case5.Web
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
-                // Adiciona as configurações de localização da aplicação localizadas na camada de Infra
-                options.AddInfraLocalization();
-
                 // Recupera a configuração da aplicação
                 var configuration = options
                     .Settings
@@ -52,15 +60,9 @@ namespace Case5.Web
                 // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = configuration.GetConnectionString(name: InfraConsts.ConnectionStringName);
 
-                // Altera o default isolation level para ReadCommitted (ReadUnCommited not supported by Devart)
-                options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
                 // Habilita o driver Oracle da Devart (DotConnect for Oracle)
                 options.EnableDevartOracleDriver(useDefaultLicense: true);
             });
-
-            // Adiciona middleware de Unit of Work
-            app.UseTnfUnitOfWork();
 
             // Exibe exceptions na tela
             if (env.IsDevelopment())
@@ -78,12 +80,11 @@ namespace Case5.Web
             });
 
             // Setup Swagger
-            app
-                .UseSwagger((httpRequest, swaggerDoc) =>
-                {
-                    swaggerDoc.Host = httpRequest.Host.Value;
-                })
-                .UseSwaggerUi();
+            app.UseSwagger((httpRequest, swaggerDoc) =>
+            {
+                swaggerDoc.Host = httpRequest.Host.Value;
+            })
+            .UseSwaggerUi();
 
             // Pipeline continue
             app.Run(context =>

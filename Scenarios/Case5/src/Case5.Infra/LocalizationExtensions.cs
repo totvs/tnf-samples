@@ -20,9 +20,6 @@ namespace Tnf.Localization
                 new DictionaryBasedLocalizationSource(
                     InfraConsts.LocalizationSourceName,
                     new JsonEmbeddedFileLocalizationDictionaryProvider(typeof(InfraConsts).Assembly, "Case5.Infra.Localization.JsonSources")));
-
-            // Incluindo o source de localização
-            configuration.EnableDbLocalization();
         }
     }
 }

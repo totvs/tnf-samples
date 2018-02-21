@@ -19,7 +19,7 @@ namespace Case5.Infra.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema("DBO");
+            modelBuilder.HasDefaultSchema(InfraConsts.Schema);
 
             modelBuilder.Entity<Customer>(m =>
             {

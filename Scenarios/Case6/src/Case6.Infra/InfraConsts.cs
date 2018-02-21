@@ -2,7 +2,6 @@
 {
     public static class InfraConsts
     {
-        public static string LocalizationSourceName = @"Case5";
         public static string ConnectionStringName = @"Default";
         public static string Schema = @"DBO";
     }
