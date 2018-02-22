@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Case5.Web": {
+    "Case6.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

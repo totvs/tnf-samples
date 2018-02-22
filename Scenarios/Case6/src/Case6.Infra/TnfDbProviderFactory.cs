@@ -2,7 +2,7 @@
 using Devart.Data.Oracle;
 using System.Data.Common;
 
-namespace Case5.Web
+namespace Case6.Web
 {
     public class TnfDbProviderFactory : OracleProviderFactory
     {

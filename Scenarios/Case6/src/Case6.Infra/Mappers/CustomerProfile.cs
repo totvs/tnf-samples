@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Data;
 using System.Data.Common;
 
 namespace Case6.Infra.Mappers

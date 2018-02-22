@@ -1,7 +1,7 @@
 ﻿using Case6.Infra.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Case5.Web.Controllers
+namespace Case6.Web.Controllers
 {
     [Route("api/customers")]
     public class CustomerController : TnfController

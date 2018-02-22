@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Tnf;
 
-namespace Case5.Web
+namespace Case6.Web
 {
     public class Program
     {

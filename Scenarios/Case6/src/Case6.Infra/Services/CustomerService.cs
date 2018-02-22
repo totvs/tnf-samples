@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Case6.Infra.Services
 {
@@ -14,7 +13,7 @@ namespace Case6.Infra.Services
 
         public IEnumerable<Customer> GetAllCustomers()
         {
-            var customers = connector.CreateReader<Customer>(@"SELECT * FROM CustomerFromADO");
+            var customers = connector.CreateReader<Customer>(@"select * from customerfromado");
 
             return customers;
         }

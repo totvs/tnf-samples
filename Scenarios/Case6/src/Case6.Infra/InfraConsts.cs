@@ -1,4 +1,4 @@
-﻿namespace Case5.Infra
+﻿namespace Case6.Infra
 {
     public static class InfraConsts
     {

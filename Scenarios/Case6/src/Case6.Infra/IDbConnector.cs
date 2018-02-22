@@ -10,7 +10,7 @@ namespace Case6.Infra
     {
         DbCommand CreateCommand();
         DbCommand CreateCommand(string commandText, List<DbParameter> parameters, CommandType commandType = CommandType.Text);
-        DbConnection CreateConnection();
+        void CreateConnection();
         DbParameter CreateParameter(string name, object value);
         DbParameter CreateParameter(string name, object value, DbType type);
         DbDataReader CreateReader(string commandText, List<DbParameter> sqlParameters = null, CommandType commandType = CommandType.Text, CommandBehavior commandBehavior = CommandBehavior.SequentialAccess);
@@ -20,5 +20,10 @@ namespace Case6.Infra
         int ExecuteNonQuery(string commandText, List<DbParameter> sqlParameters);
         int ExecuteReader(string commandText, List<DbParameter> sqlParameters);
         T ExecuteScalar<T>(string commandText, List<DbParameter> sqlParameters = null);
+        void ManuallyControlConnection(bool manuallyControlConnection);
+        void ManuallyControlTransaction(bool manuallyControlTransaction);
+        bool BeginTransaction();
+        bool CommitTransaction();
+        bool RoolbackTransaction();
     }
 }

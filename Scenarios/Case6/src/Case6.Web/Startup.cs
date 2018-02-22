@@ -1,4 +1,4 @@
-﻿using Case5.Infra;
+﻿using Case6.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Tnf.Configuration;
 
-namespace Case5.Web
+namespace Case6.Web
 {
     public class Startup
     {

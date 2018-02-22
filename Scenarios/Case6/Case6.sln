@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{811DA371-4AD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Case6.Web", "src\Case6.Web\Case6.Web.csproj", "{FCE44D91-1371-4999-91ED-2D2E73979E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Case6.Infra", "src\Case6.Infra\Case6.Infra.csproj", "{A42837C3-2477-4103-B50D-D45DB74C17EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Case6.Infra", "src\Case6.Infra\Case6.Infra.csproj", "{A42837C3-2477-4103-B50D-D45DB74C17EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

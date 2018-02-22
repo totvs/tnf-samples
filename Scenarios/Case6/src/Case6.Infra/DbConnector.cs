@@ -2,34 +2,100 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using Tnf.Configuration;
 
 namespace Case6.Infra
 {
     public class DbConnector : IDisposable, IDbConnector
     {
         private readonly DbProviderFactory dbProviderFactory;
-        private readonly ITnfConfiguration tnfConfiguration;
         private DbCommand command;
         private DbConnection connection;
+        private DbTransaction transaction;
+        private bool manuallyControlConnection;
+        private bool manuallyControlTransaction;
 
-        public DbConnector(DbProviderFactory dbProviderFactory, ITnfConfiguration tnfConfiguration)
+        public DbConnector(DbProviderFactory dbProviderFactory)
         {
             this.dbProviderFactory = dbProviderFactory;
-            this.tnfConfiguration = tnfConfiguration;
-
-            this.connection = CreateConnection();
         }
 
-        public DbConnection CreateConnection()
+        public void CreateConnection()
         {
-            var connection = dbProviderFactory.CreateConnection();
-            connection.ConnectionString = tnfConfiguration.DefaultNameOrConnectionString;
-            return connection;
+            connection = dbProviderFactory.CreateConnection();
+        }
+
+        public void ManuallyControlConnection(bool manuallyControlConnection)
+        {
+            this.manuallyControlConnection = manuallyControlConnection;
+        }
+
+        public void ManuallyControlTransaction(bool manuallyControlTransaction)
+        {
+            this.manuallyControlTransaction = manuallyControlTransaction;
+        }
+
+        public bool BeginTransaction()
+        {
+            try
+            {
+                if (transaction == null)
+                {
+                    transaction = connection.BeginTransaction();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool CommitTransaction()
+        {
+            try
+            {
+                if (transaction == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    transaction.Commit();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool RoolbackTransaction()
+        {
+            try
+            {
+                if (transaction == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    transaction.Rollback();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public DbCommand CreateCommand()
         {
+            if (connection == null && !manuallyControlConnection)
+                CreateConnection();
+
             command = connection.CreateCommand();
             return command;
         }
@@ -55,7 +121,8 @@ namespace Case6.Infra
             if (command == null)
                 command = CreateCommand(commandText, sqlParameters, commandType);
 
-            command.Connection.Open();
+            if (!manuallyControlConnection)
+                command.Connection.Open();
 
             command.CommandText = commandText;
             return command.ExecuteReader();
@@ -65,20 +132,23 @@ namespace Case6.Infra
         {
             using (var cmd = CreateCommand(commandText, sqlParameters))
             {
-                cmd.Connection.Open();
+                if (!manuallyControlConnection)
+                    cmd.Connection.Open();
+
                 object result = cmd.ExecuteScalar();
-                cmd.Connection.Close();
+
+                if (!manuallyControlConnection)
+                    cmd.Connection.Close();
 
                 if (result == null || result.GetType() == typeof(DBNull))
                     return default(T);
-                else
+
+                if (!typeof(T).IsGenericType)
                 {
-                    if (!typeof(T).IsGenericType)
-                    {
-                        result = Convert.ChangeType(result, typeof(T));
-                    }
-                    return (T)result;
+                    result = Convert.ChangeType(result, typeof(T));
                 }
+
+                return (T)result;
             }
         }
 
@@ -89,10 +159,32 @@ namespace Case6.Infra
 
             using (command)
             {
-                command.Connection.Open();
-                command.CommandText = commandText;
-                int result = command.ExecuteNonQuery();
-                command.Connection.Close();
+                if (!manuallyControlConnection)
+                    command.Connection.Open();
+
+                if (!manuallyControlTransaction)
+                    BeginTransaction();
+
+                int result = -1;
+
+                try
+                {
+                    command.CommandText = commandText;
+                    result = command.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    if (!manuallyControlTransaction)
+                        RoolbackTransaction();
+                    throw;
+                }
+
+                if (!manuallyControlTransaction)
+                    CommitTransaction();
+
+                if (!manuallyControlConnection)
+                    command.Connection.Close();
+
                 return result;
             }
         }
@@ -101,9 +193,31 @@ namespace Case6.Infra
         {
             using (var cmd = CreateCommand(commandText, sqlParameters))
             {
-                cmd.Connection.Open();
-                int result = cmd.ExecuteNonQuery();
-                cmd.Connection.Close();
+                if (!manuallyControlConnection)
+                    cmd.Connection.Open();
+
+                if (!manuallyControlTransaction)
+                    BeginTransaction();
+
+                int result = -1;
+
+                try
+                {
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    if (!manuallyControlTransaction)
+                        RoolbackTransaction();
+                    throw;
+                }
+
+                if (!manuallyControlTransaction)
+                    CommitTransaction();
+
+                if (!manuallyControlConnection)
+                    cmd.Connection.Close();
+
                 return result;
             }
         }
@@ -112,9 +226,11 @@ namespace Case6.Infra
         {
             using (var cmd = CreateCommand(commandText, sqlParameters))
             {
-                cmd.Connection.Open();
+                if (!manuallyControlConnection)
+                    cmd.Connection.Open();
                 int result = cmd.ExecuteNonQuery();
-                cmd.Connection.Close();
+                if (!manuallyControlConnection)
+                    cmd.Connection.Close();
                 return result;
             }
         }
@@ -144,7 +260,7 @@ namespace Case6.Infra
             return param;
         }
 
-        public IEnumerable<T> CreateReader<T>(string commandText, List<DbParameter> sqlParameters = null, CommandType commandType = CommandType.Text, CommandBehavior commandBehavior = CommandBehavior.SequentialAccess) 
+        public IEnumerable<T> CreateReader<T>(string commandText, List<DbParameter> sqlParameters = null, CommandType commandType = CommandType.Text, CommandBehavior commandBehavior = CommandBehavior.SequentialAccess)
             where T : class, new()
         {
             List<T> collection = new List<T>();
@@ -167,6 +283,9 @@ namespace Case6.Infra
 
             connection.Close();
             connection.Dispose();
+
+            if (transaction != null)
+                transaction.Dispose();
 
             command = null;
             connection = null;
