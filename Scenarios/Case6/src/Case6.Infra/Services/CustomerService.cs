@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Tnf.Configuration;
 
 namespace Case6.Infra.Services
 {
@@ -17,9 +14,9 @@ namespace Case6.Infra.Services
             this.providerFactory = providerFactory;
         }
 
-        public IEnumerable<CustomerDto> GetAllCustomers()
+        public IEnumerable<Customer> GetAllCustomers()
         {
-            var customers = new List<CustomerDto>();
+            var customers = new List<Customer>();
 
             using (var connection = providerFactory.CreateConnection())
             {
@@ -33,11 +30,7 @@ namespace Case6.Infra.Services
                     {
                         while (reader.Read())
                         {
-                            customers.Add(new CustomerDto()
-                            {
-                                Id = Convert.ToInt32(reader["Id"]),
-                                Name = reader["Name"].ToString()
-                            });
+                            customers.Add(reader.MapTo<Customer>());
                         }
                     }
                 }

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Devart.Data.Oracle" Version="9.5.454" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.0.18038.4" />
     <PackageReference Include="Tnf.Dto" Version="2.0.18038.4" />
     <PackageReference Include="Tnf.Notifications" Version="2.0.18038.4" />
   </ItemGroup>

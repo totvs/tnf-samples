@@ -1,4 +1,5 @@
 ﻿using Case5.Web;
+using Case6.Infra.Mappers;
 using System.Data.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -12,6 +13,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTnfNotifications();
 
             services.AddTransient<DbProviderFactory, TnfDbProviderFactory>();
+
+            services.AddTnfAutoMapper(options =>
+            {
+                options.AddProfile<CustomerProfile>();
+            });
 
             return services;
         }

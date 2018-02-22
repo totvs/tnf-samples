@@ -6,6 +6,6 @@ namespace Case6.Infra.Services
 {
     public interface ICustomerService : ITransientDependency
     {
-        IEnumerable<CustomerDto> GetAllCustomers();
+        IEnumerable<Customer> GetAllCustomers();
     }
 }
