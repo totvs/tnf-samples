@@ -6,10 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Tnf.Configuration;
-using Devart.Data.Oracle;
-using System.Data;
-using Tnf.Repositories.Uow;
-using System.Data.Common;
 
 namespace Case5.Web
 {
@@ -22,14 +18,6 @@ namespace Case5.Web
                 .AddInfra6Dependency()
                 .AddTnfRepository()
                 .AddSwaggerGen();
-
-            services.AddTransient<DbProviderFactory>((provider) =>
-            {
-                var tnfConfiguration = provider.GetRequiredService<ITnfConfiguration>();
-                var oracleConnection = new OracleProviderFactory();
-
-                return oracleConnection;
-            });
 
             services.AddCors(options =>
                 options

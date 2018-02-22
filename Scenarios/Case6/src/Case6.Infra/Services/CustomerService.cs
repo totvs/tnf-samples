@@ -11,12 +11,10 @@ namespace Case6.Infra.Services
     public class CustomerService : ICustomerService
     {
         private readonly DbProviderFactory providerFactory;
-        private readonly ITnfConfiguration tnfConfiguration;
 
-        public CustomerService(DbProviderFactory providerFactory, ITnfConfiguration tnfConfiguration)
+        public CustomerService(DbProviderFactory providerFactory)
         {
             this.providerFactory = providerFactory;
-            this.tnfConfiguration = tnfConfiguration;
         }
 
         public IEnumerable<CustomerDto> GetAllCustomers()
@@ -25,7 +23,6 @@ namespace Case6.Infra.Services
 
             using (var connection = providerFactory.CreateConnection())
             {
-                connection.ConnectionString = tnfConfiguration.DefaultNameOrConnectionString;
                 connection.Open();
 
                 using (var command = connection.CreateCommand())

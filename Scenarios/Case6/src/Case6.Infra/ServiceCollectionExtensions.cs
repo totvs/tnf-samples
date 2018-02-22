@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Case5.Web;
+using System.Data.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -9,6 +10,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTnfDefaultConventionalRegistrations();
 
             services.AddTnfNotifications();
+
+            services.AddTransient<DbProviderFactory, TnfDbProviderFactory>();
 
             return services;
         }
