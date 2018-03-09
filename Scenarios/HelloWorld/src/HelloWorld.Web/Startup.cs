@@ -12,7 +12,7 @@ namespace HelloWorld.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
-                .AddApplicationServiceDependency()  // dependencia da camada HelloWord.Application
+                .AddApplicationServiceDependency()  // dependencia da camada HelloWorld.Application
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
             services.AddCors(options =>

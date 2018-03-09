@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServiceDependency(this IServiceCollection services)
         {
-            // Dependencia do projeto Tnf.HelloWord.SharedKernel
+            // Dependencia do projeto HelloWorld.SharedKernel
             services.AddSharedKernelDependency();
 
             // Registro do serviço de search
