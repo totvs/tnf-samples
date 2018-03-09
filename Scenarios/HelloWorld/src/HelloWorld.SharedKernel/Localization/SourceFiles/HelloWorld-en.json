@@ -1,0 +1,11 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "LocalizationServiceUnavailable": "Localization serivce unavailable!",
+    "LocalizationInvalidZipCode": "Zip code invalid",
+    "LocalizationInvalidCityOrStreet": "Invalid City or Street",
+    "LocalizationInvalidState": "Invalid state",
+    "LocalizationInvalidCity": "Invalid city",
+    "LocalizationInvalidStreet": "Invalid street"
+  }
+}

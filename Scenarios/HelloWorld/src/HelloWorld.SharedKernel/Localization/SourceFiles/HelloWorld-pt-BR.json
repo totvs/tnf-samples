@@ -1,0 +1,11 @@
+﻿{
+  "culture": "pt-BR",
+  "texts": {
+    "LocalizationServiceUnavailable": "Serviço de localização indisponível!",
+    "LocalizationInvalidZipCode": "CEP inválido",
+    "LocalizationInvalidCityOrStreet": "Cidade ou rua inválida",
+    "LocalizationInvalidState": "Estado inválido",
+    "LocalizationInvalidCity": "Cidade inválida",
+    "LocalizationInvalidStreet": "Rua inválida"
+  }
+}
