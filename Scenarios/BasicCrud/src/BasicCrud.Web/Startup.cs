@@ -21,7 +21,7 @@ namespace BasicCrud.Web
         {
             // Chaveamento de qual banco a aplicação irá usar
             services
-                //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLit
+                //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLite
                 //.AddOracleDependency()            // dependencia da camada BasicCrud.Infra.Oracle
                 .AddSqlServerDependency()           // dependencia da camada BasicCrud.Infra.SqlServer
                 .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
@@ -53,9 +53,9 @@ namespace BasicCrud.Web
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, "appsettings.json");
 
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(SqLiteConstants.ConnectionStringName);
+                options.DefaultNameOrConnectionString = configuration.GetConnectionString(SqlServerConstants.ConnectionStringName);
 
-                // Opção para usar SqLite
+                // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
 
                 // Altera o default isolation level para ReadCommitted (ReadUnCommited not supported by Devart)

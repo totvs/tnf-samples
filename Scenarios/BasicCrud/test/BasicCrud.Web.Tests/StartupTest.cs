@@ -18,7 +18,6 @@ namespace BasicCrud.Web.Tests
         {            
             services
                 .AddMapperDependency()
-                .AddTnfRepository()
                 .AddApplicationServiceDependency()  // Configura a mesma dependencia da camada web a ser testada   
                 .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
                 .AddTnfEfCoreInMemory()             // Configura o setup de teste para EntityFrameworkCore em memória
