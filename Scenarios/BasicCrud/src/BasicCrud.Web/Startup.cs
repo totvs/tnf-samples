@@ -1,8 +1,6 @@
 ﻿using BasicCrud.Application;
 using BasicCrud.Domain;
 using BasicCrud.Infra;
-using BasicCrud.Infra.Oracle;
-using BasicCrud.Infra.SqLite;
 using BasicCrud.Infra.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

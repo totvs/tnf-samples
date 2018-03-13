@@ -26,8 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BasicCrud.Application\BasicCrud.Application.csproj" />
-    <ProjectReference Include="..\BasicCrud.Infra.Oracle\BasicCrud.Infra.Oracle.csproj" />
-    <ProjectReference Include="..\BasicCrud.Infra.SqLite\BasicCrud.Infra.SqLite.csproj" />
     <ProjectReference Include="..\BasicCrud.Infra.SqlServer\BasicCrud.Infra.SqlServer.csproj" />
   </ItemGroup>
 
