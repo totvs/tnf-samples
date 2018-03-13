@@ -54,7 +54,7 @@ namespace HelloWorld.Web
 
             app.Run(context =>
             {
-                context.Response.Redirect("swagger/ui");
+                context.Response.Redirect("/swagger/ui");
                 return Task.CompletedTask;
             });
         }
