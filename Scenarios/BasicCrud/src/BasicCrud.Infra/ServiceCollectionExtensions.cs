@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BasicCrud.Infra.MapperProfiles;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Infra
 {
@@ -6,9 +7,12 @@ namespace BasicCrud.Infra
     {
         public static IServiceCollection AddInfraDependency(this IServiceCollection services)
         {
-            return services
-                .AddTnfEntityFrameworkCore() // Configura o uso do EntityFrameworkCore registrando os contextos que serão usados pela aplicação
-                .AddMapperDependency();
+            services.AddTnfAutoMapper(config =>
+            {
+                config.AddProfile<CustomerProfile>();
+            });
+
+            return services;
         }
     }
 }

@@ -20,8 +20,8 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.0.18059.1" />
-    <PackageReference Include="Tnf.Repositories.Provider.DevartOracle" Version="2.0.18059.1" />
+    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.0.2.7202" />
+    <PackageReference Include="Tnf.Repositories.Provider.DevartOracle" Version="2.0.2.7202" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,10 +21,10 @@ namespace BasicCrud.Web
         {
             // Chaveamento de qual banco a aplicação irá usar
             services
+                .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
                 //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLite
                 //.AddOracleDependency()            // dependencia da camada BasicCrud.Infra.Oracle
                 .AddSqlServerDependency()           // dependencia da camada BasicCrud.Infra.SqlServer
-                .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
             services.AddCors(options =>

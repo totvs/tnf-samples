@@ -1,0 +1,265 @@
+2018-03-13 18:43:41.927 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone]
+2018-03-13 18:43:41.955 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.539 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.553 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.578 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.593 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.642 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.643 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.715 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.735 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.771 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.806 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.891 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.976 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.983 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.988 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.996 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:42.998 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.018 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.029 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.121 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.376 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.511 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:43.557 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:51.690 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:53.973 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:43:53.987 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initializing 2 localization sources.
+2018-03-13 18:43:54.025 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: BasicCrud
+2018-03-13 18:43:54.025 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: Tnf
+2018-03-13 18:43:54.272 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Application.AppServices.CustomerAppService.<GetAll>d__5.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Application\AppServices\CustomerAppService.cs:line 71
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Web.Controllers.CustomerController.<GetAll>d__2.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Web\Controllers\CustomerController.cs:line 23
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
+2018-03-13 18:44:25.922 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:44:34.248 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Application.AppServices.CustomerAppService.<GetAll>d__5.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Application\AppServices\CustomerAppService.cs:line 71
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Web.Controllers.CustomerController.<GetAll>d__2.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Web\Controllers\CustomerController.cs:line 23
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
+2018-03-13 18:44:37.554 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:56:13.957 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Application.AppServices.CustomerAppService.<GetAll>d__5.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Application\AppServices\CustomerAppService.cs:line 71
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Web.Controllers.CustomerController.<GetAll>d__2.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Web\Controllers\CustomerController.cs:line 23
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
+2018-03-13 18:56:41.400 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:56:58.472 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwa2018-03-13 18:57:12.385 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone]
+2018-03-13 18:57:12.406 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.547 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.555 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.567 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.567 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.585 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.589 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.593 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.604 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.604 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.622 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.638 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.638 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.653 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.662 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.674 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.700 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.726 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.736 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.743 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.768 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.786 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:12.949 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:15.491 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:16.432 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:57:16.450 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initializing 2 localization sources.
+2018-03-13 18:57:16.488 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: BasicCrud
+2018-03-13 18:57:16.488 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: Tnf
+2018-03-13 18:57:42.446 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Application.AppServices.CustomerAppService.<GetAll>d__5.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Application\AppServices\CustomerAppService.cs:line 71
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Web.Controllers.CustomerController.<GetAll>d__2.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Web\Controllers\CustomerController.cs:line 23
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
+2018-03-13 18:59:06.934 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-03-13 18:59:20.431 -03:00 [EROR] Tnf.AspNetCore.Mvc.Exception.TnfExceptionActionFilter Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tnf.EntityFrameworkCore.Uow.Internal.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\DbContextEfCoreTransactionStrategy.cs:line 39
+   at Tnf.EntityFrameworkCore.Uow.Internal.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext]() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Uow\Internal\EfCoreUnitOfWork.cs:line 115
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.get_Table() in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 44
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAllIncluding(Expression`1[] propertySelectors) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 87
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.InternalGetAll(Expression`1 func, IRequestAllDto key, Boolean paging, Boolean orderning) in C:\vsts_agent\vsts_repository\6\s\src\Tnf.EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs:line 371
+   at Tnf.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetAllAsync>d__49`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Tnf.Domain.Services.DomainService`2.<GetAllAsync>d__11`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Application.AppServices.CustomerAppService.<GetAll>d__5.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Application\AppServices\CustomerAppService.cs:line 71
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at BasicCrud.Web.Controllers.CustomerController.<GetAll>d__2.MoveNext() in D:\git\tnf-samples\Scenarios\BasicCrud\src\BasicCrud.Web\Controllers\CustomerController.cs:line 23
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where
