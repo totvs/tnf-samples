@@ -7,12 +7,9 @@ namespace BasicCrud.Infra
     {
         public static IServiceCollection AddInfraDependency(this IServiceCollection services)
         {
-            services.AddTnfAutoMapper(config =>
-            {
-                config.AddProfile<CustomerProfile>();
-            });
-
-            return services;
+            return services
+                .AddTnfEntityFrameworkCore()    // Configura o uso do EntityFrameworkCore registrando os contextos que serão usados pela aplicação
+                .AddMapperDependency();         // Configura o uso do AutoMappper
         }
     }
 }

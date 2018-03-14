@@ -17,15 +17,15 @@ namespace BasicCrud.Web.Tests.Mocks
         public static Guid customerGuid = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
 
         private List<CustomerDto> list = new List<CustomerDto>() {
-            new CustomerDto() { Id = customerGuid, Name="Customer A" },
-            new CustomerDto() { Id = Guid.NewGuid(), Name="Customer B" },
-            new CustomerDto() { Id = Guid.NewGuid(), Name="Customer C" }
+            new CustomerDto() { Id = customerGuid, Name = "Customer A" },
+            new CustomerDto() { Id = Guid.NewGuid(), Name = "Customer B" },
+            new CustomerDto() { Id = Guid.NewGuid(), Name = "Customer C" }
         };
 
         public Task<CustomerDto> Create(CustomerDto dto)
         {
             if (dto == null)
-                return  Task.FromResult<CustomerDto>(null);
+                return Task.FromResult<CustomerDto>(null);
 
             dto.Id = Guid.NewGuid();
             list.Add(dto);
@@ -37,7 +37,7 @@ namespace BasicCrud.Web.Tests.Mocks
         {
             list.RemoveAll(c => c.Id == id);
 
-            return 0.AsTask();
+            return Task.CompletedTask;
         }
 
         public Task<CustomerDto> Get(IRequestDto<Guid> id)
@@ -59,13 +59,11 @@ namespace BasicCrud.Web.Tests.Mocks
             if (dto == null)
                 return Task.FromResult<CustomerDto>(null);
 
-            var oldDto = list.FirstOrDefault(c => c.Id == id);
+            list.RemoveAll(c => c.Id == id);
+            dto.Id = id;
+            list.Add(dto);
 
-            if (oldDto == null)
-                return Task.FromResult<CustomerDto>(null);
-
-            oldDto.Name = dto.Name;
-            return oldDto.AsTask();
+            return dto.AsTask();
         }
     }
 }

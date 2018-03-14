@@ -1,5 +1,6 @@
 ﻿using BasicCrud.Application;
 using BasicCrud.Domain;
+using BasicCrud.Infra;
 using BasicCrud.Infra.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,7 @@ namespace BasicCrud.Web.Tests
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {            
             services
+                .AddMapperDependency()              // Configura o mesmo Mapper para ser testado
                 .AddApplicationServiceDependency()  // Configura a mesma dependencia da camada web a ser testada   
                 .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
                 .AddTnfEfCoreSqliteInMemory()       // Configura o setup de teste para EntityFrameworkCore em memória
