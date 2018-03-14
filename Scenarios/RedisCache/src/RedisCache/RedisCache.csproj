@@ -30,7 +30,7 @@
     <PackageReference Include="Serilog.Sinks.Async" Version="1.1.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
-    <PackageReference Include="Tnf.Caching.Redis.JsonSerializer" Version="2.0.2.7202" />
+    <PackageReference Include="Tnf.Caching.Redis.JsonSerializer" Version="2.0.2.7203" />
   </ItemGroup>
 
 </Project>
