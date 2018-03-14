@@ -4,22 +4,22 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Tnf.Runtime.Session;
 
-namespace BasicCrud.Infra.SqLite.Context.Migrations
+namespace BasicCrud.Infra.Oracle.Context
 {
-    public class CustomerDbContextFactory : IDesignTimeDbContextFactory<CustomerDbContext>
+    public class BasicCrudDbContextFactory : IDesignTimeDbContextFactory<BasicCrudDbContext>
     {
-        public CustomerDbContext CreateDbContext(string[] args)
+        public BasicCrudDbContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<CustomerDbContext>();
+            var builder = new DbContextOptionsBuilder<BasicCrudDbContext>();
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
                                     .AddJsonFile($"appsettings.json", true)
                                     .Build();
             
-            builder.UseSqlite(configuration.GetConnectionString(SqLiteConstants.ConnectionStringName));
+            builder.UseOracle(configuration.GetConnectionString(OracleConstants.ConnectionStringName));
 
-            return new CustomerDbContext(builder.Options, NullTnfSession.Instance);
+            return new BasicCrudDbContext(builder.Options, NullTnfSession.Instance);
         }
     }
 }

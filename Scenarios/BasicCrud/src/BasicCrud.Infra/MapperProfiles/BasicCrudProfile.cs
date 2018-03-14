@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
+using BasicCrud.Dto.Product;
 
 namespace BasicCrud.Infra.MapperProfiles
 {
-    public class CustomerProfile : Profile
+    public class BasicCrudProfile : Profile
     {
-        public CustomerProfile()
+        public BasicCrudProfile()
         {
             CreateMap<Customer, CustomerDto>();
+            CreateMap<Product, ProductDto>();
         }
     }
 }

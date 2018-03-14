@@ -32,7 +32,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                WebConstants.RouteName
+                WebConstants.CustomerRouteName
             );
 
             // Assert
@@ -46,7 +46,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
 
             // Assert
@@ -59,7 +59,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{Guid.NewGuid()}",
+                $"{WebConstants.CustomerRouteName}/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );
 
@@ -68,7 +68,7 @@ namespace BasicCrud.Web.Tests
 
             // Act
             response = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{Guid.Empty}",
+                $"{WebConstants.CustomerRouteName}/{Guid.Empty}",
                 HttpStatusCode.NotFound
             );
 
@@ -82,7 +82,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await PostResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                WebConstants.RouteName,
+                WebConstants.CustomerRouteName,
                 new CustomerDto() { Name = "Customer U" }
             );
 
@@ -95,7 +95,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                WebConstants.RouteName,
+                WebConstants.CustomerRouteName,
                 null
             );
 
@@ -109,7 +109,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await PutResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}",
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}",
                 new CustomerDto() { Name = "Customer @" }
             );
 
@@ -123,7 +123,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                $"{WebConstants.RouteName}/{Guid.Empty}",
+                $"{WebConstants.CustomerRouteName}/{Guid.Empty}",
                 null
             );
 
@@ -137,7 +137,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             await DeleteResponseAsync(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
         }
     }

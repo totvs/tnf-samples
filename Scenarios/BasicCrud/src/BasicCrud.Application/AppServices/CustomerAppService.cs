@@ -26,7 +26,6 @@ namespace BasicCrud.Application.AppServices
                 return CustomerDto.NullInstance;                       
 
             var builder = Customer.Create(Notification)
-                .WithId(dto.Id)
                 .WithName(dto.Name);
 
             dto.Id = await service.InsertAndGetIdAsync(builder);

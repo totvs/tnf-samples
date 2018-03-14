@@ -15,6 +15,7 @@ namespace BasicCrud.Application
 
             // Registro dos serviços
             services.AddTransient<ICustomerAppService, CustomerAppService>();
+            services.AddTransient<IProductAppService, ProductAppService>();
 
             return services;
         }

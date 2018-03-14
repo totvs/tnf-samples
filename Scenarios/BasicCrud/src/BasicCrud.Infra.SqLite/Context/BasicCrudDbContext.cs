@@ -3,14 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore;
 using Tnf.Runtime.Session;
 
-namespace BasicCrud.Infra.SqlServer
+namespace BasicCrud.Infra.SqLite.Context
 {
-    public class CustomerDbContext : TnfDbContext
+    public class BasicCrudDbContext : TnfDbContext
     {
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
         // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
-        public CustomerDbContext(DbContextOptions<CustomerDbContext> options, ITnfSession session) 
+        public BasicCrudDbContext(DbContextOptions<BasicCrudDbContext> options, ITnfSession session) 
             : base(options, session)
         {
         }
@@ -23,6 +25,13 @@ namespace BasicCrud.Infra.SqlServer
             {
                 m.HasKey(k => k.Id);
                 m.Property(p => p.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<Product>(m =>
+            {
+                m.HasKey(k => k.Id);
+                m.Property(p => p.Description).IsRequired();
+                m.Property(p => p.Value).IsRequired();
             });
         }
     }

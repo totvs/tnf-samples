@@ -7,7 +7,7 @@ using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
 {
-    [Route(WebConstants.RouteName)]
+    [Route(WebConstants.CustomerRouteName)]
     public class CustomerController : TnfController
     {
         private readonly ICustomerAppService appService;

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BasicCrud.Domain.Interfaces.Services;
+using BasicCrud.Domain.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Domain
 {
@@ -14,7 +16,7 @@ namespace BasicCrud.Domain
             // services.AddTnfDefaultConventionalRegistrations();
 
             // Registro dos serviços
-            //services.AddTransient<ICustomerAppService, CustomerAppService>();
+            services.AddTransient<IProductDomainService, ProductDomainService>();
 
             return services;
         }

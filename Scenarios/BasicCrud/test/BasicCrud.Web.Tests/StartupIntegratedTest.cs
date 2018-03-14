@@ -1,7 +1,7 @@
 ﻿using BasicCrud.Application;
 using BasicCrud.Domain;
 using BasicCrud.Infra;
-using BasicCrud.Infra.SqlServer;
+using BasicCrud.Infra.SqlServer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +19,7 @@ namespace BasicCrud.Web.Tests
                 .AddApplicationServiceDependency()  // Configura a mesma dependencia da camada web a ser testada   
                 .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
                 .AddTnfEfCoreSqliteInMemory()       // Configura o setup de teste para EntityFrameworkCore em memória
-                .RegisterDbContextToSqliteInMemory<CustomerDbContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+                .RegisterDbContextToSqliteInMemory<BasicCrudDbContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
             return services.BuildServiceProvider();
         }
