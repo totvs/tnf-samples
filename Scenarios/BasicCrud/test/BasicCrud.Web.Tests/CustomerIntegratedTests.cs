@@ -208,7 +208,7 @@ namespace BasicCrud.Web.Tests
             // Act
             var customer = await PostResponseAsObjectAsync<CustomerDto, CustomerDto>(
                 WebConstants.CustomerRouteName,
-                new CustomerDto() { Name = "Customer U" }
+                new CustomerDto() { Name = "Customer @" }
             );
 
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(

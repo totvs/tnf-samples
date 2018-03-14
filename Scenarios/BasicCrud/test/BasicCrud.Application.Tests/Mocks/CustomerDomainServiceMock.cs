@@ -11,7 +11,7 @@ using Tnf.Notifications;
 
 namespace BasicCrud.Application.Tests.Mocks
 {
-    public class DomainServiceMock : IDomainService<Customer, Guid>
+    public class CustomerDomainServiceMock : IDomainService<Customer, Guid>
     {
         private readonly INotificationHandler notificationHandler;
 
@@ -21,7 +21,7 @@ namespace BasicCrud.Application.Tests.Mocks
 
         public string EntityName { get; set; }
 
-        public DomainServiceMock(INotificationHandler notificationHandler)
+        public CustomerDomainServiceMock(INotificationHandler notificationHandler)
         {
             this.notificationHandler = notificationHandler;
 

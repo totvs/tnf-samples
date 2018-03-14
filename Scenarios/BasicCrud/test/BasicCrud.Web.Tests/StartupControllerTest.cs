@@ -17,6 +17,7 @@ namespace BasicCrud.Web.Tests
 
             // Registro dos serviços de Mock
             services.AddTransient<ICustomerAppService, CustomerAppServiceMock>();
+            services.AddTransient<IProductAppService, ProductAppServiceMock>();
 
             return services.BuildServiceProvider();
         }

@@ -19,7 +19,7 @@ namespace BasicCrud.Infra.SqlServer.Repositories.ReadRepositories
         }
 
         public async Task<IListDto<ProductDto, Guid>> GetAllProductsAsync(ProductRequestAllDto key)
-            => await GetAllAsync<ProductDto>(key, p => key.Description.IsNullOrEmpty() || key.Description.Contains(key.Description));
+            => await GetAllAsync<ProductDto>(key, p => key.Description.IsNullOrEmpty() || p.Description.Contains(key.Description));
 
         public async Task<ProductDto> GetProductAsync(IRequestDto<Guid> key)
         {

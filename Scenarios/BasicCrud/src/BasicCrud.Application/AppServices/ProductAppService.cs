@@ -34,6 +34,10 @@ namespace BasicCrud.Application.AppServices
                 .WithValue(dto.Value);
 
             var entity = await service.InsertProductAsync(builder);
+
+            if (Notification.HasNotification())
+                return ProductDto.NullInstance;
+
             dto.Id = entity.Id;
 
             return dto;

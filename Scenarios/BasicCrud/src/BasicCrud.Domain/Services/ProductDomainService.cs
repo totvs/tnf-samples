@@ -25,6 +25,18 @@ namespace BasicCrud.Domain.Services
 
         public async Task<Product> InsertProductAsync(Product.ProductBuilder builder)
         {
+            if(builder == null)
+            {
+                Notification.Raise(Notification
+                                    .DefaultBuilder
+                                    .AsError()
+                                    .FromErrorEnum(Error.DomainServiceOnInsertAndGetIdNullBuilderError)
+                                    .WithMessage(DomainConstants.LocalizationSourceName, Error.DomainServiceOnInsertAndGetIdNullBuilderError)
+                                    .Build());
+
+                return default(Product);
+            }
+
             var product = builder.Build();
 
             if (Notification.HasNotification())
@@ -37,6 +49,18 @@ namespace BasicCrud.Domain.Services
 
         public async Task<Product> UpdateProductAsync(Product.ProductBuilder builder)
         {
+            if (builder == null)
+            {
+                Notification.Raise(Notification
+                                    .DefaultBuilder
+                                    .AsError()
+                                    .FromErrorEnum(Error.DomainServiceOnUpdateNullBuilderError)
+                                    .WithMessage(DomainConstants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError)
+                                    .Build());
+
+                return default(Product);
+            }
+
             var product = builder.Build();
 
             if (Notification.HasNotification())

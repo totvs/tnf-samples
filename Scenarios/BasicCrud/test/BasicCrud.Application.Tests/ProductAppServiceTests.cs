@@ -9,8 +9,10 @@ using BasicCrud.Application.AppServices.Interfaces;
 using BasicCrud.Application.Tests.Mocks;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
-using BasicCrud.Dto.Customer;
+using BasicCrud.Domain.Interfaces.Services;
+using BasicCrud.Dto.Product;
 using BasicCrud.Infra;
+using BasicCrud.Infra.ReadInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -24,15 +26,15 @@ using Xunit;
 
 namespace BasicCrud.Application.Tests
 {
-    public class CustomerAppServiceTests : TnfIntegratedTestBase
+    public class ProductAppServiceTests : TnfIntegratedTestBase
     {
         private ILocalizationSource _localizationSource;
-        private readonly ICustomerAppService _appService;
+        private readonly IProductAppService _appService;
         private readonly CultureInfo _culture;
 
-        public CustomerAppServiceTests()
+        public ProductAppServiceTests()
         {
-            _appService = Resolve<ICustomerAppService>();
+            _appService = Resolve<IProductAppService>();
 
             _culture = CultureInfo.GetCultureInfo("pt-BR");
         }
@@ -45,10 +47,11 @@ namespace BasicCrud.Application.Tests
             services.AddMapperDependency();
 
             // Registro dos serviços de Mock
-            services.AddTransient<IDomainService<Customer, Guid>, CustomerDomainServiceMock>();
+            services.AddTransient<IProductDomainService, ProductServiceMock>();
+            services.AddTransient<IProductReadRepository, ProductServiceMock>();
 
             // Registro dos serviços para teste
-            services.AddTransient<ICustomerAppService, CustomerAppService>();
+            services.AddTransient<IProductAppService, ProductAppService>();
         }
 
         protected override void PostInitialize(IServiceProvider provider)
@@ -64,8 +67,9 @@ namespace BasicCrud.Application.Tests
         public void Should_Resolve_All()
         {
             TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<ICustomerAppService>().ShouldNotBeNull();
-            ServiceProvider.GetService<IDomainService<Customer, Guid>>().ShouldNotBeNull();
+            ServiceProvider.GetService<IProductAppService>().ShouldNotBeNull();
+            ServiceProvider.GetService<IProductDomainService>().ShouldNotBeNull();
+            ServiceProvider.GetService<IProductReadRepository>().ShouldNotBeNull();
         }
 
 
@@ -73,7 +77,7 @@ namespace BasicCrud.Application.Tests
         public async Task Should_GetAll()
         {
             // Act
-            var response = await _appService.GetAll(new CustomerRequestAllDto());
+            var response = await _appService.GetAllProductAsync(new ProductRequestAllDto());
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -83,34 +87,35 @@ namespace BasicCrud.Application.Tests
 
 
         [Fact]
-        public async Task Should_Get_Customer()
+        public async Task Should_Get_Product()
         {
             // Act
-            var customer = await _appService.Get(CustomerDomainServiceMock.customerGuid.ToRequestDto());
+            var product = await _appService.GetProductAsync(ProductServiceMock.productGuid.ToRequestDto());
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.Equal(CustomerDomainServiceMock.customerGuid, customer.Id);
-            Assert.Equal("Customer A", customer.Name);
+            Assert.Equal(ProductServiceMock.productGuid, product.Id);
+            Assert.Equal("Product A", product.Description);
+            Assert.Equal(5, product.Value);
         }
 
         [Fact]
         public async Task Should_Raise_Notification_On_Get_Null()
         {
             // Act
-            var customer = await _appService.Get(null);
+            var product = await _appService.GetProductAsync(null);
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
 
             // Act
-            customer = await _appService.Get(new RequestDto<Guid>());
+            product = await _appService.GetProductAsync(new RequestDto<Guid>());
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
             message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
@@ -120,36 +125,38 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Raise_Notification_On_Get_Not_Found()
         {
             // Act
-            var customer = await _appService.Get(Guid.NewGuid().ToRequestDto());
+            var product = await _appService.GetProductAsync(Guid.NewGuid().ToRequestDto());
 
             // Assert
-            Assert.Null(customer);
+            Assert.Null(product);
         }
 
 
         [Fact]
-        public async Task Should_Create_Customer()
+        public async Task Should_Create_Product()
         {
             // Act
-            var customer = await _appService.Create(new CustomerDto
+            var product = await _appService.CreateProductAsync(new ProductDto
             {
-                Name = "Customer @"
+                Description = "Product @",
+                Value = 20
             });
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.NotEqual(Guid.Empty, customer.Id);
-            Assert.Equal("Customer @", customer.Name);
+            Assert.NotEqual(Guid.Empty, product.Id);
+            Assert.Equal("Product @", product.Description);
+            Assert.Equal(20, product.Value);
         }
 
         [Fact]
         public async Task Should_Raise_Notification_On_Create()
         {
             // Act
-            var customer = await _appService.Create(null);
+            var product = await _appService.CreateProductAsync(null);
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
@@ -159,39 +166,43 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Raise_Notification_On_Create_With_Specifications()
         {
             // Act
-            var customer = await _appService.Create(new CustomerDto());
+            var product = await _appService.CreateProductAsync(new ProductDto());
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
-            var message = _localizationSource.GetString(Customer.Error.CustomerShouldHaveName, _culture);
+            var message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+            Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
+            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
 
         [Fact]
-        public async Task Should_Update_Customer()
+        public async Task Should_Update_Product()
         {
             // Act
-            var customer = await _appService.Update(CustomerDomainServiceMock.customerGuid, new CustomerDto
+            var product = await _appService.UpdateProductAsync(ProductServiceMock.productGuid, new ProductDto
             {
-                Name = "Customer @"
+                Description = "Product @",
+                Value = 20
             });
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.Equal(customer.Id, CustomerDomainServiceMock.customerGuid);
-            Assert.Equal("Customer @", customer.Name);
+            Assert.Equal(product.Id, ProductServiceMock.productGuid);
+            Assert.Equal("Product @", product.Description);
+            Assert.Equal(20, product.Value);
         }
 
         [Fact]
         public async Task Should_Raise_Notification_On_Update()
         {
             // Act
-            var customer = await _appService.Update(Guid.Empty, null);
+            var product = await _appService.UpdateProductAsync(Guid.Empty, null);
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
             Assert.Equal(2, LocalNotification.GetAll().Count());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
@@ -204,28 +215,30 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Raise_Notification_On_Update_With_Specifications()
         {
             // Act
-            var customer = await _appService.Update(CustomerDomainServiceMock.customerGuid, new CustomerDto());
+            var product = await _appService.UpdateProductAsync(ProductServiceMock.productGuid, new ProductDto());
 
             // Assert
-            Assert.NotNull(customer);
+            Assert.NotNull(product);
             Assert.True(LocalNotification.HasNotification());
-            var message = _localizationSource.GetString(Customer.Error.CustomerShouldHaveName, _culture);
+            var message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+            Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
+            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
 
         [Fact]
-        public async Task Should_Delete_Customer()
+        public async Task Should_Delete_Product()
         {
             // Act
-            await _appService.Delete(CustomerDomainServiceMock.customerGuid);
+            await _appService.DeleteProductAsync(ProductServiceMock.productGuid);
         }
 
         [Fact]
         public async Task Should_Raise_Notification_On_Delete()
         {
             // Act
-            await _appService.Delete(Guid.Empty);
+            await _appService.DeleteProductAsync(Guid.Empty);
 
             // Assert
             Assert.True(LocalNotification.HasNotification());
