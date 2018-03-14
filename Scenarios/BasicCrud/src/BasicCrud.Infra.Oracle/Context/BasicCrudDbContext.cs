@@ -1,4 +1,5 @@
 ﻿using BasicCrud.Domain.Entities;
+using BasicCrud.Infra.Oracle.Context.Builders;
 using Microsoft.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore;
 using Tnf.Runtime.Session;
@@ -21,18 +22,8 @@ namespace BasicCrud.Infra.Oracle.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Customer>(m =>
-            {
-                m.HasKey(k => k.Id);
-                m.Property(p => p.Name).IsRequired();
-            });
-
-            modelBuilder.Entity<Product>(m =>
-            {
-                m.HasKey(k => k.Id);
-                m.Property(p => p.Description).IsRequired();
-                m.Property(p => p.Value).IsRequired();
-            });
+            modelBuilder.ApplyConfiguration(new CustomerTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductTypeConfiguration());
         }
     }
 }

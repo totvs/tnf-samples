@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Tnf.Application.Services;
 using Tnf.Dto;
 
-namespace BasicCrud.Application.AppServices.Interfaces
+namespace BasicCrud.Application.Services.Interfaces
 {
     public interface IProductAppService : IApplicationService
     {

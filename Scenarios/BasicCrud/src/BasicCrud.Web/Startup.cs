@@ -45,7 +45,7 @@ namespace BasicCrud.Web
             app.UseTnfAspNetCore(options =>
             {
                 // Adiciona as configurações de localização da aplicação
-                options.AddDomainLocalization();
+                options.UseDomainLocalization();
 
                 // Recupera a configuração da aplicação
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, "appsettings.json");

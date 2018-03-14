@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
@@ -51,14 +51,14 @@ namespace BasicCrud.Web.Tests
                 for (var i = 2; i < 21; i++)
                     context.Customers.Add(Customer.Create(notificationHandler)
                         .WithId(Guid.NewGuid())
-                        .WithName($"Customer {Number2String(i, true)}")
+                        .WithName($"Customer {NumberToAlphabetLetter(i, true)}")
                         .Build());
 
                 context.SaveChanges();
             });
         }
 
-        private string Number2String(int number, bool isCaps)
+        private string NumberToAlphabetLetter(int number, bool isCaps)
         {
             Char c = (Char)((isCaps ? 65 : 97) + (number - 1));
             return c.ToString();

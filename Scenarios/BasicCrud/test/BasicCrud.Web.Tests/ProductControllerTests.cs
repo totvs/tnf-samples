@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Tnf.AspNetCore.TestBase;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
-using BasicCrud.Application.AppServices.Interfaces;
+using BasicCrud.Application.Services.Interfaces;
 using Tnf.Dto;
 using BasicCrud.Dto.Product;
 using BasicCrud.Web.Tests.Mocks;

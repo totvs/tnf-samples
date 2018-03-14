@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

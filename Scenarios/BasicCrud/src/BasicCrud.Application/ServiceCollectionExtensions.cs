@@ -1,5 +1,5 @@
-﻿using BasicCrud.Application.AppServices;
-using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services;
+using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Domain;
 using Microsoft.Extensions.DependencyInjection;
 

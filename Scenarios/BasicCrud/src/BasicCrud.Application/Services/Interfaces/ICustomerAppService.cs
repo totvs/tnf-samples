@@ -2,7 +2,7 @@
 using System;
 using Tnf.Application.Services;
 
-namespace BasicCrud.Application.AppServices.Interfaces
+namespace BasicCrud.Application.Services.Interfaces
 {
     public interface ICustomerAppService : IAsyncApplicationService<CustomerDto, CustomerRequestAllDto, Guid>
     {

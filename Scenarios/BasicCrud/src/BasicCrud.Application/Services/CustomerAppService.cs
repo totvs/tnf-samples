@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
 using System;
@@ -8,7 +8,7 @@ using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
 
-namespace BasicCrud.Application.AppServices
+namespace BasicCrud.Application.Services
 {
     public class CustomerAppService : ApplicationService, ICustomerAppService
     {

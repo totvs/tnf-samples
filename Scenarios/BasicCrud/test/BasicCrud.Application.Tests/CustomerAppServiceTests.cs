@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BasicCrud.Application.AppServices;
-using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services;
+using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Application.Tests.Mocks;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
 using BasicCrud.Infra;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using Tnf;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using Tnf.Application.Services;
 using Tnf.Domain.Services;
 using Tnf.Dto;
@@ -55,7 +51,7 @@ namespace BasicCrud.Application.Tests
         {
             base.PostInitialize(provider);
 
-            provider.ConfigureTnf().AddDomainLocalization();
+            provider.ConfigureTnf().UseDomainLocalization();
 
             _localizationSource = provider.GetService<ILocalizationManager>().GetSource(DomainConstants.LocalizationSourceName);
         }

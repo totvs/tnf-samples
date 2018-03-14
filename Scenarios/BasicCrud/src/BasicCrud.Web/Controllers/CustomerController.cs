@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Dto.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System;

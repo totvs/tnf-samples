@@ -43,7 +43,7 @@ namespace BasicCrud.Domain.Tests
         {
             base.PostInitialize(provider);
 
-            provider.ConfigureTnf().AddDomainLocalization();
+            provider.ConfigureTnf().UseDomainLocalization();
 
             _localizationSource = provider.GetService<ILocalizationManager>().GetSource(DomainConstants.LocalizationSourceName);
         }

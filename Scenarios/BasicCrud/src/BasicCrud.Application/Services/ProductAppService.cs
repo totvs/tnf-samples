@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Domain.Interfaces.Services;
 using BasicCrud.Dto.Product;
@@ -6,21 +6,20 @@ using BasicCrud.Infra.ReadInterfaces;
 using System;
 using System.Threading.Tasks;
 using Tnf.Application.Services;
-using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
 
-namespace BasicCrud.Application.AppServices
+namespace BasicCrud.Application.Services
 {
     public class ProductAppService : ApplicationService, IProductAppService
     {
-        private readonly IProductDomainService service;
+        private readonly IProductDomainService domainService;
         private readonly IProductReadRepository readRepository;
 
-        public ProductAppService(IProductDomainService service, IProductReadRepository readRepository, INotificationHandler notificationHandler)
+        public ProductAppService(IProductDomainService domainService, IProductReadRepository readRepository, INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
-            this.service = service;
+            this.domainService = domainService;
             this.readRepository = readRepository;
         }
 
@@ -33,7 +32,7 @@ namespace BasicCrud.Application.AppServices
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            var entity = await service.InsertProductAsync(builder);
+            var entity = await domainService.InsertProductAsync(builder);
 
             if (Notification.HasNotification())
                 return ProductDto.NullInstance;
@@ -53,7 +52,7 @@ namespace BasicCrud.Application.AppServices
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            await service.UpdateProductAsync(builder);
+            await domainService.UpdateProductAsync(builder);
 
             dto.Id = id;
             return dto;
@@ -64,7 +63,7 @@ namespace BasicCrud.Application.AppServices
             if (!ValidateId(id))
                 return;
 
-            await service.DeleteProductAsync(id);
+            await domainService.DeleteProductAsync(id);
         }
 
         public async Task<ProductDto> GetProductAsync(IRequestDto<Guid> id)

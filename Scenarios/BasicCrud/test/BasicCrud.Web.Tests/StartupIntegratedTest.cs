@@ -31,7 +31,7 @@ namespace BasicCrud.Web.Tests
             app.UseTnfAspNetCoreSetupTest(options =>
             {
                 // Adiciona as configurações de localização da aplicação a ser testada
-                options.AddDomainLocalization();
+                options.UseDomainLocalization();
 
                 // Configuração para usar teste com EntityFramework em memória
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
