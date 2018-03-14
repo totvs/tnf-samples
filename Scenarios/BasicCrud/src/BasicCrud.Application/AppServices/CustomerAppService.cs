@@ -81,7 +81,7 @@ namespace BasicCrud.Application.AppServices
                 return CustomerDto.NullInstance;
 
             var builder = Customer.Create(Notification)
-                .WithId(dto.Id)
+                .WithId(id)
                 .WithName(dto.Name);
 
             await service.UpdateAsync(builder);
