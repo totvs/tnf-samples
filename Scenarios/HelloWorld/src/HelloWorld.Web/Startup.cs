@@ -1,5 +1,4 @@
-﻿using HelloWorld.SharedKernel;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,9 +10,7 @@ namespace HelloWorld.Web
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddApplicationServiceDependency()  // dependencia da camada HelloWorld.Application
-                .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
+            services.AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
             services.AddCors(options =>
             {
@@ -35,7 +32,7 @@ namespace HelloWorld.Web
             app.UseTnfAspNetCore(options =>
             {
                 // Adiciona as configurações de localização da aplicação
-                options.ConfigureSharedKernelLocalization();
+                options.ConfigureLocalization();
             });
 
             // Add CORS middleware before MVC

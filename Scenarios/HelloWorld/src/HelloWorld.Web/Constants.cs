@@ -1,4 +1,4 @@
-﻿namespace HelloWorld.SharedKernel
+﻿namespace HelloWorld.Web
 {
     public static class Constants
     {
