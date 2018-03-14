@@ -5,7 +5,6 @@ using Tnf.Runtime.Session;
 
 namespace BasicCrud.Infra.SqlServer
 {
-    [DefaultDbContext]
     public class CustomerDbContext : TnfDbContext
     {
         public DbSet<Customer> Customers { get; set; }

@@ -11,9 +11,7 @@ namespace BasicCrud.Application
         public static IServiceCollection AddApplicationServiceDependency(this IServiceCollection services)
         {
             // Dependencia do projeto BasicCrud.Domain
-            services
-                .AddDomainDependency()
-                .AddInfraDependency();
+            services.AddDomainDependency();
 
             // Registro dos serviços
             services.AddTransient<ICustomerAppService, CustomerAppService>();

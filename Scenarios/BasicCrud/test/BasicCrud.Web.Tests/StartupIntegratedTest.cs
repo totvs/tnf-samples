@@ -7,20 +7,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Transactions;
-using Tnf.Configuration;
 
 namespace BasicCrud.Web.Tests
 {
-    public class StartupTest
+    public class StartupIntegratedTest
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {            
             services
+                .AddMapperDependency()              // Configura o mesmo Mapper para ser testado
                 .AddApplicationServiceDependency()  // Configura a mesma dependencia da camada web a ser testada   
                 .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
-                .AddTnfEfCoreInMemory()             // Configura o setup de teste para EntityFrameworkCore em memória
-                .RegisterDbContextInMemory<CustomerDbContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+                .AddTnfEfCoreSqliteInMemory()       // Configura o setup de teste para EntityFrameworkCore em memória
+                .RegisterDbContextToSqliteInMemory<CustomerDbContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
             return services.BuildServiceProvider();
         }

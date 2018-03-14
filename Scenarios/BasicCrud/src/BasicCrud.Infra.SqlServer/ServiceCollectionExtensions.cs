@@ -8,7 +8,7 @@ namespace BasicCrud.Infra.SqlServer
         public static IServiceCollection AddSqlServerDependency(this IServiceCollection services)
         {
             services
-                .AddTnfEntityFrameworkCore()
+                .AddInfraDependency()
                 .AddTnfDbContext<CustomerDbContext>((config) =>
                 {
                     if (config.ExistingConnection != null)

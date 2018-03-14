@@ -22,9 +22,7 @@ namespace BasicCrud.Application.AppServices
 
         public async Task<CustomerDto> Create(CustomerDto dto)
         {
-            ValidateDto<CustomerDto, Guid>(dto);
-
-            if (Notification.HasNotification())
+            if (!ValidateDto<CustomerDto, Guid>(dto))
                 return CustomerDto.NullInstance;                       
 
             var builder = Customer.Create(Notification)
@@ -38,12 +36,7 @@ namespace BasicCrud.Application.AppServices
 
         public async Task Delete(Guid id)
         {
-            ValidateId(id);
-
-            if (id == Guid.Empty)
-                RaiseNotification(Error.ApplicationServiceOnInvalidIdError);
-
-            if (Notification.HasNotification())
+            if (!ValidateId(id))
                 return;
 
             await service.DeleteAsync(id);
@@ -51,15 +44,7 @@ namespace BasicCrud.Application.AppServices
 
         public async Task<CustomerDto> Get(IRequestDto<Guid> id)
         {
-            ValidateId(id);
-
-            if (Notification.HasNotification())
-                return CustomerDto.NullInstance;
-
-            if (id.GetId() == Guid.Empty)
-                RaiseNotification(Error.ApplicationServiceOnInvalidIdError);
-
-            if (Notification.HasNotification())
+            if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
                 return CustomerDto.NullInstance;
 
             var entity = await service.GetAsync(id);
@@ -68,16 +53,11 @@ namespace BasicCrud.Application.AppServices
         }
 
         public async Task<IListDto<CustomerDto, Guid>> GetAll(CustomerRequestAllDto request)
-            => await service.GetAllAsync<CustomerDto>(request);
+            => await service.GetAllAsync<CustomerDto>(request, c => request.Name.IsNullOrEmpty() || c.Name.Contains(request.Name));
 
         public async Task<CustomerDto> Update(Guid id, CustomerDto dto)
         {
-            ValidateDtoAndId(dto, id);
-
-            if (id == Guid.Empty)
-                RaiseNotification(Error.ApplicationServiceOnInvalidIdError);
-
-            if (Notification.HasNotification())
+            if (!ValidateDtoAndId(dto, id))
                 return CustomerDto.NullInstance;
 
             var builder = Customer.Create(Notification)
