@@ -7,10 +7,11 @@ using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
 {
-    [Route("api/customers")]
+    [Route(WebConstants.RouteName)]
     public class CustomerController : TnfController
     {
         private readonly ICustomerAppService appService;
+        private const string name = "Customer";
 
         public CustomerController(ICustomerAppService appService)
         {
@@ -22,7 +23,7 @@ namespace BasicCrud.Web.Controllers
         {
             var response = await appService.GetAll(requestDto);
 
-            return CreateResponseOnGetAll(response);
+            return CreateResponseOnGetAll(response, name);
         }
 
         [HttpGet("{id}")]
@@ -32,7 +33,7 @@ namespace BasicCrud.Web.Controllers
 
             var response = await appService.Get(requestDto);
 
-            return CreateResponseOnGet<CustomerDto, Guid>(response);
+            return CreateResponseOnGet<CustomerDto, Guid>(response, name);
         }
 
         [HttpPost]
@@ -40,7 +41,7 @@ namespace BasicCrud.Web.Controllers
         {
             customerDto = await appService.Create(customerDto);
 
-            return CreateResponseOnPost<CustomerDto, Guid>(customerDto);
+            return CreateResponseOnPost<CustomerDto, Guid>(customerDto, name);
         }
 
         [HttpPut("{id}")]
@@ -48,7 +49,7 @@ namespace BasicCrud.Web.Controllers
         {
             customerDto = await appService.Update(id, customerDto);
 
-            return CreateResponseOnPut<CustomerDto, Guid>(customerDto);
+            return CreateResponseOnPut<CustomerDto, Guid>(customerDto, name);
         }
 
         [HttpDelete("{id}")]
@@ -56,7 +57,7 @@ namespace BasicCrud.Web.Controllers
         {
             await appService.Delete(id);
 
-            return CreateResponseOnDelete();
+            return CreateResponseOnDelete<CustomerDto, Guid>(name);
         }
     }
 }
