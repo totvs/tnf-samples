@@ -6,7 +6,7 @@ namespace BasicCrud.Domain
 {
     public static class LocalizationExtensions
     {
-        public static void AddDomainLocalization(this ITnfConfiguration configuration)
+        public static void UseDomainLocalization(this ITnfConfiguration configuration)
         {
             // Incluindo o source de localização
             configuration.Localization.Sources.Add(

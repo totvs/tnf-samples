@@ -1,8 +1,8 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
-using BasicCrud.Infra.SqlServer;
+using BasicCrud.Infra.SqlServer.Context;
 using BasicCrud.Web.Controllers;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +41,7 @@ namespace BasicCrud.Web.Tests
 
             _culture = CultureInfo.GetCultureInfo("pt-BR");
 
-            ServiceProvider.UsingDbContext<CustomerDbContext>(context =>
+            ServiceProvider.UsingDbContext<BasicCrudDbContext>(context =>
             {
                 context.Customers.Add(Customer.Create(notificationHandler)
                     .WithId(CustomerAppServiceMock.customerGuid)
@@ -51,14 +51,14 @@ namespace BasicCrud.Web.Tests
                 for (var i = 2; i < 21; i++)
                     context.Customers.Add(Customer.Create(notificationHandler)
                         .WithId(Guid.NewGuid())
-                        .WithName($"Customer {Number2String(i, true)}")
+                        .WithName($"Customer {NumberToAlphabetLetter(i, true)}")
                         .Build());
 
                 context.SaveChanges();
             });
         }
 
-        private string Number2String(int number, bool isCaps)
+        private string NumberToAlphabetLetter(int number, bool isCaps)
         {
             Char c = (Char)((isCaps ? 65 : 97) + (number - 1));
             return c.ToString();
@@ -79,7 +79,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                WebConstants.RouteName
+                WebConstants.CustomerRouteName
             );
 
             // Assert
@@ -88,7 +88,7 @@ namespace BasicCrud.Web.Tests
 
             // Act
             response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?pageSize=30"
+                $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
             // Assert
@@ -101,7 +101,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?pageSize=20&order=-name"
+                $"{WebConstants.CustomerRouteName}?pageSize=20&order=-name"
             );
 
             // Assert
@@ -111,7 +111,7 @@ namespace BasicCrud.Web.Tests
 
             // Act
             response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?order=-name"
+                $"{WebConstants.CustomerRouteName}?order=-name"
             );
 
             // Assert
@@ -125,7 +125,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?pageSize=20&name=Customer%20"
+                $"{WebConstants.CustomerRouteName}?pageSize=20&name=Customer%20"
             );
 
             // Assert
@@ -134,7 +134,7 @@ namespace BasicCrud.Web.Tests
 
             // Act
             response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?name=Customer%20C"
+                $"{WebConstants.CustomerRouteName}?name=Customer%20C"
             );
 
             // Assert
@@ -148,7 +148,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
 
             // Assert
@@ -161,7 +161,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}?fields=name"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}?fields=name"
             );
 
             // Assert
@@ -174,7 +174,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{Guid.NewGuid()}",
+                $"{WebConstants.CustomerRouteName}/{Guid.NewGuid()}",
                 HttpStatusCode.NotFound
             );
 
@@ -187,7 +187,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<ErrorResponse>(
-                $"{WebConstants.RouteName}/{Guid.Empty}",
+                $"{WebConstants.CustomerRouteName}/{Guid.Empty}",
                 HttpStatusCode.BadRequest
             );
 
@@ -207,12 +207,12 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await PostResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                WebConstants.RouteName,
-                new CustomerDto() { Name = "Customer U" }
+                WebConstants.CustomerRouteName,
+                new CustomerDto() { Name = "Customer @" }
             );
 
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?pageSize=30"
+                $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
             // Assert
@@ -226,7 +226,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<CustomerDto, ErrorResponse>(
-                WebConstants.RouteName,
+                WebConstants.CustomerRouteName,
                 null,
                 HttpStatusCode.BadRequest
             );
@@ -246,7 +246,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PostResponseAsObjectAsync<CustomerDto, ErrorResponse>(
-                WebConstants.RouteName,
+                WebConstants.CustomerRouteName,
                 new CustomerDto(),
                 HttpStatusCode.BadRequest
             );
@@ -267,7 +267,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var customer = await PutResponseAsObjectAsync<CustomerDto, CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}",
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}",
                 new CustomerDto() { Name = "Customer @" }
             );
 
@@ -277,7 +277,7 @@ namespace BasicCrud.Web.Tests
 
             // Act
             customer = await GetResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
 
             // Assert
@@ -290,7 +290,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<CustomerDto, ErrorResponse>(
-                $"{WebConstants.RouteName}/{Guid.Empty}",
+                $"{WebConstants.CustomerRouteName}/{Guid.Empty}",
                 null,
                 HttpStatusCode.BadRequest
             );
@@ -312,7 +312,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await PutResponseAsObjectAsync<CustomerDto, ErrorResponse>(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}",
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}",
                 new CustomerDto(),
                 HttpStatusCode.BadRequest
             );
@@ -333,11 +333,11 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             await DeleteResponseAsync(
-                $"{WebConstants.RouteName}/{CustomerAppServiceMock.customerGuid}"
+                $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
 
             var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
-                $"{WebConstants.RouteName}?pageSize=30"
+                $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
             // Assert
@@ -350,7 +350,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<ErrorResponse>(
-                $"{WebConstants.RouteName}/{Guid.Empty}",
+                $"{WebConstants.CustomerRouteName}/{Guid.Empty}",
                 HttpStatusCode.BadRequest
             );
 
@@ -369,7 +369,7 @@ namespace BasicCrud.Web.Tests
         {
             // Act
             var response = await DeleteResponseAsObjectAsync<CustomerDto>(
-                $"{WebConstants.RouteName}/{Guid.NewGuid()}"
+                $"{WebConstants.CustomerRouteName}/{Guid.NewGuid()}"
             );
 
             // Assert

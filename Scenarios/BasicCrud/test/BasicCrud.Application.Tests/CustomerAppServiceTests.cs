@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BasicCrud.Application.AppServices;
-using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services;
+using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Application.Tests.Mocks;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
 using BasicCrud.Infra;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using Tnf;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using Tnf.Application.Services;
 using Tnf.Domain.Services;
 using Tnf.Dto;
@@ -45,7 +41,7 @@ namespace BasicCrud.Application.Tests
             services.AddMapperDependency();
 
             // Registro dos serviços de Mock
-            services.AddTransient<IDomainService<Customer, Guid>, DomainServiceMock>();
+            services.AddTransient<IDomainService<Customer, Guid>, CustomerDomainServiceMock>();
 
             // Registro dos serviços para teste
             services.AddTransient<ICustomerAppService, CustomerAppService>();
@@ -55,7 +51,7 @@ namespace BasicCrud.Application.Tests
         {
             base.PostInitialize(provider);
 
-            provider.ConfigureTnf().AddDomainLocalization();
+            provider.ConfigureTnf().UseDomainLocalization();
 
             _localizationSource = provider.GetService<ILocalizationManager>().GetSource(DomainConstants.LocalizationSourceName);
         }
@@ -86,11 +82,11 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Get_Customer()
         {
             // Act
-            var customer = await _appService.Get(DomainServiceMock.customerGuid.ToRequestDto());
+            var customer = await _appService.Get(CustomerDomainServiceMock.customerGuid.ToRequestDto());
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.Equal(DomainServiceMock.customerGuid, customer.Id);
+            Assert.Equal(CustomerDomainServiceMock.customerGuid, customer.Id);
             Assert.Equal("Customer A", customer.Name);
         }
 
@@ -133,12 +129,13 @@ namespace BasicCrud.Application.Tests
             // Act
             var customer = await _appService.Create(new CustomerDto
             {
-                Name = "Customer D"
+                Name = "Customer @"
             });
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.NotNull(customer);
+            Assert.NotEqual(Guid.Empty, customer.Id);
+            Assert.Equal("Customer @", customer.Name);
         }
 
         [Fact]
@@ -172,14 +169,14 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Update_Customer()
         {
             // Act
-            var customer = await _appService.Update(DomainServiceMock.customerGuid, new CustomerDto
+            var customer = await _appService.Update(CustomerDomainServiceMock.customerGuid, new CustomerDto
             {
                 Name = "Customer @"
             });
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
-            Assert.Equal(customer.Id, DomainServiceMock.customerGuid);
+            Assert.Equal(customer.Id, CustomerDomainServiceMock.customerGuid);
             Assert.Equal("Customer @", customer.Name);
         }
 
@@ -203,7 +200,7 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Raise_Notification_On_Update_With_Specifications()
         {
             // Act
-            var customer = await _appService.Update(DomainServiceMock.customerGuid, new CustomerDto());
+            var customer = await _appService.Update(CustomerDomainServiceMock.customerGuid, new CustomerDto());
 
             // Assert
             Assert.NotNull(customer);
@@ -217,7 +214,7 @@ namespace BasicCrud.Application.Tests
         public async Task Should_Delete_Customer()
         {
             // Act
-            await _appService.Delete(DomainServiceMock.customerGuid);
+            await _appService.Delete(CustomerDomainServiceMock.customerGuid);
         }
 
         [Fact]

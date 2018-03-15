@@ -1,5 +1,4 @@
-﻿using BasicCrud.Infra.MapperProfiles;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Infra
 {

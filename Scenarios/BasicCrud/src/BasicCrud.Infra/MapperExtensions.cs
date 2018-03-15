@@ -10,7 +10,7 @@ namespace BasicCrud.Infra
             // Configura o uso do AutoMappper
             return services.AddTnfAutoMapper(config =>
             {
-                config.AddProfile<CustomerProfile>();
+                config.AddProfile<BasicCrudProfile>();
             });
         }
     }

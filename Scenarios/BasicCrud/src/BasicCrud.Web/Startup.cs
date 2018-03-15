@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using System.Transactions;
 using Tnf.Configuration;
 
 namespace BasicCrud.Web
@@ -45,7 +44,7 @@ namespace BasicCrud.Web
             app.UseTnfAspNetCore(options =>
             {
                 // Adiciona as configurações de localização da aplicação
-                options.AddDomainLocalization();
+                options.UseDomainLocalization();
 
                 // Recupera a configuração da aplicação
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, "appsettings.json");

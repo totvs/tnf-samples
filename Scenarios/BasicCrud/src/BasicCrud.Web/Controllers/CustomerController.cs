@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Dto.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +7,7 @@ using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
 {
-    [Route(WebConstants.RouteName)]
+    [Route(WebConstants.CustomerRouteName)]
     public class CustomerController : TnfController
     {
         private readonly ICustomerAppService appService;

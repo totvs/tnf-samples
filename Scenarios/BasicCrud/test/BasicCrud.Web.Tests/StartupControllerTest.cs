@@ -1,4 +1,4 @@
-﻿using BasicCrud.Application.AppServices.Interfaces;
+﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +17,7 @@ namespace BasicCrud.Web.Tests
 
             // Registro dos serviços de Mock
             services.AddTransient<ICustomerAppService, CustomerAppServiceMock>();
+            services.AddTransient<IProductAppService, ProductAppServiceMock>();
 
             return services.BuildServiceProvider();
         }
