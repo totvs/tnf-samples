@@ -4,27 +4,27 @@
 
 ### Existem duas formas de controlar esse comportamento no TNF:
 	
-* Manual: de forma explicita no código através da injeção da interface IUnitOfWorkManager que possui
+* **Manual:** de forma explicita no código através da injeção da interface IUnitOfWorkManager que possui
   métodos para iniciar ".Begin()" e ".Complete" para comitar as alterações;
 
-* Automático: de forma implícita a utilização desta opção acarreta na criação de um UnitOfWork para cada request realizado.
+* **Automático:** de forma implícita a utilização desta opção acarreta na criação de um UnitOfWork para cada request realizado.
   Isso se dá ao fato da utilização do pacote Tnf.Repositories.AspNetCore que possui além das dependências
   de AspNetCore, um middleware que pode ser chamado no Startup de sua aplicação ".UseTnfUnitOfWork()" para ser adicionado ao pipeline de sua API 
   garantindo que cada request tenha um Unit Of Work presente.
 
 ### Dependendo do TransactionScopeOption utilzado na criação de um Uow através do método ".Begin()" o controle transacional funcionará com descrito a seguir:
 
-* Required: Uma transação é exigida. Ele irá criar uma transação se esta não existir ainda. Caso você crie transações aninhandas com o mesmo
+- **Required:** Uma transação é exigida. Ele irá criar uma transação se esta não existir ainda. Caso você crie transações aninhandas com o mesmo
   TransactionScopeOption definido para Required o Unit Of Work não irá criar mais transações e manterá apenas a que foi criada anteriormente para comitá-la ao final
   deste escopo. Este é o valor default ao criar um Unit Of Work
 
-* RequiresNew: Uma transação nova sempre será criada para aquele escopo.
+- **RequiresNew:** Uma transação nova sempre será criada para aquele escopo.
 
-* Suppress: O contexto da transação é suprimdo. Todas as operações dentro deste escopo serão feitos sem um contexto de transação.
+- **Suppress:** O contexto da transação é suprimido. Todas as operações dentro deste escopo serão feitos sem um contexto de transação.
 
 ### Para alterar esse valores a nível de aplicação você deve configurar o UnitOfWorkOptions. Isso pode ser feito de duas maneiras:
 
-* Através do Startup de sua aplicação, configurando através do método .UseTnfAspNetCore:
+- Através do Startup de sua aplicação, configurando através do método .UseTnfAspNetCore:
 	
 ```
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
@@ -52,7 +52,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<
 }
 ```
 
-* Outra opção é acessar via uma extensão baseado no IServiceProvider:
+- Outra opção é acessar via uma extensão baseado no IServiceProvider:
 
 ```
 public void Configure(IServiceProvider provider)
