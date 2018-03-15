@@ -1,75 +1,88 @@
 ### Transactional Sample
 
-## Este exemplo contempla um cen·rio transacional.
+#### Este exemplo contempla um cen√°rio transacional.
 
-# Existem duas formas de controlar esse comportamento no TNF:
+Para que este exemplo funcione voc√™ precisa ter o LocalDb instalado em seu visual studio ou configurar uma instancia v√°lida do SqlServer
+nos config da aplica√ß√£o no projeto
 	
-* Manual: de forma explicita no cÛdigo atravÈs da injeÁ„o da interface IUnitOfWorkManager que possui
-  mÈtodos para iniciar ".Begin()" e ".Complete" para comitar as alteraÁıes;
+	Transactional.Web 
+		appsettings.Development.json e 
+		appsettings.Production.json.
+	
+Obs: Este exemplo utiliza as migra√ß√µes do EntityFrameWorkCore e para que elas possam ser executadas o usu√°rio de seu SqlServer ir√° precisar de permiss√£o para alterar a base de dados.
 
-* Autom·tico: de forma implÌcita a utilizaÁ„o desta opÁ„o acarreta na criaÁ„o de um UnitOfWork para cada request realizado.
-  Isso se d· ao fato da utilizaÁ„o do pacote Tnf.Repositories.AspNetCore que possui alÈm das dependÍncias
-  de AspNetCore, um middleware que pode ser chamado no Startup de sua aplicaÁ„o ".UseTnfUnitOfWork()" para ser adicionado ao pipeline de sua API 
+#### Existem duas formas de controlar esse comportamento no TNF:
+	
+* **Manual:** de forma explicita no c√≥digo atrav√©s da inje√ß√£o da interface IUnitOfWorkManager que possui
+  m√©todos para iniciar ".Begin()" e ".Complete" para comitar as altera√ß√µes;
+
+* **Autom√°tico:** de forma impl√≠cita a utiliza√ß√£o desta op√ß√£o acarreta na cria√ß√£o de um UnitOfWork para cada request realizado.
+  Isso se d√° ao fato da utiliza√ß√£o do pacote Tnf.Repositories.AspNetCore que possui al√©m das depend√™ncias
+  de AspNetCore, um middleware que pode ser chamado no Startup de sua aplica√ß√£o ".UseTnfUnitOfWork()" para ser adicionado ao pipeline de sua API 
   garantindo que cada request tenha um Unit Of Work presente.
 
-# Dependendo do TransactionScopeOption utilzado na criaÁ„o de um Uow atravÈs do mÈtodo ".Begin()" o controle transacional funcionar· com descrito a seguir:
+#### Dependendo do TransactionScopeOption utilzado na cria√ß√£o de um Uow atrav√©s do m√©todo ".Begin()" o controle transacional funcionar√° com descrito a seguir:
 
-* Required: Uma transaÁ„o È exigida. Ele ir· criar uma transaÁ„o se esta n„o existir ainda. Caso vocÍ crie transaÁıes aninhandas com o mesmo
-  TransactionScopeOption definido para Required o Unit Of Work n„o ir· criar mais transaÁıes e manter· apenas a que foi criada anteriormente para comit·-la ao final
-  deste escopo. Este È o valor default ao criar um Unit Of Work
+- **Required:** Uma transa√ß√£o √© exigida. Ele ir√° criar uma transa√ß√£o se esta n√£o existir ainda. Caso voc√™ crie transa√ß√µes aninhandas com o mesmo
+  TransactionScopeOption definido para Required o Unit Of Work n√£o ir√° criar mais transa√ß√µes e manter√° apenas a que foi criada anteriormente para comit√°-la ao final
+  deste escopo. Este √© o valor default ao criar um Unit Of Work
 
-* RequiresNew: Uma transaÁ„o nova sempre ser· criada para aquele escopo.
+- **RequiresNew:** Uma transa√ß√£o nova sempre ser√° criada para aquele escopo.
 
-* Suppress: O contexto da transaÁ„o È suprimdo. Todas as operaÁıes dentro deste escopo ser„o feitos sem um contexto de transaÁ„o.
+- **Suppress:** O contexto da transa√ß√£o √© suprimido. Todas as opera√ß√µes dentro deste escopo ser√£o feitos sem um contexto de transa√ß√£o.
 
-# Para alterar esse valores a nÌvel de aplicaÁ„o vocÍ deve configurar o UnitOfWorkOptions. Isso pode ser feito de duas maneiras:
+#### Para alterar esse valores a n√≠vel de aplica√ß√£o voc√™ deve configurar o UnitOfWorkOptions. Isso pode ser feito de duas maneiras:
 
-* AtravÈs do Startup de sua aplicaÁ„o, configurando atravÈs do mÈtodo .UseTnfAspNetCore:
+- Atrav√©s do Startup de sua aplica√ß√£o, configurando atrav√©s do m√©todo .UseTnfAspNetCore:
 	
-	public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+```
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+{
+	app.UseTnfAspNetCore(options =>
 	{
-		app.UseTnfAspNetCore(options =>
-        {
-			// ---------- ConfiguraÁıes de Unit of Work a nÌvel de aplicaÁ„o
+		// ---------- Configura√ß√µes de Unit of Work a n√≠vel de aplica√ß√£o
 
-            // Por padr„o um Uow È transacional: todas as operaÁıes realizadas dentro de um Uow ser„o
-            // comitadas ou desfeitas em caso de erro
-            options.UnitOfWorkOptions().IsTransactional = true;
+		// Por padr√£o um Uow √© transacional: todas as opera√ß√µes realizadas dentro de um Uow ser√£o
+		// comitadas ou desfeitas em caso de erro
+		options.UnitOfWorkOptions().IsTransactional = true;
 
-            // IsolationLevel default de cada transaÁ„o criada. (Precisa da configuraÁ„o IsTransactional = true para funcionar)
-            options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
+		// IsolationLevel default de cada transa√ß√£o criada. (Precisa da configura√ß√£o IsTransactional = true para funcionar)
+		options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
 
-            // Escopo da transaÁ„o. (Precisa da configuraÁ„o IsTransactional = true para funcionar)
-            options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+		// Escopo da transa√ß√£o. (Precisa da configura√ß√£o IsTransactional = true para funcionar)
+		options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
 
-            // Timeout que ser· aplicado (se este valor for informado) para toda nova transaÁ„o criada
-			// N„o È indicado informar este valor pois ir· afetar toda a aplicaÁ„o.
-            options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
+		// Timeout que ser√° aplicado (se este valor for informado) para toda nova transa√ß√£o criada
+		// N√£o √© indicado informar este valor pois ir√° afetar toda a aplica√ß√£o.
+		options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
 
-            // ----------
-		});
-	}
+		// ----------
+	});
+}
+```
 
-* Outra opÁ„o È acessar via uma extens„o baseado no IServiceProvider:
+- Outra op√ß√£o √© acessar via uma extens√£o baseado no IServiceProvider:
 
-	public void Configure(IServiceProvider provider)
-	{
-		// ---------- ConfiguraÁıes de Unit of Work a nÌvel de aplicaÁ„o
+```
+public void Configure(IServiceProvider provider)
+{
+	// ---------- Configura√ß√µes de Unit of Work a n√≠vel de aplica√ß√£o
 
-        // Por padr„o um Uow È transacional: todas as operaÁıes realizadas dentro de um Uow ser„o
-        // comitadas ou desfeitas em caso de erro
-		provider.ConfigureTnf().UnitOfWorkOptions().IsTransactional = true;
+	// Por padr√£o um Uow √© transacional: todas as opera√ß√µes realizadas dentro de um Uow ser√£o
+	// comitadas ou desfeitas em caso de erro
+	provider.ConfigureTnf().UnitOfWorkOptions().IsTransactional = true;
 
-		// IsolationLevel default de cada transaÁ„o criada. (Precisa da configuraÁ„o IsTransactional = true para funcionar)
-        provider.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
+	// IsolationLevel default de cada transa√ß√£o criada. (Precisa da configura√ß√£o IsTransactional = true para funcionar)
+	provider.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
 
-        // Escopo da transaÁ„o. (Precisa da configuraÁ„o IsTransactional = true para funcionar)
-        provider.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+	// Escopo da transa√ß√£o. (Precisa da configura√ß√£o IsTransactional = true para funcionar)
+	provider.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
 
-        // Timeout que ser· aplicado (se este valor for informado) para toda nova transaÁ„o criada
-        provider.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
+	// Timeout que ser√° aplicado (se este valor for informado) para toda nova transa√ß√£o criada
+	provider.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
 
-        // ----------
-	}
+	// ----------
+}
+```
 
-Neste exemplo È contemplado apenas o cen·rio Manual, onde todo acesso a um Repository est· sendo criado um Unit Of Work de forma explicÌta.
+Neste exemplo √© contemplado apenas o cen√°rio Manual, onde todo acesso a um Repository est√° sendo criado um Unit Of Work de forma explic√≠ta.
