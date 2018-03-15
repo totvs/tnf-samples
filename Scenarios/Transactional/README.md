@@ -26,50 +26,54 @@
 
 * Através do Startup de sua aplicação, configurando através do método .UseTnfAspNetCore:
 	
-	public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
-	{
-		app.UseTnfAspNetCore(options =>
-        {
-			// ---------- Configurações de Unit of Work a nível de aplicação
-
-            // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
-            // comitadas ou desfeitas em caso de erro
-            options.UnitOfWorkOptions().IsTransactional = true;
-
-            // IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
-            options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
-            // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
-            options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
-
-            // Timeout que será aplicado (se este valor for informado) para toda nova transação criada
-			// Não é indicado informar este valor pois irá afetar toda a aplicação.
-            options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
-
-            // ----------
-		});
-	}
-
-* Outra opção é acessar via uma extensão baseado no IServiceProvider:
-
-	public void Configure(IServiceProvider provider)
+```
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+{
+	app.UseTnfAspNetCore(options =>
 	{
 		// ---------- Configurações de Unit of Work a nível de aplicação
 
-        // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
-        // comitadas ou desfeitas em caso de erro
-		provider.ConfigureTnf().UnitOfWorkOptions().IsTransactional = true;
+		// Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
+		// comitadas ou desfeitas em caso de erro
+		options.UnitOfWorkOptions().IsTransactional = true;
 
 		// IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
-        provider.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
+		options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
 
-        // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
-        provider.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+		// Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
+		options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
 
-        // Timeout que será aplicado (se este valor for informado) para toda nova transação criada
-        provider.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
+		// Timeout que será aplicado (se este valor for informado) para toda nova transação criada
+		// Não é indicado informar este valor pois irá afetar toda a aplicação.
+		options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
 
-        // ----------
-	}
+		// ----------
+	});
+}
+```
+
+* Outra opção é acessar via uma extensão baseado no IServiceProvider:
+
+```
+public void Configure(IServiceProvider provider)
+{
+	// ---------- Configurações de Unit of Work a nível de aplicação
+
+	// Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
+	// comitadas ou desfeitas em caso de erro
+	provider.ConfigureTnf().UnitOfWorkOptions().IsTransactional = true;
+
+	// IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
+	provider.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
+
+	// Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
+	provider.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+
+	// Timeout que será aplicado (se este valor for informado) para toda nova transação criada
+	provider.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
+
+	// ----------
+}
+```
 
 Neste exemplo é contemplado apenas o cenário Manual, onde todo acesso a um Repository está sendo criado um Unit Of Work de forma explicíta.
