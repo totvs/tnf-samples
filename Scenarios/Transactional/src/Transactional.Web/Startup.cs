@@ -64,8 +64,9 @@ namespace Transactional.Web
                 // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
                 options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
 
-                // Timeout da transação
-                options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(10);
+                // Timeout que será aplicado (se este valor for informado) para toda nova transação criada
+                // Não é indicado informar este valor pois irá afetar toda a aplicação.
+                options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
 
                 // ----------
             });
