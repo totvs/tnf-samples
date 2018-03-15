@@ -2,6 +2,15 @@
 
 #### Este exemplo contempla um cenário transacional.
 
+Para que este exemplo funcione você precisa ter o LocalDb instalado em seu visual studio ou configurar uma instancia válida do SqlServer
+nos config da aplicação no projeto
+	
+	Transactional.Web 
+		appsettings.Development.json e 
+		appsettings.Production.json.
+	
+Obs: Este exemplo utiliza as migrações do EntityFrameWorkCore e para que elas possam ser executadas o usuário de seu SqlServer irá precisar de permissão para alterar a base de dados.
+
 #### Existem duas formas de controlar esse comportamento no TNF:
 	
 * **Manual:** de forma explicita no código através da injeção da interface IUnitOfWorkManager que possui
