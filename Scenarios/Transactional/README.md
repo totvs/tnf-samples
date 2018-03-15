@@ -2,7 +2,7 @@
 
 #### Este exemplo contempla um cenário transacional.
 
-##### Existem duas formas de controlar esse comportamento no TNF:
+#### Existem duas formas de controlar esse comportamento no TNF:
 	
 * **Manual:** de forma explicita no código através da injeção da interface IUnitOfWorkManager que possui
   métodos para iniciar ".Begin()" e ".Complete" para comitar as alterações;
@@ -12,7 +12,7 @@
   de AspNetCore, um middleware que pode ser chamado no Startup de sua aplicação ".UseTnfUnitOfWork()" para ser adicionado ao pipeline de sua API 
   garantindo que cada request tenha um Unit Of Work presente.
 
-##### Dependendo do TransactionScopeOption utilzado na criação de um Uow através do método ".Begin()" o controle transacional funcionará com descrito a seguir:
+#### Dependendo do TransactionScopeOption utilzado na criação de um Uow através do método ".Begin()" o controle transacional funcionará com descrito a seguir:
 
 - **Required:** Uma transação é exigida. Ele irá criar uma transação se esta não existir ainda. Caso você crie transações aninhandas com o mesmo
   TransactionScopeOption definido para Required o Unit Of Work não irá criar mais transações e manterá apenas a que foi criada anteriormente para comitá-la ao final
@@ -22,7 +22,7 @@
 
 - **Suppress:** O contexto da transação é suprimido. Todas as operações dentro deste escopo serão feitos sem um contexto de transação.
 
-##### Para alterar esse valores a nível de aplicação você deve configurar o UnitOfWorkOptions. Isso pode ser feito de duas maneiras:
+#### Para alterar esse valores a nível de aplicação você deve configurar o UnitOfWorkOptions. Isso pode ser feito de duas maneiras:
 
 - Através do Startup de sua aplicação, configurando através do método .UseTnfAspNetCore:
 	
