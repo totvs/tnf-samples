@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\SourceFiles\Transacional-en.json" />
+    <None Remove="Localization\SourceFiles\Transacional-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Transacional-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Transacional-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Repositories" Version="2.0.2.7203" />
+    <PackageReference Include="Tnf.Specifications" Version="2.0.2.7203" />
+  </ItemGroup>
+
+</Project>
