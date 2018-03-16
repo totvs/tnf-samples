@@ -4,6 +4,7 @@ Exemplo que contempla um cenário de CRUD básico acessando um banco SqlServer, Sq
 
 Segue abaixo uma explição resumida de cada camada da aplicação usando como exemplo o CRUD de Customer. 
 
+
 ### Camada de DTO
 
 Essa camada guarda os objetos que a api irá receber e mandar para respeitar o Guia de implementação das APIs TOTVS (http://tdn.totvs.com/pages/releaseview.action?pageId=271660444).
@@ -33,6 +34,7 @@ public class CustomerRequestAllDto : RequestAllDto
   public string Name { get; set; }
 }
 ```
+
 
 ### Camada de Web
 
@@ -191,6 +193,7 @@ public static class ServiceCollectionExtensions
 
 Obs: Este exemplo não utiliza registro de dependência por convenção, ele registra todas as suas interfaces e implementações, para habilitar a convenção em cada método de dependência de cada camada é preciso adicionar a linha comentada acima e nas interfaces registradas por conveção precisam herdar de Tnf.Dependency.ITransientDependency, Tnf.Dependency.IScopedDependency ou Tnf.Dependency.ISingletonDependency de cordo com o seu tempo de vida na aplicação.
 
+
 ### Camada de Domain
 
 Essa camada possui a responsabilidade de aplicar as regras de negócio da aplicação.
@@ -341,6 +344,7 @@ Fazendo isso o TNF irá injetar uma classe de domínio própria com os métodos de C
 #### Injeção de domínio e repositório customizada (CRUD de Product):
 	
 No CRUD de Product criamos um exemplo de como utilizar a injeção de domínio e repositório customizada onde o desenvolvedor configura uma implementação de domínio e de repositório para sua aplicação e pode executar suas regras de negócio na classe de domínio e as regras de propriedades utilizando os pattern's de Specification e Builder.
+
 
 ### Camada de Infra
 
