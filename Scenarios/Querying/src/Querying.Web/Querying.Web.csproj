@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Querying.Infra\Querying.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
