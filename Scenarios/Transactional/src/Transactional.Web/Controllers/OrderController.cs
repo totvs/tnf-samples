@@ -59,6 +59,8 @@ namespace Transactional.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            if (id <= 0) return BadRequest();
+
             await orderService.DeleteAsync(id);
 
             return CreateResponseOnDelete();

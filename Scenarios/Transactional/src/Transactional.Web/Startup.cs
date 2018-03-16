@@ -46,7 +46,7 @@ namespace Transactional.Web
                 options.ConfigureLocalization();
 
                 // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, "appsettings.json");
+                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
 
                 // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);

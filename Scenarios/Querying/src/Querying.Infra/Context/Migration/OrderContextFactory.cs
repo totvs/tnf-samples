@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Tnf.Runtime.Session;
-using Transactional.Domain;
 
-namespace Transactional.Infra.Context.Migrations
+namespace Querying.Infra.Context.Migration
 {
     public class OrderContextFactory : IDesignTimeDbContextFactory<OrderContext>
     {
@@ -18,7 +17,7 @@ namespace Transactional.Infra.Context.Migrations
                                     .AddJsonFile($"appsettings.Development.json", false)
                                     .Build();
 
-            builder.UseSqlServer(configuration.GetConnectionString(Constants.ConnectionStringName));
+            builder.UseSqlServer(configuration.GetConnectionString(InfraConsts.ConnectionStringName));
 
             return new OrderContext(builder.Options, NullTnfSession.Instance);
         }
