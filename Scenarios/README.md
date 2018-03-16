@@ -1,28 +1,57 @@
 ### Exemplos que serão vistos a seguir:
 
-#### Alguns cenários de utilização estão disponíveis em nosso repositório.
-#### Case1 ####
+#### Os projeto utilizam TNF 2.0.2.7203
+
+#### HelloWorld ####
 Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo, log e registro de dependências:
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
-	- Tnf.Notifications
 
-#### Case2 ####
-Exemplo de criação de uma aplicação utilizando EntityFrameworkCore com Dapper e configuração de localização via banco de dados. Para rodar essa aplicação é necessário configurar nos arquivos appsettings qual é a string de conexão que será utilizada (default é utizando o LocalDb).
-Para rodar a aplicação primeiro você deve rodar as migração executando o comando no seu Package Manager Console do visual studio 2017 para os contextos:
-- Update-Database -Context:CustomerDbContext
-- Update-Database -Context:EmployeeDbContext
-- Update-Database -Context:LocalizationDbContext
-- Update-Database -Context:SettingDbContext
+#### BasicCrud ####
+Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e configuração de localização por arquivo, log e registro de dependências.
 
 - Pacotes que foram instalados:
-	- Tnf.AutoMapper
-	- Tnf.Dapper
-	- Tnf.EntityFrameworkCore
-	- Tnf.Localization.EntityFrameworkCore
-	- Tnf.Settings.EntityFrameworkCore
+	- Tnf.Dto
 	- Tnf.Repositories.AspNetCore
+	- Tnf.Drivers.DevartOracle
+	- Tnf.Domain
+	- Tnf.AutoMapper
+	- Tnf.EntityFrameworkCore
+	
+	- Microsoft.EntityFrameworkCore.SqlServer
+	- Microsoft.EntityFrameworkCore.Sqlite
+	- Devart.Data.Oracle.Entity.EFCore
+
+#### Transactional ####
+Exempo que contempla um cenário transacional:
+
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore
+	- Tnf.Repositories
+	- Tnf.Specifications
+	- Tnf.EntityFrameworkCore
+
+#### RedisCache ####
+Exemplo de um projeto usando o pacote do Redis do Tnf:
+
+- Pacotes que foram instalados:
+	- Tnf.Caching.Redis.JsonSerializer
+
+#### Messaging ####
+Exemplo de um projeto usando o pacote do RabbitMQ do Tnf:
+
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore
+	- Tnf.Bus.Queue.RabbitMQ
+	- Tnf.Bus.Client
+	- Tnf.Caching.Abstractions
+	- Tnf.Notifications
+	- Tnf.Kernel
+	
+	
+	
+
 	
 #### Case3 ####
 Exemplo de criação de uma aplicação utilizando o supporte a fila.
