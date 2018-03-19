@@ -1,26 +1,27 @@
 #### Messaging
 
-##### Exemplo de um projeto utilizando a abstração de fila do TNF com Rabbitmq.
+##### Exemplo de um projeto utilizando a abstraÃ§Ã£o de fila do TNF com Rabbitmq.
 
-Este exemplo contém duas APIs (Messaging.Web1 e Messaging.Web2) que irão se comunicar através de mensageria, onde a API Messaging.Web1 irá publicar essa mensagem e a Messaging.Web2
-irá assinar e cachear essa mensagem na memória.
-Ambas possuem o swagger configurado para que você possa testar esse processo manualmente.
-O projeto também possui um projeto console Messaging.Client exemplificando o envio de mensagens através de um projeto externo.
+Este exemplo contÃ©m duas APIs (Messaging.Web1 e Messaging.Web2) que irÃ£o se comunicar atravÃ©s de mensageria, onde a API Messaging.Web1 irÃ¡ publicar essa mensagem e a Messaging.Web2 irÃ¡ assinar e cachear essa mensagem na memÃ³ria.
 
-Para rodar os três projetos clique com o botão direito em cima da solução no visual studio e clique em propriedades.
+Ambas possuem o swagger configurado para que vocÃª possa testar esse processo manualmente.
+O projeto tambÃ©m possui um projeto console Messaging.Client exemplificando o envio de mensagens atravÃ©s de um projeto externo.
+
+Para rodar os trÃªs projetos clique com o botÃ£o direito em cima da soluÃ§Ã£o no visual studio e clique em propriedades.
 Na janela de propriedades marque na coluna "Action" os projetos Messaging.Client, Messaging.Web1 e Messaging.Web2 para "Start".
-Após alterar essa configuração quando você executar as aplicações através da tecla F5 os 3 projetos irão rodar em modo Debug.
+ApÃ³s alterar essa configuraÃ§Ã£o quando vocÃª executar as aplicaÃ§Ãµes atravÃ©s da tecla F5 os 3 projetos irÃ£o rodar em modo Debug.
 
-##### Instalação
+##### InstalaÃ§Ã£o
 
-Para que este exemplo funcione você precisa ter o Rabbitmq instalado com o protocolo AMQP habilitado.
+Para que este exemplo funcione vocÃª precisa ter o Rabbitmq instalado com o protocolo AMQP habilitado.
 Para mais detalhes de como habilitar o protocolo AMQP no Rabbitmq e para aprender mais sobre conceitos relacionados
 a mensageria acesse (http://tdn.totvs.com/display/TNF/Mensageria)
 
-Para instalar via windows: https://www.rabbitmq.com/install-windows.html
+Para instalar via windows: (https://www.rabbitmq.com/install-windows.html)
+
 Para instalar via docker: 
 * Instale o docker
-* Execute os comandos (o primeiro comando irá criar o container e os outros 3 irão habilitar o protocolo AMQP):
+* Execute os comandos (o primeiro comando irÃ¡ criar o container e os outros 3 irÃ£o habilitar o protocolo AMQP):
 	docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.7.3-management-alpine
 	docker exec -it rabbitmq bash
 	cd plugins
