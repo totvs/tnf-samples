@@ -2,13 +2,13 @@
 
 #### Os projeto utilizam TNF 2.0.2.7203
 
-#### HelloWorld ####
+#### [HelloWorld](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/HelloWorld) ####
 Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo, log e registro de dependências:
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
 
-#### BasicCrud ####
+#### [BasicCrud](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/BasicCrud) ####
 Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e configuração de localização por arquivo, log e registro de dependências.
 
 - Pacotes que foram instalados:
@@ -23,7 +23,7 @@ Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e co
 	- Microsoft.EntityFrameworkCore.Sqlite
 	- Devart.Data.Oracle.Entity.EFCore
 
-#### Transactional ####
+#### [Transactional](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Transactional) ####
 Exempo que contempla um cenário transacional:
 
 - Pacotes que foram instalados:
@@ -32,13 +32,13 @@ Exempo que contempla um cenário transacional:
 	- Tnf.Specifications
 	- Tnf.EntityFrameworkCore
 
-#### RedisCache ####
+#### [RedisCache](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/RedisCache) ####
 Exemplo de um projeto usando o pacote do Redis do Tnf:
 
 - Pacotes que foram instalados:
 	- Tnf.Caching.Redis.JsonSerializer
 
-#### Messaging ####
+#### [Messaging](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Messaging) ####
 Exemplo de um projeto usando o pacote do RabbitMQ do Tnf:
 
 - Pacotes que foram instalados:
