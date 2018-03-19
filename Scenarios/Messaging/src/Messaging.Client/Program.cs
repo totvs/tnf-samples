@@ -53,32 +53,13 @@ namespace Messaging.Client
 
             while (command != ConsoleKey.Q)
             {
-                logger.LogInformation($"Press 'q' to exit or other key to continue...");
+                logger.LogInformation($"Press 'q' to exit application or other key to simulate sending messages ...");
 
                 var consoleKeyInfo = Console.ReadKey();
 
                 command = consoleKeyInfo.Key;
 
                 var messagesToSent = CreateMessages(start, end);
-
-                //messagesToSent.ForEach(message =>
-                //{
-                //    try
-                //    {
-                //        var serializedMessage = JsonConvert.SerializeObject(message);
-                //        var content = new StringContent(serializedMessage, Encoding.UTF8, "application/json");
-
-                //        var response = Client.PostAsync("http://localhost:5001/api/notifier", content).GetAwaiter().GetResult();
-
-                //        response.EnsureSuccessStatusCode();
-
-                //        logger.LogInformation($"{message.Message} sent");
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        logger.LogError(ex, $"Error to sent {message.Message}");
-                //    }
-                //});
 
                 ExecuteSequenceAsync(messagesToSent, async (message) =>
                 {

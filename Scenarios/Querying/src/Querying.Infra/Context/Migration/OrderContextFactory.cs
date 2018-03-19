@@ -17,7 +17,7 @@ namespace Querying.Infra.Context.Migration
                                     .AddJsonFile($"appsettings.Development.json", false)
                                     .Build();
 
-            builder.UseSqlServer(configuration.GetConnectionString(InfraConsts.ConnectionStringName));
+            builder.UseSqlServer(configuration.GetConnectionString(Constants.ConnectionStringName));
 
             return new OrderContext(builder.Options, NullTnfSession.Instance);
         }

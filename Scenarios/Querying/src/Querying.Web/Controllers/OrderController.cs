@@ -17,23 +17,25 @@ namespace Querying.Web
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto request)
+        public async Task<IActionResult> Get(int id, [FromQuery]RequestDto requestDto)
         {
             if (id <= 0) return BadRequest();
 
-            request.WithId(id);
+            requestDto.WithId(id);
 
-            var response = await orderRepository.GetOrder(request);
+            var response = await orderRepository.GetOrder(requestDto);
 
             return CreateResponseOnGetAll(response);
         }
 
         [HttpGet("{orderId}/customer")]
-        public async Task<IActionResult> GetCustomerFromOrder(int orderId)
+        public async Task<IActionResult> GetCustomerFromOrder(int orderId, [FromQuery]RequestDto requestDto)
         {
             if (orderId <= 0) return BadRequest();
 
-            var response = await orderRepository.GetCustomerFromOrder(orderId);
+            requestDto.WithId(orderId);
+
+            var response = await orderRepository.GetCustomerFromOrder(requestDto);
 
             return CreateResponseOnGet(response);
         }

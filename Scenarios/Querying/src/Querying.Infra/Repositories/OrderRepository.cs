@@ -19,6 +19,12 @@ namespace Querying.Infra.Repositories
 
         public Task<Order> GetOrder(RequestDto request)
         {
+            if (!request.Fields.Any())
+                request.Fields = "Date, TotalValue";
+
+            // Para carregar atributos específicos do objeto que será retornado
+            // no método Get do repositório do TNF, defina o valor para o campo
+            // Fields separados por virgula.
             return base.GetAsync(request);
         }
 
@@ -26,23 +32,27 @@ namespace Querying.Infra.Repositories
         /// Exemplo de query 1 x N feita através do campo expandables do TNF
         /// que irá carregar o relacionamento "Customer" da entidade de Order
         /// </summary>
-        public async Task<Customer> GetCustomerFromOrder(int orderId)
+        public async Task<Customer> GetCustomerFromOrder(RequestDto request)
         {
-            var orderRequestDto = new RequestDto(orderId)
-            {
-                Expand = "Customer"
-            };
+            if (!request.Expand.Contains("Customer"))
+                request.Expand = "Customer";
 
-            var order = await base.GetAsync(orderRequestDto);
+            // Para carregar relacionamentos específicos do objeto que será retornado
+            // no método Get do repositório do TNF, defina o valor para o campo
+            // Expand separados por vírgula, quando existir mais de um.
+            var order = await base.GetAsync(request);
 
             return order.Customer;
         }
 
         /// <summary>
-        /// Exemplo de query 1 x N feita manualmente
+        /// Exemplo de query 1 x N feita de forma explicíta
         /// </summary>
-        public async Task<Customer> GetCustomerFromOrderManual(int orderId)
+        public async Task<Customer> GetCustomerFromOrderExplicit(int orderId)
         {
+            // Para a tabela de Orders
+            // Incluo a referência da tabela de Customer
+            // Filtrando pelo Id da Order
             var customer = await Context.Orders
                 .Include(i => i.Customer)    // Inclui o relacionamento
                 .Where(w => w.Id == orderId)
@@ -57,14 +67,16 @@ namespace Querying.Infra.Repositories
         /// </summary>
         public async Task<SumarizedOrder> GetSumarizedOrderFromProduct(SumarizedOrderRequestAllDto param)
         {
-            // Usando os extensions methods do System.Linq
+            // Para a tabela de ProductOrder
+            // Incluo a referência da tabela product e order
+            // Filtrando para data passada por parâmetro
             var baseQuery = Context.ProductOrders
                 .Include(i => i.Product)
                 .Include(i => i.Order)
                 .Where(w => w.Order.Date == param.Date.Date)
-                .Select(s => s);
+                .Select(productOrder => productOrder);
 
-            // Utilizando anonymous query
+            // Agrupo pelo Id do produto e sua descrição
             var sumarizedByProduct = (from productOrders in baseQuery
                                       group productOrders by new { productOrders.Product.Id, productOrders.Product.Description } into productGroup
                                       select new

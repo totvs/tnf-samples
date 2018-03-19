@@ -8,7 +8,7 @@ namespace Querying.Infra.Repositories
 {
     public interface IOrderRepository : IRepository
     {
-        Task<Customer> GetCustomerFromOrder(int orderId);
+        Task<Customer> GetCustomerFromOrder(RequestDto request);
         Task<Order> GetOrder(RequestDto request);
         Task<SumarizedOrder> GetSumarizedOrderFromProduct(SumarizedOrderRequestAllDto param);
     }
