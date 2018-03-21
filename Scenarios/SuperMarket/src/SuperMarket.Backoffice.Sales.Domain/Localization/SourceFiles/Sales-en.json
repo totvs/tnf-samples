@@ -1,0 +1,7 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "ProductsThatAreNotInThePriceTable": "Price table do not have a products reference [{0}].",
+    "PurchaseOrderLineMustHaveValidQuantity": "Purchase order contains invalid quantity for products [{0}]."
+  }
+}

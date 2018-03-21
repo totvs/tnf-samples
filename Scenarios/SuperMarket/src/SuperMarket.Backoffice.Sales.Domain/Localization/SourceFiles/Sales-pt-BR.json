@@ -1,0 +1,7 @@
+﻿{
+  "culture": "pt-BR",
+  "texts": {
+    "ProductsThatAreNotInThePriceTable": "Tabela de preço não contém a referência dos produtos [{0}].",
+    "PurchaseOrderLineMustHaveValidQuantity": "Pedido contém quantidade inválida para os produtos [{0}]."
+  }
+}

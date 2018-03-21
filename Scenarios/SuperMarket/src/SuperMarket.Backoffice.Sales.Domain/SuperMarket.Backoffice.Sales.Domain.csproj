@@ -5,10 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Specifications\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Localization\" />
-    <Folder Include="Services\" />
+    <None Remove="Localization\SourceFiles\Sales-en.json" />
+    <None Remove="Localization\SourceFiles\Sales-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Sales-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Sales-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Domain" Version="2.0.2.7203" />
   </ItemGroup>
 
 </Project>

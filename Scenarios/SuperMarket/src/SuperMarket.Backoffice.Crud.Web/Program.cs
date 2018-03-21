@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace SuperMarket.Backoffice.Crud.Web
 {
@@ -14,12 +9,29 @@ namespace SuperMarket.Backoffice.Crud.Web
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
+            var host = WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    Log.Logger = new LoggerConfiguration()
+                        .Enrich.WithMachineName()
+                        .ReadFrom.Configuration(hostingContext.Configuration)
+                        .CreateLogger();
+                })
                 .UseStartup<Startup>()
+                .UseSerilog()
                 .Build();
+
+            host.Run();
+
+            Log.CloseAndFlush();
+        }
     }
 }

@@ -11,4 +11,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Tnf.Domain" Version="2.0.2.7203" />
+  </ItemGroup>
+  
 </Project>
