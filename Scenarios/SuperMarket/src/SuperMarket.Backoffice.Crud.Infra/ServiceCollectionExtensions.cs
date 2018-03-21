@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SuperMarket.Backoffice.Crud.Infra.AutoMapperProfiles;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
 
 namespace SuperMarket.Backoffice.Crud.Infra
@@ -10,6 +9,7 @@ namespace SuperMarket.Backoffice.Crud.Infra
         public static IServiceCollection AddCrudInfraDependency(this IServiceCollection services)
         {
             services
+                .AddMapperDependency()
                 .AddTnfEntityFrameworkCore()
                 .AddTnfDbContext<CrudContext>((config) =>
                 {
@@ -18,11 +18,6 @@ namespace SuperMarket.Backoffice.Crud.Infra
                     else
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
-
-            services.AddTnfAutoMapper(config =>
-            {
-                config.AddProfile<InfraToDtoProfile>();
-            });
 
             return services;
         }

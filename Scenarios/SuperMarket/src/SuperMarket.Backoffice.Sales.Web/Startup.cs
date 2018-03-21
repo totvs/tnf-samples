@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
+using SuperMarket.Backoffice.Sales.Infra;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.Sales.Web
@@ -67,7 +68,7 @@ namespace SuperMarket.Backoffice.Sales.Web
 
             logger.LogInformation("Running migrations ...");
 
-            //app.ApplicationServices.MigrateDatabase();
+            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

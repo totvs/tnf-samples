@@ -1,11 +1,10 @@
-﻿using System;
-using Tnf.Configuration;
+﻿using Tnf.Configuration;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 
 namespace SuperMarket.Backoffice.Sales.Domain
 {
-    public static class TnfConfigurationExtensions
+    public static class LocalizationExtensions
     {
         public static ITnfConfiguration ConfigureSalesDomain(this ITnfConfiguration configuration)
         {

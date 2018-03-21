@@ -4,7 +4,7 @@ using Tnf.Localization.Dictionaries;
 
 namespace SuperMarket.Backoffice.Crud.Domain
 {
-    public static class TnfConfigurationExtensions
+    public static class LocalizationExtensions
     {
         public static ITnfConfiguration ConfigureCrudDomain(this ITnfConfiguration configuration)
         {

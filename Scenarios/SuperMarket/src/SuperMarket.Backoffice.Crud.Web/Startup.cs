@@ -68,10 +68,13 @@ namespace SuperMarket.Backoffice.Crud.Web
 
             logger.LogInformation("Running migrations ...");
 
-            //app.ApplicationServices.MigrateDatabase();
+            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            // Habilita o uso do UnitOfWork em todo o request
+            app.UseTnfUnitOfWork();
 
             // Add CORS middleware before MVC
             app.UseCors("AllowAll");
