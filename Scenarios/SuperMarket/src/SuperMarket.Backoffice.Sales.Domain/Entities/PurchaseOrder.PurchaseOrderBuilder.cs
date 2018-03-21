@@ -121,7 +121,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
             {
                 var productsThatAreNotInThePriceTable = Instance.GetProductsThatAreNotInThePriceTable().JoinAsString(", ");
 
-                AddSpecificationWithParamsForLocalizationKey<ProductsThatAreNotInThePriceTableSpecification>(productsThatAreNotInThePriceTable);
+                AddSpecificationWithParamsForLocalizationKey<ProductsThatAreNotInThePriceTable>(productsThatAreNotInThePriceTable);
 
                 var productsWhenHaveNegativeQuantity = Instance.GetProductsWhenHaveNegativeQuantity().JoinAsString(", ");
 

@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Localization\SourceFiles\Fiscal-en.json" />
+    <None Remove="Localization\SourceFiles\Fiscal-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Fiscal-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Fiscal-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Entities\Specifications\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Localization\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

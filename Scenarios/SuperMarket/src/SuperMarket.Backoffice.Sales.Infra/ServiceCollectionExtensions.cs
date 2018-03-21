@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
+using SuperMarket.Backoffice.Sales.Infra.Repositories;
 
 namespace SuperMarket.Backoffice.Sales.Infra
 {
@@ -17,6 +19,9 @@ namespace SuperMarket.Backoffice.Sales.Infra
                     else
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
+
+            services.AddTransient<IPriceTableRepository, PriceTableRepository>();
+            services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
             return services;
         }

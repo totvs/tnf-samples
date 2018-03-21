@@ -24,7 +24,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
             if (Notification.HasNotification())
                 return purchaseOrder;
 
-            purchaseOrder = await _repository.Save(purchaseOrder);
+            purchaseOrder = await _repository.Insert(purchaseOrder);
 
             return purchaseOrder;
         }
@@ -36,7 +36,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
             if (Notification.HasNotification())
                 return purchaseOrder;
 
-            purchaseOrder = await _repository.Save(purchaseOrder);
+            purchaseOrder = await _repository.Update(purchaseOrder);
 
             return purchaseOrder;
         }
@@ -45,9 +45,9 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
         {
             var purchaseOrder = await _repository.GetPurchaseOrder(purchaseOrderId);
 
-            PurchaseOrder.UpdateTax(purchaseOrder, tax);
+            purchaseOrder.UpdateTax(tax);
 
-            await _repository.Save(purchaseOrder);
+            await _repository.Update(purchaseOrder);
         }
     }
 }

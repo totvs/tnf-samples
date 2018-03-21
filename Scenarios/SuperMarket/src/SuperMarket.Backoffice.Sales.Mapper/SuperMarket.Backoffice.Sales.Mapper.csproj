@@ -5,13 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.0.2.7203" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Domain\SuperMarket.Backoffice.Sales.Domain.csproj" />
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Infra\SuperMarket.Backoffice.Sales.Infra.csproj" />
-    <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Mapper\SuperMarket.Backoffice.Sales.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

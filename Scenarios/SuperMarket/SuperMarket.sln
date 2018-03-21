@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F7F0A65D-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Backoffice.Sales.Domain.Tests", "test\SuperMarket.Backoffice.Sales.Domain.Tests\SuperMarket.Backoffice.Sales.Domain.Tests.csproj", "{1808E32B-1552-4BCC-9E87-3DE1E18237D3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Backoffice.Sales.Mapper", "src\SuperMarket.Backoffice.Sales.Mapper\SuperMarket.Backoffice.Sales.Mapper.csproj", "{291DF19D-D3E7-4060-AFD1-5FFF73D30B42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{1808E32B-1552-4BCC-9E87-3DE1E18237D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1808E32B-1552-4BCC-9E87-3DE1E18237D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1808E32B-1552-4BCC-9E87-3DE1E18237D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{291DF19D-D3E7-4060-AFD1-5FFF73D30B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291DF19D-D3E7-4060-AFD1-5FFF73D30B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291DF19D-D3E7-4060-AFD1-5FFF73D30B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291DF19D-D3E7-4060-AFD1-5FFF73D30B42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{E40CC73D-8E52-4E7C-84B7-8F6A49F666E8} = {133D37A9-FCC6-4C13-B7CE-6E242D0B7FC2}
 		{F7F0A65D-571D-4B31-B2E6-7100E026F9CE} = {133D37A9-FCC6-4C13-B7CE-6E242D0B7FC2}
 		{1808E32B-1552-4BCC-9E87-3DE1E18237D3} = {F7F0A65D-571D-4B31-B2E6-7100E026F9CE}
+		{291DF19D-D3E7-4060-AFD1-5FFF73D30B42} = {E40CC73D-8E52-4E7C-84B7-8F6A49F666E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E837372F-D72A-481A-B8B9-80A27FD1F7B2}

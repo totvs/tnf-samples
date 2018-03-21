@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Sales.Domain.Interfaces;
+using SuperMarket.Backoffice.Sales.Domain.Services;
 
 namespace SuperMarket.Backoffice.Sales.Domain
 {
@@ -8,6 +10,8 @@ namespace SuperMarket.Backoffice.Sales.Domain
         {
             services.AddTnfDomain();
 
+            services.AddTransient<IPurchaseOrderService, PurchaseOrderService>();
+            
             return services;
         }
     }

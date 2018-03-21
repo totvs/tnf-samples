@@ -8,15 +8,6 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
 {
     public partial class PurchaseOrder : Entity<Guid>
     {
-        public static void UpdateTax(PurchaseOrder purchaseOrder, decimal tax)
-        {
-            purchaseOrder.Tax = tax;
-
-            purchaseOrder.TotalValue = (purchaseOrder.BaseValue - purchaseOrder.Discount) + purchaseOrder.Tax;
-
-            purchaseOrder.Status = PurchaseOrderStatus.Completed;
-        }
-
         public static INewPurchaseOrderBuilder New(INotificationHandler notificationHandler)
             => new PurchaseOrderBuilder(notificationHandler)
             .GenerateNewPurchaseOrder();
@@ -24,16 +15,17 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
         public static IUpdatePurchaseOrderBuilder Update(INotificationHandler notificationHandler, PurchaseOrder purchaseOrder)
             => new PurchaseOrderBuilder(notificationHandler, purchaseOrder);
 
-        public Guid Number { get; set; }
-        public DateTime Date { get; set; }
-        public decimal TotalValue { get; set; }
-        public Guid CustomerId { get; set; }
-        public decimal Discount { get; set; }
-        public decimal Tax { get; set; }
-        public decimal BaseValue { get; set; }
-        public PurchaseOrderStatus Status { get; set; }
-        public ICollection<PurchaseOrderLine> Lines { get; set; } = Enumerable.Empty<PurchaseOrderLine>().ToList();
-        public PriceTable PriceTable { get; set; } = PriceTable.Empty();
+        public Guid Number { get; private set; }
+        public DateTime Date { get; private set; }
+        public decimal TotalValue { get; private set; }
+        public Guid CustomerId { get; private set; }
+        public decimal Discount { get; private set; }
+        public decimal Tax { get; private set; }
+        public decimal BaseValue { get; private set; }
+        public PurchaseOrderStatus Status { get; private set; }
+        public ICollection<PurchaseOrderLine> Lines { get; private set; } = new List<PurchaseOrderLine>();
+
+        private PriceTable PriceTable { get; set; } = PriceTable.Empty();
 
         internal IEnumerable<Guid> GetProductsThatAreNotInThePriceTable()
         {
@@ -49,7 +41,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
             return lines.Select(s => s.ProductId);
         }
 
-        private void RecalculateBaseValue()
+        internal void RecalculateBaseValue()
         {
             BaseValue = 0;
 
@@ -62,6 +54,17 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
                     BaseValue += price * line.Quantity;
                 }
             }
+        }
+
+        public decimal GetProductPrice(Guid productId) => PriceTable.GetPrice(productId);
+
+        public void UpdateTax(decimal tax)
+        {
+            Tax = tax;
+
+            TotalValue = (BaseValue - Discount) + Tax;
+
+            Status = PurchaseOrderStatus.Completed;
         }
 
         public class PurchaseOrderLine

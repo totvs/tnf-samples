@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
+using SuperMarket.Backoffice.Sales.Mapper;
 
 namespace SuperMarket.Backoffice.Sales.Application
 {
@@ -10,7 +11,8 @@ namespace SuperMarket.Backoffice.Sales.Application
         {
             services
                 .AddSalesDomainDependency()
-                .AddSalesInfraDependency();
+                .AddSalesInfraDependency()
+                .AddSalesMapperDependency();
 
             return services;
         }

@@ -109,7 +109,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Tests
             Assert.Equal(300, purchaseOrder.BaseValue);
             Assert.Equal(PurchaseOrder.PurchaseOrderStatus.Processing, purchaseOrder.Status);
 
-            PurchaseOrder.UpdateTax(purchaseOrder, 50);
+            purchaseOrder.UpdateTax(50);
 
             Assert.Equal(340, purchaseOrder.TotalValue);
             Assert.Equal(PurchaseOrder.PurchaseOrderStatus.Completed, purchaseOrder.Status);

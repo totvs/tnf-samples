@@ -5,8 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Specifications\" />
-    <Folder Include="Localization\" />
+    <None Remove="Localization\SourceFiles\Crud-en.json" />
+    <None Remove="Localization\SourceFiles\Crud-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\Crud-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\Crud-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>

@@ -1,12 +1,14 @@
 ﻿using SuperMarket.Backoffice.Sales.Domain.Entities;
 using System;
 using System.Threading.Tasks;
+using Tnf.Repositories;
 
 namespace SuperMarket.Backoffice.Sales.Domain.Interfaces
 {
-    public interface IPurchaseOrderRepository
+    public interface IPurchaseOrderRepository : IRepository
     {
         Task<PurchaseOrder> GetPurchaseOrder(Guid id);
-        Task<PurchaseOrder> Save(PurchaseOrder purchaseOrder);
+        Task<PurchaseOrder> Insert(PurchaseOrder purchaseOrder);
+        Task<PurchaseOrder> Update(PurchaseOrder purchaseOrder);
     }
 }
