@@ -15,4 +15,8 @@
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.0.2.7203" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SuperMarket.Backoffice.FiscalService.Domain\SuperMarket.Backoffice.FiscalService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

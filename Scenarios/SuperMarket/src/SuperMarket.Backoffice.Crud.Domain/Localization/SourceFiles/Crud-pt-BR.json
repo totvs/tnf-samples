@@ -1,5 +1,8 @@
 ﻿{
   "culture": "pt-BR",
   "texts": {
+    "ProductMustHaveDescription": "Produto deve ter descrição",
+    "ProductMustHaveValue": "Produto deve ter valor",
+    "CustomerMustHaveName": "Produto deve ter nome"
   }
 }

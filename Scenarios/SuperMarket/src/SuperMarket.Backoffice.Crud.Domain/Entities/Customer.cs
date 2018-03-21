@@ -33,6 +33,13 @@ namespace SuperMarket.Backoffice.Crud.Domain.Entities
             {
             }
 
+            public CustomerBuilder WithId(Guid id)
+            {
+                Instance.Id = id;
+
+                return this;
+            }
+
             public CustomerBuilder WithName(string name)
             {
                 Instance.Name = name;
