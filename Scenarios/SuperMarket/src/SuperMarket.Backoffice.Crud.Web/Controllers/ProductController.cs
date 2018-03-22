@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Dtos;
+using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Tnf.Caching;
 using Tnf.Domain.Services;
 using Tnf.Dto;
 
@@ -12,11 +15,13 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
     public class ProductController : TnfController
     {
         private readonly IDomainService<Product, Guid> _productDomainService;
+        private readonly IPriceTableRepository _priceTableRepository;
         private const string name = "Product";
 
-        public ProductController(IDomainService<Product, Guid> productDomainService)
+        public ProductController(IDomainService<Product, Guid> productDomainService, IPriceTableRepository priceTableRepository)
         {
             _productDomainService = productDomainService;
+            _priceTableRepository = priceTableRepository;
         }
 
         [HttpGet]
@@ -45,6 +50,14 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
             var response = await _productDomainService.GetAsync<ProductDto>(request);
 
             return CreateResponseOnGet<ProductDto, Guid>(response, name);
+        }
+
+        [HttpGet("pricetable")]
+        public async Task<IActionResult> GetPriceTable([FromQuery]ProductRequestAllDto requestAll)
+        {
+            var response = await _priceTableRepository.GetPriceTable();
+
+            return CreateResponseOnGet(response);
         }
 
         [HttpPost]

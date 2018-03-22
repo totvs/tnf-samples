@@ -1,6 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
+using SuperMarket.Backoffice.Crud.Infra.Repositories;
+using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
+using System;
+using Tnf.Repositories;
 
 namespace SuperMarket.Backoffice.Crud.Infra
 {
@@ -18,6 +23,9 @@ namespace SuperMarket.Backoffice.Crud.Infra
                     else
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
+
+            services.AddTransient<IPriceTableRepository, ProductRepository>();
+            services.AddTransient<IRepository<Product, Guid>, ProductRepository>();
 
             return services;
         }

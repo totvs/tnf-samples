@@ -8,12 +8,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Infra;
+using Tnf.Caching.Redis;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.Crud.Web
 {
     public class Startup
     {
+        private readonly IConfigurationRoot Configuration;
+
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .Build();
+        }
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
@@ -32,6 +43,25 @@ namespace SuperMarket.Backoffice.Crud.Web
 
             services.AddSwaggerGen();
 
+            // Redis configuration
+            var databaseIndex = Convert.ToInt32(Configuration["DatabaseIndex"]);
+            var redisConnectionString = Configuration["RedisConnectionString"];
+
+            services.AddTnfRedisCache(builder => builder
+
+                // Nome para o qual o cache será registrado no DI
+                .UseDefaultName("Default")
+
+                // Para customizar a serialização implemente a interface Tnf.Caching.Redis.IRedisSerializer
+                // e passe a instancia do seu serializador utilizando o método .UseSerializer()
+                .UseJsonSerializer()
+                .UseCacheOptions(new CacheOptions()
+                {
+                    LogDeletedKeys = true,                // Exibir no log quando uma key for deletada
+                })
+                .UseDatabase(databaseIndex)                     // Redis Database Id
+                .UseConnectionString(redisConnectionString));   // Redis Connection String
+
             return services.BuildServiceProvider();
         }
 
@@ -44,12 +74,8 @@ namespace SuperMarket.Backoffice.Crud.Web
                 // Adiciona as configurações de localização da aplicação
                 options.ConfigureCrudDomain();
 
-                // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
-
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
-
+                options.DefaultNameOrConnectionString = Configuration.GetConnectionString(Constants.ConnectionStringName);
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
 
