@@ -7,7 +7,7 @@ namespace SuperMarket.Backoffice.FiscalService.Infra.Contexts
 {
     public class FiscalContext : TnfDbContext
     {
-        public DbSet<PurchaseOrderTaxMoviment> PurchaseOrderTaxMoviments { get; set; }
+        public DbSet<TaxMoviment> TaxMoviments { get; set; }
 
         public FiscalContext(DbContextOptions<FiscalContext> options, ITnfSession session) 
             : base(options, session)

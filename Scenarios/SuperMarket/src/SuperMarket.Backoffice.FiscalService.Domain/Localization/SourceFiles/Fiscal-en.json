@@ -1,5 +1,9 @@
 ﻿{
   "culture": "en",
   "texts": {
+    "TaxMovimentMustHaveOrderBaseValue": "Calculate tax purchase order must have a order base value.",
+    "TaxMovimentMustHaveOrderCustomer": "Calculate tax purchase order must have a order customer.",
+    "TaxMovimentMustHaveOrderDate": "Calculate tax purchase order must have a order date.",
+    "TaxMovimentMustHaveOrderNumber": "Calculate tax purchase order must have order number."
   }
 }
