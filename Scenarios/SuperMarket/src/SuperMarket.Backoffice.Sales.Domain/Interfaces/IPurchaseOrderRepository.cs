@@ -10,5 +10,6 @@ namespace SuperMarket.Backoffice.Sales.Domain.Interfaces
         Task<PurchaseOrder> GetPurchaseOrder(Guid id);
         Task<PurchaseOrder> Insert(PurchaseOrder purchaseOrder);
         Task<PurchaseOrder> Update(PurchaseOrder purchaseOrder);
+        Task DeletePurchaseOrder(Guid purchaseOrderId);
     }
 }

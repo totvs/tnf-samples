@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Domain\SuperMarket.Backoffice.Sales.Domain.csproj" />
+    <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Dto\SuperMarket.Backoffice.Sales.Dto.csproj" />
   </ItemGroup>
 
 </Project>

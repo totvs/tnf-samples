@@ -8,7 +8,9 @@ namespace SuperMarket.Backoffice.Sales.Mapper
         {
             services.AddTnfAutoMapper(config =>
             {
+                config.AddProfile<DomainToInfraProfile>();
                 config.AddProfile<InfraToDomainProfile>();
+                config.AddProfile<InfraToDtoProfile>();
             });
 
             return services;

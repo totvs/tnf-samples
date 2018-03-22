@@ -9,12 +9,12 @@ namespace SuperMarket.Backoffice.Sales.Mapper
         public InfraToDomainProfile()
         {
             CreateMap<PurchaseOrderPoco, PurchaseOrder>()
-                .ForMember(d => d.Lines, s => s.Ignore())
-                .AfterMap((s, d) =>
+                .ForMember(domain => domain.Lines, s => s.Ignore())
+                .AfterMap((poco, domain) =>
                 {
-                    foreach (var purchaseOrderProduct in s.PurchaseOrderProducts)
+                    foreach (var purchaseOrderProduct in poco.PurchaseOrderProducts)
                     {
-                        d.Lines.Add(new PurchaseOrder.PurchaseOrderLine(purchaseOrderProduct.ProductId, purchaseOrderProduct.Quantity));
+                        domain.Lines.Add(new PurchaseOrder.PurchaseOrderLine(purchaseOrderProduct.ProductId, purchaseOrderProduct.Quantity));
                     }
                 });
         }

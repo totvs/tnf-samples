@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Sales.Application.Services;
+using SuperMarket.Backoffice.Sales.Application.Services.Interfaces;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
 using SuperMarket.Backoffice.Sales.Mapper;
@@ -13,6 +15,8 @@ namespace SuperMarket.Backoffice.Sales.Application
                 .AddSalesDomainDependency()
                 .AddSalesInfraDependency()
                 .AddSalesMapperDependency();
+
+            services.AddTransient<IPurchaseOrderAppService, PurchaseOrderAppService>();
 
             return services;
         }

@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using Tnf.Dto;
+
+namespace SuperMarket.Backoffice.Sales.Dto
+{
+    public class PurchaseOrderDto : DtoBase<Guid>
+    {
+        public static PurchaseOrderDto NullInstance = new PurchaseOrderDto().AsNullable<PurchaseOrderDto, Guid>();
+
+        public Guid CustomerId { get; set; }
+        public decimal Discount { get; private set; }
+        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
+
+        public class ProductDto
+        {
+            public Guid ProductId { get; }
+            public int Quantity { get; }
+
+            public ProductDto(Guid productId, int quantity)
+            {
+                ProductId = productId;
+                Quantity = quantity;
+            }
+        }
+    }
+}
