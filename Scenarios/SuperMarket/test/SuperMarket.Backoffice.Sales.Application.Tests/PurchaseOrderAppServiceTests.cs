@@ -66,8 +66,12 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
         public void Should_Resolve_All()
         {
             TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderAppService>().ShouldNotBeNull();
+            ServiceProvider.GetService<PurchaseOrderServiceMockManager>().ShouldNotBeNull();
             ServiceProvider.GetService<IPurchaseOrderService>().ShouldNotBeNull();
+            ServiceProvider.GetService<IPurchaseOrderReadRepository>().ShouldNotBeNull();
+            ServiceProvider.GetService<IPriceTableRepository>().ShouldNotBeNull();
+            ServiceProvider.GetService<IPurchaseOrderRepository>().ShouldNotBeNull();
+            ServiceProvider.GetService<IPurchaseOrderAppService>().ShouldNotBeNull();
         }
 
 

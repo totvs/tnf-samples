@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra;
@@ -32,7 +30,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
             app.UseTnfAspNetCoreSetupTest(options =>

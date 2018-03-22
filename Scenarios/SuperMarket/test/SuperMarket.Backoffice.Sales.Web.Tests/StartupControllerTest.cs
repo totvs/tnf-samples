@@ -1,10 +1,11 @@
-﻿using BasicCrud.Application.Services.Interfaces;
-using BasicCrud.Web.Tests.Mocks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Crud.Domain;
+using SuperMarket.Backoffice.Sales.Application.Services.Interfaces;
+using SuperMarket.Backoffice.Sales.Web.Tests.Mocks;
 using System;
 
-namespace BasicCrud.Web.Tests
+namespace SuperMarket.Backoffice.Sales.Web.Tests
 {
     public class StartupControllerTest
     {
@@ -14,8 +15,7 @@ namespace BasicCrud.Web.Tests
             services.AddTnfAspNetCoreSetupTest();
 
             // Registro dos serviços de Mock
-            services.AddTransient<ICustomerAppService, CustomerAppServiceMock>();
-            services.AddTransient<IProductAppService, ProductAppServiceMock>();
+            services.AddTransient<IPurchaseOrderAppService, PurchaseOrderAppServiceMock>();
 
             return services.BuildServiceProvider();
         }
@@ -24,7 +24,11 @@ namespace BasicCrud.Web.Tests
         public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest();
+            app.UseTnfAspNetCoreSetupTest(options =>
+            {
+                // Adiciona as configurações de localização da aplicação a ser testada
+                options.ConfigureCrudDomain();
+            });
 
             app.UseMvc(routes =>
             {

@@ -3,9 +3,7 @@ using BasicCrud.Domain;
 using BasicCrud.Infra;
 using BasicCrud.Infra.SqlServer.Context;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 
 namespace BasicCrud.Web.Tests
@@ -25,7 +23,7 @@ namespace BasicCrud.Web.Tests
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
             app.UseTnfAspNetCoreSetupTest(options =>
