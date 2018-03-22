@@ -17,9 +17,6 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
             _repository = repository;
         }
 
-        public Task DeletePurchaseOrder(Guid purchaseOrderId)
-            => _repository.DeletePurchaseOrder(purchaseOrderId);
-
         public async Task<PurchaseOrder> NewPurchaseOrder(PurchaseOrder.INewPurchaseOrderBuilder newPurchaseOrderBuilder)
         {
             var purchaseOrder = newPurchaseOrderBuilder.Build();

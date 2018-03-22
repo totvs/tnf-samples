@@ -11,7 +11,8 @@
         public enum Error
         {
             ProductsThatAreNotInThePriceTable,
-            PurchaseOrderLineMustHaveValidQuantity
+            PurchaseOrderLineMustHaveValidQuantity,
+            PurchaseOrderMustHaveCustomer
         }
     }
 }

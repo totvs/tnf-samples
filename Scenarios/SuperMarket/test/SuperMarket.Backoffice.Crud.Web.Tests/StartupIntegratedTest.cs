@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Crud.Domain;
+using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
+using SuperMarket.Backoffice.Crud.Infra.Repositories;
+using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using System;
+using Tnf.Repositories;
 
 namespace SuperMarket.Backoffice.Crud.Web.Tests
 {
@@ -14,11 +18,15 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddTnfMemoryCache()                // Configura Cache na memória
                 .AddMapperDependency()              // Configura o mesmo Mapper para ser testado
                 .AddCrudDomainDependency()          // Configura a mesma dependencia da camada de dominio a ser testada   
                 .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
                 .AddTnfEfCoreSqliteInMemory()       // Configura o setup de teste para EntityFrameworkCore em memória
                 .RegisterDbContextToSqliteInMemory<CrudContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+
+            services.AddTransient<IPriceTableRepository, ProductRepository>();
+            services.AddTransient<IRepository<Product, Guid>, ProductRepository>();
 
             return services.BuildServiceProvider();
         }

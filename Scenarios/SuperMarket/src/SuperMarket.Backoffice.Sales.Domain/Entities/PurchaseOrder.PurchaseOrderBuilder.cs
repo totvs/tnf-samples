@@ -23,6 +23,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
             public PurchaseOrderBuilder(INotificationHandler notificationHandler, PurchaseOrder instance)
                 : base(notificationHandler, instance)
             {
+                EnableValidations();
             }
 
             public PurchaseOrderBuilder GenerateNewPurchaseOrder()
@@ -126,6 +127,8 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
                 var productsWhenHaveNegativeQuantity = Instance.GetProductsWhenHaveNegativeQuantity().JoinAsString(", ");
 
                 AddSpecificationWithParamsForLocalizationKey<PurchaseOrderLineMustHaveValidQuantity>(productsWhenHaveNegativeQuantity);
+
+                AddSpecification<PurchaseOrdeMustHaveCustomer>();
             }
         }
 

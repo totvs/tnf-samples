@@ -5,6 +5,7 @@ using SuperMarket.Backoffice.Crud.Infra.Dtos;
 using SuperMarket.Backoffice.Crud.Web.Controllers;
 using SuperMarket.Backoffice.Crud.Web.Tests.Mocks;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.Mvc.Response;
@@ -38,6 +39,19 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             // Assert
             Assert.False(response.HasNext);
             Assert.Equal(3, response.Items.Count);
+        }
+
+
+        [Fact]
+        public async Task Should_Get_Price_Table()
+        {
+            // Act
+            var response = await GetResponseAsObjectAsync<Dictionary<Guid, decimal>>(
+                $"{WebConstants.ProductRouteName}/pricetable"
+            );
+
+            // Assert
+            Assert.Equal(4, response.Count);
         }
 
 

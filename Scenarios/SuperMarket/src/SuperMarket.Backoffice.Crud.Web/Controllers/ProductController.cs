@@ -53,7 +53,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         }
 
         [HttpGet("pricetable")]
-        public async Task<IActionResult> GetPriceTable([FromQuery]ProductRequestAllDto requestAll)
+        public async Task<IActionResult> GetPriceTable()
         {
             var response = await _priceTableRepository.GetPriceTable();
 

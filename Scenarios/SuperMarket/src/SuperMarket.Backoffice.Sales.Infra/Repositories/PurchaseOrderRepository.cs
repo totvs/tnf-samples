@@ -24,9 +24,6 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
             _notificationHandler = notificationHandler;
         }
 
-        public Task DeletePurchaseOrder(Guid purchaseOrderId)
-            => base.DeleteAsync(purchaseOrderId);
-
         public async Task<PurchaseOrder> GetPurchaseOrder(Guid id)
         {
             var poco = await GetAsync(id);

@@ -7,7 +7,6 @@ using SuperMarket.Backoffice.Crud.Web.Tests.Mocks;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.Domain.Services;
 using Tnf.Dto;

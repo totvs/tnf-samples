@@ -18,7 +18,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
         public readonly IPriceTableRepository _priceTableRepository;
         public readonly IPurchaseOrderRepository _purchaseOrderDomainRepository;
 
-        protected PurchaseOrderAppService(INotificationHandler notification, 
+        public PurchaseOrderAppService(INotificationHandler notification, 
             IPurchaseOrderService domainService, 
             IPurchaseOrderReadRepository readRepository,
             IPriceTableRepository priceTableRepository,
@@ -31,7 +31,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             _purchaseOrderDomainRepository = purchaseOrderDomainRepository;
         }
 
-        public async Task<PurchaseOrderDto> Create(PurchaseOrderDto dto)
+        public async Task<PurchaseOrderDto> CreatePurchaseOrderAsync(PurchaseOrderDto dto)
         {
             if (!ValidateDto<PurchaseOrderDto, Guid>(dto))
                 return PurchaseOrderDto.NullInstance;
@@ -50,20 +50,15 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
 
             var entity = await _domainService.NewPurchaseOrder(purchaseOrderBuilder);
 
+            if (Notification.HasNotification())
+                return PurchaseOrderDto.NullInstance;
+
             dto.Id = entity.Id;
 
             return dto;
         }
 
-        public async Task Delete(Guid id)
-        {
-            if (!ValidateId(id))
-                return;
-
-            await _domainService.DeletePurchaseOrder(id);
-        }
-
-        public async Task<PurchaseOrderDto> Get(IRequestDto<Guid> id)
+        public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> id)
         {
             if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
                 return PurchaseOrderDto.NullInstance;
@@ -71,10 +66,10 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             return await _readRepository.GetPurchaseOrderAsync(id);
         }
 
-        public async Task<IListDto<PurchaseOrderDto, Guid>> GetAll(PurchaseOrderRequestAllDto request)
+        public async Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
             => await _readRepository.GetAllPurchaseOrdersAsync(request);
 
-        public async Task<PurchaseOrderDto> Update(Guid id, PurchaseOrderDto dto)
+        public async Task<PurchaseOrderDto> UpdatePurchaseOrderAsync(Guid id, PurchaseOrderDto dto)
         {
             if (!ValidateDtoAndId(dto, id))
                 return PurchaseOrderDto.NullInstance;

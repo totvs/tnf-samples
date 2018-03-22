@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
+using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using SuperMarket.Backoffice.Crud.Web.Tests.Mocks;
 using System;
 using Tnf.Domain.Services;
@@ -20,6 +21,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             // Registro dos serviços de Mock
             services.AddTransient<IDomainService<Customer, Guid>, CustomerDomainServiceMock>();
             services.AddTransient<IDomainService<Product, Guid>, ProductDomainServiceMock>();
+            services.AddTransient<IPriceTableRepository, PriceTableRepositoryMock>();
 
             return services.BuildServiceProvider();
         }
