@@ -9,7 +9,6 @@ namespace SuperMarket.Backoffice.Sales.Infra.Contexts
     public class SalesContext : TnfDbContext
     {
         public DbSet<PurchaseOrderPoco> PurchaseOrders { get; set; }
-        public DbSet<ProductPoco> Products { get; set; }
         public DbSet<PurchaseOrderProductPoco> PurchaseOrderProducts { get; set; }
 
         public SalesContext(DbContextOptions<SalesContext> options, ITnfSession session)
@@ -21,7 +20,6 @@ namespace SuperMarket.Backoffice.Sales.Infra.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new ProductPocoMapper());
             modelBuilder.ApplyConfiguration(new PurchaseOrderPocoMapper());
             modelBuilder.ApplyConfiguration(new PurchaseOrderProductPocoMapper());
         }

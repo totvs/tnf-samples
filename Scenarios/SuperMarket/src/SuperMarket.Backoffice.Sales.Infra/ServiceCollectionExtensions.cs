@@ -20,7 +20,6 @@ namespace SuperMarket.Backoffice.Sales.Infra
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
 
-            services.AddTransient<IPriceTableRepository, PriceTableRepository>();
             services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
             return services;

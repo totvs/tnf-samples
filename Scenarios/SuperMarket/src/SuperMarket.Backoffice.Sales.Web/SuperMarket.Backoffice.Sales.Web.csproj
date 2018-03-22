@@ -20,4 +20,8 @@
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Domain\SuperMarket.Backoffice.Sales.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

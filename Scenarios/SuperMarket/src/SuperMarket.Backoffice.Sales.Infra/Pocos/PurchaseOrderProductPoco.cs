@@ -8,7 +8,6 @@ namespace SuperMarket.Backoffice.Sales.Infra.Pocos
         public PurchaseOrderPoco PurchaseOrder { get; set; }
 
         public Guid ProductId { get; set; }
-        public ProductPoco Product { get; set; }
 
         public decimal UnitValue { get; set; }
         public int Quantity { get; set; }

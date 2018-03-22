@@ -18,11 +18,6 @@ namespace SuperMarket.Backoffice.Sales.Infra.Mappers
             builder.Property(p => p.UnitValue).HasColumnType("decimal(18, 6)").IsRequired();
 
             builder
-                .HasOne(pt => pt.Product)
-                .WithMany(p => p.PurchaseOrderProducts)
-                .HasForeignKey(p => p.ProductId);
-
-            builder
                 .HasOne(pt => pt.PurchaseOrder)
                 .WithMany(p => p.PurchaseOrderProducts)
                 .HasForeignKey(p => p.PurchaseOrderId);
