@@ -10,6 +10,7 @@ using SuperMarket.Backoffice.Sales.Dto;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using SuperMarket.Backoffice.Sales.Mapper;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ using Tnf.Dto;
 using Tnf.Localization;
 using Tnf.TestBase;
 using Xunit;
+using static SuperMarket.Backoffice.Sales.Dto.PurchaseOrderDto;
 
 namespace SuperMarket.Backoffice.Sales.Application.Tests
 {
@@ -141,12 +143,17 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
         {
             // Arrange
             var customerGuid = Guid.NewGuid();
+            var validProductId = Resolve<PurchaseOrderServiceMockManager>().ValidProduct;
 
             // Act
             var purchaseOrder = await _appService.CreatePurchaseOrderAsync(new PurchaseOrderDto
             {
                 CustomerId = customerGuid,
-                Discount = 5
+                Discount = 5,
+                Products = new List<ProductDto>()
+                {
+                    new ProductDto(validProductId, 1)
+                }
             });
 
             // Assert

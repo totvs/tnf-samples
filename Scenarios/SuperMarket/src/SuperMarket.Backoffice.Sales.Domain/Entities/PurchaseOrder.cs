@@ -9,11 +9,11 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
     public partial class PurchaseOrder : Entity<Guid>
     {
         public static INewPurchaseOrderBuilder New(INotificationHandler notificationHandler)
-            => new PurchaseOrderBuilder(notificationHandler)
+            => new Builder(notificationHandler)
             .GenerateNewPurchaseOrder();
 
         public static IUpdatePurchaseOrderBuilder Update(INotificationHandler notificationHandler, PurchaseOrder purchaseOrder)
-            => new PurchaseOrderBuilder(notificationHandler, purchaseOrder);
+            => new Builder(notificationHandler, purchaseOrder);
 
         public Guid Number { get; private set; }
         public DateTime Date { get; private set; }

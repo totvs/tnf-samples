@@ -12,7 +12,9 @@
         {
             ProductsThatAreNotInThePriceTable,
             PurchaseOrderLineMustHaveValidQuantity,
-            PurchaseOrderMustHaveCustomer
+            PurchaseOrderMustHaveCustomer,
+            PurchaseOrderMustHaveValidDiscount,
+            PurchaseOrderMustBeLines
         }
     }
 }

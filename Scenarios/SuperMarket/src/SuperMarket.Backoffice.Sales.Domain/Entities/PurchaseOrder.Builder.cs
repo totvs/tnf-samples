@@ -9,24 +9,24 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
 {
     public partial class PurchaseOrder
     {
-        class PurchaseOrderBuilder : Builder<PurchaseOrder>,
+        class Builder : Builder<PurchaseOrder>,
             INewPurchaseOrderBuilder,
             INewPurchaseOrderBuilderLines,
             IUpdatePurchaseOrderBuilder,
             IUpdatePurchaseOrderBuilderLines
         {
-            public PurchaseOrderBuilder(INotificationHandler notificationHandler)
+            public Builder(INotificationHandler notificationHandler)
                 : base(notificationHandler)
             {
             }
 
-            public PurchaseOrderBuilder(INotificationHandler notificationHandler, PurchaseOrder instance)
+            public Builder(INotificationHandler notificationHandler, PurchaseOrder instance)
                 : base(notificationHandler, instance)
             {
                 EnableValidations();
             }
 
-            public PurchaseOrderBuilder GenerateNewPurchaseOrder()
+            public Builder GenerateNewPurchaseOrder()
             {
                 Instance.Id = Guid.NewGuid();
                 Instance.Date = DateTime.UtcNow;
@@ -129,6 +129,8 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
                 AddSpecificationWithParamsForLocalizationKey<PurchaseOrderLineMustHaveValidQuantity>(productsWhenHaveNegativeQuantity);
 
                 AddSpecification<PurchaseOrdeMustHaveCustomer>();
+                AddSpecification<PurchaseOrderMustHaveValidDiscount>();
+                AddSpecification<PurchaseOrderMustBeLines>();
             }
         }
 
