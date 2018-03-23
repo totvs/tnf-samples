@@ -68,7 +68,7 @@ namespace SuperMarket.Backoffice.FiscalService.Web
 
             logger.LogInformation("Running migrations ...");
 
-            //app.ApplicationServices.MigrateDatabase();
+            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

@@ -20,6 +20,18 @@
     <ProjectReference Include="..\Messaging.Infra1\Messaging.Infra1.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <Import Project="..\Messaging.Shared\Tnf.Shared.projitems" Label="Shared" />
 
 </Project>
