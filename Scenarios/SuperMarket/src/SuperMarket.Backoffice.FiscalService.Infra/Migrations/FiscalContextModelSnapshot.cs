@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SuperMarket.Backoffice.FiscalService.Infra.Contexts;
 using System;
 
@@ -25,19 +24,21 @@ namespace SuperMarket.Backoffice.FiscalService.Infra.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("OrderBaseValue")
-                        .HasColumnType("decimal(18, 6)");
-
-                    b.Property<Guid>("OrderCustomer");
-
-                    b.Property<DateTime>("OrderDate");
-
-                    b.Property<Guid>("OrderNumber");
-
-                    b.Property<decimal>("OrderTotalValue")
-                        .HasColumnType("decimal(18, 6)");
-
                     b.Property<int>("Percentage");
+
+                    b.Property<decimal>("PurchaseOrderBaseValue")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<decimal>("PurchaseOrderDiscount")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<Guid>("PurchaseOrderId");
+
+                    b.Property<decimal>("PurchaseOrderTotalValue")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18, 6)");
 
                     b.HasKey("Id");
 

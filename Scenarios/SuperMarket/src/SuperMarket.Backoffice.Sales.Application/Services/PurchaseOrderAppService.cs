@@ -2,27 +2,33 @@
 using SuperMarket.Backoffice.Sales.Domain.Entities;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Dto;
+using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Tnf.Application.Services;
+using Tnf.Bus.Client;
+using Tnf.Bus.Queue.Interfaces;
 using Tnf.Dto;
 using Tnf.Notifications;
 
 namespace SuperMarket.Backoffice.Sales.Application.Services
 {
-    public class PurchaseOrderAppService : ApplicationService, IPurchaseOrderAppService
+    public class PurchaseOrderAppService : ApplicationService,
+        IPurchaseOrderAppService,
+        IPublish<PurchaseOrderChangedMessage>,
+        ISubscribe<TaxMovimentCalculatedMessage>
     {
         public readonly IPurchaseOrderService _domainService;
         public readonly IPurchaseOrderReadRepository _readRepository;
         public readonly IPriceTableRepository _priceTableRepository;
         public readonly IPurchaseOrderRepository _purchaseOrderDomainRepository;
 
-        public PurchaseOrderAppService(INotificationHandler notification, 
-            IPurchaseOrderService domainService, 
+        public PurchaseOrderAppService(INotificationHandler notification,
+            IPurchaseOrderService domainService,
             IPurchaseOrderReadRepository readRepository,
             IPriceTableRepository priceTableRepository,
-            IPurchaseOrderRepository purchaseOrderDomainRepository) 
+            IPurchaseOrderRepository purchaseOrderDomainRepository)
             : base(notification)
         {
             _domainService = domainService;
@@ -54,6 +60,14 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
                 return PurchaseOrderDto.NullInstance;
 
             dto.Id = entity.Id;
+
+            // Handler message after create purchase order for recalculate tax moviment
+            await Handle(new PurchaseOrderChangedMessage()
+            {
+                PurchaseOrderId = entity.Id,
+                PurchaseOrderBaseValue = entity.BaseValue,
+                PurchaseOrderDiscount = entity.Discount
+            });
 
             return dto;
         }
@@ -90,7 +104,27 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
 
             dto.Id = id;
 
+            // Handler message after create purchase order for recalculate tax moviment
+            await Handle(new PurchaseOrderChangedMessage()
+            {
+                PurchaseOrderId = entity.Id,
+                PurchaseOrderBaseValue = entity.BaseValue,
+                PurchaseOrderDiscount = entity.Discount
+            });
+
             return dto;
+        }
+
+        public Task Handle(PurchaseOrderChangedMessage message)
+            => message.Publish();
+
+        // Process result of tax moviment service
+        public async Task Handle(TaxMovimentCalculatedMessage message)
+        {
+            await _domainService.UpdateTaxMoviment(message.PurchaseOrderId, message.Tax, message.TotalValue);
+
+            // Manual Ack
+            message.DoAck();
         }
     }
 }

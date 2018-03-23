@@ -58,11 +58,10 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
 
         public decimal GetProductPrice(Guid productId) => PriceTable.GetPrice(productId);
 
-        public void UpdateTax(decimal tax)
+        public void UpdateTaxMoviment(decimal tax, decimal totalValue)
         {
             Tax = tax;
-
-            TotalValue = (BaseValue - Discount) + Tax;
+            TotalValue = totalValue;
 
             Status = PurchaseOrderStatus.Completed;
         }

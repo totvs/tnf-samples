@@ -13,12 +13,12 @@ namespace SuperMarket.Backoffice.FiscalService.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    OrderBaseValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    OrderCustomer = table.Column<Guid>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    OrderNumber = table.Column<Guid>(nullable: false),
-                    OrderTotalValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    Percentage = table.Column<int>(nullable: false)
+                    Percentage = table.Column<int>(nullable: false),
+                    PurchaseOrderBaseValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    PurchaseOrderDiscount = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    PurchaseOrderId = table.Column<Guid>(nullable: false),
+                    PurchaseOrderTotalValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
+                    Tax = table.Column<decimal>(type: "decimal(18, 6)", nullable: false)
                 },
                 constraints: table =>
                 {

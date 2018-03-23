@@ -9,6 +9,6 @@ namespace SuperMarket.Backoffice.Sales.Domain.Interfaces
     {
         Task<PurchaseOrder> NewPurchaseOrder(PurchaseOrder.INewPurchaseOrderBuilder newPurchaseOrderBuilder);
         Task<PurchaseOrder> UpdatePurchaseOrder(PurchaseOrder.IUpdatePurchaseOrderBuilder updatePurchaseOrderBuilder);
-        Task UpdateTaxPurchaseOrder(Guid purchaseOrderId, decimal tax);
+        Task UpdateTaxMoviment(Guid purchaseOrderId, decimal tax, decimal totalValue);
     }
 }

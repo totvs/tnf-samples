@@ -19,8 +19,8 @@ namespace SuperMarket.Backoffice.Sales.Infra.Migrations
                     Discount = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
                     Number = table.Column<Guid>(nullable: false),
                     Status = table.Column<int>(nullable: false, defaultValue: 1),
-                    Tax = table.Column<decimal>(type: "decimal(18, 6)", nullable: false),
-                    TotalValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: false)
+                    Tax = table.Column<decimal>(type: "decimal(18, 6)", nullable: true),
+                    TotalValue = table.Column<decimal>(type: "decimal(18, 6)", nullable: true)
                 },
                 constraints: table =>
                 {

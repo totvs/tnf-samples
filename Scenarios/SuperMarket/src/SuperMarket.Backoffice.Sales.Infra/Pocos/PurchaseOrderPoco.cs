@@ -14,10 +14,10 @@ namespace SuperMarket.Backoffice.Sales.Infra.Pocos
 
         public Guid Number { get; set; }
         public DateTime Date { get; set; }
-        public decimal TotalValue { get; set; }
+        public decimal? TotalValue { get; set; }
         public Guid CustomerId { get; set; }
         public decimal Discount { get; set; }
-        public decimal Tax { get; set; }
+        public decimal? Tax { get; set; }
         public decimal BaseValue { get; set; }
         public PurchaseOrderStatus Status { get; set; }
         public ICollection<PurchaseOrderProductPoco> PurchaseOrderProducts { get; set; }

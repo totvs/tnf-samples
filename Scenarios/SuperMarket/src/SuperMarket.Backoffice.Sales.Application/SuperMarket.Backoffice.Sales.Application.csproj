@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Domain\SuperMarket.Backoffice.Sales.Domain.csproj" />
+    <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Infra.Queue\SuperMarket.Backoffice.Sales.Infra.Queue.csproj" />
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Infra\SuperMarket.Backoffice.Sales.Infra.csproj" />
     <ProjectReference Include="..\SuperMarket.Backoffice.Sales.Mapper\SuperMarket.Backoffice.Sales.Mapper.csproj" />
   </ItemGroup>

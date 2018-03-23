@@ -53,7 +53,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Backoffice.Sale
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Backoffice.Crud.Web.Tests", "test\SuperMarket.Backoffice.Crud.Web.Tests\SuperMarket.Backoffice.Crud.Web.Tests.csproj", "{1EE1A7FB-55AD-496B-9373-6EB20D72BA06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Backoffice.Sales.Web.Tests", "test\SuperMarket.Backoffice.Sales.Web.Tests\SuperMarket.Backoffice.Sales.Web.Tests.csproj", "{D2D6BE51-71D3-432A-9255-E02F92211F20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Backoffice.Sales.Web.Tests", "test\SuperMarket.Backoffice.Sales.Web.Tests\SuperMarket.Backoffice.Sales.Web.Tests.csproj", "{D2D6BE51-71D3-432A-9255-E02F92211F20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Backoffice.Sales.Infra.Queue", "src\SuperMarket.Backoffice.Sales.Infra.Queue\SuperMarket.Backoffice.Sales.Infra.Queue.csproj", "{AB156C15-822F-419C-8134-58EEF684EB3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,10 @@ Global
 		{D2D6BE51-71D3-432A-9255-E02F92211F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2D6BE51-71D3-432A-9255-E02F92211F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2D6BE51-71D3-432A-9255-E02F92211F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB156C15-822F-419C-8134-58EEF684EB3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB156C15-822F-419C-8134-58EEF684EB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB156C15-822F-419C-8134-58EEF684EB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB156C15-822F-419C-8134-58EEF684EB3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{0214F5CE-E139-40C0-A97A-94E0B22CFFFF} = {F7F0A65D-571D-4B31-B2E6-7100E026F9CE}
 		{1EE1A7FB-55AD-496B-9373-6EB20D72BA06} = {AD5DC1CB-9BE3-4AF3-A175-04D54EF7C0A1}
 		{D2D6BE51-71D3-432A-9255-E02F92211F20} = {F7F0A65D-571D-4B31-B2E6-7100E026F9CE}
+		{AB156C15-822F-419C-8134-58EEF684EB3A} = {E40CC73D-8E52-4E7C-84B7-8F6A49F666E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E837372F-D72A-481A-B8B9-80A27FD1F7B2}

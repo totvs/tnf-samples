@@ -12,7 +12,7 @@ using System;
 namespace SuperMarket.Backoffice.Sales.Infra.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    [Migration("20180323115835_CreateDatabase")]
+    [Migration("20180323140048_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,10 +43,12 @@ namespace SuperMarket.Backoffice.Sales.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(1);
 
-                    b.Property<decimal>("Tax")
+                    b.Property<decimal?>("Tax")
+                        .IsRequired()
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<decimal>("TotalValue")
+                    b.Property<decimal?>("TotalValue")
+                        .IsRequired()
                         .HasColumnType("decimal(18, 6)");
 
                     b.HasKey("Id");
