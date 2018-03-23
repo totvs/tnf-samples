@@ -27,8 +27,11 @@ namespace SuperMarket.Backoffice.Crud.Web
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            var databaseIndex = Convert.ToInt32(Configuration["DatabaseIndex"]);
+            var redisConnectionString = Configuration["RedisConnectionString"];
+
             services
-                .AddCrudInfraDependency()
+                .AddCrudInfraDependency(databaseIndex, redisConnectionString)
                 .AddCrudDomainDependency()
                 .AddTnfAspNetCore();
 
@@ -42,25 +45,6 @@ namespace SuperMarket.Backoffice.Crud.Web
             });
 
             services.AddSwaggerGen();
-
-            // Redis configuration
-            var databaseIndex = Convert.ToInt32(Configuration["DatabaseIndex"]);
-            var redisConnectionString = Configuration["RedisConnectionString"];
-
-            services.AddTnfRedisCache(builder => builder
-
-                // Nome para o qual o cache será registrado no DI
-                .UseDefaultName("Default")
-
-                // Para customizar a serialização implemente a interface Tnf.Caching.Redis.IRedisSerializer
-                // e passe a instancia do seu serializador utilizando o método .UseSerializer()
-                .UseJsonSerializer()
-                .UseCacheOptions(new CacheOptions()
-                {
-                    LogDeletedKeys = true,                // Exibir no log quando uma key for deletada
-                })
-                .UseDatabase(databaseIndex)                     // Redis Database Id
-                .UseConnectionString(redisConnectionString));   // Redis Connection String
 
             return services.BuildServiceProvider();
         }

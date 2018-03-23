@@ -3,6 +3,6 @@
   "texts": {
     "ProductMustHaveDescription": "Produto deve ter descrição",
     "ProductMustHaveValue": "Produto deve ter valor",
-    "CustomerMustHaveName": "Produto deve ter nome"
+    "CustomerMustHaveName": "Customer deve ter nome"
   }
 }

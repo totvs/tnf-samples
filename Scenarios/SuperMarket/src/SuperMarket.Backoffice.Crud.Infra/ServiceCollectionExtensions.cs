@@ -5,13 +5,14 @@ using SuperMarket.Backoffice.Crud.Infra.Contexts;
 using SuperMarket.Backoffice.Crud.Infra.Repositories;
 using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using System;
+using Tnf.Caching.Redis;
 using Tnf.Repositories;
 
 namespace SuperMarket.Backoffice.Crud.Infra
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCrudInfraDependency(this IServiceCollection services)
+        public static IServiceCollection AddCrudInfraDependency(this IServiceCollection services, int databaseIndex, string redisConnectionString)
         {
             services
                 .AddMapperDependency()
@@ -26,6 +27,21 @@ namespace SuperMarket.Backoffice.Crud.Infra
 
             services.AddTransient<IPriceTableRepository, ProductRepository>();
             services.AddTransient<IRepository<Product, Guid>, ProductRepository>();
+
+            services.AddTnfRedisCache(builder => builder
+
+               // Nome para o qual o cache será registrado no DI
+               .UseDefaultName("Default")
+
+               // Para customizar a serialização implemente a interface Tnf.Caching.Redis.IRedisSerializer
+               // e passe a instancia do seu serializador utilizando o método .UseSerializer()
+               .UseJsonSerializer()
+               .UseCacheOptions(new CacheOptions()
+               {
+                   LogDeletedKeys = true,                // Exibir no log quando uma key for deletada
+               })
+               .UseDatabase(databaseIndex)                     // Redis Database Id
+               .UseConnectionString(redisConnectionString));   // Redis Connection String
 
             return services;
         }

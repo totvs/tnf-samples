@@ -22,6 +22,8 @@ namespace SuperMarket.Backoffice.Sales.Infra
 
             services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
+
+
             return services;
         }
     }
