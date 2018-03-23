@@ -41,11 +41,11 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
             return purchaseOrder;
         }
 
-        public async Task UpdateTaxPurchaseOrder(Guid purchaseOrderId, decimal tax)
+        public async Task UpdateTaxMoviment(Guid purchaseOrderId, decimal tax, decimal totalValue)
         {
             var purchaseOrder = await _repository.GetPurchaseOrder(purchaseOrderId);
 
-            purchaseOrder.UpdateTax(tax);
+            purchaseOrder.UpdateTaxMoviment(tax, totalValue);
 
             await _repository.Update(purchaseOrder);
         }

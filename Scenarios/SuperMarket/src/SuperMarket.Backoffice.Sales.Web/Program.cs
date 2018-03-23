@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using System;
 
 namespace SuperMarket.Backoffice.Sales.Web
 {
@@ -9,6 +10,8 @@ namespace SuperMarket.Backoffice.Sales.Web
     {
         public static void Main(string[] args)
         {
+            Console.Title = "Sales";
+
             var host = WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {

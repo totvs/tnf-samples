@@ -10,6 +10,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests.Mocks
         private readonly INotificationHandler _notification;
 
         public Guid PurchaseOrderGuid { get; private set; }
+        public Guid ValidProduct { get; private set; }
 
         public List<PurchaseOrder> List = new List<PurchaseOrder>();
         public PriceTable PriceTable;
@@ -24,6 +25,9 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests.Mocks
         private void PopulateList()
         {
             var product1 = Guid.NewGuid();
+
+            ValidProduct = product1;
+
             var product2 = Guid.NewGuid();
             var product3 = Guid.NewGuid();
             var product4 = Guid.NewGuid();

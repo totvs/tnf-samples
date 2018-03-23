@@ -13,12 +13,12 @@ namespace SuperMarket.Backoffice.FiscalService.Infra
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).IsRequired();
 
-            builder.Property(p => p.OrderNumber).IsRequired();
-            builder.Property(p => p.OrderDate).IsRequired();
-            builder.Property(p => p.OrderCustomer).IsRequired();
+            builder.Property(p => p.PurchaseOrderTotalValue).HasColumnType("decimal(18, 6)").IsRequired();
             builder.Property(p => p.Percentage).IsRequired();
-            builder.Property(p => p.OrderBaseValue).HasColumnType("decimal(18, 6)").IsRequired();
-            builder.Property(p => p.OrderTotalValue).HasColumnType("decimal(18, 6)").IsRequired();
+            builder.Property(p => p.PurchaseOrderBaseValue).HasColumnType("decimal(18, 6)").IsRequired();
+            builder.Property(p => p.PurchaseOrderDiscount).HasColumnType("decimal(18, 6)").IsRequired();
+            builder.Property(p => p.PurchaseOrderId).IsRequired();
+            builder.Property(p => p.Tax).HasColumnType("decimal(18, 6)").IsRequired();
         }
     }
 }

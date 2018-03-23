@@ -41,11 +41,11 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests.Mocks
             return entity.AsTask();
         }
 
-        public Task UpdateTaxPurchaseOrder(Guid purchaseOrderId, decimal tax)
+        public Task UpdateTaxMoviment(Guid purchaseOrderId, decimal tax, decimal totalValue)
         {
             var entity = _manager.List.SingleOrDefault(p => p.Id == purchaseOrderId);
 
-            entity.UpdateTax(tax);
+            entity.UpdateTaxMoviment(tax, totalValue);
 
             _manager.List.RemoveAll(c => c.Id == purchaseOrderId);
             _manager.List.Add(entity);

@@ -250,3 +250,9 @@ paket-files/
 .idea/
 *.sln.iml
 /TnfSample-Architecture/src/Tnf.Architecture.Web/Logs
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Sales.Web/logs/log20180323.txt
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Sales.Web/logs
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.FiscalService.Web/logs/log20180323.txt
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.FiscalService.Web/logs
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Crud.Web/logs/log20180323.txt
+/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Crud.Web/logs

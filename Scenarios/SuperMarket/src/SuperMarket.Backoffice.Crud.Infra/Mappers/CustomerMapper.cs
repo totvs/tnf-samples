@@ -12,7 +12,7 @@ namespace SuperMarket.Backoffice.Crud.Infra.Mappers
 
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).IsRequired();
-            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Name).HasMaxLength(250).IsRequired();
         }
     }
 }

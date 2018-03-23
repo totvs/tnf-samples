@@ -109,10 +109,45 @@ namespace SuperMarket.Backoffice.Sales.Domain.Tests
             Assert.Equal(300, purchaseOrder.BaseValue);
             Assert.Equal(PurchaseOrder.PurchaseOrderStatus.Processing, purchaseOrder.Status);
 
-            purchaseOrder.UpdateTax(50);
+            purchaseOrder.UpdateTaxMoviment(50, 340);
 
             Assert.Equal(340, purchaseOrder.TotalValue);
             Assert.Equal(PurchaseOrder.PurchaseOrderStatus.Completed, purchaseOrder.Status);
+        }
+
+        [Fact]
+        public void ShouldValidatePurchaseOrdeWhenReportInvalidDiscount()
+        {
+            var purchaseOrderBuilder = PurchaseOrder.New(LocalNotification)
+                .WithDiscount(-1);
+
+            purchaseOrderBuilder.Build();
+
+            Assert.NotEmpty(LocalNotification.GetAll());
+            Assert.Contains(LocalNotification.GetAll(), a => a.DetailedMessage == PurchaseOrder.Error.PurchaseOrderMustHaveValidDiscount.ToString());
+        }
+
+        [Fact]
+        public void ShouldValidatePurchaseOrdeWhenNoReportAnyLine()
+        {
+            var purchaseOrderBuilder = PurchaseOrder.New(LocalNotification);
+
+            purchaseOrderBuilder.Build();
+
+            Assert.NotEmpty(LocalNotification.GetAll());
+            Assert.Contains(LocalNotification.GetAll(), a => a.DetailedMessage == PurchaseOrder.Error.PurchaseOrderMustBeLines.ToString());
+        }
+
+        [Fact]
+        public void ShouldValidatePurchaseOrdeWhenNoReportCustomer()
+        {
+            var purchaseOrderBuilder = PurchaseOrder.New(LocalNotification)
+                .WithCustomer(Guid.Empty);
+
+            purchaseOrderBuilder.Build();
+
+            Assert.NotEmpty(LocalNotification.GetAll());
+            Assert.Contains(LocalNotification.GetAll(), a => a.DetailedMessage == PurchaseOrder.Error.PurchaseOrderMustHaveCustomer.ToString());
         }
     }
 }

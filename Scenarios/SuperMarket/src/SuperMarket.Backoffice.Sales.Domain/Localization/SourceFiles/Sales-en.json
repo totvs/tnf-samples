@@ -2,6 +2,9 @@
   "culture": "en",
   "texts": {
     "ProductsThatAreNotInThePriceTable": "Price table do not have a products reference [{0}].",
-    "PurchaseOrderLineMustHaveValidQuantity": "Purchase order contains invalid quantity for products [{0}]."
+    "PurchaseOrderLineMustHaveValidQuantity": "Purchase order contains invalid quantity for products [{0}].",
+    "PurchaseOrderMustHaveCustomer": "For the purchase order inform the customer.",
+    "PurchaseOrderMustBeLines": "For the purchase order you must be informed the products.",
+    "PurchaseOrderMustHaveValidDiscount": "The discount reported on the purchase order must be equal to or greater than zero."
   }
 }

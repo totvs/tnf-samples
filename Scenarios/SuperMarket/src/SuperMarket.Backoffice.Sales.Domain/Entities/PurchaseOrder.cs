@@ -9,11 +9,11 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
     public partial class PurchaseOrder : Entity<Guid>
     {
         public static INewPurchaseOrderBuilder New(INotificationHandler notificationHandler)
-            => new PurchaseOrderBuilder(notificationHandler)
+            => new Builder(notificationHandler)
             .GenerateNewPurchaseOrder();
 
         public static IUpdatePurchaseOrderBuilder Update(INotificationHandler notificationHandler, PurchaseOrder purchaseOrder)
-            => new PurchaseOrderBuilder(notificationHandler, purchaseOrder);
+            => new Builder(notificationHandler, purchaseOrder);
 
         public Guid Number { get; private set; }
         public DateTime Date { get; private set; }
@@ -58,11 +58,10 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
 
         public decimal GetProductPrice(Guid productId) => PriceTable.GetPrice(productId);
 
-        public void UpdateTax(decimal tax)
+        public void UpdateTaxMoviment(decimal tax, decimal totalValue)
         {
             Tax = tax;
-
-            TotalValue = (BaseValue - Discount) + Tax;
+            TotalValue = totalValue;
 
             Status = PurchaseOrderStatus.Completed;
         }

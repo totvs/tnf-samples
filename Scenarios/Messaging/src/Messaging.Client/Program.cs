@@ -34,11 +34,13 @@ namespace Messaging.Client
 
         static void Main(string[] args)
         {
+            Console.Title = "Client";
+
             var environmentName = Environment.GetEnvironmentVariable("CONSOLE_ENVIRONMENT");
 
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true)
                 .Build();
 
             var provider = ConfigureServices();

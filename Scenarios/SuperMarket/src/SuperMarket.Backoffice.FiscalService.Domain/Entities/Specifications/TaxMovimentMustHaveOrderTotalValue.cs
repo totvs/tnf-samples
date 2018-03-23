@@ -4,14 +4,14 @@ using Tnf.Specifications;
 
 namespace SuperMarket.Backoffice.FiscalService.Domain.Entities.Specifications
 {
-    public class TaxMovimentMustHaveOrderNumber : Specification<TaxMoviment>
+    public class TaxMovimentMustHaveOrderTotalValue : Specification<TaxMoviment>
     {
         public override string LocalizationSource { get; protected set; } = Constants.LocalizationSourceName;
-        public override Enum LocalizationKey { get; protected set; } = TaxMoviment.Error.TaxMovimentMustHaveOrderNumber;
+        public override Enum LocalizationKey { get; protected set; } = TaxMoviment.Error.TaxMovimentMustHaveOrderPercentage;
 
         public override Expression<Func<TaxMoviment, bool>> ToExpression()
         {
-            return (o) => o.OrderNumber != Guid.Empty;
+            return (o) => o.PurchaseOrderTotalValue > 0;
         }
     }
 }
