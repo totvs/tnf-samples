@@ -6,11 +6,13 @@ using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using System;
 using System.Threading.Tasks;
+using System.Transactions;
 using Tnf.Application.Services;
 using Tnf.Bus.Client;
 using Tnf.Bus.Queue.Interfaces;
 using Tnf.Dto;
 using Tnf.Notifications;
+using Tnf.Repositories.Uow;
 
 namespace SuperMarket.Backoffice.Sales.Application.Services
 {
@@ -19,18 +21,22 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
         IPublish<PurchaseOrderChangedMessage>,
         ISubscribe<TaxMovimentCalculatedMessage>
     {
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
         public readonly IPurchaseOrderService _domainService;
         public readonly IPurchaseOrderReadRepository _readRepository;
         public readonly IPriceTableRepository _priceTableRepository;
         public readonly IPurchaseOrderRepository _purchaseOrderDomainRepository;
 
-        public PurchaseOrderAppService(INotificationHandler notification,
+        public PurchaseOrderAppService(
+            IUnitOfWorkManager unitOfWorkManager,
+            INotificationHandler notification,
             IPurchaseOrderService domainService,
             IPurchaseOrderReadRepository readRepository,
             IPriceTableRepository priceTableRepository,
             IPurchaseOrderRepository purchaseOrderDomainRepository)
             : base(notification)
         {
+            _unitOfWorkManager = unitOfWorkManager;
             _domainService = domainService;
             _readRepository = readRepository;
             _priceTableRepository = priceTableRepository;
@@ -42,32 +48,44 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             if (!ValidateDto<PurchaseOrderDto, Guid>(dto))
                 return PurchaseOrderDto.NullInstance;
 
-            var priceTable = await _priceTableRepository.GetPriceTableAsync();
-
-            var purchaseOrderBuilder = PurchaseOrder.New(Notification)
-                .UpdatePriceTable(priceTable)
-                .WithCustomer(dto.CustomerId)
-                .WithDiscount(dto.Discount)
-                .AddPurchaseOrderLines(lines =>
-                {
-                    foreach (var productDto in dto.Products)
-                        lines.AddProduct(productDto.ProductId, productDto.Quantity);
-                });
-
-            var entity = await _domainService.NewPurchaseOrder(purchaseOrderBuilder);
-
-            if (Notification.HasNotification())
-                return PurchaseOrderDto.NullInstance;
-
-            dto.Id = entity.Id;
-
-            // Handler message after create purchase order for recalculate tax moviment
-            await Handle(new PurchaseOrderChangedMessage()
+            var options = new UnitOfWorkOptions()
             {
-                PurchaseOrderId = entity.Id,
-                PurchaseOrderBaseValue = entity.BaseValue,
-                PurchaseOrderDiscount = entity.Discount
-            });
+                IsTransactional = true,
+                Scope = TransactionScopeOption.Required,
+                IsolationLevel = IsolationLevel.ReadCommitted
+            };
+
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                var priceTable = await _priceTableRepository.GetPriceTableAsync();
+
+                var purchaseOrderBuilder = PurchaseOrder.New(Notification)
+                    .UpdatePriceTable(priceTable)
+                    .WithCustomer(dto.CustomerId)
+                    .WithDiscount(dto.Discount)
+                    .AddPurchaseOrderLines(lines =>
+                    {
+                        foreach (var productDto in dto.Products)
+                            lines.AddProduct(productDto.ProductId, productDto.Quantity);
+                    });
+
+                var purchaseOrder = await _domainService.NewPurchaseOrder(purchaseOrderBuilder);
+
+                await uow.CompleteAsync();
+
+                if (Notification.HasNotification())
+                    return PurchaseOrderDto.NullInstance;
+
+                dto.Id = purchaseOrder.Id;
+                
+                // Handler message after create purchase order for recalculate tax moviment
+                await Handle(new PurchaseOrderChangedMessage()
+                {
+                    PurchaseOrderId = purchaseOrder.Id,
+                    PurchaseOrderBaseValue = purchaseOrder.BaseValue,
+                    PurchaseOrderDiscount = purchaseOrder.Discount
+                });
+            }
 
             return dto;
         }
@@ -77,51 +95,106 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
                 return PurchaseOrderDto.NullInstance;
 
-            return await _readRepository.GetPurchaseOrderAsync(id);
+            var options = new UnitOfWorkOptions()
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.Suppress
+            };
+
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                return await _readRepository.GetPurchaseOrderAsync(id);
+            }
         }
 
         public async Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
-            => await _readRepository.GetAllPurchaseOrdersAsync(request);
+        {
+            var options = new UnitOfWorkOptions()
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.Suppress
+            };
+
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                return await _readRepository.GetAllPurchaseOrdersAsync(request);
+            }
+        }
 
         public async Task<PurchaseOrderDto> UpdatePurchaseOrderAsync(Guid id, PurchaseOrderDto dto)
         {
             if (!ValidateDtoAndId(dto, id))
                 return PurchaseOrderDto.NullInstance;
 
-            var priceTable = await _priceTableRepository.GetPriceTableAsync();
-            var entity = await _purchaseOrderDomainRepository.GetPurchaseOrder(id);
+            PriceTable priceTable = null;
+            PurchaseOrder purchaseOrderToUpdate = null;
 
-            var purchaseOrderBuilder = PurchaseOrder.Update(Notification, entity)
-                .UpdatePriceTable(priceTable)
-                .WithDiscount(dto.Discount)
-                .UpdatePurchaseOrderLines(lines =>
-                {
-                    foreach (var productDto in dto.Products)
-                        lines.AddProduct(productDto.ProductId, productDto.Quantity);
-                });
+            var options = new UnitOfWorkOptions()
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.Suppress
+            };
 
-            await _domainService.UpdatePurchaseOrder(purchaseOrderBuilder);
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                priceTable = await _priceTableRepository.GetPriceTableAsync();
+
+                purchaseOrderToUpdate = await _purchaseOrderDomainRepository.GetPurchaseOrder(id);
+            }
+
+            options = new UnitOfWorkOptions()
+            {
+                IsTransactional = true,
+                Scope = TransactionScopeOption.Required,
+                IsolationLevel = IsolationLevel.ReadCommitted
+            };
+
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                var updatePurchaseOrderBuilder = PurchaseOrder.Update(Notification, purchaseOrderToUpdate)
+                    .UpdatePriceTable(priceTable)
+                    .WithDiscount(dto.Discount)
+                    .UpdatePurchaseOrderLines(lines =>
+                    {
+                        foreach (var productDto in dto.Products)
+                            lines.AddProduct(productDto.ProductId, productDto.Quantity);
+                    });
+
+                purchaseOrderToUpdate = await _domainService.UpdatePurchaseOrder(updatePurchaseOrderBuilder);
+
+                await uow.CompleteAsync();
+            }
+
+            if (Notification.HasNotification())
+                return dto;
 
             dto.Id = id;
 
             // Handler message after create purchase order for recalculate tax moviment
             await Handle(new PurchaseOrderChangedMessage()
             {
-                PurchaseOrderId = entity.Id,
-                PurchaseOrderBaseValue = entity.BaseValue,
-                PurchaseOrderDiscount = entity.Discount
+                PurchaseOrderId = purchaseOrderToUpdate.Id,
+                PurchaseOrderBaseValue = purchaseOrderToUpdate.BaseValue,
+                PurchaseOrderDiscount = purchaseOrderToUpdate.Discount
             });
 
             return dto;
         }
 
-        public Task Handle(PurchaseOrderChangedMessage message)
-            => message.Publish();
+        public Task Handle(PurchaseOrderChangedMessage message) => message.Publish();
 
         // Process result of tax moviment service
         public async Task Handle(TaxMovimentCalculatedMessage message)
         {
-            await _domainService.UpdateTaxMoviment(message.PurchaseOrderId, message.Tax, message.TotalValue);
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                await _domainService.UpdateTaxMoviment(
+                    message.PurchaseOrderId,
+                    message.Tax,
+                    message.TotalValue);
+
+                await uow.CompleteAsync();
+            }
 
             // Manual Ack
             message.DoAck();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.FiscalService.Infra.AutoMapperProfiles;
 using SuperMarket.Backoffice.FiscalService.Infra.Contexts;
 
 namespace SuperMarket.Backoffice.FiscalService.Infra
@@ -17,6 +18,11 @@ namespace SuperMarket.Backoffice.FiscalService.Infra
                     else
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
+
+            services.AddTnfAutoMapper(config =>
+            {
+                config.AddProfile<TaxMovimentProfile>();
+            });
 
             return services;
         }

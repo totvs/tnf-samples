@@ -131,6 +131,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
                 AddSpecification<PurchaseOrdeMustHaveCustomer>();
                 AddSpecification<PurchaseOrderMustHaveValidDiscount>();
                 AddSpecification<PurchaseOrderMustBeLines>();
+                AddSpecification<PurchaseOrderMustHavePriceTable>();
             }
         }
 

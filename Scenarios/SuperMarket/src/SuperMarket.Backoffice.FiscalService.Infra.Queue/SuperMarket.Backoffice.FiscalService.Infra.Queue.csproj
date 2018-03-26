@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.0.2.7203" />
+  </ItemGroup>
+
+</Project>

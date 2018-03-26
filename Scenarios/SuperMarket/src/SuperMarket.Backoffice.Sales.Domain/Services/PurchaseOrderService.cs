@@ -47,7 +47,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Services
 
             purchaseOrder.UpdateTaxMoviment(tax, totalValue);
 
-            await _repository.Update(purchaseOrder);
+            await _repository.UpdateTaxMoviment(purchaseOrder);
         }
     }
 }

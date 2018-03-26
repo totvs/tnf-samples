@@ -3,7 +3,6 @@ using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Pocos;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;

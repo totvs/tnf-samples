@@ -46,5 +46,12 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
 
         public bool ConstainsPrice(Guid productId)
             => _table.ContainsKey(productId);
+
+        public bool IsEmpty() => _table.Count == 0;
+
+        public enum Error
+        {
+            UnavailablePriceTableService
+        }
     }
 }

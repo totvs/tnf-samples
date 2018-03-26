@@ -14,7 +14,8 @@
             PurchaseOrderLineMustHaveValidQuantity,
             PurchaseOrderMustHaveCustomer,
             PurchaseOrderMustHaveValidDiscount,
-            PurchaseOrderMustBeLines
+            PurchaseOrderMustBeLines,
+            PurchaseOrderMustHavePriceTable
         }
     }
 }

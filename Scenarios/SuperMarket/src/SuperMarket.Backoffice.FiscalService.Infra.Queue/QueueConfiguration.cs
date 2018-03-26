@@ -4,11 +4,11 @@ using Tnf.Bus.Queue;
 using Tnf.Bus.Queue.RabbitMQ;
 using Tnf.Configuration;
 
-namespace SuperMarket.Backoffice.Sales.Infra.Queue
+namespace SuperMarket.Backoffice.FiscalService.Infra.Queue
 {
     public static class QueueConfiguration
     {
-        public static ITnfConfiguration ConfigureSalesQueueInfraDependency(this ITnfConfiguration configuration)
+        public static ITnfConfiguration ConfigureFiscalServiceQueueInfraDependency(this ITnfConfiguration configuration)
         {
             // Cria um Tópico da mensagem PurchaseOrderChangedMessage
             var purchaseOrderChangedTopic = TopicSetup.Builder

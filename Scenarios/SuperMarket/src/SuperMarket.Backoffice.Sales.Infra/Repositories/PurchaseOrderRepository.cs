@@ -46,19 +46,32 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public async Task<PurchaseOrder> Update(PurchaseOrder purchaseOrder)
         {
-            var poco = purchaseOrder.MapTo<PurchaseOrderPoco>();
+            var poco = await GetAsync(purchaseOrder.Id);
 
             // Load relationship
             await EnsureCollectionLoadedAsync(poco, i => i.PurchaseOrderProducts);
+
+            var pocoToUpdate = purchaseOrder.MapTo(poco);
 
             // Remove items
             var productsIds = purchaseOrder.Lines.Select(s => s.ProductId);
 
             Context.PurchaseOrderProducts.RemoveAll(w => !productsIds.Contains(w.ProductId));
 
-            await UpdateAsync(poco);
+            await UpdateAsync(pocoToUpdate);
 
             return purchaseOrder;
+        }
+
+        public async Task UpdateTaxMoviment(PurchaseOrder purchaseOrder)
+        {
+            var poco = await GetAsync(purchaseOrder.Id);
+
+            poco.Tax = purchaseOrder.Tax;
+            poco.TotalValue = purchaseOrder.TotalValue;
+            poco.Status = purchaseOrder.Status;
+
+            await UpdateAsync(poco);
         }
     }
 }

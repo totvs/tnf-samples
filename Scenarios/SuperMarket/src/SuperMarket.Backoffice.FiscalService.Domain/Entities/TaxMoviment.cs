@@ -8,6 +8,9 @@ namespace SuperMarket.Backoffice.FiscalService.Domain.Entities
 {
     public class TaxMoviment : Entity<Guid>
     {
+        public static TaxMovimentBuilder New(INotificationHandler notification)
+            => new TaxMovimentBuilder(notification);
+
         public Guid PurchaseOrderId { get; private set; }
         public decimal PurchaseOrderBaseValue { get; private set; }
         public decimal PurchaseOrderDiscount { get; private set; }
@@ -17,7 +20,7 @@ namespace SuperMarket.Backoffice.FiscalService.Domain.Entities
 
         internal void RecalculateTaxTotalValue()
         {
-            Tax = (Percentage / 100);
+            Tax = (Percentage / 100.0m);
 
             PurchaseOrderTotalValue = (PurchaseOrderBaseValue - PurchaseOrderDiscount) + Tax;
         }
@@ -26,10 +29,7 @@ namespace SuperMarket.Backoffice.FiscalService.Domain.Entities
         {
             TaxMovimentMustHaveOrderBaseValue,
             TaxMovimentMustHaveOrderDiscount,
-            TaxMovimentMustHaveOrderId,
-            TaxMovimentMustHaveOrderTax,
-            TaxMovimentMustHaveOrderPercentage,
-            TaxMovimentMustHaveOrderTotalValue
+            TaxMovimentMustHaveOrderId
         }
 
         public class TaxMovimentBuilder : Builder<TaxMoviment>
@@ -63,9 +63,6 @@ namespace SuperMarket.Backoffice.FiscalService.Domain.Entities
                 AddSpecification<TaxMovimentMustHaveOrderBaseValue>();
                 AddSpecification<TaxMovimentMustHaveOrderDiscount>();
                 AddSpecification<TaxMovimentMustHaveOrderId>();
-                AddSpecification<TaxMovimentMustHaveOrderPercentage>();
-                AddSpecification<TaxMovimentMustHaveOrderTax>();
-                AddSpecification<TaxMovimentMustHaveOrderTotalValue>();
             }
         }
     }
