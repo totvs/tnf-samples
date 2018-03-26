@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
+using SuperMarket.Backoffice.Sales.Infra.Queue;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.Sales.Web
@@ -19,6 +20,8 @@ namespace SuperMarket.Backoffice.Sales.Web
         {
             services
                 .AddSalesApplicationDependency()
+                .AddSalesInfraDependency()
+                .AddSalesInfraQueueDependency()
                 .AddTnfAspNetCore();
 
             services.AddCors(options =>

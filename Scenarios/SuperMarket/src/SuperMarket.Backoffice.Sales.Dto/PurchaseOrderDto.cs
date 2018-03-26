@@ -14,8 +14,8 @@ namespace SuperMarket.Backoffice.Sales.Dto
 
         public class ProductDto
         {
-            public Guid ProductId { get; }
-            public int Quantity { get; }
+            public Guid ProductId { get; set; }
+            public int Quantity { get; set; }
 
             public ProductDto() { }
 

@@ -1,4 +1,5 @@
-﻿using SuperMarket.Backoffice.Sales.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperMarket.Backoffice.Sales.Domain.Entities;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Pocos;
@@ -26,10 +27,10 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public async Task<PurchaseOrder> GetPurchaseOrder(Guid id)
         {
-            var poco = await GetAsync(id);
-
-            // Load relationship
-            await EnsureCollectionLoadedAsync(poco, i => i.PurchaseOrderProducts);
+            var poco = await GetAll()
+                .AsNoTracking()
+                .Include(p => p.PurchaseOrderProducts)
+                .SingleOrDefaultAsync(p => p.Id == id);
 
             return poco.MapTo<PurchaseOrder>();
         }

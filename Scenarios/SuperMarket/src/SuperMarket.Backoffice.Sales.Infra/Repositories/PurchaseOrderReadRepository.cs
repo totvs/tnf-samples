@@ -13,18 +13,32 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 {
     public class PurchaseOrderReadRepository : EfCoreRepositoryBase<SalesContext, PurchaseOrderPoco, Guid>, IPurchaseOrderReadRepository
     {
-        public PurchaseOrderReadRepository(IDbContextProvider<SalesContext> dbContextProvider) 
+        public PurchaseOrderReadRepository(IDbContextProvider<SalesContext> dbContextProvider)
             : base(dbContextProvider)
         {
         }
 
         public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
-            Expression<Func<PurchaseOrderPoco, bool>> query = (purchaseOrder)
-                => (request.Number == Guid.Empty || request.Number == purchaseOrder.Number) &&
-                   (request.StartDate == null || request.EndDate == null ? request.StartDate == purchaseOrder.Date : purchaseOrder.Date.IsBetween(request.StartDate, request.EndDate));
+            return GetAllAsync<PurchaseOrderDto>(request, p => FilterPurchase(p, request));
+        }
 
-            return GetAllAsync<PurchaseOrderDto>(request, query);
+        private bool FilterPurchase(PurchaseOrderPoco purchaseOrder, PurchaseOrderRequestAllDto request)
+        {
+            var validateNumber = false;
+            var validateDate = false;
+
+            validateNumber = (request.Number == Guid.Empty || request.Number == purchaseOrder.Number);
+
+            if (request.StartDate == DateTime.MinValue || request.StartDate == null)
+                return validateNumber;
+
+            if (request.EndDate == DateTime.MinValue || request.EndDate == null)
+                validateDate = request.StartDate == purchaseOrder.Date;
+            else
+                validateDate = purchaseOrder.Date.IsBetween(request.StartDate, request.EndDate);
+
+            return validateNumber && validateDate;
         }
 
         public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> key)
