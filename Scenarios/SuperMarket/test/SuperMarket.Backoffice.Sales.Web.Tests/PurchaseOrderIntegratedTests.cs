@@ -427,20 +427,23 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         [Fact]
         public async Task Should_Raise_Notification_On_Update_With_Specifications()
         {
+            // Arrange
+            var invalidProductId = Guid.NewGuid();
+            var dto = new PurchaseOrderDto();
+            dto.Products.Add(new ProductDto(invalidProductId, 1));
+
             // Act
             var response = await PutResponseAsObjectAsync<PurchaseOrderDto, ErrorResponse>(
                 $"{WebConstants.PurchaseOrderRouteName}/{PurchaseOrderAppServiceMock.purchaseOrderGuid}",
-                new PurchaseOrderDto(),
+                dto,
                 HttpStatusCode.BadRequest
             );
 
             // Assert
             Assert.NotNull(response);
-            Assert.Equal(2, response.Details.Count);
+            Assert.Equal(1, response.Details.Count);
 
-            var message = _localizationSource.GetString(PurchaseOrder.Error.PurchaseOrderMustHaveCustomer, _culture);
-            Assert.Contains(response.Details, n => n.Message == message);
-            message = _localizationSource.GetString(PurchaseOrder.Error.PurchaseOrderMustBeLines, _culture);
+            var message = string.Format(_localizationSource.GetString(PurchaseOrder.Error.ProductsThatAreNotInThePriceTable, _culture), invalidProductId);
             Assert.Contains(response.Details, n => n.Message == message);
         }
     }

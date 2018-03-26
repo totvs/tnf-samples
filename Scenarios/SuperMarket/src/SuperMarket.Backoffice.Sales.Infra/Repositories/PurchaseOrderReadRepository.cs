@@ -35,7 +35,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
             if (request.EndDate == DateTime.MinValue || request.EndDate == null)
                 validateDate = request.StartDate == purchaseOrder.Date;
             else
-                validateDate = purchaseOrder.Date.IsBetween(request.StartDate, request.EndDate);
+                validateDate = purchaseOrder.Date.IsBetween(request.StartDate.Value, request.EndDate.Value);
 
             return validateNumber && validateDate;
         }

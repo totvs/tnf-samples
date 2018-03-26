@@ -18,6 +18,7 @@ using Tnf.Application.Services;
 using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Localization;
+using Tnf.Repositories.Uow;
 using Tnf.TestBase;
 using Xunit;
 using static SuperMarket.Backoffice.Sales.Dto.PurchaseOrderDto;
@@ -42,17 +43,14 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             base.PreInitialize(services);
 
             // Configura o mesmo Mapper para ser testado
-            services.AddSalesMapperDependency();
+            services.AddSalesApplicationDependency();
 
             // Registro dos serviços de Mock
             services.AddSingleton<PurchaseOrderServiceMockManager>();
-            services.AddTransient<IPurchaseOrderService, PurchaseOrderServiceMock>();
-            services.AddTransient<IPurchaseOrderReadRepository, PurchaseOrderReadRepositoryMock>();
-            services.AddTransient<IPriceTableRepository, PriceTableRepositoryMock>();
-            services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepositoryMock>();
-
-            // Registro dos serviços para teste
-            services.AddTransient<IPurchaseOrderAppService, PurchaseOrderAppService>();
+            services.ReplaceTransient<IPurchaseOrderService, PurchaseOrderServiceMock>();
+            services.ReplaceTransient<IPurchaseOrderReadRepository, PurchaseOrderReadRepositoryMock>();
+            services.ReplaceTransient<IPriceTableRepository, PriceTableRepositoryMock>();
+            services.ReplaceTransient<IPurchaseOrderRepository, PurchaseOrderRepositoryMock>();
         }
 
         protected override void PostInitialize(IServiceProvider provider)

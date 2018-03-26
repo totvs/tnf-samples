@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +7,8 @@ using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
 using SuperMarket.Backoffice.Sales.Infra.Queue;
+using System;
+using System.Threading.Tasks;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.Sales.Web
@@ -19,8 +19,6 @@ namespace SuperMarket.Backoffice.Sales.Web
         {
             services
                 .AddSalesApplicationDependency()
-                .AddSalesInfraDependency()
-                .AddSalesInfraQueueDependency()
                 .AddTnfAspNetCore();
 
             services.AddCors(options =>
