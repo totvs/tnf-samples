@@ -3,7 +3,6 @@ using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Pocos;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
@@ -20,11 +19,15 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
-            Expression<Func<PurchaseOrderPoco, bool>> query = (purchaseOrder)
-                => (request.Number == Guid.Empty || request.Number == purchaseOrder.Number) &&
-                   (request.StartDate == null || request.EndDate == null ? request.StartDate == purchaseOrder.Date : purchaseOrder.Date.IsBetween(request.StartDate, request.EndDate));
+            //Expression <Func<PurchaseOrderPoco, bool>> query = (purchaseOrder)
+            //    => (request.Number == Guid.Empty || request.Number == purchaseOrder.Number) &&
+            //       (request.StartDate == null || request.EndDate == null ? 
+            //            request.StartDate.Value == purchaseOrder.Date : 
+            //            purchaseOrder.Date >= request.StartDate.Value.Date && purchaseOrder.Date <= request.EndDate.Value.Date);
 
-            return GetAllAsync<PurchaseOrderDto>(request, query);
+            //return GetAllAsync<PurchaseOrderDto>(request, query);
+
+            return GetAllAsync<PurchaseOrderDto>(request);
         }
 
         public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> key)

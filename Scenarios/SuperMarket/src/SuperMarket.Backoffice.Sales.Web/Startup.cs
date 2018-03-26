@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
+using SuperMarket.Backoffice.Sales.Infra.Queue;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.Sales.Web
@@ -53,17 +53,13 @@ namespace SuperMarket.Backoffice.Sales.Web
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
 
-                // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
-                // comitadas ou desfeitas em caso de erro
-                options.UnitOfWorkOptions().IsTransactional = true;
-
-                // IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
-                // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+                // Forçando a estrategia de UnitOfWork a não ser transacional.
+                // Isso quer dizer que irá ser controlado manualmente esse comportamento no código
+                options.UnitOfWorkOptions().IsTransactional = false;
 
                 // ----------
+
+                options.ConfigureSalesQueueInfraDependency();
             });
 
             logger.LogInformation("Running migrations ...");

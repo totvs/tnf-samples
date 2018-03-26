@@ -8,6 +8,9 @@ namespace SuperMarket.Backoffice.FiscalService.Domain.Entities
 {
     public class TaxMoviment : Entity<Guid>
     {
+        public static TaxMovimentBuilder New(INotificationHandler notification)
+            => new TaxMovimentBuilder(notification);
+
         public Guid PurchaseOrderId { get; private set; }
         public decimal PurchaseOrderBaseValue { get; private set; }
         public decimal PurchaseOrderDiscount { get; private set; }

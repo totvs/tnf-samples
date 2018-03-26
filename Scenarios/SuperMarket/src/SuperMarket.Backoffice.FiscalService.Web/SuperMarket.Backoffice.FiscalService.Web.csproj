@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuperMarket.Backoffice.FiscalService.Domain\SuperMarket.Backoffice.FiscalService.Domain.csproj" />
+    <ProjectReference Include="..\SuperMarket.Backoffice.FiscalService.Infra.Queue\SuperMarket.Backoffice.FiscalService.Infra.Queue.csproj" />
     <ProjectReference Include="..\SuperMarket.Backoffice.FiscalService.Infra\SuperMarket.Backoffice.FiscalService.Infra.csproj" />
   </ItemGroup>
 

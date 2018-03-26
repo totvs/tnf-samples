@@ -10,6 +10,7 @@ namespace SuperMarket.Backoffice.Sales.Mapper
         public DomainToInfraProfile()
         {
             CreateMap<PurchaseOrder, PurchaseOrderPoco>()
+                .ForMember(s => s.PurchaseOrderProducts, d => d.Ignore())
                 .AfterMap((domain, poco) =>
                 {
                     // Add or Update when item exist
@@ -24,6 +25,7 @@ namespace SuperMarket.Backoffice.Sales.Mapper
                             poco.PurchaseOrderProducts.Add(purchaseOrderProduct);
                         }
 
+                        purchaseOrderProduct.ProductId = line.ProductId;
                         purchaseOrderProduct.Quantity = line.Quantity;
                         purchaseOrderProduct.UnitValue = domain.GetProductPrice(line.ProductId);
                     }

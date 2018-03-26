@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Repositories;
+using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 
 namespace SuperMarket.Backoffice.Sales.Infra
 {
@@ -21,7 +22,9 @@ namespace SuperMarket.Backoffice.Sales.Infra
                 });
 
             services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
-            
+            services.AddTransient<IPurchaseOrderReadRepository, PurchaseOrderReadRepository>();
+            services.AddTransient<IPriceTableRepository, PriceTableRepository>();
+
             return services;
         }
     }

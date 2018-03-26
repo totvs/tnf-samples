@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.FiscalService.Domain;
 using SuperMarket.Backoffice.FiscalService.Infra;
+using SuperMarket.Backoffice.FiscalService.Infra.Queue;
 using Tnf.Configuration;
 
 namespace SuperMarket.Backoffice.FiscalService.Web
@@ -19,6 +20,7 @@ namespace SuperMarket.Backoffice.FiscalService.Web
             services
                 .AddFiscalDomainDependency()
                 .AddFiscalInfraDependency()
+                .AddFiscalInfraQueueDependency()
                 .AddTnfAspNetCore();
 
             services.AddCors(options =>
@@ -53,17 +55,13 @@ namespace SuperMarket.Backoffice.FiscalService.Web
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
 
-                // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
-                // comitadas ou desfeitas em caso de erro
-                options.UnitOfWorkOptions().IsTransactional = true;
-
-                // IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
-                // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
+                // Forçando a estrategia de UnitOfWork a não ser transacional.
+                // Isso quer dizer que irá ser controlado manualmente esse comportamento no código
+                options.UnitOfWorkOptions().IsTransactional = false;
 
                 // ----------
+
+                options.ConfigureFiscalServiceQueueInfraDependency();
             });
 
             logger.LogInformation("Running migrations ...");
