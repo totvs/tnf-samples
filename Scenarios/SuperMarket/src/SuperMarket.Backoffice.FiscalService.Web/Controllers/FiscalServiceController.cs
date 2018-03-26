@@ -12,6 +12,7 @@ using Tnf.Bus.Client;
 using Tnf.Bus.Queue.Interfaces;
 using Tnf.Domain.Services;
 using Tnf.Dto;
+using Tnf.Notifications;
 using Tnf.Repositories.Uow;
 
 namespace SuperMarket.Backoffice.FiscalService.Web.Controllers
@@ -22,14 +23,17 @@ namespace SuperMarket.Backoffice.FiscalService.Web.Controllers
         IPublish<TaxMovimentCalculatedMessage>
     {
         private readonly IDomainService<TaxMoviment, Guid> _domainService;
+        private readonly INotificationHandler _notificationHandler;
         private readonly ILogger<TaxMoviment> _logger;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public FiscalServiceController(
+            INotificationHandler notificationHandler,
             ILogger<TaxMoviment> logger,
             IUnitOfWorkManager unitOfWorkManager,
             IDomainService<TaxMoviment, Guid> domainService)
         {
+            _notificationHandler = notificationHandler;
             _logger = logger;
             _unitOfWorkManager = unitOfWorkManager;
             _domainService = domainService;
@@ -58,11 +62,11 @@ namespace SuperMarket.Backoffice.FiscalService.Web.Controllers
             try
             {
                 var movimentBuilder = TaxMoviment
-                .New(Notification)
-                .ForPurchaseOrder(
-                    message.PurchaseOrderId,
-                    message.PurchaseOrderBaseValue,
-                    message.PurchaseOrderDiscount);
+                    .New(_notificationHandler)
+                    .ForPurchaseOrder(
+                        message.PurchaseOrderId,
+                        message.PurchaseOrderBaseValue,
+                        message.PurchaseOrderDiscount);
 
                 var options = new UnitOfWorkOptions()
                 {
@@ -78,9 +82,9 @@ namespace SuperMarket.Backoffice.FiscalService.Web.Controllers
                     await uow.CompleteAsync();
                 }
 
-                if (Notification.HasNotification())
+                if (_notificationHandler.HasNotification())
                 {
-                    var messages = Notification
+                    var messages = _notificationHandler
                         .GetAll()
                         .Select(s => s.Message)
                         .JoinAsString(", ");

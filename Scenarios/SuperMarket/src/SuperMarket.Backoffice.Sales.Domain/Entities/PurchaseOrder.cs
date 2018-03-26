@@ -25,7 +25,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
         public PurchaseOrderStatus Status { get; private set; }
         public ICollection<PurchaseOrderLine> Lines { get; private set; } = new List<PurchaseOrderLine>();
 
-        private PriceTable PriceTable { get; set; } = PriceTable.Empty();
+        internal PriceTable PriceTable { get; set; } = PriceTable.Empty();
 
         internal IEnumerable<Guid> GetProductsThatAreNotInThePriceTable()
         {

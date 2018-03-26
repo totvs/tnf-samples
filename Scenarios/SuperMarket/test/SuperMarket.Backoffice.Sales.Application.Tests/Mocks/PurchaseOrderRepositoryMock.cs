@@ -32,5 +32,13 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests.Mocks
 
             return purchaseOrder.AsTask();
         }
+
+        public Task UpdateTaxMoviment(PurchaseOrder purchaseOrder)
+        {
+            _manager.List.RemoveAll(c => c.Id == purchaseOrder.Id);
+            _manager.List.Add(purchaseOrder);
+
+            return purchaseOrder.AsTask();
+        }
     }
 }

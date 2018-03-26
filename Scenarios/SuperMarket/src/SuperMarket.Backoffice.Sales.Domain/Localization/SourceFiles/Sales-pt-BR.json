@@ -6,6 +6,7 @@
     "PurchaseOrderMustHaveCustomer": "Para o pedido informe o cliente.",
     "PurchaseOrderMustBeLines": "Para o pedido poder ser processado informe seus produtos.",
     "PurchaseOrderMustHaveValidDiscount": "O desconto informado no pedido precisa ser igual ou maior que zero.",
-    "UnavailablePriceTableService": "O serviço de consulta de preço está indisponível"
+    "UnavailablePriceTableService": "O serviço de consulta de preço está indisponível",
+    "PurchaseOrderMustHavePriceTable": "Para o pedido informe a tabela de preços."
   }
 }
