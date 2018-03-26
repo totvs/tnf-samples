@@ -19,6 +19,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
+            // TODO: Rever pois a expressão não está funcionando
             //Expression <Func<PurchaseOrderPoco, bool>> query = (purchaseOrder)
             //    => (request.Number == Guid.Empty || request.Number == purchaseOrder.Number) &&
             //       (request.StartDate == null || request.EndDate == null ? 
