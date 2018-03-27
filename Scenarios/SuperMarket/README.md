@@ -1,4 +1,4 @@
-#### Super Market
+### Super Market
 
 Este exemplo contém um cenário de criação e gerenciamento de um pedido utilizando o TNF com Redis e Rabbitmq e SqlServer.
 
@@ -10,9 +10,9 @@ na operação.
 O exemplo foi separado em 3 contextos: Cruds, Sales e FiscalService.
 Todos utilizam SqlServer como banco de dados e a troca de mensagens entre o serviço de Sales e FiscalService se da através do Rabbitmq.
 
-##### Instalação
+#### Instalação
 
--- Configs e banco de dados
+##### Configs e banco de dados
 
 Para que este exemplo funcione você precisa ter o LocalDb instalado em seu visual studio ou configurar uma instancia válida do SqlServer
 nos config da aplicação nos projetos
@@ -25,11 +25,11 @@ nos config da aplicação nos projetos
 		appsettings.Development.json e 
 		appsettings.Production.json
 
-	SuperMarket.Backoffice.FiscalService.Web
+	SuperMarket.FiscalService.Web
 		appsettings.Development.json e 
 		appsettings.Production.json
 
--- Mensageria
+##### Mensageria
 
 Para que a mensageria funcione o Rabbitmq terá de ser instalado e configurado para o protocolo AMQP estar habilitado.
 Para mais detalhes de como habilitar o protocolo AMQP no Rabbitmq e para aprender mais sobre conceitos relacionados
@@ -40,16 +40,16 @@ Para instalar via windows: (https://www.rabbitmq.com/install-windows.html)
 Para instalar via docker: 
 * Instale o docker
 * Execute os comandos (o primeiro comando irá criar o container e os outros 3 irão habilitar o protocolo AMQP):
-	docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.7.3-management-alpine
-	docker exec -it rabbitmq bash
-	cd plugins
-	rabbitmq-plugins enable rabbitmq_amqp1_0
+	* docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.7.3-management-alpine
+	* docker exec -it rabbitmq bash
+	* cd plugins
+	* rabbitmq-plugins enable rabbitmq_amqp1_0
 
--- Redis Cache
+##### Redis Cache
 
 Para instalar via windows: (https://github.com/rgl/redis/downloads)
 
 Para instalar via docker:
 * Instale o docker
 * Execute o comando:
-	docker run --name redis -d -p 6379:6379 -i -t redis:3.2.11-alpine
+	* docker run --name redis -d -p 6379:6379 -i -t redis:3.2.11-alpine
