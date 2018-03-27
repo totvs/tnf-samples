@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Transactions;
 using Tnf.Configuration;
+using Transacional.Domain;
 using Transactional.Domain;
 using Transactional.Infra;
-using Transacional.Domain;
-using Serilog;
-using Microsoft.Extensions.Logging;
 
 namespace Transactional.Web
 {
@@ -19,18 +18,10 @@ namespace Transactional.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCorsAll("AllowAll")
                 .AddDomainDependency()              // dependencia da camada Transactional.Domain
                 .AddInfraDependency()               // dependencia da camada Transactional.Infra
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
 
             services.AddSwaggerGen();
 
