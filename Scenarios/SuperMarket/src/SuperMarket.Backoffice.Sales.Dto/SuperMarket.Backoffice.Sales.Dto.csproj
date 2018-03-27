@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Dto" Version="2.0.2.7203" />
+    <PackageReference Include="Tnf.Dto" Version="2.0.2.8601" />
   </ItemGroup>
 
 </Project>
