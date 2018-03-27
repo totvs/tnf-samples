@@ -17,11 +17,31 @@ Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e co
 	- Tnf.Drivers.DevartOracle
 	- Tnf.Domain
 	- Tnf.AutoMapper
-	- Tnf.EntityFrameworkCore
-	
+	- Tnf.EntityFrameworkCore	
 	- Microsoft.EntityFrameworkCore.SqlServer
 	- Microsoft.EntityFrameworkCore.Sqlite
 	- Devart.Data.Oracle.Entity.EFCore
+
+#### [SuperMarket](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/SuperMarket) ####
+Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF com Redis, Rabbitmq, SqlServer, EntityFrameworkCore, configuração de localização por arquivo, log e registro de dependências.
+
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore
+	- Tnf.Dto
+	- Tnf.Repositories.AspNetCore
+	- Tnf.Drivers.DevartOracle
+	- Tnf.Domain
+	- Tnf.AutoMapper
+	- Tnf.EntityFrameworkCore	
+	- Tnf.Bus.Queue.RabbitMQ
+	- Tnf.Caching.Redis.JsonSerializer
+
+#### [Querying](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Querying) ####
+Exempo que consultas através do repositório do TNF:
+
+- Pacotes que foram instalados:
+	- Tnf.Repositories.AspNetCore
+	- Tnf.EntityFrameworkCore	
 
 #### [Transactional](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Transactional) ####
 Exempo que contempla um cenário transacional:
