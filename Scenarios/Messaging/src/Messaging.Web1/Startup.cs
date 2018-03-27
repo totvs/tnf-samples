@@ -21,14 +21,7 @@ namespace Messaging.Web1
             // Adiciona a dependencia de fila do Tnf
             services.AddQueueDependency();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            services.AddCorsAll("AllowAll");
 
             services.AddSwaggerGen();
 
