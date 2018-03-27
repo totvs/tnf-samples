@@ -10,16 +10,9 @@ namespace HelloWorld.Web
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            services
+                .AddCorsAll("AllowAll")
+                .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
             services.AddSwaggerGen();
 
