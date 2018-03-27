@@ -1,7 +1,7 @@
 ﻿using System;
 using Tnf.Bus.Client;
 
-namespace SuperMarket.Backoffice.Sales.Infra.Queue.Messages
+namespace SuperMarket.Backoffice.FiscalService.Infra.Queue.Messages
 {
     public class TaxMovimentCalculatedMessage : Message
     {
