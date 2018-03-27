@@ -4,7 +4,7 @@ using Tnf.Localization.Dictionaries;
 
 namespace SuperMarket.Backoffice.FiscalService.Domain
 {
-    public static class TnfConfigurationExtensions
+    public static class LocalizationExtensions
     {
         public static ITnfConfiguration ConfigureFiscalDomain(this ITnfConfiguration configuration)
         {
