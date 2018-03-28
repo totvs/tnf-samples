@@ -259,3 +259,4 @@ paket-files/
 /Scenarios/Messaging/src/Messaging.Web1/logs
 /Scenarios/Messaging/src/Messaging.Web2/logs
 /Scenarios/Querying/src/Querying.Web/logs
+/Scenarios/Transactional/src/Transactional.Web/logs

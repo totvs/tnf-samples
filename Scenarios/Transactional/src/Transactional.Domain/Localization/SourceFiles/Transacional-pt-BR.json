@@ -1,6 +1,6 @@
 ﻿{
   "culture": "pt-BR",
   "texts": {
-    "DuplicateOrder": "Já existe um pedido para o cliente {0} na data {1}."
+    "DuplicatePurchaseOrder": "Já existe um pedido para o cliente {0} na data {1}."
   }
 }

@@ -10,7 +10,7 @@ namespace Transactional.Infra.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "PurchaseOrders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -24,44 +24,44 @@ namespace Transactional.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrders",
+                name: "PurchaseOrderProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
+                    PurchaseOrderId = table.Column<int>(nullable: false),
                     UnitValue = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrders", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseOrderProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
+                        name: "FK_PurchaseOrderProducts_PurchaseOrders_PurchaseOrderId",
+                        column: x => x.PurchaseOrderId,
+                        principalTable: "PurchaseOrders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOrders_OrderId",
-                table: "ProductOrders",
-                column: "OrderId");
+                name: "IX_PurchaseOrderProducts_PurchaseOrderId",
+                table: "PurchaseOrderProducts",
+                column: "PurchaseOrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductOrders");
+                name: "PurchaseOrderProducts");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "PurchaseOrders");
         }
     }
 }

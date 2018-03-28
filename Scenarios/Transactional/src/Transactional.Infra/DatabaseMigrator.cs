@@ -14,7 +14,7 @@ namespace Transactional.Infra
 
             using (var uow = uowManager.Begin())
             {
-                var context = provider.GetRequiredService<OrderContext>();
+                var context = provider.GetRequiredService<PurchaseOrderContext>();
 
                 context.Database.Migrate();
             }

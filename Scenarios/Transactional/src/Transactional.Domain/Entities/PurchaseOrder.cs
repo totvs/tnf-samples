@@ -4,7 +4,7 @@ using Tnf.Repositories.Entities;
 
 namespace Transactional.Domain.Entities
 {
-    public class Order : Entity
+    public class PurchaseOrder : Entity
     {
         public DateTime Data { get; set; }
         public int ClientId { get; set; }
@@ -12,6 +12,6 @@ namespace Transactional.Domain.Entities
         public decimal TotalValue { get; set; }
         public decimal Discount { get; set; }
         public int Tax { get; set; }
-        public ICollection<ProductOrder> Products { get; set; } = new List<ProductOrder>();
+        public ICollection<PurchaseOrderProduct> PurchaseOrderProducts { get; set; } = new List<PurchaseOrderProduct>();
     }
 }

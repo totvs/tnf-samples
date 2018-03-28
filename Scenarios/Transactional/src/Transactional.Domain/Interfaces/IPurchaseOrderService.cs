@@ -4,10 +4,10 @@ using Transactional.Domain.Entities;
 
 namespace Transactional.Domain.Interfaces
 {
-    public interface IOrderService
+    public interface IPurchaseOrderService
     {
-        Task<Order> CreateNewOrder(Order order);
-        List<Order> GetAllOrders();
+        Task<PurchaseOrder> CreateNewPurchaseOrder(PurchaseOrder purchaseOrder);
+        List<PurchaseOrder> GetAllPurchaseOrders();
         Task DeleteAsync(int id);
     }
 }

@@ -16,7 +16,7 @@ namespace Transacional.Domain
             // services.AddTnfDefaultConventionalRegistrations();
 
             // Registro dos serviços
-            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPurchaseOrderService, PurchaseOrderService>();
 
             return services;
         }

@@ -15,7 +15,7 @@ using Transactional.Domain;
 
 namespace Transactional.Web.Tests
 {
-    public class OrderControllerTest : TnfAspNetCoreIntegratedTestBase<StartupTest>
+    public class PurchaseOrderControllerTest : TnfAspNetCoreIntegratedTestBase<StartupTest>
     {
         private ILocalizationManager localizationManager;
         private CultureInfo requestCulture;
@@ -35,12 +35,12 @@ namespace Transactional.Web.Tests
             // Arrange
             SetRequestCulture(CultureInfo.GetCultureInfo("pt-BR"));
 
-            Order order = null;
+            PurchaseOrder purchaseOrder = null;
 
             // Arrange
-            await ServiceProvider.UsingDbContextAsync<OrderContext>(async context =>
+            await ServiceProvider.UsingDbContextAsync<PurchaseOrderContext>(async context =>
             {
-                order = new Order()
+                purchaseOrder = new PurchaseOrder()
                 {
                     ClientId = 1,
                     Data = DateTime.UtcNow.Date,
@@ -50,38 +50,38 @@ namespace Transactional.Web.Tests
                     TotalValue = 110,
                 };
 
-                order.Products.Add(new ProductOrder()
+                purchaseOrder.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     ProductId = 1,
                     Amount = 2,
                     UnitValue = 50.0m
                 });
 
-                order.Products.Add(new ProductOrder()
+                purchaseOrder.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     ProductId = 2,
                     Amount = 5,
                     UnitValue = 10.0m
                 });
 
-                await context.Orders.AddAsync(order);
+                await context.PurchaseOrders.AddAsync(purchaseOrder);
 
                 await context.SaveChangesAsync();
             });
 
             // Act
-            var response = await PostResponseAsObjectAsync<Order, ErrorResponse>(
+            var response = await PostResponseAsObjectAsync<PurchaseOrder, ErrorResponse>(
                 @"api/order",
-                order,
+                purchaseOrder,
                 HttpStatusCode.BadRequest);
 
             // Assert
             var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);
 
-            var duplicatedMessage = localizationSource.GetString(GlobalizationKey.DuplicateOrder, requestCulture);
+            var duplicatedMessage = localizationSource.GetString(GlobalizationKey.DuplicatePurchaseOrder, requestCulture);
 
-            Assert.Contains(response.Details, w => w.DetailedMessage == GlobalizationKey.DuplicateOrder.ToString());
-            Assert.Contains(response.Details, w => w.Message == string.Format(duplicatedMessage, order.ClientId, order.Data));
+            Assert.Contains(response.Details, w => w.DetailedMessage == GlobalizationKey.DuplicatePurchaseOrder.ToString());
+            Assert.Contains(response.Details, w => w.Message == string.Format(duplicatedMessage, purchaseOrder.ClientId, purchaseOrder.Data));
         }
     }
 }

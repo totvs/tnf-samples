@@ -14,10 +14,10 @@ using Xunit;
 
 namespace Transactional.Domain.Tests
 {
-    public class OrderServiceTests : TnfEfCoreIntegratedTestBase
+    public class PurchaseOrderServiceTests : TnfEfCoreIntegratedTestBase
     {
         private ILocalizationManager localizationManager;
-        private Order order = null;
+        private PurchaseOrder purchaseOrder = null;
 
         protected override void PreInitialize(IServiceCollection services)
         {
@@ -26,7 +26,7 @@ namespace Transactional.Domain.Tests
             services
                 .AddDomainDependency()                                  // dependencia da camada Transactional.Domain
                 .AddTnfEfCoreSqliteInMemory()                           // Configura o setup de teste para EntityFrameworkCore em memória
-                .RegisterDbContextToSqliteInMemory<OrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+                .RegisterDbContextToSqliteInMemory<PurchaseOrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
         }
 
         protected override void PostInitialize(IServiceProvider provider)
@@ -38,9 +38,9 @@ namespace Transactional.Domain.Tests
             localizationManager = provider.GetService<ILocalizationManager>();
 
             // Arrange
-            provider.UsingDbContext<OrderContext>(context =>
+            provider.UsingDbContext<PurchaseOrderContext>(context =>
             {
-                order = new Order()
+                purchaseOrder = new PurchaseOrder()
                 {
                     Id = 1,
                     ClientId = 1,
@@ -49,15 +49,15 @@ namespace Transactional.Domain.Tests
                     Tax = 10,
                     BaseValue = 100,
                     TotalValue = 110,
-                    Products = new List<ProductOrder>()
+                    PurchaseOrderProducts = new List<PurchaseOrderProduct>()
                     {
-                        new ProductOrder()
+                        new PurchaseOrderProduct()
                         {
                             ProductId = 1,
                             Amount = 2,
                             UnitValue = 50.0m
                         },
-                        new ProductOrder()
+                        new PurchaseOrderProduct()
                         {
                             ProductId = 2,
                             Amount = 5,
@@ -66,7 +66,7 @@ namespace Transactional.Domain.Tests
                     }
                 };
 
-                context.Orders.Add(order);
+                context.PurchaseOrders.Add(purchaseOrder);
 
                 context.SaveChanges();
             });
@@ -75,31 +75,31 @@ namespace Transactional.Domain.Tests
         [Fact]
         public async Task ShouldNotAllowNewOrderDuplicated()
         {
-            var orderService = Resolve<IOrderService>();
+            var purchaseOrderService = Resolve<IPurchaseOrderService>();
 
-            var newOrder = await orderService.CreateNewOrder(order);
+            var newOrder = await purchaseOrderService.CreateNewPurchaseOrder(purchaseOrder);
 
             Assert.True(LocalNotification.HasNotification());
 
             // Assert
             var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);
 
-            var duplicatedMessage = localizationSource.GetString(GlobalizationKey.DuplicateOrder);
+            var duplicatedMessage = localizationSource.GetString(GlobalizationKey.DuplicatePurchaseOrder);
 
-            Assert.Contains(LocalNotification.GetAll(), w => w.DetailedMessage == GlobalizationKey.DuplicateOrder.ToString());
-            Assert.Contains(LocalNotification.GetAll(), w => w.Message == string.Format(duplicatedMessage, order.ClientId, order.Data));
+            Assert.Contains(LocalNotification.GetAll(), w => w.DetailedMessage == GlobalizationKey.DuplicatePurchaseOrder.ToString());
+            Assert.Contains(LocalNotification.GetAll(), w => w.Message == string.Format(duplicatedMessage, purchaseOrder.ClientId, purchaseOrder.Data));
         }
 
         [Fact]
         public async Task ShouldDeleteWithSucess()
         {
-            var orderService = Resolve<IOrderService>();
+            var purchaseOrderService = Resolve<IPurchaseOrderService>();
 
-            await orderService.DeleteAsync(1);
+            await purchaseOrderService.DeleteAsync(1);
 
-            ServiceProvider.UsingDbContext<OrderContext>(context =>
+            ServiceProvider.UsingDbContext<PurchaseOrderContext>(context =>
             {
-                Assert.Equal(0, context.Orders.Count());
+                Assert.Equal(0, context.PurchaseOrders.Count());
             });
         }
     }

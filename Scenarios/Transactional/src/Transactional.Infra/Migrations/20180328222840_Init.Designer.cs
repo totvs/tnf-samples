@@ -10,8 +10,8 @@ using Transactional.Infra.Context;
 
 namespace Transactional.Infra.Migrations
 {
-    [DbContext(typeof(OrderContext))]
-    [Migration("20180314153953_Init")]
+    [DbContext(typeof(PurchaseOrderContext))]
+    [Migration("20180328222840_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Transactional.Infra.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Transactional.Domain.Entities.Order", b =>
+            modelBuilder.Entity("Transactional.Domain.Entities.PurchaseOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -40,34 +40,34 @@ namespace Transactional.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("PurchaseOrders");
                 });
 
-            modelBuilder.Entity("Transactional.Domain.Entities.ProductOrder", b =>
+            modelBuilder.Entity("Transactional.Domain.Entities.PurchaseOrderProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Amount");
 
-                    b.Property<int>("OrderId");
-
                     b.Property<int>("ProductId");
+
+                    b.Property<int>("PurchaseOrderId");
 
                     b.Property<decimal>("UnitValue");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("ProductOrders");
+                    b.ToTable("PurchaseOrderProducts");
                 });
 
-            modelBuilder.Entity("Transactional.Domain.Entities.ProductOrder", b =>
+            modelBuilder.Entity("Transactional.Domain.Entities.PurchaseOrderProduct", b =>
                 {
-                    b.HasOne("Transactional.Domain.Entities.Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId")
+                    b.HasOne("Transactional.Domain.Entities.PurchaseOrder")
+                        .WithMany("PurchaseOrderProducts")
+                        .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -9,19 +9,19 @@ using Transactional.Domain.Interfaces;
 
 namespace Transactional.Domain.Services
 {
-    public class OrderService : IOrderService
+    public class PurchaseOrderService : IPurchaseOrderService
     {
         private readonly IUnitOfWorkManager unitOfWorkManager;
-        private readonly IOrderRepository orderRepository;
+        private readonly IPurchaseOrderRepository purchaseOrderRepository;
         private readonly INotificationHandler notificationHandler;
 
-        public OrderService(
+        public PurchaseOrderService(
             IUnitOfWorkManager unitOfWorkManager,
-            IOrderRepository orderRepository,
+            IPurchaseOrderRepository purchaseOrderRepository,
             INotificationHandler notificationHandler)
         {
             this.unitOfWorkManager = unitOfWorkManager;
-            this.orderRepository = orderRepository;
+            this.purchaseOrderRepository = purchaseOrderRepository;
             this.notificationHandler = notificationHandler;
         }
 
@@ -30,34 +30,34 @@ namespace Transactional.Domain.Services
         /// Caso você precise trabalhar com este modelo siga o exemplo abaixo onde uma transação é aberta (Método CheckDuplicateOrder linha 50)
         /// com o paramêtro TransactionScopeOption definido para RequiresNew (isso significa que uma nova transação será criada)
         /// </summary>
-        public async Task<Order> CreateNewOrder(Order order)
+        public async Task<PurchaseOrder> CreateNewPurchaseOrder(PurchaseOrder purchaseOrder)
         {
             using (var uow = unitOfWorkManager.Begin())
             {
-                await CheckDuplicateOrder(order);
+                await CheckDuplicateOrder(purchaseOrder);
 
                 if (notificationHandler.HasNotification())
-                    return order;
+                    return purchaseOrder;
 
-                order = await orderRepository.CreateNewOrder(order);
+                purchaseOrder = await purchaseOrderRepository.CreateNewPurchaseOrder(purchaseOrder);
 
                 await uow.CompleteAsync();
             }
 
-            return order;
+            return purchaseOrder;
         }
 
-        private async Task CheckDuplicateOrder(Order order)
+        private async Task CheckDuplicateOrder(PurchaseOrder purchaseOrder)
         {
             using (unitOfWorkManager.Begin(TransactionScopeOption.RequiresNew))
             {
-                var duplicateOrder = await orderRepository.CheckDuplicateOrder(order);
+                var duplicateOrder = await purchaseOrderRepository.CheckDuplicatePurchaseOrder(purchaseOrder);
                 if (duplicateOrder != null)
                 {
                     notificationHandler.DefaultBuilder
                         .AsSpecification()
-                        .WithMessage(Constants.LocalizationSourceName, GlobalizationKey.DuplicateOrder)
-                        .WithMessageFormat(order.ClientId, order.Data)
+                        .WithMessage(Constants.LocalizationSourceName, GlobalizationKey.DuplicatePurchaseOrder)
+                        .WithMessageFormat(purchaseOrder.ClientId, purchaseOrder.Data)
                         .Raise();
                 }
             }
@@ -72,7 +72,7 @@ namespace Transactional.Domain.Services
         {
             using (var uow = unitOfWorkManager.Begin())
             {
-                await orderRepository.DeleteAsync(id);
+                await purchaseOrderRepository.DeleteAsync(id);
 
                 await uow.CompleteAsync();
             }
@@ -82,7 +82,7 @@ namespace Transactional.Domain.Services
         /// Quando for necessário especificar algum aspecto específico como timeout da transação, escopo
         /// ou isolation level você pode utilizar a classe <see cref="UnitOfWorkOptions"/> para definir algum parâmetro
         /// </summary>
-        public List<Order> GetAllOrders()
+        public List<PurchaseOrder> GetAllPurchaseOrders()
         {
             var options = new UnitOfWorkOptions()
             {
@@ -94,7 +94,7 @@ namespace Transactional.Domain.Services
 
             using (var uow = unitOfWorkManager.Begin(options))
             {
-                return orderRepository.GetAllOrders();
+                return purchaseOrderRepository.GetAllPurchaseOrders();
             }
         }
     }

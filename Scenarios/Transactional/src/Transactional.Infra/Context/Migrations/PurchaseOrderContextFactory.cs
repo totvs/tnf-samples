@@ -7,11 +7,11 @@ using Transactional.Domain;
 
 namespace Transactional.Infra.Context.Migrations
 {
-    public class OrderContextFactory : IDesignTimeDbContextFactory<OrderContext>
+    public class PurchaseOrderContextFactory : IDesignTimeDbContextFactory<PurchaseOrderContext>
     {
-        public OrderContext CreateDbContext(string[] args)
+        public PurchaseOrderContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<OrderContext>();
+            var builder = new DbContextOptionsBuilder<PurchaseOrderContext>();
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
@@ -20,7 +20,7 @@ namespace Transactional.Infra.Context.Migrations
 
             builder.UseSqlServer(configuration.GetConnectionString(Constants.ConnectionStringName));
 
-            return new OrderContext(builder.Options, NullTnfSession.Instance);
+            return new PurchaseOrderContext(builder.Options, NullTnfSession.Instance);
         }
     }
 }
