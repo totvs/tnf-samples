@@ -19,7 +19,7 @@ namespace Querying.Infra.Repositories
 
         public Task<Order> GetOrder(RequestDto request)
         {
-            if (!request.Fields.Any())
+            if (!request.GetFields().Any())
                 request.Fields = "Date, TotalValue";
 
             // Para carregar atributos específicos do objeto que será retornado
@@ -34,7 +34,7 @@ namespace Querying.Infra.Repositories
         /// </summary>
         public async Task<Customer> GetCustomerFromOrder(RequestDto request)
         {
-            if (!request.Expand.Contains("Customer"))
+            if (!request.GetExpandablesFields().Contains("Customer"))
                 request.Expand = "Customer";
 
             // Para carregar relacionamentos específicos do objeto que será retornado

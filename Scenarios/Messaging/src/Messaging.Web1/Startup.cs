@@ -1,4 +1,4 @@
-﻿using Messaging.Queue;
+﻿using Messaging.Infra1;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +17,6 @@ namespace Messaging.Web1
             services
                 .AddInfra1Dependency()
                 .AddTnfAspNetCore();
-
-            // Adiciona a dependencia de fila do Tnf
-            services.AddQueueDependency();
 
             services.AddCorsAll("AllowAll");
 

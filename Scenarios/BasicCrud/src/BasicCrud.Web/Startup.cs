@@ -54,6 +54,9 @@ namespace BasicCrud.Web
                 //options.EnableDevartOracleDriver(useDefaultLicense: true);
             });
 
+            // SqlServer migrate database
+            app.ApplicationServices.MigrateDatabase();
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 

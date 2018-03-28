@@ -13,6 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // Configura o uso do cache em memoria
             services.AddTransient<INotifierService, NotifierService>();
 
+            // Configura o uso do client para fila
+            services.AddTnfBusClient();
+
             return services;
         }
     }

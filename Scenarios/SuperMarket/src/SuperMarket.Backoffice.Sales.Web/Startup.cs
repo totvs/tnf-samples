@@ -69,9 +69,6 @@ namespace SuperMarket.Backoffice.Sales.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
             // Add CORS middleware before MVC
             app.UseCors("AllowAll");
 

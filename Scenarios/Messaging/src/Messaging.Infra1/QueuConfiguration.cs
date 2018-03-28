@@ -1,8 +1,10 @@
-﻿using Messaging.Queue.Messages;
+﻿using Messaging.Infra1.Messages;
+using System;
+using System.Threading;
 using Tnf.Bus.Queue;
 using Tnf.Bus.Queue.Interfaces;
 
-namespace Messaging.Queue
+namespace Messaging.Infra1
 {
     public static class QueuConfiguration
     {
@@ -12,7 +14,7 @@ namespace Messaging.Queue
         public static IExchangeRouter GetExchangeRouterConfiguration()
         {
             // Cria um Tópico da mensagem CustomerCreatedEvent
-            var customerCreatedEventTopic = TopicSetup.Builder
+            var customerCreatedEventTopicToPublish = TopicSetup.Builder
                 .New(s =>
                         s.Message<NotificationMessage>()
                         .AddKey("Notification.Message"));
@@ -20,7 +22,7 @@ namespace Messaging.Queue
             // Cria uma Fila
             var queue = QueueSetup.Builder
                .New(s => s
-                    .QueueName("General")
+                    .QueueName("MessagingQueue")
                     .Reliability(r => r
                         .AutoAck(false)
                         .AutoDeleteQueue(true)
@@ -30,19 +32,29 @@ namespace Messaging.Queue
                         .PrefetchGlobalLimit(true)
                         .PrefetchLimit(100)
                         .PrefetchSize(0))
-                    .AddTopics(customerCreatedEventTopic));
+                    .AddTopics(customerCreatedEventTopicToPublish));
 
             // Cria um Exchange Router
             var exchangeRouter = ExchangeRouter
                 .Builder
                 .Factory()
-                .Name("ExchangeForCase3")
+                .Name("MessagingExchange")
                 .ServerAddress("127.0.0.1")
                 .Type(ExchangeType.topic)
                 .QueueChannel(QueueChannel.Amqp)
                 .Reliability(isDurable: false, isAutoDelete: false, isPersistent: false)
                 .AddQueue(queue)
                 .SetExclusive(false)
+                .AutomaticRecovery(
+                    isEnable: true,
+                    connectionTimeout: 15000,
+                    networkRecoveryInterval: TimeSpan.FromSeconds(10))
+                .MessageCollector(
+                    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
+                    timeout: TimeSpan.FromSeconds(60))
+                .ShutdownBehavior(
+                    graceful: new CancellationTokenSource(),
+                    forced: new CancellationTokenSource())
                 .Build();
 
             return exchangeRouter;

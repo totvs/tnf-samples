@@ -1,6 +1,6 @@
 ﻿using Tnf.Bus.Client;
 
-namespace Messaging.Queue.Messages
+namespace Messaging.Infra2.Messages
 {
     /// <summary>
     /// Representa a mensagem que será enviada/recebida

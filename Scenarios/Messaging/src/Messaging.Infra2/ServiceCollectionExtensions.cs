@@ -13,6 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // descomente a linha abaixo:
             // services.AddTnfDefaultConventionalRegistrations();
 
+            // Configura o uso do client para fila
+            services.AddTnfBusClient();
+
             services.AddTransient<IMessageStoreService, MessageStoreService>();
         }
     }

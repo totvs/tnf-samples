@@ -109,7 +109,7 @@ namespace SuperMarket.FiscalService.Infra.Queue
                         listener: er => new SubscriberListener(
                             exchangeRouter: er,
                             serviceProvider: configuration.ServiceProvider),
-                        poolSize: 1);
+                        poolSize: 4);
 
             return configuration;
         }

@@ -1,4 +1,4 @@
-﻿using Messaging.Queue;
+﻿using Messaging.Infra2;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +17,6 @@ namespace Messaging.Web2
 
             // Adiciona a dependencia da camada de Infra: Case1.Infra
             services.AddInfra2Dependency();
-
-            // Adiciona a dependencia de fila do Tnf
-            services.AddQueueDependency();
 
             services.AddCorsAll("AllowAll");
 
@@ -43,7 +40,7 @@ namespace Messaging.Web2
                         listener: er => new SubscriberListener(
                             exchangeRouter: er,
                             serviceProvider: app.ApplicationServices), 
-                        poolSize: 10);
+                        poolSize: 2);
             });
 
             if (env.IsDevelopment())

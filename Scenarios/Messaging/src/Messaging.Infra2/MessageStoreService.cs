@@ -1,4 +1,4 @@
-﻿using Messaging.Queue.Messages;
+﻿using Messaging.Infra2.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

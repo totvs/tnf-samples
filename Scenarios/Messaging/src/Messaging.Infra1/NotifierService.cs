@@ -1,4 +1,4 @@
-﻿using Messaging.Queue.Messages;
+﻿using Messaging.Infra1.Messages;
 using System.Threading.Tasks;
 using Tnf.Bus.Client;
 using Tnf.Bus.Queue.Interfaces;
