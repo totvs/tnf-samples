@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Threading.Tasks;
 using Tnf.Bus.Queue.RabbitMQ;
@@ -20,7 +21,10 @@ namespace Messaging.Web1
 
             services.AddCorsAll("AllowAll");
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Messaging 1 API", Version = "v1" });
+            });
 
             return services.BuildServiceProvider();
         }
@@ -57,15 +61,15 @@ namespace Messaging.Web1
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Messaging 1 API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
 
             app.Run(context =>
             {
-                context.Response.Redirect("swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
         }

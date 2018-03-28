@@ -1,6 +1,8 @@
 ﻿using Messaging.Infra2;
+using Messaging.Web2.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 
 namespace Messaging.Web2.Controllers
 {
@@ -15,11 +17,13 @@ namespace Messaging.Web2.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ResponseDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get()
         {
             var response = await _store.GetAllMessages();
 
-            return Json(new
+            return Json(new ResponseDto
             {
                 Total = response?.Count,
                 Messages = response
@@ -27,6 +31,8 @@ namespace Messaging.Web2.Controllers
         }
 
         [HttpGet("refresh")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Refresh()
         {
             await _store.Refresh();

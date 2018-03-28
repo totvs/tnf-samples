@@ -1,6 +1,7 @@
 ﻿using Messaging.Infra1.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 
 namespace Messaging.Web1.Controllers
 {
@@ -15,6 +16,8 @@ namespace Messaging.Web1.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Post([FromBody]MessageRequest content)
         {
             await _customerService.Notify(content?.Message);
