@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Threading.Tasks;
 
@@ -14,7 +15,10 @@ namespace HelloWorld.Web
                 .AddCorsAll("AllowAll")
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Hello World API", Version = "v1" });
+            });
 
             return services.BuildServiceProvider();
         }
@@ -36,15 +40,20 @@ namespace HelloWorld.Web
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseMvc(routes =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello World API v1");
+            });
 
             app.Run(context =>
             {
-                context.Response.Redirect("/swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
         }

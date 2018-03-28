@@ -249,11 +249,13 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/TnfSample-Architecture/src/Tnf.Architecture.Web/Logs
-/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Sales.Web/logs/log20180323.txt
 /Scenarios/SuperMarket/src/SuperMarket.Backoffice.Sales.Web/logs
-/Scenarios/SuperMarket/src/SuperMarket.Backoffice.FiscalService.Web/logs/log20180323.txt
 /Scenarios/SuperMarket/src/SuperMarket.Backoffice.FiscalService.Web/logs
-/Scenarios/SuperMarket/src/SuperMarket.Backoffice.Crud.Web/logs/log20180323.txt
 /Scenarios/SuperMarket/src/SuperMarket.Backoffice.Crud.Web/logs
 /Scenarios/SuperMarket/src/SuperMarket.FiscalService.Web/logs
+/Scenarios/HelloWorld/src/HelloWorld.Web/logs
+/Scenarios/BasicCrud/src/BasicCrud.Web/logs
+/Scenarios/Dapper/src/Dapper.Web/logs
+/Scenarios/Messaging/src/Messaging.Web1/logs
+/Scenarios/Messaging/src/Messaging.Web2/logs
+/Scenarios/Querying/src/Querying.Web/logs
