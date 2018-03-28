@@ -1,6 +1,6 @@
 ### Exemplos que serão vistos a seguir:
 
-#### Os projeto utilizam TNF 2.0.2.7203
+#### Os projeto utilizam TNF 2.0.2.8601
 
 #### [HelloWorld](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/HelloWorld) ####
 Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo, log e registro de dependências:

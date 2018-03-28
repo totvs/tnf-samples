@@ -20,14 +20,7 @@ namespace Querying.Web
             // Adiciona a dependencia da camada de Domain
             services.AddInfraDependency();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            services.AddCorsAll("AllowAll");
 
             services.AddSwaggerGen();
 
