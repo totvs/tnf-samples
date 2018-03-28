@@ -3,6 +3,7 @@ using BasicCrud.Dto.Product;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
@@ -19,6 +20,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IListDto<ProductDto, Guid>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]ProductRequestAllDto requestDto)
         {
             var response = await appService.GetAllProductAsync(requestDto);
@@ -27,6 +30,9 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ProductDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
         {
             requestDto.WithId(id);
@@ -37,6 +43,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ProductDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Post([FromBody]ProductDto customerDto)
         {
             customerDto = await appService.CreateProductAsync(customerDto);
@@ -45,6 +53,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ProductDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Put(Guid id, [FromBody]ProductDto customerDto)
         {
             customerDto = await appService.UpdateProductAsync(id, customerDto);
@@ -53,6 +63,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await appService.DeleteProductAsync(id);

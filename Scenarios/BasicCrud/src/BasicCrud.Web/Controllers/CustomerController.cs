@@ -33,6 +33,9 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
         {
             requestDto.WithId(id);
@@ -43,6 +46,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Post([FromBody]CustomerDto customerDto)
         {
             customerDto = await appService.Create(customerDto);
@@ -51,6 +56,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Put(Guid id, [FromBody]CustomerDto customerDto)
         {
             customerDto = await appService.Update(id, customerDto);
@@ -59,6 +66,8 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await appService.Delete(id);
