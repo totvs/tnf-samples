@@ -2,6 +2,7 @@
 using Querying.Infra.Context;
 using Querying.Infra.Dto;
 using Querying.Infra.Entities;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Tnf.Dto;
@@ -40,9 +41,9 @@ namespace Querying.Infra.Repositories
             // Para carregar relacionamentos específicos do objeto que será retornado
             // no método Get do repositório do TNF, defina o valor para o campo
             // Expand separados por vírgula, quando existir mais de um.
-            var order = await base.GetAsync(request);
+            var purchaseOrder = await base.GetAsync(request);
 
-            return order.Customer;
+            return purchaseOrder?.Customer;
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Querying.Infra.Repositories
         /// <summary>
         /// Query sample N X N and grouping
         /// </summary>
-        public async Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromProduct(SumarizedPurchaseOrderRequestAllDto param)
+        public async Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date)
         {
             // Para a tabela de ProductOrder
             // Incluo a referência da tabela product e order
@@ -73,7 +74,7 @@ namespace Querying.Infra.Repositories
             var baseQuery = Context.PurchaseOrderProducts
                 .Include(i => i.Product)
                 .Include(i => i.Order)
-                .Where(w => w.Order.Date == param.Date.Date)
+                .Where(w => w.Order.Date == date)
                 .Select(productOrder => productOrder);
 
             // Agrupo pelo Id do produto e sua descrição
@@ -83,14 +84,14 @@ namespace Querying.Infra.Repositories
                                       {
                                           ProductId = productGroup.Key.Id,
                                           ProductDescription = productGroup.Key.Description,
-                                          Amount = productGroup.Sum(s => s.Amount),
-                                          TotalValue = productGroup.Sum(s => s.Amount * s.UnitValue)
+                                          Amount = productGroup.Sum(s => s.Quantity),
+                                          TotalValue = productGroup.Sum(s => s.Quantity * s.UnitValue)
                                       });
 
             var sumarized = new SumarizedPurchaseOrder()
             {
-                Date = param.Date.Date,
-                TotalAmount = await baseQuery.SumAsync(s => s.Amount),
+                Date = date,
+                TotalQuantity = await baseQuery.SumAsync(s => s.Quantity),
                 TotalValue = await sumarizedByProduct.SumAsync(s => s.TotalValue),
                 Products = sumarizedByProduct.Select(s => new SumarizedProduct()
                 {

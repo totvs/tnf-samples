@@ -1,5 +1,6 @@
 ﻿using Querying.Infra.Dto;
 using Querying.Infra.Entities;
+using System;
 using System.Threading.Tasks;
 using Tnf.Dto;
 using Tnf.Repositories;
@@ -10,6 +11,6 @@ namespace Querying.Infra.Repositories
     {
         Task<Customer> GetCustomerFromPurchaseOrder(RequestDto request);
         Task<PurchaseOrder> GetPurchaseOrder(RequestDto request);
-        Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromProduct(SumarizedPurchaseOrderRequestAllDto param);
+        Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date);
     }
 }

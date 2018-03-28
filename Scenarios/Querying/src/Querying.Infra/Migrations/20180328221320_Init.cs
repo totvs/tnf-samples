@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Querying.Infra.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,37 +63,37 @@ namespace Querying.Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Amount = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
+                    PurchaseOrderId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     UnitValue = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PurchaseOrderProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchaseOrderProducts_PurchaseOrders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "PurchaseOrders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_PurchaseOrderProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrderProducts_PurchaseOrders_PurchaseOrderId",
+                        column: x => x.PurchaseOrderId,
+                        principalTable: "PurchaseOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseOrderProducts_OrderId",
-                table: "PurchaseOrderProducts",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrderProducts_ProductId",
                 table: "PurchaseOrderProducts",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrderProducts_PurchaseOrderId",
+                table: "PurchaseOrderProducts",
+                column: "PurchaseOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrders_CustomerId",
@@ -107,10 +107,10 @@ namespace Querying.Infra.Migrations
                 name: "PurchaseOrderProducts");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrders");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "PurchaseOrders");
 
             migrationBuilder.DropTable(
                 name: "Customers");

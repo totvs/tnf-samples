@@ -6,7 +6,7 @@ namespace Querying.Infra.Dto
     public class SumarizedPurchaseOrder
     {
         public DateTime Date { get; set; }
-        public int TotalAmount { get; set; }
+        public int TotalQuantity { get; set; }
         public decimal TotalValue { get; set; }
         public IEnumerable<SumarizedProduct> Products { get; set; }
     }

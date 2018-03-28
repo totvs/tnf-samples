@@ -69,19 +69,19 @@ namespace Querying.Infra.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Amount");
-
-                    b.Property<int>("OrderId");
-
                     b.Property<int>("ProductId");
+
+                    b.Property<int>("PurchaseOrderId");
+
+                    b.Property<int>("Quantity");
 
                     b.Property<decimal>("UnitValue");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseOrderId");
 
                     b.ToTable("PurchaseOrderProducts");
                 });
@@ -96,14 +96,14 @@ namespace Querying.Infra.Migrations
 
             modelBuilder.Entity("Querying.Infra.Entities.PurchaseOrderProduct", b =>
                 {
-                    b.HasOne("Querying.Infra.Entities.PurchaseOrder", "Order")
-                        .WithMany("ProductOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Querying.Infra.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Querying.Infra.Entities.PurchaseOrder", "Order")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

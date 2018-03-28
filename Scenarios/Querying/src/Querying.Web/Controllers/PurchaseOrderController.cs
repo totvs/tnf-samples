@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Querying.Infra.Dto;
+using Querying.Infra.Entities;
 using Querying.Infra.Repositories;
+using System;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 using Tnf.Dto;
 
 namespace Querying.Web
 {
-    [Route("api/purchaseorder")]
+    [Route(WebConstants.PurchaseOrderRouteName)]
     public class PurchaseOrderController : TnfController
     {
         private readonly IPurchaseOrderRepository orderRepository;
@@ -17,6 +20,8 @@ namespace Querying.Web
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PurchaseOrderDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get(int id, [FromQuery]RequestDto requestDto)
         {
             if (id <= 0) return BadRequest();
@@ -28,24 +33,28 @@ namespace Querying.Web
             return CreateResponseOnGetAll(response);
         }
 
-        [HttpGet("{orderId}/customer")]
-        public async Task<IActionResult> GetCustomerFromOrder(int orderId, [FromQuery]RequestDto requestDto)
+        [HttpGet("{id}/customer")]
+        [ProducesResponseType(typeof(Customer), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        public async Task<IActionResult> GetCustomerFromPurchaseOrder(int id, [FromQuery]RequestDto requestDto)
         {
-            if (orderId <= 0) return BadRequest();
+            if (id <= 0) return BadRequest();
 
-            requestDto.WithId(orderId);
+            requestDto.WithId(id);
 
             var response = await orderRepository.GetCustomerFromPurchaseOrder(requestDto);
 
             return CreateResponseOnGet(response);
         }
 
-        [HttpPost("sumarized")]
-        public async Task<IActionResult> GetSumarizedOrderFromProduct([FromBody]SumarizedPurchaseOrderRequestAllDto param)
+        [HttpGet("sumarized")]
+        [ProducesResponseType(typeof(SumarizedPurchaseOrder), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        public async Task<IActionResult> GetSumarizedPurchaseOrderFromDate([FromQuery]DateTime date)
         {
-            if (param == null) return BadRequest();
+            if (date == null) return BadRequest();
 
-            var response = await orderRepository.GetSumarizedPurchaseOrderFromProduct(param);
+            var response = await orderRepository.GetSumarizedPurchaseOrderFromDate(date);
 
             return CreateResponseOnGet(response);
         }

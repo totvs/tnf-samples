@@ -5,7 +5,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddInfraDependency(this IServiceCollection services)
+        public static IServiceCollection AddInfraDependency(this IServiceCollection services)
         {
             // Configura o uso do EntityFrameworkCore registrando os contextos que serão
             // usados pela aplicação
@@ -14,6 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddTnfDbContext<PurchaseOrderContext>(config => DbContextConfigurer.Configure(config));
 
             services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
+
+            return services;
         }
     }
 }
