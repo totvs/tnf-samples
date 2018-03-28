@@ -43,6 +43,14 @@ Exempo que consultas através do repositório do TNF:
 	- Tnf.Repositories.AspNetCore
 	- Tnf.EntityFrameworkCore	
 
+#### [Dapper](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Dapper) ####
+Exempo que consultas através do repositório do TNF usando Dapper:
+
+- Pacotes que foram instalados:
+	- Tnf.Repositories.AspNetCore
+	- Tnf.AutoMapper	
+	- Tnf.Dapper	
+
 #### [Transactional](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Transactional) ####
 Exempo que contempla um cenário transacional:
 
