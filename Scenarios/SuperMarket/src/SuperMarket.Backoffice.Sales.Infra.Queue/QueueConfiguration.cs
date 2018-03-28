@@ -62,19 +62,16 @@ namespace SuperMarket.Backoffice.Sales.Infra.Queue
                 .Reliability(isDurable: false, isAutoDelete: false, isPersistent: false)
                 .AddQueue(purchaseOrderQueueToPublish)
                 .SetExclusive(false)
-                .AddBasicAuthentication(
-                    username: "teste",
-                    password: "teste")
                 .AutomaticRecovery(
                     isEnable: true,
                     connectionTimeout: 15000,
                     networkRecoveryInterval: TimeSpan.FromSeconds(10))
-                //.MessageCollector(
-                //    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
-                //    timeout: TimeSpan.FromSeconds(60))
-                //.ShutdownBehavior(
-                //    graceful: new CancellationTokenSource(),
-                //    forced: new CancellationTokenSource())
+                .MessageCollector(
+                    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
+                    timeout: TimeSpan.FromSeconds(60))
+                .ShutdownBehavior(
+                    graceful: new CancellationTokenSource(),
+                    forced: new CancellationTokenSource())
                 .Build();
 
             var exchangeRouterToSubscribe = ExchangeRouter
@@ -87,19 +84,16 @@ namespace SuperMarket.Backoffice.Sales.Infra.Queue
                 .Reliability(isDurable: false, isAutoDelete: false, isPersistent: false)
                 .AddQueue(taxMovimentQueueToSubscribe)
                 .SetExclusive(false)
-                .AddBasicAuthentication(
-                    username: "teste",
-                    password: "teste")
                 .AutomaticRecovery(
                     isEnable: true,
                     connectionTimeout: 15000,
                     networkRecoveryInterval: TimeSpan.FromSeconds(10))
-                //.MessageCollector(
-                //    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
-                //    timeout: TimeSpan.FromSeconds(60))
-                //.ShutdownBehavior(
-                //    graceful: new CancellationTokenSource(),
-                //    forced: new CancellationTokenSource())
+                .MessageCollector(
+                    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
+                    timeout: TimeSpan.FromSeconds(60))
+                .ShutdownBehavior(
+                    graceful: new CancellationTokenSource(),
+                    forced: new CancellationTokenSource())
                 .Build();
 
             // Configura para que ela publique mensagens

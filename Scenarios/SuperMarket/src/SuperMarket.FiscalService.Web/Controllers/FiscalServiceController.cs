@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SuperMarket.FiscalService.Domain.Entities;
 using SuperMarket.FiscalService.Infra.Dtos;
-using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
 using Tnf.Bus.Client;
 using Tnf.Bus.Queue.Interfaces;
 using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
 using Tnf.Repositories.Uow;
+using SuperMarket.FiscalService.Infra.Queue.Messages;
 
 namespace SuperMarket.FiscalService.Web.Controllers
 {

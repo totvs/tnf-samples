@@ -1,5 +1,6 @@
-﻿using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
+﻿using SuperMarket.FiscalService.Infra.Queue.Messages;
 using System;
+using System.Threading;
 using Tnf.Bus.Queue;
 using Tnf.Bus.Queue.RabbitMQ;
 using Tnf.Configuration;
@@ -11,12 +12,12 @@ namespace SuperMarket.FiscalService.Infra.Queue
         public static ITnfConfiguration ConfigureFiscalServiceQueueInfraDependency(this ITnfConfiguration configuration)
         {
             // Cria um Tópico da mensagem PurchaseOrderChangedMessage
-            var purchaseOrderChangedTopic = TopicSetup.Builder
+            var purchaseOrderChangedTopicToSubscribe = TopicSetup.Builder
                 .New(s =>
                         s.Message<PurchaseOrderChangedMessage>()
                         .AddKey("PurchaseOrder.Changed.Message"));
 
-            var purchaseOrderQueue = QueueSetup.Builder
+            var purchaseOrderQueueToSubscribe = QueueSetup.Builder
                .New(s => s
                     .QueueName("PurchaseOrderQueue")
                     .Reliability(r => r
@@ -28,15 +29,15 @@ namespace SuperMarket.FiscalService.Infra.Queue
                         .PrefetchGlobalLimit(true)
                         .PrefetchLimit(100)
                         .PrefetchSize(0))
-                    .AddTopics(purchaseOrderChangedTopic));
+                    .AddTopics(purchaseOrderChangedTopicToSubscribe));
 
             // Cria um Tópico da mensagem TaxMovimentCalculatedMessage
-            var taxMovimentCalculatedTopic = TopicSetup.Builder
+            var taxMovimentCalculatedTopicToPublish = TopicSetup.Builder
                 .New(s =>
                         s.Message<TaxMovimentCalculatedMessage>()
                         .AddKey("TaxMoviment.Calculated.Message"));
 
-            var taxMovimentQueue = QueueSetup.Builder
+            var taxMovimentQueueToPublish = QueueSetup.Builder
                .New(s => s
                     .QueueName("TaxMovimentQueue")
                     .Reliability(r => r
@@ -48,10 +49,10 @@ namespace SuperMarket.FiscalService.Infra.Queue
                         .PrefetchGlobalLimit(true)
                         .PrefetchLimit(100)
                         .PrefetchSize(0))
-                    .AddTopics(taxMovimentCalculatedTopic));
+                    .AddTopics(taxMovimentCalculatedTopicToPublish));
 
             // Cria um Exchange Router
-            var exchangeRouter = ExchangeRouter
+            var exchangeRouterToPublish = ExchangeRouter
                 .Builder
                 .Factory()
                 .Name("SuperMarket")
@@ -59,25 +60,56 @@ namespace SuperMarket.FiscalService.Infra.Queue
                 .Type(ExchangeType.topic)
                 .QueueChannel(QueueChannel.Amqp)
                 .Reliability(isDurable: false, isAutoDelete: false, isPersistent: false)
-                .AddQueue(purchaseOrderQueue)
-                .AddQueue(taxMovimentQueue)
+                .AddQueue(taxMovimentQueueToPublish)
                 .SetExclusive(false)
+                .AutomaticRecovery(
+                    isEnable: true,
+                    connectionTimeout: 15000,
+                    networkRecoveryInterval: TimeSpan.FromSeconds(10))
+                .MessageCollector(
+                    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
+                    timeout: TimeSpan.FromSeconds(60))
+                .ShutdownBehavior(
+                    graceful: new CancellationTokenSource(),
+                    forced: new CancellationTokenSource())
+                .Build();
+
+            var exchangeRouterToSubscribe = ExchangeRouter
+                .Builder
+                .Factory()
+                .Name("SuperMarket")
+                .ServerAddress("127.0.0.1")
+                .Type(ExchangeType.topic)
+                .QueueChannel(QueueChannel.Amqp)
+                .Reliability(isDurable: false, isAutoDelete: false, isPersistent: false)
+                .AddQueue(purchaseOrderQueueToSubscribe)
+                .SetExclusive(false)
+                .AutomaticRecovery(
+                    isEnable: true,
+                    connectionTimeout: 15000,
+                    networkRecoveryInterval: TimeSpan.FromSeconds(10))
+                .MessageCollector(
+                    refreshInterval: TimeSpan.FromMilliseconds(value: 2000),
+                    timeout: TimeSpan.FromSeconds(60))
+                .ShutdownBehavior(
+                    graceful: new CancellationTokenSource(),
+                    forced: new CancellationTokenSource())
                 .Build();
 
             // Configura para que ela publique mensagens
             configuration
                 .BusClient()
                 .AddPublisher(
-                    exBuilder: e => exchangeRouter,
+                    exBuilder: e => exchangeRouterToPublish,
                     listener: er => new PublisherListener(
                         exchangeRouter: er,
                         serviceProvider: configuration.ServiceProvider))
                 .AddSubscriber(
-                        exBuilder: e => exchangeRouter,
+                        exBuilder: e => exchangeRouterToSubscribe,
                         listener: er => new SubscriberListener(
                             exchangeRouter: er,
                             serviceProvider: configuration.ServiceProvider),
-                        poolSize: 2);
+                        poolSize: 1);
 
             return configuration;
         }
