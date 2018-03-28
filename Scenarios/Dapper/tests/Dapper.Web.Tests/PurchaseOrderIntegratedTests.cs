@@ -62,7 +62,7 @@ namespace Dapper.Web.Tests
         {
             TnfSession.ShouldNotBeNull();
             ServiceProvider.GetService<PurchaseOrderController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IOrderRepository>().ShouldNotBeNull();
+            ServiceProvider.GetService<IPurchaseOrderRepository>().ShouldNotBeNull();
         }
 
 
@@ -208,7 +208,7 @@ namespace Dapper.Web.Tests
         public async Task Should_Get_SumarizedOrder_From_Date()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedOrder>(
+            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=3%2F1%2F2018"
             );
 
@@ -225,7 +225,7 @@ namespace Dapper.Web.Tests
         public async Task Should_Return_Null_On_Get_SumarizedOrder_From_Date_Not_Found()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedOrder>(
+            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=1%2F5%2F2016"
             );
 
@@ -241,7 +241,7 @@ namespace Dapper.Web.Tests
         public async Task Should_Return_Bad_Request_On_Get_SumarizedOrder_From_Date_Invalid()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedOrder>(
+            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/sumarized"
             );
 

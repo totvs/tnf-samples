@@ -10,9 +10,9 @@ using Tnf.Repositories;
 
 namespace Dapper.Infra.Repositories
 {
-    public class OrderRepository : DapperEfRepositoryBase<PurchaseOrderContext, PurchaseOrder>, IOrderRepository
+    public class PurchaseOrderRepository : DapperEfRepositoryBase<PurchaseOrderContext, PurchaseOrder>, IPurchaseOrderRepository
     {
-        public OrderRepository(IActiveTransactionProvider activeTransactionProvider)
+        public PurchaseOrderRepository(IActiveTransactionProvider activeTransactionProvider)
             : base(activeTransactionProvider)
         {
         }
@@ -40,7 +40,7 @@ namespace Dapper.Infra.Repositories
         /// <summary>
         /// Query sample N X N and grouping
         /// </summary>
-        public async Task<SumarizedOrder> GetSumarizedPurchaseOrderFromDate(DateTime date)
+        public async Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date)
         {
             // Para a tabela de PurchaseOrderProducts
             // Incluo a referência da tabela product e purchaseOrder
@@ -58,7 +58,7 @@ namespace Dapper.Infra.Repositories
                 GROUP BY product.Id, product.Description", 
                 new { Date = date });
 
-            var sumarized = new SumarizedOrder()
+            var sumarized = new SumarizedPurchaseOrder()
             {
                 Date = date,
                 TotalQuantity = purchaseOrderProductUnits.Sum(s => s.Quantity),
@@ -69,7 +69,7 @@ namespace Dapper.Infra.Repositories
             return sumarized;
         }
 
-        public Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedOrderRequestAllDto param)
+        public Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param)
         {
             return param.Date == DateTime.MinValue ?
                 GetAllAsync<PurchaseOrderDto>(param) :

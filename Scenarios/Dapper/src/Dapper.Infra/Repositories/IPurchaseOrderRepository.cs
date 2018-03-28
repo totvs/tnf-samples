@@ -7,11 +7,11 @@ using Tnf.Repositories;
 
 namespace Dapper.Infra.Repositories
 {
-    public interface IOrderRepository : IRepository
+    public interface IPurchaseOrderRepository : IRepository
     {
         Task<Customer> GetCustomerFromPurchaseOrder(int orderId);
         Task<PurchaseOrder> GetPurchaseOrder(RequestDto request);
-        Task<SumarizedOrder> GetSumarizedPurchaseOrderFromDate(DateTime date);
-        Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedOrderRequestAllDto param);
+        Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date);
+        Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param);
     }
 }

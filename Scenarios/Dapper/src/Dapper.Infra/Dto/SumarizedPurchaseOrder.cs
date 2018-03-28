@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dapper.Infra.Dto
 {
-    public class SumarizedOrder
+    public class SumarizedPurchaseOrder
     {
         public DateTime Date { get; set; }
         public int TotalQuantity { get; set; }

@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 config.AddProfile<PurchaseOrderProfile>();
             });
 
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
             return services;
         }

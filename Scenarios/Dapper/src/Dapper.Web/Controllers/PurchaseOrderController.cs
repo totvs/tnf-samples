@@ -12,9 +12,9 @@ namespace Dapper.Web
     [Route(WebConstants.PurchaseOrderRouteName)]
     public class PurchaseOrderController : TnfController
     {
-        private readonly IOrderRepository orderRepository;
+        private readonly IPurchaseOrderRepository orderRepository;
 
-        public PurchaseOrderController(IOrderRepository orderRepository)
+        public PurchaseOrderController(IPurchaseOrderRepository orderRepository)
         {
             this.orderRepository = orderRepository;
         }
@@ -22,7 +22,7 @@ namespace Dapper.Web
         [HttpGet]
         [ProducesResponseType(typeof(IListDto<PurchaseOrderDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> GetAll([FromQuery]SumarizedOrderRequestAllDto param)
+        public async Task<IActionResult> GetAll([FromQuery]SumarizedPurchaseOrderRequestAllDto param)
         {
             if (param == null) return BadRequest();
 
@@ -58,9 +58,9 @@ namespace Dapper.Web
         }
 
         [HttpGet("sumarized")]
-        [ProducesResponseType(typeof(SumarizedOrder), 200)]
+        [ProducesResponseType(typeof(SumarizedPurchaseOrder), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> GetSumarizedOrderFromDate([FromQuery]DateTime date)
+        public async Task<IActionResult> GetSumarizedPurchaseOrderFromDate([FromQuery]DateTime date)
         {
             if (date == null) return BadRequest();
 
