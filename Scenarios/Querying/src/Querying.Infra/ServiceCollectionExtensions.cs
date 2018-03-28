@@ -11,9 +11,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // usados pela aplicação
             services
                 .AddTnfEntityFrameworkCore()
-                .AddTnfDbContext<OrderContext>(config => DbContextConfigurer.Configure(config));
+                .AddTnfDbContext<PurchaseOrderContext>(config => DbContextConfigurer.Configure(config));
 
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
         }
     }
 }

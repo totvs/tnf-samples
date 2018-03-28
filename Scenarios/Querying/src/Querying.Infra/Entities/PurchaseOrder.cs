@@ -4,13 +4,13 @@ using Tnf.Repositories.Entities;
 
 namespace Querying.Infra.Entities
 {
-    public class Order : Entity
+    public class PurchaseOrder : Entity
     {
         public DateTime Date { get; set; }
         public int CustomerId { get; set; }
         public decimal TotalValue { get; set; }
 
         public Customer Customer { get; set; }
-        public ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
+        public ICollection<PurchaseOrderProduct> ProductOrders { get; set; } = new List<PurchaseOrderProduct>();
     }
 }

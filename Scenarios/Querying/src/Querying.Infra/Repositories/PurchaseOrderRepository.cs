@@ -10,17 +10,17 @@ using Tnf.EntityFrameworkCore.Repositories;
 
 namespace Querying.Infra.Repositories
 {
-    public class OrderRepository : EfCoreRepositoryBase<OrderContext, Order>, IOrderRepository
+    public class PurchaseOrderRepository : EfCoreRepositoryBase<PurchaseOrderContext, PurchaseOrder>, IPurchaseOrderRepository
     {
-        public OrderRepository(IDbContextProvider<OrderContext> dbContextProvider)
+        public PurchaseOrderRepository(IDbContextProvider<PurchaseOrderContext> dbContextProvider)
             : base(dbContextProvider)
         {
         }
 
-        public Task<Order> GetOrder(RequestDto request)
+        public Task<PurchaseOrder> GetPurchaseOrder(RequestDto request)
         {
             if (!request.GetFields().Any())
-                request.Fields = "Date, TotalValue";
+                request.Fields = "Id, Date, TotalValue";
 
             // Para carregar atributos específicos do objeto que será retornado
             // no método Get do repositório do TNF, defina o valor para o campo
@@ -32,7 +32,7 @@ namespace Querying.Infra.Repositories
         /// Exemplo de query 1 x N feita através do campo expandables do TNF
         /// que irá carregar o relacionamento "Customer" da entidade de Order
         /// </summary>
-        public async Task<Customer> GetCustomerFromOrder(RequestDto request)
+        public async Task<Customer> GetCustomerFromPurchaseOrder(RequestDto request)
         {
             if (!request.GetExpandablesFields().Contains("Customer"))
                 request.Expand = "Customer";
@@ -53,7 +53,7 @@ namespace Querying.Infra.Repositories
             // Para a tabela de Orders
             // Incluo a referência da tabela de Customer
             // Filtrando pelo Id da Order
-            var customer = await Context.Orders
+            var customer = await Context.PurchaseOrders
                 .Include(i => i.Customer)    // Inclui o relacionamento
                 .Where(w => w.Id == orderId)
                 .Select(s => s.Customer)
@@ -65,12 +65,12 @@ namespace Querying.Infra.Repositories
         /// <summary>
         /// Query sample N X N and grouping
         /// </summary>
-        public async Task<SumarizedOrder> GetSumarizedOrderFromProduct(SumarizedOrderRequestAllDto param)
+        public async Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromProduct(SumarizedPurchaseOrderRequestAllDto param)
         {
             // Para a tabela de ProductOrder
             // Incluo a referência da tabela product e order
             // Filtrando para data passada por parâmetro
-            var baseQuery = Context.ProductOrders
+            var baseQuery = Context.PurchaseOrderProducts
                 .Include(i => i.Product)
                 .Include(i => i.Order)
                 .Where(w => w.Order.Date == param.Date.Date)
@@ -87,7 +87,7 @@ namespace Querying.Infra.Repositories
                                           TotalValue = productGroup.Sum(s => s.Amount * s.UnitValue)
                                       });
 
-            var sumarized = new SumarizedOrder()
+            var sumarized = new SumarizedPurchaseOrder()
             {
                 Date = param.Date.Date,
                 TotalAmount = await baseQuery.SumAsync(s => s.Amount),

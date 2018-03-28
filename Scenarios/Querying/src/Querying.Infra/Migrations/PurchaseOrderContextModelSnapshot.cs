@@ -10,11 +10,10 @@ using System;
 
 namespace Querying.Infra.Migrations
 {
-    [DbContext(typeof(OrderContext))]
-    [Migration("20180316174819_Init")]
-    partial class Init
+    [DbContext(typeof(PurchaseOrderContext))]
+    partial class PurchaseOrderContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,24 +32,6 @@ namespace Querying.Infra.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Querying.Infra.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CustomerId");
-
-                    b.Property<DateTime>("Data");
-
-                    b.Property<decimal>("TotalValue");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("Querying.Infra.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -65,7 +46,25 @@ namespace Querying.Infra.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Querying.Infra.Entities.ProductOrder", b =>
+            modelBuilder.Entity("Querying.Infra.Entities.PurchaseOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CustomerId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<decimal>("TotalValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("PurchaseOrders");
+                });
+
+            modelBuilder.Entity("Querying.Infra.Entities.PurchaseOrderProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -84,20 +83,20 @@ namespace Querying.Infra.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrders");
+                    b.ToTable("PurchaseOrderProducts");
                 });
 
-            modelBuilder.Entity("Querying.Infra.Entities.Order", b =>
+            modelBuilder.Entity("Querying.Infra.Entities.PurchaseOrder", b =>
                 {
                     b.HasOne("Querying.Infra.Entities.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Querying.Infra.Entities.ProductOrder", b =>
+            modelBuilder.Entity("Querying.Infra.Entities.PurchaseOrderProduct", b =>
                 {
-                    b.HasOne("Querying.Infra.Entities.Order", "Order")
+                    b.HasOne("Querying.Infra.Entities.PurchaseOrder", "Order")
                         .WithMany("ProductOrders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);

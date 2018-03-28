@@ -2,7 +2,7 @@
 
 namespace Querying.Infra.Entities
 {
-    public class ProductOrder : Entity
+    public class PurchaseOrderProduct : Entity
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
@@ -10,6 +10,6 @@ namespace Querying.Infra.Entities
         public int Amount { get; set; }
 
         public Product Product { get; set; }
-        public Order Order { get; set; }
+        public PurchaseOrder Order { get; set; }
     }
 }

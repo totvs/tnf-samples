@@ -6,12 +6,12 @@ using Tnf.Dto;
 
 namespace Querying.Web
 {
-    [Route("api/order")]
-    public class OrderController : TnfController
+    [Route("api/purchaseorder")]
+    public class PurchaseOrderController : TnfController
     {
-        private readonly IOrderRepository orderRepository;
+        private readonly IPurchaseOrderRepository orderRepository;
 
-        public OrderController(IOrderRepository orderRepository)
+        public PurchaseOrderController(IPurchaseOrderRepository orderRepository)
         {
             this.orderRepository = orderRepository;
         }
@@ -23,7 +23,7 @@ namespace Querying.Web
 
             requestDto.WithId(id);
 
-            var response = await orderRepository.GetOrder(requestDto);
+            var response = await orderRepository.GetPurchaseOrder(requestDto);
 
             return CreateResponseOnGetAll(response);
         }
@@ -35,17 +35,17 @@ namespace Querying.Web
 
             requestDto.WithId(orderId);
 
-            var response = await orderRepository.GetCustomerFromOrder(requestDto);
+            var response = await orderRepository.GetCustomerFromPurchaseOrder(requestDto);
 
             return CreateResponseOnGet(response);
         }
 
         [HttpPost("sumarized")]
-        public async Task<IActionResult> GetSumarizedOrderFromProduct([FromBody]SumarizedOrderRequestAllDto param)
+        public async Task<IActionResult> GetSumarizedOrderFromProduct([FromBody]SumarizedPurchaseOrderRequestAllDto param)
         {
             if (param == null) return BadRequest();
 
-            var response = await orderRepository.GetSumarizedOrderFromProduct(param);
+            var response = await orderRepository.GetSumarizedPurchaseOrderFromProduct(param);
 
             return CreateResponseOnGet(response);
         }

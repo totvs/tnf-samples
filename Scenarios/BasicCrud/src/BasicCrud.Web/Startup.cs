@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Threading.Tasks;
 using Tnf.Configuration;
@@ -20,12 +21,15 @@ namespace BasicCrud.Web
             services
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
-                //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLite
-                //.AddOracleDependency()            // dependencia da camada BasicCrud.Infra.Oracle
+                                                    //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLite
+                                                    //.AddOracleDependency()            // dependencia da camada BasicCrud.Infra.Oracle
                 .AddSqlServerDependency()           // dependencia da camada BasicCrud.Infra.SqlServer
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Basic Crud API", Version = "v1" });
+            });
 
             return services.BuildServiceProvider();
         }
@@ -70,16 +74,16 @@ namespace BasicCrud.Web
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Crud API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
 
             app.Run(context =>
             {
-                context.Response.Redirect("/swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
         }

@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace Querying.Infra.Migrations
 {
-    public partial class Init : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,7 +37,7 @@ namespace Querying.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "PurchaseOrders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -47,9 +48,9 @@ namespace Querying.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
+                        name: "FK_PurchaseOrders_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -57,7 +58,7 @@ namespace Querying.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrders",
+                name: "PurchaseOrderProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -69,15 +70,15 @@ namespace Querying.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrders", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseOrderProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Orders_OrderId",
+                        name: "FK_PurchaseOrderProducts_PurchaseOrders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Orders",
+                        principalTable: "PurchaseOrders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Products_ProductId",
+                        name: "FK_PurchaseOrderProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -85,28 +86,28 @@ namespace Querying.Infra.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductOrders_OrderId",
-                table: "ProductOrders",
+                name: "IX_PurchaseOrderProducts_OrderId",
+                table: "PurchaseOrderProducts",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOrders_ProductId",
-                table: "ProductOrders",
+                name: "IX_PurchaseOrderProducts_ProductId",
+                table: "PurchaseOrderProducts",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_CustomerId",
+                table: "PurchaseOrders",
+                column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductOrders");
+                name: "PurchaseOrderProducts");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "PurchaseOrders");
 
             migrationBuilder.DropTable(
                 name: "Products");

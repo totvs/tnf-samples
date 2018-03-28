@@ -3,6 +3,7 @@ using BasicCrud.Dto.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
@@ -19,8 +20,13 @@ namespace BasicCrud.Web.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IListDto<CustomerDto, Guid>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]CustomerRequestAllDto requestDto)
         {
+            if (requestDto == null)
+                return BadRequest(nameof(requestDto));
+
             var response = await appService.GetAll(requestDto);
 
             return CreateResponseOnGetAll(response, name);

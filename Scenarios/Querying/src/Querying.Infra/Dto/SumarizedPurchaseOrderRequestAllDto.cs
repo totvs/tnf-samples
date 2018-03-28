@@ -2,7 +2,7 @@
 
 namespace Querying.Infra.Dto
 {
-    public class SumarizedOrderRequestAllDto
+    public class SumarizedPurchaseOrderRequestAllDto
     {
         public DateTime Date { get; set; }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Querying.Infra.Dto
 {
-    public class SumarizedOrder
+    public class SumarizedPurchaseOrder
     {
         public DateTime Date { get; set; }
         public int TotalAmount { get; set; }
