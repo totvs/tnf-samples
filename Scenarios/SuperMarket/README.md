@@ -1,14 +1,15 @@
 ### Super Market
 
-Este exemplo contém um cenário de criação e gerenciamento de um pedido utilizando o TNF com Redis e Rabbitmq e SqlServer.
+Este exemplo contém um cenário simples de criação de um pedido utilizando o TNF com Redis e Rabbitmq e SqlServer.
 
-Neste cenário todas vez que um pedido é criado/alterado será gerado um evento (mensageria) que será consumido por outro serviço responsável pelo cálculo
+Toda vez que um pedido é criado/alterado será gerado um evento (mensageria) que será consumido por outro serviço responsável pelo cálculo
 do imposto.
 Após este cálculo ser efetuado será gerado outro evento (mensageria) para atualização do pedido, onde serão atualizadas informações, sobre o imposto gerado e o valor total recalculado
 na operação.
 
 O exemplo foi separado em 3 contextos: Cruds, Sales e FiscalService.
-Todos utilizam SqlServer como banco de dados e a troca de mensagens entre o serviço de Sales e FiscalService se da através do Rabbitmq.
+Ambos utilizam bancos de dados separados para fins de exemplo.
+Todos utilizam SqlServer e a troca de mensagens entre o serviço de Sales e FiscalService se da através do Rabbitmq.
 
 #### Instalação
 

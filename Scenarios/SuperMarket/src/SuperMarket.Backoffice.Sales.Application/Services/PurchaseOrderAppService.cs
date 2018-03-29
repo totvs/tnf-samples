@@ -71,10 +71,10 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
 
                 var purchaseOrder = await _domainService.NewPurchaseOrder(purchaseOrderBuilder);
 
-                await uow.CompleteAsync();
-
                 if (Notification.HasNotification())
                     return PurchaseOrderDto.NullInstance;
+
+                await uow.CompleteAsync();
 
                 dto.Id = purchaseOrder.Id;
                 
@@ -162,11 +162,11 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
 
                 purchaseOrderToUpdate = await _domainService.UpdatePurchaseOrder(updatePurchaseOrderBuilder);
 
+                if (Notification.HasNotification())
+                    return dto;
+
                 await uow.CompleteAsync();
             }
-
-            if (Notification.HasNotification())
-                return dto;
 
             dto.Id = id;
 
