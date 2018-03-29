@@ -8,7 +8,10 @@ using Transactional.Domain.Interfaces;
 
 namespace Transactional.Web.Controllers
 {
-    [Route("api/order")]
+    /// <summary>
+    /// Purchase order API
+    /// </summary>
+    [Route("api/purchaseorder")]
     public class PurchaseOrderController : TnfController
     {
         private readonly IPurchaseOrderService purchaseOrderService;
@@ -18,6 +21,9 @@ namespace Transactional.Web.Controllers
             this.purchaseOrderService = purchaseOrderService;
         }
 
+        /// <summary>
+        /// Get all purchase orders
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<PurchaseOrder>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
@@ -28,6 +34,10 @@ namespace Transactional.Web.Controllers
             return CreateResponseOnGetAll(response);
         }
 
+        /// <summary>
+        /// Create a pre defined purchase order for test
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(PurchaseOrder), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
@@ -62,6 +72,9 @@ namespace Transactional.Web.Controllers
             return CreateResponseOnPost(purchaseOrder);
         }
 
+        /// <summary>
+        /// Delete purchase order
+        /// </summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]

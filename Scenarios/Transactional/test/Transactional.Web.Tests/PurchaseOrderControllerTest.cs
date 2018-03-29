@@ -63,7 +63,7 @@ namespace Transactional.Web.Tests
                 HttpStatusCode.BadRequest);
 
             // Assert
-            var duplicatedMessage = GetLocalizedString(Constants.LocalizationSourceName, GlobalizationKey.DuplicateOrder, culture);
+            var duplicatedMessage = GetLocalizedString(Constants.LocalizationSourceName, GlobalizationKey.DuplicatePurchaseOrder, culture);
 
             Assert.Contains(response.Details, w => w.DetailedMessage == GlobalizationKey.DuplicatePurchaseOrder.ToString());
             Assert.Contains(response.Details, w => w.Message == string.Format(duplicatedMessage, purchaseOrder.ClientId, purchaseOrder.Data));

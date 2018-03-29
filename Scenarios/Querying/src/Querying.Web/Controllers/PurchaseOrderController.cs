@@ -63,7 +63,7 @@ namespace Querying.Web
             if (requestDto == null)
                 return BadRequest();
 
-            requestDto.WithId(id);
+            requestDto.WithId(orderId);
 
             var response = await _purchaseOrderRepository.GetCustomerFromPurchaseOrder(requestDto);
 
@@ -73,17 +73,16 @@ namespace Querying.Web
         /// <summary>
         /// Get sumarized order
         /// </summary>
-        /// <param name="param">Request params</param>
+        /// <param name="date">Date to get sumarized order</param>
         /// <returns>Return a order sumarized from product</returns>
         [HttpPost("sumarized")]
         [ProducesResponseType(typeof(SumarizedPurchaseOrder), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> GetSumarizedOrderFromProduct([FromBody]SumarizedPurchaseOrderRequestAllDto param)
+        public async Task<IActionResult> GetSumarizedOrderFromProduct([FromQuery]DateTime date)
         {
-            if (param == null)
-                return BadRequest();
+            if (date == null) return BadRequest();
 
-            var response = await _purchaseOrderRepository.GetSumarizedPurchaseOrderFromProduct(param);
+            var response = await _purchaseOrderRepository.GetSumarizedPurchaseOrderFromDate(date);
 
             return CreateResponseOnGet(response);
         }
