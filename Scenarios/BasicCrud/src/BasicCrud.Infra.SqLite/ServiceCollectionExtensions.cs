@@ -5,6 +5,7 @@ using BasicCrud.Infra.SqLite.Context;
 using BasicCrud.Infra.SqLite.Repositories;
 using BasicCrud.Infra.SqLite.Repositories.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Infra.SqLite
@@ -18,7 +19,10 @@ namespace BasicCrud.Infra.SqLite
                 .AddTnfDbContext<BasicCrudDbContext>((config) =>
                 {
                     if (Constants.IsDevelopment())
+                    {
                         config.DbContextOptions.EnableSensitiveDataLogging();
+                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                    }
 
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlite(config.ExistingConnection);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Tnf.EntityFrameworkCore.Configuration;
 
 namespace Querying.Infra.Context
@@ -12,7 +13,10 @@ namespace Querying.Infra.Context
             where TDbContext : DbContext
         {
             if (Constants.IsDevelopment())
+            {
                 config.DbContextOptions.EnableSensitiveDataLogging();
+                config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+            }
 
             if (config.ExistingConnection != null)
                 config.DbContextOptions.UseSqlServer(config.ExistingConnection);

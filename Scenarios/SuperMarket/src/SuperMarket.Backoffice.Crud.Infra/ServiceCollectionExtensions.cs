@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
@@ -8,6 +9,7 @@ using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using System;
 using Tnf.Caching.Redis;
 using Tnf.Repositories;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace SuperMarket.Backoffice.Crud.Infra
 {
@@ -21,7 +23,10 @@ namespace SuperMarket.Backoffice.Crud.Infra
                 .AddTnfDbContext<CrudContext>((config) =>
                 {
                     if (Constants.IsDevelopment())
+                    {
                         config.DbContextOptions.EnableSensitiveDataLogging();
+                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                    }
 
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);

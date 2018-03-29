@@ -5,6 +5,7 @@ using BasicCrud.Infra.SqlServer.Context;
 using BasicCrud.Infra.SqlServer.Repositories;
 using BasicCrud.Infra.SqlServer.Repositories.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Infra.SqlServer
@@ -18,7 +19,10 @@ namespace BasicCrud.Infra.SqlServer
                 .AddTnfDbContext<BasicCrudDbContext>((config) =>
                 {
                     if (Constants.IsDevelopment())
+                    {
                         config.DbContextOptions.EnableSensitiveDataLogging();
+                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                    }
 
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.FiscalService.Domain;
 using SuperMarket.FiscalService.Infra.AutoMapperProfiles;
@@ -15,7 +16,10 @@ namespace SuperMarket.FiscalService.Infra
                 .AddTnfDbContext<FiscalContext>((config) =>
                 {
                     if (Constants.IsDevelopment())
+                    {
                         config.DbContextOptions.EnableSensitiveDataLogging();
+                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                    }
 
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
