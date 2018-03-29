@@ -27,7 +27,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
             var validateNumber = false;
             var validateDate = false;
 
-            validateNumber = (request.Number == Guid.Empty || request.Number == purchaseOrder.Number);
+            validateNumber = (request.Number == null || request.Number == Guid.Empty || request.Number == purchaseOrder.Number);
 
             if (request.StartDate == DateTime.MinValue || request.StartDate == null)
                 return validateNumber;

@@ -148,8 +148,9 @@ namespace Querying.Web.Tests
         public async Task Should_Get_SumarizedOrder_From_Date()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
-                $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=3%2F1%2F2018"
+            var sumarizedOrder = await PostResponseAsObjectAsync<DateTime, SumarizedPurchaseOrder>(
+                $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=3%2F1%2F2018",
+                DateTime.Now
             );
 
             // Assert
@@ -165,8 +166,10 @@ namespace Querying.Web.Tests
         public async Task Should_Return_Null_On_Get_SumarizedOrder_From_Date_Not_Found()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
-                $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=1%2F5%2F2016"
+            var sumarizedOrder = await PostResponseAsObjectAsync<DateTime, SumarizedPurchaseOrder>(
+                $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=1%2F5%2F2016",
+                DateTime.Now,
+                HttpStatusCode.OK
             );
 
             // Assert
@@ -181,16 +184,11 @@ namespace Querying.Web.Tests
         public async Task Should_Return_Bad_Request_On_Get_SumarizedOrder_From_Date_Invalid()
         {
             // Act
-            var sumarizedOrder = await GetResponseAsObjectAsync<SumarizedPurchaseOrder>(
-                $"{WebConstants.PurchaseOrderRouteName}/sumarized"
+            var sumarizedOrder = await PostResponseAsObjectAsync<DateTime, SumarizedPurchaseOrder>(
+                $"{WebConstants.PurchaseOrderRouteName}/sumarized",
+                DateTime.Now,
+                HttpStatusCode.BadRequest
             );
-
-            // Assert
-            Assert.NotNull(sumarizedOrder);
-            Assert.Equal(new DateTime(1, 1, 1), sumarizedOrder.Date);
-            Assert.Equal(0, sumarizedOrder.TotalQuantity);
-            Assert.Equal(0, sumarizedOrder.TotalValue);
-            Assert.Empty(sumarizedOrder.Products);
         }
     }
 }
