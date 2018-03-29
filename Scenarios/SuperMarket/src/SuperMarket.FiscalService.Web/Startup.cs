@@ -74,11 +74,7 @@ namespace SuperMarket.FiscalService.Web
 
             // Add CORS middleware before MVC
             app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

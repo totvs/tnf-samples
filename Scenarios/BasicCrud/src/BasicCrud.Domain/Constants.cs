@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Querying.Infra
+namespace BasicCrud.Domain
 {
-    public static class Constants
+    public class Constants
     {
-        public static string ConnectionStringName = "SqlServerConn";
+        public const string LocalizationSourceName = "BasicCrud";
 
         private const string ENVIRONMENT_VARIABLE = "ASPNETCORE_ENVIRONMENT";
         private const string DEV_ENVIRONMENT_VARIABLE = "DEVELOPMENT";

@@ -53,7 +53,7 @@ namespace BasicCrud.Application.Tests
 
             provider.ConfigureTnf().UseDomainLocalization();
 
-            _localizationSource = provider.GetService<ILocalizationManager>().GetSource(DomainConstants.LocalizationSourceName);
+            _localizationSource = provider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
         }
 
         [Fact]

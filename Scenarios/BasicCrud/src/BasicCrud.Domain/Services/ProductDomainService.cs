@@ -28,7 +28,7 @@ namespace BasicCrud.Domain.Services
                     .DefaultBuilder
                     .AsError()
                     .FromErrorEnum(Error.DomainServiceOnInsertAndGetIdNullBuilderError)
-                    .WithMessage(DomainConstants.LocalizationSourceName, Error.DomainServiceOnInsertAndGetIdNullBuilderError)
+                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnInsertAndGetIdNullBuilderError)
                     .Raise();
 
                 return default(Product);
@@ -52,7 +52,7 @@ namespace BasicCrud.Domain.Services
                     .DefaultBuilder
                     .AsError()
                     .FromErrorEnum(Error.DomainServiceOnUpdateNullBuilderError)
-                    .WithMessage(DomainConstants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError)
+                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError)
                     .Raise();
 
                 return default(Product);
