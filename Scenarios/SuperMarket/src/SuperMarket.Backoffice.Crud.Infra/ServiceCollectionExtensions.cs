@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
 using SuperMarket.Backoffice.Crud.Infra.Repositories;
@@ -19,6 +20,9 @@ namespace SuperMarket.Backoffice.Crud.Infra
                 .AddTnfEntityFrameworkCore()
                 .AddTnfDbContext<CrudContext>((config) =>
                 {
+                    if (Constants.IsDevelopment())
+                        config.DbContextOptions.EnableSensitiveDataLogging();
+
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
                     else

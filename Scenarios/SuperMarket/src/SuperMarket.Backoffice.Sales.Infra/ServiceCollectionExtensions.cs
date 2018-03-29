@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Repositories;
@@ -15,6 +16,9 @@ namespace SuperMarket.Backoffice.Sales.Infra
                 .AddTnfEntityFrameworkCore()
                 .AddTnfDbContext<SalesContext>((config) =>
                 {
+                    if (Constants.IsDevelopment())
+                        config.DbContextOptions.EnableSensitiveDataLogging();
+
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
                     else
