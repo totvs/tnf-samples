@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Messaging.Web1.Controllers
 {
+    /// <summary>
+    /// Notifier API
+    /// </summary>
     [Route("api/notifier")]
     public class NotifierController : TnfController
     {
@@ -14,6 +17,10 @@ namespace Messaging.Web1.Controllers
             _customerService = customerService;
         }
 
+        /// <summary>
+        /// Publish message
+        /// </summary>
+        /// <param name="content">Message</param>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]MessageRequest content)
         {

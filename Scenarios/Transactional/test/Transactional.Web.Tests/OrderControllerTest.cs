@@ -1,39 +1,26 @@
-﻿using Microsoft.AspNetCore.Localization;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.EntityFrameworkCore;
-using Tnf.Localization;
 using Transactional.Domain.Entities;
 using Transactional.Infra.Context;
 using Xunit;
-using Microsoft.Extensions.DependencyInjection;
 using Transactional.Domain;
 
 namespace Transactional.Web.Tests
 {
     public class OrderControllerTest : TnfAspNetCoreIntegratedTestBase<StartupTest>
     {
-        private ILocalizationManager localizationManager;
-        private CultureInfo requestCulture;
-
-        private void SetRequestCulture(CultureInfo cultureInfo)
-        {
-            Client.DefaultRequestHeaders.Add(CookieRequestCultureProvider.DefaultCookieName, $"c={cultureInfo.Name}|uic={cultureInfo.Name}");
-
-            localizationManager = ServiceProvider.GetService<ILocalizationManager>();
-
-            requestCulture = cultureInfo;
-        }
-
         [Fact]
         public async Task ShouldNotAllowNewOrderDuplicated()
         {
             // Arrange
-            SetRequestCulture(CultureInfo.GetCultureInfo("pt-BR"));
+            var culture = CultureInfo.GetCultureInfo("pt-BR");
+
+            SetRequestCulture(culture);
 
             Order order = null;
 
@@ -76,9 +63,7 @@ namespace Transactional.Web.Tests
                 HttpStatusCode.BadRequest);
 
             // Assert
-            var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);
-
-            var duplicatedMessage = localizationSource.GetString(GlobalizationKey.DuplicateOrder, requestCulture);
+            var duplicatedMessage = GetLocalizedString(Constants.LocalizationSourceName, GlobalizationKey.DuplicateOrder, culture);
 
             Assert.Contains(response.Details, w => w.DetailedMessage == GlobalizationKey.DuplicateOrder.ToString());
             Assert.Contains(response.Details, w => w.Message == string.Format(duplicatedMessage, order.ClientId, order.Data));

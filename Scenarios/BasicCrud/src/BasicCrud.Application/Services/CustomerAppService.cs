@@ -12,12 +12,12 @@ namespace BasicCrud.Application.Services
 {
     public class CustomerAppService : ApplicationService, ICustomerAppService
     {
-        private readonly IDomainService<Customer, Guid> service;
+        private readonly IDomainService<Customer, Guid> _service;
 
         public CustomerAppService(IDomainService<Customer, Guid> service, INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
-            this.service = service;
+            _service = service;
         }
 
         public async Task<CustomerDto> Create(CustomerDto dto)
@@ -28,7 +28,7 @@ namespace BasicCrud.Application.Services
             var builder = Customer.Create(Notification)
                 .WithName(dto.Name);
 
-            dto.Id = await service.InsertAndGetIdAsync(builder);
+            dto.Id = await _service.InsertAndGetIdAsync(builder);
 
             return dto;
         }
@@ -38,7 +38,7 @@ namespace BasicCrud.Application.Services
             if (!ValidateId(id))
                 return;
 
-            await service.DeleteAsync(id);
+            await _service.DeleteAsync(id);
         }
 
         public async Task<CustomerDto> Get(IRequestDto<Guid> id)
@@ -46,13 +46,13 @@ namespace BasicCrud.Application.Services
             if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
                 return CustomerDto.NullInstance;
 
-            var entity = await service.GetAsync(id);
+            var entity = await _service.GetAsync(id);
 
             return entity.MapTo<CustomerDto>();
         }
 
         public async Task<IListDto<CustomerDto, Guid>> GetAll(CustomerRequestAllDto request)
-            => await service.GetAllAsync<CustomerDto>(request, c => request.Name.IsNullOrEmpty() || c.Name.Contains(request.Name));
+            => await _service.GetAllAsync<CustomerDto>(request, c => request.Name.IsNullOrEmpty() || c.Name.Contains(request.Name));
 
         public async Task<CustomerDto> Update(Guid id, CustomerDto dto)
         {
@@ -63,7 +63,7 @@ namespace BasicCrud.Application.Services
                 .WithId(id)
                 .WithName(dto.Name);
 
-            await service.UpdateAsync(builder);
+            await _service.UpdateAsync(builder);
 
             dto.Id = id;
             return dto;

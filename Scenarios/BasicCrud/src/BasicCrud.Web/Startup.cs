@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Tnf.Configuration;
 
@@ -29,7 +30,10 @@ namespace BasicCrud.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Basic Crud API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "BasicCrud.Web.xml"));
             });
+
+            services.AddResponseCompression();
 
             return services.BuildServiceProvider();
         }
@@ -80,6 +84,8 @@ namespace BasicCrud.Web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Crud API v1");
             });
+
+            app.UseResponseCompression();
 
             app.Run(context =>
             {

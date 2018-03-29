@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Tnf.Bus.Queue.RabbitMQ;
 
@@ -20,7 +22,13 @@ namespace Messaging.Web2
 
             services.AddCorsAll("AllowAll");
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Message Store API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Messaging.Web2.xml"));
+            });
+
+            services.AddResponseCompression();
 
             return services.BuildServiceProvider();
         }
@@ -56,15 +64,17 @@ namespace Messaging.Web2
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Message Store API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.UseResponseCompression();
 
             app.Run(context =>
             {
-                context.Response.Redirect("swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
         }

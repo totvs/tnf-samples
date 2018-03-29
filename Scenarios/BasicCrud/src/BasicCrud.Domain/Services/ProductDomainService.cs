@@ -10,20 +10,17 @@ namespace BasicCrud.Domain.Services
 {
     public class ProductDomainService : DomainService, IProductDomainService
     {
-        private readonly IProductRepository repository;
+        private readonly IProductRepository _repository;
 
         public ProductDomainService(IProductRepository repository, INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
-        public async Task DeleteProductAsync(Guid id)
-        {
-            await repository.DeleteProductAsync(id);
-        }
+        public Task DeleteProductAsync(Guid id) => _repository.DeleteProductAsync(id);
 
-        public async Task<Product> InsertProductAsync(Product.ProductBuilder builder)
+        public async Task<Product> InsertProductAsync(Product.Builder builder)
         {
             if(builder == null)
             {
@@ -42,12 +39,12 @@ namespace BasicCrud.Domain.Services
             if (Notification.HasNotification())
                 return default(Product);
 
-            product.Id = await repository.InsertProductAndGetIdAsync(product);
+            product.Id = await _repository.InsertProductAndGetIdAsync(product);
 
             return product;
         }
 
-        public async Task<Product> UpdateProductAsync(Product.ProductBuilder builder)
+        public async Task<Product> UpdateProductAsync(Product.Builder builder)
         {
             if (builder == null)
             {
@@ -66,7 +63,7 @@ namespace BasicCrud.Domain.Services
             if (Notification.HasNotification())
                 return default(Product);
 
-            return await repository.UpdateProductAsync(product);
+            return await _repository.UpdateProductAsync(product);
         }
     }
 }

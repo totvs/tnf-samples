@@ -7,6 +7,6 @@ namespace Messaging.Infra2
     public interface IMessageStoreService : ITransientDependency
     {
         Task<List<string>> GetAllMessages();
-        Task Refresh();
+        Task Flush();
     }
 }

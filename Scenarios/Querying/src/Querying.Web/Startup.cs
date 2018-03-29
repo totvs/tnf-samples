@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Querying.Infra;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Tnf.Configuration;
 
@@ -22,7 +24,13 @@ namespace Querying.Web
 
             services.AddCorsAll("AllowAll");
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Querying API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Querying.Web.xml"));
+            });
+
+            services.AddResponseCompression();
 
             return services.BuildServiceProvider();
         }
@@ -59,15 +67,17 @@ namespace Querying.Web
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Querying API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.UseResponseCompression();
 
             app.Run(context =>
             {
-                context.Response.Redirect("swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 

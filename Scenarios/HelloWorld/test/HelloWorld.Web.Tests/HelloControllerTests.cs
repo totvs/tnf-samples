@@ -1,33 +1,20 @@
-﻿using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.DependencyInjection;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.TestBase;
-using Tnf.Localization;
 using Xunit;
 
 namespace HelloWorld.Web.Tests
 {
     public class HelloControllerTests : TnfAspNetCoreIntegratedTestBase<StartupTest>
     {
-        private ILocalizationManager localizationManager;
-        private CultureInfo requestCulture;
-
-        private void SetRequestCulture(CultureInfo cultureInfo)
-        {
-            Client.DefaultRequestHeaders.Add(CookieRequestCultureProvider.DefaultCookieName, $"c={cultureInfo.Name}|uic={cultureInfo.Name}");
-
-            localizationManager = ServiceProvider.GetService<ILocalizationManager>();
-
-            requestCulture = cultureInfo;
-        }
-
         [Fact]
         public async Task ShouldHelloInPortugueseCulture()
         {
+            var culture = CultureInfo.GetCultureInfo("pt-BR");
+
             // Arrange
-            SetRequestCulture(CultureInfo.GetCultureInfo("pt-BR"));
+            SetRequestCulture(culture);
 
             // Act
             var response = await GetResponseAsObjectAsync<string>(
@@ -35,9 +22,7 @@ namespace HelloWorld.Web.Tests
                 HttpStatusCode.OK);
 
             // Assert
-            var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);
-
-            var localizedHelloMessage = localizationSource.GetString(GlobalizationKey.Hello, requestCulture);
+            var localizedHelloMessage = GetLocalizedString(Constants.LocalizationSourceName, GlobalizationKey.Hello, culture);
 
             Assert.Equal(localizedHelloMessage, response);
         }
@@ -45,8 +30,10 @@ namespace HelloWorld.Web.Tests
         [Fact]
         public async Task ShouldHelloInEnglishCulture()
         {
+            var culture = CultureInfo.GetCultureInfo("en");
+
             // Arrange
-            SetRequestCulture(CultureInfo.GetCultureInfo("en"));
+            SetRequestCulture(culture);
 
             // Act
             var response = await GetResponseAsObjectAsync<string>(
@@ -54,9 +41,7 @@ namespace HelloWorld.Web.Tests
                 HttpStatusCode.OK);
 
             // Assert
-            var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);
-
-            var localizedHelloMessage = localizationSource.GetString(GlobalizationKey.Hello, requestCulture);
+            var localizedHelloMessage = GetLocalizedString(Constants.LocalizationSourceName, GlobalizationKey.Hello, culture);
 
             Assert.Equal(localizedHelloMessage, response);
         }

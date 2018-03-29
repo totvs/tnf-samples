@@ -40,7 +40,7 @@ namespace Messaging.Infra2
             message.DoAck();
         }
 
-        public Task Refresh()
+        public Task Flush()
         {
             return _cache.DeleteKeyAsync(MESSAGE_STORE_CACHE_KEY);
         }

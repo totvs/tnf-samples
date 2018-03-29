@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Messaging.Web2.Controllers
 {
+    /// <summary>
+    /// Message Store API
+    /// </summary>
     [Route("api/store")]
     public class MessageStoreController : TnfController
     {
@@ -14,6 +17,9 @@ namespace Messaging.Web2.Controllers
             _store = store;
         }
 
+        /// <summary>
+        /// Get all messages stored
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -26,10 +32,13 @@ namespace Messaging.Web2.Controllers
             });
         }
 
-        [HttpGet("refresh")]
-        public async Task<IActionResult> Refresh()
+        /// <summary>
+        /// Flush messages
+        /// </summary>
+        [HttpGet("flush")]
+        public async Task<IActionResult> Flush()
         {
-            await _store.Refresh();
+            await _store.Flush();
 
             return Ok();
         }

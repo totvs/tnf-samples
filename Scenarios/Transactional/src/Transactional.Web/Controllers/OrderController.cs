@@ -1,30 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 using Transactional.Domain.Entities;
 using Transactional.Domain.Interfaces;
 
 namespace Transactional.Web.Controllers
 {
+    /// <summary>
+    /// Order API
+    /// </summary>
     [Route("api/order")]
     public class OrderController : TnfController
     {
-        private readonly IOrderService orderService;
+        private readonly IOrderService _orderService;
 
         public OrderController(IOrderService orderService)
         {
-            this.orderService = orderService;
+            _orderService = orderService;
         }
 
+        /// <summary>
+        /// Get all orders
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(typeof(List<Order>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public IActionResult GetAll()
         {
-            var response = orderService.GetAllOrders();
+            var response = _orderService.GetAllOrders();
 
             return CreateResponseOnGetAll(response);
         }
 
+        /// <summary>
+        /// Post pre defined order for test
+        /// </summary>
         [HttpPost]
+        [ProducesResponseType(typeof(Order), 200)]
         public async Task<IActionResult> Post()
         {
             var order = new Order()
@@ -51,17 +66,23 @@ namespace Transactional.Web.Controllers
                 UnitValue = 10.0m
             });
 
-            order = await orderService.CreateNewOrder(order);
+            order = await _orderService.CreateNewOrder(order);
 
             return CreateResponseOnPost(order);
         }
 
+        /// <summary>
+        /// Delete order by id
+        /// </summary>
+        /// <param name="id">Order id</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
 
-            await orderService.DeleteAsync(id);
+            await _orderService.DeleteAsync(id);
 
             return CreateResponseOnDelete();
         }

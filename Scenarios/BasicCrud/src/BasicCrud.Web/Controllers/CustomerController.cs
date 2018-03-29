@@ -8,62 +8,96 @@ using Tnf.Dto;
 
 namespace BasicCrud.Web.Controllers
 {
+    /// <summary>
+    /// Customer API
+    /// </summary>
     [Route(WebConstants.CustomerRouteName)]
     public class CustomerController : TnfController
     {
-        private readonly ICustomerAppService appService;
-        private const string name = "Customer";
+        private readonly ICustomerAppService _appService;
+        private const string _name = "Customer";
 
         public CustomerController(ICustomerAppService appService)
         {
-            this.appService = appService;
+            _appService = appService;
         }
 
+        /// <summary>
+        /// Get all customers
+        /// </summary>
+        /// <param name="requestDto">Request params</param>
+        /// <returns>List of customers</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IListDto<CustomerDto, Guid>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]CustomerRequestAllDto requestDto)
         {
-            if (requestDto == null)
-                return BadRequest(nameof(requestDto));
+            var response = await _appService.GetAll(requestDto);
 
-            var response = await appService.GetAll(requestDto);
-
-            return CreateResponseOnGetAll(response, name);
+            return CreateResponseOnGetAll(response, _name);
         }
 
+        /// <summary>
+        /// Get customer
+        /// </summary>
+        /// <param name="id">Customer id</param>
+        /// <param name="requestDto">Request params</param>
+        /// <returns>Customer requested</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
         {
             requestDto.WithId(id);
 
-            var response = await appService.Get(requestDto);
+            var response = await _appService.Get(requestDto);
 
-            return CreateResponseOnGet<CustomerDto, Guid>(response, name);
+            return CreateResponseOnGet<CustomerDto, Guid>(response, _name);
         }
 
+        /// <summary>
+        /// Create a new customer
+        /// </summary>
+        /// <param name="customerDto">Customer to create</param>
+        /// <returns>Customer created</returns>
         [HttpPost]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Post([FromBody]CustomerDto customerDto)
         {
-            customerDto = await appService.Create(customerDto);
+            customerDto = await _appService.Create(customerDto);
 
-            return CreateResponseOnPost<CustomerDto, Guid>(customerDto, name);
+            return CreateResponseOnPost<CustomerDto, Guid>(customerDto, _name);
         }
 
+        /// <summary>
+        /// Update a customer
+        /// </summary>
+        /// <param name="id">Customer id</param>
+        /// <param name="customerDto">Customer content to update</param>
+        /// <returns>Updated customer</returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Put(Guid id, [FromBody]CustomerDto customerDto)
         {
-            customerDto = await appService.Update(id, customerDto);
+            customerDto = await _appService.Update(id, customerDto);
 
-            return CreateResponseOnPut<CustomerDto, Guid>(customerDto, name);
+            return CreateResponseOnPut<CustomerDto, Guid>(customerDto, _name);
         }
 
+        /// <summary>
+        /// Delete a customer
+        /// </summary>
+        /// <param name="id">Customer id</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await appService.Delete(id);
+            await _appService.Delete(id);
 
-            return CreateResponseOnDelete<CustomerDto, Guid>(name);
+            return CreateResponseOnDelete<CustomerDto, Guid>(_name);
         }
     }
 }

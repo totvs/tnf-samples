@@ -13,14 +13,14 @@ namespace BasicCrud.Application.Services
 {
     public class ProductAppService : ApplicationService, IProductAppService
     {
-        private readonly IProductDomainService domainService;
-        private readonly IProductReadRepository readRepository;
+        private readonly IProductDomainService _domainService;
+        private readonly IProductReadRepository _readRepository;
 
         public ProductAppService(IProductDomainService domainService, IProductReadRepository readRepository, INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
-            this.domainService = domainService;
-            this.readRepository = readRepository;
+            _domainService = domainService;
+            _readRepository = readRepository;
         }
 
         public async Task<ProductDto> CreateProductAsync(ProductDto dto)
@@ -32,7 +32,7 @@ namespace BasicCrud.Application.Services
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            var entity = await domainService.InsertProductAsync(builder);
+            var entity = await _domainService.InsertProductAsync(builder);
 
             if (Notification.HasNotification())
                 return ProductDto.NullInstance;
@@ -52,7 +52,7 @@ namespace BasicCrud.Application.Services
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            await domainService.UpdateProductAsync(builder);
+            await _domainService.UpdateProductAsync(builder);
 
             dto.Id = id;
             return dto;
@@ -63,7 +63,7 @@ namespace BasicCrud.Application.Services
             if (!ValidateId(id))
                 return;
 
-            await domainService.DeleteProductAsync(id);
+            await _domainService.DeleteProductAsync(id);
         }
 
         public async Task<ProductDto> GetProductAsync(IRequestDto<Guid> id)
@@ -71,12 +71,12 @@ namespace BasicCrud.Application.Services
             if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
                 return ProductDto.NullInstance;
 
-            var entity = await readRepository.GetProductAsync(id);
+            var entity = await _readRepository.GetProductAsync(id);
 
             return entity.MapTo<ProductDto>();
         }
 
         public async Task<IListDto<ProductDto, Guid>> GetAllProductAsync(ProductRequestAllDto request)
-            => await readRepository.GetAllProductsAsync(request);
+            => await _readRepository.GetAllProductsAsync(request);
     }
 }

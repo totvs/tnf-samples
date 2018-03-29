@@ -33,7 +33,7 @@ namespace BasicCrud.Application.Tests.Mocks
             list.Add(Product.Create(notificationHandler).WithId(Guid.NewGuid()).WithDescription("Product C").WithValue(15).Build());
         }
 
-        public Task<Product> InsertProductAsync(Product.ProductBuilder builder)
+        public Task<Product> InsertProductAsync(Product.Builder builder)
         {
             var entity = builder.Build();
 
@@ -47,7 +47,7 @@ namespace BasicCrud.Application.Tests.Mocks
             return entity.AsTask();
         }
 
-        public Task<Product> UpdateProductAsync(Product.ProductBuilder builder)
+        public Task<Product> UpdateProductAsync(Product.Builder builder)
         {
             var entity = builder.Build();
 
