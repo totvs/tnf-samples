@@ -7,7 +7,9 @@ using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
 using SuperMarket.Backoffice.Sales.Infra.Queue;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Tnf.Configuration;
 
@@ -21,16 +23,15 @@ namespace SuperMarket.Backoffice.Sales.Web
                 .AddSalesApplicationDependency()
                 .AddTnfAspNetCore();
 
-            services.AddCors(options =>
+            services.AddCorsAll("AllowAll");
+
+            services.AddSwaggerGen(c =>
             {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+                c.SwaggerDoc("v1", new Info { Title = "Sales API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Sales.Web.xml"));
             });
 
-            services.AddSwaggerGen();
+            services.AddResponseCompression();
 
             return services.BuildServiceProvider();
         }
@@ -77,15 +78,17 @@ namespace SuperMarket.Backoffice.Sales.Web
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.UseResponseCompression();
 
             app.Run(context =>
             {
-                context.Response.Redirect("/swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 

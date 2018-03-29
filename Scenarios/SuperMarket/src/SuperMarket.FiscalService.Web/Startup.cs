@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using SuperMarket.FiscalService.Domain;
 using SuperMarket.FiscalService.Infra;
 using SuperMarket.FiscalService.Infra.Queue;
+using Swashbuckle.AspNetCore.Swagger;
 using Tnf.Configuration;
 
 namespace SuperMarket.FiscalService.Web
@@ -23,16 +25,15 @@ namespace SuperMarket.FiscalService.Web
                 .AddFiscalInfraQueueDependency()
                 .AddTnfAspNetCore();
 
-            services.AddCors(options =>
+            services.AddCorsAll("AllowAll");
+
+            services.AddSwaggerGen(c =>
             {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+                c.SwaggerDoc("v1", new Info { Title = "Fiscal Service API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.FiscalService.Web.xml"));
             });
 
-            services.AddSwaggerGen();
+            services.AddResponseCompression();
 
             return services.BuildServiceProvider();
         }
@@ -79,15 +80,17 @@ namespace SuperMarket.FiscalService.Web
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSwagger((httpRequest, swaggerDoc) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                swaggerDoc.Host = httpRequest.Host.Value;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fiscal Service API v1");
             });
-            app.UseSwaggerUi(); //URL: /swagger/ui
+
+            app.UseResponseCompression();
 
             app.Run(context =>
             {
-                context.Response.Redirect("/swagger/ui");
+                context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 

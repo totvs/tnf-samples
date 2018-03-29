@@ -14,9 +14,13 @@ using Tnf.Dto;
 using Tnf.Notifications;
 using Tnf.Repositories.Uow;
 using SuperMarket.FiscalService.Infra.Queue.Messages;
+using Tnf.AspNetCore.Mvc.Response;
 
 namespace SuperMarket.FiscalService.Web.Controllers
 {
+    /// <summary>
+    /// Fiscal Service API
+    /// </summary>
     [Route("api/fiscalservice")]
     public class FiscalServiceController : TnfController,
         ISubscribe<PurchaseOrderChangedMessage>,
@@ -39,9 +43,19 @@ namespace SuperMarket.FiscalService.Web.Controllers
             _domainService = domainService;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Get all moviments
+        /// </summary>
+        /// <param name="requestAll">Request parameters for search moviments</param>
+        /// <returns>List of moviments</returns>
+        [HttpGet("taxmoviments")]
+        [ProducesResponseType(typeof(IListDto<TaxMovimentDto, Guid>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]RequestAllDto requestAll)
         {
+            if (requestAll == null)
+                return BadRequest();
+
             var options = new UnitOfWorkOptions()
             {
                 IsTransactional = false,
