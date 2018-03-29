@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tnf;
+using Tnf.AspNetCore.Mvc.Response;
 using Tnf.Localization;
 
 namespace HelloWorld.Web.Controllers
@@ -23,6 +24,7 @@ namespace HelloWorld.Web.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public IActionResult Get()
         {
             var localizationSource = localizationManager.GetSource(Constants.LocalizationSourceName);

@@ -5,6 +5,6 @@ namespace Dapper.Infra.Dto
 {
     public class SumarizedPurchaseOrderRequestAllDto : RequestAllDto
     {
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
