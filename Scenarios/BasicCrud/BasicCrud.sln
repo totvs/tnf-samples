@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Web.Tests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Application.Tests", "test\BasicCrud.Application.Tests\BasicCrud.Application.Tests.csproj", "{7E2D15D2-0B6D-461F-B4D6-BE40F1DBD77D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCrud.Domain.Tests", "test\BasicCrud.Domain.Tests\BasicCrud.Domain.Tests.csproj", "{B7DD0015-7424-4970-8C7E-9F3385C4C135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Domain.Tests", "test\BasicCrud.Domain.Tests\BasicCrud.Domain.Tests.csproj", "{B7DD0015-7424-4970-8C7E-9F3385C4C135}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

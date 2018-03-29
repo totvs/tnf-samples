@@ -45,6 +45,7 @@ namespace BasicCrud.Web.Controllers
         /// <returns>Product requested</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ProductDto), 200)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
         {

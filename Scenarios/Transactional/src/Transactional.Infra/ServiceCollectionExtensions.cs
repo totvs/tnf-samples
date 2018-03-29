@@ -12,7 +12,7 @@ namespace Transactional.Infra
         {
             services
                 .AddTnfEntityFrameworkCore()
-                .AddTnfDbContext<OrderContext>((config) =>
+                .AddTnfDbContext<PurchaseOrderContext>((config) =>
                 {
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
@@ -20,7 +20,7 @@ namespace Transactional.Infra
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
 
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
             return services;
         }

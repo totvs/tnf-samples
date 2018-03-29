@@ -12,5 +12,14 @@ namespace Querying.Infra.Entities
 
         public Customer Customer { get; set; }
         public ICollection<PurchaseOrderProduct> ProductOrders { get; set; } = new List<PurchaseOrderProduct>();
+
+        public PurchaseOrder() { }
+
+        public PurchaseOrder(DateTime date, int customerId, decimal totalValue)
+        {
+            Date = date;
+            CustomerId = customerId;
+            TotalValue = totalValue;
+        }
     }
 }

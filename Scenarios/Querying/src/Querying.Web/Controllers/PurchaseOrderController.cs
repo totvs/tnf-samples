@@ -2,6 +2,7 @@
 using Querying.Infra.Dto;
 using Querying.Infra.Entities;
 using Querying.Infra.Repositories;
+using System;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.Mvc.Response;
 using Tnf.Dto;
@@ -62,7 +63,7 @@ namespace Querying.Web
             if (requestDto == null)
                 return BadRequest();
 
-            requestDto.WithId(orderId);
+            requestDto.WithId(id);
 
             var response = await _purchaseOrderRepository.GetCustomerFromPurchaseOrder(requestDto);
 

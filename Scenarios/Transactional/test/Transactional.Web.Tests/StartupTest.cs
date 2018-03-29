@@ -16,7 +16,7 @@ namespace Transactional.Web.Tests
             services
                 .AddDomainDependency()                                  // dependencia da camada Transactional.Domain
                 .AddTnfEfCoreSqliteInMemory()                           // Configura o setup de teste para EntityFrameworkCore em memória
-                .RegisterDbContextToSqliteInMemory<OrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+                .RegisterDbContextToSqliteInMemory<PurchaseOrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
             services.AddTnfAspNetCoreSetupTest();
 

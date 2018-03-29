@@ -2,6 +2,6 @@
 {
     public enum GlobalizationKey
     {
-        DuplicateOrder
+        DuplicatePurchaseOrder
     }
 }
