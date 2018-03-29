@@ -10,9 +10,9 @@ namespace BasicCrud.Domain
         {
             // Incluindo o source de localização
             configuration.Localization.Sources.Add(
-                new DictionaryBasedLocalizationSource(DomainConstants.LocalizationSourceName,
+                new DictionaryBasedLocalizationSource(Constants.LocalizationSourceName,
                 new JsonEmbeddedFileLocalizationDictionaryProvider(
-                    typeof(DomainConstants).Assembly, 
+                    typeof(Constants).Assembly, 
                     "BasicCrud.Domain.Localization.SourceFiles")));
 
             // Incluindo suporte as seguintes linguagens

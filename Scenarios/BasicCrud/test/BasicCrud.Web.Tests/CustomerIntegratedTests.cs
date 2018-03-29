@@ -36,7 +36,7 @@ namespace BasicCrud.Web.Tests
         {
             var notificationHandler = new NotificationHandler(ServiceProvider);
             
-            _localizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(DomainConstants.LocalizationSourceName);
+            _localizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
             _tnfLocalizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(TnfConsts.LocalizationSourceName);
 
             _culture = CultureInfo.GetCultureInfo("pt-BR");

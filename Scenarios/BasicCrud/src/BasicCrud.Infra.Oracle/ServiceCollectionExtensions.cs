@@ -5,6 +5,7 @@ using BasicCrud.Infra.Oracle.Repositories;
 using BasicCrud.Infra.Oracle.Repositories.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using BasicCrud.Domain;
 
 namespace BasicCrud.Infra.Oracle
 {
@@ -16,6 +17,9 @@ namespace BasicCrud.Infra.Oracle
                 .AddInfraDependency()
                 .AddTnfDbContext<BasicCrudDbContext>((config) =>
                 {
+                    if (Constants.IsDevelopment())
+                        config.DbContextOptions.EnableSensitiveDataLogging();
+
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseOracle(config.ExistingConnection);
                     else

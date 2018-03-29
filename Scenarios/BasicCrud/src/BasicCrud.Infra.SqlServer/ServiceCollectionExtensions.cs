@@ -1,4 +1,5 @@
-﻿using BasicCrud.Domain.Interfaces.Repositories;
+﻿using BasicCrud.Domain;
+using BasicCrud.Domain.Interfaces.Repositories;
 using BasicCrud.Infra.ReadInterfaces;
 using BasicCrud.Infra.SqlServer.Context;
 using BasicCrud.Infra.SqlServer.Repositories;
@@ -16,6 +17,9 @@ namespace BasicCrud.Infra.SqlServer
                 .AddInfraDependency()
                 .AddTnfDbContext<BasicCrudDbContext>((config) =>
                 {
+                    if (Constants.IsDevelopment())
+                        config.DbContextOptions.EnableSensitiveDataLogging();
+
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
                     else

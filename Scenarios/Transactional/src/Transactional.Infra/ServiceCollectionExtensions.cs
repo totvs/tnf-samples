@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Transactional.Domain;
 using Transactional.Domain.Interfaces;
 using Transactional.Infra.Context;
 using Transactional.Infra.Repositories;
@@ -14,6 +15,9 @@ namespace Transactional.Infra
                 .AddTnfEntityFrameworkCore()
                 .AddTnfDbContext<PurchaseOrderContext>((config) =>
                 {
+                    if (Constants.IsDevelopment())
+                        config.DbContextOptions.EnableSensitiveDataLogging();
+
                     if (config.ExistingConnection != null)
                         config.DbContextOptions.UseSqlServer(config.ExistingConnection);
                     else
