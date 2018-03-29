@@ -73,7 +73,7 @@ namespace Dapper.Infra.Repositories
         {
             return param.Date == DateTime.MinValue || param.Date == null ?
                 GetAllAsync<PurchaseOrderDto>(param) :
-                GetAllAsync<PurchaseOrderDto>(param, purchaseOrder => purchaseOrder.Date == param.Date);
+                GetAllAsync<PurchaseOrderDto>(param, purchaseOrder => purchaseOrder.Date == param.Date.Value);
         }
     }
 }
