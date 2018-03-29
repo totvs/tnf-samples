@@ -58,7 +58,7 @@ namespace Transactional.Web.Tests
 
             // Act
             var response = await PostResponseAsObjectAsync<PurchaseOrder, ErrorResponse>(
-                @"api/order",
+                @"api/purchaseorder",
                 purchaseOrder,
                 HttpStatusCode.BadRequest);
 

@@ -80,7 +80,8 @@ namespace Querying.Web
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetSumarizedOrderFromProduct([FromQuery]DateTime date)
         {
-            if (date == null) return BadRequest();
+            if (date == null || date == DateTime.MinValue)
+                return BadRequest();
 
             var response = await _purchaseOrderRepository.GetSumarizedPurchaseOrderFromDate(date);
 
