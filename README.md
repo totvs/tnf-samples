@@ -1,7 +1,5 @@
-# Como estão divididos os pacotes
+# Distribuição dos Pacotes
 ![Diagramas de pacotes do Tnf](https://github.com/totvsnetcore/tnf-samples/blob/master/Scenarios/tnf_packages_diagram.png)
-
-###### Conteúdo dos pacotes
 
 **Tnf.Kernel**: Pacote principal do framework contém as dependências mais primitivas:
 - Localization.
