@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tnf.Repositories.Entities;
 
 namespace Transactional.Domain.Entities
 {
-    public class PurchaseOrder : Entity
+    public class PurchaseOrder : IEntity
     {
+        public int Id { get; set; }
         public DateTime Data { get; set; }
         public int ClientId { get; set; }
         public decimal BaseValue { get; set; }

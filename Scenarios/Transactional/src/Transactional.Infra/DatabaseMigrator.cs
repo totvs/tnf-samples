@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Tnf.Repositories.Uow;
 using Transactional.Infra.Context;
 
 namespace Transactional.Infra
@@ -10,14 +10,12 @@ namespace Transactional.Infra
     {
         public static void MigrateDatabase(this IServiceProvider provider)
         {
-            var uowManager = provider.GetRequiredService<IUnitOfWorkManager>();
-
-            using (var uow = uowManager.Begin())
+            Task.Factory.StartNew(() =>
             {
                 var context = provider.GetRequiredService<PurchaseOrderContext>();
 
                 context.Database.Migrate();
-            }
+            });
         }
     }
 }

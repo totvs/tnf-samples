@@ -24,9 +24,11 @@ namespace Transactional.Infra.Repositories
 
         public async Task<PurchaseOrder> CreateNewPurchaseOrder(PurchaseOrder purchaseOrder)
         {
-            purchaseOrder.Id = await base.InsertAndGetIdAsync(purchaseOrder);
+            purchaseOrder = await base.InsertAndSaveChangesAsync(purchaseOrder);
             return purchaseOrder;
         }
+
+        public Task DeleteAsync(int id) => DeleteAsync(w => w.Id == id);
 
         public List<PurchaseOrder> GetAllPurchaseOrders()
         {
