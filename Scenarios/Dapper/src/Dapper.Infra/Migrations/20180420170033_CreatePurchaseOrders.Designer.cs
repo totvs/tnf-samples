@@ -11,9 +11,10 @@ using System;
 namespace Dapper.Infra.Migrations
 {
     [DbContext(typeof(PurchaseOrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20180420170033_CreatePurchaseOrders")]
+    partial class CreatePurchaseOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

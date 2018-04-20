@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Dapper.Infra.Context;
-using Tnf.Repositories.Uow;
+using System.Threading.Tasks;
 
 namespace Dapper.Infra
 {
@@ -10,14 +10,12 @@ namespace Dapper.Infra
     {
         public static void MigrateDatabase(this IServiceProvider provider)
         {
-            var uowManager = provider.GetRequiredService<IUnitOfWorkManager>();
-
-            using (var uow = uowManager.Begin())
+            Task.Factory.StartNew(() =>
             {
                 var context = provider.GetRequiredService<PurchaseOrderContext>();
 
                 context.Database.Migrate();
-            }
+            });
         }
     }
 }

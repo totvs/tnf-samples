@@ -4,7 +4,7 @@ namespace Dapper.Infra
 {
     public static class Constants
     {
-        public static string ConnectionStringName = "SqlServerConn";
+        public static string ConnectionStringName = "SqlServer";
 
         private const string ENVIRONMENT_VARIABLE = "ASPNETCORE_ENVIRONMENT";
         private const string DEV_ENVIRONMENT_VARIABLE = "DEVELOPMENT";
