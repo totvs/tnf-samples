@@ -5,13 +5,13 @@
 Todos os exemplos a seguir estão com o swagger configurado, log (Serilog) e compactação habilitados.
 
 #### [HelloWorld](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/HelloWorld) ####
-Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo, log e registro de dependências:
+Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo e registro de dependências:
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
 
 #### [BasicCrud](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/BasicCrud) ####
-Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e configuração de localização por arquivo, log e registro de dependências.
+Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e configuração de localização por arquivo e registro de dependências.
 
 - Pacotes que foram instalados:
 	- Tnf.Dto
@@ -25,7 +25,7 @@ Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e co
 	- Devart.Data.Oracle.Entity.EFCore
 
 #### [SuperMarket](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/SuperMarket) ####
-Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF com Redis, Rabbitmq, SqlServer, EntityFrameworkCore, configuração de localização por arquivo, log e registro de dependências.
+Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF com Redis, Rabbitmq, SqlServer, EntityFrameworkCore, configuração de localização por arquivo e registro de dependências.
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
@@ -39,14 +39,14 @@ Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF 
 	- Tnf.Caching.Redis.JsonSerializer
 
 #### [Querying](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Querying) ####
-Exempo que consultas através do repositório do TNF:
+Exemplo que consultas através do repositório do TNF:
 
 - Pacotes que foram instalados:
 	- Tnf.Repositories.AspNetCore
 	- Tnf.EntityFrameworkCore	
 
 #### [Dapper](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Dapper) ####
-Exempo que consultas através do repositório do TNF usando Dapper:
+Exemplo que consultas através do repositório do TNF usando Dapper:
 
 - Pacotes que foram instalados:
 	- Tnf.Repositories.AspNetCore
@@ -54,7 +54,7 @@ Exempo que consultas através do repositório do TNF usando Dapper:
 	- Tnf.Dapper	
 
 #### [Transactional](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Transactional) ####
-Exempo que contempla um cenário transacional:
+Exemplo que contempla um cenário transacional:
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
