@@ -5,6 +5,7 @@ namespace Dapper.Infra.Dto
 {
     public class SumarizedPurchaseOrder
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int TotalQuantity { get; set; }
         public decimal TotalValue { get; set; }

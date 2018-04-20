@@ -14,12 +14,12 @@ namespace Microsoft.Extensions.DependencyInjection
             // usados pela aplicação
             services
                 .AddTnfEntityFrameworkCore()
+                .AddTnfDbContext<PurchaseOrderContext>(config => DbContextConfigurer.Configure(config))
                 .AddTnfDapper(options =>
                 {
                     options.MapperAssemblies.Add(typeof(CustomerMapper).Assembly);
                     options.DbType = DapperDbType.SqlServer;
-                })
-                .AddTnfDbContext<PurchaseOrderContext>(config => DbContextConfigurer.Configure(config));
+                });
 
             services.AddTnfAutoMapper(config =>
             {

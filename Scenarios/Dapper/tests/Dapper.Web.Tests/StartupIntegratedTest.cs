@@ -1,8 +1,11 @@
 ﻿using Dapper.Infra.Context;
+using Dapper.Infra.Dto;
+using Dapper.Infra.Entities;
 using Dapper.Infra.Mappers.DapperMappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Tnf.Configuration;
 using Tnf.Dapper;
 
 namespace Dapper.Web.Tests
@@ -29,7 +32,13 @@ namespace Dapper.Web.Tests
         public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest();
+            app.UseTnfAspNetCoreSetupTest(options =>
+            {
+                options.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
+            });
 
             // Habilita o uso do UnitOfWork em todo o request
             app.UseTnfUnitOfWork();

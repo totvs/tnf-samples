@@ -1,9 +1,8 @@
-﻿using Tnf.Repositories.Entities;
-
-namespace Dapper.Infra.Entities
+﻿namespace Dapper.Infra.Entities
 {
-    public class PurchaseOrderProduct : Entity
+    public class PurchaseOrderProduct : IEntity
     {
+        public int Id { get; set; }
         public int PurchaseOrderId { get; set; }
         public int ProductId { get; set; }
         public decimal UnitValue { get; set; }

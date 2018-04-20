@@ -8,6 +8,8 @@ using System;
 using System.Threading.Tasks;
 using Tnf.Configuration;
 using Swashbuckle.AspNetCore.Swagger;
+using Dapper.Infra.Entities;
+using Dapper.Infra.Dto;
 
 namespace Dapper.Web
 {
@@ -41,6 +43,11 @@ namespace Dapper.Web
 
                 // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
+
+                options.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
             });
 
             logger.LogInformation("Running migrations ...");
@@ -62,7 +69,7 @@ namespace Dapper.Web
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

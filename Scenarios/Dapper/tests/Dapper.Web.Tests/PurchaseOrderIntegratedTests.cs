@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
@@ -144,7 +145,8 @@ namespace Dapper.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<PurchaseOrderDto>(
-                $"{WebConstants.PurchaseOrderRouteName}/4"
+                $"{WebConstants.PurchaseOrderRouteName}/4",
+                HttpStatusCode.NotFound
             );
 
             // Assert
@@ -183,7 +185,8 @@ namespace Dapper.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<Customer>(
-                $"{WebConstants.PurchaseOrderRouteName}/4/customer"
+                $"{WebConstants.PurchaseOrderRouteName}/4/customer",
+                HttpStatusCode.NotFound
             );
 
             // Assert

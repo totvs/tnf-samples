@@ -17,7 +17,7 @@ namespace Dapper.Infra.Repositories
         {
         }
 
-        public Task<PurchaseOrder> GetPurchaseOrder(RequestDto request)
+        public Task<PurchaseOrder> GetPurchaseOrder(DefaultRequestDto request)
         {
             return base.GetAsync(request);
         }
@@ -69,7 +69,7 @@ namespace Dapper.Infra.Repositories
             return sumarized;
         }
 
-        public Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param)
+        public Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param)
         {
             return param.Date == DateTime.MinValue || param.Date == null ?
                 GetAllAsync<PurchaseOrderDto>(param) :

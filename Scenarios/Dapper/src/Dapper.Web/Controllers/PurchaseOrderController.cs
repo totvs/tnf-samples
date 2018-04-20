@@ -38,11 +38,9 @@ namespace Dapper.Web
         {
             if (id <= 0) return BadRequest();
 
-            requestDto.WithId(id);
+            var response = await orderRepository.GetPurchaseOrder(new DefaultRequestDto(id, requestDto));
 
-            var response = await orderRepository.GetPurchaseOrder(requestDto);
-
-            return CreateResponseOnGetAll(response);
+            return CreateResponseOnGet(response.MapTo<PurchaseOrderDto>());
         }
 
         [HttpGet("{id}/customer")]

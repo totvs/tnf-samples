@@ -10,8 +10,8 @@ namespace Dapper.Infra.Repositories
     public interface IPurchaseOrderRepository : IRepository
     {
         Task<Customer> GetCustomerFromPurchaseOrder(int orderId);
-        Task<PurchaseOrder> GetPurchaseOrder(RequestDto request);
+        Task<PurchaseOrder> GetPurchaseOrder(DefaultRequestDto request);
         Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date);
-        Task<IListDto<PurchaseOrderDto, int>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param);
+        Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrders(SumarizedPurchaseOrderRequestAllDto param);
     }
 }

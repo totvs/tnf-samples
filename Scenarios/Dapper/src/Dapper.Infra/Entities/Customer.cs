@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Tnf.Repositories.Entities;
-
-namespace Dapper.Infra.Entities
+﻿namespace Dapper.Infra.Entities
 {
-    public class Customer : Entity
+    public class Customer : IEntity
     {
         public Customer()
         {
@@ -14,6 +11,7 @@ namespace Dapper.Infra.Entities
             Name = name;
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
