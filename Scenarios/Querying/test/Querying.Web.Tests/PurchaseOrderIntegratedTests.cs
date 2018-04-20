@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.TestBase;
-using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
 using Xunit;
 using Querying.Infra.Entities;
@@ -70,7 +69,7 @@ namespace Querying.Web.Tests
         public async Task Should_Get_PurchaseOrder()
         {
             // Act
-            var purchaseOrder = await GetResponseAsObjectAsync<PurchaseOrderDto>(
+            var purchaseOrder = await GetResponseAsObjectAsync<PurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/2"
             );
 
@@ -83,8 +82,9 @@ namespace Querying.Web.Tests
         public async Task Should_Return_Null_On_Get_Not_Found()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<PurchaseOrderDto>(
-                $"{WebConstants.PurchaseOrderRouteName}/4"
+            var response = await GetResponseAsObjectAsync<PurchaseOrder>(
+                $"{WebConstants.PurchaseOrderRouteName}/4",
+                HttpStatusCode.NotFound
             );
 
             // Assert
@@ -95,7 +95,7 @@ namespace Querying.Web.Tests
         public async Task Should_Return_Bad_Request_On_Get_Invalid()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<PurchaseOrderDto>(
+            var response = await GetResponseAsObjectAsync<PurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/0",
                 HttpStatusCode.BadRequest
             );
@@ -123,7 +123,8 @@ namespace Querying.Web.Tests
         {
             // Act
             var response = await GetResponseAsObjectAsync<Customer>(
-                $"{WebConstants.PurchaseOrderRouteName}/4/customer"
+                $"{WebConstants.PurchaseOrderRouteName}/4/customer",
+                HttpStatusCode.NotFound
             );
 
             // Assert
@@ -150,7 +151,8 @@ namespace Querying.Web.Tests
             // Act
             var sumarizedOrder = await PostResponseAsObjectAsync<DateTime, SumarizedPurchaseOrder>(
                 $"{WebConstants.PurchaseOrderRouteName}/sumarized?date=3%2F1%2F2018",
-                DateTime.Now
+                DateTime.Now,
+                HttpStatusCode.OK
             );
 
             // Assert

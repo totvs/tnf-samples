@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Querying.Infra;
+using Querying.Infra.Dto;
+using Querying.Infra.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -45,6 +47,11 @@ namespace Querying.Web
 
                 // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
+
+                options.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
             });
 
             logger.LogInformation("Running migrations ...");

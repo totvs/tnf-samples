@@ -39,11 +39,9 @@ namespace Querying.Web
             if (requestDto == null)
                 return BadRequest();
 
-            requestDto.WithId(id);
+            var response = await _purchaseOrderRepository.GetPurchaseOrder(new DefaultRequestDto(id, requestDto));
 
-            var response = await _purchaseOrderRepository.GetPurchaseOrder(requestDto);
-
-            return CreateResponseOnGetAll(response);
+            return CreateResponseOnGet(response);
         }
 
         /// <summary>
@@ -63,9 +61,7 @@ namespace Querying.Web
             if (requestDto == null)
                 return BadRequest();
 
-            requestDto.WithId(orderId);
-
-            var response = await _purchaseOrderRepository.GetCustomerFromPurchaseOrder(requestDto);
+            var response = await _purchaseOrderRepository.GetCustomerFromPurchaseOrder(new DefaultRequestDto(orderId, requestDto));
 
             return CreateResponseOnGet(response);
         }

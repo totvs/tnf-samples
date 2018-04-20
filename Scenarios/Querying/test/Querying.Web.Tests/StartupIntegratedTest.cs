@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Querying.Infra.Context;
+using Querying.Infra.Dto;
+using Querying.Infra.Entities;
 using System;
+using Tnf.Configuration;
 
 namespace Querying.Web.Tests
 {
@@ -22,7 +25,13 @@ namespace Querying.Web.Tests
         public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest();
+            app.UseTnfAspNetCoreSetupTest(options =>
+            {
+                options.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
+            });
 
             // Habilita o uso do UnitOfWork em todo o request
             app.UseTnfUnitOfWork();

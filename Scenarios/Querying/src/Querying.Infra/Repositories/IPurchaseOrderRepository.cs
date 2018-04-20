@@ -9,8 +9,8 @@ namespace Querying.Infra.Repositories
 {
     public interface IPurchaseOrderRepository : IRepository
     {
-        Task<Customer> GetCustomerFromPurchaseOrder(RequestDto request);
-        Task<PurchaseOrder> GetPurchaseOrder(RequestDto request);
+        Task<Customer> GetCustomerFromPurchaseOrder(DefaultRequestDto request);
+        Task<PurchaseOrder> GetPurchaseOrder(DefaultRequestDto request);
         Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date);
     }
 }

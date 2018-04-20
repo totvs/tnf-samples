@@ -1,8 +1,6 @@
-﻿using Tnf.Repositories.Entities;
-
-namespace Querying.Infra.Entities
+﻿namespace Querying.Infra.Entities
 {
-    public class Product : Entity
+    public class Product : IEntity
     {
         public Product()
         {
@@ -14,6 +12,7 @@ namespace Querying.Infra.Entities
             Value = value;
         }
 
+        public int Id { get; set; }
         public string Description { get; set; }
         public decimal Value { get; set; }
     }

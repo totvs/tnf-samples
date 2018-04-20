@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Querying.Infra.Context;
-using Tnf.Repositories.Uow;
 
 namespace Querying.Infra
 {
@@ -10,14 +10,11 @@ namespace Querying.Infra
     {
         public static void MigrateDatabase(this IServiceProvider provider)
         {
-            var uowManager = provider.GetRequiredService<IUnitOfWorkManager>();
-
-            using (var uow = uowManager.Begin())
+            Task.Factory.StartNew(() =>
             {
                 var context = provider.GetRequiredService<PurchaseOrderContext>();
-
                 context.Database.Migrate();
-            }
+            });
         }
     }
 }

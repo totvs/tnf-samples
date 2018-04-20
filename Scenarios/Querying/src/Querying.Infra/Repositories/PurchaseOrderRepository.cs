@@ -18,7 +18,7 @@ namespace Querying.Infra.Repositories
         {
         }
 
-        public Task<PurchaseOrder> GetPurchaseOrder(RequestDto request)
+        public Task<PurchaseOrder> GetPurchaseOrder(DefaultRequestDto request)
         {
             if (!request.GetFields().Any())
                 request.Fields = "Id, Date, TotalValue";
@@ -33,7 +33,7 @@ namespace Querying.Infra.Repositories
         /// Exemplo de query 1 x N feita através do campo expandables do TNF
         /// que irá carregar o relacionamento "Customer" da entidade de Order
         /// </summary>
-        public async Task<Customer> GetCustomerFromPurchaseOrder(RequestDto request)
+        public async Task<Customer> GetCustomerFromPurchaseOrder(DefaultRequestDto request)
         {
             if (!request.GetExpandablesFields().Contains("Customer"))
                 request.Expand = "Customer";
