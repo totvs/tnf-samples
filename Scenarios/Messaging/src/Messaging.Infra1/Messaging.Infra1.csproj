@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.0.2.8701" />
-    <PackageReference Include="Tnf.Notifications" Version="2.0.2.8701" />
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.1.0.10901" />
+    <PackageReference Include="Tnf.Notifications" Version="2.1.0.10901" />
   </ItemGroup>
 
 </Project>
