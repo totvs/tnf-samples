@@ -56,7 +56,7 @@ namespace Dapper.Infra.Repositories
                     INNER JOIN PurchaseOrders purchaseOrder ON purchaseOrder.Id = purchaseOrderProduct.PurchaseOrderId
                 WHERE purchaseOrder.Date = @Date
                 GROUP BY product.Id, product.Description", 
-                new { Date = date });
+                new { Date = date.Date });
 
             var sumarized = new SumarizedPurchaseOrder()
             {
