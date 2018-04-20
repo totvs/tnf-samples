@@ -3,8 +3,9 @@ using Tnf.Dto;
 
 namespace SuperMarket.FiscalService.Infra.Dtos
 {
-    public class TaxMovimentDto : DtoBase<Guid>
+    public class TaxMovimentDto : BaseDto
     {
+        public Guid Id { get; set; }
         public Guid PurchaseOrderId { get; set; }
         public decimal PurchaseOrderBaseValue { get; set; }
         public decimal PurchaseOrderDiscount { get; set; }

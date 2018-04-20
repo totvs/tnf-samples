@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
+using SuperMarket.Backoffice.Sales.Infra;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Web.Tests.Mocks;
 using System;
@@ -35,6 +36,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             {
                 // Adiciona as configurações de localização da aplicação a ser testada
                 options.ConfigureSalesDomain();
+                options.ConfigureInfra();
 
                 options.UnitOfWorkOptions().IsTransactional = false;
             });

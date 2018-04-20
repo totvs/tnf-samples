@@ -18,18 +18,18 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests.Mocks
             _manager = manager;
         }
 
-        public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
+        public Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
             var dtoList = _manager.List.Select(MapToPurchaseOrderDto);
 
-            IListDto<PurchaseOrderDto, Guid> list = new ListDto<PurchaseOrderDto, Guid> { Items = dtoList.ToList(), HasNext = false };
+            IListDto<PurchaseOrderDto> list = new ListDto<PurchaseOrderDto> { Items = dtoList.ToList(), HasNext = false };
 
             return list.AsTask();
         }
 
-        public Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> key)
+        public Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto key)
         {
-            var entity = _manager.List.FirstOrDefault(c => c.Id == key.GetId());
+            var entity = _manager.List.FirstOrDefault(c => c.Id == key.Id);
 
             return entity == null ? Task.FromResult<PurchaseOrderDto>(null) : MapToPurchaseOrderDto(entity).AsTask();
         }

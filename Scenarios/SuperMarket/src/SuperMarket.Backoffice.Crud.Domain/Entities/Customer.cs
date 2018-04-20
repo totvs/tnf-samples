@@ -2,12 +2,12 @@
 using System;
 using Tnf.Builder;
 using Tnf.Notifications;
-using Tnf.Repositories.Entities;
 
 namespace SuperMarket.Backoffice.Crud.Domain.Entities
 {
-    public class Customer : Entity<Guid>
+    public class Customer : IEntity
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public static CustomerBuilder New(INotificationHandler notificationHandler)

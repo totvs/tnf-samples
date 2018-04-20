@@ -26,7 +26,7 @@ namespace SuperMarket.FiscalService.Web.Controllers
         ISubscribe<PurchaseOrderChangedMessage>,
         IPublish<TaxMovimentCalculatedMessage>
     {
-        private readonly IDomainService<TaxMoviment, Guid> _domainService;
+        private readonly IDomainService<TaxMoviment> _domainService;
         private readonly INotificationHandler _notificationHandler;
         private readonly ILogger<TaxMoviment> _logger;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
@@ -35,7 +35,7 @@ namespace SuperMarket.FiscalService.Web.Controllers
             INotificationHandler notificationHandler,
             ILogger<TaxMoviment> logger,
             IUnitOfWorkManager unitOfWorkManager,
-            IDomainService<TaxMoviment, Guid> domainService)
+            IDomainService<TaxMoviment> domainService)
         {
             _notificationHandler = notificationHandler;
             _logger = logger;
@@ -49,7 +49,7 @@ namespace SuperMarket.FiscalService.Web.Controllers
         /// <param name="requestAll">Request parameters for search moviments</param>
         /// <returns>List of moviments</returns>
         [HttpGet("taxmoviments")]
-        [ProducesResponseType(typeof(IListDto<TaxMovimentDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<TaxMovimentDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]RequestAllDto requestAll)
         {
@@ -91,7 +91,7 @@ namespace SuperMarket.FiscalService.Web.Controllers
 
                 using (var uow = _unitOfWorkManager.Begin(options))
                 {
-                    await _domainService.InsertAndGetIdAsync(movimentBuilder);
+                    await _domainService.InsertAndSaveChangesAsync(movimentBuilder);
 
                     await uow.CompleteAsync();
                 }

@@ -22,7 +22,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         {
             TnfSession.ShouldNotBeNull();
             ServiceProvider.GetService<CustomerController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IDomainService<Customer, Guid>>().ShouldNotBeNull();
+            ServiceProvider.GetService<IDomainService<Customer>>().ShouldNotBeNull();
         }
 
 
@@ -30,7 +30,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public async Task Should_GetAll()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 WebConstants.CustomerRouteName
             );
 
@@ -63,7 +63,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(responseDto.IsNullable());
+            Assert.Null(responseDto);
         }
 
 
@@ -91,7 +91,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
 
@@ -120,15 +120,15 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
 
         [Fact]
-        public async Task Should_Delete_Customer()
+        public Task Should_Delete_Customer()
         {
             // Act
-            await DeleteResponseAsync(
+            return DeleteResponseAsync(
                 $"{WebConstants.CustomerRouteName}/{CustomerDomainServiceMock.customerGuid}"
             );
         }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tnf.Repositories.Entities;
 using static SuperMarket.Backoffice.Sales.Domain.Entities.PurchaseOrder;
 
 namespace SuperMarket.Backoffice.Sales.Infra.Pocos
 {
-    public class PurchaseOrderPoco : Entity<Guid>
+    public class PurchaseOrderPoco
     {
         public PurchaseOrderPoco()
         {
             PurchaseOrderProducts = new List<PurchaseOrderProductPoco>();
         }
 
+        public Guid Id { get; set; }
         public Guid Number { get; set; }
         public DateTime Date { get; set; }
         public decimal? TotalValue { get; set; }

@@ -45,6 +45,9 @@ namespace SuperMarket.Backoffice.Sales.Web
                 // Adiciona as configurações de localização da aplicação
                 options.ConfigureSalesDomain();
 
+                // Configura as dependencias de RequestDto
+                options.ConfigureInfra();
+
                 // Recupera a configuração da aplicação
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
 

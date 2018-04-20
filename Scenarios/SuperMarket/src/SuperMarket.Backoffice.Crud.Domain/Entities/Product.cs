@@ -2,12 +2,12 @@
 using System;
 using Tnf.Builder;
 using Tnf.Notifications;
-using Tnf.Repositories.Entities;
 
 namespace SuperMarket.Backoffice.Crud.Domain.Entities
 {
-    public class Product : Entity<Guid>
+    public class Product : IEntity
     {
+        public Guid Id { get; set; }
         public string Description { get; set; }
         public decimal Value { get; set; }
 

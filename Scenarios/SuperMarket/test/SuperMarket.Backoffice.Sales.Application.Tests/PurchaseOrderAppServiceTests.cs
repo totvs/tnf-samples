@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using SuperMarket.Backoffice.Sales.Application.Services;
 using SuperMarket.Backoffice.Sales.Application.Services.Interfaces;
 using SuperMarket.Backoffice.Sales.Application.Tests.Mocks;
 using SuperMarket.Backoffice.Sales.Domain;
@@ -8,17 +7,13 @@ using SuperMarket.Backoffice.Sales.Domain.Entities;
 using SuperMarket.Backoffice.Sales.Domain.Interfaces;
 using SuperMarket.Backoffice.Sales.Dto;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
-using SuperMarket.Backoffice.Sales.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Tnf.Application.Services;
-using Tnf.Domain.Services;
-using Tnf.Dto;
 using Tnf.Localization;
-using Tnf.Repositories.Uow;
 using Tnf.TestBase;
 using Xunit;
 using static SuperMarket.Backoffice.Sales.Dto.PurchaseOrderDto;
@@ -95,7 +90,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             var guid = Resolve<PurchaseOrderServiceMockManager>().PurchaseOrderGuid;
 
             // Act
-            var purchaseOrder = await _appService.GetPurchaseOrderAsync(guid.ToRequestDto());
+            var purchaseOrder = await _appService.GetPurchaseOrderAsync(new DefaultRequestDto(guid));
 
             // Assert
             Assert.False(LocalNotification.HasNotification());
@@ -110,16 +105,16 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             var purchaseOrder = await _appService.GetPurchaseOrderAsync(null);
 
             // Assert
-            Assert.NotNull(purchaseOrder);
+            Assert.Null(purchaseOrder);
             Assert.True(LocalNotification.HasNotification());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
 
             // Act
-            purchaseOrder = await _appService.GetPurchaseOrderAsync(new RequestDto<Guid>());
+            purchaseOrder = await _appService.GetPurchaseOrderAsync(new DefaultRequestDto());
 
             // Assert
-            Assert.NotNull(purchaseOrder);
+            Assert.Null(purchaseOrder);
             Assert.True(LocalNotification.HasNotification());
             message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
@@ -129,7 +124,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
         public async Task Should_Raise_Notification_On_Get_Not_Found()
         {
             // Act
-            var purchaseOrder = await _appService.GetPurchaseOrderAsync(Guid.NewGuid().ToRequestDto());
+            var purchaseOrder = await _appService.GetPurchaseOrderAsync(new DefaultRequestDto(Guid.NewGuid()));
 
             // Assert
             Assert.Null(purchaseOrder);
@@ -168,7 +163,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             var purchaseOrder = await _appService.CreatePurchaseOrderAsync(null);
 
             // Assert
-            Assert.NotNull(purchaseOrder);
+            Assert.Null(purchaseOrder);
             Assert.True(LocalNotification.HasNotification());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
@@ -181,7 +176,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             var purchaseOrder = await _appService.CreatePurchaseOrderAsync(new PurchaseOrderDto());
 
             // Assert
-            Assert.NotNull(purchaseOrder);
+            Assert.Null(purchaseOrder);
             Assert.True(LocalNotification.HasNotification());
             var message = _localizationSource.GetString(PurchaseOrder.Error.PurchaseOrderMustHaveCustomer, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
@@ -213,7 +208,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             var purchaseOrder = await _appService.UpdatePurchaseOrderAsync(Guid.Empty, null);
 
             // Assert
-            Assert.NotNull(purchaseOrder);
+            Assert.Null(purchaseOrder);
             Assert.True(LocalNotification.HasNotification());
             Assert.Equal(2, LocalNotification.GetAll().Count());
             var message = string.Format(LocalLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");

@@ -23,7 +23,6 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
             public Builder(INotificationHandler notificationHandler, PurchaseOrder instance)
                 : base(notificationHandler, instance)
             {
-                EnableValidations();
             }
 
             public Builder GenerateNewPurchaseOrder()

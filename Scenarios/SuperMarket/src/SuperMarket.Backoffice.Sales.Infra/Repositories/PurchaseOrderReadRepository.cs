@@ -10,14 +10,14 @@ using Tnf.EntityFrameworkCore.Repositories;
 
 namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 {
-    public class PurchaseOrderReadRepository : EfCoreRepositoryBase<SalesContext, PurchaseOrderPoco, Guid>, IPurchaseOrderReadRepository
+    public class PurchaseOrderReadRepository : EfCoreRepositoryBase<SalesContext, PurchaseOrderPoco>, IPurchaseOrderReadRepository
     {
         public PurchaseOrderReadRepository(IDbContextProvider<SalesContext> dbContextProvider)
             : base(dbContextProvider)
         {
         }
 
-        public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
+        public Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
             return GetAllAsync<PurchaseOrderDto>(request, p => FilterPurchase(p, request));
         }
@@ -40,7 +40,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
             return validateNumber && validateDate;
         }
 
-        public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> key)
+        public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto key)
         {
             var entity = await GetAsync(key);
 

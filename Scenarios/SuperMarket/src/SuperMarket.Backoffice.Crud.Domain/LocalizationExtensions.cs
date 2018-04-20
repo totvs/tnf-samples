@@ -1,4 +1,5 @@
-﻿using Tnf.Configuration;
+﻿using SuperMarket.Backoffice.Crud.Domain.Entities;
+using Tnf.Configuration;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 
@@ -18,6 +19,11 @@ namespace SuperMarket.Backoffice.Crud.Domain
             // Incluindo suporte as seguintes linguagens
             configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português", isDefault: true));
             configuration.Localization.Languages.Add(new LanguageInfo("en", "English"));
+
+            configuration.Repository(repository =>
+            {
+                repository.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+            });
 
             return configuration;
         }

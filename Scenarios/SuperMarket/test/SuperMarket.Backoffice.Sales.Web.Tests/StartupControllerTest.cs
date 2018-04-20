@@ -12,7 +12,9 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Configura o setup de teste para AspNetCore
-            services.AddTnfAspNetCoreSetupTest();
+            services
+                .AddTnfRepository()
+                .AddTnfAspNetCoreSetupTest();
 
             // Registro dos serviços de Mock
             services.AddTransient<IPurchaseOrderAppService, PurchaseOrderAppServiceMock>();

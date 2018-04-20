@@ -14,11 +14,13 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Configura o setup de teste para AspNetCore
-            services.AddTnfAspNetCoreSetupTest();
+            services
+                .AddTnfRepository()
+                .AddTnfAspNetCoreSetupTest();
 
             // Registro dos serviços de Mock
-            services.AddTransient<IDomainService<Customer, Guid>, CustomerDomainServiceMock>();
-            services.AddTransient<IDomainService<Product, Guid>, ProductDomainServiceMock>();
+            services.AddTransient<IDomainService<Customer>, CustomerDomainServiceMock>();
+            services.AddTransient<IDomainService<Product>, ProductDomainServiceMock>();
             services.AddTransient<IPriceTableRepository, PriceTableRepositoryMock>();
 
             return services.BuildServiceProvider();

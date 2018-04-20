@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Dtos;
 using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
@@ -17,11 +18,11 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
     [Route(WebConstants.ProductRouteName)]
     public class ProductController : TnfController
     {
-        private readonly IDomainService<Product, Guid> _productDomainService;
+        private readonly IDomainService<Product> _productDomainService;
         private readonly IPriceTableRepository _priceTableRepository;
         private const string name = "Product";
 
-        public ProductController(IDomainService<Product, Guid> productDomainService, IPriceTableRepository priceTableRepository)
+        public ProductController(IDomainService<Product> productDomainService, IPriceTableRepository priceTableRepository)
         {
             _productDomainService = productDomainService;
             _priceTableRepository = priceTableRepository;
@@ -33,12 +34,12 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         /// <param name="requestAll">Request all params</param>
         /// <returns>Customer list</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IListDto<ProductDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<ProductDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]ProductRequestAllDto requestAll)
         {
             if (requestAll == null)
-                return BadRequest(ListDto<ProductDto, Guid>.Empty());
+                return BadRequest(ListDto<ProductDto>.Empty());
 
             var response = await _productDomainService.GetAllAsync<ProductDto>(requestAll,
                 (p) => requestAll.Description.IsNullOrEmpty() || p.Description.Contains(requestAll.Description));
@@ -55,19 +56,19 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ProductDto), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> request)
+        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto request)
         {
             if (request == null)
-                return BadRequest(ProductDto.NullInstance);
+                return BadRequest();
 
             if (id == Guid.Empty)
-                return BadRequest(ProductDto.NullInstance);
+                return BadRequest();
 
-            request.WithId(id);
+            var productDb = await _productDomainService.GetAsync(new DefaultRequestDto(id, request));
 
-            var response = await _productDomainService.GetAsync<ProductDto>(request);
+            var product = productDb.MapTo<ProductDto>();
 
-            return CreateResponseOnGet<ProductDto, Guid>(response, name);
+            return CreateResponseOnGet(product, name);
         }
 
         /// <summary>
@@ -95,15 +96,17 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         public async Task<IActionResult> Post([FromBody]ProductDto product)
         {
             if (product == null)
-                return BadRequest(ProductDto.NullInstance);
+                return BadRequest();
 
             var builder = Product.New(Notification)
                 .WithDescription(product.Description)
                 .WithValue(product.Value);
 
-            product.Id = await _productDomainService.InsertAndGetIdAsync(builder);
+            var productDb = await _productDomainService.InsertAndSaveChangesAsync(builder);
 
-            return CreateResponseOnPost<ProductDto, Guid>(product, name);
+            product = productDb.MapTo<ProductDto>();
+
+            return CreateResponseOnPost(product, name);
         }
 
         /// <summary>
@@ -118,10 +121,10 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody]ProductDto product)
         {
             if (product == null)
-                return BadRequest(ProductDto.NullInstance);
+                return BadRequest();
 
             if (id == Guid.Empty)
-                return BadRequest(ProductDto.NullInstance);
+                return BadRequest();
 
             var builder = Product.New(Notification)
                 .WithId(id)
@@ -132,7 +135,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
 
             product.Id = id;
 
-            return CreateResponseOnPut<ProductDto, Guid>(product, name);
+            return CreateResponseOnPut(product, name);
         }
 
         /// <summary>
@@ -148,9 +151,9 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
             if (id == Guid.Empty)
                 return BadRequest();
 
-            await _productDomainService.DeleteAsync(id);
+            await _productDomainService.DeleteAsync(w => w.Id == id);
 
-            return CreateResponseOnDelete<CustomerDto, Guid>(name);
+            return CreateResponseOnDelete(name);
         }
     }
 }

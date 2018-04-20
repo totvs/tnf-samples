@@ -24,7 +24,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
                 .RegisterDbContextToSqliteInMemory<CrudContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
             services.AddTransient<IPriceTableRepository, ProductRepository>();
-            services.AddTransient<IRepository<Product, Guid>, ProductRepository>();
+            services.AddTransient<IRepository<Product>, ProductRepository>();
 
             return services.BuildServiceProvider();
         }

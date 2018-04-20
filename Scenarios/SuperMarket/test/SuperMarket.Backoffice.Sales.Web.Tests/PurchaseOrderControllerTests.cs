@@ -30,7 +30,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public async Task Should_GetAll()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 WebConstants.PurchaseOrderRouteName
             );
 

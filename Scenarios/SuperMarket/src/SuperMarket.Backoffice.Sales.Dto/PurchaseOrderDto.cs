@@ -4,10 +4,9 @@ using Tnf.Dto;
 
 namespace SuperMarket.Backoffice.Sales.Dto
 {
-    public class PurchaseOrderDto : DtoBase<Guid>
+    public class PurchaseOrderDto : BaseDto
     {
-        public static PurchaseOrderDto NullInstance = new PurchaseOrderDto().AsNullable<PurchaseOrderDto, Guid>();
-
+        public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
         public decimal Discount { get; set; }
         public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();

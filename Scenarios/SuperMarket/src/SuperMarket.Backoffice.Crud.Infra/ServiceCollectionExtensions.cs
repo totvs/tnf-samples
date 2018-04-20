@@ -6,10 +6,8 @@ using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
 using SuperMarket.Backoffice.Crud.Infra.Repositories;
 using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
-using System;
 using Tnf.Caching.Redis;
 using Tnf.Repositories;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace SuperMarket.Backoffice.Crud.Infra
 {
@@ -26,6 +24,7 @@ namespace SuperMarket.Backoffice.Crud.Infra
                     {
                         config.DbContextOptions.EnableSensitiveDataLogging();
                         config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                        config.UseLoggerFactory();
                     }
 
                     if (config.ExistingConnection != null)
@@ -35,7 +34,7 @@ namespace SuperMarket.Backoffice.Crud.Infra
                 });
 
             services.AddTransient<IPriceTableRepository, ProductRepository>();
-            services.AddTransient<IRepository<Product, Guid>, ProductRepository>();
+            services.AddTransient<IRepository<Product>, ProductRepository>();
 
             services.AddTnfRedisCache(builder => builder
 

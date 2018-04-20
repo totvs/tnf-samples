@@ -29,7 +29,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         /// <param name="requestAll">Request params to search purchase orders</param>
         /// <returns>Purchase order results</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IListDto<PurchaseOrderDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<PurchaseOrderDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]PurchaseOrderRequestAllDto requestAll)
         {
@@ -47,11 +47,11 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PurchaseOrderDto), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> request)
+        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto request)
         {
-            var response = await _appService.GetPurchaseOrderAsync(request.WithId(id));
+            var response = await _appService.GetPurchaseOrderAsync(new DefaultRequestDto(id, request));
 
-            return CreateResponseOnGet<PurchaseOrderDto, Guid>(response, name);
+            return CreateResponseOnGet(response, name);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         {
             var response = await _appService.CreatePurchaseOrderAsync(purchaseOrder);
 
-            return CreateResponseOnPost<PurchaseOrderDto, Guid>(response, name);
+            return CreateResponseOnPost(response, name);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         {
             var response = await _appService.UpdatePurchaseOrderAsync(id, purchaseOrder);
 
-            return CreateResponseOnPut<PurchaseOrderDto, Guid>(response, name);
+            return CreateResponseOnPut(response, name);
         }
     }
 }

@@ -13,7 +13,7 @@ using Tnf.Notifications;
 
 namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 {
-    public class PurchaseOrderRepository : EfCoreRepositoryBase<SalesContext, PurchaseOrderPoco, Guid>, IPurchaseOrderRepository
+    public class PurchaseOrderRepository : EfCoreRepositoryBase<SalesContext, PurchaseOrderPoco>, IPurchaseOrderRepository
     {
         private readonly INotificationHandler _notificationHandler;
 
@@ -39,14 +39,16 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
         {
             var poco = purchaseOrder.MapTo<PurchaseOrderPoco>();
 
-            purchaseOrder.Id = await InsertAndGetIdAsync(poco);
+            poco = await InsertAndSaveChangesAsync(poco);
+
+            purchaseOrder.WithId(poco.Id);
 
             return purchaseOrder;
         }
 
         public async Task<PurchaseOrder> Update(PurchaseOrder purchaseOrder)
         {
-            var poco = await GetAsync(purchaseOrder.Id);
+            var poco = await GetAsync(w => w.Id == purchaseOrder.Id);
 
             // Load relationship
             await EnsureCollectionLoadedAsync(poco, i => i.PurchaseOrderProducts);
@@ -65,7 +67,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public async Task UpdateTaxMoviment(PurchaseOrder purchaseOrder)
         {
-            var poco = await GetAsync(purchaseOrder.Id);
+            var poco = await GetAsync(w => w.Id == purchaseOrder.Id);
 
             poco.Tax = purchaseOrder.Tax;
             poco.TotalValue = purchaseOrder.TotalValue;

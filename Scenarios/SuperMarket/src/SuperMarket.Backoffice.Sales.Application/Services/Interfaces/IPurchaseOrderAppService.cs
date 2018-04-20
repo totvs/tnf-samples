@@ -10,7 +10,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services.Interfaces
     {
         Task<PurchaseOrderDto> CreatePurchaseOrderAsync(PurchaseOrderDto product);
         Task<PurchaseOrderDto> UpdatePurchaseOrderAsync(Guid id, PurchaseOrderDto product);
-        Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> id);
-        Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request);
+        Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto id);
+        Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request);
     }
 }

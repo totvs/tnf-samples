@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.Domain.Services;
 using Tnf.Dto;
@@ -24,7 +23,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         {
             TnfSession.ShouldNotBeNull();
             ServiceProvider.GetService<ProductController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IDomainService<Product, Guid>>().ShouldNotBeNull();
+            ServiceProvider.GetService<IDomainService<Product>>().ShouldNotBeNull();
         }
 
 
@@ -32,7 +31,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public async Task Should_GetAll()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 WebConstants.ProductRouteName
             );
 
@@ -79,7 +78,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(responseDto.IsNullable());
+            Assert.Null(responseDto);
         }
 
 
@@ -107,7 +106,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
 
@@ -137,15 +136,15 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
 
         [Fact]
-        public async Task Should_Delete_Product()
+        public Task Should_Delete_Product()
         {
             // Act
-            await DeleteResponseAsync(
+            return DeleteResponseAsync(
                 $"{WebConstants.ProductRouteName}/{ProductDomainServiceMock.productGuid}"
             );
         }

@@ -12,7 +12,8 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests.Mocks
     {
         public static Guid purchaseOrderGuid = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
 
-        private List<PurchaseOrderDto> list = new List<PurchaseOrderDto>() {
+        private List<PurchaseOrderDto> list = new List<PurchaseOrderDto>()
+        {
             new PurchaseOrderDto() { Id = purchaseOrderGuid, CustomerId = Guid.NewGuid(), Discount = 10 },
             new PurchaseOrderDto() { Id = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Discount = 20 },
             new PurchaseOrderDto() { Id = Guid.NewGuid(), CustomerId = Guid.NewGuid(), Discount = 30 }
@@ -29,16 +30,16 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests.Mocks
             return dto.AsTask();
         }
 
-        public Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> id)
+        public Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto id)
         {
-            var dto = list.FirstOrDefault(c => c.Id == id.GetId());
+            var dto = list.FirstOrDefault(c => c.Id == id.Id);
 
             return dto.AsTask();
         }
 
-        public Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
+        public Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
         {
-            IListDto<PurchaseOrderDto, Guid> result = new ListDto<PurchaseOrderDto, Guid> { HasNext = false, Items = list };
+            IListDto<PurchaseOrderDto> result = new ListDto<PurchaseOrderDto> { HasNext = false, Items = list };
 
             return result.AsTask();
         }

@@ -45,8 +45,8 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
 
         public async Task<PurchaseOrderDto> CreatePurchaseOrderAsync(PurchaseOrderDto dto)
         {
-            if (!ValidateDto<PurchaseOrderDto, Guid>(dto))
-                return PurchaseOrderDto.NullInstance;
+            if (!ValidateDto(dto))
+                return null;
 
             var options = new UnitOfWorkOptions()
             {
@@ -72,7 +72,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
                 var purchaseOrder = await _domainService.NewPurchaseOrder(purchaseOrderBuilder);
 
                 if (Notification.HasNotification())
-                    return PurchaseOrderDto.NullInstance;
+                    return null;
 
                 await uow.CompleteAsync();
 
@@ -90,10 +90,10 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             return dto;
         }
 
-        public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(IRequestDto<Guid> id)
+        public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto id)
         {
-            if (!ValidateRequestDto<IRequestDto<Guid>, Guid>(id))
-                return PurchaseOrderDto.NullInstance;
+            if (!ValidateRequestDto(id) || !ValidateId(id.Id))
+                return null;
 
             var options = new UnitOfWorkOptions()
             {
@@ -107,7 +107,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
             }
         }
 
-        public async Task<IListDto<PurchaseOrderDto, Guid>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
+        public async Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrderAsync(PurchaseOrderRequestAllDto request)
         {
             var options = new UnitOfWorkOptions()
             {
@@ -124,7 +124,7 @@ namespace SuperMarket.Backoffice.Sales.Application.Services
         public async Task<PurchaseOrderDto> UpdatePurchaseOrderAsync(Guid id, PurchaseOrderDto dto)
         {
             if (!ValidateDtoAndId(dto, id))
-                return PurchaseOrderDto.NullInstance;
+                return null;
 
             PriceTable priceTable = null;
             PurchaseOrder purchaseOrderToUpdate = null;

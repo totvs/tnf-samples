@@ -6,7 +6,7 @@ using Tnf.Repositories.Entities;
 
 namespace SuperMarket.Backoffice.Sales.Domain.Entities
 {
-    public partial class PurchaseOrder : Entity<Guid>
+    public partial class PurchaseOrder
     {
         public static INewPurchaseOrderBuilder New(INotificationHandler notificationHandler)
             => new Builder(notificationHandler)
@@ -15,6 +15,7 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
         public static IUpdatePurchaseOrderBuilder Update(INotificationHandler notificationHandler, PurchaseOrder purchaseOrder)
             => new Builder(notificationHandler, purchaseOrder);
 
+        public Guid Id { get; private set; }
         public Guid Number { get; private set; }
         public DateTime Date { get; private set; }
         public decimal TotalValue { get; private set; }
@@ -64,6 +65,11 @@ namespace SuperMarket.Backoffice.Sales.Domain.Entities
             TotalValue = totalValue;
 
             Status = PurchaseOrderStatus.Completed;
+        }
+
+        public void WithId(Guid id)
+        {
+            Id = id;
         }
 
         public class PurchaseOrderLine

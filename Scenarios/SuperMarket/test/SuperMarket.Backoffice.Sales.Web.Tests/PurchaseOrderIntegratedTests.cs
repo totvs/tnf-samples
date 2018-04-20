@@ -148,7 +148,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public async Task Should_GetAll_With_Paginated()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 WebConstants.PurchaseOrderRouteName
             );
 
@@ -157,7 +157,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             Assert.Equal(10, response.Items.Count);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?pageSize=30"
             );
 
@@ -170,7 +170,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public async Task Should_GetAll_Sorted()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?pageSize=20&order=-discount"
             );
 
@@ -180,7 +180,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             Assert.Equal(10, response.Items.Last().Discount);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?order=-discount"
             );
 
@@ -194,7 +194,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public async Task Should_GetAll_By_Number()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?number={_numberGuid}"
             );
 
@@ -207,7 +207,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public async Task Should_GetAll_By_Date()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?startDate=2018/3/1"
             );
 
@@ -216,7 +216,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             Assert.Equal(20, response.Items[0].Discount);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?startDate=2018/3/1&endDate=2018/3/20"
             );
 
@@ -224,7 +224,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             Assert.Equal(10, response.Items.Count);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?pageSize=20&startDate=2018/3/1&endDate=2018/3/20"
             );
 
@@ -299,7 +299,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
 
             var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnGetError, _culture), "PurchaseOrder");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
+            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "id");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -326,7 +326,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             Assert.NotEqual(Guid.Empty, purchaseOrder.Id);
             Assert.Equal(5, purchaseOrder.Discount);
 
-            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(
                 $"{WebConstants.PurchaseOrderRouteName}?pageSize=30"
             );
 

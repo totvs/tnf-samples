@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Domain.Entities;
 using SuperMarket.Backoffice.Crud.Infra.Dtos;
 using System;
@@ -15,10 +16,10 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
     [Route(WebConstants.CustomerRouteName)]
     public class CustomerController : TnfController
     {
-        private readonly IDomainService<Customer, Guid> _customerDomainService;
+        private readonly IDomainService<Customer> _customerDomainService;
         private const string _name = "Customer";
 
-        public CustomerController(IDomainService<Customer, Guid> customerDomainService)
+        public CustomerController(IDomainService<Customer> customerDomainService)
         {
             _customerDomainService = customerDomainService;
         }
@@ -28,12 +29,12 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         /// Get all purchase orders
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IListDto<CustomerDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<CustomerDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]CustomerRequestAllDto requestAll)
         {
             if (requestAll == null)
-                return BadRequest(ListDto<CustomerDto, Guid>.Empty());
+                return BadRequest(ListDto<CustomerDto>.Empty());
 
             var response = await _customerDomainService.GetAllAsync<CustomerDto>(requestAll,
                 (c) => requestAll.Name.IsNullOrEmpty() || c.Name.Contains(requestAll.Name));
@@ -50,19 +51,17 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CustomerDto), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> request)
+        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto request)
         {
             if (request == null)
-                return BadRequest(CustomerDto.NullInstance);
+                return BadRequest();
 
             if (id == Guid.Empty)
-                return BadRequest(CustomerDto.NullInstance);
+                return BadRequest();
 
-            request.WithId(id);
+            var response = await _customerDomainService.GetAsync<CustomerDto, DefaultRequestDto>(new DefaultRequestDto(id, request));
 
-            var response = await _customerDomainService.GetAsync<CustomerDto>(request);
-
-            return CreateResponseOnGet<CustomerDto, Guid>(response, _name);
+            return CreateResponseOnGet(response, _name);
         }
 
         /// <summary>
@@ -76,14 +75,16 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         public async Task<IActionResult> Post([FromBody]CustomerDto customer)
         {
             if (customer == null)
-                return BadRequest(CustomerDto.NullInstance);
+                return BadRequest();
 
             var builder = Customer.New(Notification)
                 .WithName(customer.Name);
 
-            customer.Id = await _customerDomainService.InsertAndGetIdAsync(builder);
+            var customerDb = await _customerDomainService.InsertAndSaveChangesAsync(builder);
 
-            return CreateResponseOnPost<CustomerDto, Guid>(customer, _name);
+            customer = customerDb.MapTo<CustomerDto>();
+
+            return CreateResponseOnPost(customer, _name);
         }
 
         /// <summary>
@@ -98,10 +99,10 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody]CustomerDto customer)
         {
             if (customer == null)
-                return BadRequest(CustomerDto.NullInstance);
+                return BadRequest();
 
             if (id == Guid.Empty)
-                return BadRequest(CustomerDto.NullInstance);
+                return BadRequest();
 
             var builder = Customer.New(Notification)
                 .WithId(id)
@@ -111,7 +112,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
 
             customer.Id = id;
 
-            return CreateResponseOnPut<CustomerDto, Guid>(customer, _name);
+            return CreateResponseOnPut(customer, _name);
         }
 
         /// <summary>
@@ -126,9 +127,9 @@ namespace SuperMarket.Backoffice.Crud.Web.Controllers
             if (id == Guid.Empty)
                 return BadRequest();
 
-            await _customerDomainService.DeleteAsync(id);
+            await _customerDomainService.DeleteAsync(w => w.Id == id);
 
-            return CreateResponseOnDelete<CustomerDto, Guid>(_name);
+            return CreateResponseOnDelete(_name);
         }
     }
 }

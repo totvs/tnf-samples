@@ -2,17 +2,17 @@
 using System;
 using Tnf.Builder;
 using Tnf.Notifications;
-using Tnf.Repositories.Entities;
 
 namespace SuperMarket.FiscalService.Domain.Entities
 {
-    public class TaxMoviment : Entity<Guid>
+    public class TaxMoviment
     {
         private const int TaxPercentage = 10;
 
         public static TaxMovimentBuilder New(INotificationHandler notification)
             => new TaxMovimentBuilder(notification);
 
+        public Guid Id { get; private set; }
         public Guid PurchaseOrderId { get; private set; }
         public decimal PurchaseOrderBaseValue { get; private set; }
         public decimal PurchaseOrderDiscount { get; private set; }

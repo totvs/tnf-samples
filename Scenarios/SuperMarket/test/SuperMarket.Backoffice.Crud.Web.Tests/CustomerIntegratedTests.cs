@@ -13,7 +13,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Tnf;
-using Tnf.Application.Services;
 using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.Domain.Services;
@@ -68,7 +67,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         {
             TnfSession.ShouldNotBeNull();
             ServiceProvider.GetService<CustomerController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IDomainService<Customer, Guid>>().ShouldNotBeNull();
+            ServiceProvider.GetService<IDomainService<Customer>>().ShouldNotBeNull();
         }
 
 
@@ -76,7 +75,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public async Task Should_GetAll_With_Paginated()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 WebConstants.CustomerRouteName
             );
 
@@ -85,7 +84,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             Assert.Equal(10, response.Items.Count);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
@@ -98,7 +97,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public async Task Should_GetAll_Sorted()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=20&order=-name"
             );
 
@@ -108,7 +107,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             Assert.Equal("Customer A", response.Items.Last().Name);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?order=-name"
             );
 
@@ -122,7 +121,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
         public async Task Should_GetAll_By_Name()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=20&name=Customer%20"
             );
 
@@ -131,7 +130,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             Assert.All(response.Items, p => p.Name.Contains("Customer "));
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?name=Customer%20C"
             );
 
@@ -190,7 +189,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
 
@@ -203,7 +202,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
                 new CustomerDto() { Name = "Customer @" }
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
@@ -224,7 +223,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
         [Fact]
@@ -282,7 +281,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
             );
 
             // Assert
-            Assert.False(response.IsNullable());
+            Assert.Null(response);
         }
 
         [Fact]
@@ -314,7 +313,7 @@ namespace SuperMarket.Backoffice.Crud.Web.Tests
                 $"{WebConstants.CustomerRouteName}/{CustomerDomainServiceMock.customerGuid}"
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 

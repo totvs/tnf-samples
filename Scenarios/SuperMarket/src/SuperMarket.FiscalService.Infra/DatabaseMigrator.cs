@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SuperMarket.FiscalService.Infra.Contexts;
 using System;
-using Tnf.Repositories.Uow;
+using System.Threading.Tasks;
 
 namespace SuperMarket.FiscalService.Infra
 {
@@ -10,14 +10,12 @@ namespace SuperMarket.FiscalService.Infra
     {
         public static void MigrateDatabase(this IServiceProvider provider)
         {
-            var uowManager = provider.GetRequiredService<IUnitOfWorkManager>();
-
-            using (var uow = uowManager.Begin())
+            Task.Factory.StartNew(() =>
             {
                 var context = provider.GetRequiredService<FiscalContext>();
 
                 context.Database.Migrate();
-            }
+            });
         }
     }
 }

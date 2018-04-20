@@ -5,6 +5,7 @@ using SuperMarket.Backoffice.Crud.Infra.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tnf.Caching;
 using Tnf.EntityFrameworkCore;
@@ -13,7 +14,7 @@ using Tnf.Repositories;
 
 namespace SuperMarket.Backoffice.Crud.Infra.Repositories
 {
-    public class ProductRepository : EfCoreRepositoryBase<CrudContext, Product, Guid>, IRepository<Product, Guid>, IPriceTableRepository
+    public class ProductRepository : EfCoreRepositoryBase<CrudContext, Product>, IRepository<Product>, IPriceTableRepository
     {
         public readonly ICache _cache;
         private const string PriceTableKey = "ProductPriceTable";
@@ -41,11 +42,11 @@ namespace SuperMarket.Backoffice.Crud.Infra.Repositories
             TimeSpan.FromMinutes(10));
         }
 
-        public override async Task<Guid> InsertAndGetIdAsync(Product entity)
+        public override async Task<Product> InsertAndSaveChangesAsync(Product entity)
         {
             await _cache.DeleteKeyAsync(PriceTableKey);
 
-            return await base.InsertAndGetIdAsync(entity);
+            return await base.InsertAndSaveChangesAsync(entity);
         }
 
         public override async Task<Product> UpdateAsync(Product entity)
@@ -55,11 +56,11 @@ namespace SuperMarket.Backoffice.Crud.Infra.Repositories
             return await base.UpdateAsync(entity);
         }
 
-        public override async Task DeleteAsync(Guid id)
+        public override async Task DeleteAsync(Expression<Func<Product, bool>> predicate)
         {
             await _cache.DeleteKeyAsync(PriceTableKey);
 
-            await base.DeleteAsync(id);
+            await base.DeleteAsync(predicate);
         }
     }
 }

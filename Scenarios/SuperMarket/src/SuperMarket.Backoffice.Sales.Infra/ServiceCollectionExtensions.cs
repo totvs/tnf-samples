@@ -21,6 +21,7 @@ namespace SuperMarket.Backoffice.Sales.Infra
                     {
                         config.DbContextOptions.EnableSensitiveDataLogging();
                         config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                        config.UseLoggerFactory();
                     }
 
                     if (config.ExistingConnection != null)
