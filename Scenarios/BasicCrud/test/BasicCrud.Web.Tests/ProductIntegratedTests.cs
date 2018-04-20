@@ -4,8 +4,8 @@ using BasicCrud.Domain.Entities;
 using BasicCrud.Domain.Interfaces.Repositories;
 using BasicCrud.Domain.Interfaces.Services;
 using BasicCrud.Dto.Product;
+using BasicCrud.Infra.Context;
 using BasicCrud.Infra.ReadInterfaces;
-using BasicCrud.Infra.SqlServer.Context;
 using BasicCrud.Web.Controllers;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +20,8 @@ using Tnf;
 using Tnf.Application.Services;
 using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
-using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
-using Tnf.Localization;
 using Tnf.Notifications;
 using Xunit;
 
@@ -31,20 +29,13 @@ namespace BasicCrud.Web.Tests
 {
     public class ProductIntegratedTests : TnfAspNetCoreIntegratedTestBase<StartupIntegratedTest>
     {
-        private readonly ILocalizationSource _localizationSource;
-        private readonly ILocalizationSource _tnfLocalizationSource;
-        private readonly CultureInfo _culture;
-
         public ProductIntegratedTests()
         {
             var notificationHandler = new NotificationHandler(ServiceProvider);
 
-            _localizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
-            _tnfLocalizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(TnfConsts.LocalizationSourceName);
+            SetRequestCulture(CultureInfo.GetCultureInfo("pt-BR"));
 
-            _culture = CultureInfo.GetCultureInfo("pt-BR");
-
-            ServiceProvider.UsingDbContext<BasicCrudDbContext>(context =>
+            ServiceProvider.UsingDbContext<CrudDbContext>(context =>
             {
                 context.Products.Add(Product.Create(notificationHandler)
                     .WithId(ProductAppServiceMock.productGuid)
@@ -85,7 +76,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_With_Paginated()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 WebConstants.ProductRouteName
             );
 
@@ -94,7 +85,7 @@ namespace BasicCrud.Web.Tests
             Assert.Equal(10, response.Items.Count);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?pageSize=30"
             );
 
@@ -107,7 +98,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_Sorted()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?pageSize=20&order=-description"
             );
 
@@ -117,7 +108,7 @@ namespace BasicCrud.Web.Tests
             Assert.Equal("Product A", response.Items.Last().Description);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?order=-description"
             );
 
@@ -131,7 +122,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_By_Description()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?pageSize=20&description=Product%20"
             );
 
@@ -140,7 +131,7 @@ namespace BasicCrud.Web.Tests
             Assert.All(response.Items, p => p.Description.Contains("Product "));
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?description=Product%20C"
             );
 
@@ -214,9 +205,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnGetError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnGetError), "Product");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -227,10 +219,10 @@ namespace BasicCrud.Web.Tests
             // Act
             var product = await PostResponseAsObjectAsync<ProductDto, ProductDto>(
                 WebConstants.ProductRouteName,
-                new ProductDto() { Description = "Product @", Value = 110}
+                new ProductDto() { Description = "Product @", Value = 110 }
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?pageSize=30"
             );
 
@@ -254,9 +246,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPostError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPostError), "Product");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidDtoError), "dto");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -274,11 +267,13 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(2, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPostError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPostError), "Product");
             Assert.Equal(message, response.Message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveDescription);
             Assert.Contains(response.Details, n => n.Message == message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveValue);
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -322,11 +317,13 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(2, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPutError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPutError), "Product");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "id");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidDtoError), "dto");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -344,11 +341,13 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(2, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPutError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPutError), "Product");
             Assert.Equal(message, response.Message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveDescription);
             Assert.Contains(response.Details, n => n.Message == message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveValue);
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -361,7 +360,7 @@ namespace BasicCrud.Web.Tests
                 $"{WebConstants.ProductRouteName}/{ProductAppServiceMock.productGuid}"
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 $"{WebConstants.ProductRouteName}?pageSize=30"
             );
 
@@ -383,9 +382,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnDeleteError, _culture), "Product");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnDeleteError), "Product");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "id");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using Tnf.Notifications;
-using Tnf.Repositories.Entities;
 
 namespace BasicCrud.Domain.Entities
 {
-    public partial class Customer : Entity<Guid>
+    public partial class Customer : IEntity
     {
+        public Guid Id { get; set; }
         public string Name { get; internal set; }
 
         public static Builder Create(INotificationHandler handler)

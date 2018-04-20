@@ -1,11 +1,18 @@
-﻿using BasicCrud.Dto.Customer;
+﻿using BasicCrud.Dto;
+using BasicCrud.Dto.Customer;
 using System;
+using System.Threading.Tasks;
 using Tnf.Application.Services;
+using Tnf.Dto;
 
 namespace BasicCrud.Application.Services.Interfaces
 {
-    // Para que essa interface seja registrada por convenção ela precisa herdar de alguma dessas interfaces: ITransientDependency, IScopedDependency, ISingletonDependency
-    public interface ICustomerAppService : IAsyncApplicationService<CustomerDto, CustomerRequestAllDto, Guid>
+    public interface ICustomerAppService : IApplicationService
     {
+        Task<IListDto<CustomerDto>> GetAllAsync(CustomerRequestAllDto request);
+        Task<CustomerDto> GetAsync(DefaultRequestDto request);
+        Task<CustomerDto> CreateAsync(CustomerDto customerDto);
+        Task<CustomerDto> UpdateAsync(Guid id, CustomerDto customerDto);
+        Task DeleteAsync(Guid id);
     }
 }

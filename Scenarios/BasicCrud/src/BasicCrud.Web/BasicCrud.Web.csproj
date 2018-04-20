@@ -25,12 +25,14 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
-    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.0.2.8701" />
-    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.0.2.8701" />
+    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.1.0.10901" />
+    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.1.0.10901" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BasicCrud.Application\BasicCrud.Application.csproj" />
+    <ProjectReference Include="..\BasicCrud.Infra.Oracle\BasicCrud.Infra.Oracle.csproj" />
+    <ProjectReference Include="..\BasicCrud.Infra.SqLite\BasicCrud.Infra.SqLite.csproj" />
     <ProjectReference Include="..\BasicCrud.Infra.SqlServer\BasicCrud.Infra.SqlServer.csproj" />
   </ItemGroup>
 

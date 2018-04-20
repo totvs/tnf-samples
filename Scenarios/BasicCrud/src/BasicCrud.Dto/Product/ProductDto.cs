@@ -3,9 +3,9 @@ using Tnf.Dto;
 
 namespace BasicCrud.Dto.Product
 {
-    public class ProductDto : DtoBase<Guid>
+    public class ProductDto : BaseDto
     {
-        public static ProductDto NullInstance = new ProductDto().AsNullable<ProductDto, Guid>();
+        public Guid Id { get; set; }
 
         public string Description { get; set; }
 

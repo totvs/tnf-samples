@@ -1,14 +1,11 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
-using BasicCrud.Domain.Entities;
+using BasicCrud.Dto;
 using BasicCrud.Dto.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tnf.Application.Services;
-using Tnf.Domain.Services;
 using Tnf.Dto;
-using Tnf.Notifications;
 
 namespace BasicCrud.Web.Tests.Mocks
 {
@@ -22,7 +19,7 @@ namespace BasicCrud.Web.Tests.Mocks
             new CustomerDto() { Id = Guid.NewGuid(), Name = "Customer C" }
         };
 
-        public Task<CustomerDto> Create(CustomerDto dto)
+        public Task<CustomerDto> CreateAsync(CustomerDto dto)
         {
             if (dto == null)
                 return Task.FromResult<CustomerDto>(null);
@@ -33,28 +30,28 @@ namespace BasicCrud.Web.Tests.Mocks
             return dto.AsTask();
         }
 
-        public Task Delete(Guid id)
+        public Task DeleteAsync(Guid id)
         {
             list.RemoveAll(c => c.Id == id);
 
             return Task.CompletedTask;
         }
 
-        public Task<CustomerDto> Get(IRequestDto<Guid> id)
+        public Task<CustomerDto> GetAsync(DefaultRequestDto id)
         {
-            var dto = list.FirstOrDefault(c => c.Id == id.GetId());
+            var dto = list.FirstOrDefault(c => c.Id == id.Id);
 
             return dto.AsTask();
         }
 
-        public Task<IListDto<CustomerDto, Guid>> GetAll(CustomerRequestAllDto request)
+        public Task<IListDto<CustomerDto>> GetAllAsync(CustomerRequestAllDto request)
         {
-            IListDto<CustomerDto, Guid> result = new ListDto<CustomerDto, Guid> { HasNext = false, Items = list };
+            IListDto<CustomerDto> result = new ListDto<CustomerDto> { HasNext = false, Items = list };
 
             return result.AsTask();
         }
 
-        public Task<CustomerDto> Update(Guid id, CustomerDto dto)
+        public Task<CustomerDto> UpdateAsync(Guid id, CustomerDto dto)
         {
             if (dto == null)
                 return Task.FromResult<CustomerDto>(null);

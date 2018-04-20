@@ -1,4 +1,5 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
+using BasicCrud.Dto;
 using BasicCrud.Dto.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,11 +29,11 @@ namespace BasicCrud.Web.Controllers
         /// <param name="requestDto">Request params</param>
         /// <returns>List of customers</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IListDto<CustomerDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<CustomerDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]CustomerRequestAllDto requestDto)
         {
-            var response = await _appService.GetAll(requestDto);
+            var response = await _appService.GetAllAsync(requestDto);
 
             return CreateResponseOnGetAll(response, _name);
         }
@@ -47,13 +48,13 @@ namespace BasicCrud.Web.Controllers
         [ProducesResponseType(typeof(CustomerDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
+        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto requestDto)
         {
-            requestDto.WithId(id);
+            var request = new DefaultRequestDto(id, requestDto);
 
-            var response = await _appService.Get(requestDto);
+            var response = await _appService.GetAsync(request);
 
-            return CreateResponseOnGet<CustomerDto, Guid>(response, _name);
+            return CreateResponseOnGet(response, _name);
         }
 
         /// <summary>
@@ -66,9 +67,9 @@ namespace BasicCrud.Web.Controllers
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Post([FromBody]CustomerDto customerDto)
         {
-            customerDto = await _appService.Create(customerDto);
+            customerDto = await _appService.CreateAsync(customerDto);
 
-            return CreateResponseOnPost<CustomerDto, Guid>(customerDto, _name);
+            return CreateResponseOnPost(customerDto, _name);
         }
 
         /// <summary>
@@ -82,9 +83,9 @@ namespace BasicCrud.Web.Controllers
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Put(Guid id, [FromBody]CustomerDto customerDto)
         {
-            customerDto = await _appService.Update(id, customerDto);
+            customerDto = await _appService.UpdateAsync(id, customerDto);
 
-            return CreateResponseOnPut<CustomerDto, Guid>(customerDto, _name);
+            return CreateResponseOnPut(customerDto, _name);
         }
 
         /// <summary>
@@ -96,9 +97,9 @@ namespace BasicCrud.Web.Controllers
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _appService.Delete(id);
+            await _appService.DeleteAsync(id);
 
-            return CreateResponseOnDelete<CustomerDto, Guid>(_name);
+            return CreateResponseOnDelete(_name);
         }
     }
 }

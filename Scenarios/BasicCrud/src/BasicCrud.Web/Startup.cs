@@ -1,6 +1,10 @@
 ﻿using BasicCrud.Application;
 using BasicCrud.Domain;
+using BasicCrud.Domain.Entities;
+using BasicCrud.Dto;
 using BasicCrud.Infra;
+using BasicCrud.Infra.Oracle;
+using BasicCrud.Infra.SqLite;
 using BasicCrud.Infra.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,16 +20,29 @@ namespace BasicCrud.Web
 {
     public class Startup
     {
+        DatabaseConfiguration DatabaseConfiguration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            DatabaseConfiguration = new DatabaseConfiguration(configuration);
+        }
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Chaveamento de qual banco a aplicação irá usar
             services
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
-                                                    //.AddSqLiteDependency()            // dependencia da camada BasicCrud.Infra.SqLite
-                                                    //.AddOracleDependency()            // dependencia da camada BasicCrud.Infra.Oracle
-                .AddSqlServerDependency()           // dependencia da camada BasicCrud.Infra.SqlServer
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
+
+            if (DatabaseConfiguration.DatabaseType == DatabaseType.SqlServer)
+                services.AddSqlServerDependency();
+            else if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)
+                services.AddSqLiteDependency();
+            else if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
+                services.AddOracleDependency();
+            else
+                throw new NotSupportedException("No database configuration found");
 
             services.AddSwaggerGen(c =>
             {
@@ -46,11 +63,18 @@ namespace BasicCrud.Web
                 // Adiciona as configurações de localização da aplicação
                 options.UseDomainLocalization();
 
-                // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
+                // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
+                // O exemplo abaixo registra esse comportamento através de uma convenção:
+                // toda classe que implementar essas interfaces irão ter essa configuração definida
+                // quando for consultado um método que receba a interface IRequestDto do Tnf
+                options.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity =>
+                        entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
 
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(SqlServerConstants.ConnectionStringName);
+                options.DefaultNameOrConnectionString = DatabaseConfiguration.ConnectionString;
 
                 // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
@@ -59,10 +83,10 @@ namespace BasicCrud.Web
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
 
                 // Habilita o driver Oracle da Devart (DotConnect for Oracle)
-                //options.EnableDevartOracleDriver(useDefaultLicense: true);
+                if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
+                    options.EnableDevartOracleDriver(useDefaultLicense: true);
             });
 
-            // SqlServer migrate database
             app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
@@ -78,7 +102,7 @@ namespace BasicCrud.Web
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

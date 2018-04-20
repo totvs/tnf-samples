@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading.Tasks;
 using Tnf.Domain.Services;
-using Tnf.Localization;
 using Tnf.TestBase;
 using Xunit;
 
@@ -17,7 +16,6 @@ namespace BasicCrud.Domain.Tests
 {
     public class ProductDomainServiceTests : TnfIntegratedTestBase
     {
-        private ILocalizationSource _localizationSource;
         private readonly IProductDomainService _domainService;
         private readonly CultureInfo _culture;
 
@@ -44,8 +42,6 @@ namespace BasicCrud.Domain.Tests
             base.PostInitialize(provider);
 
             provider.ConfigureTnf().UseDomainLocalization();
-
-            _localizationSource = provider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
         }
 
         [Fact]
@@ -78,10 +74,12 @@ namespace BasicCrud.Domain.Tests
             // Act
             var product = await _domainService.InsertProductAsync(null);
 
+            
             // Assert
             Assert.Null(product);
             Assert.True(LocalNotification.HasNotification());
-            var message = _localizationSource.GetString(DomainService.Error.DomainServiceOnInsertAndGetIdNullBuilderError, _culture);
+
+            var message = GetLocalizedString(Constants.LocalizationSourceName, DomainService.Error.DomainServiceOnInsertNullBuilderError, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
@@ -94,9 +92,11 @@ namespace BasicCrud.Domain.Tests
             // Assert
             Assert.Null(product);
             Assert.True(LocalNotification.HasNotification());
-            var message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+
+            var message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveDescription, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveValue, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
@@ -128,7 +128,8 @@ namespace BasicCrud.Domain.Tests
             Assert.Null(product);
             Assert.True(LocalNotification.HasNotification());
             Assert.Single(LocalNotification.GetAll());
-            var message = _localizationSource.GetString(DomainService.Error.DomainServiceOnUpdateNullBuilderError, _culture);
+
+            var message = GetLocalizedString(Constants.LocalizationSourceName, DomainService.Error.DomainServiceOnUpdateNullBuilderError, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
@@ -141,18 +142,20 @@ namespace BasicCrud.Domain.Tests
             // Assert
             Assert.Null(product);
             Assert.True(LocalNotification.HasNotification());
-            var message = _localizationSource.GetString(Product.Error.ProductShouldHaveDescription, _culture);
+
+            var message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveDescription, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
-            message = _localizationSource.GetString(Product.Error.ProductShouldHaveValue, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Product.Error.ProductShouldHaveValue, _culture);
             Assert.Contains(LocalNotification.GetAll(), n => n.Message == message);
         }
 
 
         [Fact]
-        public async Task Should_Delete_Product()
+        public Task Should_Delete_Product()
         {
             // Act
-            await _domainService.DeleteProductAsync(ProductRepositoryMock.productGuid);
+            return _domainService.DeleteProductAsync(ProductRepositoryMock.productGuid);
         }
 
     }

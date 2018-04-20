@@ -1,14 +1,12 @@
 ﻿using BasicCrud.Domain.Entities;
 using BasicCrud.Domain.Interfaces.Services;
+using BasicCrud.Dto;
 using BasicCrud.Dto.Product;
 using BasicCrud.Infra.ReadInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Tnf.Builder;
-using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
 
@@ -67,10 +65,10 @@ namespace BasicCrud.Application.Tests.Mocks
             return Task.CompletedTask;
         }
 
-        public Task<ProductDto> GetProductAsync(IRequestDto<Guid> key)
-            => list.FirstOrDefault(c => c.Id == key.GetId()).MapTo<ProductDto>().AsTask();
+        public Task<ProductDto> GetProductAsync(DefaultRequestDto key)
+            => list.FirstOrDefault(c => c.Id == key.Id).MapTo<ProductDto>().AsTask();
 
-        public Task<IListDto<ProductDto, Guid>> GetAllProductsAsync(ProductRequestAllDto key)
-            => list.ToListDto<Product, ProductDto, Guid>(false).AsTask();
+        public Task<IListDto<ProductDto>> GetAllProductsAsync(ProductRequestAllDto key)
+            => list.ToListDto<Product, ProductDto>(false).AsTask();
     }
 }

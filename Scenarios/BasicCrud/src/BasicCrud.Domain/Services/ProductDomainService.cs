@@ -22,13 +22,13 @@ namespace BasicCrud.Domain.Services
 
         public async Task<Product> InsertProductAsync(Product.Builder builder)
         {
-            if(builder == null)
+            if (builder == null)
             {
                 Notification
                     .DefaultBuilder
                     .AsError()
-                    .FromErrorEnum(Error.DomainServiceOnInsertAndGetIdNullBuilderError)
-                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnInsertAndGetIdNullBuilderError)
+                    .FromErrorEnum(Error.DomainServiceOnInsertNullBuilderError)
+                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnInsertNullBuilderError)
                     .Raise();
 
                 return default(Product);
@@ -39,7 +39,7 @@ namespace BasicCrud.Domain.Services
             if (Notification.HasNotification())
                 return default(Product);
 
-            product.Id = await _repository.InsertProductAndGetIdAsync(product);
+            product = await _repository.InsertProductAndGetIdAsync(product);
 
             return product;
         }

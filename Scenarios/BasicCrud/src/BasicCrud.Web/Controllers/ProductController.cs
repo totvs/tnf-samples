@@ -1,4 +1,5 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
+using BasicCrud.Dto;
 using BasicCrud.Dto.Product;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,7 +29,7 @@ namespace BasicCrud.Web.Controllers
         /// <param name="requestDto">Request params</param>
         /// <returns>List of products</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IListDto<ProductDto, Guid>), 200)]
+        [ProducesResponseType(typeof(IListDto<ProductDto>), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> GetAll([FromQuery]ProductRequestAllDto requestDto)
         {
@@ -47,13 +48,13 @@ namespace BasicCrud.Web.Controllers
         [ProducesResponseType(typeof(ProductDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto<Guid> requestDto)
+        public async Task<IActionResult> Get(Guid id, [FromQuery]RequestDto requestDto)
         {
-            requestDto.WithId(id);
+            var request = new DefaultRequestDto(id, requestDto);
 
-            var response = await _appService.GetProductAsync(requestDto);
+            var response = await _appService.GetProductAsync(request);
 
-            return CreateResponseOnGet<ProductDto, Guid>(response, _name);
+            return CreateResponseOnGet(response, _name);
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace BasicCrud.Web.Controllers
         {
             customerDto = await _appService.CreateProductAsync(customerDto);
 
-            return CreateResponseOnPost<ProductDto, Guid>(customerDto, _name);
+            return CreateResponseOnPost(customerDto, _name);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace BasicCrud.Web.Controllers
         {
             customerDto = await _appService.UpdateProductAsync(id, customerDto);
 
-            return CreateResponseOnPut<ProductDto, Guid>(customerDto, _name);
+            return CreateResponseOnPut(customerDto, _name);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace BasicCrud.Web.Controllers
         {
             await _appService.DeleteProductAsync(id);
 
-            return CreateResponseOnDelete<ProductDto, Guid>(_name);
+            return CreateResponseOnDelete(_name);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
+using BasicCrud.Dto;
 using BasicCrud.Dto.Product;
 using System;
 using System.Collections.Generic;
@@ -36,16 +37,16 @@ namespace BasicCrud.Web.Tests.Mocks
             return Task.CompletedTask;
         }
 
-        public Task<ProductDto> GetProductAsync(IRequestDto<Guid> id)
+        public Task<ProductDto> GetProductAsync(DefaultRequestDto id)
         {
-            var dto = list.FirstOrDefault(c => c.Id == id.GetId());
+            var dto = list.FirstOrDefault(c => c.Id == id.Id);
 
             return dto.AsTask();
         }
 
-        public Task<IListDto<ProductDto, Guid>> GetAllProductAsync(ProductRequestAllDto request)
+        public Task<IListDto<ProductDto>> GetAllProductAsync(ProductRequestAllDto request)
         {
-            IListDto<ProductDto, Guid> result = new ListDto<ProductDto, Guid> { HasNext = false, Items = list };
+            IListDto<ProductDto> result = new ListDto<ProductDto> { HasNext = false, Items = list };
 
             return result.AsTask();
         }

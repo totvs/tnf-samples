@@ -1,9 +1,6 @@
 ﻿using BasicCrud.Domain;
-using BasicCrud.Domain.Interfaces.Repositories;
-using BasicCrud.Infra.ReadInterfaces;
+using BasicCrud.Infra.Context;
 using BasicCrud.Infra.SqlServer.Context;
-using BasicCrud.Infra.SqlServer.Repositories;
-using BasicCrud.Infra.SqlServer.Repositories.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,12 +13,13 @@ namespace BasicCrud.Infra.SqlServer
         {
             services
                 .AddInfraDependency()
-                .AddTnfDbContext<BasicCrudDbContext>((config) =>
+                .AddTnfDbContext<CrudDbContext, SqlServerCrudDbContext>((config) =>
                 {
                     if (Constants.IsDevelopment())
                     {
                         config.DbContextOptions.EnableSensitiveDataLogging();
                         config.DbContextOptions.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                        config.UseLoggerFactory();
                     }
 
                     if (config.ExistingConnection != null)
@@ -29,11 +27,6 @@ namespace BasicCrud.Infra.SqlServer
                     else
                         config.DbContextOptions.UseSqlServer(config.ConnectionString);
                 });
-
-
-            // Registro dos repositórios
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IProductReadRepository, ProductReadRepository>();
 
             return services;
         }

@@ -1,8 +1,6 @@
 ﻿using BasicCrud.Web.Controllers;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Tnf.AspNetCore.TestBase;
 using Xunit;
@@ -31,7 +29,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<ProductDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<ProductDto>>(
                 WebConstants.ProductRouteName
             );
 
@@ -135,10 +133,10 @@ namespace BasicCrud.Web.Tests
 
 
         [Fact]
-        public async Task Should_Delete_Product()
+        public Task Should_Delete_Product()
         {
             // Act
-            await DeleteResponseAsync(
+            return DeleteResponseAsync(
                 $"{WebConstants.ProductRouteName}/{ProductAppServiceMock.productGuid}"
             );
         }

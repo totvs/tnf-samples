@@ -1,4 +1,5 @@
-﻿using BasicCrud.Dto.Product;
+﻿using BasicCrud.Dto;
+using BasicCrud.Dto.Product;
 using System;
 using System.Threading.Tasks;
 using Tnf.Application.Services;
@@ -12,7 +13,7 @@ namespace BasicCrud.Application.Services.Interfaces
         Task<ProductDto> CreateProductAsync(ProductDto product);
         Task<ProductDto> UpdateProductAsync(Guid id, ProductDto product);
         Task DeleteProductAsync(Guid id);
-        Task<ProductDto> GetProductAsync(IRequestDto<Guid> id);
-        Task<IListDto<ProductDto, Guid>> GetAllProductAsync(ProductRequestAllDto request);
+        Task<ProductDto> GetProductAsync(DefaultRequestDto id);
+        Task<IListDto<ProductDto>> GetAllProductAsync(ProductRequestAllDto request);
     }
 }

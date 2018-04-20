@@ -31,13 +31,13 @@ namespace BasicCrud.Domain.Tests.Mocks
             return Task.CompletedTask;
         }
 
-        public Task<Guid> InsertProductAndGetIdAsync(Product product)
+        public Task<Product> InsertProductAndGetIdAsync(Product product)
         {
             product.Id = Guid.NewGuid();
 
             list.Add(product);
 
-            return product.Id.AsTask();
+            return product.AsTask();
         }
 
         public Task<Product> UpdateProductAsync(Product product)

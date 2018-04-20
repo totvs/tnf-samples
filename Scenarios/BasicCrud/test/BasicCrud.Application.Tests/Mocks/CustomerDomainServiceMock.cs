@@ -1,4 +1,5 @@
 ﻿using BasicCrud.Domain.Entities;
+using BasicCrud.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ using Tnf.Notifications;
 
 namespace BasicCrud.Application.Tests.Mocks
 {
-    public class CustomerDomainServiceMock : IDomainService<Customer, Guid>
+    public class CustomerDomainServiceMock : IDomainService<Customer>
     {
-        private readonly INotificationHandler notificationHandler;
+        private readonly INotificationHandler _notificationHandler;
 
         public static Guid customerGuid = Guid.Parse("1b92f96f-6a71-4655-a0b9-93c5f6ad9637");
 
@@ -23,7 +24,7 @@ namespace BasicCrud.Application.Tests.Mocks
 
         public CustomerDomainServiceMock(INotificationHandler notificationHandler)
         {
-            this.notificationHandler = notificationHandler;
+            _notificationHandler = notificationHandler;
 
             list.Add(Customer.Create(notificationHandler).WithId(customerGuid).WithName("Customer A").Build());
             list.Add(Customer.Create(notificationHandler).WithId(Guid.NewGuid()).WithName("Customer B").Build());
@@ -31,19 +32,7 @@ namespace BasicCrud.Application.Tests.Mocks
         }
 
         public void Delete(Customer entity)
-            => Delete(entity.Id);
-
-        public void Delete(Guid id)
-        {
-            list.RemoveAll(c => c.Id == id);
-        }
-
-        public Task DeleteAsync(Guid id)
-        {
-            Delete(id);
-
-            return Task.CompletedTask;
-        }
+            => Delete(w => w.Id == entity.Id);
 
         public Task DeleteAsync(Customer entity)
         {
@@ -52,53 +41,41 @@ namespace BasicCrud.Application.Tests.Mocks
             return Task.CompletedTask;
         }
 
-        public Customer Get(IRequestDto<Guid> key, bool include = true, bool select = true)
-            => list.FirstOrDefault(c => c.Id == key.GetId());
+        public Task<Customer> GetAsync(IRequestDto key, bool include = true, bool select = true)
+            => Get(key, include, select).AsTask();
 
-        public TDto Get<TDto>(IRequestDto<Guid> key, bool include = true, bool select = true)
-            where TDto : IDto<Guid>
-            => list.FirstOrDefault(c => c.Id == key.GetId()).MapTo<TDto>();
+        public Task<TDto> GetAsync<TDto>(IRequestDto key, bool include = true, bool select = true)
+            where TDto : IDto
+        {
+            var customer = Get(key, include, select);
+            return customer.MapTo<TDto>().AsTask();
+        }
 
-        public IListDto<TDto, Guid> GetAll<TDto>(IRequestAllDto key, Expression<Func<Customer, bool>> func = null, bool paging = true, bool orderning = true)
-            where TDto : IDto<Guid>
-            => list.ToListDto<Customer, TDto, Guid>(false);
-
-        public async Task<IListDto<TDto, Guid>> GetAllAsync<TDto>(IRequestAllDto key, Expression<Func<Customer, bool>> func = null, bool paging = true, bool orderning = true)
-            where TDto : IDto<Guid>
-            => await list.ToListDtoAsync<Customer, TDto, Guid>(false);
-
-        public Task<Customer> GetAsync(IRequestDto<Guid> key, bool include = true, bool select = true)
-            => Get(key).AsTask();
-
-        public Task<TDto> GetAsync<TDto>(IRequestDto<Guid> key, bool include = true, bool select = true)
-            where TDto : IDto<Guid>
-            => Get<TDto>(key).AsTask();
-
-        public Guid InsertAndGetId<TBuilder>(TBuilder builder)
+        public Customer InsertAndSaveChanges<TBuilder>(TBuilder builder)
             where TBuilder : IBuilder<Customer>
         {
             var entity = builder.Build();
 
-            if (notificationHandler.HasNotification())
-                return Guid.Empty;
+            if (_notificationHandler.HasNotification())
+                return null;
 
             entity.Id = Guid.NewGuid();
 
             list.Add(entity);
 
-            return entity.Id;
+            return entity;
         }
 
-        public Task<Guid> InsertAndGetIdAsync<TBuilder>(TBuilder builder)
+        public Task<Customer> InsertAndSaveChangesAsync<TBuilder>(TBuilder builder)
             where TBuilder : IBuilder<Customer>
-            => InsertAndGetId(builder).AsTask();
+            => InsertAndSaveChanges(builder).AsTask();
 
         public Customer Update<TBuilder>(TBuilder builder)
             where TBuilder : IBuilder<Customer>
         {
             var entity = builder.Build();
 
-            if (notificationHandler.HasNotification())
+            if (_notificationHandler.HasNotification())
                 return null;
 
             list.RemoveAll(c => c.Id == entity.Id);
@@ -110,5 +87,50 @@ namespace BasicCrud.Application.Tests.Mocks
         public Task<Customer> UpdateAsync<TBuilder>(TBuilder builder)
             where TBuilder : IBuilder<Customer>
             => Update(builder).AsTask();
+
+        public void Delete(Expression<Func<Customer, bool>> id)
+        {
+            list.RemoveAll(id.Compile());
+        }
+
+        public Task DeleteAsync(Expression<Func<Customer, bool>> id)
+        {
+            Delete(id);
+            return Task.CompletedTask;
+        }
+
+        public Customer Get<TRequestDto>(TRequestDto key, bool include = true, bool select = true) 
+            where TRequestDto : IRequestDto
+        {
+            var defaultRequestDto = key as DefaultRequestDto;
+
+            var customer = list.FirstOrDefault(w => w.Id == defaultRequestDto.Id);
+
+            return customer;
+        }
+
+        public TDto Get<TDto, TRequestDto>(TRequestDto key, bool include = true, bool select = true) where TRequestDto : IRequestDto
+        {
+            var defaultRequestDto = key as DefaultRequestDto;
+
+            var customer = list.FirstOrDefault(w => w.Id == defaultRequestDto.Id);
+
+            return customer.MapTo<TDto>();
+        }
+
+        public Task<Customer> GetAsync<TRequestDto>(TRequestDto key, bool include = true, bool select = true) where TRequestDto : IRequestDto
+            => Get(key, include, select).AsTask();
+
+        public Task<TDto> GetAsync<TDto, TRequestDto>(TRequestDto key, bool include = true, bool select = true) where TRequestDto : IRequestDto
+            => Get<TDto, TRequestDto>(key, include, select).AsTask();
+
+        public IListDto<TDto> GetAll<TDto>(IRequestAllDto key, Expression<Func<Customer, bool>> func = null, bool paging = true, bool orderning = true)
+        {
+            var result = list.ToListDto<Customer, TDto>(false);
+            return result;
+        }
+
+        public Task<IListDto<TDto>> GetAllAsync<TDto>(IRequestAllDto key, Expression<Func<Customer, bool>> func = null, bool paging = true, bool orderning = true)
+            => GetAll<TDto>(key, func, paging, orderning).AsTask();
     }
 }

@@ -2,7 +2,7 @@
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto.Customer;
-using BasicCrud.Infra.SqlServer.Context;
+using BasicCrud.Infra.Context;
 using BasicCrud.Web.Controllers;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,6 @@ using Tnf.AspNetCore.TestBase;
 using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
-using Tnf.Localization;
 using Tnf.Notifications;
 using Xunit;
 
@@ -28,20 +27,13 @@ namespace BasicCrud.Web.Tests
 {
     public class CustomerIntegratedTests : TnfAspNetCoreIntegratedTestBase<StartupIntegratedTest>
     {
-        private readonly ILocalizationSource _localizationSource;
-        private readonly ILocalizationSource _tnfLocalizationSource;
-        private readonly CultureInfo _culture;
-
         public CustomerIntegratedTests()
         {
             var notificationHandler = new NotificationHandler(ServiceProvider);
-            
-            _localizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
-            _tnfLocalizationSource = ServiceProvider.GetService<ILocalizationManager>().GetSource(TnfConsts.LocalizationSourceName);
 
-            _culture = CultureInfo.GetCultureInfo("pt-BR");
+            SetRequestCulture(CultureInfo.GetCultureInfo("pt-BR"));
 
-            ServiceProvider.UsingDbContext<BasicCrudDbContext>(context =>
+            ServiceProvider.UsingDbContext<CrudDbContext>(context =>
             {
                 context.Customers.Add(Customer.Create(notificationHandler)
                     .WithId(CustomerAppServiceMock.customerGuid)
@@ -70,7 +62,7 @@ namespace BasicCrud.Web.Tests
             TnfSession.ShouldNotBeNull();
             ServiceProvider.GetService<CustomerController>().ShouldNotBeNull();
             ServiceProvider.GetService<ICustomerAppService>().ShouldNotBeNull();
-            ServiceProvider.GetService<IDomainService<Customer, Guid>>().ShouldNotBeNull();
+            ServiceProvider.GetService<IDomainService<Customer>>().ShouldNotBeNull();
         }
 
 
@@ -78,7 +70,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_With_Paginated()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 WebConstants.CustomerRouteName
             );
 
@@ -87,7 +79,7 @@ namespace BasicCrud.Web.Tests
             Assert.Equal(10, response.Items.Count);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
@@ -100,7 +92,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_Sorted()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=20&order=-name"
             );
 
@@ -110,7 +102,7 @@ namespace BasicCrud.Web.Tests
             Assert.Equal("Customer A", response.Items.Last().Name);
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?order=-name"
             );
 
@@ -124,7 +116,7 @@ namespace BasicCrud.Web.Tests
         public async Task Should_GetAll_By_Name()
         {
             // Act
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=20&name=Customer%20"
             );
 
@@ -133,7 +125,7 @@ namespace BasicCrud.Web.Tests
             Assert.All(response.Items, p => p.Name.Contains("Customer "));
 
             // Act
-            response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?name=Customer%20C"
             );
 
@@ -195,9 +187,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnGetError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnGetError), "Customer");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "request");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -211,7 +204,7 @@ namespace BasicCrud.Web.Tests
                 new CustomerDto() { Name = "Customer @" }
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
@@ -235,9 +228,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPostError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPostError), "Customer");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidDtoError), "dto");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -255,9 +249,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPostError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPostError), "Customer");
             Assert.Equal(message, response.Message);
-            message = _localizationSource.GetString(Customer.Error.CustomerShouldHaveName, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Customer.Error.CustomerShouldHaveName);
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -299,11 +294,13 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(2, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPutError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPutError), "Customer");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "id");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidDtoError, _culture), "dto");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidDtoError), "dto");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -321,9 +318,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnPutError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnPutError), "Customer");
             Assert.Equal(message, response.Message);
-            message = _localizationSource.GetString(Customer.Error.CustomerShouldHaveName, _culture);
+
+            message = GetLocalizedString(Constants.LocalizationSourceName, Customer.Error.CustomerShouldHaveName);
             Assert.Contains(response.Details, n => n.Message == message);
         }
 
@@ -336,7 +334,7 @@ namespace BasicCrud.Web.Tests
                 $"{WebConstants.CustomerRouteName}/{CustomerAppServiceMock.customerGuid}"
             );
 
-            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto, Guid>>(
+            var response = await GetResponseAsObjectAsync<ListDto<CustomerDto>>(
                 $"{WebConstants.CustomerRouteName}?pageSize=30"
             );
 
@@ -358,9 +356,10 @@ namespace BasicCrud.Web.Tests
             Assert.NotNull(response);
             Assert.Equal(1, response.Details.Count);
 
-            var message = string.Format(_tnfLocalizationSource.GetString(TnfController.Error.AspNetCoreOnDeleteError, _culture), "Customer");
+            var message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, TnfController.Error.AspNetCoreOnDeleteError), "Customer");
             Assert.Equal(message, response.Message);
-            message = string.Format(_tnfLocalizationSource.GetString(ApplicationService.Error.ApplicationServiceOnInvalidIdError, _culture), "id");
+
+            message = string.Format(GetLocalizedString(TnfConsts.LocalizationSourceName, ApplicationService.Error.ApplicationServiceOnInvalidIdError), "id");
             Assert.Contains(response.Details, n => n.Message == message);
         }
 

@@ -3,10 +3,9 @@ using Tnf.Dto;
 
 namespace BasicCrud.Dto.Customer
 {
-    public class CustomerDto : DtoBase<Guid>
+    public class CustomerDto : BaseDto
     {
-        public static CustomerDto NullInstance = new CustomerDto().AsNullable<CustomerDto, Guid>();
-
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }
