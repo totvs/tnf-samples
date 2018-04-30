@@ -1,0 +1,11 @@
+﻿{
+  "culture": "pt-BR",
+  "texts": {
+    "CustomerShouldHaveName": "Um cliente precisa ter um nome informado.",
+    "ProductShouldHaveDescription": "Um produto precisa ter uma descrição informada.",
+    "ProductShouldHaveValue": "Um produto não pode ter um valor vazio.",
+
+    "DomainServiceOnInsertAndGetIdNullBuilderError": "Builder de produto ao inserir não pode ser nulo.",
+    "DomainServiceOnUpdateNullBuilderError": "Builder de produto ao atualizar não pode ser nulo."
+  }
+}
