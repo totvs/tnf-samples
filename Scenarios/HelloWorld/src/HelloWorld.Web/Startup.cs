@@ -16,32 +16,26 @@ namespace HelloWorld.Web
                 .AddCorsAll("AllowAll")
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Hello World API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "HelloWorld.Web.xml"));
-            });
-
-            services.AddResponseCompression();
-
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Hello World API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "HelloWorld.Web.xml"));
+                });
+            
             return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
                 // Adiciona as configurações de localização da aplicação
                 options.ConfigureLocalization();
-            });
-
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseSwagger();
@@ -50,6 +44,7 @@ namespace HelloWorld.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello World API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>

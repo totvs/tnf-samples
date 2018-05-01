@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper.Infra", "src\Dapper.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{705CA34E-7855-4229-995B-E66E9B3D11BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Web.Tests", "tests\Dapper.Web.Tests\Dapper.Web.Tests.csproj", "{6AD6B02E-1356-4B77-87D9-944733D162D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper.Web.Tests", "tests\Dapper.Web.Tests\Dapper.Web.Tests.csproj", "{6AD6B02E-1356-4B77-87D9-944733D162D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
