@@ -57,7 +57,6 @@ namespace RedisCache
             var environmentName = Environment.GetEnvironmentVariable("CONSOLE_ENVIRONMENT");
 
             Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true)
                 .Build();
 
