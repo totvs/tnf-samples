@@ -23,7 +23,7 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
-    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.1.0.10901" />
+    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.1.0.12002" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,10 +34,10 @@
     <Content Update="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.json">
+    <Content Update="appsettings.Production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.Production.json">
+    <Content Update="hosting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
