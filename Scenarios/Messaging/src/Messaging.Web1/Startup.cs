@@ -17,24 +17,25 @@ namespace Messaging.Web1
         {
             // Adiciona a dependencia de AspNetCore do Tnf
             services
+                .AddCorsAll("AllowAll")
                 .AddInfra1Dependency()
                 .AddTnfAspNetCore();
 
-            services.AddCorsAll("AllowAll");
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Publish API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Messaging.Web1.xml"));
-            });
-
-            services.AddResponseCompression();
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Publish API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Messaging.Web1.xml"));
+                });
 
             return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -53,17 +54,7 @@ namespace Messaging.Web1
             });
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -71,6 +62,7 @@ namespace Messaging.Web1
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Publish API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>

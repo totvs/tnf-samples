@@ -14,27 +14,26 @@ namespace Messaging.Web2
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Adiciona a dependencia de AspNetCore do Tnf
-            services.AddTnfAspNetCore();
+            services
+                .AddCorsAll("AllowAll")
+                .AddInfra2Dependency()      // Adiciona a dependencia da camada de Infra: Case1.Infra
+                .AddTnfAspNetCore();        // Adiciona a dependencia de AspNetCore do Tnf
 
-            // Adiciona a dependencia da camada de Infra: Case1.Infra
-            services.AddInfra2Dependency();
-
-            services.AddCorsAll("AllowAll");
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Message Store API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Messaging.Web2.xml"));
-            });
-
-            services.AddResponseCompression();
-
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Message Store API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Messaging.Web2.xml"));
+                });
+            
             return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -52,17 +51,7 @@ namespace Messaging.Web2
             });
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -70,6 +59,7 @@ namespace Messaging.Web2
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Message Store API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>
