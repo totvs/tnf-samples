@@ -8,6 +8,3 @@ cd ..
 
 cd .\Management
 start "Tnf.Rac.Management.Api.dll" dotnet Tnf.Rac.Management.Api.dll
-cd ..
-
-pause

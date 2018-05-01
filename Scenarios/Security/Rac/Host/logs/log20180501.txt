@@ -1,0 +1,700 @@
+2018-05-01 16:00:59.762 -03:00 [INFO] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using '"C:\Users\josue.agnese\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-05-01 16:01:15.193 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5000/.well-known/openid-configuration  
+2018-05-01 16:01:15.287 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone,Tnf.Rac.UserManagement.IsEmailConfirmationRequiredForLogin,Tnf.Rac.UserManagement.TwoFactorLogin.IsEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsRememberBrowserEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsEmailProviderEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsSmsProviderEnabled,Tnf.Rac.UserManagement.UserLockOut.IsEnabled,Tnf.Rac.UserManagement.UserLockOut.MaxFailedAccessAttemptsBeforeLockout,Tnf.Rac.UserManagement.UserLockOut.DefaultAccountLockoutSeconds,Tnf.Rac.UserManagement.PasswordComplexity.RequireDigit,Tnf.Rac.UserManagement.PasswordComplexity.RequireLowercase,Tnf.Rac.UserManagement.PasswordComplexity.RequireNonAlphanumeric,Tnf.Rac.UserManagement.PasswordComplexity.RequireUppercase,Tnf.Rac.UserManagement.PasswordComplexity.RequiredLength,TnfExternalAuthentication.IsEnabled,TnfExternalAuthentication.SourceName,TnfExternalAuthentication.GetValidateCredentialAddress,TnfExternalAuthentication.GetUserInfoAddress]
+2018-05-01 16:01:15.295 -03:00 [INFO] IdentityServer4.Hosting.IdentityServerMiddleware Invoking IdentityServer endpoint: "IdentityServer4.Endpoints.DiscoveryEndpoint" for "/.well-known/openid-configuration"
+2018-05-01 16:01:15.560 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.0.2-rtm-10011" initialized '"SqLiteConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "None"
+2018-05-01 16:01:15.719 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("11"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:15.725 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"Description\", \"x\".\"DisplayName\", \"x\".\"Emphasize\", \"x\".\"Enabled\", \"x\".\"Name\", \"x\".\"Required\", \"x\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"x\"
+ORDER BY \"x\".\"Id\""
+2018-05-01 16:01:15.770 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.UserClaims\".\"Id\", \"x.UserClaims\".\"IdentityResourceId\", \"x.UserClaims\".\"Type\"
+FROM \"IdentityClaims\" AS \"x.UserClaims\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"IdentityResources\" AS \"x0\"
+) AS \"t\" ON \"x.UserClaims\".\"IdentityResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:15.841 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:15.842 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"Description\", \"x\".\"DisplayName\", \"x\".\"Enabled\", \"x\".\"Name\"
+FROM \"ApiResources\" AS \"x\"
+ORDER BY \"x\".\"Id\""
+2018-05-01 16:01:15.860 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Secrets\".\"Id\", \"x.Secrets\".\"ApiResourceId\", \"x.Secrets\".\"Description\", \"x.Secrets\".\"Expiration\", \"x.Secrets\".\"Type\", \"x.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"x.Secrets\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"ApiResources\" AS \"x0\"
+) AS \"t\" ON \"x.Secrets\".\"ApiResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:15.863 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Scopes\".\"Id\", \"x.Scopes\".\"ApiResourceId\", \"x.Scopes\".\"Description\", \"x.Scopes\".\"DisplayName\", \"x.Scopes\".\"Emphasize\", \"x.Scopes\".\"Name\", \"x.Scopes\".\"Required\", \"x.Scopes\".\"ShowInDiscoveryDocument\"
+FROM \"ApiScopes\" AS \"x.Scopes\"
+INNER JOIN (
+    SELECT \"x1\".\"Id\"
+    FROM \"ApiResources\" AS \"x1\"
+) AS \"t0\" ON \"x.Scopes\".\"ApiResourceId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\", \"x.Scopes\".\"Id\""
+2018-05-01 16:01:15.892 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Scopes.UserClaims\".\"Id\", \"x.Scopes.UserClaims\".\"ApiScopeId\", \"x.Scopes.UserClaims\".\"Type\"
+FROM \"ApiScopeClaims\" AS \"x.Scopes.UserClaims\"
+INNER JOIN (
+    SELECT DISTINCT \"x.Scopes0\".\"Id\", \"t1\".\"Id\" AS \"Id0\"
+    FROM \"ApiScopes\" AS \"x.Scopes0\"
+    INNER JOIN (
+        SELECT \"x2\".\"Id\"
+        FROM \"ApiResources\" AS \"x2\"
+    ) AS \"t1\" ON \"x.Scopes0\".\"ApiResourceId\" = \"t1\".\"Id\"
+) AS \"t2\" ON \"x.Scopes.UserClaims\".\"ApiScopeId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id0\", \"t2\".\"Id\""
+2018-05-01 16:01:15.896 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.UserClaims\".\"Id\", \"x.UserClaims\".\"ApiResourceId\", \"x.UserClaims\".\"Type\"
+FROM \"ApiClaims\" AS \"x.UserClaims\"
+INNER JOIN (
+    SELECT \"x3\".\"Id\"
+    FROM \"ApiResources\" AS \"x3\"
+) AS \"t3\" ON \"x.UserClaims\".\"ApiResourceId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:16.256 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1067.0815ms 200 application/json; charset=UTF-8
+2018-05-01 16:01:16.347 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5000/.well-known/openid-configuration/jwks  
+2018-05-01 16:01:16.351 -03:00 [INFO] IdentityServer4.Hosting.IdentityServerMiddleware Invoking IdentityServer endpoint: "IdentityServer4.Endpoints.DiscoveryKeyEndpoint" for "/.well-known/openid-configuration/jwks"
+2018-05-01 16:01:16.386 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 39.4356ms 200 application/json; charset=UTF-8
+2018-05-01 16:01:16.466 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 POST http://localhost:5000/connect/token application/x-www-form-urlencoded 65
+2018-05-01 16:01:16.496 -03:00 [INFO] IdentityServer4.Hosting.IdentityServerMiddleware Invoking IdentityServer endpoint: "IdentityServer4.Endpoints.TokenEndpoint" for "/connect/token"
+2018-05-01 16:01:16.542 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.0.2-rtm-10011" initialized '"SqLiteConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "None"
+2018-05-01 16:01:16.705 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:16.712 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("3"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"AbsoluteRefreshTokenLifetime\", \"x\".\"AccessTokenLifetime\", \"x\".\"AccessTokenType\", \"x\".\"AllowAccessTokensViaBrowser\", \"x\".\"AllowOfflineAccess\", \"x\".\"AllowPlainTextPkce\", \"x\".\"AllowRememberConsent\", \"x\".\"AlwaysIncludeUserClaimsInIdToken\", \"x\".\"AlwaysSendClientClaims\", \"x\".\"AuthorizationCodeLifetime\", \"x\".\"BackChannelLogoutSessionRequired\", \"x\".\"BackChannelLogoutUri\", \"x\".\"ClientClaimsPrefix\", \"x\".\"ClientId\", \"x\".\"ClientName\", \"x\".\"ClientUri\", \"x\".\"ConsentLifetime\", \"x\".\"Description\", \"x\".\"EnableLocalLogin\", \"x\".\"Enabled\", \"x\".\"FrontChannelLogoutSessionRequired\", \"x\".\"FrontChannelLogoutUri\", \"x\".\"IdentityTokenLifetime\", \"x\".\"IncludeJwtId\", \"x\".\"LogoUri\", \"x\".\"PairWiseSubjectSalt\", \"x\".\"ProtocolType\", \"x\".\"RefreshTokenExpiration\", \"x\".\"RefreshTokenUsage\", \"x\".\"RequireClientSecret\", \"x\".\"RequireConsent\", \"x\".\"RequirePkce\", \"x\".\"SlidingRefreshTokenLifetime\", \"x\".\"UpdateAccessTokenClaimsOnRefresh\"
+FROM \"Clients\" AS \"x\"
+WHERE \"x\".\"ClientId\" = @__clientId_0
+ORDER BY \"x\".\"Id\"
+LIMIT 1"
+2018-05-01 16:01:16.811 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedGrantTypes\".\"Id\", \"x.AllowedGrantTypes\".\"ClientId\", \"x.AllowedGrantTypes\".\"GrantType\"
+FROM \"ClientGrantTypes\" AS \"x.AllowedGrantTypes\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"Clients\" AS \"x0\"
+    WHERE \"x0\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x0\".\"Id\"
+    LIMIT 1
+) AS \"t\" ON \"x.AllowedGrantTypes\".\"ClientId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:16.828 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.RedirectUris\".\"Id\", \"x.RedirectUris\".\"ClientId\", \"x.RedirectUris\".\"RedirectUri\"
+FROM \"ClientRedirectUris\" AS \"x.RedirectUris\"
+INNER JOIN (
+    SELECT \"x1\".\"Id\"
+    FROM \"Clients\" AS \"x1\"
+    WHERE \"x1\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x1\".\"Id\"
+    LIMIT 1
+) AS \"t0\" ON \"x.RedirectUris\".\"ClientId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\""
+2018-05-01 16:01:16.838 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.PostLogoutRedirectUris\".\"Id\", \"x.PostLogoutRedirectUris\".\"ClientId\", \"x.PostLogoutRedirectUris\".\"PostLogoutRedirectUri\"
+FROM \"ClientPostLogoutRedirectUris\" AS \"x.PostLogoutRedirectUris\"
+INNER JOIN (
+    SELECT \"x2\".\"Id\"
+    FROM \"Clients\" AS \"x2\"
+    WHERE \"x2\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x2\".\"Id\"
+    LIMIT 1
+) AS \"t1\" ON \"x.PostLogoutRedirectUris\".\"ClientId\" = \"t1\".\"Id\"
+ORDER BY \"t1\".\"Id\""
+2018-05-01 16:01:16.851 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedScopes\".\"Id\", \"x.AllowedScopes\".\"ClientId\", \"x.AllowedScopes\".\"Scope\"
+FROM \"ClientScopes\" AS \"x.AllowedScopes\"
+INNER JOIN (
+    SELECT \"x3\".\"Id\"
+    FROM \"Clients\" AS \"x3\"
+    WHERE \"x3\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x3\".\"Id\"
+    LIMIT 1
+) AS \"t2\" ON \"x.AllowedScopes\".\"ClientId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id\""
+2018-05-01 16:01:16.865 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.ClientSecrets\".\"Id\", \"x.ClientSecrets\".\"ClientId\", \"x.ClientSecrets\".\"Description\", \"x.ClientSecrets\".\"Expiration\", \"x.ClientSecrets\".\"Type\", \"x.ClientSecrets\".\"Value\"
+FROM \"ClientSecrets\" AS \"x.ClientSecrets\"
+INNER JOIN (
+    SELECT \"x4\".\"Id\"
+    FROM \"Clients\" AS \"x4\"
+    WHERE \"x4\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x4\".\"Id\"
+    LIMIT 1
+) AS \"t3\" ON \"x.ClientSecrets\".\"ClientId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:16.891 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Claims\".\"Id\", \"x.Claims\".\"ClientId\", \"x.Claims\".\"Type\", \"x.Claims\".\"Value\"
+FROM \"ClientClaims\" AS \"x.Claims\"
+INNER JOIN (
+    SELECT \"x5\".\"Id\"
+    FROM \"Clients\" AS \"x5\"
+    WHERE \"x5\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x5\".\"Id\"
+    LIMIT 1
+) AS \"t4\" ON \"x.Claims\".\"ClientId\" = \"t4\".\"Id\"
+ORDER BY \"t4\".\"Id\""
+2018-05-01 16:01:16.898 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.IdentityProviderRestrictions\".\"Id\", \"x.IdentityProviderRestrictions\".\"ClientId\", \"x.IdentityProviderRestrictions\".\"Provider\"
+FROM \"ClientIdPRestrictions\" AS \"x.IdentityProviderRestrictions\"
+INNER JOIN (
+    SELECT \"x6\".\"Id\"
+    FROM \"Clients\" AS \"x6\"
+    WHERE \"x6\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x6\".\"Id\"
+    LIMIT 1
+) AS \"t5\" ON \"x.IdentityProviderRestrictions\".\"ClientId\" = \"t5\".\"Id\"
+ORDER BY \"t5\".\"Id\""
+2018-05-01 16:01:16.900 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedCorsOrigins\".\"Id\", \"x.AllowedCorsOrigins\".\"ClientId\", \"x.AllowedCorsOrigins\".\"Origin\"
+FROM \"ClientCorsOrigins\" AS \"x.AllowedCorsOrigins\"
+INNER JOIN (
+    SELECT \"x7\".\"Id\"
+    FROM \"Clients\" AS \"x7\"
+    WHERE \"x7\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x7\".\"Id\"
+    LIMIT 1
+) AS \"t6\" ON \"x.AllowedCorsOrigins\".\"ClientId\" = \"t6\".\"Id\"
+ORDER BY \"t6\".\"Id\""
+2018-05-01 16:01:16.911 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Properties\".\"Id\", \"x.Properties\".\"ClientId\", \"x.Properties\".\"Key\", \"x.Properties\".\"Value\"
+FROM \"ClientProperties\" AS \"x.Properties\"
+INNER JOIN (
+    SELECT \"x8\".\"Id\"
+    FROM \"Clients\" AS \"x8\"
+    WHERE \"x8\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x8\".\"Id\"
+    LIMIT 1
+) AS \"t7\" ON \"x.Properties\".\"ClientId\" = \"t7\".\"Id\"
+ORDER BY \"t7\".\"Id\""
+2018-05-01 16:01:17.217 -03:00 [INFO] IdentityServer4.Events.DefaultEventService {
+  "Name": "Client Authentication Success",
+  "Category": "Authentication",
+  "EventType": "Success",
+  "Id": 1010,
+  "ClientId": "js_oidc",
+  "AuthenticationMethod": "SharedSecret",
+  "ActivityId": "0HLDFINKTQ5VF:00000001",
+  "TimeStamp": "2018-05-01T19:01:17Z",
+  "ProcessId": 15388,
+  "LocalIpAddress": "::1:5000",
+  "RemoteIpAddress": "::1"
+}
+2018-05-01 16:01:17.320 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:17.323 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"identityResource\".\"Id\", \"identityResource\".\"Description\", \"identityResource\".\"DisplayName\", \"identityResource\".\"Emphasize\", \"identityResource\".\"Enabled\", \"identityResource\".\"Name\", \"identityResource\".\"Required\", \"identityResource\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"identityResource\"
+WHERE \"identityResource\".\"Name\" IN ('authorization_api', 'backend_api')
+ORDER BY \"identityResource\".\"Id\""
+2018-05-01 16:01:17.380 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:17.382 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api\".\"Id\", \"api\".\"Description\", \"api\".\"DisplayName\", \"api\".\"Enabled\", \"api\".\"Name\"
+FROM \"ApiResources\" AS \"api\"
+WHERE EXISTS (
+    SELECT 1
+    FROM \"ApiScopes\" AS \"x\"
+    WHERE \"x\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api\".\"Id\" = \"x\".\"ApiResourceId\"))
+ORDER BY \"api\".\"Id\""
+2018-05-01 16:01:17.387 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Secrets\".\"Id\", \"api.Secrets\".\"ApiResourceId\", \"api.Secrets\".\"Description\", \"api.Secrets\".\"Expiration\", \"api.Secrets\".\"Type\", \"api.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"api.Secrets\"
+INNER JOIN (
+    SELECT \"api0\".\"Id\"
+    FROM \"ApiResources\" AS \"api0\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x0\"
+        WHERE \"x0\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api0\".\"Id\" = \"x0\".\"ApiResourceId\"))
+) AS \"t\" ON \"api.Secrets\".\"ApiResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:17.389 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes\".\"Id\", \"api.Scopes\".\"ApiResourceId\", \"api.Scopes\".\"Description\", \"api.Scopes\".\"DisplayName\", \"api.Scopes\".\"Emphasize\", \"api.Scopes\".\"Name\", \"api.Scopes\".\"Required\", \"api.Scopes\".\"ShowInDiscoveryDocument\"
+FROM \"ApiScopes\" AS \"api.Scopes\"
+INNER JOIN (
+    SELECT \"api1\".\"Id\"
+    FROM \"ApiResources\" AS \"api1\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x1\"
+        WHERE \"x1\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api1\".\"Id\" = \"x1\".\"ApiResourceId\"))
+) AS \"t0\" ON \"api.Scopes\".\"ApiResourceId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\", \"api.Scopes\".\"Id\""
+2018-05-01 16:01:17.395 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes.UserClaims\".\"Id\", \"api.Scopes.UserClaims\".\"ApiScopeId\", \"api.Scopes.UserClaims\".\"Type\"
+FROM \"ApiScopeClaims\" AS \"api.Scopes.UserClaims\"
+INNER JOIN (
+    SELECT DISTINCT \"api.Scopes0\".\"Id\", \"t1\".\"Id\" AS \"Id0\"
+    FROM \"ApiScopes\" AS \"api.Scopes0\"
+    INNER JOIN (
+        SELECT \"api2\".\"Id\"
+        FROM \"ApiResources\" AS \"api2\"
+        WHERE EXISTS (
+            SELECT 1
+            FROM \"ApiScopes\" AS \"x2\"
+            WHERE \"x2\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api2\".\"Id\" = \"x2\".\"ApiResourceId\"))
+    ) AS \"t1\" ON \"api.Scopes0\".\"ApiResourceId\" = \"t1\".\"Id\"
+) AS \"t2\" ON \"api.Scopes.UserClaims\".\"ApiScopeId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id0\", \"t2\".\"Id\""
+2018-05-01 16:01:17.399 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.UserClaims\".\"Id\", \"api.UserClaims\".\"ApiResourceId\", \"api.UserClaims\".\"Type\"
+FROM \"ApiClaims\" AS \"api.UserClaims\"
+INNER JOIN (
+    SELECT \"api3\".\"Id\"
+    FROM \"ApiResources\" AS \"api3\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x3\"
+        WHERE \"x3\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api3\".\"Id\" = \"x3\".\"ApiResourceId\"))
+) AS \"t3\" ON \"api.UserClaims\".\"ApiResourceId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:17.415 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:17.418 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"identityResource\".\"Id\", \"identityResource\".\"Description\", \"identityResource\".\"DisplayName\", \"identityResource\".\"Emphasize\", \"identityResource\".\"Enabled\", \"identityResource\".\"Name\", \"identityResource\".\"Required\", \"identityResource\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"identityResource\"
+WHERE \"identityResource\".\"Name\" IN ('authorization_api', 'backend_api')
+ORDER BY \"identityResource\".\"Id\""
+2018-05-01 16:01:17.419 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:17.422 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api\".\"Id\", \"api\".\"Description\", \"api\".\"DisplayName\", \"api\".\"Enabled\", \"api\".\"Name\"
+FROM \"ApiResources\" AS \"api\"
+WHERE EXISTS (
+    SELECT 1
+    FROM \"ApiScopes\" AS \"x\"
+    WHERE \"x\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api\".\"Id\" = \"x\".\"ApiResourceId\"))
+ORDER BY \"api\".\"Id\""
+2018-05-01 16:01:17.423 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Secrets\".\"Id\", \"api.Secrets\".\"ApiResourceId\", \"api.Secrets\".\"Description\", \"api.Secrets\".\"Expiration\", \"api.Secrets\".\"Type\", \"api.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"api.Secrets\"
+INNER JOIN (
+    SELECT \"api0\".\"Id\"
+    FROM \"ApiResources\" AS \"api0\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x0\"
+        WHERE \"x0\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api0\".\"Id\" = \"x0\".\"ApiResourceId\"))
+) AS \"t\" ON \"api.Secrets\".\"ApiResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:17.423 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes\".\"Id\", \"api.Scopes\".\"ApiResourceId\", \"api.Scopes\".\"Description\", \"api.Scopes\".\"DisplayName\", \"api.Scopes\".\"Emphasize\", \"api.Scopes\".\"Name\", \"api.Scopes\".\"Required\", \"api.Scopes\".\"ShowInDiscoveryDocument\"
+FROM \"ApiScopes\" AS \"api.Scopes\"
+INNER JOIN (
+    SELECT \"api1\".\"Id\"
+    FROM \"ApiResources\" AS \"api1\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x1\"
+        WHERE \"x1\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api1\".\"Id\" = \"x1\".\"ApiResourceId\"))
+) AS \"t0\" ON \"api.Scopes\".\"ApiResourceId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\", \"api.Scopes\".\"Id\""
+2018-05-01 16:01:17.424 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes.UserClaims\".\"Id\", \"api.Scopes.UserClaims\".\"ApiScopeId\", \"api.Scopes.UserClaims\".\"Type\"
+FROM \"ApiScopeClaims\" AS \"api.Scopes.UserClaims\"
+INNER JOIN (
+    SELECT DISTINCT \"api.Scopes0\".\"Id\", \"t1\".\"Id\" AS \"Id0\"
+    FROM \"ApiScopes\" AS \"api.Scopes0\"
+    INNER JOIN (
+        SELECT \"api2\".\"Id\"
+        FROM \"ApiResources\" AS \"api2\"
+        WHERE EXISTS (
+            SELECT 1
+            FROM \"ApiScopes\" AS \"x2\"
+            WHERE \"x2\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api2\".\"Id\" = \"x2\".\"ApiResourceId\"))
+    ) AS \"t1\" ON \"api.Scopes0\".\"ApiResourceId\" = \"t1\".\"Id\"
+) AS \"t2\" ON \"api.Scopes.UserClaims\".\"ApiScopeId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id0\", \"t2\".\"Id\""
+2018-05-01 16:01:17.426 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.UserClaims\".\"Id\", \"api.UserClaims\".\"ApiResourceId\", \"api.UserClaims\".\"Type\"
+FROM \"ApiClaims\" AS \"api.UserClaims\"
+INNER JOIN (
+    SELECT \"api3\".\"Id\"
+    FROM \"ApiResources\" AS \"api3\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x3\"
+        WHERE \"x3\".\"Name\" IN ('authorization_api', 'backend_api') AND (\"api3\".\"Id\" = \"x3\".\"ApiResourceId\"))
+) AS \"t3\" ON \"api.UserClaims\".\"ApiResourceId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:17.445 -03:00 [INFO] IdentityServer4.Validation.TokenRequestValidator Token request validation success
+"{
+  \"ClientId\": \"js_oidc\",
+  \"ClientName\": \"JavaScript OIDC Client\",
+  \"GrantType\": \"client_credentials\",
+  \"Scopes\": \"authorization_api backend_api\",
+  \"Raw\": {
+    \"grant_type\": \"client_credentials\",
+    \"scope\": \"authorization_api backend_api\"
+  }
+}"
+2018-05-01 16:01:17.613 -03:00 [INFO] IdentityServer4.Events.DefaultEventService {
+  "Name": "Token Issued Success",
+  "Category": "Token",
+  "EventType": "Success",
+  "Id": 2000,
+  "ClientId": "js_oidc",
+  "ClientName": "JavaScript OIDC Client",
+  "Endpoint": "Token",
+  "Scopes": "authorization_api backend_api",
+  "GrantType": "client_credentials",
+  "Tokens": [
+    {
+      "TokenType": "access_token",
+      "TokenValue": "****qQbA"
+    }
+  ],
+  "ActivityId": "0HLDFINKTQ5VF:00000001",
+  "TimeStamp": "2018-05-01T19:01:17Z",
+  "ProcessId": 15388,
+  "LocalIpAddress": "::1:5000",
+  "RemoteIpAddress": "::1"
+}
+2018-05-01 16:01:17.625 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1159.2272ms 200 application/json; charset=UTF-8
+2018-05-01 16:01:23.825 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5000/connect/authorize?response_type=token&client_id=backend_api&redirect_uri=http%3A%2F%2Flocalhost%3A5055%2Fswagger%2Foauth2-redirect.html&scope=backend_api%20authorization_api&state=VHVlIE1heSAwMSAyMDE4IDE2OjAxOjIzIEdNVC0wMzAwIChIb3JhIG9maWNpYWwgZG8gQnJhc2lsKQ%3D%3D&acr_values=tenant%3Apoa  
+2018-05-01 16:01:23.833 -03:00 [INFO] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler AuthenticationScheme: "Identity.Application" was successfully authenticated.
+2018-05-01 16:01:23.833 -03:00 [INFO] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler AuthenticationScheme: "Identity.Application" was successfully authenticated.
+2018-05-01 16:01:23.841 -03:00 [INFO] IdentityServer4.Hosting.IdentityServerMiddleware Invoking IdentityServer endpoint: "IdentityServer4.Endpoints.AuthorizeEndpoint" for "/connect/authorize"
+2018-05-01 16:01:23.878 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.0.2-rtm-10011" initialized '"SqLiteConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "None"
+2018-05-01 16:01:23.880 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:23.882 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"AbsoluteRefreshTokenLifetime\", \"x\".\"AccessTokenLifetime\", \"x\".\"AccessTokenType\", \"x\".\"AllowAccessTokensViaBrowser\", \"x\".\"AllowOfflineAccess\", \"x\".\"AllowPlainTextPkce\", \"x\".\"AllowRememberConsent\", \"x\".\"AlwaysIncludeUserClaimsInIdToken\", \"x\".\"AlwaysSendClientClaims\", \"x\".\"AuthorizationCodeLifetime\", \"x\".\"BackChannelLogoutSessionRequired\", \"x\".\"BackChannelLogoutUri\", \"x\".\"ClientClaimsPrefix\", \"x\".\"ClientId\", \"x\".\"ClientName\", \"x\".\"ClientUri\", \"x\".\"ConsentLifetime\", \"x\".\"Description\", \"x\".\"EnableLocalLogin\", \"x\".\"Enabled\", \"x\".\"FrontChannelLogoutSessionRequired\", \"x\".\"FrontChannelLogoutUri\", \"x\".\"IdentityTokenLifetime\", \"x\".\"IncludeJwtId\", \"x\".\"LogoUri\", \"x\".\"PairWiseSubjectSalt\", \"x\".\"ProtocolType\", \"x\".\"RefreshTokenExpiration\", \"x\".\"RefreshTokenUsage\", \"x\".\"RequireClientSecret\", \"x\".\"RequireConsent\", \"x\".\"RequirePkce\", \"x\".\"SlidingRefreshTokenLifetime\", \"x\".\"UpdateAccessTokenClaimsOnRefresh\"
+FROM \"Clients\" AS \"x\"
+WHERE \"x\".\"ClientId\" = @__clientId_0
+ORDER BY \"x\".\"Id\"
+LIMIT 1"
+2018-05-01 16:01:23.883 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedGrantTypes\".\"Id\", \"x.AllowedGrantTypes\".\"ClientId\", \"x.AllowedGrantTypes\".\"GrantType\"
+FROM \"ClientGrantTypes\" AS \"x.AllowedGrantTypes\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"Clients\" AS \"x0\"
+    WHERE \"x0\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x0\".\"Id\"
+    LIMIT 1
+) AS \"t\" ON \"x.AllowedGrantTypes\".\"ClientId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:23.883 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.RedirectUris\".\"Id\", \"x.RedirectUris\".\"ClientId\", \"x.RedirectUris\".\"RedirectUri\"
+FROM \"ClientRedirectUris\" AS \"x.RedirectUris\"
+INNER JOIN (
+    SELECT \"x1\".\"Id\"
+    FROM \"Clients\" AS \"x1\"
+    WHERE \"x1\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x1\".\"Id\"
+    LIMIT 1
+) AS \"t0\" ON \"x.RedirectUris\".\"ClientId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\""
+2018-05-01 16:01:23.884 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.PostLogoutRedirectUris\".\"Id\", \"x.PostLogoutRedirectUris\".\"ClientId\", \"x.PostLogoutRedirectUris\".\"PostLogoutRedirectUri\"
+FROM \"ClientPostLogoutRedirectUris\" AS \"x.PostLogoutRedirectUris\"
+INNER JOIN (
+    SELECT \"x2\".\"Id\"
+    FROM \"Clients\" AS \"x2\"
+    WHERE \"x2\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x2\".\"Id\"
+    LIMIT 1
+) AS \"t1\" ON \"x.PostLogoutRedirectUris\".\"ClientId\" = \"t1\".\"Id\"
+ORDER BY \"t1\".\"Id\""
+2018-05-01 16:01:23.884 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedScopes\".\"Id\", \"x.AllowedScopes\".\"ClientId\", \"x.AllowedScopes\".\"Scope\"
+FROM \"ClientScopes\" AS \"x.AllowedScopes\"
+INNER JOIN (
+    SELECT \"x3\".\"Id\"
+    FROM \"Clients\" AS \"x3\"
+    WHERE \"x3\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x3\".\"Id\"
+    LIMIT 1
+) AS \"t2\" ON \"x.AllowedScopes\".\"ClientId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id\""
+2018-05-01 16:01:23.885 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.ClientSecrets\".\"Id\", \"x.ClientSecrets\".\"ClientId\", \"x.ClientSecrets\".\"Description\", \"x.ClientSecrets\".\"Expiration\", \"x.ClientSecrets\".\"Type\", \"x.ClientSecrets\".\"Value\"
+FROM \"ClientSecrets\" AS \"x.ClientSecrets\"
+INNER JOIN (
+    SELECT \"x4\".\"Id\"
+    FROM \"Clients\" AS \"x4\"
+    WHERE \"x4\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x4\".\"Id\"
+    LIMIT 1
+) AS \"t3\" ON \"x.ClientSecrets\".\"ClientId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:23.885 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Claims\".\"Id\", \"x.Claims\".\"ClientId\", \"x.Claims\".\"Type\", \"x.Claims\".\"Value\"
+FROM \"ClientClaims\" AS \"x.Claims\"
+INNER JOIN (
+    SELECT \"x5\".\"Id\"
+    FROM \"Clients\" AS \"x5\"
+    WHERE \"x5\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x5\".\"Id\"
+    LIMIT 1
+) AS \"t4\" ON \"x.Claims\".\"ClientId\" = \"t4\".\"Id\"
+ORDER BY \"t4\".\"Id\""
+2018-05-01 16:01:23.886 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.IdentityProviderRestrictions\".\"Id\", \"x.IdentityProviderRestrictions\".\"ClientId\", \"x.IdentityProviderRestrictions\".\"Provider\"
+FROM \"ClientIdPRestrictions\" AS \"x.IdentityProviderRestrictions\"
+INNER JOIN (
+    SELECT \"x6\".\"Id\"
+    FROM \"Clients\" AS \"x6\"
+    WHERE \"x6\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x6\".\"Id\"
+    LIMIT 1
+) AS \"t5\" ON \"x.IdentityProviderRestrictions\".\"ClientId\" = \"t5\".\"Id\"
+ORDER BY \"t5\".\"Id\""
+2018-05-01 16:01:23.886 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.AllowedCorsOrigins\".\"Id\", \"x.AllowedCorsOrigins\".\"ClientId\", \"x.AllowedCorsOrigins\".\"Origin\"
+FROM \"ClientCorsOrigins\" AS \"x.AllowedCorsOrigins\"
+INNER JOIN (
+    SELECT \"x7\".\"Id\"
+    FROM \"Clients\" AS \"x7\"
+    WHERE \"x7\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x7\".\"Id\"
+    LIMIT 1
+) AS \"t6\" ON \"x.AllowedCorsOrigins\".\"ClientId\" = \"t6\".\"Id\"
+ORDER BY \"t6\".\"Id\""
+2018-05-01 16:01:23.888 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=["@__clientId_0='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Properties\".\"Id\", \"x.Properties\".\"ClientId\", \"x.Properties\".\"Key\", \"x.Properties\".\"Value\"
+FROM \"ClientProperties\" AS \"x.Properties\"
+INNER JOIN (
+    SELECT \"x8\".\"Id\"
+    FROM \"Clients\" AS \"x8\"
+    WHERE \"x8\".\"ClientId\" = @__clientId_0
+    ORDER BY \"x8\".\"Id\"
+    LIMIT 1
+) AS \"t7\" ON \"x.Properties\".\"ClientId\" = \"t7\".\"Id\"
+ORDER BY \"t7\".\"Id\""
+2018-05-01 16:01:23.911 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:23.913 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"identityResource\".\"Id\", \"identityResource\".\"Description\", \"identityResource\".\"DisplayName\", \"identityResource\".\"Emphasize\", \"identityResource\".\"Enabled\", \"identityResource\".\"Name\", \"identityResource\".\"Required\", \"identityResource\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"identityResource\"
+WHERE \"identityResource\".\"Name\" IN ('backend_api', 'authorization_api')
+ORDER BY \"identityResource\".\"Id\""
+2018-05-01 16:01:23.916 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:23.921 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api\".\"Id\", \"api\".\"Description\", \"api\".\"DisplayName\", \"api\".\"Enabled\", \"api\".\"Name\"
+FROM \"ApiResources\" AS \"api\"
+WHERE EXISTS (
+    SELECT 1
+    FROM \"ApiScopes\" AS \"x\"
+    WHERE \"x\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api\".\"Id\" = \"x\".\"ApiResourceId\"))
+ORDER BY \"api\".\"Id\""
+2018-05-01 16:01:23.923 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Secrets\".\"Id\", \"api.Secrets\".\"ApiResourceId\", \"api.Secrets\".\"Description\", \"api.Secrets\".\"Expiration\", \"api.Secrets\".\"Type\", \"api.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"api.Secrets\"
+INNER JOIN (
+    SELECT \"api0\".\"Id\"
+    FROM \"ApiResources\" AS \"api0\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x0\"
+        WHERE \"x0\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api0\".\"Id\" = \"x0\".\"ApiResourceId\"))
+) AS \"t\" ON \"api.Secrets\".\"ApiResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:23.924 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes\".\"Id\", \"api.Scopes\".\"ApiResourceId\", \"api.Scopes\".\"Description\", \"api.Scopes\".\"DisplayName\", \"api.Scopes\".\"Emphasize\", \"api.Scopes\".\"Name\", \"api.Scopes\".\"Required\", \"api.Scopes\".\"ShowInDiscoveryDocument\"
+FROM \"ApiScopes\" AS \"api.Scopes\"
+INNER JOIN (
+    SELECT \"api1\".\"Id\"
+    FROM \"ApiResources\" AS \"api1\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x1\"
+        WHERE \"x1\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api1\".\"Id\" = \"x1\".\"ApiResourceId\"))
+) AS \"t0\" ON \"api.Scopes\".\"ApiResourceId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\", \"api.Scopes\".\"Id\""
+2018-05-01 16:01:23.926 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes.UserClaims\".\"Id\", \"api.Scopes.UserClaims\".\"ApiScopeId\", \"api.Scopes.UserClaims\".\"Type\"
+FROM \"ApiScopeClaims\" AS \"api.Scopes.UserClaims\"
+INNER JOIN (
+    SELECT DISTINCT \"api.Scopes0\".\"Id\", \"t1\".\"Id\" AS \"Id0\"
+    FROM \"ApiScopes\" AS \"api.Scopes0\"
+    INNER JOIN (
+        SELECT \"api2\".\"Id\"
+        FROM \"ApiResources\" AS \"api2\"
+        WHERE EXISTS (
+            SELECT 1
+            FROM \"ApiScopes\" AS \"x2\"
+            WHERE \"x2\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api2\".\"Id\" = \"x2\".\"ApiResourceId\"))
+    ) AS \"t1\" ON \"api.Scopes0\".\"ApiResourceId\" = \"t1\".\"Id\"
+) AS \"t2\" ON \"api.Scopes.UserClaims\".\"ApiScopeId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id0\", \"t2\".\"Id\""
+2018-05-01 16:01:23.927 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.UserClaims\".\"Id\", \"api.UserClaims\".\"ApiResourceId\", \"api.UserClaims\".\"Type\"
+FROM \"ApiClaims\" AS \"api.UserClaims\"
+INNER JOIN (
+    SELECT \"api3\".\"Id\"
+    FROM \"ApiResources\" AS \"api3\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x3\"
+        WHERE \"x3\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api3\".\"Id\" = \"x3\".\"ApiResourceId\"))
+) AS \"t3\" ON \"api.UserClaims\".\"ApiResourceId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:23.930 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:23.932 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"identityResource\".\"Id\", \"identityResource\".\"Description\", \"identityResource\".\"DisplayName\", \"identityResource\".\"Emphasize\", \"identityResource\".\"Enabled\", \"identityResource\".\"Name\", \"identityResource\".\"Required\", \"identityResource\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"identityResource\"
+WHERE \"identityResource\".\"Name\" IN ('backend_api', 'authorization_api')
+ORDER BY \"identityResource\".\"Id\""
+2018-05-01 16:01:23.934 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:23.936 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api\".\"Id\", \"api\".\"Description\", \"api\".\"DisplayName\", \"api\".\"Enabled\", \"api\".\"Name\"
+FROM \"ApiResources\" AS \"api\"
+WHERE EXISTS (
+    SELECT 1
+    FROM \"ApiScopes\" AS \"x\"
+    WHERE \"x\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api\".\"Id\" = \"x\".\"ApiResourceId\"))
+ORDER BY \"api\".\"Id\""
+2018-05-01 16:01:23.939 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Secrets\".\"Id\", \"api.Secrets\".\"ApiResourceId\", \"api.Secrets\".\"Description\", \"api.Secrets\".\"Expiration\", \"api.Secrets\".\"Type\", \"api.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"api.Secrets\"
+INNER JOIN (
+    SELECT \"api0\".\"Id\"
+    FROM \"ApiResources\" AS \"api0\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x0\"
+        WHERE \"x0\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api0\".\"Id\" = \"x0\".\"ApiResourceId\"))
+) AS \"t\" ON \"api.Secrets\".\"ApiResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:23.942 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes\".\"Id\", \"api.Scopes\".\"ApiResourceId\", \"api.Scopes\".\"Description\", \"api.Scopes\".\"DisplayName\", \"api.Scopes\".\"Emphasize\", \"api.Scopes\".\"Name\", \"api.Scopes\".\"Required\", \"api.Scopes\".\"ShowInDiscoveryDocument\"
+FROM \"ApiScopes\" AS \"api.Scopes\"
+INNER JOIN (
+    SELECT \"api1\".\"Id\"
+    FROM \"ApiResources\" AS \"api1\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x1\"
+        WHERE \"x1\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api1\".\"Id\" = \"x1\".\"ApiResourceId\"))
+) AS \"t0\" ON \"api.Scopes\".\"ApiResourceId\" = \"t0\".\"Id\"
+ORDER BY \"t0\".\"Id\", \"api.Scopes\".\"Id\""
+2018-05-01 16:01:23.943 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.Scopes.UserClaims\".\"Id\", \"api.Scopes.UserClaims\".\"ApiScopeId\", \"api.Scopes.UserClaims\".\"Type\"
+FROM \"ApiScopeClaims\" AS \"api.Scopes.UserClaims\"
+INNER JOIN (
+    SELECT DISTINCT \"api.Scopes0\".\"Id\", \"t1\".\"Id\" AS \"Id0\"
+    FROM \"ApiScopes\" AS \"api.Scopes0\"
+    INNER JOIN (
+        SELECT \"api2\".\"Id\"
+        FROM \"ApiResources\" AS \"api2\"
+        WHERE EXISTS (
+            SELECT 1
+            FROM \"ApiScopes\" AS \"x2\"
+            WHERE \"x2\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api2\".\"Id\" = \"x2\".\"ApiResourceId\"))
+    ) AS \"t1\" ON \"api.Scopes0\".\"ApiResourceId\" = \"t1\".\"Id\"
+) AS \"t2\" ON \"api.Scopes.UserClaims\".\"ApiScopeId\" = \"t2\".\"Id\"
+ORDER BY \"t2\".\"Id0\", \"t2\".\"Id\""
+2018-05-01 16:01:23.944 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"api.UserClaims\".\"Id\", \"api.UserClaims\".\"ApiResourceId\", \"api.UserClaims\".\"Type\"
+FROM \"ApiClaims\" AS \"api.UserClaims\"
+INNER JOIN (
+    SELECT \"api3\".\"Id\"
+    FROM \"ApiResources\" AS \"api3\"
+    WHERE EXISTS (
+        SELECT 1
+        FROM \"ApiScopes\" AS \"x3\"
+        WHERE \"x3\".\"Name\" IN ('backend_api', 'authorization_api') AND (\"api3\".\"Id\" = \"x3\".\"ApiResourceId\"))
+) AS \"t3\" ON \"api.UserClaims\".\"ApiResourceId\" = \"t3\".\"Id\"
+ORDER BY \"t3\".\"Id\""
+2018-05-01 16:01:23.973 -03:00 [INFO] IdentityServer4.Endpoints.AuthorizeEndpoint ValidatedAuthorizeRequest
+"{
+  \"ClientId\": \"backend_api\",
+  \"ClientName\": \"Backend API\",
+  \"RedirectUri\": \"http://localhost:5055/swagger/oauth2-redirect.html\",
+  \"AllowedRedirectUris\": [
+    \"http://localhost:5055/swagger/oauth2-redirect.html\"
+  ],
+  \"SubjectId\": \"2\",
+  \"ResponseType\": \"token\",
+  \"ResponseMode\": \"fragment\",
+  \"GrantType\": \"implicit\",
+  \"RequestedScopes\": \"backend_api authorization_api\",
+  \"State\": \"VHVlIE1heSAwMSAyMDE4IDE2OjAxOjIzIEdNVC0wMzAwIChIb3JhIG9maWNpYWwgZG8gQnJhc2lsKQ==\",
+  \"AuthenticationContextReferenceClasses\": [
+    \"tenant:poa\"
+  ],
+  \"SessionId\": \"76c1f0cbdb1308157e8fb44334e49725\",
+  \"Raw\": {
+    \"response_type\": \"token\",
+    \"client_id\": \"backend_api\",
+    \"redirect_uri\": \"http://localhost:5055/swagger/oauth2-redirect.html\",
+    \"scope\": \"backend_api authorization_api\",
+    \"state\": \"VHVlIE1heSAwMSAyMDE4IDE2OjAxOjIzIEdNVC0wMzAwIChIb3JhIG9maWNpYWwgZG8gQnJhc2lsKQ==\",
+    \"acr_values\": \"tenant:poa\"
+  }
+}"
+2018-05-01 16:01:24.717 -03:00 [INFO] IdentityServer4.Events.DefaultEventService {
+  "Name": "Token Issued Success",
+  "Category": "Token",
+  "EventType": "Success",
+  "Id": 2000,
+  "ClientId": "backend_api",
+  "ClientName": "Backend API",
+  "RedirectUri": "http://localhost:5055/swagger/oauth2-redirect.html",
+  "Endpoint": "Authorize",
+  "SubjectId": "2",
+  "Scopes": "backend_api authorization_api",
+  "GrantType": "implicit",
+  "Tokens": [
+    {
+      "TokenType": "access_token",
+      "TokenValue": "****0--Q"
+    }
+  ],
+  "ActivityId": "0HLDFINKTQ5VH:00000001",
+  "TimeStamp": "2018-05-01T19:01:24Z",
+  "ProcessId": 15388,
+  "LocalIpAddress": "::1:5000",
+  "RemoteIpAddress": "::1"
+}
+2018-05-01 16:01:24.723 -03:00 [INFO] IdentityServer4.Endpoints.AuthorizeEndpoint Authorize endpoint response
+"{
+  \"SubjectId\": \"2\",
+  \"ClientId\": \"backend_api\",
+  \"RedirectUri\": \"http://localhost:5055/swagger/oauth2-redirect.html\",
+  \"State\": \"VHVlIE1heSAwMSAyMDE4IDE2OjAxOjIzIEdNVC0wMzAwIChIb3JhIG9maWNpYWwgZG8gQnJhc2lsKQ==\",
+  \"Scope\": \"backend_api authorization_api\"
+}"
+2018-05-01 16:01:24.753 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 927.8601ms 302 
+2018-05-01 16:01:56.951 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5000/.well-known/openid-configuration  
+2018-05-01 16:01:56.952 -03:00 [INFO] IdentityServer4.Hosting.IdentityServerMiddleware Invoking IdentityServer endpoint: "IdentityServer4.Endpoints.DiscoveryEndpoint" for "/.well-known/openid-configuration"
+2018-05-01 16:01:56.953 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.0.2-rtm-10011" initialized '"SqLiteConfigurationDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "None"
+2018-05-01 16:01:56.953 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:56.955 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"Description\", \"x\".\"DisplayName\", \"x\".\"Emphasize\", \"x\".\"Enabled\", \"x\".\"Name\", \"x\".\"Required\", \"x\".\"ShowInDiscoveryDocument\"
+FROM \"IdentityResources\" AS \"x\"
+ORDER BY \"x\".\"Id\""
+2018-05-01 16:01:56.955 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.UserClaims\".\"Id\", \"x.UserClaims\".\"IdentityResourceId\", \"x.UserClaims\".\"Type\"
+FROM \"IdentityClaims\" AS \"x.UserClaims\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"IdentityResources\" AS \"x0\"
+) AS \"t\" ON \"x.UserClaims\".\"IdentityResourceId\" = \"t\".\"Id\"
+ORDER BY \"t\".\"Id\""
+2018-05-01 16:01:56.956 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-05-01 16:01:56.958 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x\".\"Id\", \"x\".\"Description\", \"x\".\"DisplayName\", \"x\".\"Enabled\", \"x\".\"Name\"
+FROM \"ApiResources\" AS \"x\"
+ORDER BY \"x\".\"Id\""
+2018-05-01 16:01:56.958 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"x.Secrets\".\"Id\", \"x.Secrets\".\"ApiResourceId\", \"x.Secrets\".\"Description\", \"x.Secrets\".\"Expiration\", \"x.Secrets\".\"Type\", \"x.Secrets\".\"Value\"
+FROM \"ApiSecrets\" AS \"x.Secrets\"
+INNER JOIN (
+    SELECT \"x0\".\"Id\"
+    FROM \"ApiResources\" AS \"x0\"
+) AS \"t\" ON \"x.Secrets\".\"ApiResource
