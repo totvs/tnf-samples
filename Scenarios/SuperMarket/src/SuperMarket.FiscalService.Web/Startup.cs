@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,20 +19,19 @@ namespace SuperMarket.FiscalService.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCorsAll("AllowAll")
                 .AddFiscalDomainDependency()
                 .AddFiscalInfraDependency()
                 .AddFiscalInfraQueueDependency()
                 .AddTnfAspNetCore();
 
-            services.AddCorsAll("AllowAll");
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Fiscal Service API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.FiscalService.Web.xml"));
-            });
-
-            services.AddResponseCompression();
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Fiscal Service API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.FiscalService.Web.xml"));
+                });
 
             return services.BuildServiceProvider();
         }
@@ -41,6 +39,8 @@ namespace SuperMarket.FiscalService.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -72,16 +72,13 @@ namespace SuperMarket.FiscalService.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-            app.UseMvcWithDefaultRoute();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fiscal Service API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>

@@ -20,25 +20,25 @@ namespace SuperMarket.Backoffice.Sales.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCorsAll("AllowAll")
                 .AddSalesApplicationDependency()
                 .AddTnfAspNetCore();
 
-            services.AddCorsAll("AllowAll");
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Sales API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Sales.Web.xml"));
-            });
-
-            services.AddResponseCompression();
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Sales API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Sales.Web.xml"));
+                });
 
             return services.BuildServiceProvider();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -73,16 +73,13 @@ namespace SuperMarket.Backoffice.Sales.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-            app.UseMvcWithDefaultRoute();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>

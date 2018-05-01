@@ -21,7 +21,6 @@ namespace SuperMarket.Backoffice.Crud.Web
         public Startup(IHostingEnvironment env)
         {
             Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                 .Build();
         }
@@ -32,26 +31,26 @@ namespace SuperMarket.Backoffice.Crud.Web
             var redisConnectionString = Configuration["RedisConnectionString"];
 
             services
+                .AddCorsAll("AllowAll")
                 .AddCrudInfraDependency(databaseIndex, redisConnectionString)
                 .AddCrudDomainDependency()
                 .AddTnfAspNetCore();
-
-            services.AddCorsAll("AllowAll");
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Crud API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Crud.Web.xml"));
-            });
-
-            services.AddResponseCompression();
+            
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Crud API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Crud.Web.xml"));
+                });
 
             return services.BuildServiceProvider();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -83,20 +82,17 @@ namespace SuperMarket.Backoffice.Crud.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-            app.UseMvcWithDefaultRoute();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crud API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
+
+            // Habilita o uso do UnitOfWork em todo o request
+            app.UseTnfUnitOfWork();
 
             app.Run(context =>
             {

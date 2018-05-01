@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
+using System.IO;
 
 namespace SuperMarket.Backoffice.Sales.Web
 {
@@ -10,16 +11,22 @@ namespace SuperMarket.Backoffice.Sales.Web
     {
         public static void Main(string[] args)
         {
-            Console.Title = "Sales";
+            Console.Title = typeof(Program).Namespace;
+
+            var hostConfig = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hosting.json")
+                .Build();
 
             var host = WebHost.CreateDefaultBuilder(args)
+                .UseConfiguration(hostConfig)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true);
 
                     config.AddEnvironmentVariables();
+                    config.AddCommandLine(args);
                 })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -30,6 +37,10 @@ namespace SuperMarket.Backoffice.Sales.Web
                 })
                 .UseStartup<Startup>()
                 .UseSerilog()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseSetting("detailedErrors", "true")
                 .Build();
 
             host.Run();
