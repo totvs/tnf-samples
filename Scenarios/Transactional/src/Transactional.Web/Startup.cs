@@ -25,19 +25,21 @@ namespace Transactional.Web
                 .AddInfraDependency()               // dependencia da camada Transactional.Infra
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Transactional API", Version = "v1" });
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Transactional.Web.xml"));
-            });
-
-            services.AddResponseCompression();
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "Transactional API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Transactional.Web.xml"));
+                });
 
             return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -77,20 +79,13 @@ namespace Transactional.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transactional API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
             app.Run(context =>
