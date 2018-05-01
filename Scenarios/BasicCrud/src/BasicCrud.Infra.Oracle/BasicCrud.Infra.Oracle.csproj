@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Devart.Data.Oracle.EFCore" Version="9.5.483" />
-    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.1.0.10901" />
+    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.1.0.12002" />
   </ItemGroup>
 
   <ItemGroup>

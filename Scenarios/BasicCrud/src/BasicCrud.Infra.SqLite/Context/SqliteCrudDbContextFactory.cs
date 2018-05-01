@@ -15,11 +15,12 @@ namespace BasicCrud.Infra.SqLite.Context
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile($"appsettings.json", true)
-                                    .AddJsonFile($"appsettings.Development.json", true)
+                                    .AddJsonFile($"appsettings.Development.json", false)
                                     .Build();
-            
-            builder.UseSqlite(configuration.GetConnectionString(DatabaseType.Sqlite.ToString()));
+
+            var databaseConfiguration = new DatabaseConfiguration(configuration);
+
+            builder.UseSqlite(databaseConfiguration.ConnectionString);
 
             return new SqliteCrudDbContext(builder.Options, NullTnfSession.Instance);
         }

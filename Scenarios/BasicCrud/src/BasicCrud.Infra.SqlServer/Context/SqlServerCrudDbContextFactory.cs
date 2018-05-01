@@ -15,11 +15,12 @@ namespace BasicCrud.Infra.SqlServer.Context
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile($"appsettings.json", true)
-                                    .AddJsonFile($"appsettings.Development.json", true)
+                                    .AddJsonFile($"appsettings.Development.json", false)
                                     .Build();
-            
-            builder.UseSqlServer(configuration.GetConnectionString(DatabaseType.SqlServer.ToString()));
+
+            var databaseConfiguration = new DatabaseConfiguration(configuration);
+
+            builder.UseSqlServer(databaseConfiguration.ConnectionString);
 
             return new SqlServerCrudDbContext(builder.Options, NullTnfSession.Instance);
         }

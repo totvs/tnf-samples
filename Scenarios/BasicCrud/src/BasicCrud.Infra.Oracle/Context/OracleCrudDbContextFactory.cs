@@ -16,23 +16,26 @@ namespace BasicCrud.Infra.Oracle.Context
             var builder = new DbContextOptionsBuilder<CrudDbContext>();
 
             var configuration = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile($"appsettings.json", true)
-                                    .AddJsonFile($"appsettings.Development.json", true)
-                                    .Build();
+                                     .SetBasePath(Directory.GetCurrentDirectory())
+                                     .AddJsonFile($"appsettings.Development.json", false)
+                                     .Build();
 
-            var provider = new ServiceCollection()
+            var databaseConfiguration = new DatabaseConfiguration(configuration);
+
+            new ServiceCollection()
                 .AddTnfKernel()
-                .BuildServiceProvider();
+                .BuildServiceProvider()
+                .ConfigureTnf(tnf =>
+                {
+                    tnf.DefaultNameOrConnectionString = databaseConfiguration.ConnectionString;
+                    tnf.EnableDevartOracleDriver();
+                });
 
-            var tnfConfiguration = provider.ConfigureTnf();
+            DevartOracleSettings.SetDefaultSettings();
 
-            tnfConfiguration.DefaultNameOrConnectionString = configuration.GetConnectionString(DatabaseType.Oracle.ToString());
-            tnfConfiguration.EnableDevartOracleDriver();
+            builder.UseOracle(databaseConfiguration.ConnectionString);
 
-            builder.UseOracle(tnfConfiguration.DefaultNameOrConnectionString);
-
-            return new OracleCrudDbContext(builder.Options, NullTnfSession.Instance);
+            return new OracleCrudDbContext(builder.Options, NullTnfSession.Instance, databaseConfiguration);
         }
     }
 }

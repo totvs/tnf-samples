@@ -57,6 +57,8 @@ namespace BasicCrud.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("AllowAll");
+
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore(options =>
             {
@@ -90,18 +92,7 @@ namespace BasicCrud.Web
             app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
-            // Add CORS middleware before MVC
-            app.UseCors("AllowAll");
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+                app.UseDeveloperExceptionPage();      
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -109,7 +100,11 @@ namespace BasicCrud.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Crud API v1");
             });
 
+            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
+
+            // Habilita o uso do UnitOfWork em todo o request
+            app.UseTnfUnitOfWork();
 
             app.Run(context =>
             {
