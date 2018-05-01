@@ -11,7 +11,7 @@ namespace Security.Web
     {
         public static void Main(string[] args)
         {
-            Console.Title = "Security";
+            Console.Title = typeof(Program).Namespace;
 
             var hostConfig = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

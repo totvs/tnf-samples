@@ -32,7 +32,7 @@ namespace Security.Infra.Oracle.Context
                     tnf.EnableDevartOracleDriver();
                 });
 
-            OracleEntityProviderConfig.Instance.Workarounds.DisableQuoting = true;
+            DevartOracleSettings.SetDefaultSettings();
 
             builder.UseOracle(databaseConfiguration.ConnectionString);
 

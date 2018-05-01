@@ -15,7 +15,7 @@ namespace Security.Infra.SqLite.Context
 
             var configuration = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile($"appsettings.Development.json", true)
+                                    .AddJsonFile($"appsettings.Development.json", false)
                                     .Build();
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);

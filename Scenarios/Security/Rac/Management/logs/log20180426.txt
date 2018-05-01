@@ -1,0 +1,63 @@
+2018-04-26 13:29:25.241 -03:00 [INFO] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using '"C:\Users\josue.agnese\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-04-26 13:30:01.451 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/tenant?page=1&pageSize=20  
+2018-04-26 13:30:01.515 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone,Tnf.Rac.UserManagement.IsEmailConfirmationRequiredForLogin,Tnf.Rac.UserManagement.TwoFactorLogin.IsEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsRememberBrowserEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsEmailProviderEnabled,Tnf.Rac.UserManagement.TwoFactorLogin.IsSmsProviderEnabled,Tnf.Rac.UserManagement.UserLockOut.IsEnabled,Tnf.Rac.UserManagement.UserLockOut.MaxFailedAccessAttemptsBeforeLockout,Tnf.Rac.UserManagement.UserLockOut.DefaultAccountLockoutSeconds,Tnf.Rac.UserManagement.PasswordComplexity.RequireDigit,Tnf.Rac.UserManagement.PasswordComplexity.RequireLowercase,Tnf.Rac.UserManagement.PasswordComplexity.RequireNonAlphanumeric,Tnf.Rac.UserManagement.PasswordComplexity.RequireUppercase,Tnf.Rac.UserManagement.PasswordComplexity.RequiredLength,TnfExternalAuthentication.IsEnabled,TnfExternalAuthentication.SourceName,TnfExternalAuthentication.GetValidateCredentialAddress,TnfExternalAuthentication.GetUserInfoAddress]
+2018-04-26 13:30:02.817 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:02.820 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:02.821 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:03.002 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initializing 2 localization sources.
+2018-04-26 13:30:03.010 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: TnfRac
+2018-04-26 13:30:03.023 -03:00 [INFO] Tnf.Localization.Internal.LocalizationManager Initialized localization source: Tnf
+2018-04-26 13:30:03.135 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:03.246 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.TenantController.GetAllAsync (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.TenantQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:03.796 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:03.886 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.TenantController.GetAllAsync (Tnf.Rac.Management.Api)" in 779.8408ms
+2018-04-26 13:30:03.900 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 2468.9691ms 200 application/json; charset=utf-8
+2018-04-26 13:30:06.784 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/organizationUnit?page=1&pageSize=20  
+2018-04-26 13:30:06.788 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:06.788 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:06.788 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:06.797 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:06.800 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.OrganizationUnitController.GetAllAsync (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.OrganizationQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:07.125 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:07.130 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.OrganizationUnitController.GetAllAsync (Tnf.Rac.Management.Api)" in 332.5382ms
+2018-04-26 13:30:07.130 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 346.2459ms 200 application/json; charset=utf-8
+2018-04-26 13:30:09.918 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/role?page=1&pageSize=20  
+2018-04-26 13:30:09.919 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:09.919 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:09.919 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:09.927 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:09.930 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.RoleController.GetAll (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.TnfRoleQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:10.108 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:10.124 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.RoleController.GetAll (Tnf.Rac.Management.Api)" in 196.6325ms
+2018-04-26 13:30:10.124 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 205.6665ms 200 application/json; charset=utf-8
+2018-04-26 13:30:12.047 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/user?page=1&pageSize=20  
+2018-04-26 13:30:12.048 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:12.048 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:12.048 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:12.062 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:12.080 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.UserController.GetAll (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.TnfUserQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:12.297 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:12.314 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.UserController.GetAll (Tnf.Rac.Management.Api)" in 252.6715ms
+2018-04-26 13:30:12.315 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 267.7977ms 200 application/json; charset=utf-8
+2018-04-26 13:30:13.131 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/role?page=1&pageSize=20  
+2018-04-26 13:30:13.133 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:13.133 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:13.133 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:13.143 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:13.148 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.RoleController.GetAll (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.TnfRoleQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:13.170 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:13.171 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.RoleController.GetAll (Tnf.Rac.Management.Api)" in 27.837ms
+2018-04-26 13:30:13.171 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 39.9057ms 200 application/json; charset=utf-8
+2018-04-26 13:30:14.121 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/organizationUnit?page=1&pageSize=20  
+2018-04-26 13:30:14.122 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:14.124 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:14.124 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-04-26 13:30:14.124 -03:00 [INFO] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization was successful for user: "1".
+2018-04-26 13:30:14.125 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executing action method "Tnf.Rac.Management.Api.Controllers.OrganizationUnitController.GetAllAsync (Tnf.Rac.Management.Api)" with arguments (["Tnf.Rac.Dtos.OrganizationQueryDto"]) - ModelState is Valid
+2018-04-26 13:30:14.137 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-04-26 13:30:14.137 -03:00 [INFO] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker Executed action "Tnf.Rac.Management.Api.Controllers.OrganizationUnitController.GetAllAsync (Tnf.Rac.Management.Api)" in 12.9876ms
+2018-04-26 13:30:14.138 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 16.9044ms 200 application/json; charset=utf-8
+2018-04-26 13:30:14.699 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5002/api/tenant?page=1&pageSize=20  
+2018-04-26 13:30:14.701 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Successfully validated the token.
+2018-04-26 13:30:14.701 -03:00 [INFO] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was successfully authenticated.
+2018-04-26 13:30:14.701 -03:00 [INFO] IdentityServer4.AccessTokenValidation.IdentityServerAut
