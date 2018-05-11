@@ -35,7 +35,7 @@ namespace Microsoft.AspNetCore.Builder
 
         public static SwaggerUIOptions UseSwaggerRacSecurity(this SwaggerUIOptions swaggerUIOptions, TnfRacOptions options)
         {
-            swaggerUIOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Security API v1");
+            swaggerUIOptions.SwaggerEndpoint("../swagger/v1/swagger.json", "Security API v1");
 
             swaggerUIOptions.OAuthAppName(options.ApiName);
             swaggerUIOptions.OAuthClientId(options.ApiName);

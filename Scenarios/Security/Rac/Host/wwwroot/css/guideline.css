@@ -27,21 +27,21 @@
 
 @font-face {
     font-family: 'NunitoSans';
-    src: url(/NunitoSans-Regular.fb98ed1700e8dfaf0764.ttf);
+    src: url(/fonts/NunitoSans-Regular.ttf);
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'NunitoSans-Bold';
-    src: url(/NunitoSans-Bold.51066f4d1d33630cd761.ttf);
+    src: url(/fonts/NunitoSans-Bold.ttf);
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'NunitoSans-ExtraLight';
-    src: url(/NunitoSans-ExtraLight.bc36a8726e20804a94da.ttf);
+    src: url(/fonts/NunitoSans-ExtraLight.ttf);
     font-weight: normal;
     font-style: normal;
 }
