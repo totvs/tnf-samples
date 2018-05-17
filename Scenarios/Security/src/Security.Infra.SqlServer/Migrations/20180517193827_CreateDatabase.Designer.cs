@@ -5,20 +5,21 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Security.Infra.SqLite.Context;
+using Security.Infra.SqlServer.Context;
 using System;
 
-namespace Security.Infra.SqLite.Migrations
+namespace Security.Infra.SqlServer.Migrations
 {
-    [DbContext(typeof(SqliteCrudDbContext))]
-    [Migration("20180426193109_AlterCustomer")]
-    partial class AlterCustomer
+    [DbContext(typeof(SqlServerCrudDbContext))]
+    [Migration("20180517193827_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Security.Domain.Entities.Customer", b =>
                 {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Security.Infra.SqLite.Migrations
+namespace Security.Infra.Oracle.Migrations
 {
     public partial class CreateDatabase : Migration
     {
@@ -13,7 +13,8 @@ namespace Security.Infra.SqLite.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

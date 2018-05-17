@@ -2,22 +2,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Security.Infra.Oracle.Migrations
+namespace Security.Infra.SqlServer.Migrations
 {
     public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "dbo");
-
             migrationBuilder.CreateTable(
                 name: "Customers",
-                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +23,6 @@ namespace Security.Infra.Oracle.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Products",
-                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -42,12 +38,10 @@ namespace Security.Infra.Oracle.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Customers",
-                schema: "dbo");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Products",
-                schema: "dbo");
+                name: "Products");
         }
     }
 }

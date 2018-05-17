@@ -14,11 +14,17 @@ namespace Security.Infra.Oracle.Context
             _databaseConfiguration = databaseConfiguration;
         }
 
+        static OracleCrudDbContext()
+        {
+            DevartOracleSettings.SetDefaultSettings();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema(_databaseConfiguration.DefaultSchema);
+            if (!_databaseConfiguration.IgnoreSchema)
+                modelBuilder.HasDefaultSchema(_databaseConfiguration.DefaultSchema);
         }
     }
 }

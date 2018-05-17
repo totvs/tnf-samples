@@ -139,6 +139,20 @@ var AuthService = /** @class */ (function () {
             });
         });
     };
+    AuthService.prototype.authorize = function (urlCurrent) {
+        var _this = this;
+        return this.getUser().then(function (user) {
+            if (user && !user.expired) {
+                return true;
+            }
+            //Esse c�digo evita o loop infinito. Visto que, a rota "Home" � protegida...
+            if (user && user.expired && urlCurrent.startsWith('/auth-callback')) {
+                return true;
+            }
+            _this.startAuthentication();
+            return false;
+        });
+    };
     AuthService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [])

@@ -32,9 +32,9 @@ namespace Security.Infra.Oracle.Context
                     tnf.EnableDevartOracleDriver();
                 });
 
-            DevartOracleSettings.SetDefaultSettings();
-
             builder.UseOracle(databaseConfiguration.ConnectionString);
+
+            databaseConfiguration.IgnoreSchema = true;
 
             return new OracleCrudDbContext(builder.Options, NullTnfSession.Instance, databaseConfiguration);
         }

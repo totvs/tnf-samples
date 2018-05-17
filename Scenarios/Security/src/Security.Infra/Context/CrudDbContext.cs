@@ -12,7 +12,6 @@ namespace Security.Infra.Context
 
         public DbSet<Product> Products { get; set; }
 
-        // Importante o construtor do contexto receber as opções com o tipo generico definido: DbContextOptions<TDbContext>
         public CrudDbContext(DbContextOptions<CrudDbContext> options, ITnfSession session)
             : base(options, session)
         {

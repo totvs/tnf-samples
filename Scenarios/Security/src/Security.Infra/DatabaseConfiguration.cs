@@ -31,6 +31,7 @@ namespace Security.Infra
             ConnectionString = configuration[$"ConnectionStrings:{ConnectionStringName}"];
         }
 
+        public bool IgnoreSchema { get; set; }
         public string DefaultSchema { get; }
         public string ConnectionStringName { get; }
         public string ConnectionString { get; }

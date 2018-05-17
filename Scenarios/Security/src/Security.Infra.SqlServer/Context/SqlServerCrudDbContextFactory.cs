@@ -20,6 +20,8 @@ namespace Security.Infra.SqlServer.Context
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);
 
+            builder.UseSqlServer(databaseConfiguration.ConnectionString);
+
             return new SqlServerCrudDbContext(builder.Options, NullTnfSession.Instance);
         }
     }
