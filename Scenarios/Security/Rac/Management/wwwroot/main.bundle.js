@@ -232,12 +232,16 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         hubMessage = this.messages;
         this.isLoggedIn = false;
+        debugger;
         this.authService.onCompleteAuthentication().subscribe(function (user) {
             _this.user = user;
+            console.log("complete authentication ...");
             if (_this.user) {
+                console.log("getting menus ...");
                 _this.authUserService.getUserAuthorizedMenus(_this.menus).subscribe(function (authorizedMenus) {
                     _this.isLoggedIn = true;
                     _this.thfMenus = _this.thfMenus.concat(authorizedMenus);
+                    console.log("Is logged");
                 });
             }
         });
@@ -694,6 +698,7 @@ var AuthUserService = /** @class */ (function () {
     AuthUserService.prototype.getUserAuthorizedMenus = function (menus) {
         var event = new __WEBPACK_IMPORTED_MODULE_4__events_event__["a" /* EventDispatcher */]();
         var permissions = menus.map(function (m) { return m.permission; });
+        debugger;
         this.getUserPermissionsGranted(permissions).then(function (data) {
             var authorizedMenus = [];
             for (var index = 0; index < menus.length; index++) {
@@ -1232,7 +1237,7 @@ var HubMessageComponent = /** @class */ (function () {
 var environment = {
     production: false,
     authorityEndPoint: 'http://localhost:5000/',
-    authorizationEndPoint: 'http://localhost:5001/',
+    authorizationEndPoint: 'http://localhost:5000/',
     managementEndPoint: 'http://localhost:5002'
 };
 
