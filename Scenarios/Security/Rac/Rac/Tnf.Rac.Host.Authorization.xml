@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tnf.Rac.Host.Authorization</name>
+    </assembly>
+    <members>
+        <member name="T:Tnf.Rac.Host.Authorization.Controllers.FeaturesController">
+            <summary>
+            Features API
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.FeaturesController.SaveFeatures(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Save features if is a new <paramref name="hash"/>
+            </summary>
+            <param name="hash">Hash value to check</param>
+            <param name="features">List of features to save</param>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.FeaturesController.HasHash(System.String)">
+            <summary>
+            Check if hash exist
+            </summary>
+            <param name="hash">Hash value</param>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.FeaturesController.GetFeatures">
+            <summary>
+            Return list of features
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.FeaturesController.GetFeaturesByTenantId(System.Nullable{System.Int32})">
+            <summary>
+            Get features by tenant
+            </summary>
+            <param name="tenantId">Tenant id</param>
+        </member>
+        <member name="T:Tnf.Rac.Host.Authorization.Controllers.PermissionsController">
+            <summary>
+            Permission API
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.PermissionsController.GetPermissionsByUser">
+            <summary>
+            Get permissions by logged user
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.PermissionsController.GetGrantedByPermissions(System.Collections.Generic.List{System.String})">
+            <summary>
+            Get granted by permissions
+            </summary>
+            <param name="permissions">Permissions list</param>
+            <returns>Return if permissions is granted</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Authorization.Controllers.PermissionsController.VerifyPermission(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Verify permissions <paramref name="permissions"/> for <paramref name="userId"/>
+            </summary>
+            <param name="userId">User id</param>
+            <param name="permissions">Permissions list</param>
+        </member>
+    </members>
+</doc>
