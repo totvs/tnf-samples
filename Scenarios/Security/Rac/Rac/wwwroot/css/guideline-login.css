@@ -1,0 +1,100 @@
+﻿
+.login-text {
+    width: 419px;
+    height: 44px;
+    display: inline;
+    border-radius: 3px;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: var(--white);
+    box-shadow: inset 0 1px 8px 0 var(--black-10);
+    border: solid 1px var(--neutral-light-60);
+    margin-bottom: 16px;
+}
+
+.login-button {
+    width: 419px;
+    height: 44px;
+    font-family: 'NunitoSans-Bold';
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 3px;
+    border-color: #0c9abe;
+    background-color: #0c9abe;
+    background-color: var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+    margin-bottom: 30px;
+}
+
+.login-user {
+    background: url(../svg/user_blue.svg) no-repeat scroll 7px;
+    padding-left: 40px;
+}
+
+.login-password {
+    background: url(../svg/lock_blue.svg) no-repeat scroll 7px;
+    padding-left: 40px;
+}
+
+.login-page {
+    text-align: center;
+}
+
+.login-header {
+    border-bottom: none;
+    margin: 2%;
+    margin-bottom: 45px;
+}
+
+    .login-header label {
+        display: block;
+        font-family: 'NunitoSans-ExtraLight';
+        font-size: 34px;
+        font-weight: 200;
+        line-height: 1.41;
+        color: #435357;
+    }
+
+.login-body {
+    width: 419px;
+    display: inline-block;
+}
+
+.login-remember {
+    width: 202px;
+    height: 44px;
+    float: right;
+    margin-bottom: 16px;
+}
+
+    .login-remember label {
+        font-family: 'NunitoSans';
+        font-size: 16px;
+        font-weight: 100;
+        line-height: 1.5;
+        text-align: left;
+        color: var(--neutral);
+    }
+
+.login-footer {
+    width: 100%;
+    position: fixed;
+    bottom: 25px;
+    text-align: center;
+}
+
+.forgot-password {
+    width: 129px;
+    height: 24px;
+    font-family: 'NunitoSans-Bold';
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.71;
+    text-align: center;
+    color: #0c9abe;
+    color: var(--primary);
+}
+
+.login-logo {
+    padding-bottom: 90px;
+}

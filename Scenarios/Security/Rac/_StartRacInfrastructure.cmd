@@ -1,3 +1,3 @@
 cd .\Rac
-start "Tnf.Rac.Host.All.dll" dotnet Tnf.Rac.Host.All.dll
+start "Tnf.Rac.Host.dll" dotnet Tnf.Rac.Host.dll
 cd ..

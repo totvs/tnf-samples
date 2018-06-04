@@ -4,5 +4,163 @@
         <name>Tnf.Rac.Host</name>
     </assembly>
     <members>
+        <member name="T:Tnf.Rac.Host.Controllers.FeaturesController">
+            <summary>
+            Features API
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.FeaturesController.SaveFeatures(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Save features if is a new <paramref name="hash"/>
+            </summary>
+            <param name="hash">Hash value to check</param>
+            <param name="features">List of features to save</param>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.FeaturesController.HasHash(System.String)">
+            <summary>
+            Check if hash exist
+            </summary>
+            <param name="hash">Hash value</param>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.FeaturesController.GetFeatures">
+            <summary>
+            Return list of features
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.FeaturesController.GetFeaturesByTenantId(System.Nullable{System.Int32})">
+            <summary>
+            Get features by tenant
+            </summary>
+            <param name="tenantId">Tenant id</param>
+        </member>
+        <member name="T:Tnf.Rac.Host.Controllers.OrganizationUnitController">
+            <summary>
+            OrganizationUnitController
+            </summary>
+        </member>
+        <member name="F:Tnf.Rac.Host.Controllers.OrganizationUnitController._tnfOrganizationUnitManager">
+            <summary>
+            DI of ITnfOrganizationUnitManager
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.#ctor(Tnf.Rac.Interfaces.ITnfOrganizationUnitManager,Tnf.Runtime.Session.ITnfSession)">
+            <summary>
+            Default ctor
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.GetByIdAsync(System.Int64)">
+            <summary>
+            Get a TnfOrganizationUnit given an Id
+            </summary>
+            <param name="id">OrganizationUnit Id</param>
+            <returns>TnfOrganizationUnit object</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.GetAllAsync(Tnf.Rac.Dtos.OrganizationQueryDto)">
+            <summary>
+            Get all TnfOrganizationUnit
+            </summary>
+            <param name="organizationQueryDto">OrganizationQueryDto objects </param>
+            <returns>List of TnfOrganizationUnits</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.Create(Tnf.Rac.Host.Dtos.TnfOrganizationUnitDto)">
+            <summary>
+            Create a new TnfOrganizationUnit object
+            </summary>
+            <param name="tnfOrganizationUnit">TnfOrganizationUnit object</param>
+            <returns>TnfOrganizationUnit object created</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.Update(System.Int64,Tnf.Rac.Host.Dtos.TnfOrganizationUnitDto)">
+            <summary>
+            Update a TnfOrganizationUnit object
+            </summary>
+            <returns>TnfOrganizationUnit updated</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.OrganizationUnitController.Delete(System.Int64)">
+            <summary>
+            Delete a TnfOrganizationUnit
+            </summary>
+            <returns>Task</returns>
+        </member>
+        <member name="T:Tnf.Rac.Host.Controllers.PermissionsController">
+            <summary>
+            Permission API
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.PermissionsController.GetPermissionsByUser">
+            <summary>
+            Get permissions by logged user
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.PermissionsController.GetGrantedByPermissions(System.Collections.Generic.List{System.String})">
+            <summary>
+            Get granted by permissions
+            </summary>
+            <param name="permissions">Permissions list</param>
+            <returns>Return if permissions is granted</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.PermissionsController.VerifyPermission(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Verify permissions <paramref name="permissions"/> for <paramref name="userId"/>
+            </summary>
+            <param name="userId">User id</param>
+            <param name="permissions">Permissions list</param>
+        </member>
+        <member name="T:Tnf.Rac.Host.Controllers.TenantController">
+            <summary>
+            TenantController
+            </summary>
+        </member>
+        <member name="F:Tnf.Rac.Host.Controllers.TenantController._tnfTenantManager">
+            <summary>
+            DI of ITnfTenantManager
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.TenantController.#ctor(Tnf.Rac.Interfaces.ITnfTenantManager)">
+            <summary>
+            Default ctor
+            </summary>
+            <param name="tnfTenantManager"></param>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.TenantController.GetByIdAsync(System.Int32)">
+            <summary>
+            Get a TnfTenant given an Id
+            </summary>
+            <param name="id">Tenant Id</param>
+            <returns>TnfTenant object</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.TenantController.GetAllAsync(Tnf.Rac.Dtos.TenantQueryDto)">
+            <summary>
+            Get all TnfTenants
+            </summary>
+            <param name="tenantQueryDto">TnfQueryDto objects </param>
+            <returns>List of TnfTenants</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.TenantController.Create(Tnf.Rac.Entities.TnfTenant)">
+            <summary>
+            Create a new TnfTenant object
+            </summary>
+            <param name="tnfTenant">TnfTenant object</param>
+            <returns>TnfTenant object created</returns>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.TenantController.Update(System.Int32,Tnf.Rac.Entities.TnfTenant)">
+            <summary>
+            Update a TnfTenant object
+            </summary>
+            <param name="id">TnfTenant id</param>
+            <param name="tnfTenant">TnfTenant object</param>
+            <returns>TnfTenant updated</returns>
+        </member>
+        <member name="T:Tnf.Rac.Host.Controllers.UserController">
+            <summary>
+            UserController
+            </summary>
+        </member>
+        <member name="M:Tnf.Rac.Host.Controllers.UserController.#ctor(Tnf.Rac.Interfaces.ITnfUserManager)">
+            <summary>
+            Default ctor
+            </summary>
+            <param name="tnfUserManager"></param>
+        </member>
     </members>
 </doc>
