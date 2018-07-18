@@ -16,6 +16,7 @@ namespace Dapper.Infra.Context
             {
                 config.DbContextOptions.EnableSensitiveDataLogging();
                 config.DbContextOptions.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
+                config.UseLoggerFactory();
             }
 
             if (config.ExistingConnection != null)
