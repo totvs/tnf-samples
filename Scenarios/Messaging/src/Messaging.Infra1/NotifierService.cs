@@ -21,11 +21,7 @@ namespace Messaging.Infra1.Services
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                _notificationHandler.DefaultBuilder
-                    .AsError()
-                    .WithMessage(Constants.LocalizationSourceName, LocalizationKeys.UndefinedMessage)
-                    .Raise();
-
+                _notificationHandler.RaiseError(Constants.LocalizationSourceName, LocalizationKeys.UndefinedMessage);
                 return Task.CompletedTask;
             }
 
