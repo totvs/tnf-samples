@@ -35,6 +35,8 @@ namespace BasicCrud.Web
                 .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
                 .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
 
+            services.AddSingleton(DatabaseConfiguration);
+
             if (DatabaseConfiguration.DatabaseType == DatabaseType.SqlServer)
                 services.AddSqlServerDependency();
             else if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)

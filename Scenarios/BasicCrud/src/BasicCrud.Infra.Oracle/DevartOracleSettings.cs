@@ -6,8 +6,6 @@ namespace BasicCrud.Infra.Oracle
     {
         public static void SetDefaultSettings()
         {
-            OracleEntityProviderConfig.Instance.Workarounds.IgnoreDboSchemaName = true;
-            OracleEntityProviderConfig.Instance.Workarounds.IgnoreSchemaName = true;
             OracleEntityProviderConfig.Instance.Workarounds.DisableQuoting = true;
             OracleEntityProviderConfig.Instance.DmlOptions.ReuseParameters = true;
             OracleEntityProviderConfig.Instance.DmlOptions.ParametersAsLiterals = true;

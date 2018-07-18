@@ -28,8 +28,6 @@ namespace BasicCrud.Infra.Oracle
                         config.DbContextOptions.UseOracle(config.ConnectionString);
                 });
 
-            DevartOracleSettings.SetDefaultSettings();
-
             return services;
         }
     }

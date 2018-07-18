@@ -14,6 +14,11 @@ namespace BasicCrud.Infra.Oracle.Context
             _databaseConfiguration = databaseConfiguration;
         }
 
+        static OracleCrudDbContext()
+        {
+            DevartOracleSettings.SetDefaultSettings();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

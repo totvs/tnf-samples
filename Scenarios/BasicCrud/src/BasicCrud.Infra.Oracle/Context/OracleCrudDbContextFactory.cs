@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.IO;
+using Tnf.Drivers.DevartOracle;
 using Tnf.Runtime.Session;
 
 namespace BasicCrud.Infra.Oracle.Context
@@ -22,16 +21,7 @@ namespace BasicCrud.Infra.Oracle.Context
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);
 
-            new ServiceCollection()
-                .AddTnfKernel()
-                .BuildServiceProvider()
-                .ConfigureTnf(tnf =>
-                {
-                    tnf.DefaultNameOrConnectionString = databaseConfiguration.ConnectionString;
-                    tnf.EnableDevartOracleDriver();
-                });
-
-            DevartOracleSettings.SetDefaultSettings();
+            License.Validade(databaseConfiguration.ConnectionString);
 
             builder.UseOracle(databaseConfiguration.ConnectionString);
 
