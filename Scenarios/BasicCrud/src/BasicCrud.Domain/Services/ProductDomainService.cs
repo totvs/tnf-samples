@@ -24,13 +24,7 @@ namespace BasicCrud.Domain.Services
         {
             if (builder == null)
             {
-                Notification
-                    .DefaultBuilder
-                    .AsError()
-                    .FromErrorEnum(Error.DomainServiceOnInsertNullBuilderError)
-                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnInsertNullBuilderError)
-                    .Raise();
-
+                Notification.RaiseError(Constants.LocalizationSourceName, Error.DomainServiceOnInsertNullBuilderError);
                 return default(Product);
             }
 
@@ -48,13 +42,7 @@ namespace BasicCrud.Domain.Services
         {
             if (builder == null)
             {
-                Notification
-                    .DefaultBuilder
-                    .AsError()
-                    .FromErrorEnum(Error.DomainServiceOnUpdateNullBuilderError)
-                    .WithMessage(Constants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError)
-                    .Raise();
-
+                Notification.RaiseError(Constants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError);
                 return default(Product);
             }
 
