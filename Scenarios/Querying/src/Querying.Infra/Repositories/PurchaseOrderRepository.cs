@@ -5,7 +5,6 @@ using Querying.Infra.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 
@@ -68,6 +67,9 @@ namespace Querying.Infra.Repositories
         /// </summary>
         public async Task<SumarizedPurchaseOrder> GetSumarizedPurchaseOrderFromDate(DateTime date)
         {
+            if (date == DateTime.MinValue)
+                date = DateTime.UtcNow;
+
             // Para a tabela de ProductOrder
             // Incluo a referência da tabela product e order
             // Filtrando para data passada por parâmetro
