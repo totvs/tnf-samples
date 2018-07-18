@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.1.0.12002" />
-    <PackageReference Include="Tnf.Caching.Abstractions" Version="2.1.0.12002" />
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.2.0.19901" />
+    <PackageReference Include="Tnf.Caching.Abstractions" Version="2.2.0.19901" />
   </ItemGroup>
 
 </Project>
