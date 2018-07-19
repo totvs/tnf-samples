@@ -5,7 +5,7 @@ Ele segue os padrões estipulados pelos protocolos OAuth2 e openid e foi constru
 Identity Server 4 (http://identityserver.io/)
 
 Este é um exemplo de aplicação utilizando O RAC como provedor de identidade fazendo a autenticação e autorização de um produto batizado de
-"Produto XYZ" para um Tenant definido como "Grupo Boticário".
+"Produto XYZ" para um Tenant definido como "Grupo ABC".
 
 Para executar esse exemplo (F5) não será preciso configurar nada.
 Ao executar a aplicação (F5) a mesma será compilada (devido ao angular estar incorporado ao projeto junto ao THF)
@@ -48,12 +48,11 @@ Para visualizar a API acesse http://localhost:5055/swagger/index.html
 		* DNS: através de um wildcard (*, ?) utilizado no dns http://*.rac.totvs.com.br/totvs.rac, será realizada a descoberta do Tenant. 
 		Exemplos de url válidas:
 			- Administração do RAC: http://admin.rac.totvs.com.br/totvs.rac
-			- Login com o Tenant Boticário: http://boticario.rac.totvs.com.br/totvs.rac
-			- Login com o Tenant Cacau Show: http://cacaushow.rac.totvs.com.br/totvs.rac
+			- Login com o Tenant ABC: http://abc.rac.totvs.com.br/totvs.rac
 
 		* Ao realizar o login no RAC poderá ser enviado um parâmetro na query string chamado "acr_values" provindo do padrão openid que informa o tenant a ser autenticado.
 		Exemplo:
-			acr_values=tenant:boticario
+			acr_values=tenant:abc
 
 		* Ao realizar o login no RAC pode ser enviado um parâmetro no header da requisição com a chave "Tnf.TenantId" onde perá ser informado o id do tenant a ser logado.
 
@@ -65,14 +64,14 @@ Para visualizar a API acesse http://localhost:5055/swagger/index.html
 
 	* Neste exemplo serão encontradas as permissões "ProdutoXyz.ApplicationName" e "ProdutoXyz.Products" que estão sendo utilizadas nos controllers desta aplicação.
 
-	* Para gerenciar se o usuário possui acesso a esse recurso você pode acessar o gerenciamento do RAC do Tenant Boticário disponível em http://boticario.rac.totvs.com.br/totvs.rac
+	* Para gerenciar se o usuário possui acesso a esse recurso você pode acessar o gerenciamento do RAC do Tenant ABC disponível em http://abc.rac.totvs.com.br/totvs.rac
 	  utilizando o usuário "admin" e senha "totvs@123" e verificar no Menu "Cadastro de Usuários" os perfis de acesso associados a ele.
 	  Lembrando: um usuário pode ter vários perfis de acesso e um perfil de acesso pode ceder N permissões a ele.
 
 ### Configuração
 
 Acesse a administração do RAC utilizando o endereço http://admin.rac.totvs.com.br/totvs.rac com usuário "admin" e senha "123qwe".
-Para acessar um Tenant (exemplo utilizado nesse cenário boticario) acesse http://boticario.rac.totvs.com.br/totvs.rac utilizando o usuário "admin" e senha "totvs@123".
+Para acessar um Tenant (exemplo utilizado nesse cenário ABC) acesse http://abc.rac.totvs.com.br/totvs.rac utilizando o usuário "admin" e senha "totvs@123".
 
 As configurações do RAC estão nos arquivos utilizados conforme o ambiente utilizado:
 		racsettings.Development.json e 

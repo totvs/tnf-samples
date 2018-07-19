@@ -1,0 +1,24 @@
+2018-07-19 13:46:15.013 -03:00 [INFO] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using '"C:\Users\josue.agnese\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-19 13:46:16.003 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Recuperando token de acesso utilizando client credentials para o cliente OAuth "produto_xyz"...
+2018-07-19 13:46:16.110 -03:00 [INFO] Microsoft.AspNetCore.SpaServices Starting @angular/cli on port 63551...
+2018-07-19 13:46:16.330 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Token de acesso "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJmM2EwZGI0OGRhNzczNmRiYmRiYjIzOWEzOTZjYWI1IiwidHlwIjoiSldUIn0.eyJuYmYiOjE1MzIwMTg3NzYsImV4cCI6MTUzMjAyMDI3NiwiaXNzIjoiaHR0cDovL2FiYy5yYWMudG90dnMuY29tLmJyL3RvdHZzLnJhYyIsImF1ZCI6WyJodHRwOi8vYWJjLnJhYy50b3R2cy5jb20uYnIvdG90dnMucmFjL3Jlc291cmNlcyIsImF1dGhvcml6YXRpb25fYXBpIl0sImNsaWVudF9pZCI6InByb2R1dG9feHl6Iiwic2NvcGUiOlsiYXV0aG9yaXphdGlvbl9hcGkiXX0.wroqnIAC-GulHuPQgXKmyw5buOVi8XoIAeRSH4ZkxZIw4BHR4UXYxG4pxqFHKA0od6FNdYJRR3gRwPpJw4P9jtLi4u5caYpOJai-fuqxDzlE5IXM7f5SzbO9Pi5sQB9GAwzoFjGDsu_RL2sTMu_Y-Ccfvw96Yq1Y-RQq11VdzHyh6b3NCq7rfz4m2QSIqfCX_ckRzApPwJ13rDiaJjl1G1TV4wVfb8FyBJqcOHVHcMcrCQ7_YYyNJJuZa9xibpPsMqYudEcmtJ5u3uDKA_OW3B7d4NX9dmjjkW1umy2FNOiwH-6WEsWzhlMN1GHIBSB_C_p7t56tIiju2joqn4S9Sw"
+2018-07-19 13:46:16.575 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Verificando se o RAC já possui essas features...
+2018-07-19 13:46:16.788 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager RAC já possui as features? True
+2018-07-19 13:46:16.788 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager As features estão atualizadas
+2018-07-19 13:46:18.611 -03:00 [WARN] Microsoft.EntityFrameworkCore.Model.Validation Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data, this mode should only be enabled during development.
+2018-07-19 13:46:18.846 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/  
+2018-07-19 13:46:18.919 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 13:46:18.960 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone]
+2018-07-19 13:46:18.963 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.1.1-rtm-30846" initialized '"SqliteCrudDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "SensitiveDataLoggingEnabled "
+2018-07-19 13:46:18.976 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 13:46:19.094 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 13:46:19.198 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 13:46:19.212 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 13:46:19.217 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*) FROM \"sqlite_master\" WHERE \"name\" = '__EFMigrationsHistory' AND \"type\" = 'table';"
+2018-07-19 13:46:19.221 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 13:46:19.222 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA f
