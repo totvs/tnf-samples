@@ -10,7 +10,6 @@ using ProdutoXyz.Dto;
 using ProdutoXyz.Infra;
 using ProdutoXyz.Infra.SqLite;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
