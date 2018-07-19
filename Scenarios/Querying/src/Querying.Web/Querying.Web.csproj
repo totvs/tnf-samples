@@ -23,7 +23,7 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
-    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.2.0.19901" />
+    <PackageReference Include="Tnf.Repositories.AspNetCore" Version="2.2.0.20002" />
   </ItemGroup>
 
   <ItemGroup>
