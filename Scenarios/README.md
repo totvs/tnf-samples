@@ -78,3 +78,13 @@ Exemplo de um projeto usando o pacote do RabbitMQ do Tnf:
 	- Tnf.Caching.Abstractions
 	- Tnf.Notifications
 	- Tnf.Kernel
+
+#### [ProdutoXyz](https://github.com/totvs/tnf-samples/tree/master/Scenarios/ProdutoXyz) ####
+Exemplo de um projeto usando o pacote de segurança do Tnf
+
+- Pacotes que foram instalados:
+	- Tnf.AspNetCore.Security
+	- Tnf.EntityFrameworkCore
+	- Tnf.AutoMapper
+	- Tnf.Dto
+	- Tnf.Domain
