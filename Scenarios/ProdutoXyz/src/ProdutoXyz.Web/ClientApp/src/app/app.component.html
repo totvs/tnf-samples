@@ -1,0 +1,23 @@
+<div class="thf-wrapper" [hidden]="!isLoggedIn">
+  <thf-toolbar 
+    t-title="Produto XYZ"
+    [t-profile]="profile"
+    [t-profile-actions]="profileActions"
+    [t-show-notification]="false">
+  </thf-toolbar>
+  
+  <thf-menu [t-menus]="thfMenus"></thf-menu>
+  
+  <router-outlet></router-outlet>
+  <app-hub-message></app-hub-message>
+
+  <div class="button-div-voltar" *ngIf="showComponent">
+    <thf-button
+      *ngIf="!!redictUrl"
+      t-label="Voltar"
+      t-primary="true"
+      (t-click)="redirectUrl()">
+    </thf-button>
+  </div>
+</div>
+<div class="spin-loader" [hidden]="isLoggedIn"></div>

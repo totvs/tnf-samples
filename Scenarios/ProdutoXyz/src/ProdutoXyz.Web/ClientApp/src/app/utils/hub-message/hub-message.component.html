@@ -1,0 +1,23 @@
+<thf-modal
+[t-primary-action]="data.primaryAction"
+[t-secondary-action]="data.secondaryAction"
+[t-title]="data.title" >
+    <div style="position: absolute;">
+        <span [ngSwitch]="data.typeMessage" style="height: 100%">
+            <span *ngSwitchCase="'error'"       class="hub-message-icon-error thf-icon thf-icon-close"></span>
+            <span *ngSwitchCase="'warning'"     class="hub-message-icon-notification thf-icon thf-icon-document"></span>
+            <span *ngSwitchCase="'information'" class="hub-message-icon-more thf-icon thf-icon-message"></span>
+            <span *ngSwitchCase="'question'"    class="hub-message-icon-more thf-icon thf-icon-message"></span>
+        </span>
+    </div>
+    <div style="margin-bottom: 4px;margin-left: 55px; vertical-align: top; min-height: 45px" [innerHTML]="data.body"></div>
+    <form #checkForm="ngForm">
+        <thf-checkbox-group *ngIf="checkOpts.length > 0"
+            t-label="Opções"
+            [t-options]="checkOpts"
+            name="checkValues"
+            [(ngModel)]="checkValues"
+            t-required="true">
+        </thf-checkbox-group>
+    </form>
+</thf-modal>

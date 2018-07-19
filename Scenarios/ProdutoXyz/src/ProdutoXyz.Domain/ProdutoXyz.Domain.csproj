@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\SourceFiles\ProdutoXyz-en.json" />
+    <None Remove="Localization\SourceFiles\ProdutoXyz-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\ProdutoXyz-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\ProdutoXyz-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Domain" Version="2.2.0.20002" />
+  </ItemGroup>
+
+</Project>

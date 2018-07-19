@@ -1,9 +1,0 @@
-﻿{
-  "ApiName": "backend_api",
-  "AuthorityEndpoint": "http://localhost:5000",
-  "AuthorizationEndpoint": "http://localhost:5000",
-  "ClientId": "js_oidc",
-  "ClientSecret": "secret",
-  "RequireHttpsMetadata": false,
-  "Scope": "authorization_api backend_api"
-}
