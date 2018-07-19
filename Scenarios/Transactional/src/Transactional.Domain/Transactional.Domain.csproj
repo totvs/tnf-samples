@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Repositories" Version="2.2.0.19901" />
-    <PackageReference Include="Tnf.Specifications" Version="2.2.0.19901" />
+    <PackageReference Include="Tnf.Repositories" Version="2.2.0.20002" />
+    <PackageReference Include="Tnf.Specifications" Version="2.2.0.20002" />
   </ItemGroup>
 
 </Project>

@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Tnf.AspNetCore.TestBase" Version="2.2.0.19901" />
-    <PackageReference Include="Tnf.EntityFrameworkCore.Sqlite.TestBase" Version="2.2.0.19901" />
-    <PackageReference Include="Tnf.EntityFrameworkCore.TestBase" Version="2.2.0.19901" />
+    <PackageReference Include="Tnf.AspNetCore.TestBase" Version="2.2.0.20002" />
+    <PackageReference Include="Tnf.EntityFrameworkCore.Sqlite.TestBase" Version="2.2.0.20002" />
+    <PackageReference Include="Tnf.EntityFrameworkCore.TestBase" Version="2.2.0.20002" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
