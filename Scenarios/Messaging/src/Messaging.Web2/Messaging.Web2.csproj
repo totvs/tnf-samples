@@ -21,8 +21,8 @@
     <PackageReference Include="Serilog.Sinks.Async" Version="1.3.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
-    <PackageReference Include="Tnf.AspNetCore" Version="2.2.0.20002" />
-    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.2.0.20002" />
+    <PackageReference Include="Tnf.AspNetCore" Version="2.2.0.20003" />
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.2.0.20003" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
