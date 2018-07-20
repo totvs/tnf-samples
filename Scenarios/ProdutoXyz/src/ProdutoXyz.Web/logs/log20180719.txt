@@ -21,4 +21,100 @@
 2018-07-19 13:46:19.221 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""PRAGMA foreign_keys=ON;"
 2018-07-19 13:46:19.222 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""PRAGMA f
+""PRAGMA f2018-07-19 16:57:42.879 -03:00 [INFO] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using '"C:\Users\josue.agnese\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-19 16:57:43.669 -03:00 [INFO] Microsoft.AspNetCore.SpaServices Starting @angular/cli on port 49610...
+2018-07-19 16:57:43.727 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Recuperando token de acesso utilizando client credentials para o cliente OAuth "produto_xyz"...
+2018-07-19 16:57:43.901 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Token de acesso "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJmM2EwZGI0OGRhNzczNmRiYmRiYjIzOWEzOTZjYWI1IiwidHlwIjoiSldUIn0.eyJuYmYiOjE1MzIwMzAyNjMsImV4cCI6MTUzMjAzMTc2MywiaXNzIjoiaHR0cDovL2FiYy5yYWMudG90dnMuY29tLmJyL3RvdHZzLnJhYyIsImF1ZCI6WyJodHRwOi8vYWJjLnJhYy50b3R2cy5jb20uYnIvdG90dnMucmFjL3Jlc291cmNlcyIsImF1dGhvcml6YXRpb25fYXBpIl0sImNsaWVudF9pZCI6InByb2R1dG9feHl6Iiwic2NvcGUiOlsiYXV0aG9yaXphdGlvbl9hcGkiXX0.giVHIUm52_M8rIZL1Ck-9EswP5qdoqnsmV1nN9Z91jGUvIEpbhJuNhflvWwxdck7YXKzP7LKfdOubx3qzFGGYgYUd6uSqIwPb8jfcNw59ZAs4TgtUysGqfPeU3_C9DqYfYynr3Wi5szizFTZlbkZ4Dgcdy0Md3TgE-R3Z7KNEDRkqBVFpiOHwrPqJQylzt4wbYpHY7EhesGeNzy53oPyzV3hb3SAZhFH9aCYtSMxAMEqRhMSxklrPkzquwIsOWN7jf7AYuQRIdUdF0cZNJs9FrQkrr1y39bQRYbcf77lxA2FHFnswxiSxikFavzCBYKLjCZ1GfsZhjdY3m4bWg9hVQ"
+2018-07-19 16:57:43.927 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Verificando se o RAC já possui essas features...
+2018-07-19 16:57:44.077 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager RAC já possui as features? False
+2018-07-19 16:57:44.077 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Enviando features...
+2018-07-19 16:57:44.261 -03:00 [INFO] Tnf.AspNetCore.Security.Internal.SecurityManager Features enviadas
+2018-07-19 16:57:45.151 -03:00 [WARN] Microsoft.EntityFrameworkCore.Model.Validation Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data, this mode should only be enabled during development.
+2018-07-19 16:57:45.213 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/  
+2018-07-19 16:57:45.296 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:57:45.321 -03:00 [INFO] Tnf.Settings.Internal.SettingDefinitionManager Settings definitions loaded: [Tnf.Localization.DefaultLanguageName,Tnf.Timing.TimeZone]
+2018-07-19 16:57:45.335 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:57:45.402 -03:00 [INFO] Microsoft.EntityFrameworkCore.Infrastructure Entity Framework Core "2.1.1-rtm-30846" initialized '"SqliteCrudDbContext"' using provider '"Microsoft.EntityFrameworkCore.Sqlite"' with options: "SensitiveDataLoggingEnabled "
+2018-07-19 16:57:45.412 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:57:45.570 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 16:57:45.585 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 16:57:45.590 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*) FROM \"sqlite_master\" WHERE \"name\" = '__EFMigrationsHistory' AND \"type\" = 'table';"
+2018-07-19 16:57:45.595 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 16:57:45.595 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 16:57:45.596 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*) FROM \"sqlite_master\" WHERE \"name\" = '__EFMigrationsHistory' AND \"type\" = 'table';"
+2018-07-19 16:57:45.613 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""PRAGMA foreign_keys=ON;"
+2018-07-19 16:57:45.615 -03:00 [INFO] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT \"MigrationId\", \"ProductVersion\"
+FROM \"__EFMigrationsHistory\"
+ORDER BY \"MigrationId\";"
+2018-07-19 16:57:45.648 -03:00 [INFO] Microsoft.EntityFrameworkCore.Migrations No migrations were applied. The database is already up to date.
+2018-07-19 16:57:51.555 -03:00 [INFO] Microsoft.AspNetCore.SpaServices > produto.xyz@0.0.0 start D:\git\tnf-samples\Scenarios\ProdutoXyz\src\ProdutoXyz.Web\ClientApp
+> ng serve --extract-css "--port" "49610"
+
+** NG Live Development Server is listening on localhost:49610, open your browser on http://localhost:49610/ **
+
+2018-07-19 16:57:59.190 -03:00 [INFO] Microsoft.AspNetCore.SpaServices webpack: wait until bundle finished: /
+
+2018-07-19 16:58:21.351 -03:00 [INFO] Microsoft.AspNetCore.SpaServices Date: 2018-07-19T19:58:21.349Z
+
+2018-07-19 16:58:21.620 -03:00 [INFO] Microsoft.AspNetCore.SpaServices Hash: 7addd37489e594e37c1d
+Time: 28992ms
+chunk {inline} inline.bundle.js (inline) 5.79 kB [entry] [rendered]
+chunk {main} main.bundle.js (main) 177 kB [initial] [rendered]
+chunk {polyfills} polyfills.bundle.js (polyfills) 567 kB [initial] [rendered]
+chunk {scripts} scripts.bundle.js (scripts) 341 kB [initial] [rendered]
+chunk {styles} styles.bundle.css (styles) 123 kB [initial] [rendered]
+chunk {vendor} vendor.bundle.js (vendor) 30.8 MB [initial] [rendered]
+
+
+2018-07-19 16:58:21.621 -03:00 [INFO] Microsoft.AspNetCore.SpaServices webpack: Compiled successfully.
+
+2018-07-19 16:58:21.813 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 36599.596ms 304 
+2018-07-19 16:58:21.943 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/inline.bundle.js  
+2018-07-19 16:58:21.944 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:21.944 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/polyfills.bundle.js  
+2018-07-19 16:58:21.944 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:21.944 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:21.945 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:21.945 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:21.946 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:21.948 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/scripts.bundle.js  
+2018-07-19 16:58:21.948 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:21.948 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:21.948 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:21.992 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/styles.bundle.css  
+2018-07-19 16:58:21.992 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:21.992 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:21.992 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:22.115 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/vendor.bundle.js  
+2018-07-19 16:58:22.116 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:22.119 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:22.119 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/main.bundle.js  
+2018-07-19 16:58:22.119 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:22.119 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:22.119 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:22.119 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:22.644 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 701.0965ms 304 
+2018-07-19 16:58:23.322 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1374.8159ms 304 
+2018-07-19 16:58:23.545 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1553.748ms 304 
+2018-07-19 16:58:23.545 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1601.1299ms 304 
+2018-07-19 16:58:23.572 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/NunitoSans-Regular.fb98ed1700e8dfaf0764.ttf  
+2018-07-19 16:58:23.589 -03:00 [INFO] Microsoft.AspNetCore.Cors.Infrastructure.CorsService Policy execution successful.
+2018-07-19 16:58:23.615 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:23.615 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:23.615 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:23.652 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1537.5131ms 304 
+2018-07-19 16:58:23.740 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1621.5157ms 200 application/javascript; charset=UTF-8
+2018-07-19 16:58:24.189 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request starting HTTP/1.1 GET http://localhost:5055/sockjs-node/info?t=1532030304185  
+2018-07-19 16:58:24.200 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfUserRequestCultureProvider TnfSession.UserId == null
+2018-07-19 16:58:24.200 -03:00 [DBUG] Tnf.AspNetCore.Localization.TnfDefaultRequestCultureProvider Default culture get from SettingManager: pt-BR
+2018-07-19 16:58:24.200 -03:00 [DBUG] IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler AuthenticationScheme: "Bearer" was not authenticated.
+2018-07-19 16:58:24.637 -03:00 [INFO] Microsoft.AspNetCore.Hosting.Internal.WebHost Request finished in 1065.4711ms 304 
+2018-07-19 16:58:24.662 -03:00 [INFO] Microsoft.AspNetCore.Hosting.In
