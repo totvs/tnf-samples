@@ -7,8 +7,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
-    <PackageReference Include="Tnf.AutoMapper" Version="2.2.0.20003" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.2.0.20003" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.2.1.20602" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.2.1.20602" />
   </ItemGroup>
 
   <ItemGroup>
