@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Tnf.EntityFrameworkCore.Sqlite.TestBase" Version="2.2.0.20003" />
-    <PackageReference Include="Tnf.EntityFrameworkCore.TestBase" Version="2.2.0.20003" />
+    <PackageReference Include="Tnf.EntityFrameworkCore.Sqlite.TestBase" Version="2.2.1.20602" />
+    <PackageReference Include="Tnf.EntityFrameworkCore.TestBase" Version="2.2.1.20602" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
