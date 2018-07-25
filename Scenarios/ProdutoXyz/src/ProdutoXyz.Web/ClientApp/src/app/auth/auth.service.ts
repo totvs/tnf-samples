@@ -7,6 +7,7 @@ import { UserManager, UserManagerSettings, User, WebStorageStateStore } from 'oi
 import { IEvent, EventDispatcher } from '../events/event';
 import { HubMessageComponent } from '../utils/hub-message/hub-message.component';
 import { environment } from '../../environments/environment';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -30,12 +31,9 @@ export class AuthService {
         // Get user after callback
         this.getUser().then(user => {
             this.user = user;
-            if (this.user) {
 
-                if (this.user.expired)
-                    this.manager.signinRedirectCallback();
-                else
-                    this.internalOnCompleteAuthentication.dispatch(user);
+            if (this.user) {
+                this.internalOnCompleteAuthentication.dispatch(user);
             }
         });
     }
@@ -44,10 +42,6 @@ export class AuthService {
 
     getAuthorizationHeaderValue(): string {
         return this.user ? `${this.user.token_type} ${this.user.access_token}` : '';
-    }
-
-    signinSilentCallback() {
-        this.manager.signinSilentCallback();
     }
 
     signoutRedirect() {
@@ -82,8 +76,7 @@ export class AuthService {
     }
 
     async completeAuthentication(): Promise<void> {
-        if (!this.user)
-            this.user = await this.manager.signinRedirectCallback();
+        this.user = await this.manager.signinRedirectCallback();
 
         if (this.user)
             this.internalOnCompleteAuthentication.dispatch(this.user);
@@ -91,11 +84,14 @@ export class AuthService {
 
     public authorize(urlCurrent): Promise<boolean> {
         return this.getUser().then(user => {
-            if (user && !user.expired) {
-                return true;
-            }
 
-            if (user && user.expired && urlCurrent.startsWith('/auth-callback')) {
+            if (user) {
+
+                if (user.expired) {
+                    this.manager.signoutRedirect();
+                    return false;
+                }
+
                 return true;
             }
 
