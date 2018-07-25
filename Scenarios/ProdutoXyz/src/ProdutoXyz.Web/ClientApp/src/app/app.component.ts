@@ -16,7 +16,6 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
     public showComponent: boolean = true;
-    public redictUrl = localStorage['redirect_url'];
     public isLoggedIn: boolean = false;
     public title: string = '';
 
@@ -39,7 +38,11 @@ export class AppComponent implements OnInit {
     constructor(protected http: HttpClient, private authService: AuthService, private userPermissionService: UserPermissionService, private router: Router) {
         router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
+
                 this.showComponent = event.url === "" || event.url === "/" || event.url.startsWith("/auth-callback");
+
+                if (!this.showComponent)
+                    localStorage.setItem("current.route", event.url);
             }
         });
     }
@@ -72,10 +75,6 @@ export class AppComponent implements OnInit {
                         this.authService.signoutRedirect();
                 });
         });
-    }
-
-    redirectUrl() {
-        window.location.href = decodeURIComponent(this.redictUrl);
     }
 
     async logout() {

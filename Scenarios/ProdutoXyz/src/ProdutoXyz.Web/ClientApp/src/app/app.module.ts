@@ -58,15 +58,6 @@ import { ApplicationComponent } from './application/application.component';
 export class AppModule {
 
     constructor(private activatedRoute: ActivatedRoute) {
-        let dictionary = {};
-
-        window.location.search.substr(1).split("&").forEach(p => {
-            let split = p.split("=");
-            dictionary[split[0]] = decodeURIComponent(split[1]);
-        });
-
-        if (dictionary["redirect_url"])
-            localStorage.setItem("redirect_url", dictionary["redirect_url"]);
     }
 
 }
