@@ -63,6 +63,22 @@ export class AppComponent implements OnInit {
                 this.userPermissionService.getUserAuthorizedMenus(this.menus).subscribe(authorizedMenus => {
                     this.isLoggedIn = true;
                     this.thfMenus = this.thfMenus.concat(authorizedMenus);
+
+                    var currentRoute = localStorage.getItem("current.route");
+                    if (currentRoute && currentRoute.length > 0) {
+
+                        currentRoute = currentRoute.replace(/^\/+/g, '');
+
+                        var menu = authorizedMenus.find(w => w.link == currentRoute);
+
+                        if (menu)
+                            this.router.navigate([menu.link]);
+                        else
+                            this.router.navigate(['/home']);
+                    }
+                    else {
+                        this.router.navigate(['/home']);
+                    }
                 });
             }
         });
