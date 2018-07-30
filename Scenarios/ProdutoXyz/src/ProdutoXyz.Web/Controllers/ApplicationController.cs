@@ -7,6 +7,7 @@ namespace ProdutoXyz.Web.Controllers
 {
     [Produces("application/json")]
     [Route("api/application")]
+    [TnfAuthorize("ProdutoXyz.Application")]
     public class ApplicationController : TnfController
     {
         private readonly ITnfSession _tnfSession;
@@ -17,13 +18,14 @@ namespace ProdutoXyz.Web.Controllers
         }
 
         [HttpGet("name")]
-        [TnfAuthorize("ProdutoXyz.ApplicationName")]
+        [TnfAuthorize("ProdutoXyz.Application.Name")]
         public IActionResult GetApplicationName()
         {
             return Ok("Produto XYZ");
         }
 
         [HttpGet("userInfo")]
+        [TnfAuthorize("ProdutoXyz.Application.UserInfo")]
         public async Task<IActionResult> UserInfo()
         {
             var accessToken = await HttpContext.GetTokenAsync();

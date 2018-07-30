@@ -36,8 +36,9 @@ export class UserPermissionService {
             "Management.Organization",
             "Management.Role",
             "Management.User",
-            "ProdutoXyz.Products",
-            "ProdutoXyz.ApplicationName"
+            "ProdutoXyz.Application",
+            "ProdutoXyz.Application.Name",
+            "ProdutoXyz.Application.UserInfo"
         ];
 
         var response = await this.getUserPermissionsGranted(nameOfPermissions);
