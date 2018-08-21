@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    public showComponent: boolean = true;
+
     public isLoggedIn: boolean = false;
     public title: string = '';
 
@@ -39,10 +39,10 @@ export class AppComponent implements OnInit {
         router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
 
-                this.showComponent = event.url === "" || event.url === "/" || event.url.startsWith("/auth-callback");
+                var invalidRoute = event.url === "" || event.url === "/" || event.url.startsWith("/auth-callback");
 
-                if (!this.showComponent)
-                    localStorage.setItem("current.route", event.url);
+                if (!invalidRoute)
+                    sessionStorage.setItem("current.route", event.url);
             }
         });
     }
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
                     this.isLoggedIn = true;
                     this.thfMenus = this.thfMenus.concat(authorizedMenus);
 
-                    var currentRoute = localStorage.getItem("current.route");
+                    var currentRoute = sessionStorage.getItem("current.route");
                     if (currentRoute && currentRoute.length > 0) {
 
                         currentRoute = currentRoute.replace(/^\/+/g, '');
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
             hubMessage.openMessageQuestion('Sua sessão expirou. Deseja realizar o login novamente?', "Sessão expirada")
                 .subscribe((confirm) => {
                     if (confirm)
-                        this.authService.signoutRedirect();
+                        this.authService.logout();
                 });
         });
     }

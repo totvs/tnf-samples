@@ -14,15 +14,18 @@ export class TokenInterceptor implements HttpInterceptor {
         return Observable.fromPromise(this.handleAccess(request, next));
     }
 
-    private async handleAccess(request: HttpRequest<any>, next: HttpHandler):
-        Promise<HttpEvent<any>> {
-        const user = await this.auth.getUser();
+    private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
 
-        request = request.clone({
-            setHeaders: {
-                'Authorization': user ? `${user.token_type} ${user.access_token}` : ''
-            }
-        });
+        var user = await this.auth.getUser();
+
+        if (user && !user.expired) {
+
+            request = request.clone({
+                setHeaders: {
+                    'Authorization': `${user.token_type} ${user.access_token}`
+                }
+            });
+        }
 
         return next.handle(request).toPromise();
     }
