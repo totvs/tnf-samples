@@ -88,7 +88,7 @@ namespace BasicCrud.Web
 
                 // Habilita o driver Oracle da Devart (DotConnect for Oracle)
                 if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
-                    options.EnableDevartOracleDriver(useDefaultLicense: true);
+                    options.EnableDevartOracleDriver();
             });
 
             app.ApplicationServices.MigrateDatabase();
