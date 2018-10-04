@@ -8,16 +8,22 @@ using Tnf.Application.Services;
 using Tnf.Domain.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
+using Tnf.Repositories.Uow;
 
 namespace BasicCrud.Application.Services
 {
     public class CustomerAppService : ApplicationService, ICustomerAppService
     {
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly IDomainService<Customer> _service;
 
-        public CustomerAppService(IDomainService<Customer> service, INotificationHandler notificationHandler)
+        public CustomerAppService(
+            IUnitOfWorkManager unitOfWorkManager,
+            IDomainService<Customer> service, 
+            INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
+            _unitOfWorkManager = unitOfWorkManager;
             _service = service;
         }
 
@@ -29,7 +35,14 @@ namespace BasicCrud.Application.Services
             var builder = Customer.Create(Notification)
                 .WithName(dto.Name);
 
-            var customer = await _service.InsertAndSaveChangesAsync(builder);
+            Customer customer = null;
+
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                customer = await _service.InsertAndSaveChangesAsync(builder);
+
+                await uow.CompleteAsync().ForAwait();
+            }
 
             return customer.MapTo<CustomerDto>();
         }
@@ -39,7 +52,12 @@ namespace BasicCrud.Application.Services
             if (!ValidateId(id))
                 return;
 
-            await _service.DeleteAsync(w => w.Id == id);
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                await _service.DeleteAsync(w => w.Id == id);
+
+                await uow.CompleteAsync().ForAwait();
+            }
         }
 
         public async Task<CustomerDto> GetAsync(DefaultRequestDto id)
@@ -64,9 +82,15 @@ namespace BasicCrud.Application.Services
                 .WithId(id)
                 .WithName(dto.Name);
 
-            await _service.UpdateAsync(builder);
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                await _service.UpdateAsync(builder);
+
+                await uow.CompleteAsync().ForAwait();
+            }
 
             dto.Id = id;
+
             return dto;
         }
     }

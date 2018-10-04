@@ -9,17 +9,24 @@ using System.Threading.Tasks;
 using Tnf.Application.Services;
 using Tnf.Dto;
 using Tnf.Notifications;
+using Tnf.Repositories.Uow;
 
 namespace BasicCrud.Application.Services
 {
     public class ProductAppService : ApplicationService, IProductAppService
     {
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly IProductDomainService _domainService;
         private readonly IProductReadRepository _readRepository;
 
-        public ProductAppService(IProductDomainService domainService, IProductReadRepository readRepository, INotificationHandler notificationHandler)
+        public ProductAppService(
+            IUnitOfWorkManager unitOfWorkManager,
+            IProductDomainService domainService, 
+            IProductReadRepository readRepository, 
+            INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
+            _unitOfWorkManager = unitOfWorkManager;
             _domainService = domainService;
             _readRepository = readRepository;
         }
@@ -33,7 +40,14 @@ namespace BasicCrud.Application.Services
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            var entity = await _domainService.InsertProductAsync(builder);
+            Product entity = null;
+
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                entity = await _domainService.InsertProductAsync(builder);
+
+                await uow.CompleteAsync().ForAwait();
+            }
 
             if (Notification.HasNotification())
                 return null;
@@ -51,7 +65,12 @@ namespace BasicCrud.Application.Services
                 .WithDescription(dto.Description)
                 .WithValue(dto.Value);
 
-            await _domainService.UpdateProductAsync(builder);
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                await _domainService.UpdateProductAsync(builder);
+
+                await uow.CompleteAsync().ForAwait();
+            }
 
             dto.Id = id;
             return dto;
@@ -62,7 +81,12 @@ namespace BasicCrud.Application.Services
             if (!ValidateId(id))
                 return;
 
-            await _domainService.DeleteProductAsync(id);
+            using (var uow = _unitOfWorkManager.Begin())
+            {
+                await _domainService.DeleteProductAsync(id);
+
+                await uow.CompleteAsync().ForAwait();
+            }
         }
 
         public async Task<ProductDto> GetProductAsync(DefaultRequestDto id)

@@ -48,9 +48,6 @@ namespace BasicCrud.Web.Tests
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
             });
 
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
