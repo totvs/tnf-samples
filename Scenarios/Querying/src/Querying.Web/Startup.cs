@@ -71,9 +71,6 @@ namespace Querying.Web
             app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
             app.Run(context =>
             {
                 context.Response.Redirect("/swagger");
