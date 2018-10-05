@@ -13,7 +13,6 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         {
             // Configura o setup de teste para AspNetCore
             services
-                .AddTnfRepository()
                 .AddTnfAspNetCoreSetupTest();
 
             // Registro dos serviços de Mock
