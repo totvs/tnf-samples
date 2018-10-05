@@ -53,7 +53,17 @@ export class AppComponent implements OnInit {
         this.isLoggedIn = false;
 
         this.authService.onCompleteAuthentication().subscribe(user => {
-            var profileTitle = user && user.profile ? user.profile.name : null;
+
+            var profileTitle = null;
+
+            if (user && user.profile) {
+
+                profileTitle = user.profile.name;
+
+                if (Array.isArray(user.profile.name)) {
+                    profileTitle = user.profile.name[1];
+                }
+            }
 
             this.profile = {
                 title: profileTitle

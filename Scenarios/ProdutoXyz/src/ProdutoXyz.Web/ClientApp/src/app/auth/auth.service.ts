@@ -85,6 +85,8 @@ export function getClientSettings(): UserManagerSettings {
         response_type: "code id_token token",
         scope: "openid profile email authorization_api offline_access",
 
+        //acr_values = tenant: abc,
+
         // this will toggle if profile endpoint is used
         loadUserInfo: true,
 

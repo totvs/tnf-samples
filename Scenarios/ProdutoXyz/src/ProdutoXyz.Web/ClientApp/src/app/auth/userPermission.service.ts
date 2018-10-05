@@ -56,10 +56,6 @@ export class UserPermissionService {
     async getUserPermissionsGranted(permissions: string[]): Promise<boolean[]> {
         return await this.http.post<boolean[]>(`${environment.authorityEndPoint}/api/Permissions`, permissions).toPromise();
     }
-
-    async getFeatures(): Promise<string[]> {
-        return await this.http.get<string[]>(`${environment.authorityEndPoint}/api/Features`).toPromise();
-    }
 }
 
 export class MenuItem {

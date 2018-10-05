@@ -9,8 +9,14 @@ Este é um exemplo de aplicação utilizando O RAC como provedor de identidade f
 
 Para executar esse exemplo (F5) não será preciso configurar nada.
 Ao executar a aplicação (F5) a mesma será compilada (devido ao angular estar incorporado ao projeto junto ao THF)
-Acesse http://localhost:5055 e você será redirecionado para o RAC para realizar a autenticação.
+Acesse http://abc.localhost:5055 e você será redirecionado para o RAC para realizar a autenticação.
 Realize a autenticação através do usuário "admin" e senha "totvs@123"
+
+IMPORTANTE: 
+Para resolução do Tenant tanto o RAC como nesta aplicação usando o DNS, onde o tenant resolvido será através do padrão http://{tenant}.localhost:5055.
+Para que seja possível realizar o teste da aplicação local, você deverá colocar o DNS "abc.localhost" no seu arquivo de HOSTS do windows.
+Caso você não deseja registrar essa informação no arquivo HOSTS do windows, pode ser usado o navegador Google Chrome que irá aceitar que você digite a url http://abc.localhost:5055
+sem nenhuma configuração adicional.
 
 Para visualizar a API acesse http://localhost:5055/swagger/index.html
 
@@ -51,7 +57,8 @@ Para visualizar a API acesse http://localhost:5055/swagger/index.html
 			- Login com o Tenant ABC: http://abc.rac.totvs.com.br/totvs.rac
 
 		* Ao realizar o login no RAC poderá ser enviado um parâmetro na query string chamado "acr_values" provindo do padrão openid que informa o tenant a ser autenticado.
-		Exemplo:
+		Isso pode ser feito diretamente no arquivo "auth.service.ts" dentro da pasta ClientApp/src/app/auth desta aplicação
+		Exemplo (comentado na linha 88 do arquivo "auth.service.ts"):
 			acr_values=tenant:abc
 
 		* Ao realizar o login no RAC pode ser enviado um parâmetro no header da requisição com a chave "Tnf.TenantId" onde perá ser informado o id do tenant a ser logado.
@@ -82,7 +89,6 @@ Nestes arquivos temos as seguintes configurações:
 	* AuthorityEndpoint: Endereço da url do RAC onde o produto será autenticado e autorizado;
 	* ClientId: Identificador de cliente OAuth cadastrado no RAC;
 	* ClientSecret: Chave de acesso do cliente OAuth cadastrado no RAC;
-	* RequireHttpsMetadata: Identificação se requer o uso do protocolo https;
 
 Dentro do front-end:
 	ClientApp
