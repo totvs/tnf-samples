@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Tnf.Runtime.Session;
@@ -29,12 +30,18 @@ namespace ProdutoXyz.Web.Controllers
         public async Task<IActionResult> UserInfo()
         {
             var accessToken = await HttpContext.GetTokenAsync();
+            var tenantName = HttpContext.GetTenantName();
+            var userFullName = HttpContext.GetUserFullName();
+            var userName = HttpContext.GetUserName();
 
             return Ok(new
             {
                 accessToken,
                 _tnfSession.TenantId,
-                _tnfSession.UserId
+                _tnfSession.UserId,
+                TenantName = tenantName,
+                UserFullName = userFullName,
+                UserName = userName
             });
         }
     }

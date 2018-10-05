@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
-import { UserManager, UserManagerSettings, User, WebStorageStateStore } from 'oidc-client';
+import { UserManager, UserManagerSettings, User, WebStorageStateStore, Log } from 'oidc-client';
 
 import { IEvent, EventDispatcher } from '../events/event';
 import { HubMessageComponent } from '../utils/hub-message/hub-message.component';
 import { environment } from '../../environments/environment';
 import { retry } from 'rxjs/operators';
+import { Host } from '../utils/host';
 
 @Injectable()
 export class AuthService {
@@ -38,16 +39,6 @@ export class AuthService {
         });
     }
 
-    isLoggedIn = (): boolean => !!this.user && !this.user.expired;
-
-    getAuthorizationHeaderValue(): string {
-        return this.user ? `${this.user.token_type} ${this.user.access_token}` : '';
-    }
-
-    signoutRedirect() {
-        this.manager.signoutRedirect();
-    }
-
     isHostUser(): boolean {
         if (this.user == null || this.user == undefined)
             return false;
@@ -55,51 +46,31 @@ export class AuthService {
         return (this.user.profile.email == 'admin@seudominio.com.br')
     }
 
-    getUserTokenType(): string {
-        return this.user.token_type;
-    }
-
-    getUserAccessToken(): string {
-        return this.user.access_token;
-    }
-
     getUser(): Promise<User> {
         return this.manager.getUser();
     }
 
-    async startAuthentication(): Promise<void> {
-        await this.manager.signinRedirect();
+    logout() {
+        this.manager.signoutRedirect().then(() => {
+            this.manager.clearStaleState();
+            this.user = null;
+        });
     }
 
-    async logout(): Promise<void> {
-        await this.manager.signoutRedirect();
+    login() {
+        this.manager.signinRedirect();
     }
 
     async completeAuthentication(): Promise<void> {
         this.user = await this.manager.signinRedirectCallback();
 
-        if (this.user)
+        if (this.user && !this.user.expired)
             this.internalOnCompleteAuthentication.dispatch(this.user);
     }
-
-    public authorize(urlCurrent): Promise<boolean> {
-        return this.getUser().then(user => {
-
-            if (user) {
-
-                if (user.expired) {
-                    this.manager.signoutRedirect();
-                    return false;
-                }
-
-                return true;
-            }
-
-            this.startAuthentication();
-            return false;
-        });
-    }
 }
+
+Log.logger = window.console;
+Log.level = Log.INFO;
 
 export function getClientSettings(): UserManagerSettings {
 
@@ -113,6 +84,8 @@ export function getClientSettings(): UserManagerSettings {
         // needed if you want to use the silent_renew
         response_type: "code id_token token",
         scope: "openid profile email authorization_api offline_access",
+
+        //acr_values = tenant: abc,
 
         // this will toggle if profile endpoint is used
         loadUserInfo: true,

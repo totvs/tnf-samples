@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { IEvent, EventDispatcher } from '../events/event';
 import { Permission } from './user.extensions';
+import { FeaturesNames } from './featuresNames';
 
 @Injectable()
 export class UserPermissionService {
@@ -32,13 +33,13 @@ export class UserPermissionService {
     async getUserPermissions(): Promise<Permission[]> {
 
         var nameOfPermissions = [
-            "Management.Tenant",
-            "Management.Organization",
-            "Management.Role",
-            "Management.User",
-            "ProdutoXyz.Application",
-            "ProdutoXyz.Application.Name",
-            "ProdutoXyz.Application.UserInfo"
+            FeaturesNames.RAC.Tenant,
+            FeaturesNames.RAC.Organization,
+            FeaturesNames.RAC.Role,
+            FeaturesNames.RAC.User,
+            FeaturesNames.Produto.Application,
+            FeaturesNames.Produto.ApplicationName,
+            FeaturesNames.Produto.UserInfo
         ];
 
         var response = await this.getUserPermissionsGranted(nameOfPermissions);
@@ -54,10 +55,6 @@ export class UserPermissionService {
 
     async getUserPermissionsGranted(permissions: string[]): Promise<boolean[]> {
         return await this.http.post<boolean[]>(`${environment.authorityEndPoint}/api/Permissions`, permissions).toPromise();
-    }
-
-    async getFeatures(): Promise<string[]> {
-        return await this.http.get<string[]>(`${environment.authorityEndPoint}/api/Features`).toPromise();
     }
 }
 

@@ -17,15 +17,23 @@ export class AuthGuard implements CanActivate {
 
     async canActivate(): Promise<boolean> {
 
-        var isAuthorized = await this.authService.authorize(this.router.url);
+        var user = await this.authService.getUser();
 
-        if (isAuthorized) {
-            var user = await this.authService.getUser();
+        if (user) {
+
+            if (user.expired) {
+                this.authService.logout();
+                return false;
+            }
+
             var userWithPermission = UserPermission.AddPremissionFeatures(user);
             userWithPermission.permissions = await this.userPermissionService.getUserPermissions();
             userAccessor.setCurrentUser(userWithPermission);
+
+            return true;
         }
 
-        return isAuthorized;
+        this.authService.login();
+        return false;
     }
 }

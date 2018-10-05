@@ -1,7 +1,9 @@
+import { Host } from "../app/utils/host";
+
 export const environment = {
     production: false,
 
-    authorityEndPoint: 'http://abc.rac.totvs.com.br/totvs.rac',
-    applicationEndPoint: 'http://localhost:5055'
+    authorityEndPoint: `http://${Host.GetTenantName()}.rac.totvs.com.br/totvs.rac`,
+    applicationEndPoint: `http://${Host.GetTenantName()}.localhost:5055`,
 };
 

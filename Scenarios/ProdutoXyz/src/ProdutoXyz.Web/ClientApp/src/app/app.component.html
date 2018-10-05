@@ -11,13 +11,5 @@
   <router-outlet></router-outlet>
   <app-hub-message></app-hub-message>
 
-  <div class="button-div-voltar" *ngIf="showComponent">
-    <thf-button
-      *ngIf="!!redictUrl"
-      t-label="Voltar"
-      t-primary="true"
-      (t-click)="redirectUrl()">
-    </thf-button>
-  </div>
 </div>
 <div class="spin-loader" [hidden]="isLoggedIn"></div>
