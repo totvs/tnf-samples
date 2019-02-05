@@ -13,8 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
-    <PackageReference Include="Tnf.AspNetCore.Security" Version="2.4.0.33901" />
-    <PackageReference Include="Tnf.Jobs" Version="2.4.0.33901" />
+    <PackageReference Include="Tnf.AspNetCore.Security" Version="2.4.1.1101" />
+    <PackageReference Include="Tnf.Jobs" Version="2.4.1.1101" />
   </ItemGroup>
 
 </Project>
