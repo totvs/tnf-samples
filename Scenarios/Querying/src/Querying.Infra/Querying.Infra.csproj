@@ -11,7 +11,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.3.0.27701" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.4.1.1101" />
   </ItemGroup>
 
 </Project>
