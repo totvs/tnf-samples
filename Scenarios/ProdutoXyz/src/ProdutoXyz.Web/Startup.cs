@@ -21,12 +21,12 @@ namespace ProdutoXyz.Web
     public class Startup
     {
         DatabaseConfiguration DatabaseConfiguration { get; }
-        RacConfiguration RacConfiguration { get; }
+        IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             DatabaseConfiguration = new DatabaseConfiguration(configuration);
-            RacConfiguration = env.LoadRacConfiguration($"racsettings.{env.EnvironmentName}.json");
+            Configuration = configuration;
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -34,7 +34,7 @@ namespace ProdutoXyz.Web
             services
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency()
-                .AddTnfAspNetCoreSecurity(RacConfiguration);
+                .AddTnfAspNetCoreSecurity(Configuration);
 
             if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)
                 services.AddSqLiteDependency();
