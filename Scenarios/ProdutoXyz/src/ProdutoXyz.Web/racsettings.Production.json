@@ -1,5 +1,0 @@
-﻿{
-  "AuthorityEndpoint": "http://{tenant}.rac.totvs.com.br/totvs.rac",
-  "ClientId": "produto_xyz",
-  "ClientSecret": "totvs@123"
-}
