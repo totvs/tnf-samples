@@ -1,9 +1,13 @@
-﻿using BasicCrud.Application;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using BasicCrud.Application;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
 using BasicCrud.Dto;
 using BasicCrud.Infra;
 using BasicCrud.Infra.Oracle;
+using BasicCrud.Infra.PostgreSQL;
 using BasicCrud.Infra.SqLite;
 using BasicCrud.Infra.SqlServer;
 using Microsoft.AspNetCore.Builder;
@@ -11,9 +15,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Tnf.Configuration;
 
 namespace BasicCrud.Web
@@ -43,6 +44,8 @@ namespace BasicCrud.Web
                 services.AddSqLiteDependency();
             else if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
                 services.AddOracleDependency();
+            else if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
+                services.AddPostgreSQLDependency();
             else
                 throw new NotSupportedException("No database configuration found");
 
@@ -89,12 +92,14 @@ namespace BasicCrud.Web
                 // Habilita o driver Oracle da Devart (DotConnect for Oracle)
                 if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
                     options.EnableDevartOracleDriver();
+                else if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
+                    options.EnableDevartPostgreSQLDriver();
             });
 
             app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();      
+                app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

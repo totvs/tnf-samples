@@ -1,16 +1,19 @@
-﻿using BasicCrud.Infra.Context;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using BasicCrud.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using Tnf.Drivers.DevartOracle;
+using Tnf.Drivers.DevartPostgreSQL;
 using Tnf.Runtime.Session;
 
-namespace BasicCrud.Infra.Oracle.Context
+namespace BasicCrud.Infra.PostgreSQL.Context
 {
-    public class OracleCrudDbContextFactory : IDesignTimeDbContextFactory<OracleCrudDbContext>
+    public class PostgreSQLCrudDbContextFactory : IDesignTimeDbContextFactory<PostgreSQLCrudDbContext>
     {
-        public OracleCrudDbContext CreateDbContext(string[] args)
+        public PostgreSQLCrudDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<CrudDbContext>();
 
@@ -21,11 +24,11 @@ namespace BasicCrud.Infra.Oracle.Context
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);
 
-            OracleLicense.Validate(databaseConfiguration.ConnectionString);
+            PosgreSqlLicense.Validade(databaseConfiguration.ConnectionString);
 
-            builder.UseOracle(databaseConfiguration.ConnectionString);
+            builder.UsePostgreSql(databaseConfiguration.ConnectionString);
 
-            return new OracleCrudDbContext(builder.Options, NullTnfSession.Instance, databaseConfiguration);
+            return new PostgreSQLCrudDbContext(builder.Options, NullTnfSession.Instance);
         }
     }
 }

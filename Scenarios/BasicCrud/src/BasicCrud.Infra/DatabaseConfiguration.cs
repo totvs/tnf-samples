@@ -25,6 +25,10 @@ namespace BasicCrud.Infra
                 if (string.IsNullOrWhiteSpace(DefaultSchema))
                     throw new NotSupportedException($"When Oracle is used you must have set DefaultSchema in configuration.");
             }
+            else if (DatabaseType.PostgreSQL.ToString().Equals(ConnectionStringName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                DatabaseType = DatabaseType.PostgreSQL;
+            }
             else
                 throw new NotSupportedException($"Invalid ConnectionString name '{ConnectionStringName}'.");
 
@@ -41,6 +45,7 @@ namespace BasicCrud.Infra
     {
         SqlServer,
         Sqlite,
-        Oracle
+        Oracle,
+        PostgreSQL
     }
 }

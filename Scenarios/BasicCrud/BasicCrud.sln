@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Web.Tests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Domain.Tests", "test\BasicCrud.Domain.Tests\BasicCrud.Domain.Tests.csproj", "{B7DD0015-7424-4970-8C7E-9F3385C4C135}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCrud.Infra.PostgreSQL", "src\BasicCrud.Infra.PostgreSQL\BasicCrud.Infra.PostgreSQL.csproj", "{1D556F05-FC6D-4B68-9365-72193799BF5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{B7DD0015-7424-4970-8C7E-9F3385C4C135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7DD0015-7424-4970-8C7E-9F3385C4C135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7DD0015-7424-4970-8C7E-9F3385C4C135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D556F05-FC6D-4B68-9365-72193799BF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D556F05-FC6D-4B68-9365-72193799BF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D556F05-FC6D-4B68-9365-72193799BF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D556F05-FC6D-4B68-9365-72193799BF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{C043BD1E-75F5-4407-9E68-857DDCE5CAE1} = {811DA371-4AD7-4782-A5B1-63FB8983B28F}
 		{91E0F8A1-BD3B-43DC-85D6-6A233F85B795} = {AA3CB68F-042D-40AC-A9E5-91F564F1D204}
 		{B7DD0015-7424-4970-8C7E-9F3385C4C135} = {AA3CB68F-042D-40AC-A9E5-91F564F1D204}
+		{1D556F05-FC6D-4B68-9365-72193799BF5C} = {811DA371-4AD7-4782-A5B1-63FB8983B28F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5AF4C5E6-D9F4-41D4-9E3F-5A69AFF91DD6}
