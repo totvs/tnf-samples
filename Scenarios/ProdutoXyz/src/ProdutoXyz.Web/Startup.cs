@@ -38,6 +38,8 @@ namespace ProdutoXyz.Web
 
             if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)
                 services.AddSqLiteDependency();
+            else if (DatabaseConfiguration.DatabaseType == DatabaseType.Postgres)
+                services.AddPostgressDependency();
             else
                 throw new NotSupportedException("No database configuration found");
 

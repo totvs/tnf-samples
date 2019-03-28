@@ -13,6 +13,10 @@ namespace ProdutoXyz.Infra
             {
                 DatabaseType = DatabaseType.Sqlite;
             }
+            else if (DatabaseType.Postgres.ToString().Equals(ConnectionStringName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                DatabaseType = DatabaseType.Postgres;
+            }
             else
                 throw new NotSupportedException($"Invalid ConnectionString name '{ConnectionStringName}'.");
 
@@ -26,6 +30,7 @@ namespace ProdutoXyz.Infra
 
     public enum DatabaseType
     {
-        Sqlite
+        Sqlite,
+        Postgres
     }
 }

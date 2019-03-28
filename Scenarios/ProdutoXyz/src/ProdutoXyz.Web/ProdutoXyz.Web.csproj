@@ -59,6 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj" />
     <ProjectReference Include="..\ProdutoXyz.Application\ProdutoXyz.Application.csproj" />
     <ProjectReference Include="..\ProdutoXyz.Infra.SqLite\ProdutoXyz.Infra.SqLite.csproj" />
   </ItemGroup>
