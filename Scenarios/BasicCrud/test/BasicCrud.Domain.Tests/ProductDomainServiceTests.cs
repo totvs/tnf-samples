@@ -4,7 +4,6 @@ using BasicCrud.Domain.Interfaces.Services;
 using BasicCrud.Domain.Services;
 using BasicCrud.Domain.Tests.Mocks;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -47,9 +46,9 @@ namespace BasicCrud.Domain.Tests
         [Fact]
         public void Should_Resolve_All()
         {
-            TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<IProductDomainService>().ShouldNotBeNull();
-            ServiceProvider.GetService<IProductRepository>().ShouldNotBeNull();
+            Assert.NotNull(TnfSession);
+            Assert.NotNull(ServiceProvider.GetService<IProductDomainService>());
+            Assert.NotNull(ServiceProvider.GetService<IProductRepository>());
         }
 
         [Fact]
