@@ -9,14 +9,14 @@ using ProdutoXyz.Infra.SqLite.Context;
 namespace ProdutoXyz.Infra.SqLite.Migrations
 {
     [DbContext(typeof(SqliteCrudDbContext))]
-    [Migration("20180719114106_CreateDatabase")]
+    [Migration("20190507195259_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("ProdutoXyz.Domain.Entities.Product", b =>
                 {
@@ -26,7 +26,7 @@ namespace ProdutoXyz.Infra.SqLite.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("TenantId");
+                    b.Property<Guid>("TenantId");
 
                     b.Property<float>("Value");
 

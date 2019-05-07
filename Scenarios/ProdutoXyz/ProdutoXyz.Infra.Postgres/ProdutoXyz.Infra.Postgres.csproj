@@ -1,12 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devart.Data.PostgreSql.EFCore" Version="7.12.1357" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
+    <Compile Remove="Migrations\20190307211621_CreateDatabase.cs" />
+    <Compile Remove="Migrations\20190307211621_CreateDatabase.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="2.6.0.12605" />
   </ItemGroup>
 
   <ItemGroup>

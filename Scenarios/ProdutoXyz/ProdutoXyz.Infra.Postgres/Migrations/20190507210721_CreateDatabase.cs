@@ -14,7 +14,7 @@ namespace ProdutoXyz.Infra.Postgres.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Value = table.Column<float>(nullable: false),
-                    TenantId = table.Column<int>(nullable: false)
+                    TenantId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

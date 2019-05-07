@@ -10,7 +10,7 @@ namespace ProdutoXyz.Domain.Entities
         public string Description { get; internal set; }
 
         public float Value { get; internal set; }
-        public int TenantId { get; set; }
+        public Guid TenantId { get; set; }
 
         public static Builder Create(INotificationHandler handler)
             => new Builder(handler);

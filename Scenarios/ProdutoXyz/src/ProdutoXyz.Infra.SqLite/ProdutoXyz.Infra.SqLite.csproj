@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180719114106_CreateDatabase.cs" />
+    <Compile Remove="Migrations\20180719114106_CreateDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20190507195147_TenantGuid.cs" />
+    <Compile Remove="Migrations\20190507195147_TenantGuid.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.3" />
   </ItemGroup>
 
