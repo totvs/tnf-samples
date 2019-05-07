@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Domain" Version="2.5.0.8001" />
+    <PackageReference Include="Tnf.Domain" Version="2.6.0.12605" />
   </ItemGroup>
 
 </Project>
