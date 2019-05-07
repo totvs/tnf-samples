@@ -24,7 +24,7 @@ namespace BasicCrud.Infra.PostgreSQL.Context
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);
 
-            PosgreSqlLicense.Validade(databaseConfiguration.ConnectionString);
+            PostgreSqlLicense.Validade(databaseConfiguration.ConnectionString);
 
             builder.UsePostgreSql(databaseConfiguration.ConnectionString);
 
