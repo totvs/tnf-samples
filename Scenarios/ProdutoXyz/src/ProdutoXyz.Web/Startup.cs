@@ -93,6 +93,10 @@ namespace ProdutoXyz.Web
                 // Configura a connection string da aplicação
                 options.DefaultNameOrConnectionString = DatabaseConfiguration.ConnectionString;
 
+                // habilita drive Devart para PostgreSQL
+                if (DatabaseConfiguration.DatabaseType == DatabaseType.Postgres)
+                    options.EnableDevartPostgreSQLDriver();
+
                 // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
 
