@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
 using SuperMarket.Backoffice.Crud.Web.Controllers;
 using SuperMarket.Backoffice.Sales.Application.Services.Interfaces;
 using SuperMarket.Backoffice.Sales.Domain;
@@ -134,13 +133,13 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         [Fact]
         public void Should_Resolve_All()
         {
-            TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<PurchaseOrderController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderAppService>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderService>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderRepository>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPriceTableRepository>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderReadRepository>().ShouldNotBeNull();
+            Assert.NotNull(TnfSession);
+            Assert.NotNull(ServiceProvider.GetService<PurchaseOrderController>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderAppService>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderService>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderRepository>());
+            Assert.NotNull(ServiceProvider.GetService<IPriceTableRepository>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderReadRepository>());
         }
 
 
