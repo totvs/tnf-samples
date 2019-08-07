@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using BasicCrud.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -24,7 +21,7 @@ namespace BasicCrud.Infra.PostgreSQL.Context
 
             var databaseConfiguration = new DatabaseConfiguration(configuration);
 
-            PostgreSqlLicense.Validade(databaseConfiguration.ConnectionString);
+            PostgreSqlLicense.Validate(databaseConfiguration.ConnectionString);
 
             builder.UsePostgreSql(databaseConfiguration.ConnectionString);
 

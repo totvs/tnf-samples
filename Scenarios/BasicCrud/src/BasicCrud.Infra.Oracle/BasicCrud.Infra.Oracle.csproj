@@ -1,12 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devart.Data.Oracle.EFCore" Version="9.6.696" />
-    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.6.0.12605" />
+    <PackageReference Include="Tnf.Drivers.DevartOracle" Version="2.7.0.21802" />
   </ItemGroup>
 
   <ItemGroup>
