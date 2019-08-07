@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Tnf.Bus.Queue.RabbitMQ;
+using Tnf.Configuration;
 
 namespace Messaging.Web2
 {
