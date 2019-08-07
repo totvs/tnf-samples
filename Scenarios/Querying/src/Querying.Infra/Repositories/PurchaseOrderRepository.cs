@@ -5,6 +5,7 @@ using Querying.Infra.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 

@@ -1,6 +1,5 @@
 ﻿using Querying.Infra.Context;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
 using System;
 using System.Linq;
 using System.Net;
@@ -59,9 +58,9 @@ namespace Querying.Web.Tests
         [Fact]
         public void Should_Resolve_All()
         {
-            TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<PurchaseOrderController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderRepository>().ShouldNotBeNull();
+            Assert.NotNull(TnfSession);
+            Assert.NotNull(ServiceProvider.GetService<PurchaseOrderController>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderRepository>());
         }
 
 
