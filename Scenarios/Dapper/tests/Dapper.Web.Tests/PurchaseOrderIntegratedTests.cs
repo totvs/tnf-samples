@@ -3,12 +3,10 @@ using Dapper.Infra.Dto;
 using Dapper.Infra.Entities;
 using Dapper.Infra.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Tnf.AspNetCore.Mvc.Response;
 using Tnf.AspNetCore.TestBase;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
@@ -61,9 +59,9 @@ namespace Dapper.Web.Tests
         [Fact]
         public void Should_Resolve_All()
         {
-            TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<PurchaseOrderController>().ShouldNotBeNull();
-            ServiceProvider.GetService<IPurchaseOrderRepository>().ShouldNotBeNull();
+            Assert.NotNull(TnfSession);
+            Assert.NotNull(ServiceProvider.GetService<PurchaseOrderController>());
+            Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderRepository>());
         }
 
 
