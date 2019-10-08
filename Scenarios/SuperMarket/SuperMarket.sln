@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backoffice", "Backoffice", "{A3440D2C-D13C-44B5-8EC1-0DA5F9FFB872}"
 EndProject
@@ -52,6 +52,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.FiscalService.Infra.Queue", "src\SuperMarket.FiscalService.Infra.Queue\SuperMarket.FiscalService.Infra.Queue.csproj", "{CFB83530-27B2-4796-AA17-E6ECABF1C3CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.FiscalService.Web", "src\SuperMarket.FiscalService.Web\SuperMarket.FiscalService.Web.csproj", "{167CB43E-2B74-42AD-8DD9-CE3FC464CF06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89D63896-4E61-4F25-8089-D56303FEAB11}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

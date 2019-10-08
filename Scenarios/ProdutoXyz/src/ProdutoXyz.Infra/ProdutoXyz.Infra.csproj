@@ -10,8 +10,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Tnf.AutoMapper" Version="2.7.0.21802" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.7.0.21802" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.7.0.27501" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.7.0.27501" />
   </ItemGroup>
 
   <ItemGroup>

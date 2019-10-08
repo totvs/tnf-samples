@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Web", "src\ProdutoXyz.Web\ProdutoXyz.Web.csproj", "{6713677F-D3ED-4EBB-90FA-74E3F96F7619}"
 EndProject
@@ -15,7 +15,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Infra.SqLite", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Application", "src\ProdutoXyz.Application\ProdutoXyz.Application.csproj", "{09A15F5B-2456-42A1-9497-6F92F64E302C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProdutoXyz.Infra.Postgres", "ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj", "{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Infra.Postgres", "ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj", "{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B47FCAB8-3CE7-40AD-AAC6-B6524283AD77}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +63,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6713677F-D3ED-4EBB-90FA-74E3F96F7619} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{5B6AAFE1-4DBD-4498-9F9F-6230EB26D1DA} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{B1F576B8-E1E2-437F-988B-893AD326BAE9} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{71F11220-E707-4D8B-8194-5B4666FFED18} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{EFC69CF2-BE16-4A82-8705-7AC054FA1932} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{09A15F5B-2456-42A1-9497-6F92F64E302C} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {922CC173-1139-47F0-AB7B-7BDB34D35B2F}

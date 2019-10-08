@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{811DA371-4AD7-4782-A5B1-63FB8983B28F}"
 EndProject
@@ -27,7 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Web.Tests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Domain.Tests", "test\BasicCrud.Domain.Tests\BasicCrud.Domain.Tests.csproj", "{B7DD0015-7424-4970-8C7E-9F3385C4C135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCrud.Infra.PostgreSQL", "src\BasicCrud.Infra.PostgreSQL\BasicCrud.Infra.PostgreSQL.csproj", "{1D556F05-FC6D-4B68-9365-72193799BF5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCrud.Infra.PostgreSQL", "src\BasicCrud.Infra.PostgreSQL\BasicCrud.Infra.PostgreSQL.csproj", "{1D556F05-FC6D-4B68-9365-72193799BF5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C668280-A196-4E79-8485-2C3CBF3CC966}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.Config = NuGet.Config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

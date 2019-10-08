@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{811DA371-4AD7-4782-A5B1-63FB8983B28F}"
 EndProject
@@ -11,7 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Querying.Infra", "src\Query
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{094D417D-3249-4586-99BB-D993FB3B5B1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Querying.Web.Tests", "test\Querying.Web.Tests\Querying.Web.Tests.csproj", "{A8833C8A-F843-45C5-81F3-C9A3E26060B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Querying.Web.Tests", "test\Querying.Web.Tests\Querying.Web.Tests.csproj", "{A8833C8A-F843-45C5-81F3-C9A3E26060B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF8A88AA-9E46-4D85-9CBA-E32D02293929}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
