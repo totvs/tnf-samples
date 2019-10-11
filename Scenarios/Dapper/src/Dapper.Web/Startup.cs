@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Dapper.Infra;
 using System;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Dapper.Infra.Entities;
 using Dapper.Infra.Dto;
 using System.IO;
+using Dapper.Web.HostedServices;
 
 namespace Dapper.Web
 {
@@ -31,10 +31,12 @@ namespace Dapper.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Dapper.Web.xml"));
                 });
 
+            services.AddHostedService<MigrationHostedService>();
+
             return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors("AllowAll");
 
@@ -53,10 +55,6 @@ namespace Dapper.Web
                 });
             });
 
-            logger.LogInformation("Running migrations ...");
-
-            app.ApplicationServices.MigrateDatabase();
-
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -74,8 +72,6 @@ namespace Dapper.Web
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
-
-            logger.LogInformation("Start application ...");
         }
     }
 }

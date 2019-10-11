@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace Dapper.Infra.Migrations
 {
-    public partial class Init : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,8 +41,8 @@ namespace Dapper.Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomerId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     TotalValue = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -63,10 +62,10 @@ namespace Dapper.Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(nullable: false),
                     PurchaseOrderId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    UnitValue = table.Column<decimal>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    UnitValue = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
