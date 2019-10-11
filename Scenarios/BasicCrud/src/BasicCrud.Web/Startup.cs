@@ -10,6 +10,7 @@ using BasicCrud.Infra.Oracle;
 using BasicCrud.Infra.PostgreSQL;
 using BasicCrud.Infra.SqLite;
 using BasicCrud.Infra.SqlServer;
+using BasicCrud.Web.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -57,6 +58,8 @@ namespace BasicCrud.Web
 
             services.AddResponseCompression();
 
+            services.AddHostedService<MigrationHostedService>();
+
             return services.BuildServiceProvider();
         }
 
@@ -95,8 +98,6 @@ namespace BasicCrud.Web
                 else if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
                     options.EnableDevartPostgreSQLDriver();
             });
-
-            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
