@@ -23,8 +23,8 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
-    <PackageReference Include="Tnf.AspNetCore" Version="2.7.0.27501" />
-    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.7.0.27501" />
+    <PackageReference Include="Tnf.AspNetCore" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.8.0.28301" />
   </ItemGroup>
 
   <ItemGroup>
