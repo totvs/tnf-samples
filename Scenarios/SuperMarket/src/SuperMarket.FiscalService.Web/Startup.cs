@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using SuperMarket.FiscalService.Domain;
 using SuperMarket.FiscalService.Infra;
 using SuperMarket.FiscalService.Infra.Queue;
+using SuperMarket.FiscalService.Web.HostedServices;
 using Swashbuckle.AspNetCore.Swagger;
 using Tnf.Configuration;
 
@@ -16,6 +17,13 @@ namespace SuperMarket.FiscalService.Web
 {
     public class Startup
     {
+        private readonly DatabaseConfiguration _databaseConfiguration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _databaseConfiguration = new DatabaseConfiguration(configuration);
+        }
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
@@ -32,6 +40,8 @@ namespace SuperMarket.FiscalService.Web
                     c.SwaggerDoc("v1", new Info { Title = "Fiscal Service API", Version = "v1" });
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.FiscalService.Web.xml"));
                 });
+
+            services.AddHostedService<MigrationHostedService>();
 
             return services.BuildServiceProvider();
         }
@@ -51,7 +61,7 @@ namespace SuperMarket.FiscalService.Web
                 var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
 
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
+                options.DefaultNameOrConnectionString = _databaseConfiguration.ConnectionString;
 
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
@@ -64,10 +74,6 @@ namespace SuperMarket.FiscalService.Web
 
                 options.ConfigureFiscalServiceQueueInfraDependency();
             });
-
-            logger.LogInformation("Running migrations ...");
-
-            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -86,8 +92,6 @@ namespace SuperMarket.FiscalService.Web
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
-
-            logger.LogInformation("Start application ...");
         }
     }
 }

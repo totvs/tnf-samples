@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Crud.Domain;
 using SuperMarket.Backoffice.Crud.Infra;
+using SuperMarket.Backoffice.Crud.Web.HostedServices;
 using Swashbuckle.AspNetCore.Swagger;
 using Tnf.Configuration;
 
@@ -16,26 +16,22 @@ namespace SuperMarket.Backoffice.Crud.Web
 {
     public class Startup
     {
-        private readonly IConfigurationRoot Configuration;
-
-        public Startup(IHostingEnvironment env)
+        private readonly DatabaseConfiguration _databaseConfiguration;
+        private readonly RedisConfiguration _redisConfiguration;
+        public Startup(IConfiguration configuration)
         {
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
-                .Build();
+            _databaseConfiguration = new DatabaseConfiguration(configuration);
+            _redisConfiguration = new RedisConfiguration(configuration);
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            var databaseIndex = Convert.ToInt32(Configuration["DatabaseIndex"]);
-            var redisConnectionString = Configuration["RedisConnectionString"];
-
             services
                 .AddCorsAll("AllowAll")
-                .AddCrudInfraDependency(databaseIndex, redisConnectionString)
+                .AddCrudInfraDependency(_redisConfiguration)
                 .AddCrudDomainDependency()
                 .AddTnfAspNetCore();
-            
+
             services
                 .AddResponseCompression()
                 .AddSwaggerGen(c =>
@@ -44,10 +40,12 @@ namespace SuperMarket.Backoffice.Crud.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Crud.Web.xml"));
                 });
 
+            services.AddHostedService<MigrationHostedService>();
+
             return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors("AllowAll");
 
@@ -58,7 +56,7 @@ namespace SuperMarket.Backoffice.Crud.Web
                 options.ConfigureCrudDomain();
 
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = Configuration.GetConnectionString(Constants.ConnectionStringName);
+                options.DefaultNameOrConnectionString = _databaseConfiguration.ConnectionString;
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
 
@@ -75,10 +73,6 @@ namespace SuperMarket.Backoffice.Crud.Web
                 // ----------
             });
 
-            logger.LogInformation("Running migrations ...");
-
-            app.ApplicationServices.MigrateDatabase();
-
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -91,16 +85,11 @@ namespace SuperMarket.Backoffice.Crud.Web
             app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
-            // Habilita o uso do UnitOfWork em todo o request
-            app.UseTnfUnitOfWork();
-
             app.Run(context =>
             {
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
-
-            logger.LogInformation("Start application ...");
         }
     }
 }

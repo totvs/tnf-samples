@@ -12,7 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Tnf.TestBase" Version="2.7.0.27501" />
+    <PackageReference Include="Tnf.TestBase" Version="2.8.0.28301" />
   </ItemGroup>
 
   <ItemGroup>

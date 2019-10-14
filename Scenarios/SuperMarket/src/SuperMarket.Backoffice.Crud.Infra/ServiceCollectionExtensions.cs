@@ -13,7 +13,7 @@ namespace SuperMarket.Backoffice.Crud.Infra
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCrudInfraDependency(this IServiceCollection services, int databaseIndex, string redisConnectionString)
+        public static IServiceCollection AddCrudInfraDependency(this IServiceCollection services, RedisConfiguration redisConfiguration)
         {
             services
                 .AddMapperDependency()
@@ -48,8 +48,8 @@ namespace SuperMarket.Backoffice.Crud.Infra
                {
                    LogDeletedKeys = true,                // Exibir no log quando uma key for deletada
                })
-               .UseDatabase(databaseIndex)                     // Redis Database Id
-               .UseConnectionString(redisConnectionString));   // Redis Connection String
+               .UseDatabase(redisConfiguration.DatabaseIndex)                     // Redis Database Id
+               .UseConnectionString(redisConfiguration.RedisConnectionString));   // Redis Connection String
 
             return services;
         }

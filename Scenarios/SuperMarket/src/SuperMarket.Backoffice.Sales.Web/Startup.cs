@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using SuperMarket.Backoffice.Sales.Application;
 using SuperMarket.Backoffice.Sales.Domain;
 using SuperMarket.Backoffice.Sales.Infra;
 using SuperMarket.Backoffice.Sales.Infra.Queue;
+using SuperMarket.Backoffice.Sales.Web.HostedServices;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -17,6 +17,13 @@ namespace SuperMarket.Backoffice.Sales.Web
 {
     public class Startup
     {
+        private readonly DatabaseConfiguration _databaseConfiguration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _databaseConfiguration = new DatabaseConfiguration(configuration);
+        }
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
@@ -32,10 +39,12 @@ namespace SuperMarket.Backoffice.Sales.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Sales.Web.xml"));
                 });
 
+            services.AddHostedService<MigrationHostedService>();
+
             return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors("AllowAll");
 
@@ -48,12 +57,8 @@ namespace SuperMarket.Backoffice.Sales.Web
                 // Configura as dependencias de RequestDto
                 options.ConfigureInfra();
 
-                // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
-
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
-
+                options.DefaultNameOrConnectionString = _databaseConfiguration.ConnectionString;
 
                 // ---------- Configurações de Unit of Work a nível de aplicação
 
@@ -65,10 +70,6 @@ namespace SuperMarket.Backoffice.Sales.Web
 
                 options.ConfigureSalesQueueInfraDependency();
             });
-
-            logger.LogInformation("Running migrations ...");
-
-            app.ApplicationServices.MigrateDatabase();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -87,8 +88,6 @@ namespace SuperMarket.Backoffice.Sales.Web
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
-
-            logger.LogInformation("Start application ...");
         }
     }
 }
