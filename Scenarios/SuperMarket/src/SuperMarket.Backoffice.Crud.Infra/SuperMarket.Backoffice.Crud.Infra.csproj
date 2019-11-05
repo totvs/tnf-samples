@@ -11,9 +11,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Tnf.AutoMapper" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.8.1.30801" />
     <PackageReference Include="Tnf.Caching.Redis.JsonSerializer" Version="2.4.2.18901" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.8.1.30801" />
   </ItemGroup>
 
   <ItemGroup>

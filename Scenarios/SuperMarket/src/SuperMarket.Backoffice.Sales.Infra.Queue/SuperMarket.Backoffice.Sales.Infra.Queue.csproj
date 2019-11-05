@@ -5,6 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.Bus.Queue.RabbitMQ" Version="2.8.1.30801" />
   </ItemGroup>
 </Project>
