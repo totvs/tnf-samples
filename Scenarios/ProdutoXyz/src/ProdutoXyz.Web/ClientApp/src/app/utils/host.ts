@@ -1,8 +1,6 @@
-import { hubMessage } from "../app.component";
-
 export class Host {
 
-    static GetHost() {
+    static getHost() {
 
         var url = document.getElementsByTagName('base')[0].href;
 
@@ -11,7 +9,7 @@ export class Host {
         return url;
     }
 
-    static GetTenantName() {
+    static getTenantName() {
 
         var tenantName = location.hostname.substring(0, location.hostname.indexOf('.'));
         if (tenantName.length > 0)

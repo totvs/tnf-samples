@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -12,12 +12,13 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RuntimeFrameworkVersion>2.2.2</RuntimeFrameworkVersion>
 
-    <AngularPath>/produtoxyz/</AngularPath>
+    <AngularPath>/</AngularPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.0.1" />
@@ -25,12 +26,14 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
-    <PackageReference Include="Tnf.AspNetCore.Security" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.AspNetCore.Security" Version="2.8.1.30801" />
   </ItemGroup>
 
   <PropertyGroup>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\ProdutoXyz.Web.xml</DocumentationFile>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,12 +56,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj" />
     <ProjectReference Include="..\ProdutoXyz.Application\ProdutoXyz.Application.csproj" />
+    <ProjectReference Include="..\ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj" />
     <ProjectReference Include="..\ProdutoXyz.Infra.SqLite\ProdutoXyz.Infra.SqLite.csproj" />
   </ItemGroup>
 
@@ -75,8 +74,8 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod --base-href $(AngularPath)" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod --base-href $(AngularPath)" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod --base-href /" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod --base-href /" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

@@ -24,10 +24,11 @@ namespace ProdutoXyz.Web
         RacConfiguration RacConfiguration { get; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             DatabaseConfiguration = new DatabaseConfiguration(configuration);
+            RacConfiguration = new RacConfiguration(configuration);
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -36,6 +37,8 @@ namespace ProdutoXyz.Web
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency()
                 .AddTnfAspNetCoreSecurity(Configuration);
+
+            services.AddSingleton(RacConfiguration);
 
             if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)
                 services.AddSqLiteDependency();
@@ -96,7 +99,6 @@ namespace ProdutoXyz.Web
                 // habilita drive Devart para PostgreSQL
                 if (DatabaseConfiguration.DatabaseType == DatabaseType.Postgres)
                     options.EnableDevartPostgreSQLDriver();
-
                 // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
 

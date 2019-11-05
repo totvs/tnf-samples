@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Infra.SqLite", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Application", "src\ProdutoXyz.Application\ProdutoXyz.Application.csproj", "{09A15F5B-2456-42A1-9497-6F92F64E302C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Infra.Postgres", "ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj", "{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B47FCAB8-3CE7-40AD-AAC6-B6524283AD77}"
@@ -25,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.Config = NuGet.Config
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProdutoXyz.Infra.Postgres", "src\ProdutoXyz.Infra.Postgres\ProdutoXyz.Infra.Postgres.csproj", "{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +56,10 @@ Global
 		{09A15F5B-2456-42A1-9497-6F92F64E302C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A15F5B-2456-42A1-9497-6F92F64E302C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A15F5B-2456-42A1-9497-6F92F64E302C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,7 +71,7 @@ Global
 		{71F11220-E707-4D8B-8194-5B4666FFED18} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
 		{EFC69CF2-BE16-4A82-8705-7AC054FA1932} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
 		{09A15F5B-2456-42A1-9497-6F92F64E302C} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
-		{1DCAC4D2-E529-4EE7-8C2D-4A019F8E8D6D} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
+		{E59AA5EB-36D4-4F64-80B1-57FE5ADB6522} = {9B5A5988-BEAA-4301-BAE6-8DB0318DE5CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {922CC173-1139-47F0-AB7B-7BDB34D35B2F}

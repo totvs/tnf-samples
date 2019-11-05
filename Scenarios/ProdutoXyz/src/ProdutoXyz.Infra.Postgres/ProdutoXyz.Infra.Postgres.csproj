@@ -10,11 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="2.8.0.28301" />
+    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="2.8.1.30801" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ProdutoXyz.Infra\ProdutoXyz.Infra.csproj" />
+    <ProjectReference Include="..\ProdutoXyz.Infra\ProdutoXyz.Infra.csproj" />
   </ItemGroup>
 
 </Project>
