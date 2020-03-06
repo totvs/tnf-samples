@@ -4,13 +4,13 @@
 
 Todos os exemplos a seguir estão com o swagger configurado, log (Serilog) e compactação habilitados.
 
-#### [HelloWorld](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/HelloWorld) ####
+#### [HelloWorld](https://github.com/totvs/tnf-samples/tree/master/Scenarios/HelloWorld) ####
 Exemplo de criação de uma api com o minímo de infra-estrutura do Tnf contendo a configuração de localização por arquivo e registro de dependências:
 
 - Pacotes que foram instalados:
 	- Tnf.AspNetCore
 
-#### [BasicCrud](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/BasicCrud) ####
+#### [BasicCrud](https://github.com/totvs/tnf-samples/tree/master/Scenarios/BasicCrud) ####
 Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e configuração de localização por arquivo e registro de dependências.
 
 - Pacotes que foram instalados:
@@ -24,7 +24,7 @@ Exemplo de criação de dois CRUD's básicos utilizando EntityFrameworkCore e co
 	- Microsoft.EntityFrameworkCore.Sqlite
 	- Devart.Data.Oracle.Entity.EFCore
 
-#### [SuperMarket](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/SuperMarket) ####
+#### [SuperMarket](https://github.com/totvs/tnf-samples/tree/master/Scenarios/SuperMarket) ####
 Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF com Redis, Rabbitmq, SqlServer, EntityFrameworkCore, configuração de localização por arquivo e registro de dependências.
 
 - Pacotes que foram instalados:
@@ -38,14 +38,14 @@ Exemplo de criação de criação e gerenciamento de um pedido utilizando o TNF 
 	- Tnf.Bus.Queue.RabbitMQ
 	- Tnf.Caching.Redis.JsonSerializer
 
-#### [Querying](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Querying) ####
+#### [Querying](https://github.com/totvs/tnf-samples/tree/master/Scenarios/Querying) ####
 Exemplo que consultas através do repositório do TNF:
 
 - Pacotes que foram instalados:
 	- Tnf.Repositories.AspNetCore
 	- Tnf.EntityFrameworkCore	
 
-#### [Dapper](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Dapper) ####
+#### [Dapper](https://github.com/totvs/tnf-samples/tree/master/Scenarios/Dapper) ####
 Exemplo que consultas através do repositório do TNF usando Dapper:
 
 - Pacotes que foram instalados:
@@ -53,7 +53,7 @@ Exemplo que consultas através do repositório do TNF usando Dapper:
 	- Tnf.AutoMapper	
 	- Tnf.Dapper	
 
-#### [Transactional](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Transactional) ####
+#### [Transactional](https://github.com/totvs/tnf-samples/tree/master/Scenarios/Transactional) ####
 Exemplo que contempla um cenário transacional:
 
 - Pacotes que foram instalados:
@@ -62,13 +62,13 @@ Exemplo que contempla um cenário transacional:
 	- Tnf.Specifications
 	- Tnf.EntityFrameworkCore
 
-#### [RedisCache](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/RedisCache) ####
+#### [RedisCache](https://github.com/totvs/tnf-samples/tree/master/Scenarios/RedisCache) ####
 Exemplo de um projeto usando o pacote do Redis do Tnf:
 
 - Pacotes que foram instalados:
 	- Tnf.Caching.Redis.JsonSerializer
 
-#### [Messaging](https://github.com/totvsnetcore/tnf-samples/tree/master/Scenarios/Messaging) ####
+#### [Messaging](https://github.com/totvs/tnf-samples/tree/master/Scenarios/Messaging) ####
 Exemplo de um projeto usando o pacote do RabbitMQ do Tnf:
 
 - Pacotes que foram instalados:
