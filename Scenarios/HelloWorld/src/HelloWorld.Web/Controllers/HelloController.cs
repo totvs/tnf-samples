@@ -9,6 +9,7 @@ namespace HelloWorld.Web.Controllers
     /// Hello API
     /// </summary>
     [Route("api/hello")]
+    [ApiController]
     public class HelloController : TnfController
     {
         private readonly ILocalizationManager localizationManager;

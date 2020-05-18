@@ -20,7 +20,6 @@ namespace BasicCrud.Web.Tests
         public void Should_Resolve_All()
         {
             TnfSession.ShouldNotBeNull();
-            ServiceProvider.GetService<ProductController>().ShouldNotBeNull();
             ServiceProvider.GetService<IProductAppService>().ShouldNotBeNull();
         }
 

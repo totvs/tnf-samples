@@ -5,33 +5,39 @@ using System.Threading.Tasks;
 using Dapper.Infra.Context;
 using Dapper.Infra.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Dapper.Web.HostedServices
 {
     public class MigrationHostedService : IHostedService
     {
-        private readonly PurchaseOrderContext _purchaseOrderContext;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MigrationHostedService(PurchaseOrderContext purchaseOrderContext)
+        public MigrationHostedService(IServiceScopeFactory serviceScopeFactory)
         {
-            _purchaseOrderContext = purchaseOrderContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _purchaseOrderContext.Database.MigrateAsync();
+            // Criamos um escopo de service provider para pedir o PurchaseOrderContext dentro desse espoco.
+            // Isso evita ficar com services que são IDisposable dentro do service provider raiz.
+            using var scope = _serviceScopeFactory.CreateScope();
+            var purchaseOrderContext = scope.ServiceProvider.GetService<PurchaseOrderContext>();
+
+            await purchaseOrderContext.Database.MigrateAsync(cancellationToken);
 
             var date = DateTime.UtcNow.Date;
             var finalDate = date.AddDays(30);
 
-            _purchaseOrderContext.Products.Add(new Product("Sapato", 10.0m));
-            _purchaseOrderContext.Products.Add(new Product("Boné", 15.0m));
-            _purchaseOrderContext.Products.Add(new Product("Chinelo", 18.0m));
-            _purchaseOrderContext.Products.Add(new Product("Calça", 25.0m));
-            _purchaseOrderContext.Products.Add(new Product("Tenis", 35.0m));
+            purchaseOrderContext.Products.Add(new Product("Sapato", 10.0m));
+            purchaseOrderContext.Products.Add(new Product("Boné", 15.0m));
+            purchaseOrderContext.Products.Add(new Product("Chinelo", 18.0m));
+            purchaseOrderContext.Products.Add(new Product("Calça", 25.0m));
+            purchaseOrderContext.Products.Add(new Product("Tenis", 35.0m));
 
-            _purchaseOrderContext.SaveChanges();
+            await purchaseOrderContext.SaveChangesAsync(cancellationToken);
 
             var productRandom = new Random();
             var productAmountRandom = new Random();
@@ -50,8 +56,8 @@ namespace Dapper.Web.HostedServices
                 order.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     Quantity = quant,
-                    Product = _purchaseOrderContext.Products.First(w => w.Id == productId),
-                    UnitValue = _purchaseOrderContext.Products.First(w => w.Id == productId).Value
+                    Product = purchaseOrderContext.Products.First(w => w.Id == productId),
+                    UnitValue = purchaseOrderContext.Products.First(w => w.Id == productId).Value
                 });
 
                 productId = productRandom.Next(1, 5);
@@ -60,8 +66,8 @@ namespace Dapper.Web.HostedServices
                 order.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     Quantity = quant,
-                    Product = _purchaseOrderContext.Products.First(w => w.Id == productId),
-                    UnitValue = _purchaseOrderContext.Products.First(w => w.Id == productId).Value
+                    Product = purchaseOrderContext.Products.First(w => w.Id == productId),
+                    UnitValue = purchaseOrderContext.Products.First(w => w.Id == productId).Value
                 });
 
                 productId = productRandom.Next(1, 5);
@@ -70,8 +76,8 @@ namespace Dapper.Web.HostedServices
                 order.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     Quantity = quant,
-                    Product = _purchaseOrderContext.Products.First(w => w.Id == productId),
-                    UnitValue = _purchaseOrderContext.Products.First(w => w.Id == productId).Value
+                    Product = purchaseOrderContext.Products.First(w => w.Id == productId),
+                    UnitValue = purchaseOrderContext.Products.First(w => w.Id == productId).Value
                 });
 
                 productId = productRandom.Next(1, 5);
@@ -80,16 +86,16 @@ namespace Dapper.Web.HostedServices
                 order.PurchaseOrderProducts.Add(new PurchaseOrderProduct()
                 {
                     Quantity = quant,
-                    Product = _purchaseOrderContext.Products.First(w => w.Id == productId),
-                    UnitValue = _purchaseOrderContext.Products.First(w => w.Id == productId).Value
+                    Product = purchaseOrderContext.Products.First(w => w.Id == productId),
+                    UnitValue = purchaseOrderContext.Products.First(w => w.Id == productId).Value
                 });
 
                 order.TotalValue = order.PurchaseOrderProducts.Sum(s => s.UnitValue * s.Quantity);
 
-                _purchaseOrderContext.PurchaseOrders.Add(order);
+                purchaseOrderContext.PurchaseOrders.Add(order);
             }
 
-            _purchaseOrderContext.SaveChanges();
+            await purchaseOrderContext.SaveChangesAsync(cancellationToken);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

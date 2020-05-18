@@ -1,14 +1,16 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
+using BasicCrud.Web.Controllers;
 using BasicCrud.Web.Tests.Mocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace BasicCrud.Web.Tests
 {
     public class StartupControllerTest
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Configura o setup de teste para AspNetCore
             services.AddTnfAspNetCoreSetupTest();
@@ -16,19 +18,19 @@ namespace BasicCrud.Web.Tests
             // Registro dos serviços de Mock
             services.AddTransient<ICustomerAppService, CustomerAppServiceMock>();
             services.AddTransient<IProductAppService, ProductAppServiceMock>();
-
-            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseRouting();
+
             // Configura o uso do teste
             app.UseTnfAspNetCoreSetupTest();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoint =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoint.MapDefaultControllerRoute();
             });
         }
     }

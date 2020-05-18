@@ -1,4 +1,5 @@
-﻿using Tnf.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Tnf.Configuration;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
 
@@ -6,20 +7,22 @@ namespace SuperMarket.Backoffice.Sales.Domain
 {
     public static class LocalizationExtensions
     {
-        public static ITnfConfiguration ConfigureSalesDomain(this ITnfConfiguration configuration)
+        public static ITnfBuilder ConfigureSalesDomain(this ITnfBuilder builder)
         {
-            // Incluindo o source de localização
-            configuration.Localization.Sources.Add(
-                new DictionaryBasedLocalizationSource(Constants.LocalizationSourceName,
-                new JsonEmbeddedFileLocalizationDictionaryProvider(
+            builder.Localization(localization =>
+            {
+                // Incluindo o source de localização
+                localization.AddJsonEmbeddedLocalizationFile(
+                    Constants.LocalizationSourceName,
                     typeof(Constants).Assembly,
-                    "SuperMarket.Backoffice.Sales.Domain.Localization.SourceFiles")));
+                    "SuperMarket.Backoffice.Sales.Domain.Localization.SourceFiles");
 
-            // Incluindo suporte as seguintes linguagens
-            configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português", isDefault: true));
-            configuration.Localization.Languages.Add(new LanguageInfo("en", "English"));
+                // Incluindo suporte as seguintes linguagens
+                localization.AddLanguage("pt-BR", "Português", isDefault: true);
+                localization.AddLanguage("en", "English");
+            });
 
-            return configuration;
+            return builder;
         }
     }
 }

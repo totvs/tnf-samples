@@ -19,7 +19,7 @@ namespace BasicCrud.Application.Services
 
         public CustomerAppService(
             IUnitOfWorkManager unitOfWorkManager,
-            IDomainService<Customer> service, 
+            IDomainService<Customer> service,
             INotificationHandler notificationHandler)
             : base(notificationHandler)
         {
@@ -30,7 +30,7 @@ namespace BasicCrud.Application.Services
         public async Task<CustomerDto> CreateAsync(CustomerDto dto)
         {
             if (!ValidateDto<CustomerDto>(dto))
-                return null;                       
+                return null;
 
             var builder = Customer.Create(Notification)
                 .WithName(dto.Name);

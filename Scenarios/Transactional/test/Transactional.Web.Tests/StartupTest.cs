@@ -11,32 +11,29 @@ namespace Transactional.Web.Tests
 {
     public class StartupTest
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {            
             services
                 .AddDomainDependency()                                  // dependencia da camada Transactional.Domain
                 .AddTnfEfCoreSqliteInMemory()                           // Configura o setup de teste para EntityFrameworkCore em memória
                 .RegisterDbContextToSqliteInMemory<PurchaseOrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
-            services.AddTnfAspNetCoreSetupTest();
-
-            return services.BuildServiceProvider();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest(options =>
+            services.AddTnfAspNetCoreSetupTest(options =>
             {
                 // Adiciona as configurações de localização da aplicação a ser testada
                 options.ConfigureLocalization();
             });
+        }
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+
+            // Configura o uso do teste
+            app.UseTnfAspNetCoreSetupTest();
+
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

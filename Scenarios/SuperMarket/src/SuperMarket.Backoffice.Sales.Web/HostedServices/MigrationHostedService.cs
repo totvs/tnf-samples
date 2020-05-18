@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperMarket.Backoffice.Sales.Infra.Contexts;
 
@@ -8,16 +9,19 @@ namespace SuperMarket.Backoffice.Sales.Web.HostedServices
 {
     public class MigrationHostedService : IHostedService
     {
-        private readonly SalesContext _salesContext;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MigrationHostedService(SalesContext salesContext)
+        public MigrationHostedService(IServiceScopeFactory serviceScopeFactory)
         {
-            _salesContext = salesContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            return _salesContext.Database.MigrateAsync();
+            using var scope = _serviceScopeFactory.CreateScope();
+            var salesContext = scope.ServiceProvider.GetService<SalesContext>();
+
+            await salesContext.Database.MigrateAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

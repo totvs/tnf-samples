@@ -32,13 +32,13 @@ namespace SuperMarket.Backoffice.Sales.Domain.Tests
             base.PreInitialize(services);
 
             services.AddSalesDomainDependency();
+
+            services.ConfigureTnf(builder => builder.ConfigureSalesDomain());
         }
 
         protected override void PostInitialize(IServiceProvider provider)
         {
             base.PostInitialize(provider);
-
-            provider.ConfigureTnf().ConfigureSalesDomain();
         }
     }
 }

@@ -1,34 +1,32 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
+using Tnf.AspNetCore.Mvc.Exception;
 
 namespace HelloWorld.Web.Tests
 {
     public class StartupTest
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Configura o setup de teste para AspNetCore
-            services.AddTnfAspNetCoreSetupTest();
-
-            return services.BuildServiceProvider();
+            services.AddTnfAspNetCoreSetupTest(builder =>
+            {
+                builder.ConfigureLocalization();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest(options =>
-            {
-                // Adiciona as configurações de localização da aplicação a ser testada
-                options.ConfigureLocalization();
-            });
+            app.UseRouting(); 
 
-            app.UseMvc(routes =>
+            // Configura o uso do teste
+            app.UseTnfAspNetCoreSetupTest();
+
+            app.UseEndpoints(endpoint =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoint.MapDefaultControllerRoute();
             });
         }
     }

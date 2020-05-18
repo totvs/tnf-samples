@@ -1,21 +1,23 @@
 {
-  "profiles": {
-    "Kestrel Development": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "Serilog:MinimumLevel": "Debug"
-      },
-      "applicationUrl": "http://localhost:5001/"
-    },
-    "Kestrel Production": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
-      },
-      "applicationUrl": "http://localhost:5001/"
+    "profiles": {
+        "Kestrel Development": {
+            "commandName": "Project",
+            "launchBrowser": true,
+            "launchUrl": "swagger",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "Serilog:MinimumLevel": "Debug"
+            },
+            "applicationUrl": "http://localhost:5001/"
+        },
+        "Kestrel Production": {
+            "commandName": "Project",
+            "launchBrowser": true,
+            "launchUrl": "swagger",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Production"
+            },
+            "applicationUrl": "http://localhost:5001/"
+        }
     }
-  }
 }

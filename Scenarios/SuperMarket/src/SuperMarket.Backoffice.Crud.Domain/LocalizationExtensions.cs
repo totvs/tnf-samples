@@ -1,4 +1,5 @@
-﻿using SuperMarket.Backoffice.Crud.Domain.Entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Crud.Domain.Entities;
 using Tnf.Configuration;
 using Tnf.Localization;
 using Tnf.Localization.Dictionaries;
@@ -7,25 +8,27 @@ namespace SuperMarket.Backoffice.Crud.Domain
 {
     public static class LocalizationExtensions
     {
-        public static ITnfConfiguration ConfigureCrudDomain(this ITnfConfiguration configuration)
+        public static ITnfBuilder ConfigureCrudDomain(this ITnfBuilder builder)
         {
-            // Incluindo o source de localização
-            configuration.Localization.Sources.Add(
-                new DictionaryBasedLocalizationSource(Constants.LocalizationSourceName,
-                new JsonEmbeddedFileLocalizationDictionaryProvider(
-                    typeof(Constants).Assembly,
-                    "SuperMarket.Backoffice.Crud.Domain.Localization.SourceFiles")));
-
-            // Incluindo suporte as seguintes linguagens
-            configuration.Localization.Languages.Add(new LanguageInfo("pt-BR", "Português", isDefault: true));
-            configuration.Localization.Languages.Add(new LanguageInfo("en", "English"));
-
-            configuration.Repository(repository =>
+            builder.Localization(localization =>
             {
-                repository.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                // Incluindo o source de localização
+                localization.AddJsonEmbeddedLocalizationFile(
+                    Constants.LocalizationSourceName,
+                    typeof(Constants).Assembly,
+                    "SuperMarket.Backoffice.Crud.Domain.Localization.SourceFiles");
+
+                // Incluindo suporte as seguintes linguagens
+                localization.AddLanguage("pt-BR", "Português", isDefault: true);
+                localization.AddLanguage("en", "English");
+
+                builder.Repository(repository =>
+                {
+                    repository.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
             });
 
-            return configuration;
+            return builder;
         }
     }
 }

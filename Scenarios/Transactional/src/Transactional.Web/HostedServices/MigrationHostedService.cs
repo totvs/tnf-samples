@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Transactional.Infra.Context;
 
@@ -8,16 +9,19 @@ namespace Transactional.Web.HostedServices
 {
     public class MigrationHostedService : IHostedService
     {
-        private readonly PurchaseOrderContext _purchaseOrderContext;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MigrationHostedService(PurchaseOrderContext purchaseOrderContext)
+        public MigrationHostedService(IServiceScopeFactory serviceScopeFactory)
         {
-            _purchaseOrderContext = purchaseOrderContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            return _purchaseOrderContext.Database.MigrateAsync();
+            using var scope = _serviceScopeFactory.CreateScope();
+            var purchaseOrderContext = scope.ServiceProvider.GetService<PurchaseOrderContext>();
+
+            await purchaseOrderContext.Database.MigrateAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

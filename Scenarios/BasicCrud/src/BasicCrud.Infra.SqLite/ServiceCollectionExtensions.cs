@@ -2,7 +2,6 @@
 using BasicCrud.Infra.Context;
 using BasicCrud.Infra.SqLite.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BasicCrud.Infra.SqLite
@@ -18,7 +17,6 @@ namespace BasicCrud.Infra.SqLite
                     if (Constants.IsDevelopment())
                     {
                         config.DbContextOptions.EnableSensitiveDataLogging();
-                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
                         config.UseLoggerFactory();
                     }
 

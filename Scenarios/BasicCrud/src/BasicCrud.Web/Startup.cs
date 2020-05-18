@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using BasicCrud.Application;
 using BasicCrud.Domain;
 using BasicCrud.Domain.Entities;
@@ -15,7 +14,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Tnf.Configuration;
 
 namespace BasicCrud.Web
@@ -29,13 +29,42 @@ namespace BasicCrud.Web
             DatabaseConfiguration = new DatabaseConfiguration(configuration);
         }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Chaveamento de qual banco a aplicação irá usar
             services
                 .AddCorsAll("AllowAll")
-                .AddApplicationServiceDependency()  // dependencia da camada BasicCrud.Application
-                .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
+                .AddApplicationServiceDependency();  // dependencia da camada BasicCrud.Application
+
+            services.AddTnfAspNetCore(builder =>
+            {
+                builder.UseDomainLocalization();
+
+                // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
+                // O exemplo abaixo registra esse comportamento através de uma convenção:
+                // toda classe que implementar essas interfaces irão ter essa configuração definida
+                // quando for consultado um método que receba a interface IRequestDto do Tnf
+                builder.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity =>
+                        entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
+
+                // Configura a connection string da aplicação
+                builder.DefaultConnectionString(DatabaseConfiguration.ConnectionString);
+
+                // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
+                //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
+
+                // Altera o default isolation level para ReadCommitted (ReadUnCommited not supported by Devart)
+                //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
+
+                // Habilita o driver Oracle da Devart (DotConnect for Oracle)
+                if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
+                    builder.EnableDevartOracleDriver();
+                else if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
+                    builder.EnableDevartPostgreSQLDriver();
+            });
 
             services.AddSingleton(DatabaseConfiguration);
 
@@ -52,55 +81,27 @@ namespace BasicCrud.Web
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Basic Crud API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basic Crud API", Version = "v1" });
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "BasicCrud.Web.xml"));
             });
 
             services.AddResponseCompression();
 
             services.AddHostedService<MigrationHostedService>();
-
-            return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("AllowAll");
 
-            // Configura o use do AspNetCore do Tnf
-            app.UseTnfAspNetCore(options =>
-            {
-                // Adiciona as configurações de localização da aplicação
-                options.UseDomainLocalization();
-
-                // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
-                // O exemplo abaixo registra esse comportamento através de uma convenção:
-                // toda classe que implementar essas interfaces irão ter essa configuração definida
-                // quando for consultado um método que receba a interface IRequestDto do Tnf
-                options.Repository(repositoryConfig =>
-                {
-                    repositoryConfig.Entity<IEntity>(entity =>
-                        entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
-                });
-
-                // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = DatabaseConfiguration.ConnectionString;
-
-                // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
-                //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
-
-                // Altera o default isolation level para ReadCommitted (ReadUnCommited not supported by Devart)
-                //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
-                // Habilita o driver Oracle da Devart (DotConnect for Oracle)
-                if (DatabaseConfiguration.DatabaseType == DatabaseType.Oracle)
-                    options.EnableDevartOracleDriver();
-                else if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
-                    options.EnableDevartPostgreSQLDriver();
-            });
+            app.UseTnfAspNetCore();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            app.UseResponseCompression();
+
+            app.UseRouting();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -108,13 +109,9 @@ namespace BasicCrud.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Crud API v1");
             });
 
-            app.UseMvcWithDefaultRoute();
-            app.UseResponseCompression();
-
-            app.Run(context =>
+            app.UseEndpoints(builder =>
             {
-                context.Response.Redirect("/swagger");
-                return Task.CompletedTask;
+                builder.MapDefaultControllerRoute();
             });
         }
     }

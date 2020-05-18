@@ -1,6 +1,8 @@
-﻿using SuperMarket.FiscalService.Infra.Queue.Messages;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.FiscalService.Infra.Queue.Messages;
 using System;
 using System.Threading;
+using Tnf.Bus.Client;
 using Tnf.Bus.Queue;
 using Tnf.Bus.Queue.RabbitMQ;
 using Tnf.Configuration;
@@ -9,7 +11,7 @@ namespace SuperMarket.FiscalService.Infra.Queue
 {
     public static class QueueConfiguration
     {
-        public static ITnfConfiguration ConfigureFiscalServiceQueueInfraDependency(this ITnfConfiguration configuration)
+        public static void ConfigureFiscalServiceQueueInfraDependency(this ITnfBuilder builder)
         {
             // Cria um Tópico da mensagem PurchaseOrderChangedMessage
             var purchaseOrderChangedTopicToSubscribe = TopicSetup.Builder
@@ -97,21 +99,21 @@ namespace SuperMarket.FiscalService.Infra.Queue
                 .Build();
 
             // Configura para que ela publique mensagens
-            configuration
-                .BusClient()
-                .AddPublisher(
-                    exBuilder: e => exchangeRouterToPublish,
-                    listener: er => new PublisherListener(
-                        exchangeRouter: er,
-                        serviceProvider: configuration.ServiceProvider))
-                .AddSubscriber(
-                        exBuilder: e => exchangeRouterToSubscribe,
-                        listener: er => new SubscriberListener(
-                            exchangeRouter: er,
-                            serviceProvider: configuration.ServiceProvider),
-                        poolSize: 4);
+            builder.BusClient(busClient =>
+            {
+                busClient.AddPublisher(
+                exBuilder: e => exchangeRouterToPublish,
+                listener: er => new PublisherListener(
+                    exchangeRouter: er,
+                    serviceProvider: busClient.ServiceProvider));
 
-            return configuration;
+                busClient.AddSubscriber(
+                    exBuilder: e => exchangeRouterToSubscribe,
+                    listener: er => new SubscriberListener(
+                        exchangeRouter: er,
+                        serviceProvider: busClient.ServiceProvider),
+                    poolSize: 4);
+            });
         }
     }
 }

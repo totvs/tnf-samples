@@ -13,32 +13,25 @@ namespace BasicCrud.Web.Tests
 {
     public class StartupIntegratedTest
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-        {            
-            services
-                .AddMapperDependency()                                  // Configura o mesmo Mapper para ser testado
-                .AddApplicationServiceDependency()                      // Configura a mesma dependencia da camada web a ser testada   
-                .AddTnfAspNetCoreSetupTest()                            // Configura o setup de teste para AspNetCore
-                .AddTnfEfCoreSqliteInMemory()                           // Configura o setup de teste para EntityFrameworkCore em memória
-                .RegisterDbContextToSqliteInMemory<CrudDbContext, FakeCrudDbContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
-
-            return services.BuildServiceProvider();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void ConfigureServices(IServiceCollection services)
         {
-            // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest(options =>
+            // Configura o mesmo Mapper para ser testado
+            services.AddMapperDependency();
+
+            // Configura a mesma dependencia da camada web a ser testada
+            services.AddApplicationServiceDependency();
+
+            // Configura o setup de teste para AspNetCore
+            services.AddTnfAspNetCoreSetupTest(builder =>
             {
                 // Adiciona as configurações de localização da aplicação a ser testada
-                options.UseDomainLocalization();
+                builder.UseDomainLocalization();
 
                 // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
                 // O exemplo abaixo registra esse comportamento através de uma convenção:
                 // toda classe que implementar essas interfaces irão ter essa configuração definida
                 // quando for consultado um método que receba a interface IRequestDto do Tnf
-                options.Repository(repositoryConfig =>
+                builder.Repository(repositoryConfig =>
                 {
                     repositoryConfig.Entity<IEntity>(entity =>
                         entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
@@ -48,9 +41,23 @@ namespace BasicCrud.Web.Tests
                 //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
             });
 
-            app.UseMvc(routes =>
+            // Configura o setup de teste para EntityFrameworkCore em memória
+            services.AddTnfEfCoreSqliteInMemory()
+                // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+                .RegisterDbContextToSqliteInMemory<CrudDbContext, FakeCrudDbContext>();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+
+            // Configura o uso do teste
+            app.UseTnfAspNetCoreSetupTest();
+
+            app.UseEndpoints(endpoint =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoint.MapDefaultControllerRoute();
             });
         }
     }

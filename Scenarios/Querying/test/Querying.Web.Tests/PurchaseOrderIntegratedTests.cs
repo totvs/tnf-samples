@@ -59,7 +59,6 @@ namespace Querying.Web.Tests
         public void Should_Resolve_All()
         {
             Assert.NotNull(TnfSession);
-            Assert.NotNull(ServiceProvider.GetService<PurchaseOrderController>());
             Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderRepository>());
         }
 

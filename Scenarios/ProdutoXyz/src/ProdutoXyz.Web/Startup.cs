@@ -3,17 +3,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using ProdutoXyz.Application;
 using ProdutoXyz.Domain;
 using ProdutoXyz.Domain.Entities;
 using ProdutoXyz.Dto;
 using ProdutoXyz.Infra;
 using ProdutoXyz.Infra.SqLite;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Tnf.Configuration;
 
 namespace ProdutoXyz.Web
@@ -31,11 +30,36 @@ namespace ProdutoXyz.Web
             RacConfiguration = new RacConfiguration(configuration);
         }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency()
+                .AddTnfAspNetCore(options =>
+                {
+                    // Adiciona as configurações de localização da aplicação
+                    options.UseDomainLocalization();
+
+                    // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
+                    // O exemplo abaixo registra esse comportamento através de uma convenção:
+                    // toda classe que implementar essas interfaces irão ter essa configuração definida
+                    // quando for consultado um método que receba a interface IRequestDto do Tnf
+                    options.Repository(repositoryConfig =>
+                    {
+                        repositoryConfig.Entity<IEntity>(entity =>
+                            entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                    });
+
+                    // Configura a connection string da aplicação
+                    options.DefaultConnectionString(DatabaseConfiguration.ConnectionString);
+
+                    // habilita drive Devart para PostgreSQL
+                    if (DatabaseConfiguration.DatabaseType == DatabaseType.Postgres)
+                        options.EnableDevartPostgreSQLDriver();
+
+                    // Habita o suporte ao multitenancy
+                    options.MultiTenancy(tenancy => tenancy.IsEnabled = true);
+                })
                 .AddTnfAspNetCoreSecurity(Configuration);
 
             services.AddSingleton(RacConfiguration);
@@ -47,64 +71,52 @@ namespace ProdutoXyz.Web
             else
                 throw new NotSupportedException("No database configuration found");
 
+            if (DatabaseConfiguration.DatabaseType == DatabaseType.Sqlite)
+
+                services.AddSingleton(RacConfiguration);
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddHostedService<MigrationHostedService>();
+
             services
                 .AddResponseCompression()
                 .AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "Produto XYZ API", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Produto XYZ API", Version = "v1" });
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ProdutoXyz.Web.xml"));
-                    c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
-                        In = "header",
+                        In = ParameterLocation.Header,
                         Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
-                        Type = "apiKey"
+                        Type = SecuritySchemeType.ApiKey
                     });
-                    c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-                        { "Bearer", Enumerable.Empty<string>() },
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Authorization" }
+                            },
+                            new string[0]
+                        },
                     });
                 });
 
-            return services.BuildServiceProvider();
+            services.AddSingleton(RacConfiguration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("AllowAll");
 
-            app.UseTnfAspNetCore(options =>
-            {
-                // Adiciona as configurações de localização da aplicação
-                options.UseDomainLocalization();
+            app.UseTnfAspNetCore();
 
-                // Configuração global de como irá funcionar o Get utilizando o repositorio do Tnf
-                // O exemplo abaixo registra esse comportamento através de uma convenção:
-                // toda classe que implementar essas interfaces irão ter essa configuração definida
-                // quando for consultado um método que receba a interface IRequestDto do Tnf
-                options.Repository(repositoryConfig =>
-                {
-                    repositoryConfig.Entity<IEntity>(entity =>
-                        entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
-                });
-
-                // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = DatabaseConfiguration.ConnectionString;
-
-                // habilita drive Devart para PostgreSQL
-                if (DatabaseConfiguration.DatabaseType == DatabaseType.Postgres)
-                    options.EnableDevartPostgreSQLDriver();
-                // Altera o default isolation level para Unspecified (SqlLite não trabalha com isolationLevel)
-                //options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.Unspecified;
-
-                // Habita o suporte ao multitenancy
-                options.MultiTenancy(tenancy => tenancy.IsEnabled = true);
-            });
+            app.UseRouting();
 
             app.UseTnfAspNetCoreSecurity();
 
@@ -120,8 +132,12 @@ namespace ProdutoXyz.Web
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "Produto XYZ v1");
             });
 
-            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
 
             app.UseSpa(spa =>
             {
@@ -131,8 +147,6 @@ namespace ProdutoXyz.Web
                 if (env.IsDevelopment())
                     spa.UseAngularCliServer(npmScript: "start");
             });
-
-            app.ApplicationServices.MigrateDatabase();
         }
     }
 }

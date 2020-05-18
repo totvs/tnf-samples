@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperMarket.FiscalService.Infra.Contexts;
 
@@ -8,16 +9,19 @@ namespace SuperMarket.FiscalService.Web.HostedServices
 {
     public class MigrationHostedService : IHostedService
     {
-        private readonly FiscalContext _fiscalContext;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MigrationHostedService(FiscalContext fiscalContext)
+        public MigrationHostedService(IServiceScopeFactory serviceScopeFactory)
         {
-            _fiscalContext = fiscalContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            return _fiscalContext.Database.MigrateAsync();
+            using var scope = _serviceScopeFactory.CreateScope();
+            var fiscalContext = scope.ServiceProvider.GetService<FiscalContext>();
+
+            await fiscalContext.Database.MigrateAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

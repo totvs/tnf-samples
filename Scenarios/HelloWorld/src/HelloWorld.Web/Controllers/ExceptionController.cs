@@ -7,6 +7,7 @@ namespace HelloWorld.Web.Controllers
     /// <summary>
     /// Exception API
     /// </summary>
+    [ApiController]
     [Route("api/exception")]
     public class ExceptionController : TnfController
     {

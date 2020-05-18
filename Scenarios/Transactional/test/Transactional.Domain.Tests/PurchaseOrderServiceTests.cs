@@ -27,13 +27,13 @@ namespace Transactional.Domain.Tests
                 .AddDomainDependency()                                  // dependencia da camada Transactional.Domain
                 .AddTnfEfCoreSqliteInMemory()                           // Configura o setup de teste para EntityFrameworkCore em memória
                 .RegisterDbContextToSqliteInMemory<PurchaseOrderContext>();     // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
+
+            services.ConfigureTnf(builder => builder.ConfigureLocalization());
         }
 
         protected override void PostInitialize(IServiceProvider provider)
         {
             base.PostInitialize(provider);
-
-            provider.ConfigureTnf().ConfigureLocalization();
 
             localizationManager = provider.GetService<ILocalizationManager>();
 

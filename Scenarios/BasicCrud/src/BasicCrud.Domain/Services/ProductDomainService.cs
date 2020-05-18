@@ -25,13 +25,13 @@ namespace BasicCrud.Domain.Services
             if (builder == null)
             {
                 Notification.RaiseError(Constants.LocalizationSourceName, Error.DomainServiceOnInsertNullBuilderError);
-                return default(Product);
+                return default;
             }
 
             var product = builder.Build();
 
             if (Notification.HasNotification())
-                return default(Product);
+                return default;
 
             product = await _repository.InsertProductAndGetIdAsync(product);
 
@@ -43,13 +43,13 @@ namespace BasicCrud.Domain.Services
             if (builder == null)
             {
                 Notification.RaiseError(Constants.LocalizationSourceName, Error.DomainServiceOnUpdateNullBuilderError);
-                return default(Product);
+                return default;
             }
 
             var product = builder.Build();
 
             if (Notification.HasNotification())
-                return default(Product);
+                return default;
 
             return await _repository.UpdateProductAsync(product);
         }

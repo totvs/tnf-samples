@@ -3,6 +3,7 @@ using SuperMarket.Backoffice.Sales.Infra.Contexts;
 using SuperMarket.Backoffice.Sales.Infra.Pocos;
 using SuperMarket.Backoffice.Sales.Infra.Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
@@ -19,25 +20,24 @@ namespace SuperMarket.Backoffice.Sales.Infra.Repositories
 
         public Task<IListDto<PurchaseOrderDto>> GetAllPurchaseOrdersAsync(PurchaseOrderRequestAllDto request)
         {
-            return GetAllAsync<PurchaseOrderDto>(request, p => FilterPurchase(p, request));
-        }
+            var query = GetAll();
 
-        private bool FilterPurchase(PurchaseOrderPoco purchaseOrder, PurchaseOrderRequestAllDto request)
-        {
-            var validateNumber = false;
-            var validateDate = false;
+            if (request.Number.HasValue)
+            {
+                query = query.Where(p => p.Number == request.Number);
+            }
 
-            validateNumber = (request.Number == null || request.Number == Guid.Empty || request.Number == purchaseOrder.Number);
+            if (request.StartDate.HasValue)
+            {
+                query = query.Where(p => p.Date >= request.StartDate);
+            }
 
-            if (request.StartDate == DateTime.MinValue || request.StartDate == null)
-                return validateNumber;
+            if (request.EndDate.HasValue)
+            {
+                query = query.Where(p => p.Date <= request.EndDate);
+            }
 
-            if (request.EndDate == DateTime.MinValue || request.EndDate == null)
-                validateDate = request.StartDate == purchaseOrder.Date;
-            else
-                validateDate = (purchaseOrder.Date >= request.StartDate.Value) && (purchaseOrder.Date <= request.EndDate.Value);
-
-            return validateNumber && validateDate;
+            return query.ToListDtoAsync<PurchaseOrderPoco, PurchaseOrderDto>(request);
         }
 
         public async Task<PurchaseOrderDto> GetPurchaseOrderAsync(DefaultRequestDto key)

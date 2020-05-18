@@ -4,56 +4,62 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Dapper.Infra;
 using System;
-using System.Threading.Tasks;
 using Tnf.Configuration;
-using Swashbuckle.AspNetCore.Swagger;
 using Dapper.Infra.Entities;
 using Dapper.Infra.Dto;
 using System.IO;
 using Dapper.Web.HostedServices;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Dapper.Web
 {
     public class Startup
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddCorsAll("AllowAll")
-                .AddInfraDependency()       // Adiciona a dependencia da camada de Infra
-                .AddTnfAspNetCore();        // Adiciona a dependencia de AspNetCore do Tnf
+                .AddInfraDependency();       // Adiciona a dependência da camada de Infra
 
-            services
-                .AddResponseCompression()
-                .AddSwaggerGen(c =>
-                {
-                    c.SwaggerDoc("v1", new Info { Title = "Dapper API", Version = "v1" });
-                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Dapper.Web.xml"));
-                });
-
-            services.AddHostedService<MigrationHostedService>();
-
-            return services.BuildServiceProvider();
-        }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            app.UseCors("AllowAll");
-
-            // Configura o use do AspNetCore do Tnf
-            app.UseTnfAspNetCore(options =>
+            // Adiciona e configura as dependências de AspNetCore do Tnf
+            services.AddTnfAspNetCore(options =>
             {
-                // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
-
                 // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = configuration.GetConnectionString(Constants.ConnectionStringName);
+                options.DefaultConnectionString(Configuration.GetConnectionString(Constants.ConnectionStringName));
 
                 options.Repository(repositoryConfig =>
                 {
                     repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
                 });
             });
+
+            services
+                .AddResponseCompression()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dapper API", Version = "v1" });
+                    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Dapper.Web.xml"));
+                });
+
+            services.AddHostedService<MigrationHostedService>();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseCors("AllowAll");
+
+            app.UseRouting();
+
+            // Configura o use do AspNetCore do Tnf
+            app.UseTnfAspNetCore();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -64,13 +70,11 @@ namespace Dapper.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dapper API v1");
             });
 
-            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
-            app.Run(context =>
+            app.UseEndpoints(builder =>
             {
-                context.Response.Redirect("/swagger");
-                return Task.CompletedTask;
+                builder.MapDefaultControllerRoute();
             });
         }
     }

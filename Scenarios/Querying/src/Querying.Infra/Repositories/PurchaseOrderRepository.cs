@@ -81,21 +81,28 @@ namespace Querying.Infra.Repositories
                 .Select(productOrder => productOrder);
 
             // Agrupo pelo Id do produto e sua descrição
-            var sumarizedByProduct = (from productOrders in baseQuery
-                                      group productOrders by new { productOrders.Product.Id, productOrders.Product.Description } into productGroup
+            var sumarizedByProduct = (from productOrders in (from po in baseQuery
+                                                             select new
+                                                             {
+                                                                 ProductId = po.Product.Id,
+                                                                 po.Product.Description,
+                                                                 po.Quantity,
+                                                                 Total = po.Quantity * po.UnitValue
+                                                             }).ToList()
+                                      group productOrders by new { productOrders.ProductId, productOrders.Description } into productGroup
                                       select new
                                       {
-                                          ProductId = productGroup.Key.Id,
+                                          productGroup.Key.ProductId,
                                           ProductDescription = productGroup.Key.Description,
                                           Amount = productGroup.Sum(s => s.Quantity),
-                                          TotalValue = productGroup.Sum(s => s.Quantity * s.UnitValue)
+                                          TotalValue = productGroup.Sum(s => s.Total)
                                       });
 
             var sumarized = new SumarizedPurchaseOrder()
             {
                 Date = date,
                 TotalQuantity = await baseQuery.SumAsync(s => s.Quantity),
-                TotalValue = await sumarizedByProduct.SumAsync(s => s.TotalValue),
+                TotalValue = sumarizedByProduct.Sum(s => s.TotalValue),
                 Products = sumarizedByProduct.Select(s => new SumarizedProduct()
                 {
                     Id = s.ProductId,

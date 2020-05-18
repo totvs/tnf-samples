@@ -134,7 +134,6 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public void Should_Resolve_All()
         {
             Assert.NotNull(TnfSession);
-            Assert.NotNull(ServiceProvider.GetService<PurchaseOrderController>());
             Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderAppService>());
             Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderService>());
             Assert.NotNull(ServiceProvider.GetService<IPurchaseOrderRepository>());
@@ -211,8 +210,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
             );
 
             // Assert
-            Assert.Equal(1, response.Items.Count);
-            Assert.Equal(20, response.Items[0].Discount);
+            Assert.Equal(10, response.Items.Count);
 
             // Act
             response = await GetResponseAsObjectAsync<ListDto<PurchaseOrderDto>>(

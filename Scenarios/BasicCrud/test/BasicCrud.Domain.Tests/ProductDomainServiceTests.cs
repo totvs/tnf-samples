@@ -34,13 +34,8 @@ namespace BasicCrud.Domain.Tests
 
             // Registro dos serviços para teste
             services.AddTransient<IProductDomainService, ProductDomainService>();
-        }
 
-        protected override void PostInitialize(IServiceProvider provider)
-        {
-            base.PostInitialize(provider);
-
-            provider.ConfigureTnf().UseDomainLocalization();
+            services.ConfigureTnf(builder => builder.UseDomainLocalization());
         }
 
         [Fact]

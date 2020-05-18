@@ -19,7 +19,6 @@ namespace BasicCrud.Infra.PostgreSQL
                     if (Constants.IsDevelopment())
                     {
                         config.DbContextOptions.EnableSensitiveDataLogging();
-                        config.DbContextOptions.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.QueryClientEvaluationWarning));
                         config.UseLoggerFactory();
                     }
 

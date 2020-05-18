@@ -13,7 +13,11 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         {
             // Configura o setup de teste para AspNetCore
             services
-                .AddTnfAspNetCoreSetupTest();
+                .AddTnfAspNetCoreSetupTest(options =>
+                {
+                    // Adiciona as configurações de localização da aplicação a ser testada
+                    options.ConfigureCrudDomain();
+                });
 
             // Registro dos serviços de Mock
             services.AddTransient<IPurchaseOrderAppService, PurchaseOrderAppServiceMock>();
@@ -25,11 +29,7 @@ namespace SuperMarket.Backoffice.Sales.Web.Tests
         public void Configure(IApplicationBuilder app)
         {
             // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest(options =>
-            {
-                // Adiciona as configurações de localização da aplicação a ser testada
-                options.ConfigureCrudDomain();
-            });
+            app.UseTnfAspNetCoreSetupTest();
 
             app.UseMvc(routes =>
             {

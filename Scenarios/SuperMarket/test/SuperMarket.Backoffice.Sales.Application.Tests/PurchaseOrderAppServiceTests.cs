@@ -40,8 +40,10 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
             // Configura o mesmo Mapper para ser testado
             services.AddSalesApplicationDependency();
 
+            services.ConfigureTnf(builder => builder.ConfigureSalesDomain());
+
             // Registro dos serviços de Mock
-            services.AddSingleton<PurchaseOrderServiceMockManager>();
+            services.AddScoped<PurchaseOrderServiceMockManager>();
             services.ReplaceTransient<IPurchaseOrderService, PurchaseOrderServiceMock>();
             services.ReplaceTransient<IPurchaseOrderReadRepository, PurchaseOrderReadRepositoryMock>();
             services.ReplaceTransient<IPriceTableRepository, PriceTableRepositoryMock>();
@@ -51,8 +53,6 @@ namespace SuperMarket.Backoffice.Sales.Application.Tests
         protected override void PostInitialize(IServiceProvider provider)
         {
             base.PostInitialize(provider);
-
-            provider.ConfigureTnf().ConfigureSalesDomain();
 
             _localizationSource = provider.GetService<ILocalizationManager>().GetSource(Constants.LocalizationSourceName);
         }

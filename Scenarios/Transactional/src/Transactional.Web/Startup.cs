@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -24,61 +26,62 @@ namespace Transactional.Web
             _databaseConfiguration = new DatabaseConfiguration(configuration);
         }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddCorsAll("AllowAll")
                 .AddDomainDependency()              // dependencia da camada Transactional.Domain
                 .AddInfraDependency()               // dependencia da camada Transactional.Infra
-                .AddTnfAspNetCore();                // dependencia do pacote Tnf.AspNetCore
+                .AddTnfAspNetCore(options =>
+                {
+                    // Adiciona as configurações de localização da aplicação
+                    options.ConfigureLocalization();
+
+                    // Configura a connection string da aplicação
+                    options.DefaultConnectionString(_databaseConfiguration.ConnectionString);
+
+                    // ---------- Configurações de Unit of Work a nível de aplicação
+
+                    options.UnitOfWorkOptions(unitOfWorkOptions =>
+                    {
+                        // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
+                        // comitadas ou desfeitas em caso de erro
+                        unitOfWorkOptions.IsTransactional = true;
+
+                        // IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
+                        unitOfWorkOptions.IsolationLevel = IsolationLevel.ReadCommitted;
+
+                        // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
+                        unitOfWorkOptions.Scope = TransactionScopeOption.Required;
+
+                        // Timeout que será aplicado (se este valor for informado) para toda nova transação criada
+                        // Não é indicado informar este valor pois irá afetar toda a aplicação.
+                        unitOfWorkOptions.Timeout = TimeSpan.FromSeconds(5);
+                    });
+
+
+                    // ----------
+                });                                 // dependencia do pacote Tnf.AspNetCore
 
             services
                 .AddResponseCompression()
                 .AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "Transactional API", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transactional API", Version = "v1" });
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Transactional.Web.xml"));
                 });
 
             services.AddHostedService<MigrationHostedService>();
-
-            return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("AllowAll");
 
+            app.UseRouting();
+
             // Configura o use do AspNetCore do Tnf
-            app.UseTnfAspNetCore(options =>
-            {
-                // Adiciona as configurações de localização da aplicação
-                options.ConfigureLocalization();
-
-                // Recupera a configuração da aplicação
-                var configuration = options.Settings.FromJsonFiles(env.ContentRootPath, $"appsettings.{env.EnvironmentName}.json");
-
-                // Configura a connection string da aplicação
-                options.DefaultNameOrConnectionString = _databaseConfiguration.ConnectionString;
-
-                // ---------- Configurações de Unit of Work a nível de aplicação
-
-                // Por padrão um Uow é transacional: todas as operações realizadas dentro de um Uow serão
-                // comitadas ou desfeitas em caso de erro
-                options.UnitOfWorkOptions().IsTransactional = true;
-
-                // IsolationLevel default de cada transação criada. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().IsolationLevel = IsolationLevel.ReadCommitted;
-
-                // Escopo da transação. (Precisa da configuração IsTransactional = true para funcionar)
-                options.UnitOfWorkOptions().Scope = TransactionScopeOption.Required;
-
-                // Timeout que será aplicado (se este valor for informado) para toda nova transação criada
-                // Não é indicado informar este valor pois irá afetar toda a aplicação.
-                options.UnitOfWorkOptions().Timeout = TimeSpan.FromSeconds(5);
-
-                // ----------
-            });
+            app.UseTnfAspNetCore();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -89,13 +92,11 @@ namespace Transactional.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transactional API v1");
             });
 
-            app.UseMvcWithDefaultRoute();
             app.UseResponseCompression();
 
-            app.Run(context =>
+            app.UseEndpoints(endpoints =>
             {
-                context.Response.Redirect("/swagger");
-                return Task.CompletedTask;
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

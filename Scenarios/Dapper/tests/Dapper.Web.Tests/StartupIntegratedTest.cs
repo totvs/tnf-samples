@@ -21,7 +21,13 @@ namespace Dapper.Web.Tests
                     options.MapperAssemblies.Add(typeof(CustomerMapper).Assembly);
                     options.DbType = DapperDbType.Sqlite;
                 })
-                .AddTnfAspNetCoreSetupTest()        // Configura o setup de teste para AspNetCore
+                .AddTnfAspNetCoreSetupTest(options =>
+                {
+                    options.Repository(repositoryConfig =>
+                    {
+                        repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                    });
+                })        // Configura o setup de teste para AspNetCore
                 .AddTnfEfCoreSqliteInMemory()       // Configura o setup de teste para EntityFrameworkCore em memória
                 .RegisterDbContextToSqliteInMemory<PurchaseOrderContext>();    // Configura o cotexto a ser usado em memória pelo EntityFrameworkCore
 
@@ -31,19 +37,12 @@ namespace Dapper.Web.Tests
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            // Configura o uso do teste
-            app.UseTnfAspNetCoreSetupTest(options =>
-            {
-                options.Repository(repositoryConfig =>
-                {
-                    repositoryConfig.Entity<IEntity>(entity => entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
-                });
-            });
+            app.UseRouting();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+            // Configura o uso do teste
+            app.UseTnfAspNetCoreSetupTest();
+
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

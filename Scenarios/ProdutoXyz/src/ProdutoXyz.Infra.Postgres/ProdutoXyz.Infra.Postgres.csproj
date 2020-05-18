@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="2.8.1.30801" />
+    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="3.0.0.14603" />
   </ItemGroup>
 
   <ItemGroup>

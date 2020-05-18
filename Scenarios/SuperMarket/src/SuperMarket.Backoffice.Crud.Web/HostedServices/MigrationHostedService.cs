@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperMarket.Backoffice.Crud.Infra.Contexts;
 
@@ -8,16 +9,18 @@ namespace SuperMarket.Backoffice.Crud.Web.HostedServices
 {
     public class MigrationHostedService : IHostedService
     {
-        private readonly CrudContext _crudContext;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MigrationHostedService(CrudContext crudContext)
+        public MigrationHostedService(IServiceScopeFactory serviceScopeFactory)
         {
-            _crudContext = crudContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            return _crudContext.Database.MigrateAsync();
+            using var scope = _serviceScopeFactory.CreateScope();
+            var crudContext = scope.ServiceProvider.GetService<CrudContext>();
+            await crudContext.Database.MigrateAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

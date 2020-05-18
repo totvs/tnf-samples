@@ -1,6 +1,8 @@
-﻿using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SuperMarket.Backoffice.Sales.Infra.Queue.Messages;
 using System;
 using System.Threading;
+using Tnf.Bus.Client;
 using Tnf.Bus.Queue;
 using Tnf.Bus.Queue.RabbitMQ;
 using Tnf.Configuration;
@@ -9,7 +11,7 @@ namespace SuperMarket.Backoffice.Sales.Infra.Queue
 {
     public static class QueueConfiguration
     {
-        public static ITnfConfiguration ConfigureSalesQueueInfraDependency(this ITnfConfiguration configuration)
+        public static ITnfBuilder ConfigureSalesQueueInfraDependency(this ITnfBuilder builder)
         {
             // Cria um Tópico da mensagem PurchaseOrderChangedMessage
             var purchaseOrderChangedTopicToPublish = TopicSetup.Builder
@@ -97,21 +99,22 @@ namespace SuperMarket.Backoffice.Sales.Infra.Queue
                 .Build();
 
             // Configura para que ela publique mensagens
-            configuration
-                .BusClient()
-                .AddPublisher(
+            builder.BusClient(busClient =>
+            {
+                busClient.AddPublisher(
                     exBuilder: e => exchangeRouterToPublish,
                     listener: er => new PublisherListener(
                         exchangeRouter: er,
-                        serviceProvider: configuration.ServiceProvider))
+                        serviceProvider: busClient.ServiceProvider))
                 .AddSubscriber(
                         exBuilder: e => exchangeRouterToSubscribe,
                         listener: er => new SubscriberListener(
                             exchangeRouter: er,
-                            serviceProvider: configuration.ServiceProvider),
+                            serviceProvider: busClient.ServiceProvider),
                         poolSize: 4);
+            });
 
-            return configuration;
+            return builder;
         }
     }
 }
