@@ -106,6 +106,21 @@ namespace BasicCrud.Web.Controllers
         }
 
         /// <summary>
+        /// Resets the selected products's value
+        /// </summary>
+        /// <param name="requestDto">Request params</param>
+        /// <returns>Modified products</returns>
+        [HttpGet("reset")]
+        [ProducesResponseType(typeof(IListDto<ProductDto>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        public async Task<IActionResult> ResetValue([FromQuery] ProductRequestAllDto requestDto)
+        {
+            var products = await _appService.ResetAllProductAsync(requestDto);
+
+            return CreateResponseOnPut(products, _name);
+        }
+
+        /// <summary>
         /// Delete a product
         /// </summary>
         /// <param name="id">Product id</param>

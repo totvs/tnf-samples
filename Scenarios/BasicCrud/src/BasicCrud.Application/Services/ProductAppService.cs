@@ -104,6 +104,27 @@ namespace BasicCrud.Application.Services
             return dto;
         }
 
+        // Exemplo de operação de update parcial explícito (valor resetado para mínimo)
+        public async Task<IListDto<ProductDto>> ResetAllProductAsync(ProductRequestAllDto request)
+        {
+            var products = await _readRepository.GetAllProductsAsync(request);
+
+            foreach (var productDto in products.Items)
+            {
+                productDto.Value = 1;
+
+                var product = Product.Create(Notification)
+                    .WithId(productDto.Id)
+                    .WithDescription(productDto.Description)
+                    .WithValue(1)
+                    .Build();
+
+               await _repository.UpdateProductAsync(product, p => p.Value);
+            }
+
+            return products;
+        }
+
         public async Task DeleteProductAsync(Guid id)
         {
             if (!ValidateId(id))

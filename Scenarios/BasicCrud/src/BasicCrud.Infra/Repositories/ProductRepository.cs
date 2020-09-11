@@ -2,6 +2,7 @@
 using BasicCrud.Domain.Interfaces.Repositories;
 using BasicCrud.Infra.Context;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
@@ -21,7 +22,7 @@ namespace BasicCrud.Infra
         public async Task<Product> InsertProductAndGetIdAsync(Product product)
             => await InsertAndSaveChangesAsync(product);
 
-        public async Task<Product> UpdateProductAsync(Product product)
-            => await UpdateAsync(product);
+        public async Task<Product> UpdateProductAsync(Product product, params Expression<Func<Product, object>>[] changedProperties)
+            => await UpdateAsync(product, changedProperties);
     }
 }

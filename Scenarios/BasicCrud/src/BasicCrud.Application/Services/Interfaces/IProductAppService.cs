@@ -14,6 +14,7 @@ namespace BasicCrud.Application.Services.Interfaces
         Task<ProductDto> CreateProductAsync(ProductDto product);
         Task<ProductDto> UpdateProductAsync(Guid id, ProductDto product);
         Task<ProductDto> PatchProductAsync(Guid id, JsonPatchDocument productPatch);
+        Task<IListDto<ProductDto>> ResetAllProductAsync(ProductRequestAllDto request);
         Task DeleteProductAsync(Guid id);
         Task<ProductDto> GetProductAsync(DefaultRequestDto id);
         Task<IListDto<ProductDto>> GetAllProductAsync(ProductRequestAllDto request);

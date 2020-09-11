@@ -2,6 +2,7 @@
 using BasicCrud.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tnf.Notifications;
 
@@ -40,7 +41,7 @@ namespace BasicCrud.Domain.Tests.Mocks
             return product.AsTask();
         }
 
-        public Task<Product> UpdateProductAsync(Product product)
+        public Task<Product> UpdateProductAsync(Product product, params Expression<Func<Product, object>>[] changedProperties)
         {
             list.RemoveAll(c => c.Id == product.Id);
             list.Add(product);

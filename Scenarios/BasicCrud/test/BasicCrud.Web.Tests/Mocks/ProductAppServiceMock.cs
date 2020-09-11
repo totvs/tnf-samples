@@ -68,5 +68,10 @@ namespace BasicCrud.Web.Tests.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public Task<IListDto<ProductDto>> ResetAllProductAsync(ProductRequestAllDto request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
