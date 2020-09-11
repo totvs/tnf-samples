@@ -13,8 +13,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Tnf.AutoMapper" Version="3.0.0.14603" />
-    <PackageReference Include="Tnf.EntityFrameworkCore" Version="3.0.0.14603" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.8" />
+    <PackageReference Include="Tnf.AutoMapper" Version="3.0.1.25402" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="3.0.1.25402" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="3.0.0.14603" />
+    <PackageReference Include="Tnf.Drivers.DevartPostgreSQL" Version="3.0.1.25402" />
   </ItemGroup>
 
   <ItemGroup>

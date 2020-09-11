@@ -1,6 +1,7 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Dto;
 using BasicCrud.Dto.Product;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,11 @@ namespace BasicCrud.Web.Tests.Mocks
             list.Add(dto);
 
             return dto.AsTask();
+        }
+
+        public Task<ProductDto> PatchProductAsync(Guid id, JsonPatchDocument productPatch)
+        {
+            throw new NotImplementedException();
         }
     }
 }

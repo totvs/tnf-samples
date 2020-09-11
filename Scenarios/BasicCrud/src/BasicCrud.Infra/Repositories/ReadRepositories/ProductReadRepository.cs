@@ -22,11 +22,18 @@ namespace BasicCrud.Infra.Repositories.ReadRepositories
         public async Task<IListDto<ProductDto>> GetAllProductsAsync(ProductRequestAllDto key)
             => await GetAllAsync<ProductDto>(key, p => key.Description.IsNullOrEmpty() || p.Description.Contains(key.Description));
 
-        public async Task<ProductDto> GetProductAsync(DefaultRequestDto requestDto)
+        public async Task<Product> GetProductAsync(DefaultRequestDto requestDto)
         {
             var entity = await GetAsync(requestDto);
 
-            return entity.MapTo<ProductDto>();
+            return entity;
+        }
+
+        public async Task<Product> GetProductAsync(Guid id)
+        {
+            var entity = await FirstOrDefaultAsync(p => p.Id == id);
+
+            return entity;
         }
     }
 }

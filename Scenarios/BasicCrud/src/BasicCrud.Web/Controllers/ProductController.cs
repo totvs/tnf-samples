@@ -1,6 +1,7 @@
 ﻿using BasicCrud.Application.Services.Interfaces;
 using BasicCrud.Dto;
 using BasicCrud.Dto.Product;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -60,32 +61,48 @@ namespace BasicCrud.Web.Controllers
         /// <summary>
         /// Create a new product
         /// </summary>
-        /// <param name="customerDto">Product to create</param>
+        /// <param name="productDto">Product to create</param>
         /// <returns>Product created</returns>
         [HttpPost]
         [ProducesResponseType(typeof(ProductDto), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Post([FromBody]ProductDto customerDto)
+        public async Task<IActionResult> Post([FromBody]ProductDto productDto)
         {
-            customerDto = await _appService.CreateProductAsync(customerDto);
+            productDto = await _appService.CreateProductAsync(productDto);
 
-            return CreateResponseOnPost(customerDto, _name);
+            return CreateResponseOnPost(productDto, _name);
         }
 
         /// <summary>
         /// Update a product
         /// </summary>
         /// <param name="id">Product id</param>
-        /// <param name="customerDto">Product content to update</param>
+        /// <param name="productDto">Product content to update</param>
         /// <returns>Updated product</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ProductDto), 200)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
-        public async Task<IActionResult> Put(Guid id, [FromBody]ProductDto customerDto)
+        public async Task<IActionResult> Put(Guid id, [FromBody]ProductDto productDto)
         {
-            customerDto = await _appService.UpdateProductAsync(id, customerDto);
+            productDto = await _appService.UpdateProductAsync(id, productDto);
 
-            return CreateResponseOnPut(customerDto, _name);
+            return CreateResponseOnPut(productDto, _name);
+        }
+
+        /// <summary>
+        /// Patch a product
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <param name="patch">Product patch operation</param>
+        /// <returns>Patched product</returns>
+        [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(ProductDto), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument patch)
+        {
+            var productDto = await _appService.PatchProductAsync(id, patch);
+
+            return CreateResponseOnPut(productDto, _name);
         }
 
         /// <summary>
