@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,6 +34,7 @@ namespace SuperMarket.FiscalService.Web
         {
             services
                 .AddCorsAll("AllowAll")
+                .AddTnfMetrics(Configuration)
                 .AddFiscalDomainDependency()
                 .AddFiscalInfraDependency()
                 .AddFiscalInfraQueueDependency()
@@ -63,6 +65,11 @@ namespace SuperMarket.FiscalService.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.FiscalService.Web.xml"));
                 });
 
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddHostedService<MigrationHostedService>();
         }
 
@@ -75,6 +82,10 @@ namespace SuperMarket.FiscalService.Web
 
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore();
+
+            app.UseTnfMetrics();
+
+            app.UseTnfHealthChecks();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

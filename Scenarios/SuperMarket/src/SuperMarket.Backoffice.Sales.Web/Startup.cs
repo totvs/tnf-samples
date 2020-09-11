@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,10 +20,13 @@ namespace SuperMarket.Backoffice.Sales.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         private readonly DatabaseConfiguration _databaseConfiguration;
 
         public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
             _databaseConfiguration = new DatabaseConfiguration(configuration);
         }
 
@@ -30,6 +34,7 @@ namespace SuperMarket.Backoffice.Sales.Web
         {
             services
                 .AddCorsAll("AllowAll")
+                .AddTnfMetrics(Configuration)
                 .AddSalesApplicationDependency()
                 .AddTnfAspNetCore(options =>
                 {
@@ -61,6 +66,11 @@ namespace SuperMarket.Backoffice.Sales.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Sales.Web.xml"));
                 });
 
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddHostedService<MigrationHostedService>();
         }
 
@@ -72,6 +82,10 @@ namespace SuperMarket.Backoffice.Sales.Web
 
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore();
+
+            app.UseTnfMetrics();
+
+            app.UseTnfHealthChecks();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

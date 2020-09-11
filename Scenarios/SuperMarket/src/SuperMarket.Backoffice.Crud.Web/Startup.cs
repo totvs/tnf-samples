@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,10 +18,14 @@ namespace SuperMarket.Backoffice.Crud.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         private readonly DatabaseConfiguration _databaseConfiguration;
         private readonly RedisConfiguration _redisConfiguration;
+
         public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
             _databaseConfiguration = new DatabaseConfiguration(configuration);
             _redisConfiguration = new RedisConfiguration(configuration);
         }
@@ -29,6 +34,7 @@ namespace SuperMarket.Backoffice.Crud.Web
         {
             services
                 .AddCorsAll("AllowAll")
+                .AddTnfMetrics(Configuration)
                 .AddCrudInfraDependency(_redisConfiguration)
                 .AddCrudDomainDependency()
                 .AddTnfAspNetCore(options =>
@@ -63,6 +69,11 @@ namespace SuperMarket.Backoffice.Crud.Web
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SuperMarket.Backoffice.Crud.Web.xml"));
                 });
 
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddHostedService<MigrationHostedService>();
         }
 
@@ -74,6 +85,10 @@ namespace SuperMarket.Backoffice.Crud.Web
 
             // Configura o use do AspNetCore do Tnf
             app.UseTnfAspNetCore();
+
+            app.UseTnfMetrics();
+
+            app.UseTnfHealthChecks();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
