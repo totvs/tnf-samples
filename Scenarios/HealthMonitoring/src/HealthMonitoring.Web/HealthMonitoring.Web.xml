@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HealthMonitoring.Web</name>
+    </assembly>
+    <members>
+        <member name="T:HealthMonitoring.Web.Controllers.HelloController">
+            <summary>
+            Hello API
+            </summary>
+        </member>
+        <member name="M:HealthMonitoring.Web.Controllers.HelloController.Get">
+            <summary>
+            Get a localized Hello string according with request culture
+            For change culture sent in headers of request the key <see cref="F:Tnf.TnfConsts.Localization.DefaultLanguage"/>
+            </summary>
+        </member>
+    </members>
+</doc>
