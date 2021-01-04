@@ -1,0 +1,11 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "CustomerShouldHaveName": "A customer's name needs to be informed.",
+    "ProductShouldHaveDescription": "A product's description needs to be informed.",
+    "ProductShouldHaveValue": "A product can't have an empty value.",
+
+    "DomainServiceOnInsertAndGetIdNullBuilderError": "Product's builder at insert can't be null.",
+    "DomainServiceOnUpdateNullBuilderError": "Product's builder at update can't be null."
+  }
+}

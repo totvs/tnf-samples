@@ -31,7 +31,6 @@ namespace BasicCrud.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Chaveamento de qual banco a aplicação irá usar
             services
                 .AddCorsAll("AllowAll")
                 .AddApplicationServiceDependency();  // dependencia da camada BasicCrud.Application
