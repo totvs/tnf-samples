@@ -44,8 +44,8 @@ namespace SGDP.Infra.Repositories
                 })
                 .FirstOrDefaultAsync();
 
-            // Manually register the Sgdp audit log.
-            // When data is accessed through projections, the Tnf.Sgdp SDK doesn't automatically logs the query  
+            // Registro manual do audit log Sgdp.
+            // Quando dados Sgdp são acessados através de projection o sdk Tnf.Sgdp não gera os audit logs automaticamente
             await _sgdpLogger.LogAsync(DataProcessingActions.Load, customerData, typeof(Customer));
 
             return customerData;

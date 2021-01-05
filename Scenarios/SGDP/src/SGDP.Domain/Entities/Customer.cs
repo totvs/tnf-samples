@@ -5,7 +5,7 @@ namespace SGDP.Domain.Entities
 {
     [SgdpAuditedEntity]
     [SgdpDescription("Classe que contem os dados do cliente")]
-    public class Customer
+    public class Customer : IEntity
     {
         public Guid Id { get; set; }
 

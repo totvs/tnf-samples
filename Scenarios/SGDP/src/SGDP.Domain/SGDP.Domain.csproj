@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Localization\SourceFiles\SGDP-en.json" />
+    <None Remove="Localization\SourceFiles\SGDP-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\SGDP-en.json" />
+    <EmbeddedResource Include="Localization\SourceFiles\SGDP-pt-BR.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Tnf.Domain" Version="3.0.1.36304" />
     <PackageReference Include="Tnf.Sgdp.Abstractions" Version="1.0.0" />
   </ItemGroup>

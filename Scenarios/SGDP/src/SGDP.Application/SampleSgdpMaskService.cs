@@ -1,12 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-
+using System;
 using SGDP.Domain.Interfaces.Repositories;
 using Tnf.Sgdp;
-using SGDP.Dto.Customer;
-using System;
-using SGDP.Domain.Entities;
 
 namespace SGDP.Application
 {
@@ -21,11 +17,11 @@ namespace SGDP.Application
 
         public override async Task ExecuteAsync(SgdpMaskCommandContext context, CancellationToken cancellationToken = default)
         {
-            var cpf = context.Identifiers["CPF"];
-            var email = context.Identifiers["EMAIL"];
-            var rg = context.Identifiers["RG"];
+            var hasCpf = context.Identifiers.TryGetValue("CPF", out var cpf);
+            var hasEmail = context.Identifiers.TryGetValue("EMAIL", out var email);
+            var hasRg = context.Identifiers.TryGetValue("RG", out var rg);
 
-            if(!cpf.IsNullOrEmpty() || !cpf.IsNullOrEmpty() || !rg.IsNullOrEmpty())
+            if (hasCpf || hasEmail || hasRg)
             {
                 var data = await _customerRepository.GetCustomerAsync(
                     customer => (cpf.IsNullOrEmpty() || customer.Cpf.Equals(cpf))

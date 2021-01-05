@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SGDP.Application;
 using SGDP.Domain;
+using SGDP.Domain.Entities;
+using SGDP.Dto;
 using SGDP.Infra;
 using SGDP.Infra.Context;
 using SGDP.Web.HostedServices;
@@ -16,32 +18,46 @@ namespace SGDP.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         DatabaseConfiguration DatabaseConfiguration { get; }
 
         public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
             DatabaseConfiguration = new DatabaseConfiguration(configuration);
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddCorsAll("AllowAll")
-                .AddApplicationServiceDependency();  // dependencia da camada SGDP.Application
+                .AddApplicationServiceDependency();  // Dependencia da camada SGDP.Application
 
             services.AddTnfAspNetCore(builder =>
             {
                 builder.UseDomainLocalization();
+
+                // Configuração global de leitura utilizando o repositorio do Tnf
+                builder.Repository(repositoryConfig =>
+                {
+                    repositoryConfig.Entity<IEntity>(entity =>
+                        entity.RequestDto<IDefaultRequestDto>((e, d) => e.Id == d.Id));
+                });
 
                 // Configura a connection string da aplicação
                 builder.DefaultConnectionString(DatabaseConfiguration.ConnectionString);
 
                 if (DatabaseConfiguration.DatabaseType == DatabaseType.PostgreSQL)
                     builder.EnableDevartPostgreSQLDriver();
+
+                builder.MultiTenancy(o => o.IsEnabled = true);
             });
+
+            services.AddTnfAspNetCoreSecurity(Configuration);
+
+            services.AddHostedService<MigrationHostedService>();
 
             services.AddTnfSgdp(sgdp =>
             {
@@ -65,8 +81,6 @@ namespace SGDP.Web
             });
 
             services.AddResponseCompression();
-
-            services.AddHostedService<MigrationHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

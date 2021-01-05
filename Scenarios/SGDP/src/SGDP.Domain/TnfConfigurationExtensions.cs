@@ -13,7 +13,7 @@ namespace SGDP.Domain
                 localization.AddJsonEmbeddedLocalizationFile(
                     Constants.LocalizationSourceName,
                     typeof(Constants).Assembly,
-                    "BasicCrud.Domain.Localization.SourceFiles");
+                    "SGDP.Domain.Localization.SourceFiles");
 
                 // Incluindo suporte as seguintes linguagens
                 localization.AddLanguage("pt-BR", "Português", isDefault: true);

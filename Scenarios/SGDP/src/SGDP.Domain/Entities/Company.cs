@@ -5,7 +5,7 @@ namespace SGDP.Domain.Entities
 {
     [SgdpAuditedEntity]
     [SgdpDescription("Classe que contem os dados da empresa")]
-    public class Company
+    public class Company : IEntity
     {
         public Guid Id { get; set; }
 

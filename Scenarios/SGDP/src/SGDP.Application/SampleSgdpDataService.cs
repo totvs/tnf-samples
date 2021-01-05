@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System;
 using Tnf.Runtime.Session;
 using Tnf.Sgdp;
 using SGDP.Domain.Interfaces.Repositories;
-using System;
+
 
 namespace SGDP.Application
 {
@@ -24,11 +23,11 @@ namespace SGDP.Application
         {
             var tenantId = _session.TenantId;
 
-            var cpf = context.Identifiers["CPF"];
-            var email = context.Identifiers["EMAIL"];
-            var rg = context.Identifiers["RG"];
+            var hasCpf = context.Identifiers.TryGetValue("CPF", out var cpf);
+            var hasEmail = context.Identifiers.TryGetValue("EMAIL", out var email);
+            var hasRg = context.Identifiers.TryGetValue("RG", out var rg);
 
-            if (!cpf.IsNullOrEmpty() || !cpf.IsNullOrEmpty() || !rg.IsNullOrEmpty())
+            if (hasCpf || hasEmail || hasRg)
             {
                 var data = await _customerRepository.GetCustomerAsync(
                     customer => (cpf.IsNullOrEmpty() || customer.Cpf.Equals(cpf))

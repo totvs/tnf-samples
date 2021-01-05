@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using SGDP.Domain.Interfaces.Repositories;
 using SGDP.Domain;
 using SGDP.Infra.Repositories;
