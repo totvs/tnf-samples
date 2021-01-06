@@ -9,17 +9,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		NuGet.Config = NuGet.Config
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGDP.Web", "src\SGDP.Web\SGDP.Web.csproj", "{4F37CE26-4FE9-42E2-AE87-D8425705B98A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGDP.Web", "src\SGDP.Web\SGDP.Web.csproj", "{4F37CE26-4FE9-42E2-AE87-D8425705B98A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGDP.Dto", "src\SGDP.Infra\SGDP.Dto.csproj", "{C21747CD-355C-4169-8FC8-0682C53F0302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGDP.Dto", "src\SGDP.Infra\SGDP.Dto.csproj", "{C21747CD-355C-4169-8FC8-0682C53F0302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGDP.Application", "src\SGDP.Application\SGDP.Application.csproj", "{C32F2073-7823-4D08-AACE-D03D88E5CE0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGDP.Application", "src\SGDP.Application\SGDP.Application.csproj", "{C32F2073-7823-4D08-AACE-D03D88E5CE0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGDP.Domain", "src\SGDP.Domain\SGDP.Domain.csproj", "{65ECFCC7-6E15-4661-96A0-030636468023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGDP.Domain", "src\SGDP.Domain\SGDP.Domain.csproj", "{65ECFCC7-6E15-4661-96A0-030636468023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGDP.Infra", "src\SGDP.Dto\SGDP.Infra.csproj", "{C34840D9-B4B5-41DF-BD14-A00BEA1EC289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGDP.Infra", "src\SGDP.Dto\SGDP.Infra.csproj", "{C34840D9-B4B5-41DF-BD14-A00BEA1EC289}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
