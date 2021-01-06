@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SGDP.Domain\SGDP.Domain.csproj" />
-    <ProjectReference Include="..\SGDP.Infra\SGDP.Dto.csproj" />
+    <ProjectReference Include="..\SGDP.Dto\SGDP.Dto.csproj" />
   </ItemGroup>
 
 </Project>

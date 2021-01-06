@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SGDP.Domain\SGDP.Domain.csproj" />
-    <ProjectReference Include="..\SGDP.Dto\SGDP.Infra.csproj" />
+    <ProjectReference Include="..\SGDP.Infra\SGDP.Infra.csproj" />
   </ItemGroup>
 
 </Project>

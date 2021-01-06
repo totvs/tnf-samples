@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SGDP.Infra\SGDP.Dto.csproj" />
+    <ProjectReference Include="..\SGDP.Dto\SGDP.Dto.csproj" />
   </ItemGroup>
 
 </Project>
