@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+
+  rabbitmq:
+    image: masstransit/rabbitmq
+
+
+  newmessaging-applicationb:
+    image: ${DOCKER_REGISTRY-}newmessagingapplicationb
+    build:
+      context: ../..
+      dockerfile: src/NewMessaging.ApplicationB/Dockerfile
+
+
+  newmessaging-applicationa:
+    image: ${DOCKER_REGISTRY-}newmessagingapplicationa
+    build:
+      context: ../..
+      dockerfile: src/NewMessaging.ApplicationA/Dockerfile
+
