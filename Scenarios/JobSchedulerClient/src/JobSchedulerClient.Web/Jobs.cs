@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+
 using Tnf.Jobs;
 using Tnf.Runtime.Session;
 
@@ -9,7 +11,7 @@ namespace JobScheduler.GuineaPig
     [TnfJobAuthorize("FailingJob", "Failing Job")]
     public class FailingJob : Job<EmptyParam>
     {
-        public override Task ExecuteAsync(EmptyParam parameters)
+        public override Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             //Quando a execução de um jobs joga uma exceção, esta execução é marcada como falha
             //Exceções que causam a falha de execução são enviadas de volta ao jobs scheduler 
@@ -17,11 +19,11 @@ namespace JobScheduler.GuineaPig
             throw new InvalidOperationException("Can't execute this job now.");
         }
     }
-    
+
     [TnfJobAuthorize("MultipleStepsJob", "Job With Multiple Steps")]
     public class MultipleStepsJob : Job<EmptyParam>
     {
-        public override async Task ExecuteAsync(EmptyParam parameters)
+        public override async Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             await Task.Delay(3000);
 
@@ -45,7 +47,7 @@ namespace JobScheduler.GuineaPig
     [TnfJobAuthorize("UnevenProgressJob", "Uneven Progress Job")]
     public class UnevenProgressJob : Job<EmptyParam>
     {
-        public override async Task ExecuteAsync(EmptyParam parameters)
+        public override async Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             //O progresso de um job pode ser errático
 
@@ -58,7 +60,7 @@ namespace JobScheduler.GuineaPig
             await SetProgressAsync(2, 3);
 
             await Task.Delay(3000);
-            
+
             //Nesta chamada não só voltamos o progresso do job, como também mudamos o fracionamento
             await SetProgressAsync(1, 5);
 
@@ -86,7 +88,7 @@ namespace JobScheduler.GuineaPig
     [TnfJobAuthorize("LogExceptionJob", "Job That Will Log An Exception")]
     public class LogExceptionJob : Job<EmptyParam>
     {
-        public override async Task ExecuteAsync(EmptyParam parameters)
+        public override async Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -107,7 +109,7 @@ namespace JobScheduler.GuineaPig
     [TnfJobAuthorize("JobWithUserFriedlyName", "Job With User Friendly Name")]
     public class JobWithUserFriedlyName : Job<EmptyParam>
     {
-        public override Task ExecuteAsync(EmptyParam parameters)
+        public override Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -126,7 +128,7 @@ namespace JobScheduler.GuineaPig
             _session = session;
         }
 
-        public override async Task ExecuteAsync(EmptyParam parameters)
+        public override async Task ExecuteAsync(EmptyParam parameters, CancellationToken cancellationToken = default)
         {
             //É possível logar Texto puro também
             //Tudo que for logado através desse método irá parecer nos logs de execução.
@@ -138,33 +140,33 @@ namespace JobScheduler.GuineaPig
     [TnfJobAuthorize("AllTypeOfParametersJob", "Job With All Types Of Parameters")]
     public class AllTypeOfParametersJob : Job<AllTypesParameters>
     {
-        public override async Task ExecuteAsync(AllTypesParameters parameters)
+        public override async Task ExecuteAsync(AllTypesParameters parameters, CancellationToken cancellationToken = default)
         {
             //O TParameters da classe Job<TParameters> é uma class para transportar os parâmetros do job
             //Aqui temos um job que recebe todos os tipos de parâmetros aceitados
             //Parâmetros também podem ser nullable (Nullable<T>)
-            await LogTextAsync($"{nameof(parameters.ShortParam          )} was: {parameters.ShortParam         }");
-            await LogTextAsync($"{nameof(parameters.UshortParam         )} was: {parameters.UshortParam        }");
-            await LogTextAsync($"{nameof(parameters.IntParam            )} was: {parameters.IntParam           }");
-            await LogTextAsync($"{nameof(parameters.UintParam           )} was: {parameters.UintParam          }");
-            await LogTextAsync($"{nameof(parameters.LongParam           )} was: {parameters.LongParam          }");
-            await LogTextAsync($"{nameof(parameters.UlongParam          )} was: {parameters.UlongParam         }");
-            await LogTextAsync($"{nameof(parameters.FloatParam          )} was: {parameters.FloatParam         }");
-            await LogTextAsync($"{nameof(parameters.DoubleParam         )} was: {parameters.DoubleParam        }");
-            await LogTextAsync($"{nameof(parameters.DecimalParam        )} was: {parameters.DecimalParam       }");
-            await LogTextAsync($"{nameof(parameters.BoolParam           )} was: {parameters.BoolParam          }");
-            await LogTextAsync($"{nameof(parameters.CharParam           )} was: {parameters.CharParam          }");
-            await LogTextAsync($"{nameof(parameters.StringParam         )} was: {parameters.StringParam        }");
-            await LogTextAsync($"{nameof(parameters.DateTimeParam       )} was: {parameters.DateTimeParam      }");
-            await LogTextAsync($"{nameof(parameters.TimeSpanParam       )} was: {parameters.TimeSpanParam      }");
-            await LogTextAsync($"{nameof(parameters.DateTimeOffsetParam )} was: {parameters.DateTimeOffsetParam}");
+            await LogTextAsync($"{nameof(parameters.ShortParam)} was: {parameters.ShortParam         }");
+            await LogTextAsync($"{nameof(parameters.UshortParam)} was: {parameters.UshortParam        }");
+            await LogTextAsync($"{nameof(parameters.IntParam)} was: {parameters.IntParam           }");
+            await LogTextAsync($"{nameof(parameters.UintParam)} was: {parameters.UintParam          }");
+            await LogTextAsync($"{nameof(parameters.LongParam)} was: {parameters.LongParam          }");
+            await LogTextAsync($"{nameof(parameters.UlongParam)} was: {parameters.UlongParam         }");
+            await LogTextAsync($"{nameof(parameters.FloatParam)} was: {parameters.FloatParam         }");
+            await LogTextAsync($"{nameof(parameters.DoubleParam)} was: {parameters.DoubleParam        }");
+            await LogTextAsync($"{nameof(parameters.DecimalParam)} was: {parameters.DecimalParam       }");
+            await LogTextAsync($"{nameof(parameters.BoolParam)} was: {parameters.BoolParam          }");
+            await LogTextAsync($"{nameof(parameters.CharParam)} was: {parameters.CharParam          }");
+            await LogTextAsync($"{nameof(parameters.StringParam)} was: {parameters.StringParam        }");
+            await LogTextAsync($"{nameof(parameters.DateTimeParam)} was: {parameters.DateTimeParam      }");
+            await LogTextAsync($"{nameof(parameters.TimeSpanParam)} was: {parameters.TimeSpanParam      }");
+            await LogTextAsync($"{nameof(parameters.DateTimeOffsetParam)} was: {parameters.DateTimeOffsetParam}");
         }
     }
 
     [TnfJobAuthorize("JobParameterAttributeJob", "Job With JobParameterAttributes")]
     public class JobParameterAttributeJob : Job<RequiredAndLabel>
     {
-        public override Task ExecuteAsync(RequiredAndLabel parameters)
+        public override Task ExecuteAsync(RequiredAndLabel parameters, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -178,14 +180,14 @@ namespace JobScheduler.GuineaPig
         public int LabelExtractedFromProperty { get; set; }
 
         //È possível usar o atributo TnfJobParameter para informar um label para o parâmetro, assim como a obrigatoriedade desse parâmetro
-        [TnfJobParameter("Label Extracted From Attribute", true)]
+        [TnfJobParameter(true, Label = "Label Extracted From Attribute")]
         public int ParamNameFromAttribute { get; set; }
 
         //Propriedade com tipos Nullable<T> serão marcas automaticamente como parâmetros não obrigatórios
         public int? IsRequiredExtractedFromPropertyType { get; set; }
 
         //Com o atributo TnfJobParameter é possível marcar um parâmetro como não obrigatório mesmo que a propriedade não seja Nullable<T>
-        [TnfJobParameter("Is Required False Extracted From Attribute", false)]
+        [TnfJobParameter(false, Label = "Is Required False Extracted From Attribute")]
         public int IsRequiredFalseFromAttribute { get; set; }
     }
 
