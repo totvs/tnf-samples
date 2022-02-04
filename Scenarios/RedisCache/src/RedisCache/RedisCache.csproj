@@ -26,7 +26,7 @@
     <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
-    <PackageReference Include="Tnf.Caching.Redis" Version="3.0.0.14603" />
+    <PackageReference Include="Tnf.Caching.Redis" Version="3.9.0.3502" />
   </ItemGroup>
 
 </Project>
