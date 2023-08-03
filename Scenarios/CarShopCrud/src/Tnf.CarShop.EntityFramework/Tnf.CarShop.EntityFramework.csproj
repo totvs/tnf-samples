@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401" />
+	</ItemGroup>
+	
 </Project>
