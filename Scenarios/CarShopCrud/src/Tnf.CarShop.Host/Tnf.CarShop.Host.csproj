@@ -11,6 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Tnf.AspNetCore" Version="6.3.0.21401" />
+    <PackageReference Include="Tnf.Commands" Version="6.3.0.21401" />
   </ItemGroup>
 
 </Project>
