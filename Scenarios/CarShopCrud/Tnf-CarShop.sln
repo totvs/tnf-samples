@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.Host", "src\Tnf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework", "src\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFramework.csproj", "{49C80ED3-B5CE-471F-B8EB-8B02126C4133}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework.Migrator", "src\Tnf.CarShop.EntityFramework.Migrator\Tnf.CarShop.EntityFramework.Migrator.csproj", "{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.Domain", "src\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj", "{79A14A35-BE99-4032-BFE3-8B0181E3115C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework.PostgreSql", "src\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFramework.PostgreSql.csproj", "{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}"
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		NuGet.Config = NuGet.Config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.CarShop.EntityFramework.Migrator", "src\Tnf.CarShop.EntityFramework.Migrator\Tnf.CarShop.EntityFramework.Migrator.csproj", "{4C049241-B916-42AC-98A3-EAA353EB5629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +34,6 @@ Global
 		{49C80ED3-B5CE-471F-B8EB-8B02126C4133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C80ED3-B5CE-471F-B8EB-8B02126C4133}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C80ED3-B5CE-471F-B8EB-8B02126C4133}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79A14A35-BE99-4032-BFE3-8B0181E3115C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79A14A35-BE99-4032-BFE3-8B0181E3115C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79A14A35-BE99-4032-BFE3-8B0181E3115C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +42,10 @@ Global
 		{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C049241-B916-42AC-98A3-EAA353EB5629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C049241-B916-42AC-98A3-EAA353EB5629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C049241-B916-42AC-98A3-EAA353EB5629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C049241-B916-42AC-98A3-EAA353EB5629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,9 +53,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C3E68244-B6A6-4A3C-AD3F-5B2A9EE8A40B} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 		{49C80ED3-B5CE-471F-B8EB-8B02126C4133} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
-		{5DAEF44F-0A27-4B65-ACE3-0549C0AA9B6C} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 		{79A14A35-BE99-4032-BFE3-8B0181E3115C} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 		{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
+		{4C049241-B916-42AC-98A3-EAA353EB5629} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D0A4FA99-192E-4F54-B5EC-87505D95B959}

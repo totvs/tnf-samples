@@ -15,4 +15,8 @@
 		<PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFramework.csproj" />
+	</ItemGroup>
+
 </Project>
