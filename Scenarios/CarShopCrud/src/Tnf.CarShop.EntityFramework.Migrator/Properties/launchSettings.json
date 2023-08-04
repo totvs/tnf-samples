@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Tnf.CarShop.EntityFramework.Migrator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
