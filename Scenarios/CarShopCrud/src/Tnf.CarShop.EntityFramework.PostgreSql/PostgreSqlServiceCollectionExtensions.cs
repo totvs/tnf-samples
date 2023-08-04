@@ -7,7 +7,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql
     {
         public static IServiceCollection AddEFCorePostgreSql(this IServiceCollection services)
         {
-            //services.AddEFCore();
+            services.AddEFCore();
 
             services.AddTnfDbContext<CarShopDbContext, PostgreSqlCarShopDbContext>(config =>
             {
