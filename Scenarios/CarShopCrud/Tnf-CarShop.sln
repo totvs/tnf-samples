@@ -7,18 +7,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FC818A1A-A69
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.Host", "src\Tnf.CarShop.Host\Tnf.CarShop.Host.csproj", "{C3E68244-B6A6-4A3C-AD3F-5B2A9EE8A40B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework", "src\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFramework.csproj", "{49C80ED3-B5CE-471F-B8EB-8B02126C4133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFrameworkCore", "src\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj", "{49C80ED3-B5CE-471F-B8EB-8B02126C4133}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.Domain", "src\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj", "{79A14A35-BE99-4032-BFE3-8B0181E3115C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework.PostgreSql", "src\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFramework.PostgreSql.csproj", "{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFrameworkCore.PostgreSql", "src\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj", "{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1964E26A-4416-45C7-BE38-93AEEAB115A6}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet.Config = NuGet.Config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.CarShop.EntityFramework.Migrator", "src\Tnf.CarShop.EntityFramework.Migrator\Tnf.CarShop.EntityFramework.Migrator.csproj", "{4C049241-B916-42AC-98A3-EAA353EB5629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFrameworkCore.Migrator", "src\Tnf.CarShop.EntityFramework.Migrator\Tnf.CarShop.EntityFrameworkCore.Migrator.csproj", "{4C049241-B916-42AC-98A3-EAA353EB5629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

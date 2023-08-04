@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Tnf.CarShop.EntityFramework.Migrator
+namespace Tnf.CarShop.EntityFrameworkCore.Migrator
 {
     public class MigrationHostedService : IHostedService
     {

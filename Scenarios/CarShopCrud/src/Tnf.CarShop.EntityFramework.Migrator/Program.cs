@@ -4,8 +4,8 @@ using Microsoft.Extensions.Hosting;
 
 using Serilog;
 
-using Tnf.CarShop.EntityFramework.Migrator;
-using Tnf.CarShop.EntityFramework.PostgreSql;
+using Tnf.CarShop.EntityFrameworkCore.Migrator;
+using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 
 var builder = Host.CreateDefaultBuilder()
     .ConfigureAppConfiguration(configuration =>

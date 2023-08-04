@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFramework.csproj" />
+	  <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj" />
 	</ItemGroup>
 
 </Project>

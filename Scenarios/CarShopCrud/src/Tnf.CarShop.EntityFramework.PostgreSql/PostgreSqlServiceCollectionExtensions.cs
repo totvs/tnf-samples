@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tnf.CarShop.EntityFramework.PostgreSql
+namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql
 {
     public static class PostgreSqlServiceCollectionExtensions
     {

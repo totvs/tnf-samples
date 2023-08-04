@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFramework.PostgreSql.csproj" />
+    <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj" />
   </ItemGroup>
 
 </Project>

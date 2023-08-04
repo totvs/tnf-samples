@@ -3,7 +3,7 @@
 using Tnf.EntityFrameworkCore;
 using Tnf.Runtime.Session;
 
-namespace Tnf.CarShop.EntityFramework
+namespace Tnf.CarShop.EntityFrameworkCore
 {
     public class CarShopDbContext : TnfDbContext
     {

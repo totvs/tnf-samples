@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 using Tnf.Runtime.Session;
 
-namespace Tnf.CarShop.EntityFramework.PostgreSql
+namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql
 {
     public class PostgreSqlCarShopDbContextFactory : IDesignTimeDbContextFactory<PostgreSqlCarShopDbContext>
     {
