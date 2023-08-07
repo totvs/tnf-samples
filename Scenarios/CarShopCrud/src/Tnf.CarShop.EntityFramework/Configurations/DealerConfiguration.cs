@@ -11,7 +11,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
         {
             builder.ToTable("Dealers");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(dealer => dealer.Id);
         }
     }
 }

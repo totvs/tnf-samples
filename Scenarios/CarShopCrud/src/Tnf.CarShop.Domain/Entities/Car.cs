@@ -5,10 +5,8 @@ namespace Tnf.CarShop.Domain.Entities
 {
     public class Car : IHasCreationTime, IHasModificationTime, IMayHaveTenant
     {
-        public Guid Id { get; private set; }
-        public Guid CustomerId { get; set; }
-        public Guid DealerId { get; set; }
         public Guid? TenantId { get; set; }
+        public Guid Id { get; private set; }
         public string Brand { get; private set; }
         public string Model { get; private set; }
         public int Year { get; private set; }
@@ -28,15 +26,14 @@ namespace Tnf.CarShop.Domain.Entities
             Model = model;
             Dealer = dealer;
         }
-  
-        public Car(string brand, string model, int year, decimal price, Guid dealerId, Guid ownerId)
-        {            
+
+        public Car(Guid id, string brand, string model, int year, decimal price)
+        {
+            Id = id;
             Brand = brand;
             Model = model;
             Year = year;
             Price = price;
-            DealerId = dealerId;
-            CustomerId = ownerId;
         }
         public void ApplyDiscount(decimal percentage)
         {
@@ -78,5 +75,6 @@ namespace Tnf.CarShop.Domain.Entities
         {
             Owner = owner;
         }
+
     }
 }
