@@ -1,19 +1,15 @@
-﻿namespace Tnf.CarShop.Host.Commands.Car.Create;
+﻿using Tnf.CarShop.Application.Dtos;
+
+namespace Tnf.CarShop.Host.Commands.Car.Create;
 
 public class CreateCarCommand
 {
-    public Guid Id { get; set; }
-    public string Brand { get; }
-    public string Model { get; }
-    public int Year { get; }
-    public decimal Price { get; }
-    public Guid? DealerId { get; }
-    public Guid? OwnerId { get; }
+    public CarDto Car { get; set; }
 }
 
-public class CarResult
+public class CreateCarResult
 {
-    public CarResult(Guid createdCarId, bool success)
+    public CreateCarResult(Guid createdCarId, bool success)
     {
         CarId = createdCarId;
         Success = success;

@@ -1,6 +1,10 @@
-﻿namespace Tnf.CarShop.Host.Commands.Purchase.Delete;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.Commands;
 
-public class DeletePurchaseCommandHandler : ICommandHandler<DeletePurchaseCommand, CommandResult>
+namespace Tnf.CarShop.Host.Commands.Purchase.Delete;
+
+public class DeletePurchaseCommandHandler : ICommandHandler<DeletePurchaseCommand, DeletePurchaseResult>
 {
     private readonly ILogger<DeletePurchaseCommandHandler> _logger;
     private readonly IPurchaseRepository _purchaseRepository;
@@ -11,14 +15,14 @@ public class DeletePurchaseCommandHandler : ICommandHandler<DeletePurchaseComman
         _purchaseRepository = purchaseRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<DeletePurchaseCommand, CommandResult> context,
+    public async Task HandleAsync(ICommandContext<DeletePurchaseCommand, DeletePurchaseResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        var command = context.Command;
+        var purchaseId = context.Command.PurchaseId;
 
-        var success = await _purchaseRepository.DeleteAsync(command.Id, cancellationToken);
+        var success = await _purchaseRepository.DeleteAsync(purchaseId, cancellationToken);
 
-        context.Result = new CommandResult(success);
+        context.Result = new DeletePurchaseResult(success);
 
         return;
     }

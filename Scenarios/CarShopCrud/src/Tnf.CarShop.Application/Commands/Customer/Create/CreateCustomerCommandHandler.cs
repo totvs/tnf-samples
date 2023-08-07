@@ -1,12 +1,12 @@
-﻿using Tnf.CarShop.Domain.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.CarShop.Host.Commands.Customer;
 using Tnf.Commands;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
 
-namespace Tnf.CarShop.Host.Commands.Customer.Create
+namespace Tnf.CarShop.Application.Commands.Customer.Create
 {
-    public class CreateCustomerCommandHandler : ICommandHandler<CustomerCommand, CustomerResult>
+    public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, CreateCustomerResult>
     {
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
         private readonly ICustomerRepository _customerRepository;
@@ -17,21 +17,21 @@ namespace Tnf.CarShop.Host.Commands.Customer.Create
             _customerRepository = customerRepository;
         }
 
-        public async Task HandleAsync(ICommandContext<CustomerCommand, CustomerResult> context,
-            CancellationToken cancellationToken = new CancellationToken())
+        public async Task HandleAsync(ICommandContext<CreateCustomerCommand, CreateCustomerResult> context,
+            CancellationToken cancellationToken = new())
         {
-            var command = context.Command;
+            var customerDto = context.Command.Customer;
 
-            var createdCustomerId = await CreateCustomerAsync(command, cancellationToken);
+            var createdCustomerId = await CreateCustomerAsync(customerDto, cancellationToken);
 
-            context.Result = new CustomerResult(createdCustomerId, true);
+            context.Result = new CreateCustomerResult(createdCustomerId, true);
 
             return;
         }
 
-        private async Task<Guid> CreateCustomerAsync(CustomerCommand command, CancellationToken cancellationToken)
+        private async Task<Guid> CreateCustomerAsync(CustomerDto customer, CancellationToken cancellationToken)
         {
-            var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirthDay);
+            var newCustomer = new Domain.Entities.Customer(customer.FullName, customer.Address, customer.Phone, customer.Email, customer.DateOfBirth);
 
             var createdCustomer = await _customerRepository.InsertAsync(newCustomer, cancellationToken);
 

@@ -1,21 +1,19 @@
-﻿namespace Tnf.CarShop.Host.Commands.Purchase
+﻿using Tnf.CarShop.Application.Dtos;
+
+namespace Tnf.CarShop.Host.Commands.Purchase
 {
     public class CreatePurchaseCommand
     {
-        public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
-        public Guid CarId { get; set; }
+        public PurchaseDto Purchase { get; set; }
     }
 
-    public class PurchaseResult
+    public class CreatePurchaseResult
     {
-        public PurchaseResult(Guid createdPurchaseId, bool success)
+        public CreatePurchaseResult(Guid createdPurchaseId)
         {
             PurchaseId = createdPurchaseId;
-            Success = success;
         }
-
         public Guid PurchaseId { get; set; }
-        public bool Success { get; set; }
+
     }
 }

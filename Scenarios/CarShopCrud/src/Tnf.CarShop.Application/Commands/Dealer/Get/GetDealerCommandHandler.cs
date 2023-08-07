@@ -1,4 +1,10 @@
-﻿public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, DealerResult>
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Commands.Dealer.Get;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.Commands;
+
+public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDealerResult>
 {
     private readonly ILogger<GetDealerCommandHandler> _logger;
     private readonly IDealerRepository _dealerRepository;
@@ -9,19 +15,29 @@
         _dealerRepository = dealerRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<GetDealerCommand, DealerResult> context,
+    public async Task HandleAsync(ICommandContext<GetDealerCommand, GetDealerResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        var command = context.Command;
+        var dealerId = context.Command.DealerId;
 
-        var dealer = await _dealerRepository.GetAsync(command.Id, cancellationToken);
+        var dealer = await _dealerRepository.GetAsync(dealerId, cancellationToken);
 
         if (dealer == null)
         {
-            throw new Exception($"Dealer with id {command.Id} not found.");
+            throw new Exception($"Dealer with id {dealerId} not found.");
         }
 
-        var dealerResult = new DealerResult(dealer.Id, dealer.Name, dealer.Location, true);
+        var returnedCars = dealer.Cars;
+        var cars = new List<CarDto>();
+
+        if (returnedCars != null)
+            foreach (var car in returnedCars)
+            {
+                var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id);
+                cars.Add(carDto);
+            }
+
+        var dealerResult = new GetDealerResult( new DealerDto(  dealer.Id, dealer.Name, dealer.Location, cars));
 
         context.Result = dealerResult;
 

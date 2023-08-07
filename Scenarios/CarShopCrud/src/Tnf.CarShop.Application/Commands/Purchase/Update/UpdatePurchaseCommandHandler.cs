@@ -1,8 +1,12 @@
-﻿using Tnf.CarShop.Domain.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Commands.Purchase.Get;
+using Tnf.CarShop.Application.Commands.Purchase.Update;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Commands.Purchase;
 using Tnf.Commands;
 
-public class UpdatePurchaseCommandHandler : ICommandHandler<PurchaseCommand, PurchaseResult>
+public class UpdatePurchaseCommandHandler : ICommandHandler<UpdatePurchaseCommand, UpdatePurchaseResult>
 {
     private readonly ILogger<UpdatePurchaseCommandHandler> _logger;
     private readonly IPurchaseRepository _purchaseRepository;
@@ -21,36 +25,54 @@ public class UpdatePurchaseCommandHandler : ICommandHandler<PurchaseCommand, Pur
         _carRepository = carRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<PurchaseCommand, PurchaseResult> context,
+    public async Task HandleAsync(ICommandContext<UpdatePurchaseCommand, UpdatePurchaseResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        var command = context.Command;
+        var purchaseDto = context.Command.Purchase;
 
-        var purchase = await _purchaseRepository.GetAsync(command.Id, cancellationToken);
+        var purchase = await _purchaseRepository.GetAsync(purchaseDto.Id, cancellationToken);
 
         if (purchase == null)
         {
-            throw new Exception($"Purchase with id {command.Id} not found.");
+            throw new Exception($"Purchase with id {purchaseDto.Id} not found.");
         }
 
-        var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
+        var customer = await _customerRepository.GetAsync(purchaseDto.Customer.Id, cancellationToken);
         if (customer == null)
         {
-            throw new Exception($"Customer with id {command.CustomerId} not found.");
+            throw new Exception($"Customer with id {purchaseDto.Customer.Id} not found.");
         }
 
-        var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
-        if (car == null)
+        var returnedCar = await _carRepository.GetAsync(purchaseDto.Car.Id, cancellationToken);
+        if (returnedCar == null)
         {
-            throw new Exception($"Car with id {command.CarId} not found.");
+            throw new Exception($"Car with id {purchaseDto.Car.Id} not found.");
         }
 
-        purchase.UpdateCustomer(customer);
-        purchase.UpdateCar(car);
+        // purchase.UpdateCustomer(customer);
+        // purchase.UpdateCar(car);
 
         var updatedPurchase = await _purchaseRepository.UpdateAsync(purchase, cancellationToken);
+        
+        var returnedCustomerCars = updatedPurchase.Customer.CarsOwned;
+        var customerCars = new List<CarDto>();
 
-        context.Result = new PurchaseResult(updatedPurchase.Id, true);
+        if (returnedCustomerCars != null)
+            foreach (var car in returnedCustomerCars)
+            {
+                var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id);
+                customerCars.Add(carDto);
+            }
+        
+        var customerDto =  new CustomerDto(updatedPurchase.Customer.Id, updatedPurchase.Customer.FullName, updatedPurchase.Customer.Address,
+            updatedPurchase.Customer.Phone, customerCars, updatedPurchase.Customer.Email, updatedPurchase.Customer.DateOfBirth);
+
+        var returnedCarDto = new CarDto(updatedPurchase.Car.Id, updatedPurchase.Car.Brand, updatedPurchase.Car.Model, updatedPurchase.Car.Year,
+            updatedPurchase.Car.Price, updatedPurchase.Car.Dealer?.Id, updatedPurchase.Car.Owner?.Id);
+        
+        
+        context.Result = new UpdatePurchaseResult( new PurchaseDto(purchase.Id, purchase.PurchaseDate, customerDto, returnedCarDto ));
+        
 
         return;
     }

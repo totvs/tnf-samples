@@ -1,6 +1,10 @@
-﻿namespace Tnf.CarShop.Host.Commands.Car.Create.Delete;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.Commands;
 
-public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, CommandResult>
+namespace Tnf.CarShop.Application.Commands.Car.Delete;
+
+public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, DeleteCarResult>
 {
     private readonly ILogger<DeleteCarCommandHandler> _logger;
     private readonly ICarRepository _carRepository;
@@ -11,14 +15,14 @@ public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, Command
         _carRepository = carRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<DeleteCarCommand, CommandResult> context,
+    public async Task HandleAsync(ICommandContext<DeleteCarCommand, DeleteCarResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
         var command = context.Command;
 
-        var success = await _carRepository.DeleteAsync(command.Id, cancellationToken);
+        var success = await _carRepository.DeleteAsync(command.CardId, cancellationToken);
 
-        context.Result = new CommandResult(success);
+        context.Result = new DeleteCarResult(success);
 
         return;
     }

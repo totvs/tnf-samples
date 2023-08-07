@@ -1,22 +1,19 @@
-﻿namespace Tnf.CarShop.Host.Commands.Dealer
+﻿using Tnf.CarShop.Application.Dtos;
+
+namespace Tnf.CarShop.Host.Commands.Dealer
 {
-    public class DealerCommand
+    public class CreateDealerCommand
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Location { get; set; }
-        //public List<Car> Cars { get; set; }
+        public DealerDto Dealer { get; set; }
     }
 
-    public class DealerResult
+    public class CreateDealerResult
     {
-        public DealerResult(Guid createdDealerId, bool success)
+        public CreateDealerResult(Guid dealerId)
         {
-            DealerId = createdDealerId;
-            Success = success;
+            DealerId = dealerId;
         }
 
         public Guid DealerId { get; set; }
-        public bool Success { get; set; }
     }
 }

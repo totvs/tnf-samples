@@ -1,9 +1,11 @@
-﻿using Tnf.CarShop.Domain.Repositories;
-using Tnf.CarShop.Host.Commands.Car.Create;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
+
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Host.Commands.Car.Get;
-public class GetCarCommandHandler : ICommandHandler<CarCommand, CarResult>
+public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
 {
     private readonly ILogger<GetCarCommandHandler> _logger;
     private readonly ICarRepository _carRepository;
@@ -14,21 +16,23 @@ public class GetCarCommandHandler : ICommandHandler<CarCommand, CarResult>
         _carRepository = carRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<CarCommand, CarResult> context,
+    public async Task HandleAsync(ICommandContext<GetCarCommand, GetCarResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
         var command = context.Command;
 
-        var car = await _carRepository.GetAsync(command.Id, cancellationToken);
-
-        if (car == null)
+        if (command.CarId.HasValue)
         {
-            throw new Exception($"Car with id {command.Id} not found.");
+            var car = await _carRepository.GetAsync(command.CarId.Value, cancellationToken);
+
+            if (car == null)
+            {
+                throw new Exception($"Car with id {command.CarId} not found.");
+            }
+
+            var carResult = new GetCarResult( new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id));
+            context.Result = carResult;
         }
-
-        var carResult = new CarResult(car.Id, car.Brand, car.Model, car.Year, car.Price, true);
-
-        context.Result = carResult;
 
         return;
     }

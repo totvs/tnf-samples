@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Tnf.Commands" Version="6.3.0.21401" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,10 +1,12 @@
-﻿using Tnf.CarShop.Domain.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 
 namespace Tnf.CarShop.Host.Commands.Dealer.Create
 {
-    public class CreateDealerCommandHandler : ICommandHandler<DealerCommand, DealerResult>
+    public class CreateDealerCommandHandler : ICommandHandler<CreateDealerCommand, CreateDealerResult>
     {
         private readonly ILogger<CreateDealerCommandHandler> _logger;
         private readonly IDealerRepository _dealerRepository;
@@ -15,19 +17,19 @@ namespace Tnf.CarShop.Host.Commands.Dealer.Create
             _dealerRepository = dealerRepository;
         }
 
-        public async Task HandleAsync(ICommandContext<DealerCommand, DealerResult> context,
-            CancellationToken cancellationToken = new CancellationToken())
+        public async Task HandleAsync(ICommandContext<CreateDealerCommand, CreateDealerResult> context,
+            CancellationToken cancellationToken = new())
         {
-            var command = context.Command;
+            var dealerDto = context.Command.Dealer;
+            
+            var createdDealerId = await CreateDealerAsync(dealerDto, cancellationToken);
 
-            var createdDealerId = await CreateDealerAsync(command, cancellationToken);
-
-            context.Result = new DealerResult(createdDealerId, true);
+            context.Result = new CreateDealerResult(createdDealerId);
 
             return;
         }
 
-        private async Task<Guid> CreateDealerAsync(DealerCommand command, CancellationToken cancellationToken)
+        private async Task<Guid> CreateDealerAsync(DealerDto command, CancellationToken cancellationToken)
         {
             var newDealer = new Domain.Entities.Dealer(command.Name, command.Location);
 

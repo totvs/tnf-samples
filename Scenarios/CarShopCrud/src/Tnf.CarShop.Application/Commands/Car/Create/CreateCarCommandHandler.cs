@@ -1,8 +1,11 @@
-﻿using Tnf.CarShop.Domain.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.CarShop.Host.Commands.Car.Create;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Host.Commands.Car.Create;
-public class CreateCarCommandHandler : ICommandHandler<CarCommand, CarResult>
+namespace Tnf.CarShop.Application.Commands.Car.Create;
+public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateCarResult>
 {
     private readonly ILogger<CreateCarCommandHandler> _logger;
     private readonly ICarRepository _carRepository;
@@ -18,35 +21,35 @@ public class CreateCarCommandHandler : ICommandHandler<CarCommand, CarResult>
         _customerRepository = customerRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<CarCommand, CarResult> context,
+    public async Task HandleAsync(ICommandContext<CreateCarCommand, CreateCarResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
 
-        var command = context.Command;
+        var carDto = context.Command.Car;
 
-        var createdCarId = await CreateCarAsync(command, cancellationToken);
+        var createdCarId = await CreateCarAsync(carDto, cancellationToken);
 
 
-        context.Result = new CarResult(createdCarId, true);
+        context.Result = new CreateCarResult(createdCarId, true);
 
         return;
     }
 
-    private async Task<Guid> CreateCarAsync(CarCommand command, CancellationToken cancellationToken)
+    private async Task<Guid> CreateCarAsync(CarDto carDto, CancellationToken cancellationToken)
     {
-        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price);
+        var newCar = new Domain.Entities.Car(carDto.Brand, carDto.Model, carDto.Year, carDto.Price);
 
-        if (command.DealerId.HasValue)
+        if (carDto.DealerId.HasValue)
         {
-            var dealer = await FetchDealerAsync(command.DealerId.Value, cancellationToken);
-            CheckEntityNotNull(dealer, "Dealer", command.DealerId.Value);
+            var dealer = await FetchDealerAsync(carDto.DealerId.Value, cancellationToken);
+            CheckEntityNotNull(dealer, "Dealer", carDto.DealerId.Value);
             newCar.AssignToDealer(dealer);
         }
         
-        if (command.OwnerId.HasValue)
+        if (carDto.OwnerId.HasValue)
         {
-            var owner = await FetchOwnerAsync(command.OwnerId.Value, cancellationToken);
-            CheckEntityNotNull(owner, "Owner", command.OwnerId.Value);
+            var owner = await FetchOwnerAsync(carDto.OwnerId.Value, cancellationToken);
+            CheckEntityNotNull(owner, "Owner", carDto.OwnerId.Value);
             newCar.AssignToOwner(owner);
         }
         

@@ -3,10 +3,12 @@ using Tnf.Commands;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
 
 namespace Tnf.CarShop.Host.Commands.Purchase.Create
 {
-    public class CreatePurchaseCommandHandler : ICommandHandler<PurchaseCommand, PurchaseResult>
+    public class CreatePurchaseCommandHandler : ICommandHandler<CreatePurchaseCommand, CreatePurchaseResult>
     {
         private readonly ILogger<CreatePurchaseCommandHandler> _logger;
         private readonly IPurchaseRepository _purchaseRepository;
@@ -21,22 +23,22 @@ namespace Tnf.CarShop.Host.Commands.Purchase.Create
             _customerRepository = customerRepository;
         }
 
-        public async Task HandleAsync(ICommandContext<PurchaseCommand, PurchaseResult> context,
+        public async Task HandleAsync(ICommandContext<CreatePurchaseCommand, CreatePurchaseResult> context,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            var command = context.Command;
+            var purchaseDto = context.Command.Purchase;
 
-            var createdPurchaseId = await CreatePurchaseAsync(command, cancellationToken);
+            var createdPurchaseId = await CreatePurchaseAsync(purchaseDto, cancellationToken);
 
-            context.Result = new PurchaseResult(createdPurchaseId, true);
+            context.Result = new CreatePurchaseResult(createdPurchaseId);
 
             return;
         }
 
-        private async Task<Guid> CreatePurchaseAsync(PurchaseCommand command, CancellationToken cancellationToken)
+        private async Task<Guid> CreatePurchaseAsync(PurchaseDto purchaseDto, CancellationToken cancellationToken)
         {
-            var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
-            var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
+            var car = await _carRepository.GetAsync(purchaseDto.Car.Id, cancellationToken);
+            var customer = await _customerRepository.GetAsync(purchaseDto.Customer.Id, cancellationToken);
 
             if (car == null || customer == null)
             {

@@ -1,6 +1,10 @@
-﻿namespace Tnf.CarShop.Host.Commands.Dealer.Delete;
+﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Domain.Repositories;
+using Tnf.Commands;
 
-public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, CommandResult>
+namespace Tnf.CarShop.Host.Commands.Dealer.Delete;
+
+public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, DeleteDealerResult>
 {
     private readonly ILogger<DeleteDealerCommandHandler> _logger;
     private readonly IDealerRepository _dealerRepository;
@@ -11,14 +15,14 @@ public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, C
         _dealerRepository = dealerRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<DeleteDealerCommand, CommandResult> context,
+    public async Task HandleAsync(ICommandContext<DeleteDealerCommand, DeleteDealerResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
         var command = context.Command;
 
-        var success = await _dealerRepository.DeleteAsync(command.Id, cancellationToken);
+        var success = await _dealerRepository.DeleteAsync(command.DealerId, cancellationToken);
 
-        context.Result = new CommandResult(success);
+        context.Result = new DeleteDealerResult(success);
 
         return;
     }

@@ -1,19 +1,15 @@
-﻿namespace Tnf.CarShop.Host.Commands.Customer
-{
-    public class CustomerCommand
-    {
-        public Guid Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
+﻿using Tnf.CarShop.Application.Dtos;
 
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public DateOnly DateOfBirthDay { get; set; }
+namespace Tnf.CarShop.Host.Commands.Customer
+{
+    public class CreateCustomerCommand
+    {
+        public CustomerDto Customer { get; set; }
     }
 
-    public class CustomerResult
+    public class CreateCustomerResult
     {
-        public CustomerResult(Guid createdCustomerId, bool success)
+        public CreateCustomerResult(Guid createdCustomerId, bool success)
         {
             CustomerId = createdCustomerId;
             Success = success;
