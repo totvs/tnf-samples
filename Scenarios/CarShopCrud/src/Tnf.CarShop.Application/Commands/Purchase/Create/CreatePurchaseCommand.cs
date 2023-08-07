@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Host.Commands.Purchase
 {
-    public class PurchaseCommand
+    public class CreatePurchaseCommand
     {
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
