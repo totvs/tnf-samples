@@ -10,15 +10,15 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
         {
             builder.ToTable("Cars");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(car => car.Id);
 
-            builder.HasOne(x => x.Owner)
-                .WithMany(o => o.CarsOwned)
-                .HasForeignKey(x => x.CustomerId);
+            builder.HasOne(car => car.Owner)
+                .WithMany(owner => owner.CarsOwned)
+                .HasForeignKey(car => car.Owner.Id);
 
-            builder.HasOne(x => x.Dealer)
-                .WithMany(d => d.Cars)
-                .HasForeignKey(x => x.DealerId);
+            builder.HasOne(car => car.Dealer)
+                .WithMany(dealer => dealer.Cars)
+                .HasForeignKey(car => car.Dealer.Id);
         }
     }
 }

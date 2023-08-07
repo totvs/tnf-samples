@@ -5,6 +5,7 @@ namespace Tnf.CarShop.Domain.Entities
 {
     public class Car : IHasCreationTime, IHasModificationTime, IMayHaveTenant
     {
+        public Guid? TenantId { get; set; }
         public Guid Id { get; private set; }
         public string Brand { get; private set; }
         public string Model { get; private set; }
@@ -25,19 +26,7 @@ namespace Tnf.CarShop.Domain.Entities
             Model = model;
             Dealer = dealer;
         }
-  
-        // public Car(string brand, string model, int year, decimal price, )
-        // {            
-        //     Brand = brand;
-        //     Model = model;
-        //     Year = year;
-        //     Price = price;
-        //     Dealer = dealer;
-        //     Owner = owner;
-        //     CreationTime = DateTime.Now;
-        //     CreationTime = DateTime.Now;
-        // }
-        
+
         public Car(Guid id, string brand, string model, int year, decimal price)
         {
             Id = id;
@@ -86,5 +75,6 @@ namespace Tnf.CarShop.Domain.Entities
         {
             Owner = owner;
         }
+
     }
 }

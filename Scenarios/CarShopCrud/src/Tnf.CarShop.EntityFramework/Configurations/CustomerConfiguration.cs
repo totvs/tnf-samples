@@ -12,7 +12,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
         {
             builder.ToTable("Customers");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(customer => customer.Id);
         }        
     }
 }
