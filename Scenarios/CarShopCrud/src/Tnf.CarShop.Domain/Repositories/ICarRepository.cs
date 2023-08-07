@@ -9,5 +9,5 @@ public interface ICarRepository : IRepository
     Task<List<Car>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Car> InsertAsync(Car car, CancellationToken cancellationToken = default);
     Task<Car> UpdateAsync(Car car, CancellationToken cancellationToken = default);
-    Task<bool> DeleteAsync(Guid carId, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid carId, CancellationToken cancellationToken = default);
 }

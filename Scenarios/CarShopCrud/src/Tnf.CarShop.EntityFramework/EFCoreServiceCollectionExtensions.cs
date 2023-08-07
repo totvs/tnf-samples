@@ -10,6 +10,9 @@ namespace Tnf.CarShop.EntityFrameworkCore
         public static IServiceCollection AddEFCore(this IServiceCollection services)
         {
             services.AddTransient<ICarRepository, CarRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IDealerRepository, DealerRepository>();
+            services.AddTransient<IPurchaseRepository, PurchaseRepository>();
 
             return services;
         }
