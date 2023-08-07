@@ -34,9 +34,9 @@ namespace Tnf.CarShop.EntityFrameworkCore.Repositories
                 .FirstOrDefaultAsync(x => x.Id == purchaseId, cancellationToken);
         }
 
-        public Task<Purchase> UpdateAsync(Purchase purchase, CancellationToken cancellationToken = default)
+        public async Task<Purchase> UpdateAsync(Purchase purchase, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await base.UpdateAsync(purchase, cancellationToken);
         }
     }
 }
