@@ -9,8 +9,8 @@ namespace Tnf.CarShop.Domain.Entities
         public string Model { get; private set; }
         public int Year { get; private set; }
         public decimal Price { get; private set; }
-        public Dealer Dealer { get; private set; }
-        public Customer Owner { get; private set; }
+        public Dealer? Dealer { get; private set; }
+        public Customer? Owner { get; private set; }
         private decimal Discount { get; set; }
         public bool IsNew { get { return DateTime.Now.Year - Year <= 1; } }
         public bool IsOld { get { return DateTime.Now.Year - Year > 20; } }
@@ -25,14 +25,13 @@ namespace Tnf.CarShop.Domain.Entities
             Dealer = dealer;
         }
   
-        public Car(string brand, string model, int year, decimal price, Dealer dealer, Customer owner)
+        public Car(string brand, string model, int year, decimal price)
         {            
             Brand = brand;
             Model = model;
             Year = year;
             Price = price;
-            Dealer = dealer;
-            Owner = owner;
+       
             CreationTime = DateTime.Now;
         }
         public void ApplyDiscount(decimal percentage)

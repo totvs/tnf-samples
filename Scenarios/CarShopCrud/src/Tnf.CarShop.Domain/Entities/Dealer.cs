@@ -11,6 +11,7 @@ namespace Tnf.CarShop.Domain.Entities
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
+        public string Cnpj { get; private set; }
         public string Location { get; private set; }
         public ICollection<Car>? Cars { get; private set; }
         public DateTime CreationTime { get; set; }
@@ -25,13 +26,16 @@ namespace Tnf.CarShop.Domain.Entities
         {     
             Name = name;
             Location = location;
-            CreationTime = DateTime.Now;
         }
 
         public void UpdateLocation(string newLocation)
         {          
             Location = newLocation;
-            LastModificationTime = DateTime.Now;
+        }
+        
+        public void UpdateCnpj(string cnpj)
+        {          
+            Cnpj = cnpj;
         }
 
         public void AddCar(Car car)
@@ -39,6 +43,11 @@ namespace Tnf.CarShop.Domain.Entities
             Cars.Add(car);
             car.AssignToDealer(this);
             LastModificationTime = DateTime.Now;
+        }
+
+        public void UpdateName(string name)
+        {
+            Name = name;
         }
     }
 }

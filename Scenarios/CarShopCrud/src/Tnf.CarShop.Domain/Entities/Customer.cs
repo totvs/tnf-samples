@@ -9,7 +9,7 @@ namespace Tnf.CarShop.Domain.Entities
         public string Address { get; private set; }
         public string Phone { get; private set; }
         public string Email { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
+        public DateOnly DateOfBirth { get; private set; }
         public  ICollection<Car> CarsOwned { get; private set; }
         
         public DateTime CreationTime { get; set; }
@@ -20,7 +20,7 @@ namespace Tnf.CarShop.Domain.Entities
             CarsOwned = new HashSet<Car>();
         }
 
-        public Customer(string fullName, string address, string phone, string email, DateTime dateOfBirth)
+        public Customer(string fullName, string address, string phone, string email, DateOnly dateOfBirth)
         {
             FullName = fullName;
             Address = address;
@@ -55,7 +55,7 @@ namespace Tnf.CarShop.Domain.Entities
             LastModificationTime = DateTime.Now;
         }
 
-        public void UpdateDateOfBirth(DateTime dateOfBirth)
+        public void UpdateDateOfBirth(DateOnly dateOfBirth)
         {
             DateOfBirth = dateOfBirth;
             LastModificationTime = DateTime.Now;
