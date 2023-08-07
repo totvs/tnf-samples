@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Commands.Purchase.Get;
 using Tnf.CarShop.Application.Commands.Purchase.Update;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
-using Tnf.CarShop.Host.Commands.Purchase;
 using Tnf.Commands;
 
 public class UpdatePurchaseCommandHandler : ICommandHandler<UpdatePurchaseCommand, UpdatePurchaseResult>
@@ -12,17 +10,20 @@ public class UpdatePurchaseCommandHandler : ICommandHandler<UpdatePurchaseComman
     private readonly IPurchaseRepository _purchaseRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly ICarRepository _carRepository;
+    private readonly PurchaseFactory _purchaseFactory;
+
 
     public UpdatePurchaseCommandHandler(
         ILogger<UpdatePurchaseCommandHandler> logger, 
         IPurchaseRepository purchaseRepository,
         ICustomerRepository customerRepository,
-        ICarRepository carRepository)
+        ICarRepository carRepository, PurchaseFactory purchaseFactory)
     {
         _logger = logger;
         _purchaseRepository = purchaseRepository;
         _customerRepository = customerRepository;
         _carRepository = carRepository;
+        _purchaseFactory = purchaseFactory;
     }
 
     public async Task HandleAsync(ICommandContext<UpdatePurchaseCommand, UpdatePurchaseResult> context,
@@ -43,37 +44,20 @@ public class UpdatePurchaseCommandHandler : ICommandHandler<UpdatePurchaseComman
             throw new Exception($"Customer with id {purchaseDto.Customer.Id} not found.");
         }
 
-        var returnedCar = await _carRepository.GetAsync(purchaseDto.Car.Id, cancellationToken);
-        if (returnedCar == null)
+        var car = await _carRepository.GetAsync(purchaseDto.Car.Id, cancellationToken);
+        if (car == null)
         {
             throw new Exception($"Car with id {purchaseDto.Car.Id} not found.");
         }
 
-        // purchase.UpdateCustomer(customer);
-        // purchase.UpdateCar(car);
+        purchase.UpdateCustomer(customer);
+        purchase.UpdateCar(car);
 
         var updatedPurchase = await _purchaseRepository.UpdateAsync(purchase, cancellationToken);
         
-        var returnedCustomerCars = updatedPurchase.Customer.CarsOwned;
-        var customerCars = new List<CarDto>();
-
-        if (returnedCustomerCars != null)
-            foreach (var car in returnedCustomerCars)
-            {
-                var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id);
-                customerCars.Add(carDto);
-            }
         
-        var customerDto =  new CustomerDto(updatedPurchase.Customer.Id, updatedPurchase.Customer.FullName, updatedPurchase.Customer.Address,
-            updatedPurchase.Customer.Phone, customerCars, updatedPurchase.Customer.Email, updatedPurchase.Customer.DateOfBirth);
-
-        var returnedCarDto = new CarDto(updatedPurchase.Car.Id, updatedPurchase.Car.Brand, updatedPurchase.Car.Model, updatedPurchase.Car.Year,
-            updatedPurchase.Car.Price, updatedPurchase.Car.Dealer?.Id, updatedPurchase.Car.Owner?.Id);
+        context.Result = new UpdatePurchaseResult( _purchaseFactory.ToDto(updatedPurchase));
         
-        
-        context.Result = new UpdatePurchaseResult( new PurchaseDto(purchase.Id, purchase.PurchaseDate, customerDto, returnedCarDto ));
-        
-
         return;
     }
 }

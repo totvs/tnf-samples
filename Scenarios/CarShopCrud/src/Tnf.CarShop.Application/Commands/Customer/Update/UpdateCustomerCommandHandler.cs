@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Commands.Customer.Get;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Commands.Customer;
 using Tnf.Commands;
@@ -9,11 +10,14 @@ public class UpdateCustomerCommandHandler : ICommandHandler<UpdateCustomerComman
 {
     private readonly ILogger<UpdateCustomerCommandHandler> _logger;
     private readonly ICustomerRepository _customerRepository;
+    private readonly CustomerFactory _customerFactory;
 
-    public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger, ICustomerRepository customerRepository)
+
+    public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger, ICustomerRepository customerRepository, CustomerFactory customerFactory)
     {
         _logger = logger;
         _customerRepository = customerRepository;
+        _customerFactory = customerFactory;
     }
 
     public async Task HandleAsync(ICommandContext<UpdateCustomerCommand, UpdateCustomerResult> context,
@@ -36,16 +40,9 @@ public class UpdateCustomerCommandHandler : ICommandHandler<UpdateCustomerComman
 
         var updatedCustomer = await _customerRepository.UpdateAsync(customer, cancellationToken);
         
-        var returnedCars = updatedCustomer.CarsOwned;
-        var cars = new List<CarDto>();
-
-        foreach (var car in returnedCars)
-        {
-            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer.Id, car.Owner.Id);
-            cars.Add(carDto);
-        }
+        var updatedCustomerDto = _customerFactory.ToDto(updatedCustomer);
         
-        context.Result = new UpdateCustomerResult( new CustomerDto(updatedCustomer.Id, updatedCustomer.FullName, updatedCustomer.Address, updatedCustomer.Phone, cars, updatedCustomer.Email, updatedCustomer.DateOfBirth));
+        context.Result = new UpdateCustomerResult(updatedCustomerDto);
         
         return;
     }

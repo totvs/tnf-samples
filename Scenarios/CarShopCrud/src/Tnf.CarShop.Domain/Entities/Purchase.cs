@@ -21,6 +21,33 @@ namespace Tnf.CarShop.Domain.Entities
             PurchaseDate = DateTime.Now;
             CreationTime = DateTime.Now;
         }
+        
+        public Purchase(Guid id, Customer customer, Car car, DateTime purchaseDate)
+        {
+            Id = id;
+            Customer = customer;
+            Car = car;
+            Price = car.Price;
+            PurchaseDate = purchaseDate;
+        }
+        
+        public void UpdateCustomer(Customer newCustomer)
+        {
+            if (newCustomer != null)
+            {
+                Customer = newCustomer;
+            }
+        }
+        
+
+        public void UpdateCar(Car newCar)
+        {
+            if (newCar != null)
+            {
+                Car = newCar;
+                Price = newCar.Price;
+            }
+        }
 
         public void CompletePurchase()
         {

@@ -2,15 +2,15 @@
 
 public class CarDto
 {
-    public CarDto(Guid id, string brand, string model, int year, decimal price, Guid? dealerId, Guid? ownerId)
+    public CarDto(Guid id, string brand, string model, int year, decimal price, DealerDto? dealer, CustomerDto? owner)
     {
         Id = id;
         Brand = brand;
         Model = model;
         Year = year;
         Price = price;
-        DealerId = dealerId;
-        OwnerId = ownerId;
+        Dealer = dealer;
+        Owner = owner;
     }
 
     public CarDto(Guid id)
@@ -23,7 +23,7 @@ public class CarDto
     public string Model { get; set; }
     public int Year { get; set; }
     public decimal Price { get; set; }
-    public Guid? DealerId { get; set; }
-    public Guid? OwnerId { get; set; }
+    public DealerDto? Dealer { get; set; }
+    public CustomerDto? Owner { get; set; }
 
 }

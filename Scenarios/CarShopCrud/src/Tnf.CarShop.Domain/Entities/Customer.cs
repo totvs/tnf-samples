@@ -30,7 +30,17 @@ namespace Tnf.CarShop.Domain.Entities
             CreationTime = DateTime.Now;
         }
 
- 
+        public Customer(Guid id, string fullName, string address, string phone, string email, DateOnly dateOfBirth)
+        {
+            Id = id;
+            FullName = fullName;
+            Address = address;
+            Phone = phone;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            CreationTime = DateTime.Now;
+        }
+        
         public void UpdateFullName(string fullName)
         {
             FullName = fullName;

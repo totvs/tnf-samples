@@ -31,8 +31,16 @@ namespace Tnf.CarShop.Domain.Entities
             Model = model;
             Year = year;
             Price = price;
-       
             CreationTime = DateTime.Now;
+        }
+        
+        public Car(Guid id, string brand, string model, int year, decimal price)
+        {
+            Id = id;
+            Brand = brand;
+            Model = model;
+            Year = year;
+            Price = price;
         }
         public void ApplyDiscount(decimal percentage)
         {

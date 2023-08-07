@@ -19,23 +19,4 @@
     <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Commands\Dealer\Dealer\**" />
-    <Compile Remove="Commands\Customer\Update\UpdateCustomerCommand.cs" />
-    <Compile Remove="Commands\Car\Update\UpdateCarCommand.cs" />
-    <Compile Remove="Commands\Car\Create\CreateCarCommand.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Commands\Dealer\Dealer\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Commands\Dealer\Dealer\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Commands\Dealer\Dealer\**" />
-  </ItemGroup>
-
 </Project>

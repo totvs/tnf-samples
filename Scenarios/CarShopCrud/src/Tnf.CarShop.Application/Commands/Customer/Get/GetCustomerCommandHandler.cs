@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Commands.Customer.Get;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Commands.Customer;
 using Tnf.Commands;
@@ -9,11 +10,15 @@ public class GetCustomerCommandHandler : ICommandHandler<GetCustomerCommand, Get
 {
     private readonly ILogger<GetCustomerCommandHandler> _logger;
     private readonly ICustomerRepository _customerRepository;
+    private readonly CarFactory _carFactory;
+    private readonly CustomerFactory _customerFactory;
 
-    public GetCustomerCommandHandler(ILogger<GetCustomerCommandHandler> logger, ICustomerRepository customerRepository)
+    public GetCustomerCommandHandler(ILogger<GetCustomerCommandHandler> logger, ICustomerRepository customerRepository, CarFactory carFactory, CustomerFactory customerFactory)
     {
         _logger = logger;
         _customerRepository = customerRepository;
+        _carFactory = carFactory;
+        _customerFactory = customerFactory;
     }
 
     public async Task HandleAsync(ICommandContext<GetCustomerCommand, GetCustomerResult> context,
@@ -28,19 +33,9 @@ public class GetCustomerCommandHandler : ICommandHandler<GetCustomerCommand, Get
             throw new Exception($"Customer with id {customerId} not found.");
         }
 
-        var returnedCars = customer.CarsOwned;
-
-        var cars = new List<CarDto>();
-
-        foreach (var car in returnedCars)
-        {
-            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer.Id, car.Owner.Id);
-            cars.Add(carDto);
-        }
+        var customerDto = _customerFactory.ToDto(customer);
         
-        var customerResult = new GetCustomerResult( new CustomerDto(customer.Id, customer.FullName, customer.Address, customer.Phone, cars, customer.Email, customer.DateOfBirth ));
-
-        context.Result = customerResult;
+        context.Result = new GetCustomerResult(customerDto);
 
         return;
     }

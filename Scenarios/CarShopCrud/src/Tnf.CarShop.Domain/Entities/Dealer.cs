@@ -27,6 +27,13 @@ namespace Tnf.CarShop.Domain.Entities
             Name = name;
             Location = location;
         }
+        
+        public Dealer(Guid id,string name, string location)
+        {
+            Id = id;
+            Name = name;
+            Location = location;
+        }
 
         public void UpdateLocation(string newLocation)
         {          

@@ -1,6 +1,7 @@
 ﻿namespace Tnf.CarShop.Application.Factories.Interfaces;
 
-public class IFactory
+public interface IFactory<TDto, TEntity>
 {
-    
+    TEntity ToEntity(TDto dto);
+    TDto ToDto(TEntity entity);
 }

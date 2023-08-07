@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 
 namespace Tnf.CarShop.Host.Commands.Purchase.Create
 {
@@ -14,13 +15,15 @@ namespace Tnf.CarShop.Host.Commands.Purchase.Create
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly ICarRepository _carRepository;
         private readonly ICustomerRepository _customerRepository;
+        private readonly PurchaseFactory _purchaseFactory;
 
-        public CreatePurchaseCommandHandler(ILogger<CreatePurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository)
+        public CreatePurchaseCommandHandler(ILogger<CreatePurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository, PurchaseFactory purchaseFactory)
         {
             _logger = logger;
             _purchaseRepository = purchaseRepository;
             _carRepository = carRepository;
             _customerRepository = customerRepository;
+            _purchaseFactory = purchaseFactory;
         }
 
         public async Task HandleAsync(ICommandContext<CreatePurchaseCommand, CreatePurchaseResult> context,
@@ -45,7 +48,7 @@ namespace Tnf.CarShop.Host.Commands.Purchase.Create
                 throw new Exception("Invalid car or customer.");
             }
 
-            var newPurchase = new Domain.Entities.Purchase(customer, car);
+            var newPurchase = _purchaseFactory.ToEntity(purchaseDto);
 
             var createdPurchase = await _purchaseRepository.InsertAsync(newPurchase, cancellationToken);
 

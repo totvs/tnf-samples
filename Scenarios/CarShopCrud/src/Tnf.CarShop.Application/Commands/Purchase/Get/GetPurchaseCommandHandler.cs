@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Commands.Purchase.Get;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -8,11 +9,14 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
 {
     private readonly ILogger<GetPurchaseCommandHandler> _logger;
     private readonly IPurchaseRepository _purchaseRepository;
+    private readonly PurchaseFactory _purchaseFactory;
 
-    public GetPurchaseCommandHandler(ILogger<GetPurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository)
+
+    public GetPurchaseCommandHandler(ILogger<GetPurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository, PurchaseFactory purchaseFactory)
     {
         _logger = logger;
         _purchaseRepository = purchaseRepository;
+        _purchaseFactory = purchaseFactory;
     }
 
     public async Task HandleAsync(ICommandContext<GetPurchaseCommand, GetPurchaseResult> context,
@@ -27,24 +31,7 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
             throw new Exception($"Purchase with id {purchaseId} not found.");
         }
         
-        var returnedCustomerCars = purchase.Customer.CarsOwned;
-        var customerCars = new List<CarDto>();
-
-        if (returnedCustomerCars != null)
-            foreach (var car in returnedCustomerCars)
-            {
-                var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id);
-                customerCars.Add(carDto);
-            }
-        
-        var customerDto =  new CustomerDto(purchase.Customer.Id, purchase.Customer.FullName, purchase.Customer.Address,
-            purchase.Customer.Phone, customerCars, purchase.Customer.Email, purchase.Customer.DateOfBirth);
-
-        var returnedCarDto = new CarDto(purchase.Car.Id, purchase.Car.Brand, purchase.Car.Model, purchase.Car.Year,
-            purchase.Car.Price, purchase.Car.Dealer?.Id, purchase.Car.Owner?.Id);
-        
-        
-        var purchaseResult = new GetPurchaseResult( new PurchaseDto(purchase.Id, purchase.PurchaseDate, customerDto, returnedCarDto ));
+        var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
 
         context.Result = purchaseResult;
 

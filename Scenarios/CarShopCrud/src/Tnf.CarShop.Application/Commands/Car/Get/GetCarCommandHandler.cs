@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 
 using Tnf.Commands;
@@ -9,11 +10,13 @@ public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
 {
     private readonly ILogger<GetCarCommandHandler> _logger;
     private readonly ICarRepository _carRepository;
+    private readonly CarFactory _carFactory;
 
-    public GetCarCommandHandler(ILogger<GetCarCommandHandler> logger, ICarRepository carRepository)
+    public GetCarCommandHandler(ILogger<GetCarCommandHandler> logger, ICarRepository carRepository, CarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;
+        _carFactory = carFactory;
     }
 
     public async Task HandleAsync(ICommandContext<GetCarCommand, GetCarResult> context,
@@ -29,8 +32,10 @@ public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
             {
                 throw new Exception($"Car with id {command.CarId} not found.");
             }
+            
+            var carDto = _carFactory.ToDto(car);
 
-            var carResult = new GetCarResult( new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.Dealer?.Id, car.Owner?.Id));
+            var carResult = new GetCarResult(carDto);
             context.Result = carResult;
         }
 

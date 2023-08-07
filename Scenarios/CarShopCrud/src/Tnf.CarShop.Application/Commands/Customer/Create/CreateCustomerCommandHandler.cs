@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Commands.Customer;
 using Tnf.Commands;
@@ -10,11 +11,13 @@ namespace Tnf.CarShop.Application.Commands.Customer.Create
     {
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
         private readonly ICustomerRepository _customerRepository;
+        private readonly CustomerFactory _customerFactory;
 
-        public CreateCustomerCommandHandler(ILogger<CreateCustomerCommandHandler> logger, ICustomerRepository customerRepository)
+        public CreateCustomerCommandHandler(ILogger<CreateCustomerCommandHandler> logger, ICustomerRepository customerRepository, CustomerFactory customerFactory)
         {
             _logger = logger;
             _customerRepository = customerRepository;
+            _customerFactory = customerFactory;
         }
 
         public async Task HandleAsync(ICommandContext<CreateCustomerCommand, CreateCustomerResult> context,
@@ -29,9 +32,9 @@ namespace Tnf.CarShop.Application.Commands.Customer.Create
             return;
         }
 
-        private async Task<Guid> CreateCustomerAsync(CustomerDto customer, CancellationToken cancellationToken)
+        private async Task<Guid> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken)
         {
-            var newCustomer = new Domain.Entities.Customer(customer.FullName, customer.Address, customer.Phone, customer.Email, customer.DateOfBirth);
+            var newCustomer = _customerFactory.ToEntity(customerDto);
 
             var createdCustomer = await _customerRepository.InsertAsync(newCustomer, cancellationToken);
 

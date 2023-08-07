@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Commands.Car.Update;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Commands.Car.Create;
 using Tnf.Commands;
@@ -13,13 +14,15 @@ public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateC
     private readonly ICarRepository _carRepository;
     private readonly IDealerRepository _dealerRepository;
     private readonly ICustomerRepository _customerRepository;
+    private readonly CarFactory _carFactory;
 
-    public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository, IDealerRepository dealerRepository, ICustomerRepository customerRepository)
+    public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository, IDealerRepository dealerRepository, ICustomerRepository customerRepository, CarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;
         _dealerRepository = dealerRepository;
         _customerRepository = customerRepository;
+        _carFactory = carFactory;
     }
 
     public async Task HandleAsync(ICommandContext<UpdateCarCommand, UpdateCarResult> context,
@@ -39,23 +42,23 @@ public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateC
         car.UpdatePrice(carDto.Price);
         car.UpdateYear(carDto.Year);
 
-        if (carDto.DealerId.HasValue)
+        if (carDto.Dealer != null)
         {
-            var dealer = await _dealerRepository.GetAsync(carDto.DealerId.Value, cancellationToken);
+            var dealer = await _dealerRepository.GetAsync(carDto.Dealer.Id, cancellationToken);
             car.AssignToDealer(dealer);
         }
         
-        if (carDto.OwnerId.HasValue)
+        if (carDto.Owner != null)
         {
-            var owner = await _customerRepository.GetAsync(carDto.OwnerId.Value, cancellationToken);
+            var owner = await _customerRepository.GetAsync(carDto.Owner.Id, cancellationToken);
             car.AssignToOwner(owner);
         }
         
         var updatedCar = await _carRepository.UpdateAsync(car, cancellationToken);
+        
+        var updatedCarDto = _carFactory.ToDto(updatedCar);
 
-        context.Result = new UpdateCarResult(new CarDto(updatedCar.Id, updatedCar.Brand, updatedCar.Model, updatedCar.Year, updatedCar.Price, updatedCar.Dealer?.Id, updatedCar.Owner?.Id) );
-
-        return;
+        context.Result = new UpdateCarResult(updatedCarDto);
     }
     
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -10,11 +11,13 @@ namespace Tnf.CarShop.Host.Commands.Dealer.Create
     {
         private readonly ILogger<CreateDealerCommandHandler> _logger;
         private readonly IDealerRepository _dealerRepository;
+        private readonly DealerFactory _dealerFactory;
 
-        public CreateDealerCommandHandler(ILogger<CreateDealerCommandHandler> logger, IDealerRepository dealerRepository)
+        public CreateDealerCommandHandler(ILogger<CreateDealerCommandHandler> logger, IDealerRepository dealerRepository, DealerFactory dealerFactory)
         {
             _logger = logger;
             _dealerRepository = dealerRepository;
+            _dealerFactory = dealerFactory;
         }
 
         public async Task HandleAsync(ICommandContext<CreateDealerCommand, CreateDealerResult> context,
@@ -25,13 +28,11 @@ namespace Tnf.CarShop.Host.Commands.Dealer.Create
             var createdDealerId = await CreateDealerAsync(dealerDto, cancellationToken);
 
             context.Result = new CreateDealerResult(createdDealerId);
-
-            return;
         }
 
-        private async Task<Guid> CreateDealerAsync(DealerDto command, CancellationToken cancellationToken)
+        private async Task<Guid> CreateDealerAsync(DealerDto dealerDto, CancellationToken cancellationToken)
         {
-            var newDealer = new Domain.Entities.Dealer(command.Name, command.Location);
+            var newDealer = _dealerFactory.ToEntity(dealerDto);
 
             var createdDealer = await _dealerRepository.InsertAsync(newDealer, cancellationToken);
 
