@@ -23,8 +23,9 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CarResu
 
         var createdCarId = await CreateCarAsync(command, cancellationToken);
 
-        
-        return new CarResult(createdCarId, true);
+        context.Result = new CarResult(createdCarId, true);
+
+        return;
     }
 
     private async Task<Guid> CreateCarAsync(CreateCarCommand command, CancellationToken cancellationToken)
