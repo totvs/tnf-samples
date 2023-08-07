@@ -9,6 +9,6 @@ namespace Tnf.CarShop.Domain.Repositories
         Task<List<Dealer>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<Dealer> InsertAsync(Dealer dealer, CancellationToken cancellationToken = default);
         Task<Dealer> UpdateAsync(Dealer dealer, CancellationToken cancellationToken = default);
-        Task<bool> DeleteAsync(Guid dealerId, CancellationToken cancellationToken = default);
+        Task DeleteAsync(Guid dealerId, CancellationToken cancellationToken = default);
     }
 }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities
 {
-    public class Dealer : IHasCreationTime, IHasModificationTime
+    public class Dealer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     {
         public Guid Id { get; private set; }
+        public Guid TenantId { get; set; }
         public string Name { get; private set; }
         public string Cnpj { get; private set; }
         public string Location { get; private set; }
@@ -49,7 +46,6 @@ namespace Tnf.CarShop.Domain.Entities
         {          
             Cars.Add(car);
             car.AssignToDealer(this);
-            LastModificationTime = DateTime.Now;
         }
 
         public void UpdateName(string name)
