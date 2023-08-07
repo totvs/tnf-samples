@@ -10,6 +10,9 @@ namespace Tnf.CarShop.EntityFrameworkCore
     public class CarShopDbContext : TnfDbContext
     {
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Dealer> Dealers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         public CarShopDbContext(DbContextOptions<CarShopDbContext> options, ITnfSession session) 
             : base(options, session) { }
