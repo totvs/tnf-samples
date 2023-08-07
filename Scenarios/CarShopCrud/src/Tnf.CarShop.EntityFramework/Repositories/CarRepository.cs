@@ -1,5 +1,8 @@
-﻿using Tnf.CarShop.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+
+using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
+
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 
@@ -11,24 +14,31 @@ namespace Tnf.CarShop.EntityFrameworkCore.Repositories
         {
         }
 
-        public Task<bool> DeleteAsync(Guid carId, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(Guid carId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var car = await GetAsync(carId, cancellationToken);
+            if (car is null)
+                return;
+
+            await base.DeleteAsync(car, cancellationToken);
         }
 
         public Task<List<Car>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return base.GetAllListAsync(cancellationToken);
         }
 
-        public Task<Car> GetAsync(Guid carId, CancellationToken cancellationToken = default)
+        public async Task<Car> GetAsync(Guid carId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await Table
+                .Include(d => d.Dealer)
+                .Include(c => c.Owner)
+                .FirstOrDefaultAsync(x => x.Id == carId, cancellationToken);
         }
 
-        public Task<Car> UpdateAsync(Car car, CancellationToken cancellationToken = default)
+        public async Task<Car> UpdateAsync(Car car, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await base.UpdateAsync(car, cancellationToken);
         }
     }
 }
