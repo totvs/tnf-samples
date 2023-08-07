@@ -20,9 +20,9 @@ public class DeleteCustomerCommandHandler : ICommandHandler<DeleteCustomerComman
     {
         var customerId = context.Command.CustomerId;
 
-        var success = await _customerRepository.DeleteAsync(customerId, cancellationToken);
+        await _customerRepository.DeleteAsync(customerId, cancellationToken);
 
-        context.Result = new(success);
+        context.Result = new(true);
 
         return;
     }

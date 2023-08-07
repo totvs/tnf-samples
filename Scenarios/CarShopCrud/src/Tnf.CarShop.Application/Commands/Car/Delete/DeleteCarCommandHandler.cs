@@ -20,9 +20,9 @@ public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, DeleteC
     {
         var command = context.Command;
 
-        var success = await _carRepository.DeleteAsync(command.CardId, cancellationToken);
+        await _carRepository.DeleteAsync(command.CardId, cancellationToken);
 
-        context.Result = new DeleteCarResult(success);
+        context.Result = new DeleteCarResult(true);
 
         return;
     }

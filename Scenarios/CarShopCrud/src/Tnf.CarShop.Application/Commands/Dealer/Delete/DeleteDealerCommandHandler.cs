@@ -20,10 +20,8 @@ public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, D
     {
         var command = context.Command;
 
-        var success = await _dealerRepository.DeleteAsync(command.DealerId, cancellationToken);
+        await _dealerRepository.DeleteAsync(command.DealerId, cancellationToken);
 
-        context.Result = new DeleteDealerResult(success);
-
-        return;
+        context.Result = new DeleteDealerResult(true);
     }
 }

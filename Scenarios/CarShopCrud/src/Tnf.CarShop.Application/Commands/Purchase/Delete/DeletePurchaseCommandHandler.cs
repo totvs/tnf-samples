@@ -20,10 +20,8 @@ public class DeletePurchaseCommandHandler : ICommandHandler<DeletePurchaseComman
     {
         var purchaseId = context.Command.PurchaseId;
 
-        var success = await _purchaseRepository.DeleteAsync(purchaseId, cancellationToken);
+        await _purchaseRepository.DeleteAsync(purchaseId, cancellationToken);
 
-        context.Result = new DeletePurchaseResult(success);
-
-        return;
+        context.Result = new DeletePurchaseResult(true);
     }
 }

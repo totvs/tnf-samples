@@ -26,17 +26,17 @@ namespace Tnf.CarShop.Domain.Entities
             Dealer = dealer;
         }
   
-        public Car(string brand, string model, int year, decimal price)
-        {            
-            Brand = brand;
-            Model = model;
-            Year = year;
-            Price = price;
-            Dealer = dealer;
-            Owner = owner;
-            CreationTime = DateTime.Now;
-            CreationTime = DateTime.Now;
-        }
+        // public Car(string brand, string model, int year, decimal price, )
+        // {            
+        //     Brand = brand;
+        //     Model = model;
+        //     Year = year;
+        //     Price = price;
+        //     Dealer = dealer;
+        //     Owner = owner;
+        //     CreationTime = DateTime.Now;
+        //     CreationTime = DateTime.Now;
+        // }
         
         public Car(Guid id, string brand, string model, int year, decimal price)
         {
