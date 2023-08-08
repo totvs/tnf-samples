@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -39,6 +41,29 @@ namespace Tnf.CarShop.Host.Swagger
             services.AddSwaggerGenNewtonsoftSupport();
 
             return services;
+        }
+
+        public static IApplicationBuilder UseCarShopApiVersioning(this IApplicationBuilder app)
+        {
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "carshop/swagger/{documentname}/swagger.json";
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.RoutePrefix = "dap/swagger";
+
+                var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+
+                // Inclui para cada versão a documentação
+                foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint($"../swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
+            });
+
+            return app;
         }
     }
 }
