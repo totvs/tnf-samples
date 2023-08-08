@@ -37,8 +37,16 @@ public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
 
             var carResult = new GetCarResult(carDto);
             context.Result = carResult;
+
+            return;
         }
 
+        var cars = await _carRepository.GetAllAsync(cancellationToken);
+        
+        var carsDto = cars.Select(_carFactory.ToDto).ToList();
+
+        context.Result = new GetCarResult(carsDto);
+        
         return;
     }
 }

@@ -13,6 +13,13 @@ public class GetCarResult
     {
         Car = car;
     }
-    
+
+    public GetCarResult(List<CarDto> cars)
+    {
+        Cars = cars;
+    }
+
     public CarDto Car { get; set; }
+    
+    public List<CarDto> Cars { get; set; }
 }

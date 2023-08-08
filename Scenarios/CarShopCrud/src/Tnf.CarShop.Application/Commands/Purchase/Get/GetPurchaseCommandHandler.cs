@@ -22,19 +22,26 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
     public async Task HandleAsync(ICommandContext<GetPurchaseCommand, GetPurchaseResult> context,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        var purchaseId = context.Command.PurchaseId;
+        var command = context.Command;
 
-        var purchase = await _purchaseRepository.GetAsync(purchaseId, cancellationToken);
-
-        if (purchase == null)
+        if (command.PurchaseId.HasValue)
         {
-            throw new Exception($"Purchase with id {purchaseId} not found.");
-        }
+            var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
+
+            if (purchase == null)
+            {
+                throw new Exception($"Purchase with id {command} not found.");
+            }
         
-        var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
+            var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
 
-        context.Result = purchaseResult;
+            context.Result = purchaseResult;
+        }
 
-        return;
+        var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
+
+        var purchasesDto = purchases.Select(_purchaseFactory.ToDto).ToList();
+
+        context.Result = new GetPurchaseResult(purchasesDto);
     }
 }
