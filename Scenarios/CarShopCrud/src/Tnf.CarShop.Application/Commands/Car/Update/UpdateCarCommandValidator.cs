@@ -1,12 +1,14 @@
 ﻿using FluentValidation;
-using Tnf.CarShop.Application.Commands.Car.Create;
 
-namespace Tnf.CarShop.Host.Commands.Car.Create;
+namespace Tnf.CarShop.Application.Commands.Car.Update;
 
-public class CreateCarCommandValidator : TnfFluentValidator<CreateCarCommand>
+public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
 {
     public override void Configure()
     {
+        RuleFor(command => command.Car.Id)
+            .NotEmpty().WithMessage("CarId is required.");
+
         RuleFor(command => command.Car.Brand)
             .NotEmpty().WithMessage("Brand is required.")
             .Length(2, 100).WithMessage("Brand should be between 2 and 100 characters long.");
@@ -25,7 +27,9 @@ public class CreateCarCommandValidator : TnfFluentValidator<CreateCarCommand>
         RuleFor(command => command.Car.Dealer)
             .NotNull().WithMessage("Dealer is required.");
         
-        RuleFor(command => command.Car.Dealer!.Id)
+        RuleFor(command => command.Car.Dealer.Id)
             .NotNull().WithMessage("DealerId is required.");
     }
+
+ 
 }
