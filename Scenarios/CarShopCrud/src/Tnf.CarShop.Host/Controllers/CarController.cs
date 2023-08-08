@@ -1,6 +1,5 @@
-﻿namespace Tnf.CarShop.Host.Controllers
+﻿namespace Tnf.CarShop.Host.Controllers;
+
+public class CarController
 {
-    public class CarController
-    {
-    }
 }

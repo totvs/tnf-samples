@@ -1,56 +1,55 @@
 ﻿using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
-namespace Tnf.CarShop.Domain.Entities
+namespace Tnf.CarShop.Domain.Entities;
+
+public class Dealer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    public class Dealer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
+    protected Dealer()
     {
-        public Guid Id { get; private set; }
-        public Guid TenantId { get; set; }
-        public string Name { get; private set; }
-        public string Cnpj { get; private set; }
-        public string Location { get; private set; }
-        public ICollection<Car>? Cars { get; private set; }
-        public DateTime CreationTime { get; set; }
-        public DateTime? LastModificationTime { get; set; }
+        Cars = new HashSet<Car>();
+    }
 
-        protected Dealer()
-        {
-            Cars = new HashSet<Car>();
-        }
+    public Dealer(string name, string location)
+    {
+        Name = name;
+        Location = location;
+    }
 
-        public Dealer(string name, string location)
-        {     
-            Name = name;
-            Location = location;
-        }
-        
-        public Dealer(Guid id,string name, string location)
-        {
-            Id = id;
-            Name = name;
-            Location = location;
-        }
+    public Dealer(Guid id, string name, string location)
+    {
+        Id = id;
+        Name = name;
+        Location = location;
+    }
 
-        public void UpdateLocation(string newLocation)
-        {          
-            Location = newLocation;
-        }
-        
-        public void UpdateCnpj(string cnpj)
-        {          
-            Cnpj = cnpj;
-        }
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string Cnpj { get; private set; }
+    public string Location { get; private set; }
+    public ICollection<Car>? Cars { get; }
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+    public Guid TenantId { get; set; }
 
-        public void AddCar(Car car)
-        {          
-            Cars.Add(car);
-            car.AssignToDealer(this);
-        }
+    public void UpdateLocation(string newLocation)
+    {
+        Location = newLocation;
+    }
 
-        public void UpdateName(string name)
-        {
-            Name = name;
-        }
+    public void UpdateCnpj(string cnpj)
+    {
+        Cnpj = cnpj;
+    }
+
+    public void AddCar(Car car)
+    {
+        Cars.Add(car);
+        car.AssignToDealer(this);
+    }
+
+    public void UpdateName(string name)
+    {
+        Name = name;
     }
 }

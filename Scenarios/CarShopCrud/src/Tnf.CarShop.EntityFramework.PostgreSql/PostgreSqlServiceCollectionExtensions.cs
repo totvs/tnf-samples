@@ -1,20 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql
+namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql;
+
+public static class PostgreSqlServiceCollectionExtensions
 {
-    public static class PostgreSqlServiceCollectionExtensions
+    public static IServiceCollection AddEFCorePostgreSql(this IServiceCollection services)
     {
-        public static IServiceCollection AddEFCorePostgreSql(this IServiceCollection services)
+        services.AddEFCore();
+
+        services.AddTnfDbContext<CarShopDbContext, PostgreSqlCarShopDbContext>(config =>
         {
-            services.AddEFCore();
+            config.DbContextOptions.UseNpgsql(config.ConnectionString);
+        });
 
-            services.AddTnfDbContext<CarShopDbContext, PostgreSqlCarShopDbContext>(config =>
-            {
-                config.DbContextOptions.UseNpgsql(config.ConnectionString);
-            });
-
-            return services;
-        }
+        return services;
     }
 }

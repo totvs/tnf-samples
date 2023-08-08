@@ -3,73 +3,67 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Tnf.CarShop.Host.Swagger
+namespace Tnf.CarShop.Host.Swagger;
+
+public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 {
-    public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+    private readonly IApiVersionDescriptionProvider _provider;
+
+    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
     {
-        private readonly IApiVersionDescriptionProvider _provider;
+        _provider = provider;
+    }
 
-        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+    public void Configure(SwaggerGenOptions options)
+    {
+        foreach (var description in _provider.ApiVersionDescriptions)
+            options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+
+        options.OperationFilter<SwaggerVersioningOperationFilter>();
+
+        var securityDefinition = BuildSecurityDefinition();
+        options.AddSecurityDefinition(securityDefinition.Name, securityDefinition.OpenApiSecurityScheme);
+
+        options.AddSecurityRequirement(BuildSecurityRequirement());
+    }
+
+    private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+    {
+        var info = new OpenApiInfo
         {
-            _provider = provider;
-        }
+            Title = "CarShop Web API Sample",
+            Version = description.ApiVersion.ToString()
+        };
 
-        public void Configure(SwaggerGenOptions options)
+        if (description.IsDeprecated) info.Description += " This API version has been deprecated.";
+
+        return info;
+    }
+
+    private SecurityDefinition BuildSecurityDefinition()
+    {
+        const string Name = "bearer";
+        var openApiSecurityScheme = new OpenApiSecurityScheme
         {
-            foreach (var description in _provider.ApiVersionDescriptions)
-            {
-                options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
-            }
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Scheme = "bearer"
+        };
 
-            options.OperationFilter<SwaggerVersioningOperationFilter>();
+        return new SecurityDefinition(Name, openApiSecurityScheme);
+    }
 
-            var securityDefinition = BuildSecurityDefinition();
-            options.AddSecurityDefinition(securityDefinition.Name, securityDefinition.OpenApiSecurityScheme);
-
-            options.AddSecurityRequirement(BuildSecurityRequirement());
-        }
-
-        private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+    private OpenApiSecurityRequirement BuildSecurityRequirement()
+    {
+        var scheme = new OpenApiSecurityScheme
         {
-            var info = new OpenApiInfo
-            {
-                Title = "CarShop Web API Sample",
-                Version = description.ApiVersion.ToString()
-            };
+            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" }
+        };
 
-            if (description.IsDeprecated)
-            {
-                info.Description += " This API version has been deprecated.";
-            }
-
-            return info;
-        }
-
-        private SecurityDefinition BuildSecurityDefinition()
+        return new OpenApiSecurityRequirement
         {
-            const string Name = "bearer";
-            var openApiSecurityScheme = new OpenApiSecurityScheme
-            {
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                In = ParameterLocation.Header,
-                Scheme = "bearer"
-            };
-
-            return new SecurityDefinition(Name, openApiSecurityScheme);
-        }
-
-        private OpenApiSecurityRequirement BuildSecurityRequirement()
-        {
-            var scheme = new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" }
-            };
-
-            return new OpenApiSecurityRequirement
-            {
-                [scheme] = new List<string>()
-            };
-        }
+            [scheme] = new List<string>()
+        };
     }
 }
