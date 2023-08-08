@@ -1,9 +1,9 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-
 public sealed record CustomerDto
 {
-    public CustomerDto(Guid id, string fullName, string address, string phone, List<CarDto> cars, string email, DateOnly dateOfBirth)
+    public CustomerDto(Guid id, string fullName, string address, string phone, List<CarDto> cars, string email,
+        DateOnly dateOfBirth)
     {
         Id = id;
         FullName = fullName;
@@ -24,7 +24,7 @@ public sealed record CustomerDto
     public string Address { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-    
+
     public DateOnly DateOfBirth { get; set; }
     public List<CarDto> Cars { get; set; }
 }

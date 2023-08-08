@@ -2,12 +2,12 @@
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Host.Commands.Dealer.Delete;
+namespace Tnf.CarShop.Application.Commands.Dealer.Delete;
 
 public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, DeleteDealerResult>
 {
-    private readonly ILogger<DeleteDealerCommandHandler> _logger;
     private readonly IDealerRepository _dealerRepository;
+    private readonly ILogger<DeleteDealerCommandHandler> _logger;
 
     public DeleteDealerCommandHandler(ILogger<DeleteDealerCommandHandler> logger, IDealerRepository dealerRepository)
     {
@@ -16,7 +16,7 @@ public class DeleteDealerCommandHandler : ICommandHandler<DeleteDealerCommand, D
     }
 
     public async Task HandleAsync(ICommandContext<DeleteDealerCommand, DeleteDealerResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         var command = context.Command;
 

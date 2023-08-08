@@ -1,16 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serilog;
-
 using Tnf.CarShop.EntityFrameworkCore.Migrator;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 
 var builder = Host.CreateDefaultBuilder()
     .ConfigureAppConfiguration(configuration =>
     {
-        configuration.AddJsonFile($"appsettings.Development.json", optional: false);
+        configuration.AddJsonFile("appsettings.Development.json", false);
         configuration.AddEnvironmentVariables();
     })
     .ConfigureServices((context, services) =>
@@ -28,4 +26,3 @@ var builder = Host.CreateDefaultBuilder()
 
 await builder.Build()
     .RunAsync();
-

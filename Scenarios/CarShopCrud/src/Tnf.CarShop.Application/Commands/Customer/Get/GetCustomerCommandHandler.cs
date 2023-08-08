@@ -1,19 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Commands.Customer.Get;
-using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
-using Tnf.CarShop.Host.Commands.Customer;
 using Tnf.Commands;
+
+namespace Tnf.CarShop.Application.Commands.Customer.Get;
 
 public class GetCustomerCommandHandler : ICommandHandler<GetCustomerCommand, GetCustomerResult>
 {
-    private readonly ILogger<GetCustomerCommandHandler> _logger;
-    private readonly ICustomerRepository _customerRepository;
     private readonly CarFactory _carFactory;
     private readonly CustomerFactory _customerFactory;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly ILogger<GetCustomerCommandHandler> _logger;
 
-    public GetCustomerCommandHandler(ILogger<GetCustomerCommandHandler> logger, ICustomerRepository customerRepository, CarFactory carFactory, CustomerFactory customerFactory)
+    public GetCustomerCommandHandler(ILogger<GetCustomerCommandHandler> logger, ICustomerRepository customerRepository,
+        CarFactory carFactory, CustomerFactory customerFactory)
     {
         _logger = logger;
         _customerRepository = customerRepository;
@@ -22,21 +22,25 @@ public class GetCustomerCommandHandler : ICommandHandler<GetCustomerCommand, Get
     }
 
     public async Task HandleAsync(ICommandContext<GetCustomerCommand, GetCustomerResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
-        var customerId = context.Command.CustomerId;
+        var command = context.Command;
 
-        var customer = await _customerRepository.GetAsync(customerId, cancellationToken);
-
-        if (customer == null)
+        if (command.CustomerId.HasValue)
         {
-            throw new Exception($"Customer with id {customerId} not found.");
+            var customer = await _customerRepository.GetAsync(command.CustomerId.Value, cancellationToken);
+
+            if (customer == null) throw new Exception($"Customer with id {command.CustomerId.Value} not found.");
+
+            var customerDto = _customerFactory.ToDto(customer);
+
+            context.Result = new GetCustomerResult(customerDto);
         }
 
-        var customerDto = _customerFactory.ToDto(customer);
-        
-        context.Result = new GetCustomerResult(customerDto);
+        var customers = await _customerRepository.GetAllAsync(cancellationToken);
 
-        return;
+        var customersDto = customers.Select(_customerFactory.ToDto).ToList();
+
+        context.Result = new GetCustomerResult(customersDto);
     }
 }

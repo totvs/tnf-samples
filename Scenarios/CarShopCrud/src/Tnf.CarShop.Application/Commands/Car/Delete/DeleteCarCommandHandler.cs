@@ -6,8 +6,8 @@ namespace Tnf.CarShop.Application.Commands.Car.Delete;
 
 public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, DeleteCarResult>
 {
-    private readonly ILogger<DeleteCarCommandHandler> _logger;
     private readonly ICarRepository _carRepository;
+    private readonly ILogger<DeleteCarCommandHandler> _logger;
 
     public DeleteCarCommandHandler(ILogger<DeleteCarCommandHandler> logger, ICarRepository carRepository)
     {
@@ -16,14 +16,12 @@ public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, DeleteC
     }
 
     public async Task HandleAsync(ICommandContext<DeleteCarCommand, DeleteCarResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         var command = context.Command;
 
         await _carRepository.DeleteAsync(command.CardId, cancellationToken);
 
         context.Result = new DeleteCarResult(true);
-
-        return;
     }
 }

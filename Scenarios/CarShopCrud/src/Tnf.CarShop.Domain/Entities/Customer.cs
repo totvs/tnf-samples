@@ -5,18 +5,6 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public record Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    public Guid Id { get; private set; }
-    public Guid TenantId { get; set; }
-    public string FullName { get; private set; }
-    public string Address { get; private set; }
-    public string Phone { get; private set; }
-    public string Email { get; private set; }
-    public DateOnly DateOfBirth { get; private set; }
-    public  ICollection<Car> CarsOwned { get; private set; }
-    
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }        
-
     protected Customer()
     {
         CarsOwned = new HashSet<Car>();
@@ -41,7 +29,19 @@ public record Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         DateOfBirth = dateOfBirth;
         CreationTime = DateTime.Now;
     }
-    
+
+    public Guid Id { get; private set; }
+    public string FullName { get; private set; }
+    public string Address { get; private set; }
+    public string Phone { get; private set; }
+    public string Email { get; private set; }
+    public DateOnly DateOfBirth { get; private set; }
+    public ICollection<Car> CarsOwned { get; }
+
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+    public Guid TenantId { get; set; }
+
     public void UpdateFullName(string fullName)
     {
         FullName = fullName;
@@ -70,5 +70,5 @@ public record Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void PurchaseCar(Car car)
     {
         CarsOwned.Add(car);
-    }   
+    }
 }

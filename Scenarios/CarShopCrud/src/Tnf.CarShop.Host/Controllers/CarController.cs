@@ -2,5 +2,4 @@
 
 internal sealed class CarController
 {
-
 }
