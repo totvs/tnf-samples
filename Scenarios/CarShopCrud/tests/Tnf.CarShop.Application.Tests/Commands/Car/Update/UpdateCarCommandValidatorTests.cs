@@ -98,8 +98,6 @@ namespace Tnf.CarShop.Tests.Validators
             result.ShouldHaveValidationErrorFor("Car.Dealer.Id");
         }
 
-        // You can also have tests that check if there's no validation error when everything is set correctly
-
         [Fact]
         public void Should_Not_Have_Error_When_Command_Is_Valid()
         {
