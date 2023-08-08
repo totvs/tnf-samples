@@ -52,7 +52,7 @@ namespace Tnf.CarShop.Host.Swagger
 
             app.UseSwaggerUI(options =>
             {
-                options.RoutePrefix = "dap/swagger";
+                options.RoutePrefix = "carshop/swagger";
 
                 var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
 
