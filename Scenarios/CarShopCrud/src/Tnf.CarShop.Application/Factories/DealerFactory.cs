@@ -15,7 +15,7 @@ public abstract record DealerFactory : IFactory<DealerDto, Dealer>
 
     public DealerDto ToDto(Dealer dealer)
     {
-        List<CarDto> cars = dealer.Cars?.Select(_carFactory.ToDto).ToList() ?? new List<CarDto>();
+        var cars = dealer.Cars?.Select(_carFactory.ToDto).ToList() ?? new List<CarDto>();
         return new DealerDto(
             dealer.Id,
             dealer.Name,
@@ -30,16 +30,14 @@ public abstract record DealerFactory : IFactory<DealerDto, Dealer>
             dealerDto.Id,
             dealerDto.Name,
             dealerDto.Location);
-       
-            
-        if (dealerDto.Cars != null) 
-        {
-            foreach (var carDto in dealerDto.Cars) 
+
+
+        if (dealerDto.Cars != null)
+            foreach (var carDto in dealerDto.Cars)
             {
                 var car = _carFactory.ToEntity(carDto);
                 dealer.AddCar(car);
             }
-        }
 
         return dealer;
     }

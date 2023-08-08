@@ -4,7 +4,7 @@ namespace Tnf.CarShop.Application.Commands.Dealer.Get;
 
 public class GetDealerCommand
 {
-    public Guid DealerId { get; set; }
+    public Guid? DealerId { get; set; }
 }
 
 public class GetDealerResult
@@ -14,5 +14,11 @@ public class GetDealerResult
         Dealer = dealer;
     }
 
+    public GetDealerResult(List<DealerDto> dealers)
+    {
+        Dealers = dealers;
+    }
+
+    public List<DealerDto> Dealers { get; set; }
     public DealerDto Dealer { get; set; }
 }

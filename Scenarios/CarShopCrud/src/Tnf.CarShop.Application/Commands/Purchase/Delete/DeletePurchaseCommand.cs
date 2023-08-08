@@ -1,4 +1,4 @@
-﻿namespace Tnf.CarShop.Host.Commands.Purchase.Delete;
+﻿namespace Tnf.CarShop.Application.Commands.Purchase.Delete;
 
 public class DeletePurchaseCommand
 {

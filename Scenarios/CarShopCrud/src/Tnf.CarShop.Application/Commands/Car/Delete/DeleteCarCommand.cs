@@ -7,10 +7,10 @@ public class DeleteCarCommand
 
 public class DeleteCarResult
 {
-    public DeleteCarResult( bool success)
+    public DeleteCarResult(bool success)
     {
         Success = success;
     }
+
     public bool Success { get; set; }
-    
 }

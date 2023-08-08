@@ -2,20 +2,21 @@
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
-using Tnf.CarShop.Host.Commands.Car.Create;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
+
 public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateCarResult>
 {
-    private readonly ILogger<CreateCarCommandHandler> _logger;
-    private readonly ICarRepository _carRepository;
-    private readonly IDealerRepository _dealerRepository;
-    private readonly ICustomerRepository _customerRepository;
     private readonly CarFactory _carFactory;
-    
+    private readonly ICarRepository _carRepository;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IDealerRepository _dealerRepository;
+    private readonly ILogger<CreateCarCommandHandler> _logger;
 
-    public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository, IDealerRepository dealerRepository, ICustomerRepository customerRepository, CarFactory carFactory)
+
+    public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
+        IDealerRepository dealerRepository, ICustomerRepository customerRepository, CarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;
@@ -25,16 +26,13 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
     }
 
     public async Task HandleAsync(ICommandContext<CreateCarCommand, CreateCarResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
-
         var carDto = context.Command.Car;
 
         var createdCarId = await CreateCarAsync(carDto, cancellationToken);
-        
-        context.Result = new CreateCarResult(createdCarId, true);
 
-        return;
+        context.Result = new CreateCarResult(createdCarId, true);
     }
 
     private async Task<Guid> CreateCarAsync(CarDto carDto, CancellationToken cancellationToken)
@@ -47,19 +45,19 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
             CheckEntityNotNull(dealer, "Dealer", carDto.Dealer.Id);
             newCar.AssignToDealer(dealer);
         }
-        
+
         if (carDto.Owner != null)
         {
             var owner = await FetchOwnerAsync(carDto.Owner.Id, cancellationToken);
             CheckEntityNotNull(owner, "Customer", carDto.Owner.Id);
             newCar.AssignToOwner(owner);
         }
-        
+
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
 
         return createdCar.Id;
     }
-    
+
     private async Task<Domain.Entities.Dealer> FetchDealerAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _dealerRepository.GetAsync(id, cancellationToken);
@@ -72,10 +70,6 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
 
     private void CheckEntityNotNull<T>(T entity, string entityType, Guid id)
     {
-        if (entity == null)
-        {
-            throw new Exception($"{entityType} with id {id} not found.");
-        }
+        if (entity == null) throw new Exception($"{entityType} with id {id} not found.");
     }
-    
 }
