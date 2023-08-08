@@ -2,8 +2,16 @@
 
 public sealed record PurchaseDto
 {
-    public Guid Id { get; init; }
-    public DateTime PurchaseDate { get; init; }
-    public CustomerDto Customer { get; init; }
-    public CarDto Car { get; init; }
+    public PurchaseDto(Guid id, DateTime purchaseDate, CustomerDto customer, CarDto car)
+    {
+        Id = id;
+        PurchaseDate = purchaseDate;
+        Customer = customer;
+        Car = car;
+    }
+
+    public Guid Id { get; set; }
+    public DateTime PurchaseDate { get; set; }
+    public CustomerDto Customer { get; set; }
+    public CarDto Car { get; set; }
 }

@@ -19,12 +19,12 @@ public sealed record CustomerDto
         Id = id;
     }
 
-    public Guid Id { get; init; }
-    public string FullName { get; init; }
-    public string Address { get; init; }
-    public string Phone { get; init; }
-    public string Email { get; init; }
+    public Guid Id { get; set; }
+    public string FullName { get; set; }
+    public string Address { get; set; }
+    public string Phone { get; set; }
+    public string Email { get; set; }
     
-    public DateOnly DateOfBirth { get; init; }
-    public List<CarDto> Cars { get; init; }
+    public DateOnly DateOfBirth { get; set; }
+    public List<CarDto> Cars { get; set; }
 }
