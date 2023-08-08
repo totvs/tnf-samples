@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Tnf.CarShop.Host.Swagger
 {
-    public static class VersioningExtensions
+    internal static class VersioningExtensions
     {
         public static IServiceCollection AddCarShopApiVersioning(this IServiceCollection services)
         {

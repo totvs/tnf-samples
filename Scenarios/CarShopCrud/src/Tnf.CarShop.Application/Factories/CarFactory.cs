@@ -4,7 +4,7 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract class CarFactory : IFactory<CarDto, Car>
+public abstract record CarFactory : IFactory<CarDto, Car>
 {
     private readonly DealerFactory _dealerFactory; 
     private readonly CustomerFactory _customerFactory;

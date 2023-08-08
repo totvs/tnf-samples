@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public class CarDto
+public sealed record CarDto
 {
     public CarDto(Guid id, string brand, string model, int year, decimal price, DealerDto? dealer, CustomerDto? owner)
     {
@@ -18,12 +18,12 @@ public class CarDto
         Id = id;
     }
 
-    public Guid Id { get; set; }
-    public string Brand { get; set; }
-    public string Model { get; set; }
-    public int Year { get; set; }
-    public decimal Price { get; set; }
-    public DealerDto? Dealer { get; set; }
-    public CustomerDto? Owner { get; set; }
+    public Guid Id { get; init; }
+    public string Brand { get; init; }
+    public string Model { get; init; }
+    public int Year { get; init; }
+    public decimal Price { get; init; }
+    public DealerDto? Dealer { get; init; }
+    public CustomerDto? Owner { get; init; }
 
 }
