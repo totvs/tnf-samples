@@ -3,9 +3,9 @@ using Tnf.CarShop.Application.Commands.Car.Get;
 
 namespace Tnf.CarShop.Host.Commands.Car.Get;
 
-public class GetCarCommandValidator : AbstractValidator<GetCarCommand>
+public class GetCarCommandValidator : TnfFluentValidator<GetCarCommand>
 {
-    public GetCarCommandValidator()
+    public override void Configure()
     {
         RuleFor(command => command.CarId)
             .Must(carId => carId != Guid.Empty)

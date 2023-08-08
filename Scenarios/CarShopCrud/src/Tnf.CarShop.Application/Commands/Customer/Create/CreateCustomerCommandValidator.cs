@@ -3,9 +3,9 @@ using Tnf.CarShop.Application.Commands.Customer.Create;
 
 namespace Tnf.CarShop.Host.Commands.Customer.Create;
 
-public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
+public class CreateCustomerCommandValidator : TnfFluentValidator<CreateCustomerCommand>
 {
-    public CreateCustomerCommandValidator()
+    public override void Configure()
     {
         RuleFor(command => command.Customer.FullName)
             .NotEmpty().WithMessage("Full Name is required.")

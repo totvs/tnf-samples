@@ -2,9 +2,9 @@
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
 
-public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
+public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
 {
-    public UpdateCarCommandValidator()
+    public override void Configure()
     {
         RuleFor(command => command.Car.Id)
             .NotEmpty().WithMessage("CarId is required.");
@@ -30,4 +30,6 @@ public class UpdateCarCommandValidator : AbstractValidator<UpdateCarCommand>
         RuleFor(command => command.Car.Dealer.Id)
             .NotNull().WithMessage("DealerId is required.");
     }
+
+ 
 }

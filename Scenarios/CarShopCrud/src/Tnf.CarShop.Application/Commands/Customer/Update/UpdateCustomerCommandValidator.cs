@@ -2,9 +2,16 @@
 
 namespace Tnf.CarShop.Application.Commands.Customer.Update;
 
-public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
+public class UpdateCustomerCommandValidator : TnfFluentValidator<UpdateCustomerCommand>
 {
-    public UpdateCustomerCommandValidator()
+    private bool BeAValidAge(DateOnly dateOfBirth)
+    {
+        int age = DateTime.Today.Year - dateOfBirth.Year;
+        if (dateOfBirth > DateOnly.FromDateTime(DateTime.Today.AddYears(-age))) age--;
+        return age is >= 18 and <= 100;
+    }
+
+    public override void Configure()
     {
         RuleFor(command => command.Customer.Id)
             .NotEmpty().WithMessage("Customer ID is required.");
@@ -31,12 +38,5 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
         RuleFor(command => command.Customer.DateOfBirth)
             .LessThan(DateOnly.FromDateTime(DateTime.Today)).WithMessage("Date of Birth should be in the past.")
             .Must(BeAValidAge).WithMessage("Age should be between 18 and 100.");
-    }
-
-    private bool BeAValidAge(DateOnly dateOfBirth)
-    {
-        int age = DateTime.Today.Year - dateOfBirth.Year;
-        if (dateOfBirth > DateOnly.FromDateTime(DateTime.Today.AddYears(-age))) age--;
-        return age >= 18 && age <= 100;
     }
 }
