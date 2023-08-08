@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
 
-public class CreateCarCommand
+public sealed record CreateCarCommand
 {
     public CarDto Car { get; set; }
 }

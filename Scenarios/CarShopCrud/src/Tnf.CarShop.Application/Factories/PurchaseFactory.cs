@@ -4,7 +4,7 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract class PurchaseFactory : IFactory<PurchaseDto, Purchase>
+public abstract record PurchaseFactory : IFactory<PurchaseDto, Purchase>
 {
     private readonly CarFactory _carFactory;
     private readonly CustomerFactory _customerFactory;

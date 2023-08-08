@@ -3,8 +3,22 @@ using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
-public class Car : IHasCreationTime, IHasModificationTime, IMayHaveTenant
+public record Car : IHasCreationTime, IHasModificationTime, IMayHaveTenant
 {
+    public Guid? TenantId { get; set; }
+    public Guid Id { get; private set; }
+    public string Brand { get; private set; }
+    public string Model { get; private set; }
+    public int Year { get; private set; }
+    public decimal Price { get; private set; }
+    private decimal Discount { get; set; }
+    public bool IsNew { get { return DateTime.Now.Year - Year <= 1; } }
+    public bool IsOld { get { return DateTime.Now.Year - Year > 20; } }
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+    public Dealer Dealer { get; private set; }
+    public Customer Owner { get; private set; }
+
     protected Car(Customer owner, string brand, string model, Dealer dealer)
     {
         Owner = owner;
@@ -21,24 +35,9 @@ public class Car : IHasCreationTime, IHasModificationTime, IMayHaveTenant
         Year = year;
         Price = price;
     }
-
-    public Guid Id { get; private set; }
-    public string Brand { get; private set; }
-    public string Model { get; private set; }
-    public int Year { get; private set; }
-    public decimal Price { get; private set; }
-    private decimal Discount { get; set; }
-    public bool IsNew => DateTime.Now.Year - Year <= 1;
-    public bool IsOld => DateTime.Now.Year - Year > 20;
-    public Dealer Dealer { get; private set; }
-    public Customer Owner { get; private set; }
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
-    public Guid? TenantId { get; set; }
-
     public void ApplyDiscount(decimal percentage)
     {
-        Discount = Price * percentage / 100;
+        Discount = (Price * percentage) / 100;
         Price -= Discount;
     }
 

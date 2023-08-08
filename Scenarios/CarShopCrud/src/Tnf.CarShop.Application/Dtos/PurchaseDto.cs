@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public class PurchaseDto
+public sealed record PurchaseDto
 {
     public PurchaseDto(Guid id, DateTime purchaseDate, CustomerDto customer, CarDto car)
     {
