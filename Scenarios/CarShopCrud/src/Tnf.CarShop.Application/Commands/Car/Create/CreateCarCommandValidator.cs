@@ -26,6 +26,8 @@ public class CreateCarCommandValidator : TnfFluentValidator<CreateCarCommand>
             .NotNull().WithMessage("Dealer is required.");
         
         RuleFor(command => command.Car.Dealer!.Id)
-            .NotNull().WithMessage("DealerId is required.");
+            .Must(id => id != Guid.Empty)     
+            .WithMessage("DealerId should not be an empty GUID.");
+           
     }
 }
