@@ -16,6 +16,8 @@ public sealed record CarDto
     public CarDto(Guid id)
     {
         Id = id;
+        Dealer = new DealerDto();
+        Owner = new CustomerDto();
     }
 
     public CarDto()
