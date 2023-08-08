@@ -11,7 +11,7 @@ O projeto CarShop é uma aplicação de gerenciamento de loja de carros que perm
 - Atualizar detalhes do carro
 - Buscar detalhes de um carro específico
 - Listar todos os carros
-- Deleção e carro
+- Deleção de carro
 
 ### Clientes
 - Adicionar novo cliente
