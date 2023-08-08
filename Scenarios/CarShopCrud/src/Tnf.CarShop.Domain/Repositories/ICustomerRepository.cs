@@ -11,4 +11,3 @@ public interface ICustomerRepository : IRepository
     Task<Customer> UpdateAsync(Customer customer, CancellationToken cancellationToken = default);
     Task DeleteAsync(Guid customerId, CancellationToken cancellationToken = default);
 }
-}
