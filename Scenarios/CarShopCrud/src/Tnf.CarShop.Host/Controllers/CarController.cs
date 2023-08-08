@@ -1,6 +1,6 @@
-﻿namespace Tnf.CarShop.Host.Controllers
+﻿namespace Tnf.CarShop.Host.Controllers;
+
+internal sealed class CarController
 {
-    public class CarController
-    {
-    }
+
 }
