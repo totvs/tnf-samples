@@ -36,16 +36,14 @@ public abstract class CustomerFactory : IFactory<CustomerDto, Customer>
             customerDto.Phone,
             customerDto.Email,
             customerDto.DateOfBirth);
-        
-            
-        if (customerDto.Cars != null) 
-        {
-            foreach (var carDto in customerDto.Cars) 
+
+
+        if (customerDto.Cars != null)
+            foreach (var carDto in customerDto.Cars)
             {
                 var car = _carFactory.ToEntity(carDto);
                 customer.PurchaseCar(car);
             }
-        }
 
         return customer;
     }

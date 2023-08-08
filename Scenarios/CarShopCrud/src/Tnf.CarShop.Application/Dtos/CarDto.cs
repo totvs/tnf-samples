@@ -25,5 +25,4 @@ public class CarDto
     public decimal Price { get; set; }
     public DealerDto? Dealer { get; set; }
     public CustomerDto? Owner { get; set; }
-
 }

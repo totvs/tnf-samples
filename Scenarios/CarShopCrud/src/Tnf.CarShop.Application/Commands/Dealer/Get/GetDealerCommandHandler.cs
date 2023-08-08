@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Commands.Dealer.Get;
-using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
+namespace Tnf.CarShop.Application.Commands.Dealer.Get;
+
 public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDealerResult>
 {
-    private readonly ILogger<GetDealerCommandHandler> _logger;
-    private readonly IDealerRepository _dealerRepository;
     private readonly DealerFactory _dealerFactory;
+    private readonly IDealerRepository _dealerRepository;
+    private readonly ILogger<GetDealerCommandHandler> _logger;
 
-    public GetDealerCommandHandler(ILogger<GetDealerCommandHandler> logger, IDealerRepository dealerRepository, DealerFactory dealerFactory)
+    public GetDealerCommandHandler(ILogger<GetDealerCommandHandler> logger, IDealerRepository dealerRepository,
+        DealerFactory dealerFactory)
     {
         _logger = logger;
         _dealerRepository = dealerRepository;
@@ -19,7 +20,7 @@ public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDeal
     }
 
     public async Task HandleAsync(ICommandContext<GetDealerCommand, GetDealerResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         var command = context.Command;
 
@@ -27,14 +28,11 @@ public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDeal
         {
             var dealer = await _dealerRepository.GetAsync(command.DealerId.Value, cancellationToken);
 
-            if (dealer == null)
-            {
-                throw new Exception($"Dealer with id {command} not found.");
-            }
-        
-            var dealerResult = new GetDealerResult( _dealerFactory.ToDto(dealer));
+            if (dealer == null) throw new Exception($"Dealer with id {command} not found.");
 
-            context.Result = dealerResult; 
+            var dealerResult = new GetDealerResult(_dealerFactory.ToDto(dealer));
+
+            context.Result = dealerResult;
         }
 
         var dealers = await _dealerRepository.GetAllAsync(cancellationToken);
