@@ -5,7 +5,7 @@ namespace Tnf.CarShop.Host.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route(Routes.Car)]
-internal class CarController : TnfController
+[Route(Routes.Customer)]
+internal class CustomerController : TnfController
 {
 }
