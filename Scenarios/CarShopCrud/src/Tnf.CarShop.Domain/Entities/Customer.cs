@@ -1,74 +1,75 @@
 ﻿using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
-namespace Tnf.CarShop.Domain.Entities;
-
-public record Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
+namespace Tnf.CarShop.Domain.Entities
 {
-    protected Customer()
+    public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     {
-        CarsOwned = new HashSet<Car>();
-    }
+        public Guid Id { get; private set; }
+        public Guid TenantId { get; set; }
+        public string FullName { get; private set; }
+        public string Address { get; private set; }
+        public string Phone { get; private set; }
+        public string Email { get; private set; }
+        public DateOnly DateOfBirth { get; private set; }
+        public ICollection<Car> CarsOwned { get; private set; }
 
-    public Customer(string fullName, string address, string phone, string email, DateOnly dateOfBirth)
-    {
-        FullName = fullName;
-        Address = address;
-        Phone = phone;
-        Email = email;
-        DateOfBirth = dateOfBirth;
-    }
+        public DateTime CreationTime { get; set; }
+        public DateTime? LastModificationTime { get; set; }
 
-    public Customer(Guid id, string fullName, string address, string phone, string email, DateOnly dateOfBirth)
-    {
-        Id = id;
-        FullName = fullName;
-        Address = address;
-        Phone = phone;
-        Email = email;
-        DateOfBirth = dateOfBirth;
-        CreationTime = DateTime.Now;
-    }
+        protected Customer()
+        {
+            CarsOwned = new HashSet<Car>();
+        }
 
-    public Guid Id { get; private set; }
-    public string FullName { get; private set; }
-    public string Address { get; private set; }
-    public string Phone { get; private set; }
-    public string Email { get; private set; }
-    public DateOnly DateOfBirth { get; private set; }
-    public ICollection<Car> CarsOwned { get; }
+        public Customer(string fullName, string address, string phone, string email, DateOnly dateOfBirth)
+        {
+            FullName = fullName;
+            Address = address;
+            Phone = phone;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+        }
 
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
-    public Guid TenantId { get; set; }
+        public Customer(Guid id, string fullName, string address, string phone, string email, DateOnly dateOfBirth)
+        {
+            Id = id;
+            FullName = fullName;
+            Address = address;
+            Phone = phone;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            CreationTime = DateTime.Now;
+        }
 
-    public void UpdateFullName(string fullName)
-    {
-        FullName = fullName;
-    }
+        public void UpdateFullName(string fullName)
+        {
+            FullName = fullName;
+        }
 
-    public void UpdateAddress(string address)
-    {
-        Address = address;
-    }
+        public void UpdateAddress(string address)
+        {
+            Address = address;
+        }
 
-    public void UpdatePhone(string phone)
-    {
-        Phone = phone;
-    }
+        public void UpdatePhone(string phone)
+        {
+            Phone = phone;
+        }
 
-    public void UpdateEmail(string email)
-    {
-        Email = email;
-    }
+        public void UpdateEmail(string email)
+        {
+            Email = email;
+        }
 
-    public void UpdateDateOfBirth(DateOnly dateOfBirth)
-    {
-        DateOfBirth = dateOfBirth;
-    }
+        public void UpdateDateOfBirth(DateOnly dateOfBirth)
+        {
+            DateOfBirth = dateOfBirth;
+        }
 
-    public void PurchaseCar(Car car)
-    {
-        CarsOwned.Add(car);
+        public void PurchaseCar(Car car)
+        {
+            CarsOwned.Add(car);
+        }
     }
 }
