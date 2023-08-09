@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tnf.CarShop.Domain.Entities;
 
-namespace Tnf.CarShop.EntityFrameworkCore.Configurations
-{
-    public class CarConfiguration : IEntityTypeConfiguration<Car>
-    {
-        public void Configure(EntityTypeBuilder<Car> builder)
-        {
-            builder.ToTable("Cars");
+namespace Tnf.CarShop.EntityFrameworkCore.Configurations;
 
-            builder.HasKey(car => car.Id);
+public class CarConfiguration : IEntityTypeConfiguration<Car>
+{
+    public void Configure(EntityTypeBuilder<Car> builder)
+    {
+        builder.ToTable("Cars");
+
+        builder.HasKey(car => car.Id);
 
             builder.HasOne(car => car.Owner)
                 .WithMany(owner => owner.CarsOwned)
@@ -18,7 +18,6 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
 
             builder.HasOne(car => car.Dealer)
                 .WithMany(dealer => dealer.Cars)
-                .HasForeignKey(car => car.DealerId);
-        }
+                .HasForeignKey(car => car.DealerId);        
     }
 }

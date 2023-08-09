@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public class DealerDto
+public sealed record DealerDto
 {
     public DealerDto(Guid id, string name, string location, List<CarDto> cars)
     {
@@ -13,6 +13,10 @@ public class DealerDto
     public DealerDto(Guid id)
     {
         Id = id;
+    }
+
+    public DealerDto()
+    {
     }
 
     public Guid Id { get; set; }

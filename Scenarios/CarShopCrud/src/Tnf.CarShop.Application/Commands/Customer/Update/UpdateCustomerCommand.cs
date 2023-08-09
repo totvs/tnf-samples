@@ -1,5 +1,7 @@
 ﻿using Tnf.CarShop.Application.Dtos;
 
+namespace Tnf.CarShop.Application.Commands.Customer.Update;
+
 public class UpdateCustomerCommand
 {
     public CustomerDto Customer { get; set; }

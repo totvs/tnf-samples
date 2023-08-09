@@ -4,10 +4,10 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract class CarFactory : IFactory<CarDto, Car>
+public abstract record CarFactory : IFactory<CarDto, Car>
 {
-    private readonly DealerFactory _dealerFactory; 
     private readonly CustomerFactory _customerFactory;
+    private readonly DealerFactory _dealerFactory;
 
     protected CarFactory(DealerFactory dealerFactory, CustomerFactory customerFactory)
     {
@@ -17,7 +17,7 @@ public abstract class CarFactory : IFactory<CarDto, Car>
 
     public CarDto ToDto(Car car)
     {
-        return new(
+        return new CarDto(
             car.Id,
             car.Brand,
             car.Model,
@@ -31,21 +31,15 @@ public abstract class CarFactory : IFactory<CarDto, Car>
     public Car ToEntity(CarDto carDto)
     {
         var car = new Car(
-            carDto.Id,  
-            carDto.Brand, 
-            carDto.Model, 
-            carDto.Year, 
+            carDto.Id,
+            carDto.Brand,
+            carDto.Model,
+            carDto.Year,
             carDto.Price);
-            
-        if (carDto.Dealer != null) 
-        {
-            car.AssignToDealer(_dealerFactory.ToEntity(carDto.Dealer));
-        }
 
-        if (carDto.Owner != null) 
-        {
-            car.AssignToOwner(_customerFactory.ToEntity(carDto.Owner));
-        }
+        if (carDto.Dealer != null) car.AssignToDealer(_dealerFactory.ToEntity(carDto.Dealer));
+
+        if (carDto.Owner != null) car.AssignToOwner(_customerFactory.ToEntity(carDto.Owner));
 
         return car;
     }

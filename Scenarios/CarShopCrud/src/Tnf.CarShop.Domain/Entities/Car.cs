@@ -49,7 +49,7 @@ namespace Tnf.CarShop.Domain.Entities
         }
 
         public void UpdatePrice(decimal newPrice)
-        {      
+        {
             Price = newPrice;
         }
 
@@ -77,6 +77,5 @@ namespace Tnf.CarShop.Domain.Entities
         {
             Owner = owner;
         }
-
     }
 }

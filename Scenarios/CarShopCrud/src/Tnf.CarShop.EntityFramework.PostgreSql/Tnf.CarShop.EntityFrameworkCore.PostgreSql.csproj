@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
@@ -15,8 +15,8 @@
 		<PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj"/>
+    </ItemGroup>
 
 </Project>

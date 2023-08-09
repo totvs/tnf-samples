@@ -1,18 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Commands.Purchase.Get;
-using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
+namespace Tnf.CarShop.Application.Commands.Purchase.Get;
+
 public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, GetPurchaseResult>
 {
     private readonly ILogger<GetPurchaseCommandHandler> _logger;
-    private readonly IPurchaseRepository _purchaseRepository;
     private readonly PurchaseFactory _purchaseFactory;
+    private readonly IPurchaseRepository _purchaseRepository;
 
 
-    public GetPurchaseCommandHandler(ILogger<GetPurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository, PurchaseFactory purchaseFactory)
+    public GetPurchaseCommandHandler(ILogger<GetPurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository,
+        PurchaseFactory purchaseFactory)
     {
         _logger = logger;
         _purchaseRepository = purchaseRepository;
@@ -20,21 +21,25 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
     }
 
     public async Task HandleAsync(ICommandContext<GetPurchaseCommand, GetPurchaseResult> context,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
-        var purchaseId = context.Command.PurchaseId;
+        var command = context.Command;
 
-        var purchase = await _purchaseRepository.GetAsync(purchaseId, cancellationToken);
-
-        if (purchase == null)
+        if (command.PurchaseId.HasValue)
         {
-            throw new Exception($"Purchase with id {purchaseId} not found.");
+            var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
+
+            if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
+
+            var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
+
+            context.Result = purchaseResult;
         }
-        
-        var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
 
-        context.Result = purchaseResult;
+        var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
 
-        return;
+        var purchasesDto = purchases.Select(_purchaseFactory.ToDto).ToList();
+
+        context.Result = new GetPurchaseResult(purchasesDto);
     }
 }

@@ -1,25 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 using Tnf.CarShop.Domain.Entities;
 
-namespace Tnf.CarShop.EntityFrameworkCore.Configurations
-{
-    public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
-    {
-        public void Configure(EntityTypeBuilder<Purchase> builder)
-        {
-            builder.ToTable("Purchases");
+namespace Tnf.CarShop.EntityFrameworkCore.Configurations;
 
-            builder.HasKey(purchase => purchase.Id);
+public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
+{
+    public void Configure(EntityTypeBuilder<Purchase> builder)
+    {
+        builder.ToTable("Purchases");
+
+        builder.HasKey(purchase => purchase.Id);
 
             builder.HasOne(purchase => purchase.Customer)
                .WithOne()
                .HasForeignKey<Customer>(customer => customer.Id);
 
-            builder.HasOne(purchase => purchase.Car)
-                   .WithMany()
-                   .HasForeignKey(purchase => purchase.CarId);
-        }
+        builder.HasOne(purchase => purchase.Car)
+            .WithMany()
+            .HasForeignKey(purchase => purchase.CarId);
     }
 }

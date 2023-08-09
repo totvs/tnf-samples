@@ -1,8 +1,8 @@
 ﻿using Tnf.CarShop.Application.Dtos;
 
-namespace Tnf.CarShop.Host.Commands.Car.Create;
+namespace Tnf.CarShop.Application.Commands.Car.Create;
 
-public class CreateCarCommand
+public sealed record CreateCarCommand
 {
     public CarDto Car { get; set; }
 }
@@ -17,5 +17,4 @@ public class CreateCarResult
 
     public Guid CarId { get; set; }
     public bool Success { get; set; }
-    
 }

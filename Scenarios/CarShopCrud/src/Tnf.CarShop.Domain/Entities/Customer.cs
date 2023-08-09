@@ -13,9 +13,9 @@ namespace Tnf.CarShop.Domain.Entities
         public string Email { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
         public ICollection<Car> CarsOwned { get; private set; }
-        
+
         public DateTime CreationTime { get; set; }
-        public DateTime? LastModificationTime { get; set; }        
+        public DateTime? LastModificationTime { get; set; }
 
         protected Customer()
         {
@@ -41,7 +41,7 @@ namespace Tnf.CarShop.Domain.Entities
             DateOfBirth = dateOfBirth;
             CreationTime = DateTime.Now;
         }
-        
+
         public void UpdateFullName(string fullName)
         {
             FullName = fullName;
@@ -70,6 +70,6 @@ namespace Tnf.CarShop.Domain.Entities
         public void PurchaseCar(Car car)
         {
             CarsOwned.Add(car);
-        }   
+        }
     }
 }

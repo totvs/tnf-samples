@@ -1,6 +1,6 @@
 ﻿using Tnf.CarShop.Application.Dtos;
 
-namespace Tnf.CarShop.Host.Commands.Car.Get;
+namespace Tnf.CarShop.Application.Commands.Car.Get;
 
 public class GetCarCommand
 {
@@ -9,10 +9,17 @@ public class GetCarCommand
 
 public class GetCarResult
 {
-    public GetCarResult( CarDto car)
+    public GetCarResult(CarDto car)
     {
         Car = car;
     }
-    
+
+    public GetCarResult(List<CarDto> cars)
+    {
+        Cars = cars;
+    }
+
     public CarDto Car { get; set; }
+
+    public List<CarDto> Cars { get; set; }
 }

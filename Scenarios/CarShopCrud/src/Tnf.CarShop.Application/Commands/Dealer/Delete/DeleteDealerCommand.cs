@@ -1,4 +1,4 @@
-﻿namespace Tnf.CarShop.Host.Commands.Dealer.Delete;
+﻿namespace Tnf.CarShop.Application.Commands.Dealer.Delete;
 
 public class DeleteDealerCommand
 {
