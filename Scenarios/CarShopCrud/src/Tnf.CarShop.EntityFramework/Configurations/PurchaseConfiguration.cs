@@ -12,9 +12,9 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
 
         builder.HasKey(purchase => purchase.Id);
 
-        builder.HasOne(purchase => purchase.Customer)
-            .WithMany()
-            .HasForeignKey(purchase => purchase.CustomerId);
+            builder.HasOne(purchase => purchase.Customer)
+               .WithOne()
+               .HasForeignKey<Customer>(customer => customer.Id);
 
         builder.HasOne(purchase => purchase.Car)
             .WithMany()
