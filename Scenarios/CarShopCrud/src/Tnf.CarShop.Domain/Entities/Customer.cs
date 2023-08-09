@@ -12,7 +12,7 @@ namespace Tnf.CarShop.Domain.Entities
         public string Phone { get; private set; }
         public string Email { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
-        public  ICollection<Car> CarsOwned { get; private set; }
+        public ICollection<Car> CarsOwned { get; private set; }
         
         public DateTime CreationTime { get; set; }
         public DateTime? LastModificationTime { get; set; }        

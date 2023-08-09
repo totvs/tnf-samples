@@ -7,7 +7,6 @@ namespace Tnf.CarShop.Domain.Entities
     {
         public Guid Id { get; private set; }
         public Guid? TenantId { get; set; }
-        public Guid CustomerId { get; private set; }
         public Guid CarId { get; private set; }
         public DateTime PurchaseDate { get; private set; }
         public decimal Price { get; private set; }

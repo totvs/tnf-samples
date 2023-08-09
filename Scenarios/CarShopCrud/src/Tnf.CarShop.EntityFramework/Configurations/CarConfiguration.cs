@@ -14,11 +14,11 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
 
             builder.HasOne(car => car.Owner)
                 .WithMany(owner => owner.CarsOwned)
-                .HasForeignKey(car => car.Owner.Id);
+                .HasForeignKey(car => car.CustomerId);
 
             builder.HasOne(car => car.Dealer)
                 .WithMany(dealer => dealer.Cars)
-                .HasForeignKey(car => car.Dealer.Id);
+                .HasForeignKey(car => car.DealerId);
         }
     }
 }

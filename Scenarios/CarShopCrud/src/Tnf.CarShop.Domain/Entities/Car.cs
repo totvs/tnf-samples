@@ -7,6 +7,8 @@ namespace Tnf.CarShop.Domain.Entities
     {
         public Guid? TenantId { get; set; }
         public Guid Id { get; private set; }
+        public Guid CustomerId { get; set; }
+        public Guid DealerId { get; set; }
         public string Brand { get; private set; }
         public string Model { get; private set; }
         public int Year { get; private set; }

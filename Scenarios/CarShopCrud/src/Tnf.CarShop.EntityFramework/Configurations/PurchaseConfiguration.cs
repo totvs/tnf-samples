@@ -14,8 +14,8 @@ namespace Tnf.CarShop.EntityFrameworkCore.Configurations
             builder.HasKey(purchase => purchase.Id);
 
             builder.HasOne(purchase => purchase.Customer)
-               .WithMany()
-               .HasForeignKey(purchase => purchase.CustomerId);
+               .WithOne()
+               .HasForeignKey<Customer>(customer => customer.Id);
 
             builder.HasOne(purchase => purchase.Car)
                    .WithMany()
