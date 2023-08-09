@@ -15,6 +15,10 @@ public sealed record DealerDto
         Id = id;
     }
 
+    public DealerDto()
+    {
+    }
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Location { get; set; }

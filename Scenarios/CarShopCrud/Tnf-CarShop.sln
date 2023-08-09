@@ -22,6 +22,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.CarShop.EntityFramework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.CarShop.Application", "src\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj", "{BBE967A2-21BB-47C5-BDFC-A78B91518200}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{29077EEB-E711-4B68-9F37-71E83DAF338D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tnf.CarShop.Application.Tests", "tests\Tnf.CarShop.Application.Tests\Tnf.CarShop.Application.Tests.csproj", "{0B61B3FF-B6BE-45F6-9613-511CB7D57376}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +56,10 @@ Global
 		{BBE967A2-21BB-47C5-BDFC-A78B91518200}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBE967A2-21BB-47C5-BDFC-A78B91518200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBE967A2-21BB-47C5-BDFC-A78B91518200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B61B3FF-B6BE-45F6-9613-511CB7D57376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B61B3FF-B6BE-45F6-9613-511CB7D57376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B61B3FF-B6BE-45F6-9613-511CB7D57376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B61B3FF-B6BE-45F6-9613-511CB7D57376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{31ADF39C-18F1-4CB3-BC1E-6CFBB9DD82E0} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 		{4C049241-B916-42AC-98A3-EAA353EB5629} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
 		{BBE967A2-21BB-47C5-BDFC-A78B91518200} = {FC818A1A-A69F-4F13-A26E-5BC461CA4858}
+		{0B61B3FF-B6BE-45F6-9613-511CB7D57376} = {29077EEB-E711-4B68-9F37-71E83DAF338D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D0A4FA99-192E-4F54-B5EC-87505D95B959}
