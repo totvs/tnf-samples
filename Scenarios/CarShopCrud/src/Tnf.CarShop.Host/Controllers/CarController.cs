@@ -79,7 +79,7 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> DeleteCar(Guid carId)
     {
-        var command = new DeleteCarCommand { CardId = carId };
+        var command = new DeleteCarCommand { CarId = carId };
 
         var result = await _commandSender.SendAsync(command);
 
