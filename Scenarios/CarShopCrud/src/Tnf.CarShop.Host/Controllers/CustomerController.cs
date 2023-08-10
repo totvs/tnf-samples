@@ -45,13 +45,13 @@ public class CustomerController : TnfController
     {
         var result = await _commandSender.SendAsync<GetCustomerResult>(new GetCustomerCommand());
 
-        return CreateResponseOnGetAll(result.Customer);
+        return CreateResponseOnGetAll(result.Customers);
     }
 
     [HttpPost]
     [ProducesResponseType(typeof(CreateCustomerResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> CreateCustomer(CustomerDto customer)
+    public async Task<IActionResult> Create(CustomerDto customer)
     {
         var command = new CreateCustomerCommand { Customer = customer };
 
@@ -63,7 +63,7 @@ public class CustomerController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdateCustomerResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> UpdateCustomer(CustomerDto customer)
+    public async Task<IActionResult> Update(CustomerDto customer)
     {
         var command = new UpdateCustomerCommand { Customer = customer };
 
@@ -75,7 +75,7 @@ public class CustomerController : TnfController
     [HttpDelete("{customerId}")]
     [ProducesResponseType(typeof(bool), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> DeleteCustomer(Guid customerId)
+    public async Task<IActionResult> Delete(Guid customerId)
     {
         var command = new DeleteCustomerCommand { CustomerId = customerId };
 
