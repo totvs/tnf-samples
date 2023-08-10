@@ -53,7 +53,7 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CreateCarResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> CreateCar(CarDto car)
+    public async Task<IActionResult> Create(CarDto car)
     {
         var command = new CreateCarCommand { Car = car };
 
@@ -65,7 +65,7 @@ public class CarController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdateCarResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> UpdateCar(CarDto car)
+    public async Task<IActionResult> Update(CarDto car)
     {
         var command = new UpdateCarCommand { Car = car };
 
@@ -77,7 +77,7 @@ public class CarController : TnfController
     [HttpDelete("{carId}")]
     [ProducesResponseType(typeof(bool), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> DeleteCar(Guid carId)
+    public async Task<IActionResult> Delete(Guid carId)
     {
         var command = new DeleteCarCommand { CarId = carId };
 
