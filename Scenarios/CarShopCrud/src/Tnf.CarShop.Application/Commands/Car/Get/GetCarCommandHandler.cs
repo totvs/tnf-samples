@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Get;
 
-public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
+public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>, IGetCarCommandHandler
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;

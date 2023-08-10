@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
 
-public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateCarResult>
+public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateCarResult>, IUpdateCarCommandHandler
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;
