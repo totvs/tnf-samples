@@ -17,7 +17,6 @@
     </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
@@ -48,7 +47,7 @@
 
   <ItemGroup>
     <Folder Include="Endpoints\" />
-    <Folder Include="Requests\" />
+    <Folder Include="Requests\Car\" />
   </ItemGroup>
 
 </Project>
