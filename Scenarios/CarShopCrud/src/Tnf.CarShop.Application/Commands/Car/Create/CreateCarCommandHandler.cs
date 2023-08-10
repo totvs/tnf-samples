@@ -6,7 +6,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
 
-public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateCarResult>
+public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateCarResult>, ICreateCarCommandHandler
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;
