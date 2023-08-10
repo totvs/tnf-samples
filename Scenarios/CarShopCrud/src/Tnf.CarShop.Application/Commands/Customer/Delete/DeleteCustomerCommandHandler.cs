@@ -4,7 +4,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Delete;
 
-public class DeleteCustomerCommandHandler : ICommandHandler<DeleteCustomerCommand, DeleteCustomerResult>
+public class DeleteCustomerCommandHandler : CommandHandler<DeleteCustomerCommand, DeleteCustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ILogger<DeleteCustomerCommandHandler> _logger;
@@ -16,13 +16,12 @@ public class DeleteCustomerCommandHandler : ICommandHandler<DeleteCustomerComman
         _customerRepository = customerRepository;
     }
 
-    public async Task HandleAsync(ICommandContext<DeleteCustomerCommand, DeleteCustomerResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<DeleteCustomerResult> ExecuteAsync(DeleteCustomerCommand command, CancellationToken cancellationToken = default)
     {
-        var customerId = context.Command.CustomerId;
+        var customerId = command.CustomerId;
 
         await _customerRepository.DeleteAsync(customerId, cancellationToken);
 
-        context.Result = new DeleteCustomerResult(true);
-    }
+        return new DeleteCustomerResult(true);
+    }    
 }
