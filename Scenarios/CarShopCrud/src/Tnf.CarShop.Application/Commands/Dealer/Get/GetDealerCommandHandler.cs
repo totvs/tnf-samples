@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Dealer.Get;
 
-public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDealerResult>
+public class GetDealerCommandHandler : CommandHandler<GetDealerCommand, GetDealerResult>
 {
     private readonly DealerFactory _dealerFactory;
     private readonly IDealerRepository _dealerRepository;
@@ -19,26 +19,23 @@ public class GetDealerCommandHandler : ICommandHandler<GetDealerCommand, GetDeal
         _dealerFactory = dealerFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<GetDealerCommand, GetDealerResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<GetDealerResult> ExecuteAsync(GetDealerCommand command, CancellationToken cancellationToken = default)
     {
-        var command = context.Command;
-
         if (command.DealerId.HasValue)
         {
             var dealer = await _dealerRepository.GetAsync(command.DealerId.Value, cancellationToken);
 
-            if (dealer == null) throw new Exception($"Dealer with id {command} not found.");
+            if (dealer is null) throw new Exception($"Dealer with id {command} not found.");
 
             var dealerResult = new GetDealerResult(_dealerFactory.ToDto(dealer));
 
-            context.Result = dealerResult;
+            return dealerResult;
         }
 
         var dealers = await _dealerRepository.GetAllAsync(cancellationToken);
 
         var dealersDto = dealers.Select(_dealerFactory.ToDto).ToList();
 
-        context.Result = new GetDealerResult(dealersDto);
-    }
+        return new GetDealerResult(dealersDto);
+    }    
 }
