@@ -33,10 +33,8 @@ public class CreateCustomerCommandValidator : TnfFluentValidator<CreateCustomerC
 
     private bool BeAValidAge(DateOnly dateOfBirth)
     {
-        int age = DateTime.Today.Year - dateOfBirth.Year;
+        var age = DateTime.Today.Year - dateOfBirth.Year;
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.Today.AddYears(-age))) age--;
         return age >= 18 && age <= 100;
     }
 }
-
-

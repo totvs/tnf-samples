@@ -19,7 +19,8 @@ public class UpdateDealerCommandHandler : CommandHandler<UpdateDealerCommand, Up
         _dealerFactory = dealerFactory;
     }
 
-    public override async Task<UpdateDealerResult> ExecuteAsync(UpdateDealerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<UpdateDealerResult> ExecuteAsync(UpdateDealerCommand command,
+        CancellationToken cancellationToken = default)
     {
         var dealerDto = command.Dealer;
 
@@ -33,5 +34,5 @@ public class UpdateDealerCommandHandler : CommandHandler<UpdateDealerCommand, Up
         var updatedDealer = await _dealerRepository.UpdateAsync(dealer, cancellationToken);
 
         return new UpdateDealerResult(_dealerFactory.ToDto(updatedDealer));
-    }    
+    }
 }

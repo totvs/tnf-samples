@@ -25,14 +25,15 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         _carFactory = carFactory;
     }
 
-    public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command, CancellationToken cancellationToken = default)
+    public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
+        CancellationToken cancellationToken = default)
     {
         var carDto = command.Car;
 
         var createdCarId = await CreateCarAsync(carDto, cancellationToken);
 
         return new CreateCarResult(createdCarId, true);
-    }    
+    }
 
     private async Task<Guid> CreateCarAsync(CarDto carDto, CancellationToken cancellationToken)
     {
@@ -41,7 +42,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         if (carDto.Dealer != null)
         {
             var dealer = await FetchDealerAsync(carDto.Dealer.Id, cancellationToken);
-            
+
             Check.NotNull(dealer, nameof(dealer));
 
             newCar.AssignToDealer(dealer);
@@ -52,7 +53,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
             var owner = await FetchOwnerAsync(carDto.Owner.Id, cancellationToken);
 
             Check.NotNull(owner, "Customer");
-            
+
             newCar.AssignToOwner(owner);
         }
 
@@ -69,5 +70,5 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     private async Task<Domain.Entities.Customer> FetchOwnerAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _customerRepository.GetAsync(id, cancellationToken);
-    }    
+    }
 }

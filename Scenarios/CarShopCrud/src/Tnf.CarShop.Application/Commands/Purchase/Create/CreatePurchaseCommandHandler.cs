@@ -25,14 +25,15 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
         _purchaseFactory = purchaseFactory;
     }
 
-    public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command, CancellationToken cancellationToken = default)
+    public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
         var purchaseDto = command.Purchase;
 
         var createdPurchaseId = await CreatePurchaseAsync(purchaseDto, cancellationToken);
 
         return new CreatePurchaseResult(createdPurchaseId);
-    }    
+    }
 
     private async Task<Guid> CreatePurchaseAsync(PurchaseDto purchaseDto, CancellationToken cancellationToken)
     {

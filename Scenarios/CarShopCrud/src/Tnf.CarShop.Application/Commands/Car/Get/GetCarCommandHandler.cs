@@ -19,7 +19,8 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         _carFactory = carFactory;
     }
 
-    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command, CancellationToken cancellationToken = default)
+    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command,
+        CancellationToken cancellationToken = default)
     {
         if (command.CarId.HasValue)
         {
@@ -37,5 +38,5 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         var carsDto = cars.Select(_carFactory.ToDto).ToList();
 
         return new GetCarResult(carsDto);
-    }    
+    }
 }

@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tnf.CarShop.Application.Commands.Customer.Delete;
+﻿using Tnf.CarShop.Application.Commands.Customer.Delete;
 
-namespace Tnf.CarShop.Application.Tests.Commands.Customer.Delete
+namespace Tnf.CarShop.Application.Tests.Commands.Customer.Delete;
+
+public class DeleteCustomerCommandValidatorTests
 {
-    public class DeleteCustomerCommandValidatorTests
+    [Fact]
+    public void Should_Have_Error_When_CustomerId_Is_Empty()
     {
-        [Fact]
-        public void Should_Have_Error_When_CustomerId_Is_Empty()
-        {
-            
-            var command = new DeleteCustomerCommand();
-            var validator = new DeleteCustomerCommandValidator();
+        var command = new DeleteCustomerCommand();
+        var validator = new DeleteCustomerCommandValidator();
 
-            
-            var result = validator.Validate(command);
 
-           
-            Assert.False(result.IsValid);
-            Assert.Contains(result.Errors, e => e.ErrorMessage == "CustomerId is required.");
-        }
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors, e => e.ErrorMessage == "CustomerId is required.");
     }
 }

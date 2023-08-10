@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Customer.Create;
 using Tnf.CarShop.Application.Commands.Customer.Delete;
 using Tnf.CarShop.Application.Commands.Customer.Get;
 using Tnf.CarShop.Application.Commands.Customer.Update;
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
 using Tnf.Dto;
 

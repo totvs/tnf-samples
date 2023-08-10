@@ -20,7 +20,8 @@ public class UpdateCustomerCommandHandler : CommandHandler<UpdateCustomerCommand
         _customerFactory = customerFactory;
     }
 
-    public override async Task<UpdateCustomerResult> ExecuteAsync(UpdateCustomerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<UpdateCustomerResult> ExecuteAsync(UpdateCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
         var customerDto = command.Customer;
 

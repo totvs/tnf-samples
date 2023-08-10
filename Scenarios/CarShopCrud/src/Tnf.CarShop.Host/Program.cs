@@ -5,10 +5,7 @@ using Tnf.CarShop.Host.Swagger;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logs
-builder.Host.UseSerilog((context, configuration) =>
-{
-    configuration.ReadFrom.Configuration(context.Configuration);
-});
+builder.Host.UseSerilog((context, configuration) => { configuration.ReadFrom.Configuration(context.Configuration); });
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -21,19 +18,13 @@ builder.Services.AddTnfAspNetCore(tnf =>
     tnf.DefaultConnectionString(builder.Configuration.GetConnectionString("PostgreSql"));
 });
 
-builder.Services.AddTnfCommands(commands =>
-{
-    commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly);
-});
+builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });
 
 builder.Services.AddEFCorePostgreSql();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
 app.UseCarShopApiVersioning();
 

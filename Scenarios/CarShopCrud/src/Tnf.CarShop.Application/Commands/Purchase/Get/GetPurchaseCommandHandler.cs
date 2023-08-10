@@ -20,7 +20,8 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         _purchaseFactory = purchaseFactory;
     }
 
-    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command, CancellationToken cancellationToken = default)
+    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
         if (command.PurchaseId.HasValue)
         {
@@ -38,5 +39,5 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         var purchasesDto = purchases.Select(_purchaseFactory.ToDto).ToList();
 
         return new GetPurchaseResult(purchasesDto);
-    }    
+    }
 }

@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Commands.Car.Delete;
 using Tnf.CarShop.Application.Commands.Car.Get;
 using Tnf.CarShop.Application.Commands.Car.Update;
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -85,5 +81,4 @@ public class CarController : TnfController
 
         return CreateResponseOnDelete(result);
     }
-
 }

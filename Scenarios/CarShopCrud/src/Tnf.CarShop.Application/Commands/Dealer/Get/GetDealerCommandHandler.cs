@@ -19,7 +19,8 @@ public class GetDealerCommandHandler : CommandHandler<GetDealerCommand, GetDeale
         _dealerFactory = dealerFactory;
     }
 
-    public override async Task<GetDealerResult> ExecuteAsync(GetDealerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<GetDealerResult> ExecuteAsync(GetDealerCommand command,
+        CancellationToken cancellationToken = default)
     {
         if (command.DealerId.HasValue)
         {
@@ -37,5 +38,5 @@ public class GetDealerCommandHandler : CommandHandler<GetDealerCommand, GetDeale
         var dealersDto = dealers.Select(_dealerFactory.ToDto).ToList();
 
         return new GetDealerResult(dealersDto);
-    }    
+    }
 }

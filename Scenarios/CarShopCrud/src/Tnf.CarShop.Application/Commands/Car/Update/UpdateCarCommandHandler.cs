@@ -23,7 +23,8 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
         _carFactory = carFactory;
     }
 
-    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command, CancellationToken cancellationToken = default)
+    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command,
+        CancellationToken cancellationToken = default)
     {
         var carDto = command.Car;
 
@@ -53,5 +54,5 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
         var updatedCarDto = _carFactory.ToDto(updatedCar);
 
         return new UpdateCarResult(updatedCarDto);
-    }    
+    }
 }

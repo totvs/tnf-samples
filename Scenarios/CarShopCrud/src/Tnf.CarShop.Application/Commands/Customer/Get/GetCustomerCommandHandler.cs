@@ -15,7 +15,8 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
         _customerFactory = customerFactory;
     }
 
-    public override async Task<GetCustomerResult> ExecuteAsync(GetCustomerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<GetCustomerResult> ExecuteAsync(GetCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
         if (command.CustomerId.HasValue)
         {
@@ -33,5 +34,5 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
         var customersDto = customers.Select(_customerFactory.ToDto).ToList();
 
         return new GetCustomerResult(customersDto);
-    }    
+    }
 }
