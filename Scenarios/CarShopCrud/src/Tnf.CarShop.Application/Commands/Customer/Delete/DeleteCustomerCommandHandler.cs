@@ -4,7 +4,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Delete;
 
-public class DeleteCustomerCommandHandler : ICommandHandler<DeleteCustomerCommand, DeleteCustomerResult>, IDeleteCustomerCommandHandler
+public class DeleteCustomerCommandHandler : ICommandHandler<DeleteCustomerCommand, DeleteCustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ILogger<DeleteCustomerCommandHandler> _logger;

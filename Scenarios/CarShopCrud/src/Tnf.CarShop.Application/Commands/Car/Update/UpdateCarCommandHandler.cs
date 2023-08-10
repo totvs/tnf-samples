@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
 
-public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateCarResult>, IUpdateCarCommandHandler
+public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCarResult>
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;
@@ -23,10 +23,9 @@ public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateC
         _carFactory = carFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<UpdateCarCommand, UpdateCarResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command, CancellationToken cancellationToken = default)
     {
-        var carDto = context.Command.Car;
+        var carDto = command.Car;
 
         var car = await _carRepository.GetAsync(carDto.Id, cancellationToken);
 
@@ -53,6 +52,6 @@ public class UpdateCarCommandHandler : ICommandHandler<UpdateCarCommand, UpdateC
 
         var updatedCarDto = _carFactory.ToDto(updatedCar);
 
-        context.Result = new UpdateCarResult(updatedCarDto);
-    }
+        return new UpdateCarResult(updatedCarDto);
+    }    
 }

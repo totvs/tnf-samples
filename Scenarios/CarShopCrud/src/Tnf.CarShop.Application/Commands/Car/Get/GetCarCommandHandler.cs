@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Get;
 
-public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>, IGetCarCommandHandler
+public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;
@@ -19,29 +19,23 @@ public class GetCarCommandHandler : ICommandHandler<GetCarCommand, GetCarResult>
         _carFactory = carFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<GetCarCommand, GetCarResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command, CancellationToken cancellationToken = default)
     {
-        var command = context.Command;
-
         if (command.CarId.HasValue)
         {
             var car = await _carRepository.GetAsync(command.CarId.Value, cancellationToken);
 
-            if (car == null) throw new Exception($"Car with id {command.CarId.Value} not found.");
+            if (car is null) throw new Exception($"Car with id {command.CarId.Value} not found.");
 
             var carDto = _carFactory.ToDto(car);
 
-            var carResult = new GetCarResult(carDto);
-            context.Result = carResult;
-
-            return;
+            return new GetCarResult(carDto);
         }
 
         var cars = await _carRepository.GetAllAsync(cancellationToken);
 
         var carsDto = cars.Select(_carFactory.ToDto).ToList();
 
-        context.Result = new GetCarResult(carsDto);
-    }
+        return new GetCarResult(carsDto);
+    }    
 }

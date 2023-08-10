@@ -6,7 +6,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
 
-public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateCarResult>, ICreateCarCommandHandler
+public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
     private readonly CarFactory _carFactory;
     private readonly ICarRepository _carRepository;
@@ -25,15 +25,14 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
         _carFactory = carFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<CreateCarCommand, CreateCarResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command, CancellationToken cancellationToken = default)
     {
-        var carDto = context.Command.Car;
+        var carDto = command.Car;
 
         var createdCarId = await CreateCarAsync(carDto, cancellationToken);
 
-        context.Result = new CreateCarResult(createdCarId, true);
-    }
+        return new CreateCarResult(createdCarId, true);
+    }    
 
     private async Task<Guid> CreateCarAsync(CarDto carDto, CancellationToken cancellationToken)
     {
@@ -42,14 +41,18 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
         if (carDto.Dealer != null)
         {
             var dealer = await FetchDealerAsync(carDto.Dealer.Id, cancellationToken);
-            CheckEntityNotNull(dealer, "Dealer", carDto.Dealer.Id);
+            
+            Check.NotNull(dealer, nameof(dealer));
+
             newCar.AssignToDealer(dealer);
         }
 
         if (carDto.Owner != null)
         {
             var owner = await FetchOwnerAsync(carDto.Owner.Id, cancellationToken);
-            CheckEntityNotNull(owner, "Customer", carDto.Owner.Id);
+
+            Check.NotNull(owner, "Customer");
+            
             newCar.AssignToOwner(owner);
         }
 
@@ -66,10 +69,5 @@ public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, CreateC
     private async Task<Domain.Entities.Customer> FetchOwnerAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _customerRepository.GetAsync(id, cancellationToken);
-    }
-
-    private void CheckEntityNotNull<T>(T entity, string entityType, Guid id)
-    {
-        if (entity == null) throw new Exception($"{entityType} with id {id} not found.");
-    }
+    }    
 }

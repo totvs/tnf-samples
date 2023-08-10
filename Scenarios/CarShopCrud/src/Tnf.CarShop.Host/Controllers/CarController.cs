@@ -1,8 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
+
+using Tnf.CarShop.Application.Commands.Car.Create;
+using Tnf.CarShop.Application.Commands.Car.Delete;
+using Tnf.CarShop.Application.Commands.Car.Get;
+using Tnf.CarShop.Application.Commands.Car.Update;
 using Tnf.CarShop.Application.Dtos;
-using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+
+using Tnf.Commands;
+
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -12,32 +20,70 @@ namespace Tnf.CarShop.Host.Controllers;
 [Route(Routes.Car)]
 public class CarController : TnfController
 {
+    private readonly ICommandSender _commandSender;
 
-    private readonly ICarRepository _carRepository;
-
-    public CarController(ICarRepository carRepository)
+    public CarController(ICommandSender commandSender)
     {
-        _carRepository = carRepository;
+        _commandSender = commandSender;
     }
 
 
-    [HttpGet("{model}")]
+    [HttpGet("{carId}")]
     [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public IActionResult GetByModel(string model)
+    public async Task<IActionResult> GetById(Guid carId)
     {
-        var car = _carRepository.GetAsync()
+        var command = new GetCarCommand { CarId = carId };
 
-        return CreateResponseOnGet();
+        var result = await _commandSender.SendAsync<GetCarResult>(command);
+
+        return CreateResponseOnGet(result.Car);
     }
 
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<CarDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var cars = _carRepository.GetAllAsync();
-        return CreateResponseOnGetAll(cars);
+        var result = await _commandSender.SendAsync<GetCarResult>(new GetCarCommand());
+
+        return CreateResponseOnGetAll(result.Cars);
     }
-         
+
+    [HttpPost]
+    [ProducesResponseType(typeof(CreateCarResult), 201)]
+    [ProducesResponseType(typeof(ErrorResponse), 400)]
+    public async Task<IActionResult> CreateCar(CarDto car)
+    {
+        var command = new CreateCarCommand { Car = car };
+
+        var result = await _commandSender.SendAsync<CreateCarResult>(command);
+
+        return CreateResponseOnPost(result);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(typeof(UpdateCarResult), 200)]
+    [ProducesResponseType(typeof(ErrorResponse), 400)]
+    public async Task<IActionResult> UpdateCar(CarDto car)
+    {
+        var command = new UpdateCarCommand { Car = car };
+
+        var result = await _commandSender.SendAsync<UpdateCarResult>(command);
+
+        return CreateResponseOnPut(result);
+    }
+
+    [HttpDelete("{carId}")]
+    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(typeof(ErrorResponse), 400)]
+    public async Task<IActionResult> DeleteCar(Guid carId)
+    {
+        var command = new DeleteCarCommand { CardId = carId };
+
+        var result = await _commandSender.SendAsync(command);
+
+        return CreateResponseOnDelete(result);
+    }
+
 }

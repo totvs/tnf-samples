@@ -9,11 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Dockerfile" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="Dockerfile" />
+      <Compile Remove="Endpoints\**" />
+      <Compile Remove="Requests\**" />
+      <Content Remove="Endpoints\**" />
+      <Content Remove="Requests\**" />
+      <EmbeddedResource Remove="Endpoints\**" />
+      <EmbeddedResource Remove="Requests\**" />
+      <None Remove="Endpoints\**" />
+      <None Remove="Requests\**" />
     </ItemGroup>
 
   <ItemGroup>
@@ -43,11 +46,6 @@
     <Content Update="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Endpoints\" />
-    <Folder Include="Requests\Car\" />
   </ItemGroup>
 
 </Project>
