@@ -4,7 +4,8 @@ namespace Tnf.CarShop.Application.Commands.Purchase.Update;
 
 public class UpdatePurchaseCommand
 {
-    public PurchaseDto Purchase { get; set; }
+    public Guid Id { get; set; }
+    public DateTime PurchaseDate { get; set; }
 }
 
 public class UpdatePurchaseResult

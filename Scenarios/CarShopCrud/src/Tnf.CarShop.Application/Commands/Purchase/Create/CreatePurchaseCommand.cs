@@ -4,7 +4,8 @@ namespace Tnf.CarShop.Application.Commands.Purchase.Create;
 
 public class CreatePurchaseCommand
 {
-    public PurchaseDto Purchase { get; set; }
+    public Guid Id { get; set; }
+    public DateTime PurchaseDate { get; set; }
 }
 
 public class CreatePurchaseResult
