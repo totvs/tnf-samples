@@ -8,7 +8,7 @@ namespace Tnf.CarShop.Application.Commands.Car.Create;
 
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
-    private readonly CarFactory _carFactory;
+    private readonly ICarFactory _carFactory;
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IDealerRepository _dealerRepository;
@@ -16,7 +16,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 
 
     public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
-        IDealerRepository dealerRepository, ICustomerRepository customerRepository, CarFactory carFactory)
+        IDealerRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;
@@ -25,14 +25,15 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         _carFactory = carFactory;
     }
 
-    public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command, CancellationToken cancellationToken = default)
+    public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
+        CancellationToken cancellationToken = default)
     {
         var carDto = command.Car;
 
         var createdCarId = await CreateCarAsync(carDto, cancellationToken);
 
         return new CreateCarResult(createdCarId, true);
-    }    
+    }
 
     private async Task<Guid> CreateCarAsync(CarDto carDto, CancellationToken cancellationToken)
     {
@@ -41,7 +42,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         if (carDto.Dealer != null)
         {
             var dealer = await FetchDealerAsync(carDto.Dealer.Id, cancellationToken);
-            
+
             Check.NotNull(dealer, nameof(dealer));
 
             newCar.AssignToDealer(dealer);
@@ -52,7 +53,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
             var owner = await FetchOwnerAsync(carDto.Owner.Id, cancellationToken);
 
             Check.NotNull(owner, "Customer");
-            
+
             newCar.AssignToOwner(owner);
         }
 
@@ -69,5 +70,5 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     private async Task<Domain.Entities.Customer> FetchOwnerAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _customerRepository.GetAsync(id, cancellationToken);
-    }    
+    }
 }

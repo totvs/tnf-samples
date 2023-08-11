@@ -16,12 +16,13 @@ public class DeletePurchaseCommandHandler : CommandHandler<DeletePurchaseCommand
         _purchaseRepository = purchaseRepository;
     }
 
-    public override async Task<DeletePurchaseResult> ExecuteAsync(DeletePurchaseCommand command, CancellationToken cancellationToken = default)
+    public override async Task<DeletePurchaseResult> ExecuteAsync(DeletePurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
         var purchaseId = command.PurchaseId;
 
         await _purchaseRepository.DeleteAsync(purchaseId, cancellationToken);
 
         return new DeletePurchaseResult(true);
-    }    
+    }
 }

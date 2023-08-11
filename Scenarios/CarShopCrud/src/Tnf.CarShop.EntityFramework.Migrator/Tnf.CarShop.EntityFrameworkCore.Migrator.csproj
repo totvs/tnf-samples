@@ -8,36 +8,36 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="appsettings.Development.json" />
-      <None Remove="appsettings.Production.json" />
+        <None Remove="appsettings.Development.json"/>
+        <None Remove="appsettings.Production.json"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="appsettings.Development.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="appsettings.Production.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <Content Include="appsettings.Development.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="appsettings.Production.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-        <PackageReference Include="Serilog" Version="3.0.1" />
-        <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
-        <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
-        <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-        <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-        <PackageReference Include="Tnf.Kernel" Version="6.3.0.21401" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
+        <PackageReference Include="Serilog" Version="3.0.1"/>
+        <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0"/>
+        <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0"/>
+        <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1"/>
+        <PackageReference Include="Tnf.Kernel" Version="6.3.0.21401"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj"/>
     </ItemGroup>
 
 </Project>

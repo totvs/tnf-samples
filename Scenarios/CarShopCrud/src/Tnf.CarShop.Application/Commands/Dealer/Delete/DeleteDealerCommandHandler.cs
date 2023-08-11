@@ -15,10 +15,11 @@ public class DeleteDealerCommandHandler : CommandHandler<DeleteDealerCommand, De
         _dealerRepository = dealerRepository;
     }
 
-    public override async Task<DeleteDealerResult> ExecuteAsync(DeleteDealerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<DeleteDealerResult> ExecuteAsync(DeleteDealerCommand command,
+        CancellationToken cancellationToken = default)
     {
         await _dealerRepository.DeleteAsync(command.DealerId, cancellationToken);
 
         return new DeleteDealerResult(true);
-    }    
+    }
 }

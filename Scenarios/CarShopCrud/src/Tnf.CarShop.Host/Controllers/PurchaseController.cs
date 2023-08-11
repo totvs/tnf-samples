@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Purchase.Create;
 using Tnf.CarShop.Application.Commands.Purchase.Delete;
 using Tnf.CarShop.Application.Commands.Purchase.Get;
 using Tnf.CarShop.Application.Commands.Purchase.Update;
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
 using Tnf.Dto;
 
@@ -31,7 +28,7 @@ public class PurchaseController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetById(Guid purchaseId)
     {
-        var command = new GetPurchaseCommand {  PurchaseId = purchaseId };
+        var command = new GetPurchaseCommand { PurchaseId = purchaseId };
 
         var result = await _commandSender.SendAsync<GetPurchaseResult>(command);
 
@@ -65,7 +62,7 @@ public class PurchaseController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(PurchaseDto purchase)
     {
-        var command = new UpdatePurchaseCommand{ Purchase = purchase };
+        var command = new UpdatePurchaseCommand { Purchase = purchase };
 
         var result = await _commandSender.SendAsync<UpdatePurchaseResult>(command);
 

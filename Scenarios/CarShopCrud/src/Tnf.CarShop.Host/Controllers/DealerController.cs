@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Dealer.Create;
 using Tnf.CarShop.Application.Commands.Dealer.Delete;
 using Tnf.CarShop.Application.Commands.Dealer.Get;
 using Tnf.CarShop.Application.Commands.Dealer.Update;
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;

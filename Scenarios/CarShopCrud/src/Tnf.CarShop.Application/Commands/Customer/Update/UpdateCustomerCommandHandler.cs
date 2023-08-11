@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Factories;
+using Tnf.CarShop.Application.Factories.Interfaces;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -7,20 +8,23 @@ namespace Tnf.CarShop.Application.Commands.Customer.Update;
 
 public class UpdateCustomerCommandHandler : CommandHandler<UpdateCustomerCommand, UpdateCustomerResult>
 {
-    private readonly CustomerFactory _customerFactory;
+    private readonly ICarFactory _carFactory;
+    private readonly ICustomerFactory _customerFactory;
     private readonly ICustomerRepository _customerRepository;
     private readonly ILogger<UpdateCustomerCommandHandler> _logger;
 
 
     public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger,
-        ICustomerRepository customerRepository, CustomerFactory customerFactory)
+        ICustomerRepository customerRepository, ICustomerFactory customerFactory, ICarFactory carFactory)
     {
         _logger = logger;
         _customerRepository = customerRepository;
         _customerFactory = customerFactory;
+        _carFactory = carFactory;
     }
 
-    public override async Task<UpdateCustomerResult> ExecuteAsync(UpdateCustomerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<UpdateCustomerResult> ExecuteAsync(UpdateCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
         var customerDto = command.Customer;
 
@@ -37,6 +41,8 @@ public class UpdateCustomerCommandHandler : CommandHandler<UpdateCustomerCommand
         var updatedCustomer = await _customerRepository.UpdateAsync(customer, cancellationToken);
 
         var updatedCustomerDto = _customerFactory.ToDto(updatedCustomer);
+        updatedCustomerDto.Cars = updatedCustomer.CarsOwned?.Select(car => _carFactory.ToDto(car)).ToList();
+
 
         return new UpdateCustomerResult(updatedCustomerDto);
     }

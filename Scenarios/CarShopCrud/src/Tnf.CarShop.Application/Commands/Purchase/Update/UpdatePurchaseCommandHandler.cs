@@ -27,7 +27,8 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
         _purchaseFactory = purchaseFactory;
     }
 
-    public override async Task<UpdatePurchaseResult> ExecuteAsync(UpdatePurchaseCommand command, CancellationToken cancellationToken = default)
+    public override async Task<UpdatePurchaseResult> ExecuteAsync(UpdatePurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
         var purchaseDto = command.Purchase;
 
@@ -48,5 +49,5 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
 
 
         return new UpdatePurchaseResult(_purchaseFactory.ToDto(updatedPurchase));
-    }    
+    }
 }

@@ -16,14 +16,15 @@ public class CreateDealerCommandHandler : CommandHandler<CreateDealerCommand, Cr
         _dealerFactory = dealerFactory;
     }
 
-    public override async Task<CreateDealerResult> ExecuteAsync(CreateDealerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<CreateDealerResult> ExecuteAsync(CreateDealerCommand command,
+        CancellationToken cancellationToken = default)
     {
         var dealerDto = command.Dealer;
 
         var createdDealerId = await CreateDealerAsync(dealerDto, cancellationToken);
 
         return new CreateDealerResult(createdDealerId);
-    }    
+    }
 
     private async Task<Guid> CreateDealerAsync(DealerDto dealerDto, CancellationToken cancellationToken)
     {

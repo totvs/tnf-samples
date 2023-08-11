@@ -4,33 +4,19 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract record PurchaseFactory : IFactory<PurchaseDto, Purchase>
+public class PurchaseFactory : IPurchaseFactory
 {
-    private readonly CarFactory _carFactory;
-    private readonly CustomerFactory _customerFactory;
-
-    protected PurchaseFactory(CustomerFactory customerFactory, CarFactory carFactory)
-    {
-        _customerFactory = customerFactory;
-        _carFactory = carFactory;
-    }
-
     public PurchaseDto ToDto(Purchase purchase)
     {
         return new PurchaseDto(
             purchase.Id,
-            purchase.PurchaseDate,
-            _customerFactory.ToDto(purchase.Customer),
-            _carFactory.ToDto(purchase.Car)
+            purchase.PurchaseDate
         );
     }
 
     public Purchase ToEntity(PurchaseDto purchaseDto)
     {
-        var customer = _customerFactory.ToEntity(purchaseDto.Customer);
-        var car = _carFactory.ToEntity(purchaseDto.Car);
-
-        var purchase = new Purchase(purchaseDto.Id, customer, car, purchaseDto.PurchaseDate);
+        var purchase = new Purchase(purchaseDto.Id, purchaseDto.PurchaseDate);
 
         return purchase;
     }

@@ -16,14 +16,15 @@ public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand
         _customerFactory = customerFactory;
     }
 
-    public override async Task<CreateCustomerResult> ExecuteAsync(CreateCustomerCommand command, CancellationToken cancellationToken = default)
+    public override async Task<CreateCustomerResult> ExecuteAsync(CreateCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
         var customerDto = command.Customer;
 
         var createdCustomerId = await CreateCustomerAsync(customerDto, cancellationToken);
 
         return new CreateCustomerResult(createdCustomerId, true);
-    }    
+    }
 
     private async Task<Guid> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken)
     {

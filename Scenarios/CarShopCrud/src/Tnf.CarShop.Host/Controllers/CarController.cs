@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Commands.Car.Delete;
 using Tnf.CarShop.Application.Commands.Car.Get;
 using Tnf.CarShop.Application.Commands.Car.Update;
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -79,11 +75,10 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid carId)
     {
-        var command = new DeleteCarCommand { CardId = carId };
+        var command = new DeleteCarCommand { CarId = carId };
 
         var result = await _commandSender.SendAsync(command);
 
         return CreateResponseOnDelete(result);
     }
-
 }
