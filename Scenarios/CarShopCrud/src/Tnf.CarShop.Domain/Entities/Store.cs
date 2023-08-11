@@ -6,6 +6,7 @@ namespace Tnf.CarShop.Domain.Entities;
 public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
     private readonly List<Car> _cars = new List<Car>();
+    private readonly List<Customer> _customers = new List<Customer>();
 
     public Guid TenantId { get; set; }
     public string Name { get; private set; }
@@ -15,6 +16,7 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public DateTime? LastModificationTime { get; set; }
         
     public IReadOnlyCollection<Car> Cars => _cars;
+    public IReadOnlyCollection<Customer> Customers => _customers;
 
     public void UpdateLocation(string newLocation)
     {
@@ -34,5 +36,10 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateName(string name)
     {
         Name = name;
+    }
+
+    public void AddCustomer(Customer customer)
+    {
+        _customers.Add(customer);
     }
 }

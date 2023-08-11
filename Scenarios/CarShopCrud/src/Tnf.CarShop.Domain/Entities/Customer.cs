@@ -3,7 +3,7 @@ using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
-public class Customer : IHasCreationTime, IHasModificationTime, IMayHaveTenant
+public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {        
     public Guid Id { get; private set; }
     public string FullName { get; private set; }
@@ -14,7 +14,9 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMayHaveTenant
 
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
-    public Guid? TenantId { get; set; }
+
+    public Guid TenantId { get; set; }
+    public Store Store { get; set; }
 
     public Customer(string fullName, string address, string phone, string email, DateTime dateOfBirth)
     {

@@ -10,6 +10,6 @@ public class StoreConfiguration : IEntityTypeConfiguration<Store>
     {
         builder.ToTable("Stores");
 
-        builder.HasKey(dealer => dealer.TenantId);
+        builder.HasKey(store => store.TenantId);
     }
 }
