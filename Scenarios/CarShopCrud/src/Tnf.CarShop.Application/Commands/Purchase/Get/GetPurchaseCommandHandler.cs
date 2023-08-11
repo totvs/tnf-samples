@@ -5,7 +5,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Get;
 
-public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, GetPurchaseResult>
+public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetPurchaseResult>
 {
     private readonly ILogger<GetPurchaseCommandHandler> _logger;
     private readonly PurchaseFactory _purchaseFactory;
@@ -20,11 +20,9 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
         _purchaseFactory = purchaseFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<GetPurchaseCommand, GetPurchaseResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
-        var command = context.Command;
-
         if (command.PurchaseId.HasValue)
         {
             var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
@@ -33,13 +31,13 @@ public class GetPurchaseCommandHandler : ICommandHandler<GetPurchaseCommand, Get
 
             var purchaseResult = new GetPurchaseResult(_purchaseFactory.ToDto(purchase));
 
-            context.Result = purchaseResult;
+            return purchaseResult;
         }
 
         var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
 
         var purchasesDto = purchases.Select(_purchaseFactory.ToDto).ToList();
 
-        context.Result = new GetPurchaseResult(purchasesDto);
+        return new GetPurchaseResult(purchasesDto);
     }
 }

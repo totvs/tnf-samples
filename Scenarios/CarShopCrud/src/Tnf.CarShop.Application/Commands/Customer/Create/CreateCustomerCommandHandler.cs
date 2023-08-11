@@ -1,33 +1,29 @@
-﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Create;
 
-public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, CreateCustomerResult>, ICreateCustomerCommandHandler
+public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand, CreateCustomerResult>
 {
     private readonly CustomerFactory _customerFactory;
     private readonly ICustomerRepository _customerRepository;
-    private readonly ILogger<CreateCustomerCommandHandler> _logger;
 
-    public CreateCustomerCommandHandler(ILogger<CreateCustomerCommandHandler> logger,
-        ICustomerRepository customerRepository, CustomerFactory customerFactory)
+    public CreateCustomerCommandHandler(ICustomerRepository customerRepository, CustomerFactory customerFactory)
     {
-        _logger = logger;
         _customerRepository = customerRepository;
         _customerFactory = customerFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<CreateCustomerCommand, CreateCustomerResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<CreateCustomerResult> ExecuteAsync(CreateCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
-        var customerDto = context.Command.Customer;
+        var customerDto = command.Customer;
 
         var createdCustomerId = await CreateCustomerAsync(customerDto, cancellationToken);
 
-        context.Result = new CreateCustomerResult(createdCustomerId, true);
+        return new CreateCustomerResult(createdCustomerId, true);
     }
 
     private async Task<Guid> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken)

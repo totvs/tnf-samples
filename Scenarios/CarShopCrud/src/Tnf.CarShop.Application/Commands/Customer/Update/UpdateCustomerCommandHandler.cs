@@ -1,29 +1,32 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Factories;
+using Tnf.CarShop.Application.Factories.Interfaces;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Update;
 
-public class UpdateCustomerCommandHandler : ICommandHandler<UpdateCustomerCommand, UpdateCustomerResult>, IUpdateCustomerCommandHandler
+public class UpdateCustomerCommandHandler : CommandHandler<UpdateCustomerCommand, UpdateCustomerResult>
 {
-    private readonly CustomerFactory _customerFactory;
+    private readonly ICarFactory _carFactory;
+    private readonly ICustomerFactory _customerFactory;
     private readonly ICustomerRepository _customerRepository;
     private readonly ILogger<UpdateCustomerCommandHandler> _logger;
 
 
     public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger,
-        ICustomerRepository customerRepository, CustomerFactory customerFactory)
+        ICustomerRepository customerRepository, ICustomerFactory customerFactory, ICarFactory carFactory)
     {
         _logger = logger;
         _customerRepository = customerRepository;
         _customerFactory = customerFactory;
+        _carFactory = carFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<UpdateCustomerCommand, UpdateCustomerResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<UpdateCustomerResult> ExecuteAsync(UpdateCustomerCommand command,
+        CancellationToken cancellationToken = default)
     {
-        var customerDto = context.Command.Customer;
+        var customerDto = command.Customer;
 
         var customer = await _customerRepository.GetAsync(customerDto.Id, cancellationToken);
 
@@ -38,7 +41,9 @@ public class UpdateCustomerCommandHandler : ICommandHandler<UpdateCustomerComman
         var updatedCustomer = await _customerRepository.UpdateAsync(customer, cancellationToken);
 
         var updatedCustomerDto = _customerFactory.ToDto(updatedCustomer);
+        updatedCustomerDto.Cars = updatedCustomer.CarsOwned?.Select(car => _carFactory.ToDto(car)).ToList();
 
-        context.Result = new UpdateCustomerResult(updatedCustomerDto);
+
+        return new UpdateCustomerResult(updatedCustomerDto);
     }
 }

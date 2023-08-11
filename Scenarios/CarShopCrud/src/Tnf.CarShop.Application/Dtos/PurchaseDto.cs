@@ -10,6 +10,16 @@ public sealed record PurchaseDto
         Car = car;
     }
 
+    public PurchaseDto()
+    {
+    }
+
+    public PurchaseDto(Guid id, DateTime purchaseDate)
+    {
+        Id = id;
+        PurchaseDate = purchaseDate;
+    }
+
     public Guid Id { get; set; }
     public DateTime PurchaseDate { get; set; }
     public CustomerDto Customer { get; set; }

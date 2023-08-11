@@ -21,13 +21,12 @@ public class CreateCarCommandValidator : TnfFluentValidator<CreateCarCommand>
 
         RuleFor(command => command.Car.Price)
             .GreaterThan(0).WithMessage("Price should be positive.");
-        
+
         RuleFor(command => command.Car.Dealer)
             .NotNull().WithMessage("Dealer is required.");
-        
+
         RuleFor(command => command.Car.Dealer!.Id)
-            .Must(id => id != Guid.Empty)     
+            .Must(id => id != Guid.Empty)
             .WithMessage("DealerId should not be an empty GUID.");
-           
     }
 }

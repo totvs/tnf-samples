@@ -4,24 +4,17 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract record CustomerFactory : IFactory<CustomerDto, Customer>
+public class CustomerFactory : ICustomerFactory
 {
-    private readonly CarFactory _carFactory;
-
-    protected CustomerFactory(CarFactory carFactory)
-    {
-        _carFactory = carFactory;
-    }
-
     public CustomerDto ToDto(Customer customer)
     {
-        var cars = customer.CarsOwned.Select(_carFactory.ToDto).ToList();
         return new CustomerDto(
             customer.Id,
             customer.FullName,
             customer.Address,
             customer.Phone,
-            cars,
+            //cars,
+            null,
             customer.Email,
             customer.DateOfBirth
         );
@@ -36,14 +29,6 @@ public abstract record CustomerFactory : IFactory<CustomerDto, Customer>
             customerDto.Phone,
             customerDto.Email,
             customerDto.DateOfBirth);
-
-
-        if (customerDto.Cars != null)
-            foreach (var carDto in customerDto.Cars)
-            {
-                var car = _carFactory.ToEntity(carDto);
-                customer.PurchaseCar(car);
-            }
 
         return customer;
     }

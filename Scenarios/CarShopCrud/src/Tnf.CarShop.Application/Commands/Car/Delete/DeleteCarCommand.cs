@@ -2,7 +2,7 @@
 
 public class DeleteCarCommand
 {
-    public Guid CardId { get; set; }
+    public Guid CarId { get; set; }
 }
 
 public class DeleteCarResult

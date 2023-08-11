@@ -6,7 +6,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Create;
 
-public class CreatePurchaseCommandHandler : ICommandHandler<CreatePurchaseCommand, CreatePurchaseResult>
+public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand, CreatePurchaseResult>
 {
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
@@ -25,14 +25,14 @@ public class CreatePurchaseCommandHandler : ICommandHandler<CreatePurchaseComman
         _purchaseFactory = purchaseFactory;
     }
 
-    public async Task HandleAsync(ICommandContext<CreatePurchaseCommand, CreatePurchaseResult> context,
-        CancellationToken cancellationToken = new())
+    public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command,
+        CancellationToken cancellationToken = default)
     {
-        var purchaseDto = context.Command.Purchase;
+        var purchaseDto = command.Purchase;
 
         var createdPurchaseId = await CreatePurchaseAsync(purchaseDto, cancellationToken);
 
-        context.Result = new CreatePurchaseResult(createdPurchaseId);
+        return new CreatePurchaseResult(createdPurchaseId);
     }
 
     private async Task<Guid> CreatePurchaseAsync(PurchaseDto purchaseDto, CancellationToken cancellationToken)
