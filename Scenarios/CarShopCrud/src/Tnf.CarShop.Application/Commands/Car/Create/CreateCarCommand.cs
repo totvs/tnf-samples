@@ -4,7 +4,11 @@ namespace Tnf.CarShop.Application.Commands.Car.Create;
 
 public sealed record CreateCarCommand
 {
-    public CarDto Car { get; set; }
+    public Guid Id { get; set; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public int Year { get; set; }
+    public decimal Price { get; set; }
 }
 
 public class CreateCarResult
