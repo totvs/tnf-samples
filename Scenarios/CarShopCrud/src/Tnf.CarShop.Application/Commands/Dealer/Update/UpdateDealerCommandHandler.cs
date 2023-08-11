@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Application.Factories;
+using Tnf.CarShop.Application.Factories.Interfaces;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -7,16 +9,18 @@ namespace Tnf.CarShop.Application.Commands.Dealer.Update;
 
 public class UpdateDealerCommandHandler : CommandHandler<UpdateDealerCommand, UpdateDealerResult>
 {
-    private readonly DealerFactory _dealerFactory;
+    private readonly ICarFactory _carFactory;
+    private readonly IDealerFactory _dealerFactory;
     private readonly IDealerRepository _dealerRepository;
     private readonly ILogger<UpdateDealerCommandHandler> _logger;
 
     public UpdateDealerCommandHandler(ILogger<UpdateDealerCommandHandler> logger, IDealerRepository dealerRepository,
-        DealerFactory dealerFactory)
+        IDealerFactory dealerFactory, ICarFactory carFactory)
     {
         _logger = logger;
         _dealerRepository = dealerRepository;
         _dealerFactory = dealerFactory;
+        _carFactory = carFactory;
     }
 
     public override async Task<UpdateDealerResult> ExecuteAsync(UpdateDealerCommand command,
@@ -31,8 +35,22 @@ public class UpdateDealerCommandHandler : CommandHandler<UpdateDealerCommand, Up
         dealer.UpdateName(dealerDto.Name);
         dealer.UpdateLocation(dealerDto.Location);
 
+        if (dealerDto.Cars != null)
+        {
+            var cars = dealerDto.Cars.Select(dto => _carFactory.ToEntity(dto)).ToList();
+            foreach (var carDto in dealerDto.Cars)
+            {
+                var carEntity = _carFactory.ToEntity(carDto);
+                dealer.AddCar(carEntity);
+            }
+        }
+
         var updatedDealer = await _dealerRepository.UpdateAsync(dealer, cancellationToken);
 
-        return new UpdateDealerResult(_dealerFactory.ToDto(updatedDealer));
+        var updatedDealerDto = _dealerFactory.ToDto(updatedDealer);
+        updatedDealerDto.Cars =
+            updatedDealer.Cars?.Select(car => _carFactory.ToDto(car)).ToList() ?? new List<CarDto>();
+
+        return new UpdateDealerResult(updatedDealerDto);
     }
 }

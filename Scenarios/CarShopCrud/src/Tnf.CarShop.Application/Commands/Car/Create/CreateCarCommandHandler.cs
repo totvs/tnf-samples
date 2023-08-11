@@ -8,7 +8,7 @@ namespace Tnf.CarShop.Application.Commands.Car.Create;
 
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
-    private readonly CarFactory _carFactory;
+    private readonly ICarFactory _carFactory;
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IDealerRepository _dealerRepository;
@@ -16,7 +16,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 
 
     public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
-        IDealerRepository dealerRepository, ICustomerRepository customerRepository, CarFactory carFactory)
+        IDealerRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;

@@ -14,6 +14,12 @@ public sealed record PurchaseDto
     {
     }
 
+    public PurchaseDto(Guid id, DateTime purchaseDate)
+    {
+        Id = id;
+        PurchaseDate = purchaseDate;
+    }
+
     public Guid Id { get; set; }
     public DateTime PurchaseDate { get; set; }
     public CustomerDto Customer { get; set; }

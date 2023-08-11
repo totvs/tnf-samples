@@ -26,6 +26,12 @@ public record Purchase : IHasCreationTime, IMayHaveTenant
         PurchaseDate = purchaseDate;
     }
 
+    public Purchase(Guid id, DateTime purchaseDate)
+    {
+        Id = id;
+        PurchaseDate = purchaseDate;
+    }
+
     public Guid Id { get; private set; }
     public Guid CarId { get; }
     public DateTime PurchaseDate { get; private set; }

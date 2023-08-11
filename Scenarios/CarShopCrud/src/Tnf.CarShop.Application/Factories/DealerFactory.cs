@@ -4,23 +4,18 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories;
 
-public abstract record DealerFactory : IFactory<DealerDto, Dealer>
+public class DealerFactory : IDealerFactory
 {
-    private readonly CarFactory _carFactory;
+    //private ICarFactory _carFactory;
 
-    protected DealerFactory(CarFactory carFactory)
-    {
-        _carFactory = carFactory;
-    }
 
     public DealerDto ToDto(Dealer dealer)
     {
-        var cars = dealer.Cars?.Select(_carFactory.ToDto).ToList() ?? new List<CarDto>();
         return new DealerDto(
             dealer.Id,
             dealer.Name,
             dealer.Location,
-            cars
+            null
         );
     }
 
@@ -31,14 +26,10 @@ public abstract record DealerFactory : IFactory<DealerDto, Dealer>
             dealerDto.Name,
             dealerDto.Location);
 
-
-        if (dealerDto.Cars != null)
-            foreach (var carDto in dealerDto.Cars)
-            {
-                var car = _carFactory.ToEntity(carDto);
-                dealer.AddCar(car);
-            }
-
         return dealer;
+    }
+
+    public void SetCarFactory(ICarFactory carFactory)
+    {
     }
 }
