@@ -11,10 +11,10 @@ public class GetDealerCommandHandler : CommandHandler<GetDealerCommand, GetDeale
 {
     private readonly ICarFactory _carFactory;
     private readonly IDealerFactory _dealerFactory;
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<GetDealerCommandHandler> _logger;
 
-    public GetDealerCommandHandler(ILogger<GetDealerCommandHandler> logger, IDealerRepository dealerRepository,
+    public GetDealerCommandHandler(ILogger<GetDealerCommandHandler> logger, IStoreRepository dealerRepository,
         IDealerFactory dealerFactory, ICarFactory carFactory)
     {
         _logger = logger;

@@ -13,11 +13,15 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
         builder.HasKey(purchase => purchase.Id);
 
         builder.HasOne(purchase => purchase.Customer)
-            .WithOne()
-            .HasForeignKey<Customer>(customer => customer.Id);
+            .WithMany()
+            .HasForeignKey(purchase => purchase.CustomerId);
 
         builder.HasOne(purchase => purchase.Car)
             .WithMany()
             .HasForeignKey(purchase => purchase.CarId);
+
+        builder.HasOne(purchase => purchase.Store)
+            .WithMany()
+            .HasForeignKey(purchase => purchase.TenantId);
     }
 }

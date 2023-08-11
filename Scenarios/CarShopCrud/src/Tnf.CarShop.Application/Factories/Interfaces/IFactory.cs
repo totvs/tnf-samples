@@ -13,7 +13,7 @@ public interface ICustomerFactory : IFactory<CustomerDto, Customer>
 {
 }
 
-public interface IDealerFactory : IFactory<DealerDto, Dealer>
+public interface IDealerFactory : IFactory<DealerDto, Store>
 {
 }
 

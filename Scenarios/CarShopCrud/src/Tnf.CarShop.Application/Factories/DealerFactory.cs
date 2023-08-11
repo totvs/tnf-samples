@@ -9,7 +9,7 @@ public class DealerFactory : IDealerFactory
     //private ICarFactory _carFactory;
 
 
-    public DealerDto ToDto(Dealer dealer)
+    public DealerDto ToDto(Store dealer)
     {
         return new DealerDto(
             dealer.Id,
@@ -19,9 +19,9 @@ public class DealerFactory : IDealerFactory
         );
     }
 
-    public Dealer ToEntity(DealerDto dealerDto)
+    public Store ToEntity(DealerDto dealerDto)
     {
-        var dealer = new Dealer(
+        var dealer = new Store(
             dealerDto.Id,
             dealerDto.Name,
             dealerDto.Location);

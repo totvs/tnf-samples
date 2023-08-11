@@ -10,7 +10,7 @@ public static class EFCoreServiceCollectionExtensions
     {
         services.AddTransient<ICarRepository, CarRepository>();
         services.AddTransient<ICustomerRepository, CustomerRepository>();
-        services.AddTransient<IDealerRepository, DealerRepository>();
+        services.AddTransient<IStoreRepository, StoreRepository>();
         services.AddTransient<IPurchaseRepository, PurchaseRepository>();
 
         return services;
