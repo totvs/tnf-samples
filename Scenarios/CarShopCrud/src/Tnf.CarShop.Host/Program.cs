@@ -18,6 +18,11 @@ builder.Services.AddCarShopApiVersioning();
 builder.Services.AddTnfAspNetCore(tnf =>
 {
     tnf.DefaultConnectionString(builder.Configuration.GetConnectionString("PostgreSql"));
+
+    tnf.MultiTenancy(multiTenancy =>
+    {
+        multiTenancy.IsEnabled = true;
+    });
 });
 
 
