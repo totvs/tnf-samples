@@ -28,9 +28,7 @@ public class CustomerRepository : EfCoreRepositoryBase<CarShopDbContext, Custome
 
     public async Task<Customer> GetAsync(Guid customerId, CancellationToken cancellationToken = default)
     {
-        return await Table
-            .Include(c => c.CarsOwned)
-            .FirstOrDefaultAsync(x => x.Id == customerId, cancellationToken);
+        return await Table.FirstOrDefaultAsync(x => x.Id == customerId, cancellationToken);
     }
 
     public async Task<Customer> UpdateAsync(Customer customer, CancellationToken cancellationToken = default)

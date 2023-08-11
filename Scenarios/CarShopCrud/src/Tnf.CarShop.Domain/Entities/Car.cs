@@ -14,11 +14,11 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
     public Guid TenantId { get; set; }
+
     public Store Store { get; set; }
 
-    public Car(Guid id, string brand, string model, int year, decimal price)
+    public Car(string brand, string model, int year, decimal price)
     {
-        Id = id;
         Brand = brand;
         Model = model;
         Year = year;

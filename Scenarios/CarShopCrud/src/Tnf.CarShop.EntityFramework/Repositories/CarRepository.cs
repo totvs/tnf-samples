@@ -28,10 +28,7 @@ public class CarRepository : EfCoreRepositoryBase<CarShopDbContext, Car>, ICarRe
 
     public async Task<Car> GetAsync(Guid carId, CancellationToken cancellationToken = default)
     {
-        return await Table
-            .Include(d => d.Dealer)
-            .Include(c => c.Owner)
-            .FirstOrDefaultAsync(x => x.Id == carId, cancellationToken);
+        return await Table.FirstOrDefaultAsync(x => x.Id == carId, cancellationToken);
     }
 
     public async Task<Car> UpdateAsync(Car car, CancellationToken cancellationToken = default)

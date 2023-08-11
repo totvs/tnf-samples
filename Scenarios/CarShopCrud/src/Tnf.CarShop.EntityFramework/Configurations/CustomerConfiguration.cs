@@ -11,5 +11,9 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.ToTable("Customers");
 
         builder.HasKey(customer => customer.Id);
+
+        builder.HasOne(customer => customer.Store)
+            .WithMany(store => store.Customers)
+            .HasForeignKey(customer => customer.TenantId);
     }
 }
