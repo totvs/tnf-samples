@@ -8,9 +8,9 @@ namespace Tnf.CarShop.Application.Commands.Dealer.Create;
 public class CreateDealerCommandHandler : CommandHandler<CreateDealerCommand, CreateDealerResult>
 {
     private readonly DealerFactory _dealerFactory;
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
 
-    public CreateDealerCommandHandler(IDealerRepository dealerRepository, DealerFactory dealerFactory)
+    public CreateDealerCommandHandler(IStoreRepository dealerRepository, DealerFactory dealerFactory)
     {
         _dealerRepository = dealerRepository;
         _dealerFactory = dealerFactory;

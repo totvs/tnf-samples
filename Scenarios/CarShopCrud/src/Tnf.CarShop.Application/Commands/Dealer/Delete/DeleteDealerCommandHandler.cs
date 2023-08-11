@@ -6,10 +6,10 @@ namespace Tnf.CarShop.Application.Commands.Dealer.Delete;
 
 public class DeleteDealerCommandHandler : CommandHandler<DeleteDealerCommand, DeleteDealerResult>
 {
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<DeleteDealerCommandHandler> _logger;
 
-    public DeleteDealerCommandHandler(ILogger<DeleteDealerCommandHandler> logger, IDealerRepository dealerRepository)
+    public DeleteDealerCommandHandler(ILogger<DeleteDealerCommandHandler> logger, IStoreRepository dealerRepository)
     {
         _logger = logger;
         _dealerRepository = dealerRepository;

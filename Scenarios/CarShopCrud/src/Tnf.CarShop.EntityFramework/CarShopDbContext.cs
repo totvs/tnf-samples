@@ -15,7 +15,7 @@ public class CarShopDbContext : TnfDbContext
 
     public DbSet<Car> Cars { get; set; }
     public DbSet<Purchase> Purchases { get; set; }
-    public DbSet<Dealer> Dealers { get; set; }
+    public DbSet<Store> Stores { get; set; }
     public DbSet<Customer> Customers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ public class CarShopDbContext : TnfDbContext
 
         modelBuilder.ApplyConfiguration(new CarConfiguration());
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
-        modelBuilder.ApplyConfiguration(new DealerConfiguration());
+        modelBuilder.ApplyConfiguration(new StoreConfiguration());
         modelBuilder.ApplyConfiguration(new PurchaseConfiguration());
     }
 }

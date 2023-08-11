@@ -11,10 +11,10 @@ public class UpdateDealerCommandHandler : CommandHandler<UpdateDealerCommand, Up
 {
     private readonly ICarFactory _carFactory;
     private readonly IDealerFactory _dealerFactory;
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<UpdateDealerCommandHandler> _logger;
 
-    public UpdateDealerCommandHandler(ILogger<UpdateDealerCommandHandler> logger, IDealerRepository dealerRepository,
+    public UpdateDealerCommandHandler(ILogger<UpdateDealerCommandHandler> logger, IStoreRepository dealerRepository,
         IDealerFactory dealerFactory, ICarFactory carFactory)
     {
         _logger = logger;

@@ -11,12 +11,12 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     private readonly ICarFactory _carFactory;
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
 
 
     public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
-        IDealerRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory)
+        IStoreRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory)
     {
         _logger = logger;
         _carRepository = carRepository;
@@ -62,7 +62,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         return createdCar.Id;
     }
 
-    private async Task<Domain.Entities.Dealer> FetchDealerAsync(Guid id, CancellationToken cancellationToken)
+    private async Task<Domain.Entities.Store> FetchDealerAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _dealerRepository.GetAsync(id, cancellationToken);
     }

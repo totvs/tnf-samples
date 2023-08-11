@@ -13,11 +13,11 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
     private readonly ICustomerFactory _customerFactory;
     private readonly ICustomerRepository _customerRepository;
     private readonly IDealerFactory _dealerFactory;
-    private readonly IDealerRepository _dealerRepository;
+    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<UpdateCarCommandHandler> _logger;
 
     public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository,
-        IDealerRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory,
+        IStoreRepository dealerRepository, ICustomerRepository customerRepository, ICarFactory carFactory,
         IDealerFactory dealerFactory, ICustomerFactory customerFactory)
     {
         _logger = logger;

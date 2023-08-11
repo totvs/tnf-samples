@@ -3,44 +3,27 @@ using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
-public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
-{
-    protected Customer()
-    {
-        CarsOwned = new HashSet<Car>();
-    }
-
-    public Customer(string fullName, string address, string phone, string email, DateOnly dateOfBirth)
-    {
-        FullName = fullName;
-        Address = address;
-        Phone = phone;
-        Email = email;
-        DateOfBirth = dateOfBirth;
-    }
-
-    public Customer(Guid id, string fullName, string address, string phone, string email, DateOnly dateOfBirth)
-    {
-        Id = id;
-        FullName = fullName;
-        Address = address;
-        Phone = phone;
-        Email = email;
-        DateOfBirth = dateOfBirth;
-        CreationTime = DateTime.Now;
-    }
-
+public class Customer : IHasCreationTime, IHasModificationTime, IMayHaveTenant
+{        
     public Guid Id { get; private set; }
     public string FullName { get; private set; }
     public string Address { get; private set; }
     public string Phone { get; private set; }
     public string Email { get; private set; }
-    public DateOnly DateOfBirth { get; private set; }
-    public ICollection<Car> CarsOwned { get; }
+    public DateTime DateOfBirth { get; private set; }
 
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
-    public Guid TenantId { get; set; }
+    public Guid? TenantId { get; set; }
+
+    public Customer(string fullName, string address, string phone, string email, DateTime dateOfBirth)
+    {
+        FullName = fullName;
+        Address = address;
+        Phone = phone;
+        Email = email;
+        DateOfBirth = dateOfBirth;
+    }
 
     public void UpdateFullName(string fullName)
     {
@@ -62,13 +45,8 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Email = email;
     }
 
-    public void UpdateDateOfBirth(DateOnly dateOfBirth)
+    public void UpdateDateOfBirth(DateTime dateOfBirth)
     {
         DateOfBirth = dateOfBirth;
-    }
-
-    public void PurchaseCar(Car car)
-    {
-        CarsOwned.Add(car);
     }
 }

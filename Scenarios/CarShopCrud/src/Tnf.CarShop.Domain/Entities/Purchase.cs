@@ -3,48 +3,25 @@ using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
-public record Purchase : IHasCreationTime, IMayHaveTenant
+public record Purchase : IHasCreationTime, IMustHaveTenant
 {
-    protected Purchase()
-    {
-    }
-
-    public Purchase(Customer customer, Car car)
-    {
-        Customer = customer;
-        Car = car;
-        Price = car.Price;
-        PurchaseDate = DateTime.Now;
-    }
-
-    public Purchase(Guid id, Customer customer, Car car, DateTime purchaseDate)
-    {
-        Id = id;
-        Customer = customer;
-        Car = car;
-        Price = car.Price;
-        PurchaseDate = purchaseDate;
-    }
-
-    public Purchase(Guid id, DateTime purchaseDate)
-    {
-        Id = id;
-        PurchaseDate = purchaseDate;
-    }
-
     public Guid Id { get; private set; }
     public Guid CarId { get; }
-    public DateTime PurchaseDate { get; private set; }
+    public Guid CustomerId { get; }
     public decimal Price { get; private set; }
+    public DateTime PurchaseDate { get; private set; }
+    
+    public DateTime CreationTime { get; set; }
+    public Guid TenantId { get; set; }
 
     public Customer Customer { get; private set; }
     public Car Car { get; private set; }
-    public DateTime CreationTime { get; set; }
-    public Guid? TenantId { get; set; }
+    public Store Store { get; set; }
 
     public void UpdateCustomer(Customer newCustomer)
     {
-        if (newCustomer != null) Customer = newCustomer;
+        if (newCustomer != null) 
+            Customer = newCustomer;
     }
 
 
@@ -57,8 +34,10 @@ public record Purchase : IHasCreationTime, IMayHaveTenant
         }
     }
 
-    public void CompletePurchase()
+    public void CompletePurchase(Customer customer, Car car, Store store)
     {
-        Car.AssignToOwner(Customer);
+        Customer = customer;
+        Car = car;
+        Store = store;
     }
 }
