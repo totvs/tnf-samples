@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
-
+//use xunit
 public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
 {
     public override void Configure()
@@ -25,3 +25,4 @@ public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
             .GreaterThan(0).WithMessage("Price should be positive.");
     }
 }
+//Unit Test

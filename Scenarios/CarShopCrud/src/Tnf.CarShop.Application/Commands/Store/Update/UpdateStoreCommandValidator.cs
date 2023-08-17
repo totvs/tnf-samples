@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Update;
-
-public class UpdateShopCommandValidator : TnfFluentValidator<UpdateShopCommand>
+namespace Tnf.CarShop.Application.Commands.Store.Update;
+//use xunit
+public class UpdateStoreCommandValidator : TnfFluentValidator<UpdateStoreCommand>
 {
     public override void Configure()
     {

@@ -15,6 +15,14 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Location = location;
     }
 
+    public Store(Guid tenantId, string name, string cnpj, string location)
+    {
+        Name = name;
+        Cnpj = cnpj;
+        Location = location;
+        TenantId = tenantId;
+    }
+
     public Guid TenantId { get; set; }
     public string Name { get; private set; }
     public string Cnpj { get; private set; }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Create;
+namespace Tnf.CarShop.Application.Commands.Store.Create;
 
 public class CreateStoreCommandValidator : TnfFluentValidator<CreateStoreCommand>
 {

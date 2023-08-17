@@ -3,7 +3,7 @@ using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Create;
+namespace Tnf.CarShop.Application.Commands.Store.Create;
 
 public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, CreateStoreResult>
 {
@@ -26,7 +26,7 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
 
     private async Task<Guid> CreateShopAsync(CreateStoreCommand shopCommand, CancellationToken cancellationToken)
     {
-        var newDealer = new Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
+        var newDealer = new Domain.Entities.Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
 
         var createdDealer = await _storeRepository.InsertAsync(newDealer, cancellationToken);
 

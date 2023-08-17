@@ -3,7 +3,7 @@ using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Get;
+namespace Tnf.CarShop.Application.Commands.Store.Get;
 
 public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreResult>
 {

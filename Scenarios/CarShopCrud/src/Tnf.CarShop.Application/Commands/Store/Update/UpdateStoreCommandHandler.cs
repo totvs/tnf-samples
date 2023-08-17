@@ -1,23 +1,22 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
-using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Update;
+namespace Tnf.CarShop.Application.Commands.Store.Update;
 
-public class UpdateStoreCommandHandler : CommandHandler<UpdateShopCommand, UpdateDealerResult>
-{    
+public class UpdateStoreCommandHandler : CommandHandler<UpdateStoreCommand, UpdateStoreResult>
+{
     private readonly IStoreRepository _StoreRepository;
     private readonly ILogger<UpdateStoreCommandHandler> _logger;
 
     public UpdateStoreCommandHandler(ILogger<UpdateStoreCommandHandler> logger, IStoreRepository storeRepository)
     {
         _logger = logger;
-        _StoreRepository = storeRepository;        
+        _StoreRepository = storeRepository;
     }
 
-    public override async Task<UpdateDealerResult> ExecuteAsync(UpdateShopCommand command,
+    public override async Task<UpdateStoreResult> ExecuteAsync(UpdateStoreCommand command,
         CancellationToken cancellationToken = default)
     {
 
@@ -26,12 +25,12 @@ public class UpdateStoreCommandHandler : CommandHandler<UpdateShopCommand, Updat
         if (store == null) throw new Exception($"Shop with id {command.Id} not found.");
 
         store.UpdateName(command.Name);
-        store.UpdateLocation(command.Location);       
+        store.UpdateLocation(command.Location);
 
         var updatedDealer = await _StoreRepository.UpdateAsync(store, cancellationToken);
 
         var storeDto = new StoreDto(updatedDealer.TenantId, updatedDealer.Name, updatedDealer.Location);
 
-        return new UpdateDealerResult(storeDto);
+        return new UpdateStoreResult(storeDto);
     }
 }

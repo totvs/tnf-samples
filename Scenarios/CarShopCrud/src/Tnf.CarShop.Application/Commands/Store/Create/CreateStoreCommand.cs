@@ -1,6 +1,6 @@
 ﻿using Tnf.CarShop.Application.Dtos;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Create;
+namespace Tnf.CarShop.Application.Commands.Store.Create;
 
 public class CreateStoreCommand
 {
