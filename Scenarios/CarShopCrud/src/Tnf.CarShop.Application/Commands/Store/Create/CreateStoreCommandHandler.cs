@@ -2,7 +2,6 @@
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Store.Create;
-
 public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, CreateStoreResult>
 {
     private readonly IStoreRepository _storeRepository;

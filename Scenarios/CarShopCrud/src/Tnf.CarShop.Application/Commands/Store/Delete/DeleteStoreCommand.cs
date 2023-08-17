@@ -2,6 +2,15 @@
 
 public class DeleteStoreCommand
 {
+    public DeleteStoreCommand(Guid storeId)
+    {
+        StoreId = storeId;
+    }
+
+    public DeleteStoreCommand()
+    {
+    }
+
     public Guid StoreId { get; set; }
 }
 

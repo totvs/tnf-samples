@@ -7,7 +7,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
     {
-        var command = new CreateStoreCommand { Name = string.Empty, Location = "Location" };
+        var command = new CreateStoreCommand(string.Empty, "cnpj" ,"Location");
         var validator = new CreateStoreCommandValidator();
 
 
@@ -22,7 +22,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Name_Is_Too_Long()
     {
-        var command = new CreateStoreCommand { Name = new string('*', 151), Location = "Location" };
+        var command = new CreateStoreCommand(new string('*', 151), "cnpj" ,"Location");
         var validator = new CreateStoreCommandValidator();
 
 
@@ -38,7 +38,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Location_Is_Empty()
     {
-        var command = new CreateStoreCommand { Name = "Name", Location = string.Empty };
+        var command = new CreateStoreCommand("Name", "cnpj", string.Empty);
         var validator = new CreateStoreCommandValidator();
 
 
@@ -53,7 +53,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Location_Is_Too_Long()
     {
-        var command = new CreateStoreCommand { Name = "Name", Location = new string('*', 251) };
+        var command = new CreateStoreCommand("Name", "cnpj", new string('*', 251));
         var validator = new CreateStoreCommandValidator();
 
 

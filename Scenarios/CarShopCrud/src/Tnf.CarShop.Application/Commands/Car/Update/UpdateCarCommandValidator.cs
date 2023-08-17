@@ -2,7 +2,6 @@
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
 
-//use xunit
 public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
 {
     public override void Configure()

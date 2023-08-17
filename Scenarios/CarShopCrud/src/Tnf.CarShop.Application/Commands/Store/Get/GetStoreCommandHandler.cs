@@ -5,7 +5,6 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Store.Get;
 
-//use xunit
 public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreResult>
 {
     private readonly ILogger<GetStoreCommandHandler> _logger;

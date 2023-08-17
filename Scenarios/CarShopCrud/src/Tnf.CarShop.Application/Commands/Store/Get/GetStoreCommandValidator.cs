@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 
-//use xunit
 namespace Tnf.CarShop.Application.Commands.Store.Get;
 
 public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
