@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -9,13 +8,14 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
 {
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
-    private readonly ILogger<CreatePurchaseCommandHandler> _logger;    
+    private readonly ILogger<CreatePurchaseCommandHandler> _logger;
     private readonly IPurchaseRepository _purchaseRepository;
     private readonly IStoreRepository _storeRepository;
 
 
     public CreatePurchaseCommandHandler(ILogger<CreatePurchaseCommandHandler> logger,
-        IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository, IStoreRepository storeRepository)
+        IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository,
+        IStoreRepository storeRepository)
     {
         _logger = logger;
         _purchaseRepository = purchaseRepository;
@@ -26,7 +26,7 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
 
     public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command,
         CancellationToken cancellationToken = default)
-    {        
+    {
         var createdPurchaseId = await CreatePurchaseAsync(command, cancellationToken);
 
         return new CreatePurchaseResult(createdPurchaseId);
@@ -40,7 +40,8 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
 
         if (car == null || customer == null || store == null) throw new Exception("Invalid car or customer.");
 
-        var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price, command.PurchaseDate, command.TenantId ,customer, car, store);
+        var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price,
+            command.PurchaseDate, command.TenantId, customer, car, store);
 
         var createdPurchase = await _purchaseRepository.InsertAsync(newPurchase, cancellationToken);
 

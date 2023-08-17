@@ -4,14 +4,23 @@ namespace Tnf.CarShop.Application.Commands.Store.Get;
 
 public class GetStoreCommand
 {
+    public GetStoreCommand()
+    {
+    }
+
+    public GetStoreCommand(Guid storeId)
+    {
+        StoreId = storeId;
+    }
+
     public Guid? StoreId { get; set; }
 }
 
 public class GetStoreResult
 {
-    public GetStoreResult(StoreDto dealer)
+    public GetStoreResult(StoreDto store)
     {
-        Store = dealer;
+        Store = store;
     }
 
     public GetStoreResult(List<StoreDto> stores)

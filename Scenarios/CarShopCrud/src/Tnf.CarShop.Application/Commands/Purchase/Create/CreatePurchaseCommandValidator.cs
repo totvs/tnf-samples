@@ -15,7 +15,7 @@ public class CreatePurchaseCommandValidator : TnfFluentValidator<CreatePurchaseC
         RuleFor(command => command.CarId)
             .NotEmpty().WithMessage("Car Id is required.");
         RuleFor(command => command.StoreId)
-         .NotEmpty().WithMessage("Store Id is required.");
+            .NotEmpty().WithMessage("Store Id is required.");
 
         RuleFor(command => command.CustomerId)
             .NotEmpty().WithMessage("Customer Id is required.");

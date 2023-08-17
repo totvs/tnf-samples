@@ -4,19 +4,7 @@ using Tnf.Repositories.Entities.Auditing;
 namespace Tnf.CarShop.Domain.Entities;
 
 public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
-{    
-    public Guid Id { get; private set; }
-    public string Brand { get; private set; }
-    public string Model { get; private set; }
-    public int Year { get; private set; }
-    public decimal Price { get; private set; }
-    private decimal Discount { get; set; }
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
-    public Guid TenantId { get; set; }
-
-    public Store Store { get; set; }
-
+{
     public Car(string brand, string model, int year, decimal price)
     {
         Brand = brand;
@@ -24,6 +12,18 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Year = year;
         Price = price;
     }
+
+    public Guid Id { get; }
+    public string Brand { get; private set; }
+    public string Model { get; private set; }
+    public int Year { get; private set; }
+    public decimal Price { get; private set; }
+    private decimal Discount { get; set; }
+
+    public Store Store { get; set; }
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+    public Guid TenantId { get; set; }
 
     public void ApplyDiscount(decimal percentage)
     {

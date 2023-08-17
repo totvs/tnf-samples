@@ -17,10 +17,7 @@ builder.Services.AddTnfAspNetCore(tnf =>
 {
     tnf.DefaultConnectionString(builder.Configuration.GetConnectionString("PostgreSql"));
 
-    tnf.MultiTenancy(multiTenancy =>
-    {
-        multiTenancy.IsEnabled = true;
-    });
+    tnf.MultiTenancy(multiTenancy => { multiTenancy.IsEnabled = true; });
 });
 
 builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });

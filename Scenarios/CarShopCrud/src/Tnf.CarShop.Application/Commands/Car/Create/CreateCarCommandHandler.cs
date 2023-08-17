@@ -2,7 +2,6 @@
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-
 namespace Tnf.CarShop.Application.Commands.Car.Create;
 
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
@@ -19,13 +18,12 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
         _logger = logger;
         _carRepository = carRepository;
         _dealerRepository = dealerRepository;
-        _customerRepository = customerRepository;        
+        _customerRepository = customerRepository;
     }
 
     public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
         CancellationToken cancellationToken = default)
     {
-
         var createdCarId = await CreateCarAsync(command, cancellationToken);
 
         return new CreateCarResult(createdCarId, true);

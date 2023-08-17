@@ -49,7 +49,7 @@ public class StoreController : TnfController
     [ProducesResponseType(typeof(CreateStoreResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Create(CreateStoreCommand command)
-    {        
+    {
         var result = await _commandSender.SendAsync<CreateStoreResult>(command);
 
         return CreateResponseOnPost(result);
@@ -59,7 +59,7 @@ public class StoreController : TnfController
     [ProducesResponseType(typeof(UpdateStoreResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(UpdateStoreCommand command)
-    {        
+    {
         var result = await _commandSender.SendAsync<UpdateStoreResult>(command);
 
         return CreateResponseOnPut(result);

@@ -15,12 +15,12 @@ public sealed record CustomerDto
     }
 
     public CustomerDto(Guid id, string fullName, string address, string phone, string email,
-    DateTime dateOfBirth)
+        DateTime dateOfBirth)
     {
         Id = id;
         FullName = fullName;
         Address = address;
-        Phone = phone;        
+        Phone = phone;
         Email = email;
         DateOfBirth = dateOfBirth;
     }

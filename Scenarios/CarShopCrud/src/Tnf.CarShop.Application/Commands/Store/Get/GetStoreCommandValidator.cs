@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
+
 //use xunit
-namespace Tnf.CarShop.Application.Commands.Store.Get
+namespace Tnf.CarShop.Application.Commands.Store.Get;
+
+public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
 {
-    public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
+    public override void Configure()
     {
-        public override void Configure()
-        {
-            RuleFor(x => x.StoreId)
-                .NotNull()
-                .WithMessage("StoreId is required.");
-        }
+        RuleFor(x => x.StoreId)
+            .NotNull()
+            .WithMessage("StoreId is required.");
     }
 }

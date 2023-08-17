@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 
 namespace Tnf.CarShop.Application.Commands.Store.Delete;
+
 //use Xunit
 public class DeleteStoreCommandValidator : TnfFluentValidator<DeleteStoreCommand>
 {

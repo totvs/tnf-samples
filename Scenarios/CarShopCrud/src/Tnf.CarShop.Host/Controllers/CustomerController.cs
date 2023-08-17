@@ -59,7 +59,7 @@ public class CustomerController : TnfController
     [ProducesResponseType(typeof(UpdateCustomerResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(CustomerDto command)
-    {        
+    {
         var result = await _commandSender.SendAsync<UpdateCustomerResult>(command);
 
         return CreateResponseOnPut(result);

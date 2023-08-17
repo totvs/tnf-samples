@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Tnf.CarShop.Application.Dtos;
-using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -8,14 +7,14 @@ namespace Tnf.CarShop.Application.Commands.Purchase.Get;
 
 public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetPurchaseResult>
 {
-    private readonly ILogger<GetPurchaseCommandHandler> _logger;    
+    private readonly ILogger<GetPurchaseCommandHandler> _logger;
     private readonly IPurchaseRepository _purchaseRepository;
 
 
     public GetPurchaseCommandHandler(ILogger<GetPurchaseCommandHandler> logger, IPurchaseRepository purchaseRepository)
     {
         _logger = logger;
-        _purchaseRepository = purchaseRepository;        
+        _purchaseRepository = purchaseRepository;
     }
 
     public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command,
@@ -27,7 +26,8 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
 
             if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
 
-            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId ,purchase.CustomerId, purchase.CarId, purchase.Store.TenantId);
+            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId,
+                purchase.CustomerId, purchase.CarId, purchase.Store.TenantId);
 
             var purchaseResult = new GetPurchaseResult(purchaseDto);
 
@@ -37,8 +37,9 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
 
         var purchasesDto = purchases.Select(
-            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId, purchase.CustomerId, purchase.CarId, purchase.Store.TenantId)
-            ).ToList();
+            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId, purchase.CustomerId,
+                purchase.CarId, purchase.Store.TenantId)
+        ).ToList();
 
         return new GetPurchaseResult(purchasesDto);
     }

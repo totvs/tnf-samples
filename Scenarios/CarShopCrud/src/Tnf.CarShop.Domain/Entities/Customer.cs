@@ -4,20 +4,7 @@ using Tnf.Repositories.Entities.Auditing;
 namespace Tnf.CarShop.Domain.Entities;
 
 public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
-{        
-    public Guid Id { get; private set; }
-    public string FullName { get; private set; }
-    public string Address { get; private set; }
-    public string Phone { get; private set; }
-    public string Email { get; private set; }
-    public DateTime DateOfBirth { get; private set; }
-
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
-
-    public Guid TenantId { get; set; }
-    public Store Store { get; set; }
-
+{
     public Customer(string fullName, string address, string phone, string email, DateTime dateOfBirth)
     {
         FullName = fullName;
@@ -26,6 +13,19 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Email = email;
         DateOfBirth = dateOfBirth;
     }
+
+    public Guid Id { get; }
+    public string FullName { get; private set; }
+    public string Address { get; private set; }
+    public string Phone { get; private set; }
+    public string Email { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
+    public Store Store { get; set; }
+
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+
+    public Guid TenantId { get; set; }
 
     public void UpdateFullName(string fullName)
     {

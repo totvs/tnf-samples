@@ -8,7 +8,8 @@ public sealed record CarDto
         Brand = brand;
         Model = model;
         Year = year;
-        Price = price;;
+        Price = price;
+        ;
     }
 
     public CarDto(Guid id)

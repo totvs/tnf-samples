@@ -7,8 +7,8 @@ namespace Tnf.CarShop.Application.Commands.Store.Update;
 
 public class UpdateStoreCommandHandler : CommandHandler<UpdateStoreCommand, UpdateStoreResult>
 {
-    private readonly IStoreRepository _StoreRepository;
     private readonly ILogger<UpdateStoreCommandHandler> _logger;
+    private readonly IStoreRepository _StoreRepository;
 
     public UpdateStoreCommandHandler(ILogger<UpdateStoreCommandHandler> logger, IStoreRepository storeRepository)
     {
@@ -19,7 +19,6 @@ public class UpdateStoreCommandHandler : CommandHandler<UpdateStoreCommand, Upda
     public override async Task<UpdateStoreResult> ExecuteAsync(UpdateStoreCommand command,
         CancellationToken cancellationToken = default)
     {
-
         var store = await _StoreRepository.GetAsync(command.Id, cancellationToken);
 
         if (store == null) throw new Exception($"Shop with id {command.Id} not found.");

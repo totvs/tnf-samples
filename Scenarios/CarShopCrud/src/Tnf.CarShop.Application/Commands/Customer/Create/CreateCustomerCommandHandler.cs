@@ -9,13 +9,12 @@ public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand
 
     public CreateCustomerCommandHandler(ICustomerRepository customerRepository)
     {
-        _customerRepository = customerRepository;        
+        _customerRepository = customerRepository;
     }
 
     public override async Task<CreateCustomerResult> ExecuteAsync(CreateCustomerCommand command,
         CancellationToken cancellationToken = default)
     {
-
         var createdCustomerId = await CreateCustomerAsync(command, cancellationToken);
 
         return new CreateCustomerResult(createdCustomerId, true);
@@ -23,7 +22,8 @@ public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand
 
     private async Task<Guid> CreateCustomerAsync(CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth);
+        var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email,
+            command.DateOfBirth);
 
         var createdCustomer = await _customerRepository.InsertAsync(newCustomer, cancellationToken);
 
