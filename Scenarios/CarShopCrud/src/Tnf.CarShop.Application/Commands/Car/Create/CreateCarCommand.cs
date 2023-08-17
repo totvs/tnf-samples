@@ -2,6 +2,23 @@
 
 public sealed record CreateCarCommand
 {
+    public CreateCarCommand(string brand, string model, int year, decimal price)
+    {
+        Brand = brand;
+        Model = model;
+        Year = year;
+        Price = price;
+    }
+
+    public CreateCarCommand(Guid id, string brand, string model, int year, decimal price)
+    {
+        Id = id;
+        Brand = brand;
+        Model = model;
+        Year = year;
+        Price = price;
+    }
+
     public Guid Id { get; set; }
     public string Brand { get; set; }
     public string Model { get; set; }
