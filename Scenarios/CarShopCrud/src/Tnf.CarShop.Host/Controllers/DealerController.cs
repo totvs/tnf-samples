@@ -24,35 +24,33 @@ public class DealerController : TnfController
     }
 
     [HttpGet("{dealerId}")]
-    [ProducesResponseType(typeof(DealerDto), 200)]
+    [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetById(Guid dealerId)
+    public async Task<IActionResult> GetById(Guid storeId)
     {
-        var command = new GetDealerCommand { DealerId = dealerId };
+        var command = new GetStoreCommand { StoreId = storeId };
 
-        var result = await _commandSender.SendAsync<GetDealerResult>(command);
+        var result = await _commandSender.SendAsync<GetStoreResult>(command);
 
-        return CreateResponseOnGet(result.Dealer);
+        return CreateResponseOnGet(result.Store);
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IListDto<DealerDto>), 200)]
+    [ProducesResponseType(typeof(IListDto<StoreDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _commandSender.SendAsync<GetDealerResult>(new GetDealerCommand());
+        var result = await _commandSender.SendAsync<GetStoreResult>(new GetStoreCommand());
 
-        return CreateResponseOnGetAll(result.Dealers);
+        return CreateResponseOnGetAll(result.Stores);
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreateDealerResult), 201)]
+    [ProducesResponseType(typeof(CreateStoreResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(DealerDto dealer)
-    {
-        var command = new CreateDealerCommand { Dealer = dealer };
-
-        var result = await _commandSender.SendAsync<CreateDealerResult>(command);
+    public async Task<IActionResult> Create(CreateStoreCommand command)
+    {        
+        var result = await _commandSender.SendAsync<CreateStoreResult>(command);
 
         return CreateResponseOnPost(result);
     }
@@ -60,10 +58,8 @@ public class DealerController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdateDealerResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(DealerDto dealer)
-    {
-        var command = new UpdateDealerCommand { Dealer = dealer };
-
+    public async Task<IActionResult> Update(UpdateShopCommand command)
+    {        
         var result = await _commandSender.SendAsync<UpdateDealerResult>(command);
 
         return CreateResponseOnPut(result);
@@ -74,7 +70,7 @@ public class DealerController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid dealerId)
     {
-        var command = new DeleteDealerCommand { DealerId = dealerId };
+        var command = new DeleteStoreCommand { StoreId = dealerId };
 
         var result = await _commandSender.SendAsync(command);
 

@@ -1,6 +1,4 @@
 using Serilog;
-using Tnf.CarShop.Application.Factories;
-using Tnf.CarShop.Application.Factories.Interfaces;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 using Tnf.CarShop.Host.Swagger;
 
@@ -24,12 +22,6 @@ builder.Services.AddTnfAspNetCore(tnf =>
         multiTenancy.IsEnabled = true;
     });
 });
-
-
-builder.Services.AddTransient<ICustomerFactory, CustomerFactory>();
-builder.Services.AddTransient<IDealerFactory, DealerFactory>();
-builder.Services.AddTransient<IPurchaseFactory, PurchaseFactory>();
-builder.Services.AddTransient<ICarFactory, CarFactory>();
 
 builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });
 

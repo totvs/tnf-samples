@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Commands.Dealer.Update;
 
-public class UpdateDealerCommand
+public class UpdateShopCommand
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -11,10 +11,10 @@ public class UpdateDealerCommand
 
 public class UpdateDealerResult
 {
-    public UpdateDealerResult(DealerDto dealer)
+    public UpdateDealerResult(StoreDto dealer)
     {
         Dealer = dealer;
     }
 
-    public DealerDto Dealer { get; set; }
+    public StoreDto Dealer { get; set; }
 }

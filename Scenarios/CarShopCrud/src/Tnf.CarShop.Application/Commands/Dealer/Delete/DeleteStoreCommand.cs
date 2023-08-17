@@ -1,13 +1,13 @@
 ﻿namespace Tnf.CarShop.Application.Commands.Dealer.Delete;
 
-public class DeleteDealerCommand
+public class DeleteStoreCommand
 {
-    public Guid DealerId { get; set; }
+    public Guid StoreId { get; set; }
 }
 
-public class DeleteDealerResult
+public class DeleteStoreResult
 {
-    public DeleteDealerResult(bool success)
+    public DeleteStoreResult(bool success)
     {
         Success = success;
     }
