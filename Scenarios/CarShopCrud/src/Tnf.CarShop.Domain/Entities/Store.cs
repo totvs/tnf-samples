@@ -8,6 +8,13 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     private readonly List<Car> _cars = new List<Car>();
     private readonly List<Customer> _customers = new List<Customer>();
 
+    public Store(string name, string cnpj, string location)
+    {
+        Name = name;
+        Cnpj = cnpj;
+        Location = location;
+    }
+
     public Guid TenantId { get; set; }
     public string Name { get; private set; }
     public string Cnpj { get; private set; }

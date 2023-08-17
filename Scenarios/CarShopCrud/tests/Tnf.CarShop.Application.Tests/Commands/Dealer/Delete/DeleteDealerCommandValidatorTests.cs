@@ -7,8 +7,8 @@ public class DeleteDealerCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_DealerId_Is_Empty()
     {
-        var command = new DeleteDealerCommand();
-        var validator = new DeleteDealerCommandValidator();
+        var command = new DeleteStoreCommand();
+        var validator = new DeleteStoreCommandValidator();
 
 
         var result = validator.Validate(command);

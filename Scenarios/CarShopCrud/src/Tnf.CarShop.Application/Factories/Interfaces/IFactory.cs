@@ -3,9 +3,10 @@ using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Factories.Interfaces;
 
-public interface IFactory<TDto, TEntity>
+public interface IFactory<TDto, TEntity, TCommand>
 {
     TEntity ToEntity(TDto dto);
+    TEntity ToEntity(TCommand command);
     TDto ToDto(TEntity entity);
 }
 

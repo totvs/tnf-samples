@@ -2,16 +2,17 @@
 
 namespace Tnf.CarShop.Application.Commands.Dealer.Create;
 
-public class CreateDealerCommand
+public class CreateStoreCommand
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string Cnpj { get; set; }
     public string Location { get; set; }
 }
 
-public class CreateDealerResult
+public class CreateStoreResult
 {
-    public CreateDealerResult(Guid dealerId)
+    public CreateStoreResult(Guid dealerId)
     {
         DealerId = dealerId;
     }

@@ -48,10 +48,8 @@ public class CustomerController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CreateCustomerResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CustomerDto customer)
+    public async Task<IActionResult> Create(CreateCustomerCommand command)
     {
-        var command = new CreateCustomerCommand { Customer = customer };
-
         var result = await _commandSender.SendAsync<CreateCustomerResult>(command);
 
         return CreateResponseOnPost(result);
@@ -60,10 +58,8 @@ public class CustomerController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdateCustomerResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CustomerDto customer)
-    {
-        var command = new UpdateCustomerCommand { Customer = customer };
-
+    public async Task<IActionResult> Update(CustomerDto command)
+    {        
         var result = await _commandSender.SendAsync<UpdateCustomerResult>(command);
 
         return CreateResponseOnPut(result);

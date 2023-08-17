@@ -3,13 +3,24 @@
 public sealed record CustomerDto
 {
     public CustomerDto(Guid id, string fullName, string address, string phone, List<CarDto> cars, string email,
-        DateOnly dateOfBirth)
+        DateTime dateOfBirth)
     {
         Id = id;
         FullName = fullName;
         Address = address;
         Phone = phone;
         Cars = cars;
+        Email = email;
+        DateOfBirth = dateOfBirth;
+    }
+
+    public CustomerDto(Guid id, string fullName, string address, string phone, string email,
+    DateTime dateOfBirth)
+    {
+        Id = id;
+        FullName = fullName;
+        Address = address;
+        Phone = phone;        
         Email = email;
         DateOfBirth = dateOfBirth;
     }
@@ -29,6 +40,6 @@ public sealed record CustomerDto
     public string Phone { get; set; }
     public string Email { get; set; }
 
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public List<CarDto> Cars { get; set; }
 }

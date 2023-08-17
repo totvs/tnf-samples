@@ -49,10 +49,8 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CreateCarResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CarDto car)
-    {
-        var command = new CreateCarCommand { Car = car };
-
+    public async Task<IActionResult> Create(UpdateCarCommand command)
+    {        
         var result = await _commandSender.SendAsync<CreateCarResult>(command);
 
         return CreateResponseOnPost(result);
@@ -61,9 +59,8 @@ public class CarController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdateCarResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CarDto car)
-    {
-        var command = new UpdateCarCommand { Car = car };
+    public async Task<IActionResult> Update(UpdateCarCommand command)
+    {        
 
         var result = await _commandSender.SendAsync<UpdateCarResult>(command);
 
