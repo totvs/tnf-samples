@@ -1,6 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
-
-namespace Tnf.CarShop.Application.Commands.Purchase.Create;
+﻿namespace Tnf.CarShop.Application.Commands.Purchase.Create;
 
 public class CreatePurchaseCommand
 {

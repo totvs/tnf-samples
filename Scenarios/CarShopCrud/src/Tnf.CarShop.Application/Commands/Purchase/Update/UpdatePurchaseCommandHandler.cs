@@ -22,13 +22,12 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
         _logger = logger;
         _purchaseRepository = purchaseRepository;
         _customerRepository = customerRepository;
-        _carRepository = carRepository;        
+        _carRepository = carRepository;
     }
 
     public override async Task<UpdatePurchaseResult> ExecuteAsync(UpdatePurchaseCommand command,
         CancellationToken cancellationToken = default)
-    {      
-
+    {
         var purchase = await _purchaseRepository.GetAsync(command.Id, cancellationToken);
 
         if (purchase == null) throw new Exception($"Purchase with id {command.Id} not found.");
@@ -43,13 +42,13 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
         purchase.UpdateCar(car);
 
         var updatedPurchase = await _purchaseRepository.UpdateAsync(purchase, cancellationToken);
-        
-        var purchaseDto = new PurchaseDto(updatedPurchase.Id, 
-                updatedPurchase.PurchaseDate, 
-                updatedPurchase.Store.TenantId, 
-                updatedPurchase.CarId,
-                updatedPurchase.CustomerId,
-                updatedPurchase.TenantId);
+
+        var purchaseDto = new PurchaseDto(updatedPurchase.Id,
+            updatedPurchase.PurchaseDate,
+            updatedPurchase.Store.TenantId,
+            updatedPurchase.CarId,
+            updatedPurchase.CustomerId,
+            updatedPurchase.TenantId);
 
         return new UpdatePurchaseResult(purchaseDto);
     }

@@ -3,12 +3,12 @@ using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Get;
+namespace Tnf.CarShop.Application.Commands.Store.Get;
 
 public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreResult>
 {
-    private readonly IStoreRepository _storeRepository;
     private readonly ILogger<GetStoreCommandHandler> _logger;
+    private readonly IStoreRepository _storeRepository;
 
     public GetStoreCommandHandler(ILogger<GetStoreCommandHandler> logger, IStoreRepository storeRepository)
     {
@@ -28,7 +28,6 @@ public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreRe
             var storeDto = new StoreDto(store.TenantId, store.Name, store.Location);
 
 
-
             return new GetStoreResult(storeDto);
         }
 
@@ -38,6 +37,4 @@ public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreRe
 
         return new GetStoreResult(dealersDto);
     }
-
-
 }

@@ -2,12 +2,12 @@
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
-namespace Tnf.CarShop.Application.Commands.Dealer.Delete;
+namespace Tnf.CarShop.Application.Commands.Store.Delete;
 
 public class DeleteStoreCommandHandler : CommandHandler<DeleteStoreCommand, DeleteStoreResult>
 {
-    private readonly IStoreRepository _storeRepository;
     private readonly ILogger<DeleteStoreCommandHandler> _logger;
+    private readonly IStoreRepository _storeRepository;
 
     public DeleteStoreCommandHandler(ILogger<DeleteStoreCommandHandler> logger, IStoreRepository dealerRepository)
     {

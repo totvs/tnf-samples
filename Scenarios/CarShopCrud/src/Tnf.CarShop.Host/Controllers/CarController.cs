@@ -50,7 +50,7 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(CreateCarResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Create(UpdateCarCommand command)
-    {        
+    {
         var result = await _commandSender.SendAsync<CreateCarResult>(command);
 
         return CreateResponseOnPost(result);
@@ -60,8 +60,7 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(UpdateCarResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(UpdateCarCommand command)
-    {        
-
+    {
         var result = await _commandSender.SendAsync<UpdateCarResult>(command);
 
         return CreateResponseOnPut(result);

@@ -14,7 +14,7 @@ public sealed record StoreDto
     {
         Id = id;
         Name = name;
-        Location = location;        
+        Location = location;
     }
 
     public StoreDto(Guid id)

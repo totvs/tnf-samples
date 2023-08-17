@@ -59,7 +59,7 @@ public class PurchaseController : TnfController
     [ProducesResponseType(typeof(UpdatePurchaseResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(CreatePurchaseCommand command)
-    {       
+    {
         var result = await _commandSender.SendAsync<UpdatePurchaseResult>(command);
 
         return CreateResponseOnPut(result);

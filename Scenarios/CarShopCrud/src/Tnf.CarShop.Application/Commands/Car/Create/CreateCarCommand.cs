@@ -1,6 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
-
-namespace Tnf.CarShop.Application.Commands.Car.Create;
+﻿namespace Tnf.CarShop.Application.Commands.Car.Create;
 
 public sealed record CreateCarCommand
 {
