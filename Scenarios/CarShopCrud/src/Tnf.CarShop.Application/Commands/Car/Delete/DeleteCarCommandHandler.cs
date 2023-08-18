@@ -3,7 +3,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Delete;
-
+ xunit
 public class DeleteCarCommandHandler : ICommandHandler<DeleteCarCommand, DeleteCarResult>
 {
     private readonly ICarRepository _carRepository;

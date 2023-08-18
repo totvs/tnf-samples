@@ -13,7 +13,8 @@ public class CreateCarCommandValidatorTests
              null,
              "Model",
              2000,
-             10000
+             10000,
+             Guid.NewGuid()
         );
 
 
@@ -34,7 +35,8 @@ public class CreateCarCommandValidatorTests
             string.Empty,
             "Model",
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -55,7 +57,8 @@ public class CreateCarCommandValidatorTests
             "A",
             "Model",
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -77,7 +80,8 @@ public class CreateCarCommandValidatorTests
             new string('A', 101),
             "Model",
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -99,7 +103,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             null,
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -120,7 +125,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             string.Empty,
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -141,7 +147,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             "A",
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -163,7 +170,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             new string('A', 101),
             2000,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -185,7 +193,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             "Model",
             1899,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -207,7 +216,8 @@ public class CreateCarCommandValidatorTests
             "Brand",
             "Model",
             DateTime.Now.Year + 1,
-            10000
+            10000,
+            Guid.NewGuid()
         );
 
 

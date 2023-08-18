@@ -12,7 +12,7 @@ internal static class VersioningExtensions
     {
         services.AddApiVersioning(options =>
         {
-            // UseApiBehavior está true para que somente os controller que utilizam o attributo ApiControllerAttribute
+            ApiBehavior está true para que somente os controller que utilizam o attributo ApiControllerAttribute
             // sejam considerados como API versionadas.
             options.UseApiBehavior = true;
             options.AssumeDefaultVersionWhenUnspecified = true;

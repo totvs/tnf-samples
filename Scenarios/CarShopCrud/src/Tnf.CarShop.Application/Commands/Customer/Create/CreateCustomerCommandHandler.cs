@@ -2,7 +2,7 @@
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Create;
-
+ xunit
 public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand, CreateCustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
@@ -30,3 +30,4 @@ public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand
         return createdCustomer.Id;
     }
 }
+// Unit Test

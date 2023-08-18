@@ -4,6 +4,8 @@ namespace Tnf.CarShop.Application.Commands.Car.Update;
 
 public class UpdateCarCommand
 {
+
+
     public Guid Id { get; set; }
     public string Brand { get; set; }
     public string Model { get; set; }

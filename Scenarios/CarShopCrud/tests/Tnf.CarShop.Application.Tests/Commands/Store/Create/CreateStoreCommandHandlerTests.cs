@@ -28,10 +28,8 @@ namespace Tnf.CarShop.Application.Tests.Commands.Store.Create
             var expectedId = Guid.NewGuid();
             _storeRepositoryMock.Setup(sr => sr.InsertAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Domain.Entities.Store(expectedId, command.Name, command.Cnpj, command.Location));
-
             
             var result = await _handler.ExecuteAsync(command);
-
             
             Assert.NotNull(result);
             Assert.Equal(expectedId, result.StoreId);

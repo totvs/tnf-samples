@@ -1,19 +1,26 @@
-﻿using Tnf.CarShop.Application.Commands.Car.Delete;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tnf.CarShop.Application.Commands.Car.Delete;
 
-namespace Tnf.CarShop.Application.Tests.Commands.Car.Delete;
-
-public class DeleteCarCommandValidatorTests
+namespace Tnf.CarShop.Application.Tests.Commands.Car.Delete
 {
-    [Fact]
-    public void DeleteCarCommandValidator_Validate_CarIdIsNotEmpty_ShouldReturnSuccess()
-    {
-        var validator = new DeleteCarCommandValidator();
-        var command = new DeleteCarCommand { CarId = Guid.NewGuid() };
+    public class DeleteCarCommandValidatorTests
+    {    
+        [Fact]
+        public void DeleteCarCommandValidator_Validate_CarIdIsNotEmpty_ShouldReturnSuccess()
+        {
+            
+            var validator = new DeleteCarCommandValidator();
+            var command = new DeleteCarCommand(Guid.NewGuid());
 
+            
+            var result = validator.Validate(command);
 
-        var result = validator.Validate(command);
-
-
-        Assert.True(result.IsValid);
+           
+            Assert.True(result.IsValid);
+        }
     }
 }

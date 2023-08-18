@@ -14,6 +14,16 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         DateOfBirth = dateOfBirth;
     }
 
+    public Customer(Guid id, string fullName, string address, string phone, string email, DateTime dateOfBirth)
+    {
+        Id = id;
+        FullName = fullName;
+        Address = address;
+        Phone = phone;
+        Email = email;
+        DateOfBirth = dateOfBirth;
+    }
+
     public Guid Id { get; }
     public string FullName { get; private set; }
     public string Address { get; private set; }

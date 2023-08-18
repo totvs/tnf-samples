@@ -5,8 +5,20 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    public Car(string brand, string model, int year, decimal price)
+    public Car(string brand, string model, int year, decimal price, Store store, Guid tenantId)
     {
+        Brand = brand;
+        Model = model;
+        Year = year;
+        Price = price;
+        Store = store;
+        TenantId = tenantId;
+        Discount = 0;
+    }
+
+    public Car(Guid id, string brand, string model, int year, decimal price)
+    {
+        Id = id;
         Brand = brand;
         Model = model;
         Year = year;
