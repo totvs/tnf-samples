@@ -2,6 +2,11 @@
 
 public class DeleteCarCommand
 {
+    public DeleteCarCommand(Guid carId)
+    {
+        CarId = carId;
+    }
+
     public Guid CarId { get; set; }
 }
 

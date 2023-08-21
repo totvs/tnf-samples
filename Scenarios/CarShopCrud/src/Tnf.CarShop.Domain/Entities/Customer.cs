@@ -5,12 +5,7 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    protected Customer()
-    {
-        CarsOwned = new HashSet<Car>();
-    }
-
-    public Customer(string fullName, string address, string phone, string email, DateOnly dateOfBirth)
+    public Customer(string fullName, string address, string phone, string email, DateTime dateOfBirth)
     {
         FullName = fullName;
         Address = address;
@@ -19,7 +14,7 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         DateOfBirth = dateOfBirth;
     }
 
-    public Customer(Guid id, string fullName, string address, string phone, string email, DateOnly dateOfBirth)
+    public Customer(Guid id, string fullName, string address, string phone, string email, DateTime dateOfBirth)
     {
         Id = id;
         FullName = fullName;
@@ -27,19 +22,19 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Phone = phone;
         Email = email;
         DateOfBirth = dateOfBirth;
-        CreationTime = DateTime.Now;
     }
 
-    public Guid Id { get; private set; }
+    public Guid Id { get; }
     public string FullName { get; private set; }
     public string Address { get; private set; }
     public string Phone { get; private set; }
     public string Email { get; private set; }
-    public DateOnly DateOfBirth { get; private set; }
-    public ICollection<Car> CarsOwned { get; }
+    public DateTime DateOfBirth { get; private set; }
+    public Store Store { get; set; }
 
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
+
     public Guid TenantId { get; set; }
 
     public void UpdateFullName(string fullName)
@@ -62,13 +57,8 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Email = email;
     }
 
-    public void UpdateDateOfBirth(DateOnly dateOfBirth)
+    public void UpdateDateOfBirth(DateTime dateOfBirth)
     {
         DateOfBirth = dateOfBirth;
-    }
-
-    public void PurchaseCar(Car car)
-    {
-        CarsOwned.Add(car);
     }
 }

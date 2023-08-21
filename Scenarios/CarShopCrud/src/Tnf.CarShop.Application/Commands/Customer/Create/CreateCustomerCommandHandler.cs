@@ -1,34 +1,29 @@
-﻿using Tnf.CarShop.Application.Dtos;
-using Tnf.CarShop.Application.Factories;
-using Tnf.CarShop.Domain.Repositories;
+﻿using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Create;
 
 public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand, CreateCustomerResult>
 {
-    private readonly CustomerFactory _customerFactory;
     private readonly ICustomerRepository _customerRepository;
 
-    public CreateCustomerCommandHandler(ICustomerRepository customerRepository, CustomerFactory customerFactory)
+    public CreateCustomerCommandHandler(ICustomerRepository customerRepository)
     {
         _customerRepository = customerRepository;
-        _customerFactory = customerFactory;
     }
 
     public override async Task<CreateCustomerResult> ExecuteAsync(CreateCustomerCommand command,
         CancellationToken cancellationToken = default)
     {
-        var customerDto = command.Customer;
-
-        var createdCustomerId = await CreateCustomerAsync(customerDto, cancellationToken);
+        var createdCustomerId = await CreateCustomerAsync(command, cancellationToken);
 
         return new CreateCustomerResult(createdCustomerId, true);
     }
 
-    private async Task<Guid> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken)
+    private async Task<Guid> CreateCustomerAsync(CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var newCustomer = _customerFactory.ToEntity(customerDto);
+        var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email,
+            command.DateOfBirth);
 
         var createdCustomer = await _customerRepository.InsertAsync(newCustomer, cancellationToken);
 

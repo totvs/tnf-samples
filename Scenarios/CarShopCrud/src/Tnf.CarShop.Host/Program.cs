@@ -1,6 +1,5 @@
-using Serilog;
-using Tnf.CarShop.Application.Factories;
-using Tnf.CarShop.Application.Factories.Interfaces;
+﻿using Serilog;
+using Tnf.CarShop.Application.Localization;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 using Tnf.CarShop.Host.Swagger;
 
@@ -19,21 +18,14 @@ builder.Services.AddTnfAspNetCore(tnf =>
 {
     tnf.DefaultConnectionString(builder.Configuration.GetConnectionString("PostgreSql"));
 
-    tnf.MultiTenancy(multiTenancy =>
-    {
-        multiTenancy.IsEnabled = true;
-    });
+    tnf.MultiTenancy(multiTenancy => { multiTenancy.IsEnabled = true; });
 });
-
-
-builder.Services.AddTransient<ICustomerFactory, CustomerFactory>();
-builder.Services.AddTransient<IDealerFactory, DealerFactory>();
-builder.Services.AddTransient<IPurchaseFactory, PurchaseFactory>();
-builder.Services.AddTransient<ICarFactory, CarFactory>();
 
 builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });
 
 builder.Services.AddEFCorePostgreSql();
+
+builder.Services.ConfigureCarShopLocalization();
 
 var app = builder.Build();
 

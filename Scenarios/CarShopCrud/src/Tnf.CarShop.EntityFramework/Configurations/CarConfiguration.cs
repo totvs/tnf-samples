@@ -12,12 +12,8 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
 
         builder.HasKey(car => car.Id);
 
-        builder.HasOne(car => car.Owner)
-            .WithMany(owner => owner.CarsOwned)
-            .HasForeignKey(car => car.CustomerId);
-
-        builder.HasOne(car => car.Dealer)
-            .WithMany(dealer => dealer.Cars)
-            .HasForeignKey(car => car.DealerId);
+        builder.HasOne(car => car.Store)
+            .WithMany(store => store.Cars)
+            .HasForeignKey(car => car.TenantId);
     }
 }

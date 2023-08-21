@@ -34,12 +34,6 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("DealerId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -49,7 +43,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid?>("TenantId")
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Year")
@@ -57,9 +51,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("DealerId");
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Cars", (string)null);
                 });
@@ -67,6 +59,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
             modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Address")
@@ -75,8 +68,8 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -95,12 +88,49 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("Customers", (string)null);
                 });
 
-            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Dealer", b =>
+            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Purchase", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CarId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Purchases", (string)null);
+                });
+
+            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Store", b =>
+                {
+                    b.Property<Guid>("TenantId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -119,68 +149,31 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
+                    b.HasKey("TenantId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Dealers", (string)null);
-                });
-
-            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Purchase", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CarId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid?>("TenantId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.ToTable("Purchases", (string)null);
+                    b.ToTable("Stores", (string)null);
                 });
 
             modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Car", b =>
                 {
-                    b.HasOne("Tnf.CarShop.Domain.Entities.Customer", "Owner")
-                        .WithMany("CarsOwned")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tnf.CarShop.Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
                         .WithMany("Cars")
-                        .HasForeignKey("DealerId")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Dealer");
-
-                    b.Navigation("Owner");
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("Tnf.CarShop.Domain.Entities.Purchase", null)
-                        .WithOne("Customer")
-                        .HasForeignKey("Tnf.CarShop.Domain.Entities.Customer", "Id")
+                    b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
+                        .WithMany("Customers")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Purchase", b =>
@@ -191,22 +184,30 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tnf.CarShop.Domain.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Car");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("CarsOwned");
-                });
-
-            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Dealer", b =>
+            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Store", b =>
                 {
                     b.Navigation("Cars");
-                });
 
-            modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Purchase", b =>
-                {
-                    b.Navigation("Customer");
+                    b.Navigation("Customers");
                 });
 #pragma warning restore 612, 618
         }

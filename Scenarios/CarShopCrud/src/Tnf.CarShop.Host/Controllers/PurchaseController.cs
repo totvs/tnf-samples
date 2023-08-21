@@ -48,10 +48,8 @@ public class PurchaseController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CreatePurchaseResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(PurchaseDto purchase)
+    public async Task<IActionResult> Create(CreatePurchaseCommand command)
     {
-        var command = new CreatePurchaseCommand { Purchase = purchase };
-
         var result = await _commandSender.SendAsync<CreatePurchaseResult>(command);
 
         return CreateResponseOnPost(result);
@@ -60,10 +58,8 @@ public class PurchaseController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdatePurchaseResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(PurchaseDto purchase)
+    public async Task<IActionResult> Update(CreatePurchaseCommand command)
     {
-        var command = new UpdatePurchaseCommand { Purchase = purchase };
-
         var result = await _commandSender.SendAsync<UpdatePurchaseResult>(command);
 
         return CreateResponseOnPut(result);

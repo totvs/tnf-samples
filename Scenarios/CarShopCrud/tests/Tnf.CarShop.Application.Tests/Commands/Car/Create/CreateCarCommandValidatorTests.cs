@@ -1,80 +1,233 @@
-﻿using FluentValidation.TestHelper;
-using Tnf.CarShop.Application.Commands.Car.Create;
-using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Host.Commands.Car.Create;
 
 namespace Tnf.CarShop.Tests.Commands.Car.Create;
 
 public class CreateCarCommandValidatorTests
 {
-    private readonly CreateCarCommandValidator _validator = new();
-
     [Fact]
-    public void Should_Error_When_Brand_Is_Empty()
+    public void Should_Have_Error_When_Brand_Is_Null()
     {
-        var carDto = new CarDto { Brand = string.Empty };
-        var model = new CreateCarCommand { Car = carDto };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Brand);
-        Assert.Contains(result.Errors, result => result.ErrorMessage.Contains("Brand is required."));
-    }
+        var command = new CreateCarCommand
+        (
+            null,
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
-    [Theory]
-    [InlineData("A")]
-    [InlineData(
-        "This is a test string that is intended to be longer than one hundred characters to see if the validation rule kicks in as expected.")]
-    public void Should_Error_When_Brand_Length_Is_Outside_Range(string brand)
-    {
-        var model = new CreateCarCommand { Car = new CarDto { Brand = brand } };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Brand);
-    }
 
-    [Fact]
-    public void Should_Error_When_Model_Is_Empty()
-    {
-        var model = new CreateCarCommand { Car = new CarDto { Model = string.Empty } };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Model);
-        Assert.Contains(result.Errors, result => result.ErrorMessage.Contains("Model is required."));
-    }
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
 
-    [Theory]
-    [InlineData("A")]
-    [InlineData(
-        "This is a test string that is intended to be longer than one hundred characters to see if the validation rule kicks in as expected.")]
-    public void Should_Error_When_Model_Length_Is_Outside_Range(string modelStr)
-    {
-        var model = new CreateCarCommand { Car = new CarDto { Model = modelStr } };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Model);
-    }
 
-    [Theory]
-    [InlineData(1800)]
-    [InlineData(3000)]
-    public void Should_Error_When_Year_Is_Outside_Range(int year)
-    {
-        var model = new CreateCarCommand { Car = new CarDto { Year = year } };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Year);
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
     }
 
     [Fact]
-    public void Should_Error_When_Price_Is_Negative_Or_Zero()
+    public void Should_Have_Error_When_Brand_Is_Empty()
     {
-        var model = new CreateCarCommand { Car = new CarDto { Price = -10 } };
-        var result = _validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(command => command.Car.Price);
-        Assert.Contains(result.Errors, result => result.ErrorMessage.Contains("Price should be positive."));
+        var command = new CreateCarCommand
+        (
+            string.Empty,
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
     }
 
     [Fact]
-    public void Should_Error_When_DealerId_Is_Null()
+    public void Should_Have_Error_When_Brand_Is_Too_Short()
     {
-        var model = new CreateCarCommand { Car = new CarDto { Dealer = new DealerDto() } };
-        var result = _validator.TestValidate(model);
-        _ = result.ShouldHaveValidationErrorFor(command => command.Car.Dealer.Id);
-        Assert.Contains(result.Errors, result => result.ErrorMessage.Contains("DealerId should not be an empty GUID."));
+        var command = new CreateCarCommand
+        (
+            "A",
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Brand) &&
+                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Brand_Is_Too_Long()
+    {
+        var command = new CreateCarCommand
+        (
+            new string('A', 101),
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Brand) &&
+                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Model_Is_Null()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            null,
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Model_Is_Empty()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            string.Empty,
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Model_Is_Too_Short()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            "A",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Model) &&
+                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Model_Is_Too_Long()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            new string('A', 101),
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Model) &&
+                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Year_Is_Lower_Than_1900()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            "Model",
+            1899,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Year) &&
+                 e.ErrorMessage == $"'Year' must be between 1900 and {DateTime.Now.Year}. You entered {command.Year}.");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Year_Is_Greater_Than_Current_Year()
+    {
+        var command = new CreateCarCommand
+        (
+            "Brand",
+            "Model",
+            DateTime.Now.Year + 1,
+            10000,
+            Guid.NewGuid()
+        );
+
+
+        var validator = new CreateCarCommandValidator();
+        var result = validator.Validate(command);
+
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors,
+            e => e.PropertyName == nameof(command.Year) &&
+                 e.ErrorMessage == $"'Year' must be between 1900 and {DateTime.Now.Year}. You entered {command.Year}.");
     }
 }

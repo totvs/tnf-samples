@@ -6,22 +6,16 @@ public class UpdatePurchaseCommandValidator : TnfFluentValidator<UpdatePurchaseC
 {
     public override void Configure()
     {
-        RuleFor(command => command.Purchase.Id)
+        RuleFor(command => command.Id)
             .NotEmpty().WithMessage("Purchase Id is required.");
 
-        RuleFor(command => command.Purchase.PurchaseDate)
+        RuleFor(command => command.PurchaseDate)
             .LessThanOrEqualTo(DateTime.Now).WithMessage("Purchase Date should be in the past or today.");
 
-        RuleFor(command => command.Purchase.Car)
+        RuleFor(command => command.CarId)
             .NotNull().WithMessage("Car must be present.");
 
-        RuleFor(command => command.Purchase.Car.Id)
-            .NotEmpty().WithMessage("Car Id is required.");
-
-        RuleFor(command => command.Purchase.Customer)
-            .NotNull().WithMessage("Customer must be present.");
-
-        RuleFor(command => command.Purchase.Customer.Id)
+        RuleFor(command => command.CustomerId)
             .NotEmpty().WithMessage("Customer Id is required.");
     }
 }

@@ -7,12 +7,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Tnf.Commands" Version="6.3.0.21401"/>
-        <PackageReference Include="Tnf.Commands.FluentValidation" Version="6.3.0.21401"/>
+        <Compile Remove="Factories\**" />
+        <EmbeddedResource Remove="Factories\**" />
+        <None Remove="Factories\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
+      <None Remove="Localization\Sources\CarShop-pt-BR.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Localization\Sources\CarShop-pt-BR.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Tnf.Commands" Version="6.3.0.21401" />
+        <PackageReference Include="Tnf.Commands.FluentValidation" Version="6.3.0.21401" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
     </ItemGroup>
 
 </Project>

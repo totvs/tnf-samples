@@ -1,6 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
-
-namespace Tnf.CarShop.Application.Commands.Customer.Create;
+﻿namespace Tnf.CarShop.Application.Commands.Customer.Create;
 
 public class CreateCustomerCommand
 {
@@ -9,8 +7,7 @@ public class CreateCustomerCommand
     public string Address { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 }
 
 public class CreateCustomerResult

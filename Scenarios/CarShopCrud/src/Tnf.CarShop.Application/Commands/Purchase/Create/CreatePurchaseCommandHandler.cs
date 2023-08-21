@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Dtos;
-using Tnf.CarShop.Application.Factories;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -11,38 +9,38 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly ILogger<CreatePurchaseCommandHandler> _logger;
-    private readonly PurchaseFactory _purchaseFactory;
     private readonly IPurchaseRepository _purchaseRepository;
+    private readonly IStoreRepository _storeRepository;
 
     public CreatePurchaseCommandHandler(ILogger<CreatePurchaseCommandHandler> logger,
         IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository,
-        PurchaseFactory purchaseFactory)
+        IStoreRepository storeRepository)
     {
         _logger = logger;
         _purchaseRepository = purchaseRepository;
         _carRepository = carRepository;
         _customerRepository = customerRepository;
-        _purchaseFactory = purchaseFactory;
+        _storeRepository = storeRepository;
     }
 
     public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command,
         CancellationToken cancellationToken = default)
     {
-        var purchaseDto = command.Purchase;
-
-        var createdPurchaseId = await CreatePurchaseAsync(purchaseDto, cancellationToken);
+        var createdPurchaseId = await CreatePurchaseAsync(command, cancellationToken);
 
         return new CreatePurchaseResult(createdPurchaseId);
     }
 
-    private async Task<Guid> CreatePurchaseAsync(PurchaseDto purchaseDto, CancellationToken cancellationToken)
+    private async Task<Guid> CreatePurchaseAsync(CreatePurchaseCommand command, CancellationToken cancellationToken)
     {
-        var car = await _carRepository.GetAsync(purchaseDto.Car.Id, cancellationToken);
-        var customer = await _customerRepository.GetAsync(purchaseDto.Customer.Id, cancellationToken);
+        var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
+        var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
+        var store = await _storeRepository.GetAsync(command.StoreId, cancellationToken);
 
-        if (car == null || customer == null) throw new Exception("Invalid car or customer.");
+        if (car == null || customer == null || store == null) throw new Exception("Invalid car or customer.");
 
-        var newPurchase = _purchaseFactory.ToEntity(purchaseDto);
+        var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price,
+            command.PurchaseDate, command.TenantId, customer, car, store);
 
         var createdPurchase = await _purchaseRepository.InsertAsync(newPurchase, cancellationToken);
 
