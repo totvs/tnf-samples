@@ -3,7 +3,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Get;
- xunit
+
 public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetCustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
@@ -38,4 +38,3 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
         return new GetCustomerResult(customersDto);
     }
 }
-// Unit Test

@@ -18,6 +18,20 @@ public record Purchase : IHasCreationTime, IMustHaveTenant
         Store = store;
     }
 
+    public Purchase(Guid id ,Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId, Customer customer,
+     Car car, Store store)
+    {
+        Id = id;
+        CarId = carId;
+        CustomerId = customerId;
+        Price = price;
+        PurchaseDate = purchaseDate;
+        TenantId = tenantId;
+        Customer = customer;
+        Car = car;
+        Store = store;
+    }
+
     public Guid Id { get; }
     public Guid CarId { get; }
     public Guid CustomerId { get; }

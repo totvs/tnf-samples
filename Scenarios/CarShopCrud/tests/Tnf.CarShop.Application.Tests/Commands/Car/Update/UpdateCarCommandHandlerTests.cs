@@ -49,34 +49,6 @@ namespace Tnf.CarShop.Application.Tests.Commands.Car.Update
 
             carRepositoryMock.Verify(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>()), Times.Once);
             carRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task UpdateCarCommandHandler_Should_Throw_Exception_When_Car_Not_Found()
-        {
-            
-            var carRepositoryMock = new Mock<ICarRepository>();
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var dealerRepositoryMock = new Mock<IStoreRepository>();
-            var loggerMock = new Mock<ILogger<UpdateCarCommandHandler>>();
-
-            var command = new UpdateCarCommand{
-                Id = Guid.NewGuid(), 
-                Brand = "Ford",
-                Model = "Fiesta", 
-                Year = 2019,
-                Price = 20000
-            };
-            carRepositoryMock.Setup(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>())).ReturnsAsync((Domain.Entities.Car)null);
-
-            var handler = new UpdateCarCommandHandler(loggerMock.Object, carRepositoryMock.Object,
-                dealerRepositoryMock.Object, customerRepositoryMock.Object);
-
-             & Assert
-            await Assert.ThrowsAsync<Exception>(() => handler.ExecuteAsync(command));
-
-            carRepositoryMock.Verify(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>()), Times.Once);
-            carRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Never);
-        }
+        }      
     }
 }

@@ -11,29 +11,39 @@ namespace Tnf.CarShop.Application.Tests.Commands.Customer.Create
 {
     public class CreateCustomerCommandHandlerTests
     {
-        [Fact]
-        public async Task CreateCustomerCommandHandler_Should_Create_Customer()
+        private readonly Mock<ICustomerRepository> _customerRepoMock;
+        private readonly CreateCustomerCommandHandler _handler;
+
+        public CreateCustomerCommandHandlerTests()
         {
-            
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-        
-            var command = new CreateCustomerCommand {
+            _customerRepoMock = new Mock<ICustomerRepository>();
+            _handler = new CreateCustomerCommandHandler(_customerRepoMock.Object);
+        }
+
+        [Fact]
+        public async Task ExecuteAsync_ValidCommand_CreatesCustomerSuccessfully()
+        {
+            var customerId = Guid.NewGuid();
+            var customer = new Domain.Entities.Customer(customerId, "Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh", DateTime.Now.AddYears(-33));
+
+
+            _customerRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(customer);
+
+            var command = new CreateCustomerCommand
+            {
                 FullName = "John Doe",
-                Address = "123 Main Street",
-                Phone = "51999999999",
+                Address = "123 Main St.",
+                Phone = "555-5555",
                 Email = "john.doe@example.com",
-                DateOfBirth = DateTime.Now.AddYears(-28)
+                DateOfBirth = DateTime.UtcNow.AddYears(-30)
+            };
 
-                };
-            var handler = new CreateCustomerCommandHandler(customerRepositoryMock.Object);
-
+            var result = await _handler.ExecuteAsync(command);
             
-            var result = await handler.ExecuteAsync(command);
-
-            
-            Assert.NotNull(result);
             Assert.True(result.Success);
-            Assert.NotEqual(Guid.Empty, result.CustomerId);
+            Assert.Equal(customerId, result.CustomerId);
+            _customerRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

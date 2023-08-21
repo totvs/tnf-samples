@@ -26,8 +26,8 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
 
             if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
 
-            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId,
-                purchase.CustomerId, purchase.CarId, purchase.Store.TenantId);
+            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate,
+                purchase.CustomerId, purchase.CarId, purchase.TenantId);
 
             var purchaseResult = new GetPurchaseResult(purchaseDto);
 
@@ -37,8 +37,8 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
 
         var purchasesDto = purchases.Select(
-            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.TenantId, purchase.CustomerId,
-                purchase.CarId, purchase.Store.TenantId)
+            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.CustomerId,
+                purchase.CarId, purchase.TenantId)
         ).ToList();
 
         return new GetPurchaseResult(purchasesDto);

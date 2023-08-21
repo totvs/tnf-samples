@@ -3,11 +3,10 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
- xunit
+
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
     private readonly ICarRepository _carRepository;
-    private readonly ICustomerRepository _customerRepository;
     private readonly IStoreRepository _storeRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
 
@@ -40,4 +39,3 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     }
 }
 
-//Unit Test

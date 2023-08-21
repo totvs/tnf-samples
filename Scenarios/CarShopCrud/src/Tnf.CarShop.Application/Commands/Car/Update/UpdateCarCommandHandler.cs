@@ -4,7 +4,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
- xunit
+
 public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCarResult>
 {
     private readonly ICarRepository _carRepository;
@@ -41,4 +41,3 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
         return new UpdateCarResult(updatedCarDto);
     }
 }
-//Unit Test
