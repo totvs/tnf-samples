@@ -39,4 +39,3 @@ public class UpdateCustomerCommandHandler : CommandHandler<UpdateCustomerCommand
         return new UpdateCustomerResult(updatedCustomerDto);
     }
 }
-

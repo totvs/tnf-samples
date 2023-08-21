@@ -10,11 +10,11 @@ public class CreateCarCommandValidatorTests
     {
         var command = new CreateCarCommand
         (
-             null,
-             "Model",
-             2000,
-             10000,
-             Guid.NewGuid()
+            null,
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
         );
 
 
@@ -99,7 +99,7 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Model_Is_Null()
     {
         var command = new CreateCarCommand
-        (   
+        (
             "Brand",
             null,
             2000,

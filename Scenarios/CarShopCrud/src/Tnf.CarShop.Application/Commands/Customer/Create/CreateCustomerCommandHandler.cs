@@ -2,6 +2,7 @@
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Create;
+
 public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand, CreateCustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;

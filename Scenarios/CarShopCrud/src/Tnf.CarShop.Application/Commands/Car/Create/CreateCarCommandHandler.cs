@@ -7,8 +7,8 @@ namespace Tnf.CarShop.Application.Commands.Car.Create;
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
     private readonly ICarRepository _carRepository;
-    private readonly IStoreRepository _storeRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
+    private readonly IStoreRepository _storeRepository;
 
 
     public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
@@ -31,11 +31,11 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     {
         var store = await _storeRepository.GetAsync(command.TenantId, cancellationToken);
 
-        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, store, command.TenantId);
+        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, store,
+            command.TenantId);
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
 
         return createdCar.Id;
     }
 }
-

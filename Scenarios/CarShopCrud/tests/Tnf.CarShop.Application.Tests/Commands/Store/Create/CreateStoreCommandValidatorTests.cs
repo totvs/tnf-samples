@@ -7,7 +7,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
     {
-        var command = new CreateStoreCommand(string.Empty, "cnpj" ,"Location");
+        var command = new CreateStoreCommand(string.Empty, "cnpj", "Location");
         var validator = new CreateStoreCommandValidator();
 
 
@@ -22,7 +22,7 @@ public class CreateStoreCommandValidatorTests
     [Fact]
     public void Should_Have_Error_When_Name_Is_Too_Long()
     {
-        var command = new CreateStoreCommand(new string('*', 151), "cnpj" ,"Location");
+        var command = new CreateStoreCommand(new string('*', 151), "cnpj", "Location");
         var validator = new CreateStoreCommandValidator();
 
 

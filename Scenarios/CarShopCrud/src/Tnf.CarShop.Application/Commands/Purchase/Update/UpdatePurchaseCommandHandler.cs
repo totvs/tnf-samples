@@ -44,7 +44,7 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
         var updatedPurchase = await _purchaseRepository.UpdateAsync(purchase, cancellationToken);
 
         var purchaseDto = new PurchaseDto(updatedPurchase.Id,
-            updatedPurchase.PurchaseDate,   
+            updatedPurchase.PurchaseDate,
             updatedPurchase.CarId,
             updatedPurchase.CustomerId,
             updatedPurchase.TenantId);
