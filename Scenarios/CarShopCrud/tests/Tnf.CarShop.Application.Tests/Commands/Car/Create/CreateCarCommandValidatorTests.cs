@@ -9,12 +9,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Brand_Is_Null()
     {
         var command = new CreateCarCommand
-        {
-            Brand = null,
-            Model = "Model",
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            null,
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -30,12 +31,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Brand_Is_Empty()
     {
         var command = new CreateCarCommand
-        {
-            Brand = string.Empty,
-            Model = "Model",
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            string.Empty,
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -51,12 +53,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Brand_Is_Too_Short()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "A",
-            Model = "Model",
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            "A",
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -73,12 +76,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Brand_Is_Too_Long()
     {
         var command = new CreateCarCommand
-        {
-            Brand = new string('A', 101),
-            Model = "Model",
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            new string('A', 101),
+            "Model",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -95,12 +99,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Model_Is_Null()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = null,
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            "Brand",
+            null,
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -116,12 +121,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Model_Is_Empty()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = string.Empty,
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            "Brand",
+            string.Empty,
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -137,12 +143,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Model_Is_Too_Short()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = "A",
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            "Brand",
+            "A",
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -159,12 +166,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Model_Is_Too_Long()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = new string('A', 101),
-            Year = 2000,
-            Price = 10000
-        };
+        (
+            "Brand",
+            new string('A', 101),
+            2000,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -181,12 +189,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Year_Is_Lower_Than_1900()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = "Model",
-            Year = 1899,
-            Price = 10000
-        };
+        (
+            "Brand",
+            "Model",
+            1899,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();
@@ -203,12 +212,13 @@ public class CreateCarCommandValidatorTests
     public void Should_Have_Error_When_Year_Is_Greater_Than_Current_Year()
     {
         var command = new CreateCarCommand
-        {
-            Brand = "Brand",
-            Model = "Model",
-            Year = DateTime.Now.Year + 1,
-            Price = 10000
-        };
+        (
+            "Brand",
+            "Model",
+            DateTime.Now.Year + 1,
+            10000,
+            Guid.NewGuid()
+        );
 
 
         var validator = new CreateCarCommandValidator();

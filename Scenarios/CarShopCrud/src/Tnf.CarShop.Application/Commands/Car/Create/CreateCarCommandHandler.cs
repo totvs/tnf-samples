@@ -7,18 +7,16 @@ namespace Tnf.CarShop.Application.Commands.Car.Create;
 public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCarResult>
 {
     private readonly ICarRepository _carRepository;
-    private readonly ICustomerRepository _customerRepository;
-    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
+    private readonly IStoreRepository _storeRepository;
 
 
     public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
-        IStoreRepository dealerRepository, ICustomerRepository customerRepository)
+        IStoreRepository storeRepository)
     {
         _logger = logger;
         _carRepository = carRepository;
-        _dealerRepository = dealerRepository;
-        _customerRepository = customerRepository;
+        _storeRepository = storeRepository;
     }
 
     public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
@@ -31,7 +29,10 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 
     private async Task<Guid> CreateCarAsync(CreateCarCommand command, CancellationToken cancellationToken)
     {
-        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price);
+        var store = await _storeRepository.GetAsync(command.TenantId, cancellationToken);
+
+        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, store,
+            command.TenantId);
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
 

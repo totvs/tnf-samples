@@ -45,7 +45,6 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
 
         var purchaseDto = new PurchaseDto(updatedPurchase.Id,
             updatedPurchase.PurchaseDate,
-            updatedPurchase.Store.TenantId,
             updatedPurchase.CarId,
             updatedPurchase.CustomerId,
             updatedPurchase.TenantId);

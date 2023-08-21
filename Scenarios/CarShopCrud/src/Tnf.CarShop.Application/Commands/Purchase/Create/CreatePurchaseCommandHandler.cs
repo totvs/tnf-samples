@@ -12,7 +12,6 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
     private readonly IPurchaseRepository _purchaseRepository;
     private readonly IStoreRepository _storeRepository;
 
-
     public CreatePurchaseCommandHandler(ILogger<CreatePurchaseCommandHandler> logger,
         IPurchaseRepository purchaseRepository, ICarRepository carRepository, ICustomerRepository customerRepository,
         IStoreRepository storeRepository)

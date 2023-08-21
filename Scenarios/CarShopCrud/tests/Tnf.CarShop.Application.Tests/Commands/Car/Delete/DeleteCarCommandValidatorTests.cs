@@ -8,7 +8,7 @@ public class DeleteCarCommandValidatorTests
     public void DeleteCarCommandValidator_Validate_CarIdIsNotEmpty_ShouldReturnSuccess()
     {
         var validator = new DeleteCarCommandValidator();
-        var command = new DeleteCarCommand { CarId = Guid.NewGuid() };
+        var command = new DeleteCarCommand(Guid.NewGuid());
 
 
         var result = validator.Validate(command);

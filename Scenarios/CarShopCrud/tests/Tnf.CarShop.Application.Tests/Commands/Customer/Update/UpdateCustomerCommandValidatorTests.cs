@@ -11,6 +11,7 @@ public class UpdateCustomerCommandValidatorTests
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
+            TenantId = Guid.NewGuid(),
             Address = "Rua Teste",
             Phone = "+55 11 99999-9999",
             Email = "john@doe.com",

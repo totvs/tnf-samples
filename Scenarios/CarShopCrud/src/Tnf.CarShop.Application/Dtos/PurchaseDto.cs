@@ -20,11 +20,11 @@ public sealed record PurchaseDto
         PurchaseDate = purchaseDate;
     }
 
-    public PurchaseDto(Guid id, DateTime purchaseDate, Guid storeId, Guid carId, Guid customerId, Guid tenantId)
+    public PurchaseDto(Guid id, DateTime purchaseDate, Guid carId, Guid customerId, Guid tenantId)
     {
         Id = id;
         PurchaseDate = purchaseDate;
-        StoreId = storeId;
+
         CarId = carId;
         CustomerId = customerId;
         TenantId = tenantId;
@@ -34,7 +34,6 @@ public sealed record PurchaseDto
     public DateTime PurchaseDate { get; set; }
     public CustomerDto Customer { get; set; }
     public CarDto Car { get; set; }
-    public Guid StoreId { get; set; }
     public Guid CarId { get; set; }
     public Guid CustomerId { get; set; }
     public Guid TenantId { get; set; }

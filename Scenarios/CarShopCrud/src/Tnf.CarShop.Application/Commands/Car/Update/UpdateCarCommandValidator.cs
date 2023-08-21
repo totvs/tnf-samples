@@ -25,4 +25,3 @@ public class UpdateCarCommandValidator : TnfFluentValidator<UpdateCarCommand>
             .GreaterThan(0).WithMessage("Price should be positive.");
     }
 }
-//Unit Test
