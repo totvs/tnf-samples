@@ -24,7 +24,7 @@ public class CreateCarCommandValidatorTests
 
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "Brand is required.");
+            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class CreateCarCommandValidatorTests
 
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "Brand is required.");
+            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Brand) &&
-                 e.ErrorMessage == "Brand should be between 2 and 100 characters long.");
+                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
     }
 
     [Fact]
@@ -92,7 +92,7 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Brand) &&
-                 e.ErrorMessage == "Brand should be between 2 and 100 characters long.");
+                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class CreateCarCommandValidatorTests
 
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "Model is required.");
+            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
     }
 
     [Fact]
@@ -136,7 +136,7 @@ public class CreateCarCommandValidatorTests
 
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "Model is required.");
+            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Model) &&
-                 e.ErrorMessage == "Model should be between 2 and 100 characters long.");
+                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
     }
 
     [Fact]
@@ -182,7 +182,7 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Model) &&
-                 e.ErrorMessage == "Model should be between 2 and 100 characters long.");
+                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
     }
 
     [Fact]
@@ -205,7 +205,7 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Year) &&
-                 e.ErrorMessage == $"Year should be between 1900 and {DateTime.Now.Year}.");
+                 e.ErrorMessage == $"'Year' must be between 1900 and {DateTime.Now.Year}. You entered {command.Year}.");
     }
 
     [Fact]
@@ -228,6 +228,6 @@ public class CreateCarCommandValidatorTests
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Year) &&
-                 e.ErrorMessage == $"Year should be between 1900 and {DateTime.Now.Year}.");
+                 e.ErrorMessage == $"'Year' must be between 1900 and {DateTime.Now.Year}. You entered {command.Year}.");
     }
 }
