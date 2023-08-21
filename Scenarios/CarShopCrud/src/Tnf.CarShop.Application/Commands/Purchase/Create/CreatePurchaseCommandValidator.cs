@@ -19,5 +19,11 @@ public class CreatePurchaseCommandValidator : TnfFluentValidator<CreatePurchaseC
 
         RuleFor(command => command.CustomerId)
             .NotEmpty().WithMessage("Customer Id is required.");
+
+        RuleFor(command => command.TenantId)
+           .NotEmpty().WithMessage("TenantId is required.");
+
+        RuleFor(command => command.Price)
+           .NotEmpty().WithMessage("Price is required.");
     }
 }
