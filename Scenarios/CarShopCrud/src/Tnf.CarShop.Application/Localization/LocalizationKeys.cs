@@ -4,6 +4,12 @@ public enum LocalizationKeys
 {
     PropertyRequired,
     PropertyLength,
+    PropertyValid,
     CarYearLength,
-    PriceShouldBePositive
+    PriceShouldBePositive,
+    AddressLength,
+    ValidBrazilianPhoneNumber,
+    BeforeValidDate,
+    Over18YearsOld,
+    EmptyGUID
 }

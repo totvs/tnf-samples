@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Commands.Purchase.Delete;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Get;
 
@@ -9,6 +11,6 @@ public class GetPurchaseCommandValidator : TnfFluentValidator<GetPurchaseCommand
         RuleFor(command => command.PurchaseId)
             .Must(carId => carId != Guid.Empty)
             .When(command => command.PurchaseId.HasValue)
-            .WithMessage("PurchaseId should not be an empty GUID.");
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID, nameof(GetPurchaseCommand.PurchaseId));
     }
 }

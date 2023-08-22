@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Commands.Customer.Create;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Commands.Customer.Create;
 
@@ -8,27 +10,36 @@ public class CreateCustomerCommandValidator : TnfFluentValidator<CreateCustomerC
     public override void Configure()
     {
         RuleFor(command => command.FullName)
-            .NotEmpty().WithMessage("Full Name is required.")
-            .Length(2, 150).WithMessage("Full Name should be between 2 and 150 characters long.");
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreateCustomerCommand.FullName))
+            .Length(2, 150)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyLength, nameof(CreateCustomerCommand.FullName));
 
         RuleFor(command => command.Address)
-            .NotEmpty().WithMessage("Address is required.")
-            .Length(5, 250).WithMessage("Address should be between 5 and 250 characters long.");
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreateCustomerCommand.Address))
+            .Length(5, 250)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.AddressLength);
 
         RuleFor(command => command.Phone)
-            .NotEmpty().WithMessage("Phone is required.")
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreateCustomerCommand.Phone))
             .Matches(@"^(\+55)?\s?\(?\d{2}\)?\s?\d{4,5}-?\d{4}$")
-            .WithMessage("A valid Brazilian phone number is required.");
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.ValidBrazilianPhoneNumber);
 
         RuleFor(command => command.Email)
-            .NotEmpty().WithMessage("Email is required.")
-            .EmailAddress().WithMessage("A valid email is required.")
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreateCustomerCommand.Email))
+            .EmailAddress()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyValid, nameof(CreateCustomerCommand.Email))
             .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-            .WithMessage("Invalid email format.");
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyValid, nameof(CreateCustomerCommand.Email));
 
         RuleFor(command => command.DateOfBirth)
-            .LessThan(DateTime.Today).WithMessage("Date of Birth should be in the past.")
-            .Must(BeAValidAge).WithMessage("Age should be between 18 and 100.");
+            .LessThan(DateTime.Today)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.BeforeValidDate)
+            .Must(BeAValidAge)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.Over18YearsOld);
     }
 
     private bool BeAValidAge(DateTime dateOfBirth)

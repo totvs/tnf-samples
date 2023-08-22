@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Commands.Car.Create;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Car.Delete;
 
@@ -7,6 +9,6 @@ public class DeleteCarCommandValidator : TnfFluentValidator<DeleteCarCommand>
     public override void Configure()
     {
         RuleFor(command => command.CarId)
-            .NotEmpty().WithMessage("CarId is required.");
+            .NotEmpty().WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(DeleteCarCommand.CarId));
     }
 }

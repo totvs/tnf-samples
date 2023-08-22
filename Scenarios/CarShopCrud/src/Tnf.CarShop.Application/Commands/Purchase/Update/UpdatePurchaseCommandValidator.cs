@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Update;
 
@@ -7,15 +8,27 @@ public class UpdatePurchaseCommandValidator : TnfFluentValidator<UpdatePurchaseC
     public override void Configure()
     {
         RuleFor(command => command.Id)
-            .NotEmpty().WithMessage("Purchase Id is required.");
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(UpdatePurchaseCommand.Id));
 
         RuleFor(command => command.PurchaseDate)
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Purchase Date should be in the past or today.");
+            .LessThanOrEqualTo(DateTime.Now)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.BeforeValidDate);
+
+        RuleFor(command => command.Price)
+          .NotNull()
+          .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(UpdatePurchaseCommand.Price));
 
         RuleFor(command => command.CarId)
-            .NotNull().WithMessage("Car must be present.");
+            .NotNull()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(UpdatePurchaseCommand.CarId));
 
         RuleFor(command => command.CustomerId)
-            .NotEmpty().WithMessage("Customer Id is required.");
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(UpdatePurchaseCommand.CustomerId));
+
+        RuleFor(command => command.StoreId)
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(UpdatePurchaseCommand.StoreId));
     }
 }

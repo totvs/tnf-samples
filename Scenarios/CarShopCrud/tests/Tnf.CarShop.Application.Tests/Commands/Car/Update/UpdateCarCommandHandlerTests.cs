@@ -19,6 +19,7 @@ public class UpdateCarCommandHandlerTests
 
         var command = new UpdateCarCommand
         {
+            
             Id = Guid.NewGuid(),
             Brand = "Ford",
             Model = "Fiesta",
