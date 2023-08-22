@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Domain.Repositories;
+
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Get;
@@ -25,7 +27,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
 
             if (car is null) throw new Exception($"Car with id {command.CarId.Value} not found.");
 
-            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price);
+            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId);
 
 
             return new GetCarResult(carDto);
@@ -34,7 +36,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         var cars = await _carRepository.GetAllAsync(cancellationToken);
 
         var carsDto = cars.Select(car =>
-            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price)).ToList();
+            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId)).ToList();
 
         return new GetCarResult(carsDto);
     }
