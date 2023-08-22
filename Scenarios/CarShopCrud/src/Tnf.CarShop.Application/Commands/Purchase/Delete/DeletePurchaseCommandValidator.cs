@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Delete;
 
@@ -7,6 +8,7 @@ public class DeletePurchaseCommandValidator : TnfFluentValidator<DeletePurchaseC
     public override void Configure()
     {
         RuleFor(command => command.PurchaseId)
-            .NotEmpty().WithMessage("PurchaseId is required.");
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(DeletePurchaseCommand.PurchaseId));
     }
 }

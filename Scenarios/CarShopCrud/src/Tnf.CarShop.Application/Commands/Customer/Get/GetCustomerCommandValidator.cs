@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Get;
 
@@ -9,6 +10,6 @@ public class GetCustomerCommandValidator : TnfFluentValidator<GetCustomerCommand
         RuleFor(command => command.CustomerId)
             .Must(carId => carId != Guid.Empty)
             .When(command => command.CustomerId.HasValue)
-            .WithMessage("CustomerId should not be an empty GUID.");
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID);
     }
 }
