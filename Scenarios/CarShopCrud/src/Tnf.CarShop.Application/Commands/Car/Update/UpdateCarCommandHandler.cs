@@ -21,8 +21,7 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
         _carEventPublisher = carEventPublisher;
     }
 
-    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command, CancellationToken cancellationToken = default)
     {
         var car = await _carRepository.GetAsync(command.Id, cancellationToken);
 

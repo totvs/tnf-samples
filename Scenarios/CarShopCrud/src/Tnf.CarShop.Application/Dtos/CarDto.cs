@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public sealed record CarDto
+public class CarDto
 {
     public CarDto(Guid id, string brand, string model, int year, decimal price, Guid tenantId)
     {

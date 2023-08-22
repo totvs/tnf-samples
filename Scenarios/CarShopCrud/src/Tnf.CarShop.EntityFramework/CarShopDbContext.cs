@@ -17,6 +17,7 @@ public class CarShopDbContext : TnfDbContext
     public DbSet<Purchase> Purchases { get; set; }
     public DbSet<Store> Stores { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Fipe> Fipe { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,5 +27,6 @@ public class CarShopDbContext : TnfDbContext
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
         modelBuilder.ApplyConfiguration(new StoreConfiguration());
         modelBuilder.ApplyConfiguration(new PurchaseConfiguration());
+        modelBuilder.ApplyConfiguration(new FipeConfiguration());
     }
 }

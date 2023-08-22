@@ -3,7 +3,7 @@ using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
-public record Purchase : IHasCreationTime, IMustHaveTenant
+public class Purchase : IHasCreationTime, IMustHaveTenant
 {
     public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId, Customer customer,
         Car car, Store store)

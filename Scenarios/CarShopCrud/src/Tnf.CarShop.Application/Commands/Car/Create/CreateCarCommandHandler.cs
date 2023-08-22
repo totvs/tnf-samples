@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
+using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
 
@@ -43,7 +44,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
 
-        _logger.LogInformation($"Car {createdCar.Id} successfully created!");
+        _logger.EntitySuccessfullyCreated("car", createdCar.Id);
 
         await _carEventPublisher.NotifyCreationAsync(createdCar, cancellationToken);
 

@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public sealed record StoreDto
+public class StoreDto
 {
     public StoreDto(Guid id, string name, string location, List<CarDto> cars)
     {

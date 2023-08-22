@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Dtos;
 
-public sealed record CustomerDto
+public class CustomerDto
 {
     public CustomerDto(Guid id, string fullName, string address, string phone, List<CarDto> cars, string email,
         DateTime dateOfBirth)

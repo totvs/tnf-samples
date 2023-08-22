@@ -88,7 +88,6 @@ public class CreateCarCommandValidatorTests
         var validator = new CreateCarCommandValidator();
         var result = validator.Validate(command);
 
-
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == nameof(command.Brand) &&
