@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using Tnf.CarShop.Application.Commands.Store.Delete;
+using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Store.Get;
 
@@ -8,6 +10,6 @@ public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
     {
         RuleFor(x => x.StoreId)
             .NotNull()
-            .WithMessage("StoreId is required.");
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetStoreCommand.StoreId));
     }
 }
