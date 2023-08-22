@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
+
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;
@@ -8,17 +11,14 @@ namespace Tnf.CarShop.Application.Commands.Car.Update;
 public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCarResult>
 {
     private readonly ICarRepository _carRepository;
-    private readonly ICustomerRepository _customerRepository;
-    private readonly IStoreRepository _dealerRepository;
     private readonly ILogger<UpdateCarCommandHandler> _logger;
+    private readonly ICarEventPublisher _carEventPublisher;
 
-    public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository,
-        IStoreRepository dealerRepository, ICustomerRepository customerRepository)
+    public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository, ICarEventPublisher carEventPublisher)
     {
         _logger = logger;
         _carRepository = carRepository;
-        _dealerRepository = dealerRepository;
-        _customerRepository = customerRepository;
+        _carEventPublisher = carEventPublisher;
     }
 
     public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command,
@@ -35,8 +35,17 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
 
         var updatedCar = await _carRepository.UpdateAsync(car, cancellationToken);
 
-        var updatedCarDto = new CarDto(updatedCar.Id, updatedCar.Brand, updatedCar.Model, updatedCar.Year,
-            updatedCar.Price);
+        var updatedCarDto = new CarDto(
+            updatedCar.Id,
+            updatedCar.Brand,
+            updatedCar.Model,
+            updatedCar.Year,
+            updatedCar.Price,
+            updatedCar.TenantId);
+
+        _logger.LogInformation($"Car {updatedCar.Id} successfully updated!");
+
+        await _carEventPublisher.NotifyUpdateAsync(updatedCarDto, cancellationToken);
 
         return new UpdateCarResult(updatedCarDto);
     }

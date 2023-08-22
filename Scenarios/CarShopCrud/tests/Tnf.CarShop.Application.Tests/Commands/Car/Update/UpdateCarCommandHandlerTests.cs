@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using Tnf.CarShop.Application.Commands.Car.Update;
+using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Update;
@@ -11,9 +14,8 @@ public class UpdateCarCommandHandlerTests
     public async Task UpdateCarCommandHandler_Should_Update_Car()
     {
         var carRepositoryMock = new Mock<ICarRepository>();
-        var customerRepositoryMock = new Mock<ICustomerRepository>();
-        var dealerRepositoryMock = new Mock<IStoreRepository>();
         var loggerMock = new Mock<ILogger<UpdateCarCommandHandler>>();
+        var carEventPublisherMock = new Mock<ICarEventPublisher>();
 
         var command = new UpdateCarCommand
         {
@@ -30,8 +32,7 @@ public class UpdateCarCommandHandlerTests
         carRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(car);
 
-        var handler = new UpdateCarCommandHandler(loggerMock.Object, carRepositoryMock.Object,
-            dealerRepositoryMock.Object, customerRepositoryMock.Object);
+        var handler = new UpdateCarCommandHandler(loggerMock.Object, carRepositoryMock.Object, carEventPublisherMock.Object);
 
 
         var result = await handler.ExecuteAsync(command);

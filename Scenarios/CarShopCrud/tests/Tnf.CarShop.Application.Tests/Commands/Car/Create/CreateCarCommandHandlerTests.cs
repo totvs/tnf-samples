@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using Tnf.CarShop.Application.Commands.Car.Create;
+using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Create;
@@ -11,14 +14,16 @@ public class CreateCarCommandHandlerTests
     private readonly CreateCarCommandHandler _handler;
     private readonly Mock<ILogger<CreateCarCommandHandler>> _loggerMock;
     private readonly Mock<IStoreRepository> _storeRepoMock;
+    private readonly Mock<ICarEventPublisher> _carEventPublisherMock;
 
     public CreateCarCommandHandlerTests()
     {
         _loggerMock = new Mock<ILogger<CreateCarCommandHandler>>();
         _carRepoMock = new Mock<ICarRepository>();
         _storeRepoMock = new Mock<IStoreRepository>();
+        _carEventPublisherMock = new Mock<ICarEventPublisher>();
 
-        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _storeRepoMock.Object);
+        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _storeRepoMock.Object, _carEventPublisherMock.Object);
     }
 
     [Fact]

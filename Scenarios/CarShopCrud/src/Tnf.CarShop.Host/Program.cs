@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Tnf.CarShop.Application.Localization;
+using Tnf.CarShop.Application.Messages;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 using Tnf.CarShop.Host.Swagger;
 
@@ -26,6 +27,8 @@ builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAss
 builder.Services.AddEFCorePostgreSql();
 
 builder.Services.ConfigureCarShopLocalization();
+
+builder.Services.AddMessaging(builder.Configuration);
 
 var app = builder.Build();
 

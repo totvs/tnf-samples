@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+
+using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
+
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car.Create;
@@ -9,14 +12,18 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     private readonly ICarRepository _carRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
     private readonly IStoreRepository _storeRepository;
+    private readonly ICarEventPublisher _carEventPublisher;
 
-
-    public CreateCarCommandHandler(ILogger<CreateCarCommandHandler> logger, ICarRepository carRepository,
-        IStoreRepository storeRepository)
+    public CreateCarCommandHandler(
+        ILogger<CreateCarCommandHandler> logger,
+        ICarRepository carRepository,
+        IStoreRepository storeRepository,
+        ICarEventPublisher carEventPublisher)
     {
         _logger = logger;
         _carRepository = carRepository;
         _storeRepository = storeRepository;
+        _carEventPublisher = carEventPublisher;
     }
 
     public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
@@ -35,6 +42,10 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
             command.TenantId);
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
+
+        _logger.LogInformation($"Car {createdCar.Id} successfully created!");
+
+        await _carEventPublisher.NotifyCreationAsync(createdCar, cancellationToken);
 
         return createdCar.Id;
     }
