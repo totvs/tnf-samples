@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Commands.Customer.Create;
 using Tnf.CarShop.Application.Localization;
 
@@ -45,7 +44,10 @@ public class CreateCustomerCommandValidator : TnfFluentValidator<CreateCustomerC
     private bool BeAValidAge(DateTime dateOfBirth)
     {
         var age = DateTime.Today.Year - dateOfBirth.Year;
-        if (dateOfBirth > DateTime.Today.AddYears(-age)) age--;
+
+        if (dateOfBirth > DateTime.Today.AddYears(-age))
+            age--;
+
         return age >= 18 && age <= 100;
     }
 }

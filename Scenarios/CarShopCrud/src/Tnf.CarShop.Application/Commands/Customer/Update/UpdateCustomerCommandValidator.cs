@@ -8,7 +8,10 @@ public class UpdateCustomerCommandValidator : TnfFluentValidator<UpdateCustomerC
     private bool BeAValidAge(DateTime dateOfBirth)
     {
         var age = DateTime.Today.Year - dateOfBirth.Year;
-        if (dateOfBirth > DateTime.Today.AddYears(-age)) age--;
+
+        if (dateOfBirth > DateTime.Today.AddYears(-age))
+            age--;
+
         return age is >= 18 and <= 100;
     }
 
