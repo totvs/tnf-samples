@@ -12,8 +12,8 @@ using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreSqlCarShopDbContext))]
-    [Migration("20230823172648_AddFipeEntity")]
-    partial class AddFipeEntity
+    [Migration("20230823200929_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
@@ -54,7 +57,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Cars", (string)null);
                 });
@@ -86,12 +89,15 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -156,6 +162,9 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
@@ -165,14 +174,14 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Purchases", (string)null);
                 });
 
             modelBuilder.Entity("Tnf.CarShop.Domain.Entities.Store", b =>
                 {
-                    b.Property<Guid>("TenantId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -191,7 +200,10 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("TenantId");
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Stores", (string)null);
                 });
@@ -200,7 +212,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                 {
                     b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
                         .WithMany("Cars")
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -211,7 +223,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                 {
                     b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
                         .WithMany("Customers")
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -234,7 +246,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 
                     b.HasOne("Tnf.CarShop.Domain.Entities.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -2,18 +2,6 @@
 
 public class CreateStoreCommand
 {
-    public CreateStoreCommand(string name, string cnpj, string location)
-    {
-        Name = name;
-        Cnpj = cnpj;
-        Location = location;
-    }
-
-    public CreateStoreCommand()
-    {
-
-    }
-
     public string Name { get; set; }
     public string Cnpj { get; set; }
     public string Location { get; set; }
@@ -21,10 +9,10 @@ public class CreateStoreCommand
 
 public class CreateStoreResult
 {
-    public CreateStoreResult(Guid tenantId)
+    public CreateStoreResult(Guid storeId)
     {
-        TenantId = tenantId;
+        StoreId = storeId;
     }
 
-    public Guid TenantId { get; set; }
+    public Guid StoreId { get; set; }
 }

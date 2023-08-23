@@ -8,21 +8,8 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     private readonly List<Car> _cars = new();
     private readonly List<Customer> _customers = new();
 
-    public Store(string name, string cnpj, string location)
-    {
-        Name = name;
-        Cnpj = cnpj;
-        Location = location;
-    }
 
-    public Store(Guid tenantId, string name, string cnpj, string location)
-    {
-        Name = name;
-        Cnpj = cnpj;
-        Location = location;
-        TenantId = tenantId;
-    }
-
+    public Guid Id { get; set; }
     public string Name { get; private set; }
     public string Cnpj { get; private set; }
     public string Location { get; private set; }
@@ -33,6 +20,14 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public DateTime? LastModificationTime { get; set; }
 
     public Guid TenantId { get; set; }
+
+    public Store(string name, string cnpj, string location)
+    {
+        Name = name;
+        Cnpj = cnpj;
+        Location = location;
+    }
+
 
     public void UpdateLocation(string newLocation)
     {

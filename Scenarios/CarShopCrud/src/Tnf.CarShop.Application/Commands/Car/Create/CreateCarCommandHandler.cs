@@ -12,18 +12,15 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 {
     private readonly ICarRepository _carRepository;
     private readonly ILogger<CreateCarCommandHandler> _logger;
-    private readonly IStoreRepository _storeRepository;
     private readonly ICarEventPublisher _carEventPublisher;
 
     public CreateCarCommandHandler(
         ILogger<CreateCarCommandHandler> logger,
         ICarRepository carRepository,
-        IStoreRepository storeRepository,
         ICarEventPublisher carEventPublisher)
     {
         _logger = logger;
         _carRepository = carRepository;
-        _storeRepository = storeRepository;
         _carEventPublisher = carEventPublisher;
     }
 
@@ -37,10 +34,7 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
 
     private async Task<Guid> CreateCarAsync(CreateCarCommand command, CancellationToken cancellationToken)
     {
-        var store = await _storeRepository.GetAsync(command.TenantId, cancellationToken);
-
-        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, store,
-            command.TenantId);
+        var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId);
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
 

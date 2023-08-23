@@ -47,7 +47,7 @@ public class UpdatePurchaseCommandHandler : CommandHandler<UpdatePurchaseCommand
             updatedPurchase.PurchaseDate,
             updatedPurchase.CarId,
             updatedPurchase.CustomerId,
-            updatedPurchase.TenantId);
+            updatedPurchase.StoreId);
 
         return new UpdatePurchaseResult(purchaseDto);
     }

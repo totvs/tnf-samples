@@ -30,7 +30,7 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
     {
         return await Table
             //.Include(c => c.Cars)
-            .FirstOrDefaultAsync(x => x.TenantId == tenantId);
+            .FirstOrDefaultAsync(x => x.Id == tenantId);
     }
 
     public async Task<Store> UpdateAsync(Store store, CancellationToken cancellationToken = default)

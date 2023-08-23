@@ -27,7 +27,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
 
             if (car is null) throw new Exception($"Car with id {command.CarId.Value} not found.");
 
-            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId);
+            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.StoreId);
 
 
             return new GetCarResult(carDto);
@@ -36,7 +36,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         var cars = await _carRepository.GetAllAsync(cancellationToken);
 
         var carsDto = cars.Select(car =>
-            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId)).ToList();
+            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.StoreId)).ToList();
 
         return new GetCarResult(carsDto);
     }

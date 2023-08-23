@@ -29,7 +29,7 @@ public class StoreController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetById(Guid tenantId)
     {
-        var command = new GetStoreCommand { TenantId = tenantId };
+        var command = new GetStoreCommand { StoreId = tenantId };
 
         var result = await _commandSender.SendAsync<GetStoreResult>(command);
 

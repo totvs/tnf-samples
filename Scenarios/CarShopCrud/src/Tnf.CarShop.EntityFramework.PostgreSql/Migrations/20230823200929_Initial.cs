@@ -12,19 +12,39 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Stores",
+                name: "Fipe",
                 columns: table => new
                 {
-                    TenantId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Cnpj = table.Column<string>(type: "text", nullable: true),
-                    Location = table.Column<string>(type: "text", nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FipeCode = table.Column<string>(type: "text", nullable: false),
+                    MonthYearReference = table.Column<string>(type: "text", nullable: false),
+                    Brand = table.Column<string>(type: "text", nullable: false),
+                    Model = table.Column<string>(type: "text", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    AveragePrice = table.Column<decimal>(type: "numeric", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stores", x => x.TenantId);
+                    table.PrimaryKey("PK_Fipe", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Cnpj = table.Column<string>(type: "text", nullable: true),
+                    Location = table.Column<string>(type: "text", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,18 +56,19 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     Model = table.Column<string>(type: "text", nullable: true),
                     Year = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    TenantId = table.Column<Guid>(type: "uuid", nullable: false)
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cars_Stores_TenantId",
-                        column: x => x.TenantId,
+                        name: "FK_Cars_Stores_StoreId",
+                        column: x => x.StoreId,
                         principalTable: "Stores",
-                        principalColumn: "TenantId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -61,6 +82,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     Phone = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     TenantId = table.Column<Guid>(type: "uuid", nullable: false)
@@ -69,10 +91,10 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Stores_TenantId",
-                        column: x => x.TenantId,
+                        name: "FK_Customers_Stores_StoreId",
+                        column: x => x.StoreId,
                         principalTable: "Stores",
-                        principalColumn: "TenantId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -83,6 +105,7 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CarId = table.Column<Guid>(type: "uuid", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uuid", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PurchaseDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -104,22 +127,22 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Purchases_Stores_TenantId",
-                        column: x => x.TenantId,
+                        name: "FK_Purchases_Stores_StoreId",
+                        column: x => x.StoreId,
                         principalTable: "Stores",
-                        principalColumn: "TenantId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_TenantId",
+                name: "IX_Cars_StoreId",
                 table: "Cars",
-                column: "TenantId");
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_TenantId",
+                name: "IX_Customers_StoreId",
                 table: "Customers",
-                column: "TenantId");
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_CarId",
@@ -132,14 +155,17 @@ namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchases_TenantId",
+                name: "IX_Purchases_StoreId",
                 table: "Purchases",
-                column: "TenantId");
+                column: "StoreId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Fipe");
+
             migrationBuilder.DropTable(
                 name: "Purchases");
 

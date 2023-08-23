@@ -49,7 +49,7 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CreateCarResult), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(UpdateCarCommand command)
+    public async Task<IActionResult> Create(CreateCarCommand command)
     {
         var result = await _commandSender.SendAsync<CreateCarResult>(command);
 

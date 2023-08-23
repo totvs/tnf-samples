@@ -5,5 +5,5 @@ public class CarEvent
     public string Model { get; set; }
     public int Year { get; set; }
     public decimal Price { get; set; }
-    public Guid TenantId { get; set; }
+    public Guid StoreId { get; set; }
 }

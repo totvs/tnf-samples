@@ -30,7 +30,6 @@ public class FipeRepository : EfCoreRepositoryBase<CarShopDbContext, Fipe>, IFip
 
     public async Task<Fipe> UpdateAsync(Fipe fipe, CancellationToken cancellationToken = default)
     {
-        //return await base.UpdateAsync(fipe, cancellationToken);
-        throw new NotImplementedException();
+        return await base.UpdateAsync(fipe, cancellationToken);
     }
 }

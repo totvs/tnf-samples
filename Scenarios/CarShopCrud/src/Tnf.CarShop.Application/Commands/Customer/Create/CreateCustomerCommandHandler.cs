@@ -22,8 +22,7 @@ public class CreateCustomerCommandHandler : CommandHandler<CreateCustomerCommand
 
     private async Task<Guid> CreateCustomerAsync(CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email,
-            command.DateOfBirth);
+        var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth, command.StoreId);
 
         var createdCustomer = await _customerRepository.InsertAsync(newCustomer, cancellationToken);
 

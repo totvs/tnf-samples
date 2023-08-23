@@ -40,7 +40,7 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
             updatedCar.Model,
             updatedCar.Year,
             updatedCar.Price,
-            updatedCar.TenantId);
+            updatedCar.StoreId);
 
         _logger.LogInformation($"Car {updatedCar.Id} successfully updated!");
 

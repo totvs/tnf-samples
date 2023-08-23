@@ -12,14 +12,11 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
         _storeRepository = storeRepository;
     }
 
-    public Guid Id { get; set; }
-
-    public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command, CancellationToken cancellationToken = default)
     {
-        var tenantId = await CreateShopAsync(command, cancellationToken);
+        var storeId = await CreateShopAsync(command, cancellationToken);
 
-        return new CreateStoreResult(tenantId);
+        return new CreateStoreResult(storeId);
     }
 
     private async Task<Guid> CreateShopAsync(CreateStoreCommand shopCommand, CancellationToken cancellationToken)
@@ -28,6 +25,6 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
 
         newStore = await _storeRepository.InsertAsync(newStore, cancellationToken);
 
-        return newStore.TenantId;
+        return newStore.Id;
     }
 }

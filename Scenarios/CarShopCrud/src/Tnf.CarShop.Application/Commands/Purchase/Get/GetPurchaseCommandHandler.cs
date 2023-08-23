@@ -27,7 +27,7 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
             if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
 
             var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate,
-                purchase.CustomerId, purchase.CarId, purchase.TenantId);
+                purchase.CustomerId, purchase.CarId, purchase.StoreId);
 
             var purchaseResult = new GetPurchaseResult(purchaseDto);
 
@@ -38,7 +38,7 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
 
         var purchasesDto = purchases.Select(
             purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.CustomerId,
-                purchase.CarId, purchase.TenantId)
+                purchase.CarId, purchase.StoreId)
         ).ToList();
 
         return new GetPurchaseResult(purchasesDto);

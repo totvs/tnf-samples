@@ -8,8 +8,8 @@ public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
 {
     public override void Configure()
     {
-        RuleFor(x => x.TenantId)
+        RuleFor(x => x.StoreId)
             .NotNull()
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetStoreCommand.TenantId));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetStoreCommand.StoreId));
     }
 }

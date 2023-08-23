@@ -26,9 +26,9 @@ public class UpdateStoreCommandHandler : CommandHandler<UpdateStoreCommand, Upda
         store.UpdateName(command.Name);
         store.UpdateLocation(command.Location);
 
-        var updatedDealer = await _StoreRepository.UpdateAsync(store, cancellationToken);
+        store = await _StoreRepository.UpdateAsync(store, cancellationToken);
 
-        var storeDto = new StoreDto(updatedDealer.TenantId, updatedDealer.Name, updatedDealer.Location);
+        var storeDto = new StoreDto(store.Id, store.Name, store.Location);
 
         return new UpdateStoreResult(storeDto);
     }
