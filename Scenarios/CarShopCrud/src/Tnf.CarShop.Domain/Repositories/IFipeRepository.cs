@@ -7,5 +7,6 @@ public interface IFipeRepository : IRepository
     Task<Fipe> InsertAsync(Fipe fipe, CancellationToken cancellationToken = default);
     Task<Fipe> UpdateAsync(Fipe fipe, CancellationToken cancellationToken = default);
     Task<Fipe> GetAsync(Guid id, CancellationToken cancellationToken= default);
+    Task<Fipe> GetByFipeCodeAsync(string fipeCode, CancellationToken cancellationToken = default);
     Task<IEnumerable<Fipe>> GetAllAsync(CancellationToken cancellationToken= default);
 }

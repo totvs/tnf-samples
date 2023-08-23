@@ -22,6 +22,11 @@ public class FipeRepository : EfCoreRepositoryBase<CarShopDbContext, Fipe>, IFip
         throw new NotImplementedException();
     }
 
+    public Task<Fipe> GetByFipeCodeAsync(string fipeCode, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<Fipe> UpdateAsync(Fipe fipe, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
