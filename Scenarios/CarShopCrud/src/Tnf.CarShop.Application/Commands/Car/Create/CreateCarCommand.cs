@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Commands.Car.Create;
 
-public sealed record CreateCarCommand
+public class CreateCarCommand
 {
     public CreateCarCommand(string brand, string model, int year, decimal price, Guid tenantId)
     {

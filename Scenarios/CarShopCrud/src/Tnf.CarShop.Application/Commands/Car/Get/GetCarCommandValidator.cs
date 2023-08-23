@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Commands.Car.Get;
 using Tnf.CarShop.Application.Localization;
 
@@ -11,7 +10,7 @@ public class GetCarCommandValidator : TnfFluentValidator<GetCarCommand>
     {
         RuleFor(command => command.CarId)
             .Must(carId => carId != Guid.Empty)
-            .When(command => command.CarId.HasValue)
+            .When(command => !command.CarId.HasValue)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetCarCommand.CarId));
     }
 }

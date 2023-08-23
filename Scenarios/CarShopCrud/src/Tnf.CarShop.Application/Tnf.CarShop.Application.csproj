@@ -23,8 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
         <PackageReference Include="Tnf.Commands" Version="6.3.0.21401" />
         <PackageReference Include="Tnf.Commands.FluentValidation" Version="6.3.0.21401" />
+        <PackageReference Include="Tnf.Messaging" Version="6.3.0.21401" />
+        <PackageReference Include="Tnf.Messaging.RabbitMQ" Version="6.3.0.21401" />
     </ItemGroup>
 
     <ItemGroup>
