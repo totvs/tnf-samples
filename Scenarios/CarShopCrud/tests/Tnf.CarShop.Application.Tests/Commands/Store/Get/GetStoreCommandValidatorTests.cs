@@ -8,7 +8,7 @@ public class GetStoreCommandValidatorTests
     public void Should_Have_Error_When_StoreId_Is_Null()
     {
         var validator = new GetStoreCommandValidator();
-        var command = new GetStoreCommand { StoreId = null };
+        var command = new GetStoreCommand { TenantId = null };
 
 
         var result = validator.Validate(command);

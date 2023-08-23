@@ -1,4 +1,5 @@
-﻿using Tnf.CarShop.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
 
 using Tnf.EntityFrameworkCore;
@@ -22,13 +23,14 @@ public class FipeRepository : EfCoreRepositoryBase<CarShopDbContext, Fipe>, IFip
         throw new NotImplementedException();
     }
 
-    public Task<Fipe> GetByFipeCodeAsync(string fipeCode, CancellationToken cancellationToken = default)
+    public async Task<Fipe> GetByFipeCodeAsync(string fipeCode, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await Table.FirstOrDefaultAsync(x => x.FipeCode == fipeCode, cancellationToken);
     }
 
-    public Task<Fipe> UpdateAsync(Fipe fipe, CancellationToken cancellationToken = default)
+    public async Task<Fipe> UpdateAsync(Fipe fipe, CancellationToken cancellationToken = default)
     {
+        //return await base.UpdateAsync(fipe, cancellationToken);
         throw new NotImplementedException();
     }
 }

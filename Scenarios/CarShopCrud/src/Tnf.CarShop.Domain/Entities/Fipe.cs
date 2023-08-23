@@ -24,4 +24,13 @@ public class Fipe : IHasCreationTime, IHasModificationTime
         Year = year;
         AveragePrice = averagePrice;
     }
+
+    public void UpdateTable(string monthYearReference, string brand, string model, int year, decimal averagePrice)
+    {
+        MonthYearReference = monthYearReference;
+        Brand = brand;
+        Model = model;
+        Year = year;
+        AveragePrice = averagePrice;
+    }
 }

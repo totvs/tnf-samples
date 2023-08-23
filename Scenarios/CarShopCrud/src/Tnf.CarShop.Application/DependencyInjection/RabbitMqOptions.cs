@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Tnf.CarShop.Application.Messages;
+namespace Tnf.CarShop.Application.DependencyInjection;
 
 public class RabbitMqOptions
 {

@@ -8,12 +8,12 @@ public class GetStoreCommand
     {
     }
 
-    public GetStoreCommand(Guid storeId)
+    public GetStoreCommand(Guid tenantId)
     {
-        StoreId = storeId;
+        TenantId = tenantId;
     }
 
-    public Guid? StoreId { get; set; }
+    public Guid TenantId { get; set; }
 }
 
 public class GetStoreResult

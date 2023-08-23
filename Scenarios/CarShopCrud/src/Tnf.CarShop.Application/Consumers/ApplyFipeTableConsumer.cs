@@ -3,7 +3,6 @@
 using Tnf.CarShop.Application.Commands.Fipe;
 using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages;
-using Tnf.CarShop.Domain.Entities;
 using Tnf.Commands;
 
 using Tnf.Messaging;
@@ -28,7 +27,15 @@ public class ApplyFipeTableConsumer : IConsumer<CloudEvent<ApplyFipeTable>>
         if (!context.TryGetData(_logger, out var data))
             return;
 
-        var command = data as ApplyFipeTableCommand;
+        var command = new ApplyFipeTableCommand
+        {
+            AveragePrice = data.AveragePrice,
+            Brand = data.Brand,
+            FipeCode = data.FipeCode,
+            Model = data.Model,
+            MonthYearReference = data.MonthYearReference,
+            Year = data.Year
+        };
 
         var result = await _commandSender.SendAsync(command);
 

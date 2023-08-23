@@ -14,6 +14,7 @@ namespace Tnf.CarShop.Host.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(Routes.Store)]
+[TnfAuthorize]
 public class StoreController : TnfController
 {
     private readonly ICommandSender _commandSender;
@@ -23,12 +24,12 @@ public class StoreController : TnfController
         _commandSender = commandSender;
     }
 
-    [HttpGet("{storeId}")]
+    [HttpGet("{tenantId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetById(Guid storeId)
+    public async Task<IActionResult> GetById(Guid tenantId)
     {
-        var command = new GetStoreCommand { StoreId = storeId };
+        var command = new GetStoreCommand { TenantId = tenantId };
 
         var result = await _commandSender.SendAsync<GetStoreResult>(command);
 

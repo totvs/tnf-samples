@@ -6,6 +6,13 @@ public class ApplyFipeTableCommandValidator : TnfFluentValidator<ApplyFipeTableC
 {
     public override void Configure()
     {
+        RuleFor(command => command.FipeCode)
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(ApplyFipeTableCommand.FipeCode));
+
+        RuleFor(command => command.MonthYearReference)
+            .NotEmpty()
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(ApplyFipeTableCommand.MonthYearReference));
 
         RuleFor(command => command.Brand)
             .NotEmpty()

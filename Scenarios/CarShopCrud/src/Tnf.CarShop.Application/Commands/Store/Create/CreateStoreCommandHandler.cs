@@ -17,17 +17,17 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
     public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command,
         CancellationToken cancellationToken = default)
     {
-        var createdDealerId = await CreateShopAsync(command, cancellationToken);
+        var tenantId = await CreateShopAsync(command, cancellationToken);
 
-        return new CreateStoreResult(createdDealerId);
+        return new CreateStoreResult(tenantId);
     }
 
     private async Task<Guid> CreateShopAsync(CreateStoreCommand shopCommand, CancellationToken cancellationToken)
     {
-        var newDealer = new Domain.Entities.Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
+        var newStore = new Domain.Entities.Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
 
-        var createdDealer = await _storeRepository.InsertAsync(newDealer, cancellationToken);
+        newStore = await _storeRepository.InsertAsync(newStore, cancellationToken);
 
-        return createdDealer.TenantId;
+        return newStore.TenantId;
     }
 }

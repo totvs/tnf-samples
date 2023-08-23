@@ -27,6 +27,6 @@ public class CreateStoreCommandHandlerTests
         var result = await _handler.ExecuteAsync(command);
 
         Assert.NotNull(result);
-        Assert.Equal(expectedId, result.StoreId);
+        Assert.Equal(expectedId, result.TenantId);
     }
 }

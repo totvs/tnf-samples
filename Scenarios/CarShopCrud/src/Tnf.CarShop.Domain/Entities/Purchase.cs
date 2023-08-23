@@ -5,22 +5,16 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Purchase : IHasCreationTime, IMustHaveTenant
 {
-    public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId, Customer customer,
-        Car car, Store store)
+    public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId)
     {
         CarId = carId;
         CustomerId = customerId;
         Price = price;
         PurchaseDate = purchaseDate;
         TenantId = tenantId;
-        Customer = customer;
-        Car = car;
-        Store = store;
     }
 
-    public Purchase(Guid id, Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId,
-        Customer customer,
-        Car car, Store store)
+    public Purchase(Guid id, Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid tenantId)
     {
         Id = id;
         CarId = carId;
@@ -28,9 +22,6 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
         Price = price;
         PurchaseDate = purchaseDate;
         TenantId = tenantId;
-        Customer = customer;
-        Car = car;
-        Store = store;
     }
 
     public Guid Id { get; }

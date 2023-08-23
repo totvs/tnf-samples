@@ -18,8 +18,7 @@ public class CreatePurchaseCommandHandlerTests
         var car = new Domain.Entities.Car(carId, "Ford", "Fiesta", 2019, 20000, store, storeId);
         var customer = new Domain.Entities.Customer(customerId, "Joao da Silva", "Rua Bem-te-vi", "999999",
             "joao@silva.zeh", DateTime.Now.AddYears(-33));
-        var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid(), customer,
-            car, store);
+        var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid());
 
         var loggerMock = new Mock<ILogger<CreatePurchaseCommandHandler>>();
         var purchaseRepoMock = new Mock<IPurchaseRepository>();

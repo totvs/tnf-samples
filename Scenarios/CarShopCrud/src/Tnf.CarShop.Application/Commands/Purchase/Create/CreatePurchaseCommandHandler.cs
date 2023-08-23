@@ -39,8 +39,7 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
 
         if (car == null || customer == null || store == null) throw new Exception("Invalid car or customer.");
 
-        var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price,
-            command.PurchaseDate, command.TenantId, customer, car, store);
+        var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price, command.PurchaseDate, command.TenantId);
 
         var createdPurchase = await _purchaseRepository.InsertAsync(newPurchase, cancellationToken);
 

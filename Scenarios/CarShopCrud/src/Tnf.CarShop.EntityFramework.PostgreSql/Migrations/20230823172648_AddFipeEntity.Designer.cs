@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
@@ -11,9 +12,11 @@ using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 namespace Tnf.CarShop.EntityFrameworkCore.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreSqlCarShopDbContext))]
-    partial class PostgreSqlCarShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230823172648_AddFipeEntity")]
+    partial class AddFipeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
