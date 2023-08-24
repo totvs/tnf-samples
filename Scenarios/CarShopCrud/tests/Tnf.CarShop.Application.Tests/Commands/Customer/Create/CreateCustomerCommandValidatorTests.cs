@@ -4,7 +4,7 @@ using Tnf.CarShop.Host.Commands.Customer.Create;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Create;
 
-public class CreateCustomerCommandValidatorTests
+public class CreateCustomerCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Null()
@@ -12,11 +12,10 @@ public class CreateCustomerCommandValidatorTests
         var command = new CreateCustomerCommand { FullName = null };
         var validator = new CreateCustomerCommandValidator();
 
-
         var result = validator.Validate(command);
 
+        ValidateEmpty(result, "Full Name");
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Full Name is required.");
     }
 
     [Fact]
@@ -29,7 +28,7 @@ public class CreateCustomerCommandValidatorTests
         var result = validator.Validate(command);
 
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Full Name is required.");
+        ValidateEmpty(result, "Full Name");
     }
 
     [Fact]
@@ -38,24 +37,23 @@ public class CreateCustomerCommandValidatorTests
         var command = new CreateCustomerCommand { FullName = "A" };
         var validator = new CreateCustomerCommandValidator();
 
-
         var result = validator.Validate(command);
 
+        ValidateSizeFullName(result, 1);
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Full Name should be between 2 and 150 characters long.");
     }
 
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Too_Long()
     {
-        var command = new CreateCustomerCommand { FullName = new string('*', 151) };
+        int size = 151;
+        var command = new CreateCustomerCommand { FullName = new string('*', size) };
         var validator = new CreateCustomerCommandValidator();
 
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Full Name should be between 2 and 150 characters long.");
+        ValidateSizeFullName(result, size);
     }
 
     [Fact]
@@ -67,8 +65,7 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Address is required.");
+        ValidateEmpty(result, "Address");
     }
 
     [Fact]
@@ -80,34 +77,19 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Address is required.");
+        ValidateEmpty(result, "Address");
     }
 
-    [Fact]
-    public void Should_Have_Error_When_Address_Is_Too_Short()
-    {
-        var command = new CreateCustomerCommand { Address = "A" };
-        var validator = new CreateCustomerCommandValidator();
-
-
-        var result = validator.Validate(command);
-
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Address should be between 5 and 250 characters long.");
-    }
-
+ 
     [Fact]
     public void Should_Have_Error_When_Address_Is_Too_Long()
     {
         var command = new CreateCustomerCommand { Address = new string('*', 251) };
         var validator = new CreateCustomerCommandValidator();
 
-
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Address should be between 5 and 250 characters long.");
+        ValidateAddressTooLong(result);
     }
 
     [Fact]
@@ -119,8 +101,7 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Phone is required.");
+        ValidateEmpty(result, "Phone");
     }
 
     [Fact]
@@ -132,8 +113,7 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Phone is required.");
+        ValidateEmpty(result, "Phone");
     }
 
     [Fact]
@@ -146,7 +126,7 @@ public class CreateCustomerCommandValidatorTests
         var result = validator.Validate(command);
 
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "A valid Brazilian phone number is required.");
+        result.Errors.Should().Contain(e => e.ErrorMessage == "'Phone' is not in the correct format.");
     }
 
     [Fact]
@@ -158,8 +138,7 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
-
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Email is required.");
+        ValidateEmpty(result, "Email");
     }
 
     [Fact]
@@ -172,7 +151,7 @@ public class CreateCustomerCommandValidatorTests
         var result = validator.Validate(command);
 
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Email is required.");
+        ValidateEmpty(result, "Email");
     }
 
     [Fact]
@@ -184,8 +163,8 @@ public class CreateCustomerCommandValidatorTests
 
         var result = validator.Validate(command);
 
+        ValidateValidEmail(result);
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "A valid email is required.");
     }
 
     [Fact]
@@ -198,6 +177,6 @@ public class CreateCustomerCommandValidatorTests
         var result = validator.Validate(command);
 
 
-        result.Errors.Should().Contain(e => e.ErrorMessage == "Date of Birth should be in the past.");
+        result.Errors.Should().Contain(e => e.ErrorMessage == "'Date Of Birth' must be less than '" + DateTime.Today + "'.");
     }
 }

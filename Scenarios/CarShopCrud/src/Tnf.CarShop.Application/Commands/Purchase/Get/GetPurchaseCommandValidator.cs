@@ -9,7 +9,7 @@ public class GetPurchaseCommandValidator : TnfFluentValidator<GetPurchaseCommand
     {
         RuleFor(command => command.PurchaseId)
             .Must(purchaseId => purchaseId != Guid.Empty)
-            .When(command => !command.PurchaseId.HasValue)
+            .When(command => command.PurchaseId.HasValue)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID, nameof(GetPurchaseCommand.PurchaseId));
     }
 }

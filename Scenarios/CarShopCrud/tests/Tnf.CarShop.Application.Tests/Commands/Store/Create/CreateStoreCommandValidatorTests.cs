@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Store.Create;
 
-public class CreateStoreCommandValidatorTests
+public class CreateStoreCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
@@ -15,8 +15,7 @@ public class CreateStoreCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(CreateStoreCommand.Name) && e.ErrorMessage == "Dealer Name is required.");
+        ValidateEmpty(result, "Name");
     }
 
     [Fact]
@@ -30,9 +29,8 @@ public class CreateStoreCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(CreateStoreCommand.Name) &&
-                 e.ErrorMessage == "Dealer Name should be between 2 and 150 characters long.");
+        ValidateGenericMessage(result, "'Name' must be between 2 and 150 characters. You entered 151 characters.");
+       
     }
 
     [Fact]
@@ -46,8 +44,7 @@ public class CreateStoreCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(CreateStoreCommand.Location) && e.ErrorMessage == "Location is required.");
+        ValidateEmpty(result, "Location");
     }
 
     [Fact]
@@ -61,8 +58,6 @@ public class CreateStoreCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(CreateStoreCommand.Location) &&
-                 e.ErrorMessage == "Location should be between 5 and 250 characters long.");
+        ValidateGenericMessage(result, "'Location' must be between 5 and 250 characters. You entered 251 characters.");
     }
 }

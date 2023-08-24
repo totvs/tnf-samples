@@ -3,7 +3,7 @@ using Tnf.CarShop.Host.Commands.Car.Get;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Get;
 
-public class GetCarCommandValidatorTests
+public class GetCarCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_CarId_Is_Empty()
@@ -11,11 +11,9 @@ public class GetCarCommandValidatorTests
         var validator = new GetCarCommandValidator();
         var command = new GetCarCommand { CarId = Guid.Empty };
 
-
         var result = validator.Validate(command);
 
-
         Assert.False(result.IsValid);
-        Assert.Contains("CarId should not be an empty GUID.", result.Errors.Select(x => x.ErrorMessage));
+        ValidateGenericMessage(result, "The specified condition was not met for 'Car Id'.");
     }
 }
