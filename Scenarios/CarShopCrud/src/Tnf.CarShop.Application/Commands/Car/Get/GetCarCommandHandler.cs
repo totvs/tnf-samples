@@ -24,7 +24,8 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         {
             var car = await _carRepository.GetAsync(command.CarId.Value, cancellationToken);
 
-            if (car is null) throw new Exception($"Car with id {command.CarId.Value} not found.");
+            if (car is null)
+                return null;
 
             var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.StoreId);
 

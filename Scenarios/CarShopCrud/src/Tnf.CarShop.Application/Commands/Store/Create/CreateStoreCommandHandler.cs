@@ -14,17 +14,10 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
 
     public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command, CancellationToken cancellationToken = default)
     {
-        var storeId = await CreateShopAsync(command, cancellationToken);
-
-        return new CreateStoreResult(storeId);
-    }
-
-    private async Task<Guid> CreateShopAsync(CreateStoreCommand shopCommand, CancellationToken cancellationToken)
-    {
-        var newStore = new Domain.Entities.Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
+        var newStore = new Domain.Entities.Store(command.Name, command.Cnpj, command.Location);
 
         newStore = await _storeRepository.InsertAsync(newStore, cancellationToken);
 
-        return newStore.Id;
+        return new CreateStoreResult(newStore.Id);
     }
 }

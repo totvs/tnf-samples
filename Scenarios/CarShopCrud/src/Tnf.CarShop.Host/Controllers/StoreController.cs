@@ -27,11 +27,15 @@ public class StoreController : TnfController
     [HttpGet("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid storeId)
     {
         var command = new GetStoreCommand { StoreId = storeId };
 
         var result = await _commandSender.SendAsync<GetStoreResult>(command);
+
+        if (result is null)
+            return NotFound();
 
         return CreateResponseOnGet(result.Store);
     }
@@ -39,9 +43,9 @@ public class StoreController : TnfController
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<StoreDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
     {
-        var result = await _commandSender.SendAsync<GetStoreResult>(new GetStoreCommand());
+        var result = await _commandSender.SendAsync<GetStoreResult>(new GetStoreCommand { RequestAllStores = requestAllDto });
 
         return CreateResponseOnGetAll(result.Stores);
     }

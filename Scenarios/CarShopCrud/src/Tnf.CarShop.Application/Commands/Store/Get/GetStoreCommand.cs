@@ -1,14 +1,12 @@
 ﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Dto;
 
 namespace Tnf.CarShop.Application.Commands.Store.Get;
 
 public class GetStoreCommand
 {
-    public GetStoreCommand()
-    {
-    }   
-
-    public Guid StoreId { get; set; }
+    public Guid? StoreId { get; set; }
+    public RequestAllDto RequestAllStores { get; set; }
 }
 
 public class GetStoreResult
@@ -18,11 +16,11 @@ public class GetStoreResult
         Store = store;
     }
 
-    public GetStoreResult(List<StoreDto> stores)
+    public GetStoreResult(IListDto<StoreDto> stores)
     {
         Stores = stores;
     }
 
-    public List<StoreDto> Stores { get; set; }
+    public IListDto<StoreDto> Stores { get; set; }
     public StoreDto Store { get; set; }
 }

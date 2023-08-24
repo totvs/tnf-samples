@@ -32,11 +32,15 @@ public class CarController : TnfController
     [HttpGet("{carId}")]
     [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid carId)
     {
         var command = new GetCarCommand { CarId = carId };
 
         var result = await _commandSender.SendAsync<GetCarResult>(command);
+
+        if (result is null)
+            return NotFound();
 
         return CreateResponseOnGet(result.Car);
     }

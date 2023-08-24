@@ -20,7 +20,8 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
         {
             var customer = await _customerRepository.GetAsync(command.CustomerId.Value, cancellationToken);
 
-            if (customer == null) throw new Exception($"Customer with id {command.CustomerId.Value} not found.");
+            if (customer is null)
+                return null;
 
             var customerDto = new CustomerDto(customer.Id, customer.FullName, customer.Address, customer.Phone,
                 customer.Email, customer.DateOfBirth);

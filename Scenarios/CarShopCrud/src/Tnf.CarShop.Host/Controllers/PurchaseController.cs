@@ -14,6 +14,7 @@ namespace Tnf.CarShop.Host.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(Routes.Purchase)]
+[TnfAuthorize]
 public class PurchaseController : TnfController
 {
     private readonly ICommandSender _commandSender;
@@ -26,11 +27,15 @@ public class PurchaseController : TnfController
     [HttpGet("{purchaseId}")]
     [ProducesResponseType(typeof(PurchaseDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid purchaseId)
     {
         var command = new GetPurchaseCommand { PurchaseId = purchaseId };
 
         var result = await _commandSender.SendAsync<GetPurchaseResult>(command);
+
+        if (result is null)
+            return NotFound();
 
         return CreateResponseOnGet(result.Purchase);
     }

@@ -2,7 +2,6 @@
 
 public class CreatePurchaseCommand
 {
-    public Guid Id { get; set; }
     public DateTime PurchaseDate { get; set; }
     public Guid StoreId { get; set; }
     public Guid CarId { get; set; }

@@ -17,14 +17,14 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         _purchaseRepository = purchaseRepository;
     }
 
-    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command, CancellationToken cancellationToken = default)
     {
         if (command.PurchaseId.HasValue)
         {
             var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
 
-            if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
+            if (purchase is null)
+                return null;
 
             var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate,
                 purchase.CustomerId, purchase.CarId, purchase.StoreId);

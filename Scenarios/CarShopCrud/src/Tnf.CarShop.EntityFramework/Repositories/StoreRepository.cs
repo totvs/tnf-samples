@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
+using Tnf.Dto;
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 
@@ -21,16 +23,23 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
         await base.DeleteAsync(store, cancellationToken);
     }
 
-    public async Task<List<Store>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IListDto<StoreDto>> GetAllAsync(RequestAllDto requestAllDto, CancellationToken cancellationToken = default)
     {
-        return await GetAllListAsync(cancellationToken);
+        var baseQuery = GetAll().AsNoTracking();
+
+        return await baseQuery.Select(x => new StoreDto
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Location = x.Location
+        }).ToListDtoAsync(requestAllDto, cancellationToken);
     }
 
     public async Task<Store> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Table
             .Include(c => c.Cars)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public async Task<Store> UpdateAsync(Store store, CancellationToken cancellationToken = default)

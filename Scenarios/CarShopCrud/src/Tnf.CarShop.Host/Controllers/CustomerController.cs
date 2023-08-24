@@ -27,11 +27,15 @@ public class CustomerController : TnfController
     [HttpGet("{customerId}")]
     [ProducesResponseType(typeof(CustomerDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid customerId)
     {
         var command = new GetCustomerCommand { CustomerId = customerId };
 
         var result = await _commandSender.SendAsync<GetCustomerResult>(command);
+
+        if (result is null)
+            return NotFound();
 
         return CreateResponseOnGet(result.Customer);
     }

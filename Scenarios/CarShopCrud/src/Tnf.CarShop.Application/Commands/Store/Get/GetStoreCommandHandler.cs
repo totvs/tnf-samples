@@ -16,25 +16,21 @@ public class GetStoreCommandHandler : CommandHandler<GetStoreCommand, GetStoreRe
         _storeRepository = storeRepository;
     }
 
-    public override async Task<GetStoreResult> ExecuteAsync(GetStoreCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<GetStoreResult> ExecuteAsync(GetStoreCommand command, CancellationToken cancellationToken = default)
     {
-        if (Guid.TryParse(command.StoreId.ToString(), out Guid tenantId))
+        if (command.StoreId.HasValue)
         {
-            var store = await _storeRepository.GetAsync(tenantId, cancellationToken);
+            var store = await _storeRepository.GetAsync(command.StoreId.Value, cancellationToken);
 
             if (store is null)
-                throw new Exception($"Store with id {command} not found.");
+                return null;
 
             var storeDto = new StoreDto(store.Id, store.Name, store.Location);
-
 
             return new GetStoreResult(storeDto);
         }
 
-        var stores = await _storeRepository.GetAllAsync(cancellationToken);
-
-        var storesDto = stores.Select(x => new StoreDto(x.Id, x.Name, x.Location)).ToList();
+        var storesDto = await _storeRepository.GetAllAsync(command.RequestAllStores, cancellationToken);        
 
         return new GetStoreResult(storesDto);
     }

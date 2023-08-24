@@ -26,23 +26,17 @@ public class CreatePurchaseCommandHandler : CommandHandler<CreatePurchaseCommand
     public override async Task<CreatePurchaseResult> ExecuteAsync(CreatePurchaseCommand command,
         CancellationToken cancellationToken = default)
     {
-        var createdPurchaseId = await CreatePurchaseAsync(command, cancellationToken);
-
-        return new CreatePurchaseResult(createdPurchaseId);
-    }
-
-    private async Task<Guid> CreatePurchaseAsync(CreatePurchaseCommand command, CancellationToken cancellationToken)
-    {
         var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
         var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
         var store = await _storeRepository.GetAsync(command.StoreId, cancellationToken);
 
-        if (car == null || customer == null || store == null) throw new Exception("Invalid car or customer.");
+        if (car == null || customer == null || store == null)
+            throw new Exception("Invalid car or customer.");
 
         var newPurchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price, command.PurchaseDate, command.TenantId);
 
         var createdPurchase = await _purchaseRepository.InsertAsync(newPurchase, cancellationToken);
 
-        return createdPurchase.Id;
-    }
+        return new CreatePurchaseResult(createdPurchase.Id);
+    }    
 }
