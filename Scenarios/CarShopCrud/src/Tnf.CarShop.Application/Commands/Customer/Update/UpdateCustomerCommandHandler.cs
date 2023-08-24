@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 

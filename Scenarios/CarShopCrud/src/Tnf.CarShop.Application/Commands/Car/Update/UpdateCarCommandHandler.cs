@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
 

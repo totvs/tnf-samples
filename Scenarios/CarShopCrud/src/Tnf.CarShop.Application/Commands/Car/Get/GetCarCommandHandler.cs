@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 
 using Tnf.Commands;
@@ -18,8 +18,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         _carRepository = carRepository;
     }
 
-    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command, CancellationToken cancellationToken = default)
     {
         if (command.CarId.HasValue)
         {
@@ -33,10 +32,7 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
             return new GetCarResult(carDto);
         }
 
-        var cars = await _carRepository.GetAllAsync(cancellationToken);
-
-        var carsDto = cars.Select(car =>
-            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.StoreId)).ToList();
+        var carsDto = await _carRepository.GetAllAsync(command.RequestAllCars, cancellationToken);        
 
         return new GetCarResult(carsDto);
     }

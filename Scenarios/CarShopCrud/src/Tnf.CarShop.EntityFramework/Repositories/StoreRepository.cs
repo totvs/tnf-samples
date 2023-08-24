@@ -12,9 +12,9 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
     {
     }
 
-    public async Task DeleteAsync(Guid tenantId, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var store = await GetAsync(tenantId, cancellationToken);
+        var store = await GetAsync(id, cancellationToken);
         if (store is null)
             return;
 
@@ -26,11 +26,11 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
         return await GetAllListAsync(cancellationToken);
     }
 
-    public async Task<Store> GetAsync(Guid tenantId, CancellationToken cancellationToken = default)
+    public async Task<Store> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Table
-            //.Include(c => c.Cars)
-            .FirstOrDefaultAsync(x => x.Id == tenantId);
+            .Include(c => c.Cars)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<Store> UpdateAsync(Store store, CancellationToken cancellationToken = default)

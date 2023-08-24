@@ -4,7 +4,7 @@ using Tnf.CarShop.Application.Commands.Store.Create;
 using Tnf.CarShop.Application.Commands.Store.Delete;
 using Tnf.CarShop.Application.Commands.Store.Get;
 using Tnf.CarShop.Application.Commands.Store.Update;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Host.Constants;
 using Tnf.Commands;
 using Tnf.Dto;
@@ -24,12 +24,12 @@ public class StoreController : TnfController
         _commandSender = commandSender;
     }
 
-    [HttpGet("{tenantId}")]
+    [HttpGet("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetById(Guid tenantId)
+    public async Task<IActionResult> GetById(Guid storeId)
     {
-        var command = new GetStoreCommand { StoreId = tenantId };
+        var command = new GetStoreCommand { StoreId = storeId };
 
         var result = await _commandSender.SendAsync<GetStoreResult>(command);
 
@@ -67,14 +67,17 @@ public class StoreController : TnfController
     }
 
     [HttpDelete("{storeId}")]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid storeId)
     {
         var command = new DeleteStoreCommand { StoreId = storeId };
 
-        var result = await _commandSender.SendAsync(command);
+        var result = await _commandSender.SendAsync<DeleteStoreResult>(command);
 
-        return CreateResponseOnDelete(result);
+        if (!result.Success)
+            return BadRequest();
+
+        return CreateResponseOnDelete();
     }
 }

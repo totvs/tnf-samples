@@ -1,10 +1,12 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Dto;
 
 namespace Tnf.CarShop.Application.Commands.Customer.Get;
 
 public class GetCustomerCommand
 {
     public Guid? CustomerId { get; set; }
+    public RequestAllDto RequestAllCustomers { get; set; }
 }
 
 public class GetCustomerResult
@@ -14,11 +16,11 @@ public class GetCustomerResult
         Customer = customer;
     }
 
-    public GetCustomerResult(List<CustomerDto> customers)
+    public GetCustomerResult(IListDto<CustomerDto> customers)
     {
         Customers = customers;
     }
 
-    public List<CustomerDto> Customers { get; set; }
+    public IListDto<CustomerDto> Customers { get; set; }
     public CustomerDto Customer { get; set; }
 }

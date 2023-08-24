@@ -27,21 +27,21 @@ public class CreateCarCommandHandler : CommandHandler<CreateCarCommand, CreateCa
     public override async Task<CreateCarResult> ExecuteAsync(CreateCarCommand command,
         CancellationToken cancellationToken = default)
     {
-        var createdCarId = await CreateCarAsync(command, cancellationToken);
-
-        return new CreateCarResult(createdCarId, true);
-    }
-
-    private async Task<Guid> CreateCarAsync(CreateCarCommand command, CancellationToken cancellationToken)
-    {
         var newCar = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId);
 
         var createdCar = await _carRepository.InsertAsync(newCar, cancellationToken);
+
+        if (createdCar is null || createdCar.Id == default)
+        {
+            _logger.EntityWasNotCreated("car");
+
+            return new CreateCarResult(Guid.Empty, false);
+        }
 
         _logger.EntitySuccessfullyCreated("car", createdCar.Id);
 
         await _carEventPublisher.NotifyCreationAsync(createdCar, cancellationToken);
 
-        return createdCar.Id;
-    }
+        return new CreateCarResult(createdCar.Id, true);
+    }    
 }

@@ -1,4 +1,4 @@
-﻿namespace Tnf.CarShop.Application.Dtos;
+﻿namespace Tnf.CarShop.Domain.Dtos;
 
 public class StoreDto
 {

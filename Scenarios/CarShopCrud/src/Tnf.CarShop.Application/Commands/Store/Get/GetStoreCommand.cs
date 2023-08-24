@@ -1,4 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 
 namespace Tnf.CarShop.Application.Commands.Store.Get;
 
@@ -6,12 +6,7 @@ public class GetStoreCommand
 {
     public GetStoreCommand()
     {
-    }
-
-    public GetStoreCommand(Guid storeId)
-    {
-        StoreId = storeId;
-    }
+    }   
 
     public Guid StoreId { get; set; }
 }

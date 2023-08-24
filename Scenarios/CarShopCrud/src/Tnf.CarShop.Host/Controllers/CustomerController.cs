@@ -4,7 +4,7 @@ using Tnf.CarShop.Application.Commands.Customer.Create;
 using Tnf.CarShop.Application.Commands.Customer.Delete;
 using Tnf.CarShop.Application.Commands.Customer.Get;
 using Tnf.CarShop.Application.Commands.Customer.Update;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Host.Constants;
 using Tnf.Commands;
 using Tnf.Dto;
@@ -14,6 +14,7 @@ namespace Tnf.CarShop.Host.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(Routes.Customer)]
+[TnfAuthorize]
 public class CustomerController : TnfController
 {
     private readonly ICommandSender _commandSender;
@@ -38,9 +39,9 @@ public class CustomerController : TnfController
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<CustomerDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
     {
-        var result = await _commandSender.SendAsync<GetCustomerResult>(new GetCustomerCommand());
+        var result = await _commandSender.SendAsync<GetCustomerResult>(new GetCustomerCommand { RequestAllCustomers = requestAllDto });
 
         return CreateResponseOnGetAll(result.Customers);
     }
@@ -66,13 +67,16 @@ public class CustomerController : TnfController
     }
 
     [HttpDelete("{customerId}")]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid customerId)
     {
         var command = new DeleteCustomerCommand { CustomerId = customerId };
 
-        var result = await _commandSender.SendAsync(command);
+        var result = await _commandSender.SendAsync<DeleteCustomerResult>(command);
+
+        if (!result.Success)
+            return BadRequest();
 
         return CreateResponseOnDelete(result);
     }

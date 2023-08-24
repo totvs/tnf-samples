@@ -17,8 +17,16 @@ public class DeleteStoreCommandHandler : CommandHandler<DeleteStoreCommand, Dele
 
     public override async Task<DeleteStoreResult> ExecuteAsync(DeleteStoreCommand command, CancellationToken cancellationToken = default)
     {
-        await _storeRepository.DeleteAsync(command.StoreId, cancellationToken);
+        try
+        {
+            await _storeRepository.DeleteAsync(command.StoreId, cancellationToken);
 
-        return new DeleteStoreResult(true);
+            return new DeleteStoreResult(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return new DeleteStoreResult(false);
+        }        
     }
 }

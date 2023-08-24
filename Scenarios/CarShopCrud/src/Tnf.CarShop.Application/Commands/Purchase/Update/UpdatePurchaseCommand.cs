@@ -1,4 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Update;
 

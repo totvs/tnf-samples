@@ -4,7 +4,7 @@ using Tnf.CarShop.Application.Commands.Purchase.Create;
 using Tnf.CarShop.Application.Commands.Purchase.Delete;
 using Tnf.CarShop.Application.Commands.Purchase.Get;
 using Tnf.CarShop.Application.Commands.Purchase.Update;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Host.Constants;
 using Tnf.Commands;
 using Tnf.Dto;
