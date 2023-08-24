@@ -9,7 +9,7 @@ public class GetCustomerCommandValidator : TnfFluentValidator<GetCustomerCommand
     {
         RuleFor(command => command.CustomerId)
             .Must(customerId => customerId != Guid.Empty)
-            .When(command => !command.CustomerId.HasValue)
+            .When(command => command.CustomerId.HasValue)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID);
     }
 }

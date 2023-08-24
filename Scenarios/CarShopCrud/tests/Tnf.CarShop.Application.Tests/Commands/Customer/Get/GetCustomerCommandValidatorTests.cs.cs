@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Get;
 
-public class GetCustomerCommandValidatorTests
+public class GetCustomerCommandValidatorTests: TesteComom
 {
     [Fact]
     public void GetCustomerCommandValidator_Should_Return_Error_When_CustomerId_Is_Empty()
@@ -15,6 +15,7 @@ public class GetCustomerCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, x => x.ErrorMessage == "CustomerId should not be an empty GUID.");
+
+        ValidateGenericMessage(result, "The specified condition was not met for 'Customer Id'.");
     }
 }

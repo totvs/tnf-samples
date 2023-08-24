@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase.Delete;
 
-public class DeletePurchaseCommandValidatorTests
+public class DeletePurchaseCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_PurchaseId_Is_Empty()
@@ -15,6 +15,6 @@ public class DeletePurchaseCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains("PurchaseId is required.", result.Errors.Select(e => e.ErrorMessage));
+        ValidateEmpty(result, "Purchase Id");
     }
 }
