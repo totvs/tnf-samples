@@ -1,4 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Entities;
 
 namespace Tnf.CarShop.Application.Messages.Events;

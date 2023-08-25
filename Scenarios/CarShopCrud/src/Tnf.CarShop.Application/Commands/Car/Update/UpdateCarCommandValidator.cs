@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Tnf.CarShop.Application.Commands.Car.Create;
 using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Car.Update;

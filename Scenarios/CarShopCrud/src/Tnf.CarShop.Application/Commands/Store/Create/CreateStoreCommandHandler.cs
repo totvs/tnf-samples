@@ -12,22 +12,12 @@ public class CreateStoreCommandHandler : CommandHandler<CreateStoreCommand, Crea
         _storeRepository = storeRepository;
     }
 
-    public Guid Id { get; set; }
-
-    public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<CreateStoreResult> ExecuteAsync(CreateStoreCommand command, CancellationToken cancellationToken = default)
     {
-        var createdDealerId = await CreateShopAsync(command, cancellationToken);
+        var newStore = new Domain.Entities.Store(command.Name, command.Cnpj, command.Location);
 
-        return new CreateStoreResult(createdDealerId);
-    }
+        newStore = await _storeRepository.InsertAsync(newStore, cancellationToken);
 
-    private async Task<Guid> CreateShopAsync(CreateStoreCommand shopCommand, CancellationToken cancellationToken)
-    {
-        var newDealer = new Domain.Entities.Store(shopCommand.Name, shopCommand.Cnpj, shopCommand.Location);
-
-        var createdDealer = await _storeRepository.InsertAsync(newDealer, cancellationToken);
-
-        return createdDealer.TenantId;
+        return new CreateStoreResult(newStore.Id);
     }
 }

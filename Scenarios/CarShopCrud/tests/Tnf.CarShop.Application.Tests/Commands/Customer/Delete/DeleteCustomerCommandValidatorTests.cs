@@ -10,11 +10,9 @@ public class DeleteCustomerCommandValidatorTests
         var command = new DeleteCustomerCommand();
         var validator = new DeleteCustomerCommandValidator();
 
-
         var result = validator.Validate(command);
 
-
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "'Customer Id' must not be empty.");
+        Assert.Contains(result.Errors, e => e.ErrorMessage == "'CustomerId' must not be empty.");
     }
 }

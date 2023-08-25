@@ -7,10 +7,6 @@ public class CreatePurchaseCommandValidator : TnfFluentValidator<CreatePurchaseC
 {
     public override void Configure()
     {
-        RuleFor(command => command.Id)
-            .NotEmpty()
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreatePurchaseCommand.Id));
-
         RuleFor(command => command.PurchaseDate)
             .LessThanOrEqualTo(DateTime.Now)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.BeforeValidDate);
@@ -27,9 +23,9 @@ public class CreatePurchaseCommandValidator : TnfFluentValidator<CreatePurchaseC
             .NotEmpty()
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreatePurchaseCommand.CustomerId));
 
-        RuleFor(command => command.TenantId)
+        RuleFor(command => command.StoreId)
            .NotEmpty()
-           .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreatePurchaseCommand.TenantId));
+           .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CreatePurchaseCommand.StoreId));
 
         RuleFor(command => command.Price)
            .NotEmpty()

@@ -16,13 +16,20 @@ public class DeleteCustomerCommandHandler : CommandHandler<DeleteCustomerCommand
         _customerRepository = customerRepository;
     }
 
-    public override async Task<DeleteCustomerResult> ExecuteAsync(DeleteCustomerCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<DeleteCustomerResult> ExecuteAsync(DeleteCustomerCommand command, CancellationToken cancellationToken = default)
     {
-        var customerId = command.CustomerId;
+        try
+        {
+            var customerId = command.CustomerId;
 
-        await _customerRepository.DeleteAsync(customerId, cancellationToken);
+            await _customerRepository.DeleteAsync(customerId, cancellationToken);
 
-        return new DeleteCustomerResult(true);
+            return new DeleteCustomerResult(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return new DeleteCustomerResult(false);
+        }        
     }
 }

@@ -4,7 +4,7 @@ using Tnf.CarShop.Application.Tests.Commands.Car;
 
 namespace Tnf.CarShop.Tests.Validators;
 
-public class UpdateCarCommandValidatorTests: TesteComom
+public class UpdateCarCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_Id_Is_Empty()

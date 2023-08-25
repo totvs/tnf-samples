@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
+
 using Tnf.CarShop.Application.Commands.Purchase.Create;
 using Tnf.CarShop.Application.Commands.Purchase.Delete;
 using Tnf.CarShop.Application.Commands.Purchase.Get;
 using Tnf.CarShop.Application.Commands.Purchase.Update;
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Host.Constants;
+
 using Tnf.Commands;
+
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -14,6 +18,7 @@ namespace Tnf.CarShop.Host.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(Routes.Purchase)]
+[TnfAuthorize]
 public class PurchaseController : TnfController
 {
     private readonly ICommandSender _commandSender;
@@ -26,11 +31,15 @@ public class PurchaseController : TnfController
     [HttpGet("{purchaseId}")]
     [ProducesResponseType(typeof(PurchaseDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid purchaseId)
     {
         var command = new GetPurchaseCommand { PurchaseId = purchaseId };
 
         var result = await _commandSender.SendAsync<GetPurchaseResult>(command);
+
+        if (result is null)
+            return NotFound();
 
         return CreateResponseOnGet(result.Purchase);
     }
@@ -38,9 +47,9 @@ public class PurchaseController : TnfController
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<PurchaseDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
     {
-        var result = await _commandSender.SendAsync<GetPurchaseResult>(new GetPurchaseCommand());
+        var result = await _commandSender.SendAsync<GetPurchaseResult>(new GetPurchaseCommand { RequestAllPurchases = requestAllDto });
 
         return CreateResponseOnGetAll(result.Purchases);
     }
@@ -58,7 +67,7 @@ public class PurchaseController : TnfController
     [HttpPut]
     [ProducesResponseType(typeof(UpdatePurchaseResult), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CreatePurchaseCommand command)
+    public async Task<IActionResult> Update(UpdatePurchaseCommand command)
     {
         var result = await _commandSender.SendAsync<UpdatePurchaseResult>(command);
 
@@ -66,14 +75,17 @@ public class PurchaseController : TnfController
     }
 
     [HttpDelete("{purchaseId}")]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid purchaseId)
     {
         var command = new DeletePurchaseCommand { PurchaseId = purchaseId };
 
-        var result = await _commandSender.SendAsync(command);
+        var result = await _commandSender.SendAsync<DeletePurchaseResult>(command);
 
-        return CreateResponseOnDelete(result);
+        if (!result.Success)
+            return BadRequest();
+
+        return CreateResponseOnDelete();
     }
 }

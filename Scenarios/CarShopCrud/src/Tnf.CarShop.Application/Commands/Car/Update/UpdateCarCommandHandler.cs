@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
+using Tnf.CarShop.Application.Extensions;
 
 using Tnf.Commands;
 
@@ -21,8 +22,7 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
         _carEventPublisher = carEventPublisher;
     }
 
-    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<UpdateCarResult> ExecuteAsync(UpdateCarCommand command, CancellationToken cancellationToken = default)
     {
         var car = await _carRepository.GetAsync(command.Id, cancellationToken);
 
@@ -41,9 +41,9 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
             updatedCar.Model,
             updatedCar.Year,
             updatedCar.Price,
-            updatedCar.TenantId);
+            updatedCar.StoreId);
 
-        _logger.LogInformation($"Car {updatedCar.Id} successfully updated!");
+        _logger.EntitySuccessfullyUpdated(nameof(car), updatedCar.Id);
 
         await _carEventPublisher.NotifyUpdateAsync(updatedCarDto, cancellationToken);
 

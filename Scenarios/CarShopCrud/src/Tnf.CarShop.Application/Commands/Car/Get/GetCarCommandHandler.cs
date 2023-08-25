@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using Tnf.CarShop.Application.Dtos;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 
 using Tnf.Commands;
@@ -18,25 +18,22 @@ public class GetCarCommandHandler : CommandHandler<GetCarCommand, GetCarResult>
         _carRepository = carRepository;
     }
 
-    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<GetCarResult> ExecuteAsync(GetCarCommand command, CancellationToken cancellationToken = default)
     {
         if (command.CarId.HasValue)
         {
             var car = await _carRepository.GetAsync(command.CarId.Value, cancellationToken);
 
-            if (car is null) throw new Exception($"Car with id {command.CarId.Value} not found.");
+            if (car is null)
+                return null;
 
-            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId);
+            var carDto = new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.StoreId);
 
 
             return new GetCarResult(carDto);
         }
 
-        var cars = await _carRepository.GetAllAsync(cancellationToken);
-
-        var carsDto = cars.Select(car =>
-            new CarDto(car.Id, car.Brand, car.Model, car.Year, car.Price, car.TenantId)).ToList();
+        var carsDto = await _carRepository.GetAllAsync(command.RequestAllCars, cancellationToken);        
 
         return new GetCarResult(carsDto);
     }

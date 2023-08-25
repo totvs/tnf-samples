@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Application.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -17,29 +16,21 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
         _purchaseRepository = purchaseRepository;
     }
 
-    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command,
-        CancellationToken cancellationToken = default)
+    public override async Task<GetPurchaseResult> ExecuteAsync(GetPurchaseCommand command, CancellationToken cancellationToken = default)
     {
         if (command.PurchaseId.HasValue)
         {
-            var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
+            var purchaseDto = await _purchaseRepository.GetPurchaseDtoAsync(command.PurchaseId.Value, cancellationToken);
 
-            if (purchase == null) throw new Exception($"Purchase with id {command} not found.");
-
-            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate,
-                purchase.CustomerId, purchase.CarId, purchase.TenantId);
+            if (purchaseDto is null)
+                return null;
 
             var purchaseResult = new GetPurchaseResult(purchaseDto);
 
             return purchaseResult;
         }
 
-        var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
-
-        var purchasesDto = purchases.Select(
-            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.CustomerId,
-                purchase.CarId, purchase.TenantId)
-        ).ToList();
+        var purchasesDto = await _purchaseRepository.GetAllAsync(command.RequestAllPurchases, cancellationToken);        
 
         return new GetPurchaseResult(purchasesDto);
     }

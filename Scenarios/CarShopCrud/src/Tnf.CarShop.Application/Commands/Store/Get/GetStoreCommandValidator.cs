@@ -9,7 +9,8 @@ public class GetStoreCommandValidator : TnfFluentValidator<GetStoreCommand>
     public override void Configure()
     {
         RuleFor(x => x.StoreId)
-            .NotNull()
+            .Must(storeId => storeId != Guid.Empty)
+            .When(command => !command.StoreId.HasValue)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetStoreCommand.StoreId));
     }
 }

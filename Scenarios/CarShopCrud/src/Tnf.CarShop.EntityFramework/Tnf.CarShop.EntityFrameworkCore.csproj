@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401"/>
+        <PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
+        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
     </ItemGroup>
 
 </Project>

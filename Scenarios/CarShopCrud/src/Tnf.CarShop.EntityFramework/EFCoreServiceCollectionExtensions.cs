@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.EntityFrameworkCore.Repositories;
 
@@ -12,6 +13,7 @@ public static class EFCoreServiceCollectionExtensions
         services.AddTransient<ICustomerRepository, CustomerRepository>();
         services.AddTransient<IStoreRepository, StoreRepository>();
         services.AddTransient<IPurchaseRepository, PurchaseRepository>();
+        services.AddTransient<IFipeRepository, FipeRepository>();
 
         return services;
     }

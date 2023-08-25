@@ -1,17 +1,9 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 
 namespace Tnf.CarShop.Application.Commands.Store.Update;
 
 public class UpdateStoreCommand
 {
-    public UpdateStoreCommand(Guid id, string name, string location, string cnpj)
-    {
-        Id = id;
-        Name = name;
-        Location = location;
-        Cnpj = cnpj;
-    }
-
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Location { get; set; }

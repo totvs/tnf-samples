@@ -2,7 +2,6 @@
 using Moq;
 using Tnf.CarShop.Application.Commands.Car.Delete;
 using Tnf.CarShop.Domain.Repositories;
-using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Delete;
 
@@ -18,15 +17,13 @@ public class DeleteCarCommandHandlerTests
         var loggerMock = new Mock<ILogger<DeleteCarCommandHandler>>();
 
         var command = new DeleteCarCommand(Guid.NewGuid());
-        var context = new CommandContext<DeleteCarCommand, DeleteCarResult>(command);
 
         var handler = new DeleteCarCommandHandler(loggerMock.Object, carRepositoryMock.Object);
 
 
-        await handler.HandleAsync(context);
+        var result = await handler.ExecuteAsync(command);
 
-
-        Assert.True(context.Result.Success);
+        Assert.True(result.Success);
         carRepositoryMock.Verify(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

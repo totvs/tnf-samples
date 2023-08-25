@@ -1,4 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -20,7 +20,8 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
         {
             var customer = await _customerRepository.GetAsync(command.CustomerId.Value, cancellationToken);
 
-            if (customer == null) throw new Exception($"Customer with id {command.CustomerId.Value} not found.");
+            if (customer is null)
+                return null;
 
             var customerDto = new CustomerDto(customer.Id, customer.FullName, customer.Address, customer.Phone,
                 customer.Email, customer.DateOfBirth);
@@ -28,12 +29,8 @@ public class GetCustomerCommandHandler : CommandHandler<GetCustomerCommand, GetC
             return new GetCustomerResult(customerDto);
         }
 
-        var customers = await _customerRepository.GetAllAsync(cancellationToken);
-
-        var customersDto = customers.Select(customer =>
-            new CustomerDto(customer.Id, customer.FullName, customer.Address, customer.Phone, customer.Email,
-                customer.DateOfBirth)
-        ).ToList();
+        var customersDto = await _customerRepository.GetAllAsync(command.RequestAllCustomers, cancellationToken);
+        
 
         return new GetCustomerResult(customersDto);
     }
