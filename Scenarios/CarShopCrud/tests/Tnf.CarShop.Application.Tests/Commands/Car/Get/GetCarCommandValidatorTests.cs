@@ -3,7 +3,7 @@ using Tnf.CarShop.Host.Commands.Car.Get;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Get;
 
-public class GetCarCommandValidatorTests: TesteComom
+public class GetCarCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_CarId_Is_Empty()

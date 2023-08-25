@@ -13,46 +13,39 @@ public class CreateCarCommandHandlerTests
     private readonly Mock<ICarRepository> _carRepoMock;
     private readonly CreateCarCommandHandler _handler;
     private readonly Mock<ILogger<CreateCarCommandHandler>> _loggerMock;
-    private readonly Mock<IStoreRepository> _storeRepoMock;
     private readonly Mock<ICarEventPublisher> _carEventPublisherMock;
 
     public CreateCarCommandHandlerTests()
     {
         _loggerMock = new Mock<ILogger<CreateCarCommandHandler>>();
         _carRepoMock = new Mock<ICarRepository>();
-        _storeRepoMock = new Mock<IStoreRepository>();
         _carEventPublisherMock = new Mock<ICarEventPublisher>();
 
-        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _storeRepoMock.Object, _carEventPublisherMock.Object);
+        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _carEventPublisherMock.Object);
     }
 
     [Fact]
     public async Task ExecuteAsync_ValidCommand_CreatesCarSuccessfully()
     {
-        var tenantId = Guid.NewGuid();
-        var carId = Guid.NewGuid();
-        var store = new Domain.Entities.Store(tenantId, "Loja do Zé", "000000000000", "Tramandai");
-        var createdCar = new Domain.Entities.Car(carId, "Tesla", "Model S", 2022, 79999, store, tenantId);
+        var storeId = Guid.NewGuid();
+        var createdCar = new Domain.Entities.Car("Tesla", "Model S", 2022, 79999, storeId);
 
-        _storeRepoMock.Setup(s => s.GetAsync(tenantId, It.IsAny<CancellationToken>())).ReturnsAsync(store);
         _carRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(createdCar);
 
         var command = new CreateCarCommand
-        (
-            "Tesla",
-            "Model S",
-            2022,
-            79999,
-            tenantId
-        );
+        {
+            Brand = "Tesla",
+            Model = "Model S",
+            Year = 2022,
+            Price = 79999,
+            StoreId = storeId
+        };
 
         var result = await _handler.ExecuteAsync(command);
 
-
         Assert.True(result.Success);
         Assert.Equal(createdCar.Id, result.CarId);
-        _storeRepoMock.Verify(s => s.GetAsync(tenantId, It.IsAny<CancellationToken>()), Times.Once);
         _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()),
             Times.Once);
     }

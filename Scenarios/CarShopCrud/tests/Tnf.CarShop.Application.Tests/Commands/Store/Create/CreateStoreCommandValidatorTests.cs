@@ -2,17 +2,21 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Store.Create;
 
-public class CreateStoreCommandValidatorTests: TesteComom
+public class CreateStoreCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
     {
-        var command = new CreateStoreCommand(string.Empty, "cnpj", "Location");
+        var command = new CreateStoreCommand
+        {
+            Name = string.Empty,
+            Cnpj= "cnpj",
+            Location = "Location"
+        };
+
         var validator = new CreateStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateEmpty(result, "Name");
@@ -21,12 +25,16 @@ public class CreateStoreCommandValidatorTests: TesteComom
     [Fact]
     public void Should_Have_Error_When_Name_Is_Too_Long()
     {
-        var command = new CreateStoreCommand(new string('*', 151), "cnpj", "Location");
+        var command = new CreateStoreCommand
+        {
+            Name = new string('*', 151),
+            Cnpj = "cnpj",
+            Location = "Location"
+        };
+
         var validator = new CreateStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateGenericMessage(result, "'Name' must be between 2 and 150 characters. You entered 151 characters.");
@@ -36,12 +44,16 @@ public class CreateStoreCommandValidatorTests: TesteComom
     [Fact]
     public void Should_Have_Error_When_Location_Is_Empty()
     {
-        var command = new CreateStoreCommand("Name", "cnpj", string.Empty);
+        var command = new CreateStoreCommand
+        {
+            Name = "Name",
+            Cnpj = "cnpj",
+            Location = string.Empty
+        };
+
         var validator = new CreateStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateEmpty(result, "Location");
@@ -50,12 +62,16 @@ public class CreateStoreCommandValidatorTests: TesteComom
     [Fact]
     public void Should_Have_Error_When_Location_Is_Too_Long()
     {
-        var command = new CreateStoreCommand("Name", "cnpj", new string('*', 251));
+        var command = new CreateStoreCommand
+        {
+            Name = "Name",
+            Cnpj = "cnpj",
+            Location = new string('*', 251)
+        };
+
         var validator = new CreateStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateGenericMessage(result, "'Location' must be between 5 and 250 characters. You entered 251 characters.");

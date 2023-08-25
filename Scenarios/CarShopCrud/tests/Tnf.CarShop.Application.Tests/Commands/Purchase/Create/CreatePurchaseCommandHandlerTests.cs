@@ -14,10 +14,12 @@ public class CreatePurchaseCommandHandlerTests
         var customerId = Guid.NewGuid();
         var storeId = Guid.NewGuid();
 
-        var store = new Domain.Entities.Store(storeId, "Loja", "Cnpj", "casa");
-        var car = new Domain.Entities.Car(carId, "Ford", "Fiesta", 2019, 20000, store, storeId);
-        var customer = new Domain.Entities.Customer(customerId, "Joao da Silva", "Rua Bem-te-vi", "999999",
-            "joao@silva.zeh", DateTime.Now.AddYears(-33));
+        var store = new Domain.Entities.Store("Loja", "Cnpj", "casa");
+
+        var car = new Domain.Entities.Car("Ford", "Fiesta", 2019, 20000, storeId);
+
+        var customer = new Domain.Entities.Customer("Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh", DateTime.Now.AddYears(-33), storeId);
+
         var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid());
 
         var loggerMock = new Mock<ILogger<CreatePurchaseCommandHandler>>();
@@ -46,8 +48,7 @@ public class CreatePurchaseCommandHandlerTests
             CustomerId = customerId,
             StoreId = storeId,
             Price = 100,
-            PurchaseDate = DateTime.UtcNow,
-            TenantId = Guid.NewGuid()
+            PurchaseDate = DateTime.UtcNow
         };
 
         var result = await handler.ExecuteAsync(command);

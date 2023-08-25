@@ -1,11 +1,9 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation.Results;
 
 namespace Tnf.CarShop.Application.Tests.Commands;
-public class TesteComom
+public class TestCommon
 {   
-
     public static void ValidateAddressTooLong(ValidationResult result)
     {
         result.Errors.Should().Contain(e => e.ErrorMessage == "'Address' must be between 5 and 250 characters. You entered 251 characters.");

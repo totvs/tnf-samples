@@ -4,7 +4,7 @@ using Tnf.CarShop.Host.Commands.Customer.Create;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Create;
 
-public class CreateCustomerCommandValidatorTests: TesteComom
+public class CreateCustomerCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Null()

@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase.Update;
 
-public class UpdatePurchaseCommandValidatorTests: TesteComom
+public class UpdatePurchaseCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_Id_Is_Empty()
