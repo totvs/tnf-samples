@@ -15,6 +15,6 @@ public class DeleteCustomerCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "CustomerId is required.");
+        Assert.Contains(result.Errors, e => e.ErrorMessage == "'Customer Id' must not be empty.");
     }
 }

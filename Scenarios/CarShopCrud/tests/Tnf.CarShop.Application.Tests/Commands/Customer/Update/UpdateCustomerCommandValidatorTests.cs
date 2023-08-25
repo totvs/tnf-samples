@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Update;
 
-public class UpdateCustomerCommandValidatorTests
+public class UpdateCustomerCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()
@@ -24,7 +24,8 @@ public class UpdateCustomerCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "Date of Birth should be in the past.");
+
+        ValidateGenericMessage(result, "'Date Of Birth' must be less than '" + DateTime.Today + "'.");
     }
 
     [Fact]
@@ -46,7 +47,7 @@ public class UpdateCustomerCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "Age should be between 18 and 100.");
+        ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");
     }
 
     [Fact]
@@ -68,6 +69,7 @@ public class UpdateCustomerCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "Age should be between 18 and 100.");
+        ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");  
+
     }
 }

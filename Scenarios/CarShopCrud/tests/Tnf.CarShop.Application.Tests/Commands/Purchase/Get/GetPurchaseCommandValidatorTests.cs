@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase.Get;
 
-public class GetPurchaseCommandValidatorTests
+public class GetPurchaseCommandValidatorTests: TesteComom
 {
     [Fact]
     public void GetPurchaseCommandValidator_Should_Return_Error_When_PurchaseId_Is_Empty()
@@ -15,6 +15,6 @@ public class GetPurchaseCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, error => error.ErrorMessage == "PurchaseId should not be an empty GUID.");
+        ValidateGenericMessage(result, "The specified condition was not met for 'Purchase Id'.");
     }
 }

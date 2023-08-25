@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Store.Delete;
 
-public class DeleteStoreCommandValidatorTests
+public class DeleteStoreCommandValidatorTests: TesteComom
 {
     [Fact]
     public void Should_Have_Error_When_StoreId_Is_Empty()
@@ -15,7 +15,7 @@ public class DeleteStoreCommandValidatorTests
 
 
         Assert.False(result.IsValid);
-        Assert.Contains("StoreId is required.", result.Errors.Select(e => e.ErrorMessage));
+        ValidateEmpty(result, "Store Id");
     }
 
     [Fact]
