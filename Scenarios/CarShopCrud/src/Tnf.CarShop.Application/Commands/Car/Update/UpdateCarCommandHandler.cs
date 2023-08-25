@@ -3,6 +3,7 @@
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
+using Tnf.CarShop.Application.Extensions;
 
 using Tnf.Commands;
 
@@ -42,7 +43,7 @@ public class UpdateCarCommandHandler : CommandHandler<UpdateCarCommand, UpdateCa
             updatedCar.Price,
             updatedCar.StoreId);
 
-        _logger.LogInformation($"Car {updatedCar.Id} successfully updated!");
+        _logger.EntitySuccessfullyUpdated(nameof(car), updatedCar.Id);
 
         await _carEventPublisher.NotifyUpdateAsync(updatedCarDto, cancellationToken);
 

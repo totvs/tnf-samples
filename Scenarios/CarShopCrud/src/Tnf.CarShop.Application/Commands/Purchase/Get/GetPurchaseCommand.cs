@@ -1,10 +1,12 @@
 ﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Dto;
 
 namespace Tnf.CarShop.Application.Commands.Purchase.Get;
 
 public class GetPurchaseCommand
 {
     public Guid? PurchaseId { get; set; }
+    public RequestAllDto RequestAllPurchases { get; set; }
 }
 
 public class GetPurchaseResult
@@ -14,11 +16,11 @@ public class GetPurchaseResult
         Purchase = purchase;
     }
 
-    public GetPurchaseResult(List<PurchaseDto> purchases)
+    public GetPurchaseResult(IListDto<PurchaseDto> purchases)
     {
         Purchases = purchases;
     }
 
-    public List<PurchaseDto> Purchases { get; set; }
+    public IListDto<PurchaseDto> Purchases { get; set; }
     public PurchaseDto Purchase { get; set; }
 }

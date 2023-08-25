@@ -1,4 +1,5 @@
-﻿using Tnf.Repositories.Entities;
+﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
@@ -53,5 +54,16 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateDateOfBirth(DateTime dateOfBirth)
     {
         DateOfBirth = dateOfBirth;
+    }
+
+    public CustomerDto ToDto()
+    {
+        return new CustomerDto(
+            Id,
+            FullName,
+            Address,
+            Phone,
+            Email,
+            DateOfBirth);
     }
 }

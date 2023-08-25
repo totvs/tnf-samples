@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
@@ -21,25 +20,17 @@ public class GetPurchaseCommandHandler : CommandHandler<GetPurchaseCommand, GetP
     {
         if (command.PurchaseId.HasValue)
         {
-            var purchase = await _purchaseRepository.GetAsync(command.PurchaseId.Value, cancellationToken);
+            var purchaseDto = await _purchaseRepository.GetPurchaseDtoAsync(command.PurchaseId.Value, cancellationToken);
 
-            if (purchase is null)
+            if (purchaseDto is null)
                 return null;
-
-            var purchaseDto = new PurchaseDto(purchase.Id, purchase.PurchaseDate,
-                purchase.CustomerId, purchase.CarId, purchase.StoreId);
 
             var purchaseResult = new GetPurchaseResult(purchaseDto);
 
             return purchaseResult;
         }
 
-        var purchases = await _purchaseRepository.GetAllAsync(cancellationToken);
-
-        var purchasesDto = purchases.Select(
-            purchase => new PurchaseDto(purchase.Id, purchase.PurchaseDate, purchase.CustomerId,
-                purchase.CarId, purchase.StoreId)
-        ).ToList();
+        var purchasesDto = await _purchaseRepository.GetAllAsync(command.RequestAllPurchases, cancellationToken);        
 
         return new GetPurchaseResult(purchasesDto);
     }

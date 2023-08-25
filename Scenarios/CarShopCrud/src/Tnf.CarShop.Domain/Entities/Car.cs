@@ -1,4 +1,5 @@
-﻿using Tnf.Repositories.Entities;
+﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
@@ -57,5 +58,16 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateYear(int year)
     {
         Year = year;
+    }
+
+    public CarDto ToDto()
+    {
+        return new CarDto(
+            Id,
+            Brand,
+            Model,
+            Year,
+            Price,
+            StoreId);
     }
 }

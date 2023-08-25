@@ -1,4 +1,6 @@
-﻿using Tnf.Repositories.Entities;
+﻿using Tnf.CarShop.Domain.Dtos;
+
+using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
@@ -52,5 +54,10 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void AddCustomer(Customer customer)
     {
         _customers.Add(customer);
+    }
+
+    public StoreDto ToDto()
+    {
+        return new StoreDto(Id, Name, Location);
     }
 }

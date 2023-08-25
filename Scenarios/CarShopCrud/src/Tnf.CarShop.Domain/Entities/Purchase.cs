@@ -5,7 +5,6 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Purchase : IHasCreationTime, IMustHaveTenant
 {
-
     public Guid Id { get; }
     public Guid CarId { get; }
     public Guid CustomerId { get; }
@@ -18,7 +17,7 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
     public Store Store { get; set; }
 
     public DateTime CreationTime { get; set; }
-    
+
     public Guid TenantId { get; set; }
 
     public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid storeId)
@@ -30,26 +29,30 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
         StoreId = storeId;
     }
 
-    public void UpdateCustomer(Customer newCustomer)
+    public void UpdatePurchaseDate(DateTime? purchaseDate)
     {
-        if (newCustomer != null)
-            Customer = newCustomer;
+        if (purchaseDate.HasValue)
+        {
+            PurchaseDate = purchaseDate.Value;
+            return;
+        }
+
+        PurchaseDate = DateTime.Now;
     }
 
+    public void UpdateCustomer(Customer newCustomer)
+    {
+        Customer = newCustomer;
+    }
 
     public void UpdateCar(Car newCar)
     {
-        if (newCar != null)
-        {
-            Car = newCar;
-            Price = newCar.Price;
-        }
+        Car = newCar;
+        Price = newCar.Price;
     }
 
-    public void CompletePurchase(Customer customer, Car car, Store store)
+    public void UpdateStore(Store store)
     {
-        Customer = customer;
-        Car = car;
         Store = store;
     }
 }
