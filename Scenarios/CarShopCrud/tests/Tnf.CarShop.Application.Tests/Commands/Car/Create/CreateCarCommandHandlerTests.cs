@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-
 using Moq;
-
 using Tnf.CarShop.Application.Commands.Car.Create;
+using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
-
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Create;
 
 public class CreateCarCommandHandlerTests
@@ -25,28 +23,31 @@ public class CreateCarCommandHandlerTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_ValidCommand_CreatesCarSuccessfully()
+    public async Task Should_Create_Car_Successfully()
     {
-        var storeId = Guid.NewGuid();
-        var createdCar = new Domain.Entities.Car("Tesla", "Model S", 2022, 79999, storeId);
-
-        _carRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(createdCar);
-
         var command = new CreateCarCommand
         {
-            Brand = "Tesla",
-            Model = "Model S",
-            Year = 2022,
-            Price = 79999,
-            StoreId = storeId
+            Brand = "Ford",
+            Model = "Fiesta",
+            Year = 2020,
+            Price = 25000,
+            StoreId = Guid.NewGuid()
         };
+
+        _carRepoMock
+            .Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId) { Id = Guid.NewGuid() });
+
+        _carEventPublisherMock
+            .Setup(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         var result = await _handler.ExecuteAsync(command);
 
+        Assert.NotEqual(Guid.Empty, result.CarId);
         Assert.True(result.Success);
-        Assert.Equal(createdCar.Id, result.CarId);
-        _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()),
-            Times.Once);
+
+        _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
+        _carEventPublisherMock.Verify(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);       
     }
 }

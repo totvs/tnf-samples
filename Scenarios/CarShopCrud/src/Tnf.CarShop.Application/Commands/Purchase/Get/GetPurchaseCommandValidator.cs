@@ -8,8 +8,7 @@ public class GetPurchaseCommandValidator : TnfFluentValidator<GetPurchaseCommand
     public override void Configure()
     {
         RuleFor(command => command.PurchaseId)
-            .Must(purchaseId => purchaseId != Guid.Empty)
-            .When(command => !command.PurchaseId.HasValue)
+            .Must(purchaseId => purchaseId.HasValue && purchaseId.Value != Guid.Empty)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID, nameof(GetPurchaseCommand.PurchaseId));
     }
 }

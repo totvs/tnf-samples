@@ -9,8 +9,7 @@ public class GetCarCommandValidator : TnfFluentValidator<GetCarCommand>
     public override void Configure()
     {
         RuleFor(command => command.CarId)
-            .Must(carId => carId != Guid.Empty)
-            .When(command => !command.CarId.HasValue)
+            .Must(carId => carId.HasValue && carId.Value != Guid.Empty)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(GetCarCommand.CarId));
     }
 }

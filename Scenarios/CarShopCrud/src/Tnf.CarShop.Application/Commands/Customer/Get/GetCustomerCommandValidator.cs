@@ -8,8 +8,7 @@ public class GetCustomerCommandValidator : TnfFluentValidator<GetCustomerCommand
     public override void Configure()
     {
         RuleFor(command => command.CustomerId)
-            .Must(customerId => customerId != Guid.Empty)
-            .When(command => !command.CustomerId.HasValue)
+            .Must(customerId => customerId.HasValue && customerId.Value != Guid.Empty)
             .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.EmptyGUID);
     }
 }

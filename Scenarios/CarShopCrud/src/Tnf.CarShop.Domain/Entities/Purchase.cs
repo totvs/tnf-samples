@@ -5,7 +5,7 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Purchase : IHasCreationTime, IMustHaveTenant
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public Guid CarId { get; }
     public Guid CustomerId { get; }
     public Guid StoreId { get; set; }

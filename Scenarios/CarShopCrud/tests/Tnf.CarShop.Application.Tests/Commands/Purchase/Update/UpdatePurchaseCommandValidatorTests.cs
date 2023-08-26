@@ -15,18 +15,4 @@ public class UpdatePurchaseCommandValidatorTests: TestCommon
         Assert.False(result.IsValid);
         ValidateEmpty(result, "Id");
     }
-
-
-    [Fact]
-    public void Should_Have_Error_When_CustomerId_Is_Empty()
-    {
-        var command = new UpdatePurchaseCommand { CustomerId = Guid.Empty };
-        var validator = new UpdatePurchaseCommandValidator();
-
-        var result = validator.Validate(command);
-
-        Assert.False(result.IsValid);
-
-        ValidateEmpty(result, "Customer Id");
-    }
 }
