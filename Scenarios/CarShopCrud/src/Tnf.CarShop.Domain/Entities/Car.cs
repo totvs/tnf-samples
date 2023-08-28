@@ -6,7 +6,7 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public string Brand { get; private set; }
     public string Model { get; private set; }
     public int Year { get; private set; }
@@ -27,7 +27,7 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Price = price;
         StoreId = storeId;
         Discount = 0;
-    }        
+    }
 
     public void ApplyDiscount(decimal percentage)
     {

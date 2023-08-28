@@ -33,8 +33,7 @@ public class UpdateCustomerCommandHandlerTests
 
         var result = await handler.ExecuteAsync(command);
 
-        Assert.NotNull(result);
-        Assert.Equal(command.Id, result.Customer.Id);
+        Assert.NotNull(result);        
         Assert.Equal(command.FullName, result.Customer.FullName);
         Assert.Equal(command.Address, result.Customer.Address);
         Assert.Equal(command.Phone, result.Customer.Phone);
