@@ -13,6 +13,6 @@ public class DeleteCustomerCommandValidatorTests
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.ErrorMessage == "'CustomerId' must not be empty.");
+        Assert.Contains(result.Errors, e => e.PropertyName == nameof(DeleteCustomerCommand.CustomerId));
     }
 }

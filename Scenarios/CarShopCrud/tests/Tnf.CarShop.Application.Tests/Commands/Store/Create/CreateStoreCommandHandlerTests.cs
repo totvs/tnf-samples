@@ -29,7 +29,7 @@ public class CreateStoreCommandHandlerTests
 
         _storeRepositoryMock
             .Setup(sr => sr.InsertAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Domain.Entities.Store(command.Name, command.Cnpj, command.Location));
+            .ReturnsAsync(new Domain.Entities.Store(command.Name, command.Cnpj, command.Location) { Id = expectedId});
 
         var result = await _handler.ExecuteAsync(command);
 
