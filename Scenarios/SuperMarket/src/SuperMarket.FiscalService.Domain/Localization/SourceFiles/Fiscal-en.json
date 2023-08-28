@@ -1,8 +1,0 @@
-﻿{
-  "culture": "en",
-  "texts": {
-    "TaxMovimentMustHaveOrderBaseValue": "Calculate tax purchase order must have a order base value.",
-    "TaxMovimentMustHaveOrderDiscount": "Calculate tax purchase order must have a order discount.",
-    "TaxMovimentMustHaveOrderId": "Calculate tax purchase order must have a order id."
-  }
-}

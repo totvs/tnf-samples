@@ -1,8 +1,0 @@
-﻿{
-  "culture": "en",
-  "texts": {
-    "ProductMustHaveDescription": "Product must have description",
-    "ProductMustHaveValue": "Product must have value",
-    "CustomerMustHaveName": "Customer must have name"
-  }
-}

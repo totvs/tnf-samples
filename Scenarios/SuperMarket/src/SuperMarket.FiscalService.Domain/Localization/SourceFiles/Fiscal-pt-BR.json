@@ -1,8 +1,0 @@
-﻿{
-  "culture": "pt-BR",
-  "texts": {
-    "TaxMovimentMustHaveOrderBaseValue": "Para calcular o imposto do pedido é preciso o seu valor base.",
-    "TaxMovimentMustHaveOrderDiscount": "Para calcular o imposto do pedido é preciso do valor de seu desconto.",
-    "TaxMovimentMustHaveOrderId": "Para calcular o imposto do pedido é preciso da seu Id."
-  }
-}
