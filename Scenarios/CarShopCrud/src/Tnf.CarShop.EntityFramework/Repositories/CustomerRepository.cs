@@ -34,7 +34,8 @@ public class CustomerRepository : EfCoreRepositoryBase<CarShopDbContext, Custome
             DateOfBirth = x.DateOfBirth,
             Email = x.Email,
             FullName = x.FullName,
-            Phone = x.Phone            
+            Phone = x.Phone,
+            StoreId = x.StoreId
         }).ToListDtoAsync(requestAllDto, cancellationToken);
     }
 

@@ -1,6 +1,9 @@
-﻿namespace Tnf.CarShop.Application.Commands.Fipe;
+﻿using Tnf.Commands;
 
-public class ApplyFipeTableCommand
+namespace Tnf.CarShop.Application.Commands.Fipe;
+
+//Exemplo de um comando sem retorno e que implementa um ICommand
+public class ApplyFipeTableCommand : ICommand
 {
     public string FipeCode { get; set; }
     public string MonthYearReference { get; set; }

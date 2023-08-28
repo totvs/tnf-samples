@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
-using Tnf.CarShop.Application.Commands.Customer.Create;
-using Tnf.CarShop.Application.Commands.Customer.Delete;
-using Tnf.CarShop.Application.Commands.Customer.Get;
-using Tnf.CarShop.Application.Commands.Customer.Update;
+
+using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Dtos;
+using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+
 using Tnf.Commands;
+
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -18,10 +20,16 @@ namespace Tnf.CarShop.Host.Controllers;
 public class CustomerController : TnfController
 {
     private readonly ICommandSender _commandSender;
+    private readonly ICustomerRepository _customerRepository;
 
-    public CustomerController(ICommandSender commandSender)
+    //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
+    //Para casos mais complexos deve-se criar uma service
+    //ou até mesmo comandos que possam ter validações e regras de negócio retornando os dados necessários.
+
+    public CustomerController(ICommandSender commandSender, ICustomerRepository customerRepository)
     {
         _commandSender = commandSender;
+        _customerRepository = customerRepository;
     }
 
     [HttpGet("{customerId}")]
@@ -30,14 +38,14 @@ public class CustomerController : TnfController
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid customerId)
     {
-        var command = new GetCustomerCommand { CustomerId = customerId };
+        var customer = await _customerRepository.GetAsync(customerId, HttpContext.RequestAborted);
 
-        var result = await _commandSender.SendAsync<GetCustomerResult>(command);
-
-        if (result is null)
+        if (customer is null)
             return NotFound();
 
-        return CreateResponseOnGet(result.Customer);
+        var customerDto = customer.ToDto();
+
+        return CreateResponseOnGet(customerDto);
     }
 
     [HttpGet]
@@ -45,29 +53,29 @@ public class CustomerController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
     {
-        var result = await _commandSender.SendAsync<GetCustomerResult>(new GetCustomerCommand { RequestAllCustomers = requestAllDto });
+        var customers = await _customerRepository.GetAllAsync(requestAllDto, HttpContext.RequestAborted);
 
-        return CreateResponseOnGetAll(result.Customers);
+        return CreateResponseOnGetAll(customers);
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreateCustomerResult), 201)]
+    [ProducesResponseType(typeof(CustomerDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CreateCustomerCommand command)
+    public async Task<IActionResult> Create(CustomerCommand command)
     {
-        var result = await _commandSender.SendAsync<CreateCustomerResult>(command);
+        var result = await _commandSender.SendAsync<CustomerResult>(command);
 
-        return CreateResponseOnPost(result);
+        return CreateResponseOnPost(result.CustomerDto);
     }
 
     [HttpPut]
-    [ProducesResponseType(typeof(UpdateCustomerResult), 200)]
+    [ProducesResponseType(typeof(CustomerDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CustomerDto command)
+    public async Task<IActionResult> Update(CustomerCommand command)
     {
-        var result = await _commandSender.SendAsync<UpdateCustomerResult>(command);
+        var result = await _commandSender.SendAsync<CustomerResult>(command);
 
-        return CreateResponseOnPut(result);
+        return CreateResponseOnPut(result.CustomerDto);
     }
 
     [HttpDelete("{customerId}")]
@@ -75,13 +83,8 @@ public class CustomerController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid customerId)
     {
-        var command = new DeleteCustomerCommand { CustomerId = customerId };
+        await _customerRepository.DeleteAsync(customerId, HttpContext.RequestAborted);
 
-        var result = await _commandSender.SendAsync<DeleteCustomerResult>(command);
-
-        if (!result.Success)
-            return BadRequest();
-
-        return CreateResponseOnDelete(result);
+        return CreateResponseOnDelete();
     }
 }

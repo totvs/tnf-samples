@@ -2,11 +2,9 @@
 
 using Tnf.AspNetCore.Mvc.Response;
 
-using Tnf.CarShop.Application.Commands.Car.Create;
-using Tnf.CarShop.Application.Commands.Car.Delete;
-using Tnf.CarShop.Application.Commands.Car.Get;
-using Tnf.CarShop.Application.Commands.Car.Update;
+using Tnf.CarShop.Application.Commands.Car;
 using Tnf.CarShop.Domain.Dtos;
+using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
 
 using Tnf.Commands;
@@ -22,10 +20,16 @@ namespace Tnf.CarShop.Host.Controllers;
 public class CarController : TnfController
 {
     private readonly ICommandSender _commandSender;
+    private readonly ICarRepository _carRepository;
 
-    public CarController(ICommandSender commandSender)
+    //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
+    //Para casos mais complexos deve-se criar uma service
+    //ou até mesmo comandos que possam ter validações e regras de negócio retornando os dados necessários.
+
+    public CarController(ICommandSender commandSender, ICarRepository carRepository)
     {
         _commandSender = commandSender;
+        _carRepository = carRepository;
     }
 
 
@@ -35,44 +39,44 @@ public class CarController : TnfController
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid carId)
     {
-        var command = new GetCarCommand { CarId = carId };
+        var car = await _carRepository.GetAsync(carId, HttpContext.RequestAborted);
 
-        var result = await _commandSender.SendAsync<GetCarResult>(command);
-
-        if (result is null)
+        if (car is null)
             return NotFound();
 
-        return CreateResponseOnGet(result.Car);
+        var carDto = car.ToDto();
+
+        return CreateResponseOnGet(carDto);
     }
 
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<CarDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
-    {
-        var result = await _commandSender.SendAsync<GetCarResult>(new GetCarCommand { RequestAllCars = requestAllDto });
+    {        
+        var cars = await _carRepository.GetAllAsync(requestAllDto, HttpContext.RequestAborted);
 
-        return CreateResponseOnGetAll(result.Cars);
+        return CreateResponseOnGetAll(cars);
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreateCarResult), 201)]
+    [ProducesResponseType(typeof(CarDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CreateCarCommand command)
+    public async Task<IActionResult> Create(CarCommand command)
     {
-        var result = await _commandSender.SendAsync<CreateCarResult>(command);
+        var result = await _commandSender.SendAsync<CarResult>(command);
 
-        return CreateResponseOnPost(result);
+        return CreateResponseOnPost(result.CarDto);
     }
 
     [HttpPut]
-    [ProducesResponseType(typeof(UpdateCarResult), 200)]
+    [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(UpdateCarCommand command)
+    public async Task<IActionResult> Update(CarCommand command)
     {
-        var result = await _commandSender.SendAsync<UpdateCarResult>(command);
+        var result = await _commandSender.SendAsync<CarResult>(command);
 
-        return CreateResponseOnPut(result);
+        return CreateResponseOnPut(result.CarDto);
     }
 
     [HttpDelete("{carId}")]
@@ -80,12 +84,7 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid carId)
     {
-        var command = new DeleteCarCommand(carId);
-
-        var result = await _commandSender.SendAsync<DeleteCarResult>(command);
-
-        if (!result.Success)
-            return BadRequest();
+        await _carRepository.DeleteAsync(carId, HttpContext.RequestAborted);
 
         return CreateResponseOnDelete();
     }

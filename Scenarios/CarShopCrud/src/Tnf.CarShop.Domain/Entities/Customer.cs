@@ -64,6 +64,7 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
             Address,
             Phone,
             Email,
-            DateOfBirth);
+            DateOfBirth,
+            StoreId);
     }
 }

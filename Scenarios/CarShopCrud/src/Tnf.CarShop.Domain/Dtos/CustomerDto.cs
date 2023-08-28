@@ -8,7 +8,8 @@ public class CustomerDto
         string address,
         string phone,
         string email,
-        DateTime dateOfBirth)
+        DateTime dateOfBirth,
+        Guid storeId)
     {
         Id = id;
         FullName = fullName;
@@ -16,7 +17,8 @@ public class CustomerDto
         Phone = phone;
         Email = email;
         DateOfBirth = dateOfBirth;
-    }    
+        StoreId = storeId;
+    }
 
     public CustomerDto()
     {
@@ -29,4 +31,5 @@ public class CustomerDto
     public string Email { get; set; }
 
     public DateTime DateOfBirth { get; set; }
+    public Guid StoreId { get; set; }
 }
