@@ -31,7 +31,8 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
         {
             Id = x.Id,
             Name = x.Name,
-            Location = x.Location
+            Location = x.Location,
+            Cnpj = x.Cnpj
         }).ToListDtoAsync(requestAllDto, cancellationToken);
     }
 

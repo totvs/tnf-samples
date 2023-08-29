@@ -1,20 +1,21 @@
-﻿using Tnf.Repositories.Entities;
+﻿using Tnf.CarShop.Domain.Dtos;
+using Tnf.Repositories.Entities;
 using Tnf.Repositories.Entities.Auditing;
 
 namespace Tnf.CarShop.Domain.Entities;
 
 public class Purchase : IHasCreationTime, IMustHaveTenant
 {
-    public Guid Id { get; set; }
-    public Guid CarId { get; }
-    public Guid CustomerId { get; }
-    public Guid StoreId { get; set; }
+    public Guid Id { get; set;  }
+    public Guid CarId { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public Guid StoreId { get; private set; }
     public decimal Price { get; private set; }
     public DateTime PurchaseDate { get; private set; }
 
     public Customer Customer { get; private set; }
     public Car Car { get; private set; }
-    public Store Store { get; set; }
+    public Store Store { get; private set; }
 
     public DateTime CreationTime { get; set; }
 
@@ -42,17 +43,27 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
 
     public void UpdateCustomer(Customer newCustomer)
     {
-        Customer = newCustomer;
+        CustomerId = newCustomer.Id;
     }
 
     public void UpdateCar(Car newCar)
     {
-        Car = newCar;
+        CarId = newCar.Id;
         Price = newCar.Price;
     }
 
     public void UpdateStore(Store store)
     {
-        Store = store;
+        StoreId = store.Id;
+    }
+
+    public PurchaseDto ToDto()
+    {
+        var dto = new PurchaseDto(Id, PurchaseDate);
+        dto.Car = Car.ToDto();
+        dto.Customer = Customer.ToDto();
+        dto.Store = Store.ToDto();
+
+        return dto;
     }
 }
