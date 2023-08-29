@@ -38,6 +38,10 @@ O projeto CarShop é uma aplicação de gerenciamento de loja de carros que perm
 - Atualização de detalhes de Compra
 - Deleção de registros de Compra
 
+### Tabela FIPE
+
+- Enriquecimento de dados da tabela FIPE através de mensageria para atualização de preço e modelo dos carros na loja CarShop.
+
 ## Instalação
 
 1. **Clone o repositório**:
@@ -70,7 +74,19 @@ O projeto CarShop é uma aplicação de gerenciamento de loja de carros que perm
 
 - .NET Core 6.0
 - Microsoft.Extensions.Logging
-- TNF 6.3
+- Serilog
+- Npgsql.EntityFrameworkCore.PostgreSQL
+- Tnf.AspNetCore
+- Tnf.AspNetCore.Security
+- Tnf.Commands
+- Tnf.Commands.FluentValidation
+- Tnf.Messaging
+- Tnf.Messaging.RabbitMQ
+- Tnf.Repositories
+- Tnf.EntityFrameworkCore
+- Tnf.Kernel
+
+Obs: Pacotes TNF na versão 6.3
 
 # Projeto Tnf.CarShop
 
@@ -80,7 +96,7 @@ O projeto Tnf.CarShop é uma solução de gestão de loja de carros, desenvolvid
 
 ### `Tnf.CarShop.Host`
 
-- **Responsabilidade:** Este é o projeto de hospedagem, responsável por inicializar e configurar a aplicação. É nele que estão configurados os endpoints da API, que utilizam o padrão CQRS. Ao receber uma requisição, os endpoints enviam comandos para a camada de aplicação. Além disso, ele configura o pipeline de solicitações, as dependências da aplicação, gerencia a autenticação e também inclui a configuração do Swagger para documentação da API.
+- **Responsabilidade:** Este é o projeto de hospedagem, responsável por inicializar e configurar a aplicação. É nele que estão configurados os endpoints da API. Ao receber uma requisição, os endpoints enviam comandos para a camada de aplicação. Além disso, ele configura o pipeline de solicitações, as dependências da aplicação, gerencia a autenticação e também inclui a configuração do Swagger para documentação da API.
 
 ### `Tnf.CarShop.Application`
 
@@ -90,23 +106,26 @@ O projeto Tnf.CarShop é uma solução de gestão de loja de carros, desenvolvid
 
   ```
   Commands
-  ├───car
-  │   ├───Create
-  │   │   ├───CreateCarCommand.cs
-  │   │   ├───CreateCarCommandHandler.cs
-  │   │   └───CreateCarCommandValidator.cs
-  │   ├───Delete
-  │   │   ├───DeleteCarCommand.cs
-  │   │   ├───DeleteCarCommandHandler.cs
-  │   │   └───DeleteCarCommandValidator.cs
-  │   ├───Get
-  │   │   ├───GetCarCommand.cs
-  │   │   ├───GetCarCommandHandler.cs
-  │   │   └───GetCarCommandValidator.cs
-  │   └───Update
-  │       ├───UpdateCarCommand.cs
-  │       ├───UpdateCarCommandHandler.cs
-  │       └───UpdateCarCommandValidator.cs
+  ├───Car
+  │   ├───CarCommand
+  │   ├───CarCommandHandler.cs
+  │   └───CarCommandValidator.cs
+  ├───Customer
+  │   ├───CustomerCommand.cs
+  │   ├───CustomerCommandHandler.cs
+  │   ├───CustomerCommandValidator.cs
+  ├───Fipe
+  │   ├───FipeCommand.cs
+  │   ├───FipeCommandHandler.cs
+  │   ├───FipeCommandValidator.cs
+  ├───Purchase
+  │   ├───PurchaseCommand.cs
+  │   ├───PurchaseCommandHandler.cs
+  │   ├───PurchaseCommandValidator.cs
+  ├───Store
+  │   ├───StoreCommand.cs
+  │   ├───StoreCommandHandler.cs
+  │   ├───StoreCommandValidator.cs
   ```
 
   Essa estruturação garante que os comandos, handlers e validadores de cada entidade estejam organizados de maneira clara e modularizada, facilitando a manutenção e o entendimento do código.
@@ -132,6 +151,22 @@ public async Task ConsumeAsync(IConsumeContext<CloudEvent<ApplyFipeTable>> conte
 ...
 }
 }
+```
+
+`Localization`
+
+Responsável pelos arquivos de resource, enumeradores e idiomas que serão utilizadas em mensagens de validação do *TnfNotification* que são implementadas nos *CommandValidators* de cada comando ou utilizadas de forma independente, como por exemplo, nas *Controllers*.
+
+```
+`Tnf.CarShop.Application`
+└───`Localization`
+   │
+   ├───`Sources`
+   │   └───`CarShop-pt-BR.json`
+   │
+   ├───`LocalizationKeys.cs`
+   ├───`LocalizationServiceCollection.cs`
+   └───`LocalizationSource.cs`
 ```
 
 `Messages`
