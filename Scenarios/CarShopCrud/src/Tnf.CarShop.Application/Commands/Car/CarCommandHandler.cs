@@ -2,6 +2,7 @@
 
 using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages.Events;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 
 using Tnf.Commands;
@@ -28,12 +29,27 @@ public class CarCommandHandler : CommandHandler<CarCommand, CarResult>
         {
             car = await InsertCarAsync(command, cancellationToken);
 
+            if (car is null || car.Id == default)
+            {
+                _logger.EntityWasNotCreated(nameof(car));
+                return null;
+            }
+
+            _logger.EntitySuccessfullyCreated(nameof(car), car.Id);
+
+            await _carEventPublisher.NotifyCreationAsync(car, cancellationToken);
+
             return new CarResult { CarDto = car.ToDto() };
         }
 
         car = await UpdateCarAsync(command, cancellationToken);
 
-        return new CarResult { CarDto = car.ToDto() };
+        _logger.EntitySuccessfullyUpdated(nameof(car), car.Id);
+
+        var carDto = car.ToDto();
+        await _carEventPublisher.NotifyUpdateAsync(carDto, cancellationToken);
+
+        return new CarResult { CarDto = carDto };
     }
 
     private async Task<Domain.Entities.Car> UpdateCarAsync(CarCommand command, CancellationToken cancellationToken)
@@ -48,13 +64,7 @@ public class CarCommandHandler : CommandHandler<CarCommand, CarResult>
         car.UpdatePrice(command.Price);
         car.UpdateYear(command.Year);
 
-        car = await _carRepository.UpdateAsync(car, cancellationToken);
-
-        var carDto = car.ToDto();
-
-        _logger.EntitySuccessfullyUpdated(nameof(car), car.Id);
-
-        await _carEventPublisher.NotifyUpdateAsync(carDto, cancellationToken);
+        car = await _carRepository.UpdateAsync(car, cancellationToken);            
 
         return car;
     }
@@ -63,17 +73,7 @@ public class CarCommandHandler : CommandHandler<CarCommand, CarResult>
     {
         var car = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId);
 
-        car = await _carRepository.InsertAsync(car, cancellationToken);
-
-        if (car is null || car.Id == default)
-        {
-            _logger.EntityWasNotCreated(nameof(car));
-            return null;
-        }
-
-        _logger.EntitySuccessfullyCreated(nameof(car), car.Id);
-
-        await _carEventPublisher.NotifyCreationAsync(car, cancellationToken);
+        car = await _carRepository.InsertAsync(car, cancellationToken);               
 
         return car;
     }

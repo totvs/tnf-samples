@@ -6,6 +6,7 @@ using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 using Tnf.Commands;
 
@@ -24,7 +25,7 @@ public class CustomerController : TnfController
 
     //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
     //Para casos mais complexos deve-se criar uma service
-    //ou até mesmo comandos que possam ter validações e regras de negócio retornando os dados necessários.
+    //ou até mesmo comandos que possam ter validações e regras de negócio, retornando os dados necessários.
 
     public CustomerController(ICommandSender commandSender, ICustomerRepository customerRepository)
     {
@@ -73,6 +74,12 @@ public class CustomerController : TnfController
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(CustomerCommand command)
     {
+        if (!command.Id.HasValue)
+        {
+            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
+            return CreateResponseOnPut();
+        }
+
         var result = await _commandSender.SendAsync<CustomerResult>(command);
 
         return CreateResponseOnPut(result.CustomerDto);

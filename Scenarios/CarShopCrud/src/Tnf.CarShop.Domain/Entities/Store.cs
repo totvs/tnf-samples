@@ -58,6 +58,6 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 
     public StoreDto ToDto()
     {
-        return new StoreDto(Id, Name, Location);
+        return new StoreDto(Id, Name, Location, Cnpj);
     }
 }
