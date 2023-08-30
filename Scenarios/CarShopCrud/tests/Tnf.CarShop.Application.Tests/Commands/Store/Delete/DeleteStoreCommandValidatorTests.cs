@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Store.Delete;
 
-public class DeleteStoreCommandValidatorTests: TesteComom
+public class DeleteStoreCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_StoreId_Is_Empty()
@@ -10,9 +10,7 @@ public class DeleteStoreCommandValidatorTests: TesteComom
         var command = new DeleteStoreCommand();
         var validator = new DeleteStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateEmpty(result, "Store Id");
@@ -24,9 +22,7 @@ public class DeleteStoreCommandValidatorTests: TesteComom
         var command = new DeleteStoreCommand { StoreId = Guid.NewGuid() };
         var validator = new DeleteStoreCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.True(result.IsValid);
     }

@@ -14,6 +14,6 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 
         builder.HasOne(customer => customer.Store)
             .WithMany(store => store.Customers)
-            .HasForeignKey(customer => customer.TenantId);
+            .HasForeignKey(customer => customer.StoreId);
     }
 }

@@ -18,11 +18,18 @@ public class CreateStoreCommandHandlerTests
     [Fact]
     public async Task Should_Create_Store()
     {
-        var command = new CreateStoreCommand("Store 1", "123456789", "Location 1");
+        var command = new CreateStoreCommand
+        {
+            Name = "Store 1",
+            Cnpj = "123456789",
+            Location= "Location 1"
+        };
+
         var expectedId = Guid.NewGuid();
+
         _storeRepositoryMock
             .Setup(sr => sr.InsertAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Domain.Entities.Store(expectedId, command.Name, command.Cnpj, command.Location));
+            .ReturnsAsync(new Domain.Entities.Store(command.Name, command.Cnpj, command.Location) { Id = expectedId});
 
         var result = await _handler.ExecuteAsync(command);
 

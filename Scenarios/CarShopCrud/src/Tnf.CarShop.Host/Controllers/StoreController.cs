@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
-using Tnf.CarShop.Application.Commands.Store.Create;
-using Tnf.CarShop.Application.Commands.Store.Delete;
-using Tnf.CarShop.Application.Commands.Store.Get;
-using Tnf.CarShop.Application.Commands.Store.Update;
-using Tnf.CarShop.Application.Dtos;
+
+using Tnf.CarShop.Application.Commands.Store;
+using Tnf.CarShop.Domain.Dtos;
+using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
+
 using Tnf.Commands;
+
 using Tnf.Dto;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -14,66 +17,81 @@ namespace Tnf.CarShop.Host.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(Routes.Store)]
+[TnfAuthorize]
 public class StoreController : TnfController
 {
     private readonly ICommandSender _commandSender;
+    private readonly IStoreRepository _storeRepository;
 
-    public StoreController(ICommandSender commandSender)
+    //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
+    //Para casos mais complexos deve-se criar uma service
+    //ou até mesmo comandos que possam ter validações e regras de negócio, retornando os dados necessários.
+
+    public StoreController(ICommandSender commandSender, IStoreRepository storeRepository)
     {
         _commandSender = commandSender;
+        _storeRepository = storeRepository;
     }
 
     [HttpGet("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(Guid storeId)
     {
-        var command = new GetStoreCommand { StoreId = storeId };
+        var store = await _storeRepository.GetAsync(storeId, HttpContext.RequestAborted);
 
-        var result = await _commandSender.SendAsync<GetStoreResult>(command);
+        if (store is null)
+            return NotFound();
 
-        return CreateResponseOnGet(result.Store);
+        var storeDto = store.ToDto();
+
+        return CreateResponseOnGet(storeDto);
     }
 
     [HttpGet]
     [ProducesResponseType(typeof(IListDto<StoreDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
     {
-        var result = await _commandSender.SendAsync<GetStoreResult>(new GetStoreCommand());
+        var storesDto = await _storeRepository.GetAllAsync(requestAllDto, HttpContext.RequestAborted);
 
-        return CreateResponseOnGetAll(result.Stores);
+        return CreateResponseOnGetAll(storesDto);
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreateStoreResult), 201)]
+    [ProducesResponseType(typeof(StoreDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CreateStoreCommand command)
+    public async Task<IActionResult> Create(StoreCommand command)
     {
-        var result = await _commandSender.SendAsync<CreateStoreResult>(command);
+        var result = await _commandSender.SendAsync<StoreResult>(command);
 
-        return CreateResponseOnPost(result);
+        return CreateResponseOnPost(result.StoreDto);
     }
 
     [HttpPut]
-    [ProducesResponseType(typeof(UpdateStoreResult), 200)]
+    [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(UpdateStoreCommand command)
+    public async Task<IActionResult> Update(StoreCommand command)
     {
-        var result = await _commandSender.SendAsync<UpdateStoreResult>(command);
+        if (!command.Id.HasValue)
+        {
+            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
+            return CreateResponseOnPut();
+        }
 
-        return CreateResponseOnPut(result);
+        var result = await _commandSender.SendAsync<StoreResult>(command);
+
+        return CreateResponseOnPut(result.StoreDto);
     }
 
     [HttpDelete("{storeId}")]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Delete(Guid storeId)
     {
-        var command = new DeleteStoreCommand { StoreId = storeId };
+        await _storeRepository.DeleteAsync(storeId, HttpContext.RequestAborted);
 
-        var result = await _commandSender.SendAsync(command);
-
-        return CreateResponseOnDelete(result);
+        return CreateResponseOnDelete();
     }
 }

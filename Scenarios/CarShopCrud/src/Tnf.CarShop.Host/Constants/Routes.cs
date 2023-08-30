@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Host.Constants;
 
-internal sealed record Routes
+public class Routes
 {
     public const string Car = "api/carshop/v{version:apiVersion}/cars";
     public const string Customer = "api/carshop/v{version:apiVersion}/customers";

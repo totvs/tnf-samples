@@ -15,34 +15,31 @@ public class UpdateCustomerCommandHandlerTests
         var command = new UpdateCustomerCommand
         {
             Id = Guid.NewGuid(),
-            TenantId = Guid.NewGuid(),
+            StoreId = Guid.NewGuid(),
             FullName = "John Doe",
             Address = "123 Main Street",
             Phone = "1234567890",
             Email = "john@doe.com",
-            DateOfBirth = new DateTime(1980, 1, 1)
+            DateOfBirth = new DateTime(1980, 1, 1), 
         };
-        var customer = new Domain.Entities.Customer(command.Id, command.FullName, command.Address, command.Phone,
-            command.Email, command.DateOfBirth);
-        customerRepositoryMock.Setup(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>())).ReturnsAsync(customer);
-        customerRepositoryMock
-            .Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(customer);
-        var handler = new UpdateCustomerCommandHandler(loggerMock.Object, customerRepositoryMock.Object);
+        var customer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth, command.StoreId);
 
+        customerRepositoryMock.Setup(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>())).ReturnsAsync(customer);
+
+        customerRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(customer);
+
+        var handler = new UpdateCustomerCommandHandler(loggerMock.Object, customerRepositoryMock.Object);
 
         var result = await handler.ExecuteAsync(command);
 
-
-        Assert.NotNull(result);
-        Assert.Equal(command.Id, result.Customer.Id);
+        Assert.NotNull(result);        
         Assert.Equal(command.FullName, result.Customer.FullName);
         Assert.Equal(command.Address, result.Customer.Address);
         Assert.Equal(command.Phone, result.Customer.Phone);
         Assert.Equal(command.Email, result.Customer.Email);
         Assert.Equal(command.DateOfBirth, result.Customer.DateOfBirth);
         customerRepositoryMock.Verify(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>()), Times.Once);
-        customerRepositoryMock.Verify(
-            x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
+        customerRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Tnf.CarShop.Application.Dtos;
+﻿using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Application.Localization;
 using Tnf.CarShop.Domain.Entities;
 
@@ -29,7 +29,7 @@ public class CarEventPublisher : ICarEventPublisher
                 Brand = car.Brand,
                 Model = car.Model,
                 Price = car.Price,
-                TenantId = car.TenantId,
+                StoreId = car.StoreId,
                 Year = car.Year
             }
         };
@@ -51,7 +51,7 @@ public class CarEventPublisher : ICarEventPublisher
                 Brand = carDto.Brand,
                 Model = carDto.Model,
                 Price = carDto.Price,
-                TenantId = carDto.TenantId,
+                StoreId = carDto.StoreId,
                 Year = carDto.Year
             }
         };

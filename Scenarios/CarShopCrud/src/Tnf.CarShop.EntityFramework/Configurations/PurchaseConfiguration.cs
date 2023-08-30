@@ -22,6 +22,6 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
 
         builder.HasOne(purchase => purchase.Store)
             .WithMany()
-            .HasForeignKey(purchase => purchase.TenantId);
+            .HasForeignKey(purchase => purchase.StoreId);
     }
 }

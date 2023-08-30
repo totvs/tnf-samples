@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Get;
 
-public class GetCustomerCommandValidatorTests: TesteComom
+public class GetCustomerCommandValidatorTests: TestCommon
 {
     [Fact]
     public void GetCustomerCommandValidator_Should_Return_Error_When_CustomerId_Is_Empty()
@@ -10,9 +10,7 @@ public class GetCustomerCommandValidatorTests: TesteComom
         var command = new GetCustomerCommand { CustomerId = Guid.Empty };
         var validator = new GetCustomerCommandValidator();
 
-
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
 

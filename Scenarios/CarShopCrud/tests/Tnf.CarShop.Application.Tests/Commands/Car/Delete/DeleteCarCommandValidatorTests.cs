@@ -10,9 +10,7 @@ public class DeleteCarCommandValidatorTests
         var validator = new DeleteCarCommandValidator();
         var command = new DeleteCarCommand(Guid.NewGuid());
 
-
         var result = validator.Validate(command);
-
 
         Assert.True(result.IsValid);
     }

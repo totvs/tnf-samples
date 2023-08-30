@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-
 using Moq;
-
 using Tnf.CarShop.Application.Commands.Car.Create;
+using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
-
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Create;
 
 public class CreateCarCommandHandlerTests
@@ -13,47 +11,43 @@ public class CreateCarCommandHandlerTests
     private readonly Mock<ICarRepository> _carRepoMock;
     private readonly CreateCarCommandHandler _handler;
     private readonly Mock<ILogger<CreateCarCommandHandler>> _loggerMock;
-    private readonly Mock<IStoreRepository> _storeRepoMock;
     private readonly Mock<ICarEventPublisher> _carEventPublisherMock;
 
     public CreateCarCommandHandlerTests()
     {
         _loggerMock = new Mock<ILogger<CreateCarCommandHandler>>();
         _carRepoMock = new Mock<ICarRepository>();
-        _storeRepoMock = new Mock<IStoreRepository>();
         _carEventPublisherMock = new Mock<ICarEventPublisher>();
 
-        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _storeRepoMock.Object, _carEventPublisherMock.Object);
+        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _carEventPublisherMock.Object);
     }
 
     [Fact]
-    public async Task ExecuteAsync_ValidCommand_CreatesCarSuccessfully()
+    public async Task Should_Create_Car_Successfully()
     {
-        var tenantId = Guid.NewGuid();
-        var carId = Guid.NewGuid();
-        var store = new Domain.Entities.Store(tenantId, "Loja do Zé", "000000000000", "Tramandai");
-        var createdCar = new Domain.Entities.Car(carId, "Tesla", "Model S", 2022, 79999, store, tenantId);
-
-        _storeRepoMock.Setup(s => s.GetAsync(tenantId, It.IsAny<CancellationToken>())).ReturnsAsync(store);
-        _carRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(createdCar);
-
         var command = new CreateCarCommand
-        (
-            "Tesla",
-            "Model S",
-            2022,
-            79999,
-            tenantId
-        );
+        {
+            Brand = "Ford",
+            Model = "Fiesta",
+            Year = 2020,
+            Price = 25000,
+            StoreId = Guid.NewGuid()
+        };
+
+        _carRepoMock
+            .Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId) { Id = Guid.NewGuid() });
+
+        _carEventPublisherMock
+            .Setup(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         var result = await _handler.ExecuteAsync(command);
 
-
+        Assert.NotEqual(Guid.Empty, result.CarId);
         Assert.True(result.Success);
-        Assert.Equal(createdCar.Id, result.CarId);
-        _storeRepoMock.Verify(s => s.GetAsync(tenantId, It.IsAny<CancellationToken>()), Times.Once);
-        _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()),
-            Times.Once);
+
+        _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
+        _carEventPublisherMock.Verify(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);       
     }
 }

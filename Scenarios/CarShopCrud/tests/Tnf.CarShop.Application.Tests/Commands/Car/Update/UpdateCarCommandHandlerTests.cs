@@ -27,16 +27,15 @@ public class UpdateCarCommandHandlerTests
             Price = 20000
         };
 
-        var car = new Domain.Entities.Car(command.Id, command.Brand, command.Model, command.Year, command.Price);
+        var car = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, Guid.NewGuid()) { Id = command.Id };
+
         carRepositoryMock.Setup(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>())).ReturnsAsync(car);
         carRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(car);
 
         var handler = new UpdateCarCommandHandler(loggerMock.Object, carRepositoryMock.Object, carEventPublisherMock.Object);
 
-
         var result = await handler.ExecuteAsync(command);
-
 
         Assert.NotNull(result);
         Assert.Equal(command.Id, result.Car.Id);
@@ -46,7 +45,6 @@ public class UpdateCarCommandHandlerTests
         Assert.Equal(command.Price, result.Car.Price);
 
         carRepositoryMock.Verify(x => x.GetAsync(command.Id, It.IsAny<CancellationToken>()), Times.Once);
-        carRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()),
-            Times.Once);
+        carRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

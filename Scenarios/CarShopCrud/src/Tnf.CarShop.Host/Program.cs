@@ -1,6 +1,6 @@
 ﻿using Serilog;
+using Tnf.CarShop.Application.DependencyInjection;
 using Tnf.CarShop.Application.Localization;
-using Tnf.CarShop.Application.Messages;
 using Tnf.CarShop.EntityFrameworkCore.PostgreSql;
 using Tnf.CarShop.Host.Swagger;
 
@@ -22,7 +22,10 @@ builder.Services.AddTnfAspNetCore(tnf =>
     tnf.MultiTenancy(multiTenancy => { multiTenancy.IsEnabled = true; });
 });
 
-builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });
+builder.Services.AddTnfAspNetCoreSecurity(builder.Configuration);
+
+//builder.Services.AddTnfCommands(commands => { commands.AddCommandHandlersFromAssembly(typeof(Program).Assembly); });
+builder.Services.AddCommands();
 
 builder.Services.AddEFCorePostgreSql();
 

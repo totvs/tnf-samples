@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Update;
 
-public class UpdateCustomerCommandValidatorTests: TesteComom
+public class UpdateCustomerCommandValidatorTests: TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()
@@ -11,17 +11,15 @@ public class UpdateCustomerCommandValidatorTests: TesteComom
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
-            TenantId = Guid.NewGuid(),
+            StoreId = Guid.NewGuid(),
             Address = "Rua Teste",
             Phone = "+55 11 99999-9999",
             Email = "john@doe.com",
             DateOfBirth = DateTime.Today.AddDays(1)
         };
 
-
         var validator = new UpdateCustomerCommandValidator();
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
 
@@ -41,10 +39,8 @@ public class UpdateCustomerCommandValidatorTests: TesteComom
             DateOfBirth = DateTime.Today.AddYears(-17)
         };
 
-
         var validator = new UpdateCustomerCommandValidator();
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");
@@ -63,10 +59,8 @@ public class UpdateCustomerCommandValidatorTests: TesteComom
             DateOfBirth = DateTime.Today.AddYears(-101)
         };
 
-
         var validator = new UpdateCustomerCommandValidator();
         var result = validator.Validate(command);
-
 
         Assert.False(result.IsValid);
         ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");  
