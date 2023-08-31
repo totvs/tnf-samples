@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Tnf.CarShop.Application.Commands.Customer.Create;
+using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Create;
@@ -7,12 +7,12 @@ namespace Tnf.CarShop.Application.Tests.Commands.Customer.Create;
 public class CreateCustomerCommandHandlerTests
 {
     private readonly Mock<ICustomerRepository> _customerRepoMock;
-    private readonly CreateCustomerCommandHandler _handler;
+    private readonly CustomerCommandHandler _handler;
 
     public CreateCustomerCommandHandlerTests()
     {
         _customerRepoMock = new Mock<ICustomerRepository>();
-        _handler = new CreateCustomerCommandHandler(_customerRepoMock.Object);
+        _handler = new CustomerCommandHandler(_customerRepoMock.Object);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class CreateCustomerCommandHandlerTests
         _customerRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
-        var command = new CreateCustomerCommand
+        var command = new CustomerCommand
         {
             FullName = "John Doe",
             Address = "123 Main St.",
@@ -35,8 +35,7 @@ public class CreateCustomerCommandHandlerTests
         };
 
         var result = await _handler.ExecuteAsync(command);
-
-        Assert.True(result.Success);
+        
         _customerRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

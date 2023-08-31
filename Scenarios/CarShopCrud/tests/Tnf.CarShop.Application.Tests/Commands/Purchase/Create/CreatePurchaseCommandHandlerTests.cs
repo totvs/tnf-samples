@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
-using Tnf.CarShop.Application.Commands.Purchase.Create;
+using Tnf.CarShop.Application.Commands.Purchase;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase.Create;
 
-public class CreatePurchaseCommandHandlerTests
+public class PurchaseCommandHandlerTests
 {
     [Fact]
     public async Task ExecuteAsync_ValidCommand_ReturnsExpectedPurchaseId()
@@ -22,7 +22,7 @@ public class CreatePurchaseCommandHandlerTests
 
         var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid());
 
-        var loggerMock = new Mock<ILogger<CreatePurchaseCommandHandler>>();
+        var loggerMock = new Mock<ILogger<PurchaseCommandHandler>>();
         var purchaseRepoMock = new Mock<IPurchaseRepository>();
         var carRepoMock = new Mock<ICarRepository>();
         var customerRepoMock = new Mock<ICustomerRepository>();
@@ -31,18 +31,20 @@ public class CreatePurchaseCommandHandlerTests
         carRepoMock.Setup(x => x.GetAsync(carId, It.IsAny<CancellationToken>())).ReturnsAsync(car);
         customerRepoMock.Setup(x => x.GetAsync(customerId, It.IsAny<CancellationToken>())).ReturnsAsync(customer);
         storeRepoMock.Setup(x => x.GetAsync(storeId, It.IsAny<CancellationToken>())).ReturnsAsync(store);
+        purchaseRepoMock.Setup(x => x.GetAsync(purchase.Id, It.IsAny<CancellationToken>()))
+          .ReturnsAsync(purchase);
         purchaseRepoMock.Setup(x => x.InsertAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(purchase);
 
-        var handler = new CreatePurchaseCommandHandler(
-            loggerMock.Object,
-            purchaseRepoMock.Object,
+        var handler = new PurchaseCommandHandler(
             carRepoMock.Object,
             customerRepoMock.Object,
+            loggerMock.Object,
+            purchaseRepoMock.Object,                   
             storeRepoMock.Object
         );
 
-        var command = new CreatePurchaseCommand
+        var command = new PurchaseCommand
         {
             CarId = carId,
             CustomerId = customerId,
@@ -54,6 +56,6 @@ public class CreatePurchaseCommandHandlerTests
         var result = await handler.ExecuteAsync(command);
 
         Assert.NotNull(result);
-        Assert.Equal(purchase.Id, result.PurchaseId);
+        Assert.Equal(purchase.Id, result.PurchaseDto.Id);
     }
 }

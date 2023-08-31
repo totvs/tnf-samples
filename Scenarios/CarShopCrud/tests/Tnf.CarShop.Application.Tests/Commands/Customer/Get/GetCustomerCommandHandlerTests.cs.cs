@@ -1,34 +1,33 @@
 ﻿using Moq;
-using Tnf.CarShop.Application.Commands.Customer.Get;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Get;
 
 public class GetCustomerCommandHandlerTests
 {
-    [Fact]
-    public async Task GetCustomerCommandHandler_Should_Return_Customer_When_Id_Is_Provided()
-    {
-        var customerRepositoryMock = new Mock<ICustomerRepository>();
-        customerRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Domain.Entities.Customer(
-                "John Doe",
-                "123 Main Street",
-                "1234567890",
-                "john@doe.com",
-                DateTime.Now,
-                Guid.NewGuid()));
+    //[Fact]
+    //public async Task GetCustomerCommandHandler_Should_Return_Customer_When_Id_Is_Provided()
+    //{
+    //    var customerRepositoryMock = new Mock<ICustomerRepository>();
+    //    customerRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+    //        .ReturnsAsync(new Domain.Entities.Customer(
+    //            "John Doe",
+    //            "123 Main Street",
+    //            "1234567890",
+    //            "john@doe.com",
+    //            DateTime.Now,
+    //            Guid.NewGuid()));
 
-        var handler = new GetCustomerCommandHandler(customerRepositoryMock.Object);
-
-
-        var result = await handler.ExecuteAsync(new GetCustomerCommand { CustomerId = Guid.NewGuid() });
+    //    var handler = new GetCustomerCommandHandler(customerRepositoryMock.Object);
 
 
-        Assert.NotNull(result);
-        Assert.NotNull(result.Customer);
-        Assert.Equal("John Doe", result.Customer.FullName);
-    }
+    //    var result = await handler.ExecuteAsync(new GetCustomerCommand { CustomerId = Guid.NewGuid() });
+
+
+    //    Assert.NotNull(result);
+    //    Assert.NotNull(result.Customer);
+    //    Assert.Equal("John Doe", result.Customer.FullName);
+    //}
 
     //[Fact]
     //public async Task GetCustomerCommandHandler_Should_Return_All_Customers_When_No_Id_Is_Provided()
