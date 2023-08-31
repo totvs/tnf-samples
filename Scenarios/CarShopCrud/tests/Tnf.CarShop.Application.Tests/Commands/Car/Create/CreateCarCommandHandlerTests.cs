@@ -1,31 +1,30 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
-using Tnf.CarShop.Application.Commands.Car.Create;
-using Tnf.CarShop.Application.Extensions;
+using Tnf.CarShop.Application.Commands.Car;
 using Tnf.CarShop.Application.Messages.Events;
 using Tnf.CarShop.Domain.Repositories;
 namespace Tnf.CarShop.Application.Tests.Commands.Car.Create;
 
-public class CreateCarCommandHandlerTests
+public class CarCommandHandlerTests
 {
     private readonly Mock<ICarRepository> _carRepoMock;
-    private readonly CreateCarCommandHandler _handler;
-    private readonly Mock<ILogger<CreateCarCommandHandler>> _loggerMock;
+    private readonly CarCommandHandler _handler;
+    private readonly Mock<ILogger<CarCommandHandler>> _loggerMock;
     private readonly Mock<ICarEventPublisher> _carEventPublisherMock;
 
-    public CreateCarCommandHandlerTests()
+    public CarCommandHandlerTests()
     {
-        _loggerMock = new Mock<ILogger<CreateCarCommandHandler>>();
+        _loggerMock = new Mock<ILogger<CarCommandHandler>>();
         _carRepoMock = new Mock<ICarRepository>();
         _carEventPublisherMock = new Mock<ICarEventPublisher>();
 
-        _handler = new CreateCarCommandHandler(_loggerMock.Object, _carRepoMock.Object, _carEventPublisherMock.Object);
+        _handler = new CarCommandHandler(_carRepoMock.Object, _loggerMock.Object, _carEventPublisherMock.Object);
     }
 
     [Fact]
     public async Task Should_Create_Car_Successfully()
     {
-        var command = new CreateCarCommand
+        var command = new CarCommand
         {
             Brand = "Ford",
             Model = "Fiesta",
@@ -44,10 +43,9 @@ public class CreateCarCommandHandlerTests
 
         var result = await _handler.ExecuteAsync(command);
 
-        Assert.NotEqual(Guid.Empty, result.CarId);
-        Assert.True(result.Success);
+        Assert.NotEqual(Guid.Empty, result.CarDto.Id);
 
         _carRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
-        _carEventPublisherMock.Verify(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);       
+        _carEventPublisherMock.Verify(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

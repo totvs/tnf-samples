@@ -1,13 +1,13 @@
-﻿using Tnf.CarShop.Application.Commands.Customer.Update;
+﻿using Tnf.CarShop.Application.Commands.Customer;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Update;
 
-public class UpdateCustomerCommandValidatorTests: TestCommon
+public class CustomerCommandValidatorTests : TestCommon
 {
     [Fact]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()
     {
-        var command = new UpdateCustomerCommand
+        var command = new CustomerCommand
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
@@ -18,7 +18,7 @@ public class UpdateCustomerCommandValidatorTests: TestCommon
             DateOfBirth = DateTime.Today.AddDays(1)
         };
 
-        var validator = new UpdateCustomerCommandValidator();
+        var validator = new CustomerCommandValidator();
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
@@ -29,7 +29,7 @@ public class UpdateCustomerCommandValidatorTests: TestCommon
     [Fact]
     public void Should_Have_Error_When_Age_Is_Less_Than_18()
     {
-        var command = new UpdateCustomerCommand
+        var command = new CustomerCommand
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
@@ -39,7 +39,7 @@ public class UpdateCustomerCommandValidatorTests: TestCommon
             DateOfBirth = DateTime.Today.AddYears(-17)
         };
 
-        var validator = new UpdateCustomerCommandValidator();
+        var validator = new CustomerCommandValidator();
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
@@ -49,7 +49,7 @@ public class UpdateCustomerCommandValidatorTests: TestCommon
     [Fact]
     public void Should_Have_Error_When_Age_Is_Greater_Than_100()
     {
-        var command = new UpdateCustomerCommand
+        var command = new CustomerCommand
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
@@ -59,11 +59,11 @@ public class UpdateCustomerCommandValidatorTests: TestCommon
             DateOfBirth = DateTime.Today.AddYears(-101)
         };
 
-        var validator = new UpdateCustomerCommandValidator();
+        var validator = new CustomerCommandValidator();
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
-        ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");  
+        ValidateGenericMessage(result, "The specified condition was not met for 'Date Of Birth'.");
 
     }
 }
