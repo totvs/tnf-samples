@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase.Update;
 
-public class UpdatePurchaseCommandValidatorTests : TestCommon
+public class UpdatePurchaseCommandValidatorTests : TestBase
 {
 
 }

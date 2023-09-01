@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer.Update;
 
-public class CustomerCommandValidatorTests : TestCommon
+public class CustomerCommandValidatorTests : TestBase
 {
     [Fact]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()

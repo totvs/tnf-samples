@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Tests.Commands.Store.Create;
 
-public class StoreCommandValidatorTests : TestCommon
+public class StoreCommandValidatorTests : TestBase
 {
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
@@ -19,7 +19,7 @@ public class StoreCommandValidatorTests : TestCommon
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
-        ValidateEmpty(result, "Name");
+        ValidateNullOrEmpty(result, "Name");
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class StoreCommandValidatorTests : TestCommon
         var result = validator.Validate(command);
 
         Assert.False(result.IsValid);
-        ValidateEmpty(result, "Location");
+        ValidateNullOrEmpty(result, "Location");
     }
 
     [Fact]

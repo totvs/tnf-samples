@@ -1,8 +1,13 @@
-﻿using Tnf.CarShop.Application.Commands.Car;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tnf.CarShop.Application.Commands.Car;
 
-namespace Tnf.CarShop.Tests.Commands.Car.Create;
-
-public class CarCommandValidatorTests
+namespace Tnf.CarShop.Application.Tests.Commands.Car;
+public class CarCommandValidatorTests : TestBase
 {
     [Fact]
     public void Should_Have_Error_When_Brand_Is_Null()
@@ -19,10 +24,7 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
+        ValidateNullOrEmpty(result, nameof(command.Brand));
     }
 
     [Fact]
@@ -40,9 +42,7 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) && e.ErrorMessage == "'Brand' must not be empty.");
+        ValidateNullOrEmpty(result, nameof(command.Brand));
     }
 
     [Fact]
@@ -59,11 +59,15 @@ public class CarCommandValidatorTests
 
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
+        
+        int size = command.Brand.Length;
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) &&
-                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
+        result.Errors.ForEach(x => ValidatePropertySize(
+            result,
+            nameof(command.Brand),
+            size,
+            x.FormattedMessagePlaceholderValues["MinLength"].ToString(),
+            x.FormattedMessagePlaceholderValues["MaxLength"].ToString()));
     }
 
     [Fact]
@@ -81,10 +85,14 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Brand) &&
-                 e.ErrorMessage == $"'Brand' must be between 2 and 100 characters. You entered {command.Brand.Length} characters.");
+        int size = command.Brand.Length;
+
+        result.Errors.ForEach(x => ValidatePropertySize(
+            result,
+            nameof(command.Brand),
+            size,
+            x.FormattedMessagePlaceholderValues["MinLength"].ToString(),
+            x.FormattedMessagePlaceholderValues["MaxLength"].ToString()));
     }
 
     [Fact]
@@ -102,9 +110,7 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
+        ValidateNullOrEmpty(result, nameof(command.Model));
     }
 
     [Fact]
@@ -122,9 +128,7 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) && e.ErrorMessage == "'Model' must not be empty.");
+        ValidateNullOrEmpty(result, nameof(command.Model));
     }
 
     [Fact]
@@ -142,10 +146,14 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) &&
-                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
+        int size = command.Model.Length;
+
+        result.Errors.ForEach(x => ValidatePropertySize(
+            result,
+            nameof(command.Model),
+            size,
+            x.FormattedMessagePlaceholderValues["MinLength"].ToString(),
+            x.FormattedMessagePlaceholderValues["MaxLength"].ToString()));
     }
 
     [Fact]
@@ -163,11 +171,27 @@ public class CarCommandValidatorTests
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors,
-            e => e.PropertyName == nameof(command.Model) &&
-                 e.ErrorMessage == $"'Model' must be between 2 and 100 characters. You entered {command.Model.Length} characters.");
+        int size = command.Model.Length;
+
+        result.Errors.ForEach(x => ValidatePropertySize(
+            result,
+            nameof(command.Model),
+            size,
+            x.FormattedMessagePlaceholderValues["MinLength"].ToString(),
+            x.FormattedMessagePlaceholderValues["MaxLength"].ToString()));
     }
 
-  
+    [Fact]
+    public void Should_Have_Error_When_Price_Is_Less_Than_0()
+    {
+        var command = new CarCommand { Price = -1 };
+        var validator = new CarCommandValidator();
+
+        var result = validator.Validate(command);
+
+        var validationFailure = result.Errors.Where(x => x.PropertyName == nameof(command.Price)).FirstOrDefault();
+
+        string value = validationFailure?.FormattedMessagePlaceholderValues["ComparisonValue"].ToString();
+        ValidatePropertyValue(result, nameof(command.Price), value);
+    }
 }

@@ -60,9 +60,9 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
     public PurchaseDto ToDto()
     {
         var dto = new PurchaseDto(Id, PurchaseDate);
-        //dto.Car = Car.ToDto();
-        //dto.Customer = Customer.ToDto();
-        //dto.Store = Store.ToDto();
+        dto.Car = Car.ToDto();
+        dto.Customer = Customer.ToDto();
+        dto.Store = Store.ToDto();
 
         return dto;
     }
