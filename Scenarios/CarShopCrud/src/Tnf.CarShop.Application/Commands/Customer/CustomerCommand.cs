@@ -3,7 +3,6 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 
-//Implementar um ICommand<TResult> é opcional, porém uma boa prática por convenção!
 public class CustomerCommand: ICommand<CustomerResult>
 {
     public Guid? Id { get; set; }
