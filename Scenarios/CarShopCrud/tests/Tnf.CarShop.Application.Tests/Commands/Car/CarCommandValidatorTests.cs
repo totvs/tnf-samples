@@ -192,6 +192,6 @@ public class CarCommandValidatorTests : TestBase
         var validationFailure = result.Errors.Where(x => x.PropertyName == nameof(command.Price)).FirstOrDefault();
 
         string value = validationFailure?.FormattedMessagePlaceholderValues["ComparisonValue"].ToString();
-        ValidatePropertyValue(result, nameof(command.Price), value);
+        ValidatePropertyGreaterThanValue(result, nameof(command.Price), value);
     }
 }
