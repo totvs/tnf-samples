@@ -33,6 +33,7 @@ builder.Services.ConfigureCarShopLocalization();
 
 builder.Services.AddMessaging(builder.Configuration);
 
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
