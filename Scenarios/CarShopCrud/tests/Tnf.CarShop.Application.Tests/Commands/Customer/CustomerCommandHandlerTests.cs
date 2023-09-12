@@ -6,12 +6,14 @@ namespace Tnf.CarShop.Application.Tests.Commands.Customer;
 public class CustomerCommandHandlerTests
 {
     private readonly Mock<ICustomerRepository> _customerRepoMock;
-    private readonly CustomerCommandHandler _handler;
+    private readonly CustomerCommandCreateHandler _createHandler;
+    private readonly CustomerCommandUpdateHandler _updateHandler;
 
     public CustomerCommandHandlerTests()
     {
         _customerRepoMock = new Mock<ICustomerRepository>();
-        _handler = new CustomerCommandHandler(_customerRepoMock.Object);
+        _createHandler = new CustomerCommandCreateHandler(_customerRepoMock.Object);
+        _updateHandler = new CustomerCommandUpdateHandler(_customerRepoMock.Object);
     }
 
     [Fact]
@@ -23,7 +25,7 @@ public class CustomerCommandHandlerTests
         _customerRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
-        var command = new CustomerCommand
+        var command = new CustomerCommandCreate
         {
             FullName = "John Doe",
             Address = "123 Main St.",
@@ -33,7 +35,7 @@ public class CustomerCommandHandlerTests
             StoreId = storeId
         };
 
-        var result = await _handler.ExecuteAsync(command);
+        var result = await _createHandler.ExecuteAsync(command);
 
         _customerRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
     }
@@ -41,7 +43,7 @@ public class CustomerCommandHandlerTests
     [Fact]
     public async Task CustomerCommandHandler_Should_Update_Customer()
     {        
-        var command = new CustomerCommand
+        var command = new CustomerCommandUpdate
         {
             Id = Guid.NewGuid(),
             StoreId = Guid.NewGuid(),
@@ -59,7 +61,7 @@ public class CustomerCommandHandlerTests
         _customerRepoMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
-        var result = await _handler.ExecuteAsync(command);
+        var result = await _updateHandler.ExecuteAsync(command);
 
         Assert.NotNull(result);
         Assert.Equal(command.FullName, result.CustomerDto.FullName);

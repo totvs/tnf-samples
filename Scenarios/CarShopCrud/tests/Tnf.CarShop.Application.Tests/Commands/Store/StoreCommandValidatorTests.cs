@@ -7,7 +7,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
     {
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = string.Empty,
             Cnpj = "cnpj",
@@ -26,7 +26,7 @@ public class StoreCommandValidatorTests : TestBase
     public void Should_Have_Error_When_Name_Is_Less_Than_2_Characters()
     {
         var validator = new StoreCommandValidator();
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = "T",
             Cnpj = "cnpj",
@@ -50,7 +50,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Name_Is_Too_Long()
     {
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = new string('*', 151),
             Cnpj = "cnpj",
@@ -76,7 +76,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Location_Is_Empty()
     {
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = "Name",
             Cnpj = "cnpj",
@@ -94,7 +94,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Location_Is_Too_Long()
     {
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = "Name",
             Cnpj = "cnpj",

@@ -8,23 +8,28 @@ namespace Tnf.CarShop.Application.Tests.Commands.Car;
 public class CarCommandHandlerTests
 {
     private readonly Mock<ICarRepository> _carRepoMock;
-    private readonly CarCommandHandler _handler;
-    private readonly Mock<ILogger<CarCommandHandler>> _loggerMock;
+    private readonly CarCommandCreateHandler _createHandler;
+    private readonly CarCommandUpdateHandler _updateHandler;
+    private readonly Mock<ILogger<CarCommandCreateHandler>> _loggerCreateMock;
+    private readonly Mock<ILogger<CarCommandUpdateHandler>> _loggerUpdateMock;
     private readonly Mock<ICarEventPublisher> _carEventPublisherMock;
 
     public CarCommandHandlerTests()
     {
-        _loggerMock = new Mock<ILogger<CarCommandHandler>>();
+        _loggerCreateMock = new Mock<ILogger<CarCommandCreateHandler>>();
+        _loggerUpdateMock = new Mock<ILogger<CarCommandUpdateHandler>>();
         _carRepoMock = new Mock<ICarRepository>();
         _carEventPublisherMock = new Mock<ICarEventPublisher>();
 
-        _handler = new CarCommandHandler(_carRepoMock.Object, _loggerMock.Object, _carEventPublisherMock.Object);
+        _createHandler = new CarCommandCreateHandler(_carRepoMock.Object, _loggerCreateMock.Object, _carEventPublisherMock.Object);
+
+        _updateHandler = new CarCommandUpdateHandler(_carRepoMock.Object, _loggerUpdateMock.Object, _carEventPublisherMock.Object);
     }
 
     [Fact]
     public async Task Should_Create_Car_Successfully()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "Ford",
             Model = "Fiesta",
@@ -41,7 +46,7 @@ public class CarCommandHandlerTests
             .Setup(c => c.NotifyCreationAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
-        var result = await _handler.ExecuteAsync(command);
+        var result = await _createHandler.ExecuteAsync(command);
 
         Assert.NotEqual(Guid.Empty, result.CarDto.Id);
 
@@ -52,7 +57,7 @@ public class CarCommandHandlerTests
     [Fact]
     public async Task UpdateCarCommandHandler_Should_Update_Car()
     {
-        var command = new CarCommand
+        var command = new CarCommandUpdate
         {
 
             Id = Guid.NewGuid(),
@@ -68,9 +73,9 @@ public class CarCommandHandlerTests
         _carRepoMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Car>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(car);
 
-        var handler = new CarCommandHandler(_carRepoMock.Object, _loggerMock.Object, _carEventPublisherMock.Object);
+        var handler = new CarCommandUpdateHandler(_carRepoMock.Object, _loggerUpdateMock.Object, _carEventPublisherMock.Object);
 
-        var result = await handler.ExecuteAsync(command);
+        var result = await _updateHandler.ExecuteAsync(command);
 
         Assert.NotNull(result);
         Assert.Equal(command.Id, result.CarDto.Id);

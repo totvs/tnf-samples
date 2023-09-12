@@ -6,7 +6,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Null()
     {
-        var command = new CustomerCommand { FullName = null };
+        var command = new CustomerCommandCreate { FullName = null };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -17,7 +17,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Empty()
     {
-        var command = new CustomerCommand { FullName = string.Empty };
+        var command = new CustomerCommandCreate { FullName = string.Empty };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -28,7 +28,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Too_Short()
     {
-        var command = new CustomerCommand { FullName = "A" };
+        var command = new CustomerCommandCreate { FullName = "A" };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -49,7 +49,7 @@ public class CustomerCommandValidatorTests : TestBase
     public void Should_Have_Error_When_FullName_Is_Too_Long()
     {
         int size = 151;
-        var command = new CustomerCommand { FullName = new string('*', size) };
+        var command = new CustomerCommandCreate { FullName = new string('*', size) };
         var validator = new CustomerCommandValidator();
 
 
@@ -70,7 +70,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Address_Is_Null()
     {
-        var command = new CustomerCommand { Address = null };
+        var command = new CustomerCommandCreate { Address = null };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -81,7 +81,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Address_Is_Empty()
     {
-        var command = new CustomerCommand { Address = string.Empty };
+        var command = new CustomerCommandCreate { Address = string.Empty };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -93,7 +93,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Address_Is_Too_Long()
     {
-        var command = new CustomerCommand { Address = new string('*', 251) };
+        var command = new CustomerCommandCreate { Address = new string('*', 251) };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -113,7 +113,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Phone_Is_Null()
     {
-        var command = new CustomerCommand { Phone = null };
+        var command = new CustomerCommandCreate { Phone = null };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -124,7 +124,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Phone_Is_Empty()
     {
-        var command = new CustomerCommand { Phone = string.Empty };
+        var command = new CustomerCommandCreate { Phone = string.Empty };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -135,7 +135,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Phone_Is_Invalid()
     {
-        var command = new CustomerCommand { Phone = "12345678" };
+        var command = new CustomerCommandCreate { Phone = "12345678" };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -146,7 +146,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Email_Is_Null()
     {
-        var command = new CustomerCommand { Email = null };
+        var command = new CustomerCommandCreate { Email = null };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -157,7 +157,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Email_Is_Empty()
     {
-        var command = new CustomerCommand { Email = string.Empty };
+        var command = new CustomerCommandCreate { Email = string.Empty };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -168,7 +168,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Email_Is_Invalid()
     {
-        var command = new CustomerCommand { Email = "invalid" };
+        var command = new CustomerCommandCreate { Email = "invalid" };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -180,7 +180,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()
     {
-        var command = new CustomerCommand { DateOfBirth = DateTime.Today.AddDays(1) };
+        var command = new CustomerCommandCreate { DateOfBirth = DateTime.Today.AddDays(1) };
         var validator = new CustomerCommandValidator();
 
         var result = validator.Validate(command);
@@ -191,7 +191,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Age_Is_Less_Than_18()
     {
-        var command = new CustomerCommand
+        var command = new CustomerCommandCreate
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",
@@ -210,7 +210,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Age_Is_Greater_Than_100()
     {
-        var command = new CustomerCommand
+        var command = new CustomerCommandCreate
         {
             Id = Guid.NewGuid(),
             FullName = "John Doe",

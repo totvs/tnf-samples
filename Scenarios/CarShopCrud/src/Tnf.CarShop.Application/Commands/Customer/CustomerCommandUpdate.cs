@@ -1,9 +1,12 @@
-﻿using Tnf.CarShop.Domain.Dtos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
-
-public class CustomerCommand: ICommand<CustomerResult>
+public class CustomerCommandUpdate : ICommand<CustomerResult>
 {
     public Guid? Id { get; set; }
     public string FullName { get; set; }
@@ -12,9 +15,4 @@ public class CustomerCommand: ICommand<CustomerResult>
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
     public Guid StoreId { get; set; }
-}
-
-public class CustomerResult
-{
-    public CustomerDto CustomerDto { get; set; }
 }

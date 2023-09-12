@@ -12,7 +12,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Brand_Is_Null()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = null,
             Model = "Model",
@@ -30,7 +30,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Brand_Is_Empty()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = string.Empty,
             Model = "Model",
@@ -48,7 +48,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Brand_Is_Too_Short()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "A",
             Model = "Model",
@@ -73,7 +73,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Brand_Is_Too_Long()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = new string('A', 101),
             Model = "Model",
@@ -98,7 +98,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Model_Is_Null()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "Brand",
             Model = null,
@@ -116,7 +116,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Model_Is_Empty()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "Brand",
             Model = string.Empty,
@@ -134,7 +134,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Model_Is_Too_Short()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "Brand",
             Model = "A",
@@ -159,7 +159,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Model_Is_Too_Long()
     {
-        var command = new CarCommand
+        var command = new CarCommandCreate
         {
             Brand = "Brand",
             Model = new string('A', 101),
@@ -184,7 +184,7 @@ public class CarCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Price_Is_Less_Than_0()
     {
-        var command = new CarCommand { Price = -1 };
+        var command = new CarCommandCreate { Price = -1 };
         var validator = new CarCommandValidator();
 
         var result = validator.Validate(command);

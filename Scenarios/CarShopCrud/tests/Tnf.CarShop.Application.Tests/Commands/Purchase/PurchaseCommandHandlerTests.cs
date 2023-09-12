@@ -21,7 +21,7 @@ public class PurchaseCommandHandlerTests
 
         var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid());
 
-        var loggerMock = new Mock<ILogger<PurchaseCommandHandler>>();
+        var loggerMock = new Mock<ILogger<PurchaseCommandCreateHandler>>();
         var purchaseRepoMock = new Mock<IPurchaseRepository>();
         var carRepoMock = new Mock<ICarRepository>();
         var customerRepoMock = new Mock<ICustomerRepository>();
@@ -38,7 +38,7 @@ public class PurchaseCommandHandlerTests
         purchaseRepoMock.Setup(x => x.InsertAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(purchase);
 
-        var handler = new PurchaseCommandHandler(
+        var handler = new PurchaseCommandCreateHandler(
             carRepoMock.Object,
             customerRepoMock.Object,
             loggerMock.Object,
@@ -46,7 +46,7 @@ public class PurchaseCommandHandlerTests
             storeRepoMock.Object
         );
 
-        var command = new PurchaseCommand
+        var command = new PurchaseCommandCreate
         {
             CarId = carId,
             CustomerId = customerId,
@@ -115,9 +115,9 @@ public class PurchaseCommandHandlerTests
         storeRepositoryMock.Setup(x => x.GetAsync(storeId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(store);
 
-        var loggerMock = new Mock<ILogger<PurchaseCommandHandler>>();
+        var loggerMock = new Mock<ILogger<PurchaseCommandUpdateHandler>>();
 
-        var command = new PurchaseCommand
+        var command = new PurchaseCommandUpdate
         {
             Id = purchaseId,
             PurchaseDate = purchaseDate,
@@ -127,7 +127,7 @@ public class PurchaseCommandHandlerTests
             Price = 23000
         };
 
-        var handler = new PurchaseCommandHandler(
+        var handler = new PurchaseCommandUpdateHandler(
             carRepositoryMock.Object,
             customerRepositoryMock.Object,
             loggerMock.Object,

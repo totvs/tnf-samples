@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
+using Tnf.CarShop.Application.Commands.Car;
 using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
-using CarShopLocalization = Tnf.CarShop.Application.Localization;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
 
@@ -20,8 +17,9 @@ namespace Tnf.CarShop.Host.Controllers;
 [TnfAuthorize]
 public class CustomerController : TnfController
 {
-    private readonly ICommandSender _commandSender;
+
     private readonly ICustomerRepository _customerRepository;
+    private readonly ICommandSender _commandSender;
 
     //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
     //Para casos mais complexos deve-se criar uma service
@@ -62,24 +60,25 @@ public class CustomerController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CustomerDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CustomerCommand command)
+    public async Task<IActionResult> Create(CustomerCommandCreate command)
     {
         var result = await _commandSender.SendAsync<CustomerResult>(command);
 
         return CreateResponseOnPost(result.CustomerDto);
     }
 
-    [HttpPut]
+    [HttpPut("{customerId}")]
     [ProducesResponseType(typeof(CustomerDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CustomerCommand command)
+    public async Task<IActionResult> Update(Guid customerId, [FromBody] CustomerCommandUpdate command)
     {
+        command.Id = customerId;
+
         if (!command.Id.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
-
         var result = await _commandSender.SendAsync<CustomerResult>(command);
 
         return CreateResponseOnPut(result.CustomerDto);

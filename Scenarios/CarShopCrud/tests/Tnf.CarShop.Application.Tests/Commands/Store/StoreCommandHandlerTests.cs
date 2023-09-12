@@ -7,21 +7,27 @@ namespace Tnf.CarShop.Application.Tests.Commands.Store;
 
 public class StoreCommandHandlerTests
 {
-    private readonly StoreCommandHandler _handler;
+    private readonly StoreCommandCreateHandler _createHandler;
+    private readonly StoreCommandUpdateHandler _updateHandler;
     private readonly Mock<IStoreRepository> _storeRepositoryMock;
-    private readonly Mock<ILogger<StoreCommandHandler>> _loggerMock;
+    private readonly Mock<ILogger<StoreCommandCreateHandler>> _createLoggerMock;
+    private readonly Mock<ILogger<StoreCommandUpdateHandler>> _updateLoggerMock;
 
     public StoreCommandHandlerTests()
     {
-        _loggerMock = new Mock<ILogger<StoreCommandHandler>>();
         _storeRepositoryMock = new Mock<IStoreRepository>();
-        _handler = new StoreCommandHandler(_loggerMock.Object, _storeRepositoryMock.Object);
+
+        _createLoggerMock = new Mock<ILogger<StoreCommandCreateHandler>>();        
+        _createHandler = new StoreCommandCreateHandler(_createLoggerMock.Object, _storeRepositoryMock.Object);
+
+        _updateLoggerMock = new Mock<ILogger<StoreCommandUpdateHandler>>();
+        _updateHandler = new StoreCommandUpdateHandler(_updateLoggerMock.Object, _storeRepositoryMock.Object);
     }
 
     [Fact]
     public async Task Should_Create_Store()
     {
-        var command = new StoreCommand
+        var command = new StoreCommandCreate
         {
             Name = "Store 1",
             Cnpj = "123456789",
@@ -34,7 +40,7 @@ public class StoreCommandHandlerTests
             .Setup(sr => sr.InsertAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Domain.Entities.Store(command.Name, command.Cnpj, command.Location) { Id = expectedId });
 
-        var result = await _handler.ExecuteAsync(command);
+        var result = await _createHandler.ExecuteAsync(command);
 
         Assert.NotNull(result);
         Assert.Equal(expectedId, result.StoreDto.Id);
@@ -43,7 +49,7 @@ public class StoreCommandHandlerTests
     [Fact]
     public async Task UpdateStoreCommandHandler_Should_Update_Store()
     {                
-        var command = new StoreCommand
+        var command = new StoreCommandUpdate
         {
             Id = Guid.NewGuid(),
             Name = "Store Name",
@@ -57,7 +63,7 @@ public class StoreCommandHandlerTests
         _storeRepositoryMock.Setup(s => s.UpdateAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(store);        
 
-        var result = await _handler.ExecuteAsync(command);
+        var result = await _updateHandler.ExecuteAsync(command);
 
         Assert.NotNull(result);
         Assert.Equal(command.Name, result.StoreDto.Name);

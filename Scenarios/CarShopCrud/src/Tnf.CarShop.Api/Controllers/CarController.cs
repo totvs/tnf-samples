@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Car;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
-using CarShopLocalization = Tnf.CarShop.Application.Localization;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
 
@@ -54,7 +50,7 @@ public class CarController : TnfController
     [ProducesResponseType(typeof(IListDto<CarDto>), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> GetAll([FromQuery] RequestAllDto requestAllDto)
-    {        
+    {
         var cars = await _carRepository.GetAllAsync(requestAllDto, HttpContext.RequestAborted);
 
         return CreateResponseOnGetAll(cars);
@@ -63,24 +59,25 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CarDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CarCommand command)
+    public async Task<IActionResult> Create(CarCommandCreate command)
     {
-        var result = await _commandSender.SendAsync<CarResult>(command);
+        var result =  await _commandSender.SendAsync<CarResult>(command);
 
         return CreateResponseOnPost(result.CarDto);
     }
 
-    [HttpPut]
+    [HttpPut("{carId}")]
     [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(CarCommand command)
+    public async Task<IActionResult> Update(Guid carId, [FromBody] CarCommandUpdate command)
     {
+        command.Id = carId;
+
         if (!command.Id.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
-
         var result = await _commandSender.SendAsync<CarResult>(command);
 
         return CreateResponseOnPut(result.CarDto);
