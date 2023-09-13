@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Store;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
-using CarShopLocalization = Tnf.CarShop.Application.Localization;
-
 using Tnf.Commands;
-
 using Tnf.Dto;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
 
@@ -62,18 +58,20 @@ public class StoreController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(StoreDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(StoreCommand command)
+    public async Task<IActionResult> Create(StoreCommandCreate command)
     {
         var result = await _commandSender.SendAsync<StoreResult>(command);
 
         return CreateResponseOnPost(result.StoreDto);
     }
 
-    [HttpPut]
+    [HttpPut("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(StoreCommand command)
+    public async Task<IActionResult> Update(Guid storeId, [FromBody] StoreCommandUpdate command)
     {
+        command.Id = storeId;
+
         if (!command.Id.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
