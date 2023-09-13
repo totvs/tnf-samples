@@ -11,10 +11,7 @@ public static class ServiceCollectionExtensions
 {    
     public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddTransient<ICarEventPublisher, CarEventPublisher>();
-
-        services.Configure<RabbitMqOptions>(configuration.GetSection("RabbitMq"));
-        services.AddSingleton<IValidateOptions<RabbitMqOptions>, RabbitMqOptionsValidator>();
+        services.AddTransient<ICarEventPublisher, CarEventPublisher>();       
 
         services.AddTnfMessaging(messaging =>
         {
