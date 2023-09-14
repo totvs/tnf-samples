@@ -46,7 +46,7 @@ public class PurchaseCommandHandlerTests
             storeRepoMock.Object
         );
 
-        var command = new PurchaseCommandCreate
+        var command = new PurchaseCommandCreateAdmin
         {
             CarId = carId,
             CustomerId = customerId,
@@ -117,7 +117,7 @@ public class PurchaseCommandHandlerTests
 
         var loggerMock = new Mock<ILogger<PurchaseCommandUpdateHandler>>();
 
-        var command = new PurchaseCommandUpdate
+        var command = new PurchaseCommandUpdateAdmin
         {
             Id = purchaseId,
             PurchaseDate = purchaseDate,

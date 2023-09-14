@@ -12,3 +12,8 @@ public class CarCommandCreate : ICommand<CarResult>
     public decimal Price { get; set; }
     public Guid StoreId { get; set; }
 }
+
+public class CarCommandCreateAdmin : CarCommandCreate, IPermissionRequiredCommand
+{
+    public bool MustBeAdmin { get; set; }
+}

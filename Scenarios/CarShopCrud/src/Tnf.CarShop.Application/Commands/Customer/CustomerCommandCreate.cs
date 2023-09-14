@@ -1,9 +1,8 @@
-﻿using Tnf.CarShop.Domain.Dtos;
-using Tnf.Commands;
+﻿using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 
-public class CustomerCommandCreate: ICommand<CustomerResult>
+public class CustomerCommandCreate : ICommand<CustomerResult>
 {
     public Guid? Id { get; set; }
     public string FullName { get; set; }
@@ -12,4 +11,10 @@ public class CustomerCommandCreate: ICommand<CustomerResult>
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
     public Guid StoreId { get; set; }
+}
+
+
+public class CustomerCommandCreateAdmin : CustomerCommandCreate, IPermissionRequiredCommand
+{
+    public bool MustBeAdmin { get; set; }
 }
