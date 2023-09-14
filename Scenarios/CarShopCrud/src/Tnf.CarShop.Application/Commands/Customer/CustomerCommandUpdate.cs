@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tnf.Commands;
+﻿using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 public class CustomerCommandUpdate : ICommand<CustomerResult>
@@ -15,4 +10,10 @@ public class CustomerCommandUpdate : ICommand<CustomerResult>
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
     public Guid StoreId { get; set; }
+}
+
+
+public class CustomerCommandUpdateAdmin : CustomerCommandUpdate, IPermissionRequiredCommand
+{
+    public bool MustBeAdmin { get; set; }
 }

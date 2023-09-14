@@ -1,6 +1,4 @@
-﻿using Tnf.CarShop.Domain.Dtos;
-
-namespace Tnf.CarShop.Application.Commands.Purchase;
+﻿namespace Tnf.CarShop.Application.Commands.Purchase;
 
 //Exemplo de um comando que não implementa um ICommand
 public class PurchaseCommandCreate
@@ -11,5 +9,11 @@ public class PurchaseCommandCreate
     public Guid CarId { get; set; }
     public Guid CustomerId { get; set; }
     public decimal Price { get; set; }
+}
+
+
+public class PurchaseCommandCreateAdmin : PurchaseCommandCreate, IPermissionRequiredCommand
+{
+    public bool MustBeAdmin { get; set; }
 }
 

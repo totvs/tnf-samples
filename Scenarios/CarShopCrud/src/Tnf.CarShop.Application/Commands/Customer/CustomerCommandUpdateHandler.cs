@@ -2,7 +2,7 @@
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
-public class CustomerCommandUpdateHandler : CommandHandler<CustomerCommandUpdate, CustomerResult>
+public class CustomerCommandUpdateHandler : CommandHandler<CustomerCommandUpdateAdmin, CustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
 
@@ -11,7 +11,7 @@ public class CustomerCommandUpdateHandler : CommandHandler<CustomerCommandUpdate
         _customerRepository = customerRepository;
     }
 
-    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandUpdate command, CancellationToken cancellationToken = default)
+    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandUpdateAdmin command, CancellationToken cancellationToken = default)
     {
         var customer = await _customerRepository.GetAsync(command.Id.Value, cancellationToken) ?? throw new Exception($"Customer with id {command.Id} not found.");
         customer.UpdateFullName(command.FullName);

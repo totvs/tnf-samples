@@ -27,11 +27,12 @@ public class StoreCommandHandlerTests
     [Fact]
     public async Task Should_Create_Store()
     {
-        var command = new StoreCommandCreate
+        var command = new StoreCommandCreateAdmin
         {
             Name = "Store 1",
             Cnpj = "123456789",
-            Location = "Location 1"
+            Location = "Location 1",
+            MustBeAdmin = true,
         };
 
         var expectedId = Guid.NewGuid();
@@ -49,12 +50,13 @@ public class StoreCommandHandlerTests
     [Fact]
     public async Task UpdateStoreCommandHandler_Should_Update_Store()
     {                
-        var command = new StoreCommandUpdate
+        var command = new StoreCommandUpdateAdmin
         {
             Id = Guid.NewGuid(),
             Name = "Store Name",
             Location = "Store Location",
-            Cnpj = "bem bacana um cnpj maneiro"
+            Cnpj = "bem bacana um cnpj maneiro",
+            MustBeAdmin = true,
         };
 
         var store = new Domain.Entities.Store(command.Cnpj, command.Name, command.Location);

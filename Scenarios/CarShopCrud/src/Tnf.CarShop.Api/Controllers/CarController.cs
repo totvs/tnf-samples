@@ -59,8 +59,9 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CarDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CarCommandCreate command)
+    public async Task<IActionResult> Create(CarCommandCreateAdmin command)
     {
+        command.MustBeAdmin = true;
         var result =  await _commandSender.SendAsync<CarResult>(command);
 
         return CreateResponseOnPost(result.CarDto);
@@ -69,9 +70,10 @@ public class CarController : TnfController
     [HttpPut("{carId}")]
     [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(Guid carId, [FromBody] CarCommandUpdate command)
+    public async Task<IActionResult> Update(Guid carId, [FromBody] CarCommandUpdateAdmin command)
     {
         command.Id = carId;
+        command.MustBeAdmin = true;
 
         if (!command.Id.HasValue)
         {

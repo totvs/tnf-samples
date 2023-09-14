@@ -58,8 +58,9 @@ public class StoreController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(StoreDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(StoreCommandCreate command)
+    public async Task<IActionResult> Create(StoreCommandCreateAdmin command)
     {
+        command.MustBeAdmin = true;
         var result = await _commandSender.SendAsync<StoreResult>(command);
 
         return CreateResponseOnPost(result.StoreDto);
@@ -68,9 +69,10 @@ public class StoreController : TnfController
     [HttpPut("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(Guid storeId, [FromBody] StoreCommandUpdate command)
+    public async Task<IActionResult> Update(Guid storeId, [FromBody] StoreCommandUpdateAdmin command)
     {
         command.Id = storeId;
+        command.MustBeAdmin = true;
 
         if (!command.Id.HasValue)
         {

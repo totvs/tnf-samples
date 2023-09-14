@@ -5,7 +5,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car;
-public class CarCommandUpdateHandler : CommandHandler<CarCommandUpdate, CarResult>
+public class CarCommandUpdateHandler : CommandHandler<CarCommandUpdateAdmin, CarResult>
 {
     private readonly ICarRepository _carRepository;
     private readonly ILogger<CarCommandUpdateHandler> _logger;
@@ -18,7 +18,7 @@ public class CarCommandUpdateHandler : CommandHandler<CarCommandUpdate, CarResul
         _carEventPublisher = carEventPublisher;
     }
 
-    public override async Task<CarResult> ExecuteAsync(CarCommandUpdate command, CancellationToken cancellationToken = default)
+    public override async Task<CarResult> ExecuteAsync(CarCommandUpdateAdmin command, CancellationToken cancellationToken = default)
     {
         var car = await _carRepository.GetAsync(command.Id.Value, cancellationToken);
 

@@ -6,7 +6,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car;
-public class CarCommandCreateHandler : CommandHandler<CarCommandCreate, CarResult>
+public class CarCommandCreateHandler : CommandHandler<CarCommandCreateAdmin, CarResult>
 {
     private readonly ICarRepository _carRepository;
     private readonly ILogger<CarCommandCreateHandler> _logger;
@@ -19,7 +19,7 @@ public class CarCommandCreateHandler : CommandHandler<CarCommandCreate, CarResul
         _carEventPublisher = carEventPublisher;
     }
 
-    public override async Task<CarResult> ExecuteAsync(CarCommandCreate command, CancellationToken cancellationToken = default)
+    public override async Task<CarResult> ExecuteAsync(CarCommandCreateAdmin command, CancellationToken cancellationToken = default)
     {
         var car = new Domain.Entities.Car(command.Brand, command.Model, command.Year, command.Price, command.StoreId);
 

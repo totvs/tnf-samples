@@ -8,3 +8,9 @@ public class PurchaseCommandUpdate
     public Guid CustomerId { get; set; }
     public decimal Price { get; set; }
 }
+
+
+public class PurchaseCommandUpdateAdmin : PurchaseCommandUpdate, IPermissionRequiredCommand
+{
+    public bool MustBeAdmin { get; set; }
+}

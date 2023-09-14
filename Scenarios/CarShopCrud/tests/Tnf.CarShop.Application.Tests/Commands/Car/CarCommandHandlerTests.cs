@@ -29,12 +29,13 @@ public class CarCommandHandlerTests
     [Fact]
     public async Task Should_Create_Car_Successfully()
     {
-        var command = new CarCommandCreate
+        var command = new CarCommandCreateAdmin
         {
             Brand = "Ford",
             Model = "Fiesta",
             Year = 2020,
             Price = 25000,
+            MustBeAdmin = true,
             StoreId = Guid.NewGuid()
         };
 
@@ -57,13 +58,14 @@ public class CarCommandHandlerTests
     [Fact]
     public async Task UpdateCarCommandHandler_Should_Update_Car()
     {
-        var command = new CarCommandUpdate
+        var command = new CarCommandUpdateAdmin
         {
 
             Id = Guid.NewGuid(),
             Brand = "Ford",
             Model = "Fiesta",
             Year = 2019,
+            MustBeAdmin = true,
             Price = 20000
         };
 
