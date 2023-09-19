@@ -57,12 +57,11 @@ public class PurchaseController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(PurchaseDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(PurchaseCommandCreateAdmin command)
+    public async Task<IActionResult> Create(PurchaseCommandCreate command)
     {
-        command.MustBeAdmin = true;
         var result = await _commandSender.SendAsync<PurchaseResult>(command);
 
-        return CreateResponseOnPost(result);
+        return CreateResponseOnPost(result.PurchaseDto);
     }
 
     [HttpPut("{purchaseId}")]
@@ -80,7 +79,7 @@ public class PurchaseController : TnfController
 
         var result = await _commandSender.SendAsync<PurchaseResult>(command);
 
-        return CreateResponseOnPut(result);
+        return CreateResponseOnPut(result.PurchaseDto);
     }
 
     [HttpDelete("{purchaseId}")]

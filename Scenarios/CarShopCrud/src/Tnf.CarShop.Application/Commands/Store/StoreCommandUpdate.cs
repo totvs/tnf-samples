@@ -10,8 +10,3 @@ public class StoreCommandUpdate : ICommand<StoreResult>, ITransactionCommand
     public string Location { get; set; }
     public string Cnpj { get; set; }
 }
-
-public class StoreCommandUpdateAdmin : StoreCommandUpdate, IPermissionRequiredCommand
-{
-    public bool MustBeAdmin { get; set; }
-}

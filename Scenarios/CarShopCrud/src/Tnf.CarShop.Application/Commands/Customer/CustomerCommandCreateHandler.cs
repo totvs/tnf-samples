@@ -3,7 +3,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 
-public class CustomerCommandCreateHandler : CommandHandler<CustomerCommandCreateAdmin, CustomerResult>
+public class CustomerCommandCreateHandler : CommandHandler<CustomerCommandCreate, CustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
 
@@ -12,7 +12,7 @@ public class CustomerCommandCreateHandler : CommandHandler<CustomerCommandCreate
         _customerRepository = customerRepository;
     }
 
-    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandCreateAdmin command, CancellationToken cancellationToken = default)
+    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandCreate command, CancellationToken cancellationToken = default)
     {
         var newCustomer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth, command.StoreId);
 

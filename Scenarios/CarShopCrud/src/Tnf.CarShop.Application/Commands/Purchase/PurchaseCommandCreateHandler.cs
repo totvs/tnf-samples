@@ -6,7 +6,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Purchase;
-public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreateAdmin, PurchaseResult>
+public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreate, PurchaseResult>
 {
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
@@ -28,7 +28,7 @@ public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreate
         _storeRepository = storeRepository;
     }
 
-    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandCreateAdmin command, CancellationToken cancellationToken = default)
+    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandCreate command, CancellationToken cancellationToken = default)
     {      
 
         var car = await _carRepository.GetAsync(command.CarId, cancellationToken);

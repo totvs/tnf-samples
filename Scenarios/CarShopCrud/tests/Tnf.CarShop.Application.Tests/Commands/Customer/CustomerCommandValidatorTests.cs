@@ -193,7 +193,6 @@ public class CustomerCommandValidatorTests : TestBase
     {
         var command = new CustomerCommandCreate
         {
-            Id = Guid.NewGuid(),
             FullName = "John Doe",
             Address = "Rua Teste",
             Phone = "+55 11 99999-9999",
@@ -212,7 +211,6 @@ public class CustomerCommandValidatorTests : TestBase
     {
         var command = new CustomerCommandCreate
         {
-            Id = Guid.NewGuid(),
             FullName = "John Doe",
             Address = "Rua Teste",
             Phone = "+55 11 99999-9999",

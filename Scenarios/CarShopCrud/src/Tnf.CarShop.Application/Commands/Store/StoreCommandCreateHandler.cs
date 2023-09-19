@@ -4,7 +4,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Store;
-public class StoreCommandCreateHandler : CommandHandler<StoreCommandCreateAdmin, StoreResult>
+public class StoreCommandCreateHandler : CommandHandler<StoreCommandCreate, StoreResult>
 {
     private readonly ILogger<StoreCommandCreateHandler> _logger;
     private readonly IStoreRepository _storeRepository;
@@ -15,7 +15,7 @@ public class StoreCommandCreateHandler : CommandHandler<StoreCommandCreateAdmin,
         _storeRepository = storeRepository;
     }
 
-    public override async Task<StoreResult> ExecuteAsync(StoreCommandCreateAdmin command, CancellationToken cancellationToken = default)
+    public override async Task<StoreResult> ExecuteAsync(StoreCommandCreate command, CancellationToken cancellationToken = default)
     {
 
         var store = new Domain.Entities.Store(command.Name, command.Cnpj, command.Location);

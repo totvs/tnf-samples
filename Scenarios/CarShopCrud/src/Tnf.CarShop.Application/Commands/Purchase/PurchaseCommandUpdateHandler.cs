@@ -4,7 +4,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Purchase;
-public class PurchaseCommandUpdateHandler : CommandHandler<PurchaseCommandUpdateAdmin, PurchaseResult>
+public class PurchaseCommandUpdateHandler : CommandHandler<PurchaseCommandUpdate, PurchaseResult>
 {
     private readonly ICarRepository _carRepository;
     private readonly ICustomerRepository _customerRepository;
@@ -27,7 +27,7 @@ public class PurchaseCommandUpdateHandler : CommandHandler<PurchaseCommandUpdate
     }
 
 
-    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandUpdateAdmin command, CancellationToken cancellationToken = default)
+    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandUpdate command, CancellationToken cancellationToken = default)
     {
         var purchase = await _purchaseRepository.GetAsync(command.Id.Value, cancellationToken) ?? throw new Exception($"Purchase with id {command.Id} not found.");
         purchase.UpdatePurchaseDate(command.PurchaseDate);
@@ -45,21 +45,21 @@ public class PurchaseCommandUpdateHandler : CommandHandler<PurchaseCommandUpdate
         return new PurchaseResult { PurchaseDto = purchase.ToDto() };
     }
 
-    private async Task UpdateStore(PurchaseCommandUpdateAdmin command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
+    private async Task UpdateStore(PurchaseCommandUpdate command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
     {
         var store = await _storeRepository.GetAsync(command.StoreId, cancellationToken);
         if (store != null)
             purchase.UpdateStore(store);
     }
 
-    private async Task UpdateCar(PurchaseCommandUpdateAdmin command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
+    private async Task UpdateCar(PurchaseCommandUpdate command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
     {
         var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
         if (car != null)
             purchase.UpdateCar(car);
     }
 
-    private async Task UpdateCustomer(PurchaseCommandUpdateAdmin command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
+    private async Task UpdateCustomer(PurchaseCommandUpdate command, Domain.Entities.Purchase purchase, CancellationToken cancellationToken)
     {
         var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
         if (customer != null)

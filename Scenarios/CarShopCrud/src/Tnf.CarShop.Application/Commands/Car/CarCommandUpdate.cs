@@ -13,9 +13,3 @@ public class CarCommandUpdate : ICommand<CarResult>, ITransactionCommand
     public decimal Price { get; set; }
     public Guid StoreId { get; set; }
 }
-
-
-public class CarCommandUpdateAdmin : CarCommandUpdate, IPermissionRequiredCommand
-{
-    public bool MustBeAdmin { get; set; }
-}

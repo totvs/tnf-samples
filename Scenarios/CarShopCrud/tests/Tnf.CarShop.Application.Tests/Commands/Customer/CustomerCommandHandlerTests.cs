@@ -25,15 +25,14 @@ public class CustomerCommandHandlerTests
         _customerRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
-        var command = new CustomerCommandCreateAdmin
+        var command = new CustomerCommandCreate
         {
             FullName = "John Doe",
             Address = "123 Main St.",
             Phone = "555-5555",
             Email = "john.doe@example.com",
             DateOfBirth = DateTime.UtcNow.AddYears(-30),
-            StoreId = storeId,
-            MustBeAdmin = true
+            StoreId = storeId
         };
 
         var result = await _createHandler.ExecuteAsync(command);
@@ -44,7 +43,7 @@ public class CustomerCommandHandlerTests
     [Fact]
     public async Task CustomerCommandHandler_Should_Update_Customer()
     {        
-        var command = new CustomerCommandUpdateAdmin
+        var command = new CustomerCommandUpdate
         {
             Id = Guid.NewGuid(),
             StoreId = Guid.NewGuid(),
@@ -52,8 +51,7 @@ public class CustomerCommandHandlerTests
             Address = "123 Main Street",
             Phone = "1234567890",
             Email = "john@doe.com",
-            DateOfBirth = new DateTime(1980, 1, 1),
-            MustBeAdmin = true
+            DateOfBirth = new DateTime(1980, 1, 1)
         };
 
         var customer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth, command.StoreId);

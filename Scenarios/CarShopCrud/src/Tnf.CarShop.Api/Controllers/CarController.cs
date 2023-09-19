@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
+
 using Tnf.CarShop.Application.Commands.Car;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+
 using Tnf.Commands;
 using Tnf.Dto;
+
 using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -59,9 +63,8 @@ public class CarController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CarDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CarCommandCreateAdmin command)
+    public async Task<IActionResult> Create(CarCommandCreate command)
     {
-        command.MustBeAdmin = true;
         var result =  await _commandSender.SendAsync<CarResult>(command);
 
         return CreateResponseOnPost(result.CarDto);
