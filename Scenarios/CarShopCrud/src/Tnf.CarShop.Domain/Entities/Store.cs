@@ -10,7 +10,6 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     private readonly List<Car> _cars = new();
     private readonly List<Customer> _customers = new();
 
-
     public Guid Id { get; set; }
     public string Name { get; private set; }
     public string Cnpj { get; private set; }
@@ -33,11 +32,17 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 
     public void UpdateLocation(string newLocation)
     {
+        if (newLocation.IsNullOrEmpty())
+            return;
+
         Location = newLocation;
     }
 
     public void UpdateCnpj(string cnpj)
     {
+        if (cnpj.IsNullOrEmpty())
+            return;
+
         Cnpj = cnpj;
     }
 
@@ -48,6 +53,9 @@ public class Store : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 
     public void UpdateName(string name)
     {
+        if (name.IsNullOrEmpty())
+            return;
+
         Name = name;
     }
 

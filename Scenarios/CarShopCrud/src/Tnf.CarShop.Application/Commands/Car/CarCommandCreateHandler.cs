@@ -36,8 +36,6 @@ public class CarCommandCreateHandler : CommandHandler<CarCommandCreateAdmin, Car
         await _carEventPublisher.NotifyCreationAsync(car, cancellationToken);
 
         return new CarResult { CarDto = car.ToDto() };
-
-
     }
 
 }

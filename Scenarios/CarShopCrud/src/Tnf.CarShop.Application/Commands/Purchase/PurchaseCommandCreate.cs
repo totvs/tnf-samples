@@ -1,7 +1,7 @@
 ﻿namespace Tnf.CarShop.Application.Commands.Purchase;
 
 //Exemplo de um comando que não implementa um ICommand
-public class PurchaseCommandCreate
+public class PurchaseCommandCreate: ITransactionCommand
 {
     public Guid? Id { get; set; }
     public DateTime PurchaseDate { get; set; }

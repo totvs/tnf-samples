@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Tnf.AspNetCore.Mvc.Response;
-using Tnf.CarShop.Application.Commands.Car;
+
 using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
+
 using Tnf.Commands;
 using Tnf.Dto;
+
 using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -71,16 +74,16 @@ public class CustomerController : TnfController
     [HttpPut("{customerId}")]
     [ProducesResponseType(typeof(CustomerDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(Guid customerId, [FromBody] CustomerCommandUpdateAdmin command)
-    {
-        command.Id = customerId;
-        command.MustBeAdmin = true;
-
-        if (!command.Id.HasValue)
+    public async Task<IActionResult> Update(Guid? customerId, [FromBody] CustomerCommandUpdate command)
+    {        
+        if (!customerId.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
+
+        command.Id = customerId;
+
         var result = await _commandSender.SendAsync<CustomerResult>(command);
 
         return CreateResponseOnPut(result.CustomerDto);

@@ -3,7 +3,6 @@ using Tnf.Repositories.Uow;
 
 namespace Tnf.CarShop.Application.Commands;
 
-[IgnoreOnAssemblyRead]
 public class TransactionMiddleware<TCommand, TResult> : ICommandMiddleware<TCommand, TResult>
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;
@@ -28,6 +27,4 @@ public class TransactionMiddleware<TCommand, TResult> : ICommandMiddleware<TComm
             await next();
         }
     }
-
-    public interface ITransactionCommand { }
 }
