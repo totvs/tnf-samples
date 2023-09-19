@@ -3,9 +3,8 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Car;
 
-public class CarCommandCreate : ICommand<CarResult>
+public class CarCommandCreate : ICommand<CarResult>, ITransactionCommand
 {
-    public Guid? Id { get; set; }
     public string Brand { get; set; }
     public string Model { get; set; }
     public int Year { get; set; }

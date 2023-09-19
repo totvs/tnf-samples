@@ -1,7 +1,7 @@
 ﻿using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Store;
-public class StoreCommandCreate : ICommand<StoreResult>
+public class StoreCommandCreate : ICommand<StoreResult>, ITransactionCommand
 {
     public Guid? Id { get; set; }
     public string Name { get; set; }

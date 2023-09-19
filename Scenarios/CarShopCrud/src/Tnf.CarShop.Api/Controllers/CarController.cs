@@ -69,15 +69,16 @@ public class CarController : TnfController
     [HttpPut("{carId}")]
     [ProducesResponseType(typeof(CarDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(Guid carId, [FromBody] CarCommandUpdate command)
-    {
-        command.Id = carId;
-
-        if (!command.Id.HasValue)
+    public async Task<IActionResult> Update(Guid? carId, [FromBody] CarCommandUpdate command)
+    {       
+        if (!carId.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
+
+        command.Id = carId;
+
         var result = await _commandSender.SendAsync<CarResult>(command);
 
         return CreateResponseOnPut(result.CarDto);

@@ -33,21 +33,33 @@ public class Customer : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 
     public void UpdateFullName(string fullName)
     {
+        if (fullName.IsNullOrEmpty())
+            return;
+
         FullName = fullName;
     }
 
     public void UpdateAddress(string address)
     {
+        if (address.IsNullOrEmpty())
+            return;
+
         Address = address;
     }
 
     public void UpdatePhone(string phone)
     {
+        if (phone.IsNullOrEmpty())
+            return;
+
         Phone = phone;
     }
 
     public void UpdateEmail(string email)
     {
+        if (email.IsNullOrEmpty())
+            return;
+
         Email = email;
     }
 

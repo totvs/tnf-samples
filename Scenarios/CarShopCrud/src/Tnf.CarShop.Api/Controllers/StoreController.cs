@@ -68,15 +68,15 @@ public class StoreController : TnfController
     [HttpPut("{storeId}")]
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Update(Guid storeId, [FromBody] StoreCommandUpdate command)
-    {
-        command.Id = storeId;
-
-        if (!command.Id.HasValue)
+    public async Task<IActionResult> Update(Guid? storeId, [FromBody] StoreCommandUpdate command)
+    {        
+        if (!storeId.HasValue)
         {
             Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
+
+        command.Id = storeId;
 
         var result = await _commandSender.SendAsync<StoreResult>(command);
 

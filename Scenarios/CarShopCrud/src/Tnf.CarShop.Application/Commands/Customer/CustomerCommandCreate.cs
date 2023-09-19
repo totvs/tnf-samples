@@ -3,7 +3,7 @@ using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 
-public class CustomerCommandCreate: ICommand<CustomerResult>
+public class CustomerCommandCreate: ICommand<CustomerResult>, ITransactionCommand
 {
     public Guid? Id { get; set; }
     public string FullName { get; set; }

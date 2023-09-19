@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using Tnf.CarShop.Application.Commands;
 using Tnf.CarShop.Application.Messages;
 using Tnf.CarShop.Application.Messages.Events;
+using Tnf.Commands;
 using Tnf.Messaging;
 
 namespace Tnf.CarShop.Application.DependencyInjection;
@@ -41,7 +42,10 @@ public static class ServiceCollectionExtensions
         services.AddTnfCommands(commands =>
         {
             commands.AddCommandHandlersFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+
+            commands.Services.Add(ServiceDescriptor.Scoped(typeof(ICommandMiddleware<,>), typeof(TransactionMiddleware<,>)));
         });
+
         return services;
     }
 }
