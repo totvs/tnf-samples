@@ -63,8 +63,9 @@ public class CustomerController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(CustomerDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(CustomerCommandCreate command)
+    public async Task<IActionResult> Create(CustomerCommandCreateAdmin command)
     {
+        command.MustBeAdmin = true;
         var result = await _commandSender.SendAsync<CustomerResult>(command);
 
         return CreateResponseOnPost(result.CustomerDto);

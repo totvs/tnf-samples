@@ -57,8 +57,9 @@ public class PurchaseController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(PurchaseDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(PurchaseCommandCreate command)
+    public async Task<IActionResult> Create(PurchaseCommandCreateAdmin command)
     {
+        command.MustBeAdmin = true;
         var result = await _commandSender.SendAsync<PurchaseResult>(command);
 
         return CreateResponseOnPost(result);

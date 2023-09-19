@@ -1,8 +1,8 @@
 ﻿using Tnf.Commands;
-
 using Tnf.Repositories.Uow;
 
 namespace Tnf.CarShop.Application.Commands;
+
 public class TransactionMiddleware<TCommand, TResult> : ICommandMiddleware<TCommand, TResult>
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;

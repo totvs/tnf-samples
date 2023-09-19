@@ -1,5 +1,4 @@
-﻿using Tnf.CarShop.Domain.Dtos;
-using Tnf.Commands;
+﻿using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 

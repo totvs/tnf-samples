@@ -58,8 +58,9 @@ public class StoreController : TnfController
     [HttpPost]
     [ProducesResponseType(typeof(StoreDto), 201)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
-    public async Task<IActionResult> Create(StoreCommandCreate command)
+    public async Task<IActionResult> Create(StoreCommandCreateAdmin command)
     {
+        command.MustBeAdmin = true;
         var result = await _commandSender.SendAsync<StoreResult>(command);
 
         return CreateResponseOnPost(result.StoreDto);

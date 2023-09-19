@@ -42,7 +42,6 @@ public static class ServiceCollectionExtensions
         services.AddTnfCommands(commands =>
         {
             commands.AddCommandHandlersFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
-
             commands.Services.Add(ServiceDescriptor.Scoped(typeof(ICommandMiddleware<,>), typeof(TransactionMiddleware<,>)));
         });
 
