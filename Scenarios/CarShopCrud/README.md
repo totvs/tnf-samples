@@ -13,6 +13,7 @@ O projeto CarShop é uma aplicação de gerenciamento de loja de carros que perm
 - Buscar detalhes de um carro específico
 - Listar todos os carros
 - Deleção de carro
+- Através de mensageria notificar quando um novo carro é criado ou atualizado
 
 ### Clientes
 
@@ -75,6 +76,8 @@ O projeto CarShop é uma aplicação de gerenciamento de loja de carros que perm
 - .NET Core 6.0
 - Microsoft.Extensions.Logging
 - Serilog
+- FluentAssertions
+- Xunit
 - Npgsql.EntityFrameworkCore.PostgreSQL
 - Tnf.AspNetCore
 - Tnf.AspNetCore.Security
@@ -94,7 +97,7 @@ O projeto Tnf.CarShop é uma solução de gestão de loja de carros, desenvolvid
 
 ## Camadas
 
-### `Tnf.CarShop.Host`
+### `Tnf.CarShop.Api`
 
 - **Responsabilidade:** Este é o projeto de hospedagem, responsável por inicializar e configurar a aplicação. É nele que estão configurados os endpoints da API. Ao receber uma requisição, os endpoints enviam comandos para a camada de aplicação. Além disso, ele configura o pipeline de solicitações, as dependências da aplicação, gerencia a autenticação e também inclui a configuração do Swagger para documentação da API.
 
@@ -107,25 +110,37 @@ O projeto Tnf.CarShop é uma solução de gestão de loja de carros, desenvolvid
   ```
   Commands
   ├───Car
-  │   ├───CarCommand
-  │   ├───CarCommandHandler.cs
+  │   ├───CarCommandCreate.cs
+  │   ├───CarCommandCreateHandler.cs
+  |   |───CarCommandUpdate.cs
+  │   ├───CarCommandUpdateHandler.cs
+  │   ├───CarResult.cs
   │   └───CarCommandValidator.cs
   ├───Customer
-  │   ├───CustomerCommand.cs
-  │   ├───CustomerCommandHandler.cs
+  │   ├───CustomerCommandCreate.cs
+  │   ├───CustomerCommandCreateHandler.cs
+  │   ├───CustomerCommandUpdate.cs 
+  │   ├───CustomerCommandUpdateHandler.cs 
   │   ├───CustomerCommandValidator.cs
+  │   ├───CustomerResult.cs
   ├───Fipe
-  │   ├───FipeCommand.cs
-  │   ├───FipeCommandHandler.cs
-  │   ├───FipeCommandValidator.cs
+  │   ├───ApplyFipeTableCommand.cs
+  │   ├───ApplyFipeTableCommandHandler.cs
+  │   ├───ApplyFipeTableCommandValidator.cs
   ├───Purchase
-  │   ├───PurchaseCommand.cs
-  │   ├───PurchaseCommandHandler.cs
+  │   ├───PurchaseCommandCreate.cs
+  │   ├───PurchaseCommandCreateHandler.cs
+  │   ├───PurchaseCommandUpdate.cs
+  │   ├───PurchaseCommandUpdateHandler.cs
   │   ├───PurchaseCommandValidator.cs
+  │   ├───PurchaseResult.cs
   ├───Store
-  │   ├───StoreCommand.cs
-  │   ├───StoreCommandHandler.cs
+  │   ├───StoreCommandCreate.cs
+  │   ├───StoreCommandCreateHandler.cs
+  │   ├───StoreCommandUpdate.cs
+  │   ├───StoreCommandUpdateHandler.cs
   │   ├───StoreCommandValidator.cs
+  │   ├───StoreResult.cs
   ```
 
   Essa estruturação garante que os comandos, handlers e validadores de cada entidade estejam organizados de maneira clara e modularizada, facilitando a manutenção e o entendimento do código.
@@ -215,3 +230,7 @@ Esta camada contém todas as entidades, eventos de domínio, lógica de negócio
 ### `Tnf.CarShop.EntityFrameworkCore.Migrator`
 
 - **Responsabilidade:** Projeto responsável por executar migrações de banco de dados e atualizar o esquema do banco de dados.
+
+### `Tnf.CarShop.Application.Tests`
+
+- **Responsabilidade:** Projeto responsável por executar testes nos commands e validators.
