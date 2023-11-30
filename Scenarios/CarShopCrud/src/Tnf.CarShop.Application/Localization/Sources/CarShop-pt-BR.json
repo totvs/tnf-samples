@@ -1,0 +1,15 @@
+{
+  "culture": "pt-BR",
+    "texts": {
+        "PropertyRequired": "A propriedade {0} é obrigatória.",
+        "PropertyValid": "Um Valido {0} é requerido.",
+        "PropertyLength": "A propriedade {0} deve ter tamanho entre 2 e 100 caracteres.",
+        "CarYearLength": "O ano deve estar entre 1900 e {0}.",
+        "AddressLength": "O endereço deve estar entre 5 e 250 caracteres",
+        "PriceShouldBePositive": "O preço deve ser um valor positivo.",
+        "ValidBrazilianPhoneNumber": "Informe um numero de telefone Válido para o territorio Brasileiro",
+        "BeforeValidDate": "A data informada deve ser inferior a data de hoje",
+        "Over18YearsOld": "Deve ter acima de 18 anos",
+        "EmptyGUID": "{0} não deve ser um GUID vazio"
+    }
+}

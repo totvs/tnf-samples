@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Tnf.EntityFrameworkCore" Version="6.3.0.21401" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
