@@ -1,0 +1,44 @@
+---
+resources:
+  repositories:
+    - repository: totvsapp-devops-template
+      type: git
+      name: TOTVSApps/totvsapp-devops-template
+
+schedules:
+  - cron: "0 10 * * 1" #07:00h UTC-3 on Mondays
+    displayName: Portal CI develop
+    branches:
+      include:
+        - develop
+    always: true
+
+trigger:
+  - develop
+
+variables:
+  - group: totvsapps-sonarqube-ci
+  - name: REGISTRY_CONNECTION
+    value: registry-support-element-portal-push
+  - name: TAG_BUILD
+    value: "$(Build.BuildId)-$(Build.SourceBranchName)"
+  - name: REPOSITORY
+    value: tab1784-service-119-322963/totvsapps-support-element-portal/portal-service-ui
+
+extends:
+  template: ci/v3/main-template.yaml@totvsapp-devops-template
+  parameters:
+    pool:
+      name: TOTVSApps-Builds
+      demands:
+        - size-big
+    registryConnection: $(REGISTRY_CONNECTION)
+    imageTag: $(TAG_BUILD)
+    repository: $(REPOSITORY)
+    buildContext: ./
+    buildArguments:
+      --build-arg SONAR_LOGIN=$(SONAR_LOGIN)
+      --build-arg SONAR_VERSION=$(Build.BuildNumber)
+      --build-arg SONAR_BRANCH=$(Build.SourceBranchName)
+    Dockerfile: devops/docker/Dockerfile
+    policyVulnerabilitiesFolder: support-element-portal

@@ -1,0 +1,31 @@
+export const environment = {
+    production: false,
+    shouldPromptTokenRequest: true,
+    apiOptIn: 'https://optin.dev.totvs.app/api/optin',
+    apiOptInManager: 'https://optin.dev.totvs.app/api/optin-manager',
+    portalApi: 'https://portal.dev.totvs.app/api',
+    appCodeDevMode: 'portal',
+    pkceEnabled: false,
+    communicationApplicationID: '7f6befb6-d335-4bd1-84c3-7c554431c0a9',
+    DEV: {
+        TOKEN_URL: 'https://portal.dev.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.dev.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.dev.totvs.app',
+        IDENTITY_URL: 'https://app.fluigidentity.net',
+        NOTIFICATION_URL: 'https://communication.dev.totvs.app',
+    },
+    STAGING: {
+        TOKEN_URL: 'https://portal.staging.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.staging.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.staging.totvs.app',
+        IDENTITY_URL: 'https://app.customerfi.com',
+        NOTIFICATION_URL: 'https://communication.staging.totvs.app',
+    },
+    PROD: {
+        TOKEN_URL: 'https://portal.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.totvs.app',
+        IDENTITY_URL: 'https://app.fluigidentity.com',
+        NOTIFICATION_URL: 'https://communication.totvs.app',
+    },
+};

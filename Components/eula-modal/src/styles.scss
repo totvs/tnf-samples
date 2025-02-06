@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background-color-scrollbar: #045b8f;
+
+    --height-header: 60px;
+
+    --width-menu: 290px;
+    --width-collapsed-menu: 56px;
+
+    // Icon
+    --icon-color-totvs: #0C9ABE;
+    --icon-color-disabled: #B6BDBF;
+
+    // Text
+    --text-color-default: #111;
+
+    // Page Default
+    --background-color-page-default: #FFF;
+
+    // Page Content
+    --box-shadow-page-content: 0px 0px 30px 0px rgba(0, 0, 0, 0.10);
+
+    // Container
+    --background-color-container: #FFF;
+
+    --border-color-container: #D8D8D8;
+
+    --box-shadow-container-hover: 0px 0px 4px 0px #0c9abe;
+    --color-table-background-color-row-strip: #fbfbfb;
+}
+
+@mixin text($font-size: 1rem,
+    $font-weight: 400,
+    $color: #111,
+    $line-height: 1rem) {
+    color: $color;
+    font-feature-settings:
+        'clig' off,
+        'liga' off;
+
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: $font-size;
+    font-style: normal;
+    font-weight: $font-weight;
+    line-height: $line-height;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--background-color-scrollbar);
+}
+
+::ng-deep {
+    .po-button {
+        min-height: 2.5rem !important;
+    }
+
+    .po-container {
+        padding: 24px;
+    }
+
+    .po-table-row-template-container {
+        padding: 0 !important;
+    }
+
+    .po-modal-body {
+        padding: 24px !important;
+    }
+
+    .po-tag-value span {
+        text-overflow: unset !important;
+    }
+}
