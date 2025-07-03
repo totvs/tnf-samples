@@ -10,16 +10,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="appsettings.Development.json" />
+        <None Remove="appsettings.Development.json" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="appsettings.Development.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <Content Include="appsettings.Development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
-    <ItemGroup>        
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 
@@ -32,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Tnf.SmartX.EntityFramework.PostgreSql\Tnf.SmartX.EntityFramework.PostgreSql.csproj" />
+        <ProjectReference Include="..\Tnf.SmartX.EntityFramework.PostgreSql\Tnf.SmartX.EntityFramework.PostgreSql.csproj" />
     </ItemGroup>
 
 </Project>
