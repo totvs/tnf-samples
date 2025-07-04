@@ -33,6 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Tnf.SmartX.Domain\Tnf.SmartX.Domain.csproj" />
       <ProjectReference Include="..\Tnf.SmartX.EntityFramework.PostgreSql\Tnf.SmartX.EntityFramework.PostgreSql.csproj" />
     </ItemGroup>
 
