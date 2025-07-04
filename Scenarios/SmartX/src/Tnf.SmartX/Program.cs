@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using Tnf.SmartX;
 using Tnf.SmartX.EntityFramework.PostgreSql;
 using Tnf.SmartX.Sample.Swagger;
@@ -33,17 +34,22 @@ builder.Services.AddTnfSmartX(b =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors("AllowAll");
+
+app.UseRouting();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseTnfAspNetCoreSecurity();
+
+app.MapTnfHealthChecks();
+
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
+app.MapTnfSmartXControllers();
 
 app.Run();
