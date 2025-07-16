@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.Repositories" Version="8.1.0.18102" />
+    <PackageReference Include="Tnf.SmartX" Version="8.1.0.18102" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DatabaseFirst\Usuario\Models\" />
+  </ItemGroup>
+
+</Project>

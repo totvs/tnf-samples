@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="8.1.0.18102" />
+    <PackageReference Include="Tnf.SmartX.EntityFrameworkCore" Version="8.1.0.18102" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tnf.SmartX.Domain\Tnf.SmartX.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

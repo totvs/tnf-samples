@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>d5fde5f3-74c2-4f6f-810d-92dae9978f31</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+        
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+        
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.3" />
+        
+        <PackageReference Include="Tnf.AspNetCore" Version="8.1.0.18102" />
+        <PackageReference Include="Tnf.AspNetCore.Security.FluigIdentity" Version="8.1.0.18102" />
+        <PackageReference Include="Tnf.SmartX" Version="8.1.0.18102" />
+
+        <PackageReference Include="Serilog" Version="4.0.1" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
+        <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+        <PackageReference Include="Serilog.Sinks.Async" Version="2.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Tnf.SmartX.Domain\Tnf.SmartX.Domain.csproj" />
+      <ProjectReference Include="..\Tnf.SmartX.EntityFramework.PostgreSql\Tnf.SmartX.EntityFramework.PostgreSql.csproj" />
+    </ItemGroup>
+
+</Project>
