@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA690C5C-E1FD-4C2E-B527-944CD2B90FF9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tnf.SmartX.EntityFramework", "src\Tnf.SmartX.EntityFrameworkCore\Tnf.SmartX.EntityFramework.csproj", "{1A31C05B-EF28-4D9E-B1A7-FA93F06A42FE}"
