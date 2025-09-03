@@ -16,6 +16,9 @@ public class CustomerEntityConfiguration : IEntityTypeConfiguration<CustomerEnti
         builder.Property(c => c.Name)
             .IsRequired();
 
+        builder.Property(c => c.LastName)
+            .IsRequired();
+
         builder.Property(c => c.Email)
             .IsRequired()
             .SxPattern("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");

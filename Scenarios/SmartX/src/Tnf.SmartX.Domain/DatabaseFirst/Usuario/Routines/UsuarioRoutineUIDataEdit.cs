@@ -10,7 +10,7 @@ public class UsuarioRoutineUIDataEdit : UsuarioModelEntity, ISXRoutineLayoutData
         builder
             .AddDataEdit(v => v.WithIdentifier("dataEditlUser").WithTitle("Editar Usuário")
                     .WithElementsBase("dataNewUser")
-                    .AddTabs(t => t                        
+                    .AddTabs(t => t
                         .AddTab(tab => tab.WithIdentifier("tabUser").WithTitle("Usuário").WithOrder(1)
                             .AddSection(s => s.WithIdentifier("sectionDataUser").WithTitle("Dados do Usuário")
                                 .AddElement(e => e.WithProperty(nameof(Usuario)))
@@ -34,10 +34,10 @@ public class UsuarioRoutineUIDataEdit : UsuarioModelEntity, ISXRoutineLayoutData
                         .AddTab(s => s.WithIdentifier("tabPerfiUser").WithTitle("Perfis").WithOrder(3)
                             .AddSection(e => e.WithIdentifier("tablePerfis").WithTitle("Perfis")
                                 .AddElement(c => c.WithProperty(nameof(Perfis))))))
-                // .Configuration(c => c
-                //   .ExcludeProperty(ep => ep.WithProperty(nameof(DescricaoAcesso)))
-                //   .ExcludeProperty(ep => ep.WithProperty(nameof(Apelido)))
-                //   .ExcludeProperty(ep => ep.WithProperty(nameof(Chapa))))
+            // .Configuration(c => c
+            //   .ExcludeProperty(ep => ep.WithProperty(nameof(DescricaoAcesso)))
+            //   .ExcludeProperty(ep => ep.WithProperty(nameof(Apelido)))
+            //   .ExcludeProperty(ep => ep.WithProperty(nameof(Chapa))))
             );
     }
 }

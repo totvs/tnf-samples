@@ -22,5 +22,6 @@ public class CustomerDbContext(DbContextOptions options, ITnfSession session) : 
         modelBuilder.ApplyConfiguration(new DeliveryEntityConfiguration());
         modelBuilder.ApplyConfiguration(new DeliveryItemConfiguration());
         modelBuilder.ApplyConfiguration(new StateEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ZipCodeEntityConfiguration());
     }
 }

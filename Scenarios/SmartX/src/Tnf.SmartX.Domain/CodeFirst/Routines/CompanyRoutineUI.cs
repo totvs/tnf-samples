@@ -21,7 +21,7 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
         builder.AddEvents(e => e
             .AddOnBlur(b => b
                 .WithContext([RoutineLayoutEnum.DataNew, RoutineLayoutEnum.DataEdit])
-                    .WithFields([nameof(RegistrationNumber)])
+                    .WithFields(f => f.AddField(nameof(RegistrationNumber)))
                 .AddAction(a => a
                     .AddServerValidateAction(sv => sv
                         .WithIdentifier("validateRegistrationNumber")
@@ -36,7 +36,6 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
 
     private static void SetupDataView(IRoutineViewDataViewBuilder builder)
     {
-
         builder
             .WithIdentifier("dataViewCompanies")
             .WithTitle("Listagem de empresas")
@@ -115,9 +114,7 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
             .AddElement(e => e.WithProperty(nameof(Email)))
             .AddElement(e => e.WithProperty(nameof(Name)))
             .AddElement(e => e.WithProperty(nameof(TradeName)))
-            .AddElement(e => e
-                .WithProperty(nameof(RegistrationNumber))
-                .WithMask("99.999.999/9999-99"))
+            .AddElement(e => e.WithProperty(nameof(RegistrationNumber)))
             .AddElement(e => e.WithProperty(nameof(HasEsg)))
         );
         builder.SetProperty(p => p.WithProperty(nameof(Id)).WithHidden(true));

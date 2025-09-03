@@ -8,6 +8,7 @@ public class CustomerEntity : SXObject, IMustHaveTenant, IHasModificationTime, I
     public Guid Id { get; set; }
     public Guid TenantId { get; set; }
     public string Name { get; set; }
+    public string LastName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public DateTime CreationTime { get; set; }

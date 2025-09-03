@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tnf.SmartX.EntityFramework.PostgreSql;
@@ -11,9 +12,11 @@ using Tnf.SmartX.EntityFramework.PostgreSql;
 namespace Tnf.SmartX.EntityFramework.PostgreSql.Migrations.PostgreSqlCustomerDb
 {
     [DbContext(typeof(PostgreSqlCustomerDbContext))]
-    partial class PostgreSqlCustomerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250805145049_AddLastNameOnCustomerEntity")]
+    partial class AddLastNameOnCustomerEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,33 +206,6 @@ namespace Tnf.SmartX.EntityFramework.PostgreSql.Migrations.PostgreSqlCustomerDb
                     b.HasKey("UF");
 
                     b.ToTable("States", (string)null);
-                });
-
-            modelBuilder.Entity("Tnf.SmartX.Domain.CodeFirst.Entities.ZipCodeEntity", b =>
-                {
-                    b.Property<string>("ZipCode")
-                        .HasColumnType("text")
-                        .HasAnnotation("SX:Mask", "99999-999")
-                        .HasAnnotation("SX:Title", "CEP");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("SX:Title", "Cidade");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("SX:Title", "Estado");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("SX:Title", "Rua");
-
-                    b.HasKey("ZipCode");
-
-                    b.ToTable("ZipCodes", (string)null);
                 });
 
             modelBuilder.Entity("Tnf.SmartX.Domain.CodeFirst.Entities.AddressEntity", b =>
