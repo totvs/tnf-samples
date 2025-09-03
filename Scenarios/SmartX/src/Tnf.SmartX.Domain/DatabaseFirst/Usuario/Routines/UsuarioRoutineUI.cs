@@ -13,9 +13,8 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                 //    .AddAction(a => a
                 //        .AddShowMessageAction(s => s.WithIdentifier("showMessageOnLoadEvent").WithLabel("TESTE AÇÃO!")
                 //            .WithMessage("Evento [OnLoad] disparado com sucesso!").WithMessageType(ActionMessageTypeEnum.Info))))
-                .AddOnBlur(b => b.WithContext([RoutineLayoutEnum.DataNew, RoutineLayoutEnum.DataEdit]).WithFields([
-                        nameof(Usuario)
-                    ])
+                .AddOnBlur(b => b.WithContext([RoutineLayoutEnum.DataNew, RoutineLayoutEnum.DataEdit])
+                    .WithFields(f => f.AddField(nameof(Usuario)))
                     .AddAction(a => a
                       .AddApiCallAction(ac => ac.WithIdentifier("apiCallVerifyUser").WithMethod(ActionMethodEnum.GET).WithEndpoint("data/GlbUsuarioModel/U099").WithLabel("Ação")
                         .AddActionSuccess(acs => acs

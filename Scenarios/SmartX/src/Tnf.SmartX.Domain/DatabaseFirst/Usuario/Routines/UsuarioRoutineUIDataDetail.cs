@@ -17,7 +17,7 @@ public class UsuarioRoutineUIDataDetail : UsuarioModelEntity, ISXRoutineLayoutDa
                                 .AddElement(e => e.WithProperty(nameof(Email)))
                                 .AddElement(e => e.WithProperty(nameof(UserId)))
                                 .AddElement(e => e.WithProperty(nameof(Status)))
-                                .AddElement(e => e.WithProperty(nameof(DataInicio)).WithFormat("date-time"))
+                                .AddElement(e => e.WithProperty(nameof(DataInicio)))
                                 .AddElement(e => e.WithProperty(nameof(DataExpiracao))))
                             .AddSection(s => s.WithIdentifier("sectionAccessUser").WithTitle("Dados de Acesso")
                                 .AddElement(e => e.WithProperty(nameof(CodAcesso)))
