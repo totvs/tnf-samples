@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Tnf.SmartX.EntityFramework.Migrator": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

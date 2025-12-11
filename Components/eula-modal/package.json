@@ -1,0 +1,50 @@
+{
+  "name": "portal-service-ui",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --proxy-config src/environments/proxy.config.js",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~18.2.6",
+    "@angular/cdk": "~18.2.6",
+    "@angular/common": "~18.2.6",
+    "@angular/compiler": "~18.2.6",
+    "@angular/core": "~18.2.6",
+    "@angular/forms": "~18.2.6",
+    "@angular/platform-browser": "~18.2.6",
+    "@angular/platform-browser-dynamic": "~18.2.6",
+    "@angular/router": "~18.2.6",
+    "@po-ui/ng-components": "18.11.0",
+    "@po-ui/style": "18.11.0",
+    "@totvs-apps-components/auth": "^18.0.0",
+    "@totvs-apps-components/header": "18.0.0",
+    "@totvs-smartlink-components/eula-modal": "^18.0.10",
+    "@totvs/po-theme": "18.11.0",
+    "rxjs": "~7.8.1",
+    "tslib": "^2.6.2",
+    "zone.js": "~0.14.10"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~18.2.6",
+    "@angular-devkit/schematics": "~18.2.6",
+    "@angular/cli": "~18.2.6",
+    "@angular/compiler-cli": "~18.2.6",
+    "@types/jasmine": "~5.1.0",
+    "autoprefixer": "^10.4.20",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.9",
+    "typescript": "~5.5.4"
+  }
+}

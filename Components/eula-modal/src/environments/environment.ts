@@ -1,0 +1,31 @@
+export const environment = {
+    production: true,
+    shouldPromptTokenRequest: false,
+    apiOptIn: '${API_OPTIN}',
+    apiOptInManager: '${API_OPTIN_MANAGER}',
+    portalApi: "${API_PORTAL}",
+    appCodeDevMode: 'portal',
+    pkceEnabled: false,
+    communicationApplicationID: '${COMMUNICATION_APP_ID}',
+    DEV: {
+        TOKEN_URL: 'https://portal.dev.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.dev.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.dev.totvs.app',
+        IDENTITY_URL: 'https://app.fluigidentity.net',
+        NOTIFICATION_URL: 'https://communication.dev.totvs.app',
+    },
+    STAGING: {
+        TOKEN_URL: 'https://portal.staging.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.staging.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.staging.totvs.app',
+        IDENTITY_URL: 'https://app.customerfi.com',
+        NOTIFICATION_URL: 'https://communication.staging.totvs.app',
+    },
+    PROD: {
+        TOKEN_URL: 'https://portal.totvs.app/token/:token',
+        REFRESH_TOKEN_URL: 'https://portal.totvs.app/refresh-token',
+        MANAGER_URL: 'https://api-fluig.totvs.app',
+        IDENTITY_URL: 'https://app.fluigidentity.com',
+        NOTIFICATION_URL: 'https://communication.totvs.app',
+    },
+};

@@ -1,0 +1,20 @@
+<thf-page-list t-title="Application">
+
+    <div class="row">
+        <button (click)="getApplicationName()" class="btn btn-primary">Get Application Name</button>
+    </div>
+
+    <div class="row">
+        <button (click)="getUserInfo()" class="btn btn-primary">Get User Info</button>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ajax Result</div>
+            <div class="panel-body">
+                <pre>{{ajaxResult}}</pre>
+            </div>
+        </div>
+    </div>
+</thf-page-list>

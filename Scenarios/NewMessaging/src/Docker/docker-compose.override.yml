@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+
+  rabbitmq:
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "14672:15672"
+      - "4672:5672"
+    volumes:
+      - newmessaging_rabbitmqdata:/var/lib/rabbitmq
+
+
+  newmessaging-applicationa:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "52311:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+
+  newmessaging-applicationb:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "55854:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+
+volumes:
+  newmessaging_rabbitmqdata:
+

@@ -1,0 +1,34 @@
+resources:
+  repositories:
+    - repository: totvsapp-devops-template
+      type: git
+      name: TOTVSApps/totvsapp-devops-template
+
+pr:
+  - main
+  - develop
+
+trigger:
+  - none
+
+variables:
+  - group: totvsapps-sonarqube-ci
+  - name: REPOSITORY
+    value: tab1784-service-119-322963/totvsapps-support-element-portal/portal-service-ui
+
+extends:
+  template: ci/v3/pull-request-template.yaml@totvsapp-devops-template
+  parameters:
+    pool:
+      name: TOTVSApps-Builds
+      demands:
+        - size-big
+    buildContext: ./
+    repository: $(REPOSITORY)
+    buildArguments:
+      --build-arg SONAR_LOGIN=$(SONAR_LOGIN)
+      --build-arg SONAR_PR_KEY=$(System.PullRequest.PullRequestId)
+      --build-arg SONAR_PR_BRANCH=$(System.PullRequest.SourceBranch)
+      --build-arg SONAR_PR_TARGET_BRANCH=$(System.PullRequest.targetBranchName)
+    Dockerfile: devops/docker/Dockerfile
+    policyVulnerabilitiesFolder: support-element-portal

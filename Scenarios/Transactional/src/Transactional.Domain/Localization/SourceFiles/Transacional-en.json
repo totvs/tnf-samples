@@ -1,0 +1,6 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "DuplicatePurchaseOrder": "There is an Purchase Order to customer {0} in date {1}."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Console Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CONSOLE_ENVIRONMENT": "Development"
+      }
+    },
+    "Console Production": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CONSOLE_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}

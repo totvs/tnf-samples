@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Tnf.CarShop.EntityFramework.Migrator": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

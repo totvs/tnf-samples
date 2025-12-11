@@ -1,0 +1,35 @@
+<div class="page-default">
+    @if (breadcrumbItems.length > 0) {
+    <div class="page-default-breadcrumb">
+        <po-breadcrumb [p-items]="breadcrumbItems"></po-breadcrumb>
+    </div>
+    }
+
+    <div class="wrapper">
+        @if (enableArrowAction) {
+        <img class="page-default-arrow-action" src="assets/images/icon-arrow-right.svg" alt="Arrow Left"
+            (click)="onBack()" (keydown.enter)="onBack()" tabindex="0" />
+        }
+
+        @if (title) {
+        <div class="ml-2 page-default-title">
+            {{ title }}
+        </div>
+        }
+
+        <!-- @if (enableStepper) {
+        <div class="page-default-stepper">
+          <stepper></stepper>
+        </div>
+      } -->
+
+        <div class="page-default-right">
+            <ng-container [ngTemplateOutlet]="rightTemplateRef"></ng-container>
+        </div>
+
+    </div>
+
+    <div class="page-default-content" [ngClass]="{ 'enabled-container': enableContainerContent }">
+        <ng-container [ngTemplateOutlet]="customTemplateRef"></ng-container>
+    </div>
+</div>

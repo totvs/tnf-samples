@@ -1,0 +1,80 @@
+@import '../../../../styles.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+
+    padding: 1.5rem 1.5rem;
+    overflow-y: auto;
+    overflow-x: none;
+
+    background-color: var(--background-color-page-default);
+
+    transition: all 0.2s ease;
+}
+
+.wrapper,
+.page-default-content {
+    margin-top: 1.5rem;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .ph-arrow-left {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        cursor: pointer;
+    }
+
+    .page-default-title {
+        display: flex;
+
+        align-items: center;
+        width: 100%;
+
+        @include text($font-size: 1.5rem, $line-height: 2.5rem);
+
+        .title-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .title-icon {
+            margin-left: 1rem;
+        }
+    }
+
+    .page-default-stepper {
+        position: absolute;
+        right: 0;
+        width: 55%;
+    }
+}
+
+.button-action {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.page-default-content {
+    flex-grow: 1;
+
+    height: auto;
+    width: 100%;
+
+    &.enabled-container {
+        padding: 1.5rem;
+
+        border-radius: 0.25rem;
+        box-shadow: var(--box-shadow-page-content);
+    }
+}

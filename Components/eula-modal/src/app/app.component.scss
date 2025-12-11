@@ -1,0 +1,67 @@
+// @import '../styles.scss';
+
+
+// :host::ng-deep {
+//     .po-menu-inner {
+//         margin-top: var(--height-header);
+//     }
+
+//     .po-icon-menu {
+//         position: relative;
+//         z-index: 1;
+
+//         margin-top: var(--height-header);
+//     }
+
+//     .po-page-header {
+//         margin-top: 60px;
+//     }
+
+//     .po-page {
+//         background-color: rgb(253, 249, 249);
+//         // box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, .1);
+//     }
+// }
+
+@import '../styles.scss';
+
+.router {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+
+    height: calc(100vh - var(--height-header));
+    width: calc(100vw - var(--width-menu));
+
+    &.menu-collapsed {
+        width: calc(100vw - var(--width-collapsed-menu));
+    }
+
+    &.menu-page-forbidden {
+        width: 100vw;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .router {
+        width: 100vw;
+    }
+}
+
+:host::ng-deep {
+    .po-menu-inner {
+        margin-top: var(--height-header);
+    }
+
+    .po-icon-menu {
+        position: relative;
+        z-index: 1;
+
+        margin-top: var(--height-header);
+    }
+
+    .po-page-slide {
+        top: 3rem !important;
+        ;
+    }
+}

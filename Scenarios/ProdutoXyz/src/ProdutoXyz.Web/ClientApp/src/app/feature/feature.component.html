@@ -1,0 +1,8 @@
+<thf-page-list t-title="Features for loged user">
+    <div class="thf-row">
+        <div class="thf-xl-12 thf-lg-12 thf-md-12 thf-sm-12"
+             *ngFor="let permission of permissions">
+            <label>Feature {{permission.key}} is granted {{permission.value}}</label>
+        </div>
+    </div>
+</thf-page-list>
