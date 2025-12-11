@@ -222,8 +222,8 @@ O arquivo de configuração completo deve incluir connection strings e configura
 
     // Configurações de autenticação TOTVS (opcional)
     "AuthorityEndpoint": "https://admin.rac.dev.totvs.app/totvs.rac",
-    "ClientId": "link_service_data_upstreaming_cc",
-    "ClientSecret": "totvs@123",
+    "ClientId": "",
+    "ClientSecret": "",
 
     "FluigIdentity": {
         "TokenEndpoint": "https://app.fluigidentity.net/accounts/oauth/token",
