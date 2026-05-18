@@ -1,0 +1,66 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Central Package Management (CPM)
+      https://learn.microsoft.com/nuget/consume-packages/central-package-management
+
+      Tnf.* packages must be resolved from the private TOTVS feed (see nuget.config).
+      The 8.* wildcard floats to the latest available 8.x.x patch from that feed.
+
+      CentralPackageFloatingVersionsEnabled opts in to wildcard/floating versions inside
+      Directory.Packages.props (disabled by default per NuGet NU1011).
+      See: https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu1011
+    -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="TNF Framework – latest 8.x patch from the TOTVS feed">
+    <PackageVersion Include="Tnf.AspNetCore"                        Version="8.*" />
+    <PackageVersion Include="Tnf.AspNetCore.Security"               Version="8.*" />
+    <PackageVersion Include="Tnf.Commands"                          Version="8.*" />
+    <PackageVersion Include="Tnf.Commands.FluentValidation"         Version="8.*" />
+    <PackageVersion Include="Tnf.EntityFrameworkCore"               Version="8.*" />
+    <PackageVersion Include="Tnf.Kernel"                            Version="8.*" />
+    <PackageVersion Include="Tnf.Messaging"                         Version="8.*" />
+    <PackageVersion Include="Tnf.Messaging.RabbitMQ"                Version="8.*" />
+    <PackageVersion Include="Tnf.Repositories"                      Version="8.*" />
+  </ItemGroup>
+
+  <ItemGroup Label="EF Core / PostgreSQL">
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL"  Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design"   Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools"    Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup Label="API / Tooling">
+    <PackageVersion Include="Swashbuckle.AspNetCore"                 Version="6.6.2" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Newtonsoft"      Version="6.6.2" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning"    Version="5.1.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+  </ItemGroup>
+
+  <ItemGroup Label="Serilog">
+    <PackageVersion Include="Serilog"                                Version="4.0.1" />
+    <PackageVersion Include="Serilog.Enrichers.Environment"          Version="2.3.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting"             Version="8.0.0" />
+    <PackageVersion Include="Serilog.Settings.Configuration"         Version="8.0.4" />
+    <PackageVersion Include="Serilog.Sinks.Async"                    Version="2.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console"                  Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Migrator / Hosting">
+    <PackageVersion Include="Microsoft.Extensions.Hosting"           Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testing">
+    <PackageVersion Include="FluentAssertions"                       Version="6.12.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk"                 Version="17.9.0" />
+    <PackageVersion Include="Moq"                                    Version="4.20.70" />
+    <PackageVersion Include="xunit"                                  Version="2.7.0" />
+    <PackageVersion Include="xunit.runner.visualstudio"              Version="2.5.7" />
+    <PackageVersion Include="coverlet.collector"                     Version="6.0.1" />
+  </ItemGroup>
+</Project>
