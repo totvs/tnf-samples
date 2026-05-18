@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
-
 using Tnf.CarShop.Application.Commands.Fipe;
 using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Application.Messages;
 using Tnf.Commands;
-
 using Tnf.Messaging;
 
 namespace Tnf.CarShop.Application.Consumers;
+
 public class ApplyFipeTableConsumer : IConsumer<CloudEvent<ApplyFipeTable>>
 {
     private readonly ICommandSender _commandSender;
@@ -19,13 +18,18 @@ public class ApplyFipeTableConsumer : IConsumer<CloudEvent<ApplyFipeTable>>
         _logger = logger;
     }
 
-    public async Task ConsumeAsync(IConsumeContext<CloudEvent<ApplyFipeTable>> context, CancellationToken cancellationToken = default)
+    public async Task ConsumeAsync(IConsumeContext<CloudEvent<ApplyFipeTable>> context,
+        CancellationToken cancellationToken = default)
     {
         if (!context.TryGetMessage(_logger, out var message))
+        {
             return;
+        }
 
         if (!context.TryGetData(_logger, out var data))
+        {
             return;
+        }
 
         var command = new ApplyFipeTableCommand
         {
@@ -40,8 +44,12 @@ public class ApplyFipeTableConsumer : IConsumer<CloudEvent<ApplyFipeTable>>
         var result = await _commandSender.SendAsync(command);
 
         if (result)
+        {
             _logger.MessageSuccessfullyProcessed(nameof(ApplyFipeTable));
+        }
         else
+        {
             _logger.MessageWasNotProcessed(nameof(ApplyFipeTable));
+        }
     }
 }

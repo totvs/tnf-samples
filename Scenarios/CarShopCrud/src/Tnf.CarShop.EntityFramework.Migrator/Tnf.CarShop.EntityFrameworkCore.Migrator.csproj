@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="appsettings.Development.json" />
-        <None Remove="appsettings.Production.json" />
+        <None Remove="appsettings.Development.json"/>
+        <None Remove="appsettings.Production.json"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -27,18 +27,18 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Hosting" />
-        <PackageReference Include="Serilog" />
-        <PackageReference Include="Serilog.Enrichers.Environment" />
-        <PackageReference Include="Serilog.Extensions.Hosting" />
-        <PackageReference Include="Serilog.Settings.Configuration" />
-        <PackageReference Include="Serilog.Sinks.Async" />
-        <PackageReference Include="Serilog.Sinks.Console" />
-        <PackageReference Include="Tnf.Kernel" />
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
+        <PackageReference Include="Serilog"/>
+        <PackageReference Include="Serilog.Enrichers.Environment"/>
+        <PackageReference Include="Serilog.Extensions.Hosting"/>
+        <PackageReference Include="Serilog.Settings.Configuration"/>
+        <PackageReference Include="Serilog.Sinks.Async"/>
+        <PackageReference Include="Serilog.Sinks.Console"/>
+        <PackageReference Include="Tnf.Kernel"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj"/>
     </ItemGroup>
 
 </Project>

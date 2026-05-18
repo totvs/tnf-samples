@@ -55,8 +55,10 @@ internal static class VersioningExtensions
 
             // Inclui para cada versão a documentação
             foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+            {
                 options.SwaggerEndpoint($"../swagger/{description.GroupName}/swagger.json",
                     description.GroupName.ToUpperInvariant());
+            }
         });
 
         return app;

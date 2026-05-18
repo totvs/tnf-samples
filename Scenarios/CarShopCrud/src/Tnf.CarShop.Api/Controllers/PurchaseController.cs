@@ -4,9 +4,9 @@ using Tnf.CarShop.Application.Commands.Purchase;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
-using CarShopLocalization = Tnf.CarShop.Application.Localization;
 using Tnf.Commands;
 using Tnf.Dto;
+using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
 
@@ -15,10 +15,10 @@ namespace Tnf.CarShop.Host.Controllers;
 [Route(Routes.Purchase)]
 [TnfAuthorize]
 public class PurchaseController : TnfController
-{    
+{
+    private readonly ICommandSender _commandSender;
 
     private readonly IPurchaseRepository _purchaseRepository;
-    private readonly ICommandSender _commandSender;
 
     //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
     //Para casos mais complexos deve-se criar uma service
@@ -39,7 +39,9 @@ public class PurchaseController : TnfController
         var purchaseDto = await _purchaseRepository.GetPurchaseDtoAsync(purchaseId, HttpContext.RequestAborted);
 
         if (purchaseDto is null)
+        {
             return NotFound();
+        }
 
         return CreateResponseOnGet(purchaseDto);
     }
@@ -68,10 +70,11 @@ public class PurchaseController : TnfController
     [ProducesResponseType(typeof(PurchaseDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(Guid? purchaseId, [FromBody] PurchaseCommandUpdate command)
-    {        
+    {
         if (!purchaseId.HasValue)
         {
-            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
+            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default,
+                CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
 

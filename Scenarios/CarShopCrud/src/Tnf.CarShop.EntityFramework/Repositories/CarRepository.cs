@@ -18,12 +18,15 @@ public class CarRepository : EfCoreRepositoryBase<CarShopDbContext, Car>, ICarRe
     {
         var car = await GetAsync(carId, cancellationToken);
         if (car is null)
+        {
             return;
+        }
 
         await base.DeleteAsync(car, cancellationToken);
     }
 
-    public async Task<IListDto<CarDto>> GetAllAsync(RequestAllDto requestAllDto, CancellationToken cancellationToken = default)
+    public async Task<IListDto<CarDto>> GetAllAsync(RequestAllDto requestAllDto,
+        CancellationToken cancellationToken = default)
     {
         var basequery = GetAll().AsNoTracking();
 
@@ -34,7 +37,7 @@ public class CarRepository : EfCoreRepositoryBase<CarShopDbContext, Car>, ICarRe
             Model = x.Model,
             Price = x.Price,
             StoreId = x.StoreId,
-            Year = x.Year,
+            Year = x.Year
         }).ToListDtoAsync(requestAllDto, cancellationToken);
     }
 

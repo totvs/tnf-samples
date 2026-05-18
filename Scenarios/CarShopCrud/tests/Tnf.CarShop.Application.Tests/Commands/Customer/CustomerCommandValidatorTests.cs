@@ -1,6 +1,7 @@
 ﻿using Tnf.CarShop.Application.Commands.Customer;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer;
+
 public class CustomerCommandValidatorTests : TestBase
 {
     [Fact]
@@ -33,7 +34,7 @@ public class CustomerCommandValidatorTests : TestBase
 
         var result = validator.Validate(command);
 
-        int size = command.FullName.Length;
+        var size = command.FullName.Length;
 
         var validationFailure = result.Errors.Where(x => x.PropertyName == nameof(command.FullName)).FirstOrDefault();
 
@@ -48,7 +49,7 @@ public class CustomerCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_FullName_Is_Too_Long()
     {
-        int size = 151;
+        var size = 151;
         var command = new CustomerCommandCreate { FullName = new string('*', size) };
         var validator = new CustomerCommandValidator();
 
@@ -98,7 +99,7 @@ public class CustomerCommandValidatorTests : TestBase
 
         var result = validator.Validate(command);
 
-        int size = command.Address.Length;
+        var size = command.Address.Length;
 
         var validationFailure = result.Errors.Where(x => x.PropertyName == nameof(command.Address)).FirstOrDefault();
 

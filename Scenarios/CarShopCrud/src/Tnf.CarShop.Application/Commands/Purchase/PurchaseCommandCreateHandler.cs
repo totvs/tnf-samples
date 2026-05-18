@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-
 using Tnf.CarShop.Application.Extensions;
 using Tnf.CarShop.Domain.Repositories;
-
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Purchase;
+
 public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreate, PurchaseResult>
 {
     private readonly ICarRepository _carRepository;
@@ -28,23 +27,30 @@ public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreate
         _storeRepository = storeRepository;
     }
 
-    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandCreate command, CancellationToken cancellationToken = default)
-    {      
-
+    public override async Task<PurchaseResult> ExecuteAsync(PurchaseCommandCreate command,
+        CancellationToken cancellationToken = default)
+    {
         var car = await _carRepository.GetAsync(command.CarId, cancellationToken);
         var customer = await _customerRepository.GetAsync(command.CustomerId, cancellationToken);
         var store = await _storeRepository.GetAsync(command.StoreId, cancellationToken);
 
         if (car == null)
+        {
             throw new Exception("Invalid car.");
+        }
 
         if (customer == null)
+        {
             throw new Exception("Invalid customer.");
+        }
 
         if (store == null)
+        {
             throw new Exception("Invalid store.");
+        }
 
-        var purchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price, command.PurchaseDate, command.StoreId);
+        var purchase = new Domain.Entities.Purchase(command.CarId, command.CustomerId, command.Price,
+            command.PurchaseDate, command.StoreId);
 
         purchase = await _purchaseRepository.InsertAsync(purchase, cancellationToken);
 
@@ -54,7 +60,5 @@ public class PurchaseCommandCreateHandler : CommandHandler<PurchaseCommandCreate
 
 
         return new PurchaseResult { PurchaseDto = purchase.ToDto() };
-    }   
-
-    
+    }
 }

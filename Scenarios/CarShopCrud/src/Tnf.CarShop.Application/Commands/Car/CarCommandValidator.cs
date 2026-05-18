@@ -9,23 +9,27 @@ public class CarCommandValidator : TnfFluentValidator<CarCommandCreate>
     {
         RuleFor(command => command.Brand)
             .NotEmpty()
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CarCommandCreate.Brand));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(CarCommandCreate.Brand));
 
         RuleFor(command => command.Brand)
             .Length(2, 100)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyLength, nameof(CarCommandCreate.Brand));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyLength,
+                nameof(CarCommandCreate.Brand));
 
         RuleFor(command => command.Model)
             .NotEmpty()
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CarCommandCreate.Model));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(CarCommandCreate.Model));
 
         RuleFor(command => command.Model)
             .Length(2, 100)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyLength, nameof(CarCommandCreate.Model));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyLength,
+                nameof(CarCommandCreate.Model));
 
         RuleFor(command => command.Year)
-            .InclusiveBetween(1900, DateTime.Now.Year+1)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.CarYearLength, DateTime.Now.Year+1);
+            .InclusiveBetween(1900, DateTime.Now.Year + 1)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.CarYearLength, DateTime.Now.Year + 1);
 
         RuleFor(command => command.Price)
             .GreaterThan(0)
@@ -34,6 +38,7 @@ public class CarCommandValidator : TnfFluentValidator<CarCommandCreate>
         RuleFor(command => command.StoreId)
             .Must(storeId => storeId != Guid.Empty)
             .When(command => command.StoreId == default)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(CarCommandCreate.StoreId));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(CarCommandCreate.StoreId));
     }
 }

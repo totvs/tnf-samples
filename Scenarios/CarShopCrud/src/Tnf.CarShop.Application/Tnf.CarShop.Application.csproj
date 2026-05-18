@@ -7,32 +7,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Factories\**" />
-        <EmbeddedResource Remove="Factories\**" />
-        <None Remove="Factories\**" />
+        <Compile Remove="Factories\**"/>
+        <EmbeddedResource Remove="Factories\**"/>
+        <None Remove="Factories\**"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Localization\Sources\CarShop-pt-BR.json" />
+        <None Remove="Localization\Sources\CarShop-pt-BR.json"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Localization\Sources\CarShop-pt-BR.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
+        <EmbeddedResource Include="Localization\Sources\CarShop-pt-BR.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
         <!-- Version managed in Directory.Packages.props (CPM) -->
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
-        <PackageReference Include="Tnf.Commands" />
-        <PackageReference Include="Tnf.Commands.FluentValidation" />
-        <PackageReference Include="Tnf.Messaging" />
-        <PackageReference Include="Tnf.Messaging.RabbitMQ" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+        <PackageReference Include="Tnf.Commands"/>
+        <PackageReference Include="Tnf.Commands.FluentValidation"/>
+        <PackageReference Include="Tnf.Messaging"/>
+        <PackageReference Include="Tnf.Messaging.RabbitMQ"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

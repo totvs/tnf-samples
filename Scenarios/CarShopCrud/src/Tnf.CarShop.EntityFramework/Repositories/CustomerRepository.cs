@@ -18,12 +18,15 @@ public class CustomerRepository : EfCoreRepositoryBase<CarShopDbContext, Custome
     {
         var customer = await GetAsync(customerId, cancellationToken);
         if (customer is null)
+        {
             return;
+        }
 
         await base.DeleteAsync(customer, cancellationToken);
     }
 
-    public async Task<IListDto<CustomerDto>> GetAllAsync(RequestAllDto requestAllDto, CancellationToken cancellationToken = default)
+    public async Task<IListDto<CustomerDto>> GetAllAsync(RequestAllDto requestAllDto,
+        CancellationToken cancellationToken = default)
     {
         var basequery = GetAll().AsNoTracking();
 

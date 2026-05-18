@@ -2,7 +2,7 @@
 
 namespace Tnf.CarShop.Application.Commands.Customer;
 
-public class CustomerCommandCreate: ICommand<CustomerResult>, ITransactionCommand
+public class CustomerCommandCreate : ICommand<CustomerResult>, ITransactionCommand
 {
     public string FullName { get; set; }
     public string Address { get; set; }

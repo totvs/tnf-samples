@@ -6,18 +6,6 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
 {
-    public Guid Id { get; set; }
-    public string Brand { get; private set; }
-    public string Model { get; private set; }
-    public int Year { get; private set; }
-    public decimal Price { get; private set; }
-    public Guid TenantId { get; set; }
-
-    public Guid StoreId { get; set; }
-    public Store Store { get; set; }
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
-
     public Car(string brand, string model, int year, decimal price, Guid storeId)
     {
         Brand = brand;
@@ -25,12 +13,26 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
         Year = year;
         Price = price;
         StoreId = storeId;
-    }    
+    }
+
+    public Guid Id { get; set; }
+    public string Brand { get; private set; }
+    public string Model { get; private set; }
+    public int Year { get; private set; }
+    public decimal Price { get; private set; }
+
+    public Guid StoreId { get; set; }
+    public Store Store { get; set; }
+    public DateTime CreationTime { get; set; }
+    public DateTime? LastModificationTime { get; set; }
+    public Guid TenantId { get; set; }
 
     public void UpdatePrice(decimal newPrice)
     {
         if (newPrice <= 0)
+        {
             return;
+        }
 
         Price = newPrice;
     }
@@ -38,7 +40,9 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateBrand(string brand)
     {
         if (brand.IsNullOrEmpty())
+        {
             return;
+        }
 
         Brand = brand;
     }
@@ -46,7 +50,9 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateModel(string model)
     {
         if (model.IsNullOrEmpty())
+        {
             return;
+        }
 
         Model = model;
     }
@@ -54,7 +60,9 @@ public class Car : IHasCreationTime, IHasModificationTime, IMustHaveTenant
     public void UpdateYear(int year)
     {
         if (year <= 0)
+        {
             return;
+        }
 
         Year = year;
     }

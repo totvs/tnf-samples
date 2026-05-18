@@ -1,8 +1,6 @@
 ﻿using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Entities;
-
 using Tnf.Dto;
-
 using Tnf.Repositories;
 
 namespace Tnf.CarShop.Domain.Repositories;

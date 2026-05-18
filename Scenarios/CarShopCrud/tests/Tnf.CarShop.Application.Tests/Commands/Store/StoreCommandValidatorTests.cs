@@ -7,12 +7,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Name_Is_Empty()
     {
-        var command = new StoreCommandCreate
-        {
-            Name = string.Empty,
-            Cnpj = "cnpj",
-            Location = "Location"
-        };
+        var command = new StoreCommandCreate { Name = string.Empty, Cnpj = "cnpj", Location = "Location" };
 
         var validator = new StoreCommandValidator();
 
@@ -26,12 +21,7 @@ public class StoreCommandValidatorTests : TestBase
     public void Should_Have_Error_When_Name_Is_Less_Than_2_Characters()
     {
         var validator = new StoreCommandValidator();
-        var command = new StoreCommandCreate
-        {
-            Name = "T",
-            Cnpj = "cnpj",
-            Location = "Location"
-        };
+        var command = new StoreCommandCreate { Name = "T", Cnpj = "cnpj", Location = "Location" };
 
         var result = validator.Validate(command);
 
@@ -50,12 +40,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Name_Is_Too_Long()
     {
-        var command = new StoreCommandCreate
-        {
-            Name = new string('*', 151),
-            Cnpj = "cnpj",
-            Location = "Location"
-        };
+        var command = new StoreCommandCreate { Name = new string('*', 151), Cnpj = "cnpj", Location = "Location" };
 
         var validator = new StoreCommandValidator();
 
@@ -76,12 +61,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Location_Is_Empty()
     {
-        var command = new StoreCommandCreate
-        {
-            Name = "Name",
-            Cnpj = "cnpj",
-            Location = string.Empty
-        };
+        var command = new StoreCommandCreate { Name = "Name", Cnpj = "cnpj", Location = string.Empty };
 
         var validator = new StoreCommandValidator();
 
@@ -94,12 +74,7 @@ public class StoreCommandValidatorTests : TestBase
     [Fact]
     public void Should_Have_Error_When_Location_Is_Too_Long()
     {
-        var command = new StoreCommandCreate
-        {
-            Name = "Name",
-            Cnpj = "cnpj",
-            Location = new string('*', 251)
-        };
+        var command = new StoreCommandCreate { Name = "Name", Cnpj = "cnpj", Location = new string('*', 251) };
 
         var validator = new StoreCommandValidator();
 

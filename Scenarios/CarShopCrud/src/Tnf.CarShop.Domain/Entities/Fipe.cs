@@ -4,6 +4,16 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Fipe : IHasCreationTime, IHasModificationTime
 {
+    public Fipe(string fipeCode, string monthYearReference, string brand, string model, int year, decimal averagePrice)
+    {
+        FipeCode = fipeCode;
+        MonthYearReference = monthYearReference;
+        Brand = brand;
+        Model = model;
+        Year = year;
+        AveragePrice = averagePrice;
+    }
+
     public Guid Id { get; }
     public string FipeCode { get; private set; }
     public string MonthYearReference { get; private set; }
@@ -14,16 +24,6 @@ public class Fipe : IHasCreationTime, IHasModificationTime
 
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
-
-    public Fipe(string fipeCode, string monthYearReference, string brand, string model, int year, decimal averagePrice)
-    {
-        FipeCode = fipeCode;
-        MonthYearReference = monthYearReference;
-        Brand = brand;
-        Model = model;
-        Year = year;
-        AveragePrice = averagePrice;
-    }
 
     public void UpdateTable(string monthYearReference, string brand, string model, int year, decimal averagePrice)
     {

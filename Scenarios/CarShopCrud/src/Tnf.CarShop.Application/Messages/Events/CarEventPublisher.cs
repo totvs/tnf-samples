@@ -1,7 +1,6 @@
-﻿using Tnf.CarShop.Domain.Dtos;
-using Tnf.CarShop.Application.Localization;
+﻿using Tnf.CarShop.Application.Localization;
+using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Entities;
-
 using Tnf.Messaging;
 
 namespace Tnf.CarShop.Application.Messages.Events;
@@ -18,7 +17,9 @@ public class CarEventPublisher : ICarEventPublisher
     public async Task NotifyCreationAsync(Car car, CancellationToken cancellationToken = default)
     {
         if (car is null)
+        {
             return;
+        }
 
         var message = new CloudEvent<CarCreatedEvent>
         {
@@ -40,7 +41,9 @@ public class CarEventPublisher : ICarEventPublisher
     public async Task NotifyUpdateAsync(CarDto carDto, CancellationToken cancellationToken = default)
     {
         if (carDto is null)
+        {
             return;
+        }
 
         var message = new CloudEvent<CarUpdatedEvent>
         {

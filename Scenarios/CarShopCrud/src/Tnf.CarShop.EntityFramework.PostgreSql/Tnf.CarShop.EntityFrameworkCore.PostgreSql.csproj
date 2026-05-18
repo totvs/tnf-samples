@@ -12,12 +12,12 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-        <PackageReference Include="Tnf.EntityFrameworkCore" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="Tnf.EntityFrameworkCore"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.EntityFramework\Tnf.CarShop.EntityFrameworkCore.csproj"/>
     </ItemGroup>
 
 </Project>

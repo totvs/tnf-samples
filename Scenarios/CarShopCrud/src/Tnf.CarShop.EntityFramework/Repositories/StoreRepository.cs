@@ -18,22 +18,21 @@ public class StoreRepository : EfCoreRepositoryBase<CarShopDbContext, Store>, IS
     {
         var store = await GetAsync(id, cancellationToken);
         if (store is null)
+        {
             return;
+        }
 
         await base.DeleteAsync(store, cancellationToken);
     }
 
-    public async Task<IListDto<StoreDto>> GetAllAsync(RequestAllDto requestAllDto, CancellationToken cancellationToken = default)
+    public async Task<IListDto<StoreDto>> GetAllAsync(RequestAllDto requestAllDto,
+        CancellationToken cancellationToken = default)
     {
         var baseQuery = GetAll().AsNoTracking();
 
-        return await baseQuery.Select(x => new StoreDto
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Location = x.Location,
-            Cnpj = x.Cnpj
-        }).ToListDtoAsync(requestAllDto, cancellationToken);
+        return await baseQuery
+            .Select(x => new StoreDto { Id = x.Id, Name = x.Name, Location = x.Location, Cnpj = x.Cnpj })
+            .ToListDtoAsync(requestAllDto, cancellationToken);
     }
 
     public async Task<Store> GetAsync(Guid id, CancellationToken cancellationToken = default)

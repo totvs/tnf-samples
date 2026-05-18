@@ -8,12 +8,12 @@
 
     <ItemGroup>
         <!-- Version managed in Directory.Packages.props (CPM) -->
-        <PackageReference Include="Tnf.EntityFrameworkCore" />
+        <PackageReference Include="Tnf.EntityFrameworkCore"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj" />
-        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj"/>
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

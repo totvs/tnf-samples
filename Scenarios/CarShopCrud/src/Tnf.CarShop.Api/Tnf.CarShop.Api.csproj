@@ -9,42 +9,42 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Endpoints\**" />
-        <Compile Remove="Requests\**" />
-        <Content Remove="Endpoints\**" />
-        <Content Remove="Requests\**" />
-        <EmbeddedResource Remove="Endpoints\**" />
-        <EmbeddedResource Remove="Requests\**" />
-        <None Remove="Endpoints\**" />
-        <None Remove="Requests\**" />
+        <Compile Remove="Endpoints\**"/>
+        <Compile Remove="Requests\**"/>
+        <Content Remove="Endpoints\**"/>
+        <Content Remove="Requests\**"/>
+        <EmbeddedResource Remove="Endpoints\**"/>
+        <EmbeddedResource Remove="Requests\**"/>
+        <None Remove="Endpoints\**"/>
+        <None Remove="Requests\**"/>
     </ItemGroup>
 
     <ItemGroup>
         <!-- Version managed in Directory.Packages.props (CPM) -->
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
-        <PackageReference Include="Serilog" />
-        <PackageReference Include="Serilog.Enrichers.Environment" />
-        <PackageReference Include="Serilog.Extensions.Hosting" />
-        <PackageReference Include="Serilog.Settings.Configuration" />
-        <PackageReference Include="Serilog.Sinks.Async" />
-        <PackageReference Include="Serilog.Sinks.Console" />
-        <PackageReference Include="Swashbuckle.AspNetCore" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" />
-        <PackageReference Include="Tnf.AspNetCore" />
-        <PackageReference Include="Tnf.AspNetCore.Security" />
-        <PackageReference Include="Tnf.Commands" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"/>
+        <PackageReference Include="Serilog"/>
+        <PackageReference Include="Serilog.Enrichers.Environment"/>
+        <PackageReference Include="Serilog.Extensions.Hosting"/>
+        <PackageReference Include="Serilog.Settings.Configuration"/>
+        <PackageReference Include="Serilog.Sinks.Async"/>
+        <PackageReference Include="Serilog.Sinks.Console"/>
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft"/>
+        <PackageReference Include="Tnf.AspNetCore"/>
+        <PackageReference Include="Tnf.AspNetCore.Security"/>
+        <PackageReference Include="Tnf.Commands"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj" />
-        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
-        <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj" />
+        <ProjectReference Include="..\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj"/>
+        <ProjectReference Include="..\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
+        <ProjectReference Include="..\Tnf.CarShop.EntityFramework.PostgreSql\Tnf.CarShop.EntityFrameworkCore.PostgreSql.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

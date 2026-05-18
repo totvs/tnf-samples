@@ -18,12 +18,15 @@ public class PurchaseRepository : EfCoreRepositoryBase<CarShopDbContext, Purchas
     {
         var purchase = await GetAsync(purchaseId, cancellationToken);
         if (purchase is null)
+        {
             return;
+        }
 
         await base.DeleteAsync(purchase, cancellationToken);
     }
 
-    public async Task<IListDto<PurchaseDto>> GetAllAsync(RequestAllDto requestAllDto, CancellationToken cancellationToken = default)
+    public async Task<IListDto<PurchaseDto>> GetAllAsync(RequestAllDto requestAllDto,
+        CancellationToken cancellationToken = default)
     {
         var baseQuery = GetAll()
             .Include(c => c.Car)
@@ -37,8 +40,7 @@ public class PurchaseRepository : EfCoreRepositoryBase<CarShopDbContext, Purchas
             Car = x.Car.ToDto(),
             Store = x.Store.ToDto(),
             Id = x.Id,
-            PurchaseDate = x.PurchaseDate            
-            
+            PurchaseDate = x.PurchaseDate
         }).ToListDtoAsync(requestAllDto, cancellationToken);
     }
 
@@ -56,7 +58,9 @@ public class PurchaseRepository : EfCoreRepositoryBase<CarShopDbContext, Purchas
         var purchase = await GetAsync(id, cancellationToken);
 
         if (purchase is null)
+        {
             return null;
+        }
 
         return new PurchaseDto
         {

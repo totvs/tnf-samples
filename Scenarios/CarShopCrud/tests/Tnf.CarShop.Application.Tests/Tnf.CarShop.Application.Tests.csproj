@@ -11,10 +11,10 @@
 
     <ItemGroup>
         <!-- Version managed in Directory.Packages.props (CPM) -->
-        <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="Moq" />
-        <PackageReference Include="xunit" />
+        <PackageReference Include="FluentAssertions"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Moq"/>
+        <PackageReference Include="xunit"/>
         <PackageReference Include="xunit.runner.visualstudio">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -26,8 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj" />
-        <ProjectReference Include="..\..\src\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj" />
+        <ProjectReference Include="..\..\src\Tnf.CarShop.Application\Tnf.CarShop.Application.csproj"/>
+        <ProjectReference Include="..\..\src\Tnf.CarShop.Domain\Tnf.CarShop.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

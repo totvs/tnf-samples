@@ -8,11 +8,12 @@ using Tnf.Commands;
 using Tnf.Messaging;
 
 namespace Tnf.CarShop.Application.DependencyInjection;
+
 public static class ServiceCollectionExtensions
-{    
+{
     public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddTransient<ICarEventPublisher, CarEventPublisher>();       
+        services.AddTransient<ICarEventPublisher, CarEventPublisher>();
 
         services.AddTnfMessaging(messaging =>
         {
@@ -42,7 +43,8 @@ public static class ServiceCollectionExtensions
         services.AddTnfCommands(commands =>
         {
             commands.AddCommandHandlersFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
-            commands.Services.Add(ServiceDescriptor.Scoped(typeof(ICommandMiddleware<,>), typeof(TransactionMiddleware<,>)));
+            commands.Services.Add(ServiceDescriptor.Scoped(typeof(ICommandMiddleware<,>),
+                typeof(TransactionMiddleware<,>)));
         });
 
         return services;

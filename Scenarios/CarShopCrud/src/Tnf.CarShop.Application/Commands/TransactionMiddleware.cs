@@ -12,7 +12,8 @@ public class TransactionMiddleware<TCommand, TResult> : ICommandMiddleware<TComm
         _unitOfWorkManager = unitOfWorkManager;
     }
 
-    public async Task InvokeAsync(ICommandContext<TCommand, TResult> context, Func<Task> next, CancellationToken cancellationToken = default)
+    public async Task InvokeAsync(ICommandContext<TCommand, TResult> context, Func<Task> next,
+        CancellationToken cancellationToken = default)
     {
         if (context.Command is ITransactionCommand)
         {
