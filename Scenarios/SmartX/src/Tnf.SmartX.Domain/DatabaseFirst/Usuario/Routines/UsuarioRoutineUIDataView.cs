@@ -12,8 +12,9 @@ public class UsuarioRoutineUIDataView : UsuarioModelEntity, ISXRoutineLayoutData
                 .AddOnLoad(l => l.WithContext([RoutineLayoutEnum.DataDetail])
                     .AddAction(a => a
                         .AddShowMessageAction(s => s.WithIdentifier("showMessageOnLoadEvent").WithLabel("TESTE AÇÃO!")
-                            .WithMessage("Evento [OnLoad] disparado com sucesso!").WithMessageType(ActionMessageTypeEnum.Info))))
-                )
+                            .WithMessage("Evento [OnLoad] disparado com sucesso!")
+                            .WithMessageType(ActionMessageTypeEnum.Info))))
+            )
             .AddDataView(x => x.WithIdentifier("dataViewUsers").WithTitle("Listagem de Usuários").WithIndex(true)
                 .AddTable(e => e.WithIdentifier("tableUsers")
                     .SetColumn(c => c.WithProperty(nameof(Usuario)))

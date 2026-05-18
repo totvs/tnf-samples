@@ -1,6 +1,6 @@
 ﻿namespace Tnf.SmartX.Domain.CodeFirst.Entities;
 
-public class TeamEntity : SXObject
+public class TeamEntity : SXObject<TeamEntity>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

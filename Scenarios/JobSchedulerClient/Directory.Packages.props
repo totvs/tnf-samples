@@ -1,0 +1,37 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Central Package Management (CPM)
+      https://learn.microsoft.com/nuget/consume-packages/central-package-management
+
+      Tnf.* packages must be resolved from the private TOTVS feed (see nuget.config).
+      The 8.* wildcard floats to the latest available 8.x.x patch from that feed.
+
+      CentralPackageFloatingVersionsEnabled opts in to wildcard/floating versions inside
+      Directory.Packages.props (disabled by default per NuGet NU1011).
+      See: https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu1011
+    -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="TNF Framework – latest 8.x patch from the TOTVS feed">
+    <PackageVersion Include="Tnf.AspNetCore"                        Version="8.*" />
+    <PackageVersion Include="Tnf.AspNetCore.Security"               Version="8.*" />
+    <PackageVersion Include="Tnf.AspNetCore.Security.FluigIdentity" Version="8.*" />
+    <PackageVersion Include="Tnf.Jobs"                              Version="8.*" />
+  </ItemGroup>
+
+  <ItemGroup Label="API / Tooling">
+    <PackageVersion Include="Swashbuckle.AspNetCore"                 Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Logging – Serilog">
+    <PackageVersion Include="Serilog.AspNetCore"                     Version="8.0.3" />
+    <PackageVersion Include="Serilog.Enrichers.Environment"          Version="3.0.1" />
+    <PackageVersion Include="Serilog.Settings.Configuration"         Version="8.0.4" />
+    <PackageVersion Include="Serilog.Sinks.Async"                    Version="2.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console"                  Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File"                     Version="6.0.0" />
+  </ItemGroup>
+</Project>

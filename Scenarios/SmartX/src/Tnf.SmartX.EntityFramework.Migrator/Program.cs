@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using Tnf.SmartX.EntityFramework.Migrator;
-
 using Serilog;
+using Tnf.SmartX.EntityFramework.Migrator;
 using Tnf.SmartX.EntityFramework.PostgreSql;
 
 const string CodeFirstConnectionStringName = "CodeFirst";

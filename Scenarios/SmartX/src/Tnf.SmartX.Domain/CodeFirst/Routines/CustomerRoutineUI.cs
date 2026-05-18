@@ -61,10 +61,10 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
             .SetProperty(p => p
                 .WithProperty(nameof(Email))
                 .AddComponent(c => c
-                        .AddInputEmail(ie => ie
-                            .WithPlaceholder("E-mail")
-                        )
+                    .AddInputEmail(ie => ie
+                        .WithPlaceholder("E-mail")
                     )
+                )
                 .WithTitle("E-mail")
                 .AddGridSystem(gd => gd
                     .WithExtraLargeColumns(6)
@@ -88,19 +88,19 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
             .SetProperty(p => p
                 .WithProperty(nameof(Id))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(CreationTime))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(LastModificationTime))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(TenantId))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(Addresses))
                 .SetChildProperty(cp => cp
@@ -112,25 +112,25 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
                         .WithDisplayFields(["zipCode", "street", "city", "state"])
                         .WithFieldValue("zipCode")
                         .WithMultiSelect(false)
-                        )
                     )
+                )
                 .SetChildProperty(cp => cp
                     .WithProperty(nameof(AddressEntity.Street))
                     .WithOrder(2)
-                    )
+                )
                 .SetChildProperty(cp => cp
                     .WithProperty(nameof(AddressEntity.City))
                     .WithOrder(3)
-                    )
+                )
                 .SetChildProperty(cp => cp
                     .WithProperty(nameof(AddressEntity.State))
                     .WithOrder(4)
-                    )
+                )
                 .SetChildProperty(cp => cp
                     .WithProperty(nameof(AddressEntity.Deliveries))
                     .SetChildProperty(cp => cp
-                    .WithProperty(nameof(DeliveryEntity.ScheduledDate))
-                    .WithDefaultValue(DateTime.UtcNow.ToString("yyyy-MM-dd"))
+                        .WithProperty(nameof(DeliveryEntity.ScheduledDate))
+                        .WithDefaultValue(DateTime.UtcNow.ToString("yyyy-MM-dd"))
                     )
                 )
             )
@@ -153,7 +153,6 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
                 //.WithFields( f => f
                 //    .AddField(x => x.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.ZipCode)))
                 //)
-
                 .AddAction(a => a
                     .AddApiCallAction(api => api
                         .WithIdentifier("apiCallGetAddress")
@@ -161,31 +160,33 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
                         .WithEndpoint("data/ZipCodeEntityModel/{{$model.addresses.zipCode}}")
                         .AddHeaders(h => h.WithHeader("Content-Type", "application/json"))
                         .AddActionSuccess(acs => acs
-                        .AddSetFieldsAction(fa => fa
-                            .WithIdentifier("setFields")
-                            .AddField(f => f
-                                .SetProperty(p => p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.Street)))
-                                //.SetProperty(p => p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.Street)))
-                                .WithValue("{{$response.street}}")
+                            .AddSetFieldsAction(fa => fa
+                                .WithIdentifier("setFields")
+                                .AddField(f => f
+                                    .SetProperty(p =>
+                                        p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.Street)))
+                                    //.SetProperty(p => p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.Street)))
+                                    .WithValue("{{$response.street}}")
+                                )
+                                .AddField(f => f
+                                    .SetProperty(p =>
+                                        p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.City)))
+                                    .WithValue("{{$response.city}}")
+                                )
+                                .AddField(f => f
+                                    .SetProperty(p =>
+                                        p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.State)))
+                                    .WithValue("{{$response.state}}")
+                                )
                             )
-                            .AddField(f => f
-                                .SetProperty(p => p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.City)))
-                                .WithValue("{{$response.city}}")
-                            )
-                            .AddField(f => f
-                                .SetProperty(p => p.WithNestedProperty(nameof(Addresses), nameof(AddressEntity.State)))
-                                .WithValue("{{$response.state}}")
+                        )
+                        .AddActionError(err => err
+                            .AddShowMessageAction(sm => sm
+                                .WithMessage("Ocorreu um erro ao buscar o CEP.")
+                                .WithMessageType(ActionMessageTypeEnum.Error)
                             )
                         )
                     )
-                    .AddActionError(err => err
-                        .AddShowMessageAction(sm => sm
-                            .WithMessage("Ocorreu um erro ao buscar o CEP.")
-                            .WithMessageType(ActionMessageTypeEnum.Error)
-
-                        )
-                    )
-                )
                 )
             )
             //.AddOnBlur(c => c
@@ -285,7 +286,6 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
                     )
                 )
             )
-
         );
     }
 
@@ -336,18 +336,18 @@ public class CustomerRoutineUI : CustomerEntity, ISXRoutineLayoutDataOperations
                 .WithLabel("Abrir AddressRoutine")
                 .AddAction(a => a
                     .AddNavigateAction(ima => ima
-                        .WithIdentifier("addressRoutineAction")
-                        .WithLabel("Abrir AddressRoutine")
-                        .WithUrl("smart-x/AddressRoutine")
-                        .WithTarget(ActionTargetEnum.Self)
-                    //.WithRoutine("CompanyRoutine")
-                    //.WithTargetView("dataViewAddress")
+                            .WithIdentifier("addressRoutineAction")
+                            .WithLabel("Abrir AddressRoutine")
+                            .WithUrl("smart-x/AddressRoutine")
+                            .WithTarget(ActionTargetEnum.Self)
+                        //.WithRoutine("CompanyRoutine")
+                        //.WithTargetView("dataViewAddress")
 
-                    // .AddRoutineAction(ima => ima
-                    //     .WithIdentifier("addressRoutineAction")
-                    //     .WithLabel("Abrir AddressRoutine")
-                    //     .WithRoutine("CompanyRoutine")
-                    //     .WithTargetView("dataViewAddress")
+                        // .AddRoutineAction(ima => ima
+                        //     .WithIdentifier("addressRoutineAction")
+                        //     .WithLabel("Abrir AddressRoutine")
+                        //     .WithRoutine("CompanyRoutine")
+                        //     .WithTargetView("dataViewAddress")
                     )
                 )
             )

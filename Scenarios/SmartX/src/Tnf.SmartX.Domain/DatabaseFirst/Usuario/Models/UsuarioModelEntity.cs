@@ -1,5 +1,4 @@
-﻿
-using Tnf.SmartX.Domain.DatabaseFirst.Usuario.Entities;
+﻿using Tnf.SmartX.Domain.DatabaseFirst.Usuario.Entities;
 
 namespace Tnf.SmartX.Domain.DatabaseFirst.Usuario.Models;
 
@@ -9,13 +8,15 @@ public class UsuarioModelEntity : UsuarioObjectEntity, ISXModel
     /// <summary>
     ///     Lista de permissões do usuário
     /// </summary>
-    [SxRelation(Name = "fk_GUsuario_GPermis", Title = "Permissões", Columns = new[] { "CODUSUARIO" }, ParentColumns = new[] { "CODUSUARIO" })]
+    [SxRelation(Name = "fk_GUsuario_GPermis", Title = "Permissões", Columns = new[] { "CODUSUARIO" },
+        ParentColumns = new[] { "CODUSUARIO" })]
     public List<PermisObjectEntity> Permis { get; set; } = new();
 
     /// <summary>
     ///     Lista de perfis do usuário
     /// </summary>
-    [SxRelation(Name = "fk_GUsuario_GUsrPerfil", Title = "Perfis", Columns = new[] { "CODUSUARIO" }, ParentColumns = new[] { "CODUSUARIO" })]
+    [SxRelation(Name = "fk_GUsuario_GUsrPerfil", Title = "Perfis", Columns = new[] { "CODUSUARIO" },
+        ParentColumns = new[] { "CODUSUARIO" })]
     public List<UsuarioPerfilObjectEntity> Perfis { get; set; } = new();
 
     /// <summary>
@@ -38,23 +39,23 @@ public class UsuarioModelEntity : UsuarioObjectEntity, ISXModel
                     )));
 
         builder.SetProperty(p => p
-                .WithProperty("codAcesso")
-                .AddLookup(l =>
-                  l.WithModelRef("GlbAcessoModel")
+            .WithProperty("codAcesso")
+            .AddLookup(l =>
+                l.WithModelRef("GlbAcessoModel")
                     .WithDisplayFields(new[] { "descricao" })
                     .WithFieldValue("codAcesso")
                     .WithLookupFinder(new FinderResult(new[] { "codAcesso" })))
-                );
+        );
 
         builder.SetProperty(p => p.WithProperty(nameof(Status))
-                .WithOptionValues(
-                    [
-                        new OptionResult { Value = 0, Description = "Inativo"},
-                        new OptionResult { Value = 1, Description = "Ativo" },
-                    ]));
+            .WithOptionValues(
+            [
+                new OptionResult { Value = 0, Description = "Inativo" },
+                new OptionResult { Value = 1, Description = "Ativo" }
+            ]));
     }
 
-    protected override void DoBeforeCreate(BeforeCreateParams parms)
+    public override Task BeforeCreate(BeforeCreateParams parms)
     {
         Senha = "1234561";
         Controle = 1;
@@ -68,6 +69,8 @@ public class UsuarioModelEntity : UsuarioObjectEntity, ISXModel
                 indice++;
             }
         }
+
+        return Task.CompletedTask;
     }
 
     protected override bool DoOnValidate(OnValidateParams parms)

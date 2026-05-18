@@ -1,6 +1,6 @@
 ﻿namespace Tnf.SmartX.Domain.CodeFirst.Entities;
 
-public class EmployeeEntity : SXObject
+public class EmployeeEntity : SXObject<EmployeeEntity>
 {
     public Guid Id { get; set; }
     public string FullName { get; set; }

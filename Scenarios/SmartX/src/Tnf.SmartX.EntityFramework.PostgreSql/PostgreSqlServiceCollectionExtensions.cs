@@ -9,11 +9,11 @@ public static class PostgreSqlServiceCollectionExtensions
     private const string CodeFirstCustomerConnectionString = "CodeFirstCustomer";
 
     public static IServiceCollection AddEFCorePostgreSql(this IServiceCollection services, IConfiguration configuration)
-    {        
+    {
         services.AddTnfDbContext<CompanyDbContext, PostgreSqlCompanyDbContext>(c =>
         {
             c.DbContextOptions.UseNpgsql(c.ConnectionString);
-        });        
+        });
 
         services.AddTnfDbContext<CustomerDbContext, PostgreSqlCustomerDbContext>(c =>
         {

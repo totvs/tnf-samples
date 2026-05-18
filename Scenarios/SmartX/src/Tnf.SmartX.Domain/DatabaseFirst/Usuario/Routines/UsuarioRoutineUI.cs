@@ -16,16 +16,19 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                 .AddOnBlur(b => b.WithContext([RoutineLayoutEnum.DataNew, RoutineLayoutEnum.DataEdit])
                     .WithFields(f => f.AddField(nameof(Usuario)))
                     .AddAction(a => a
-                      .AddApiCallAction(ac => ac.WithIdentifier("apiCallVerifyUser").WithMethod(ActionMethodEnum.GET).WithEndpoint("data/GlbUsuarioModel/U099").WithLabel("Ação")
-                        .AddActionSuccess(acs => acs
-                          .AddSetFieldsAction(sf => sf.WithIdentifier("setFieldsEmail").WithLabel("Ação")
-                            .AddField(f => f
-                              .SetProperty(p => p.WithProperty(nameof(Email)).WithReadOnly(true))
-                              .WithValue("{{$response.email}}"))))
-                        .AddActionError(ace => ace
-                          .AddShowMessageAction(sm => sm.WithIdentifier("smEmailError").WithLabel("Ação")
-                            .WithMessage("Falha ao executar a ação do evento!").WithSupportMessage("Aqui será uma mensagem com mais detalhes do erro.").WithMessageType(ActionMessageTypeEnum.Error))))))
-                )
+                        .AddApiCallAction(ac => ac.WithIdentifier("apiCallVerifyUser").WithMethod(ActionMethodEnum.GET)
+                            .WithEndpoint("data/GlbUsuarioModel/U099").WithLabel("Ação")
+                            .AddActionSuccess(acs => acs
+                                .AddSetFieldsAction(sf => sf.WithIdentifier("setFieldsEmail").WithLabel("Ação")
+                                    .AddField(f => f
+                                        .SetProperty(p => p.WithProperty(nameof(Email)).WithReadOnly(true))
+                                        .WithValue("{{$response.email}}"))))
+                            .AddActionError(ace => ace
+                                .AddShowMessageAction(sm => sm.WithIdentifier("smEmailError").WithLabel("Ação")
+                                    .WithMessage("Falha ao executar a ação do evento!")
+                                    .WithSupportMessage("Aqui será uma mensagem com mais detalhes do erro.")
+                                    .WithMessageType(ActionMessageTypeEnum.Error))))))
+            )
             .AddDataView(x => x.WithIdentifier("dataViewUsers").WithTitle("Listagem de Usuários").WithIndex(true)
                 .AddTable(e => e.WithIdentifier("tableUsers")
                     .SetColumn(c => c.WithProperty(nameof(Usuario)))
@@ -42,7 +45,7 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                         f.WithProperty(nameof(Nome))
                             .WithAdvancedOperator([FilterOperatorEnum.Equal, FilterOperatorEnum.Contains],
                                 false)))
-                .Configuration(c => c                    
+                .Configuration(c => c
                     .ExcludeProperty(ep => ep.WithProperty(nameof(Senha)))
                     .ExcludeProperty(ep => ep.WithProperty(nameof(Controle)))
                     .ExcludeProperty(ep => ep.WithProperty(nameof(UserId)))
@@ -73,7 +76,8 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                             .AddShowMessageAction(r =>
                                 r.WithIdentifier("tableNavNameUser").WithLabel("Clique aqui!")
                                     .WithMessageType(ActionMessageTypeEnum.Info)
-                                    .WithMessage(string.Format("Olá! O nome do usuário selecionado é: {0}.", "{{$selectedRow.nome}}")))))
+                                    .WithMessage(string.Format("Olá! O nome do usuário selecionado é: {0}.",
+                                        "{{$selectedRow.nome}}")))))
                     .AddTableAction(ta => ta.WithMinSelectedItems(2).WithMaxSelectedItems(4)
                         .AddAction(a => a
                             .AddApiCallAction(n =>
@@ -157,9 +161,9 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                             .AddSection(e => e.WithIdentifier("tablePerfis").WithTitle("Perfis")
                                 .AddElement(c => c.WithProperty(nameof(Perfis))))))
                     .AddSection(s => s.WithIdentifier("relationalFields").WithTitle("Campos Relacionais").WithOrder(2)
-                    // .AddElement(e => e.WithProperty(nameof(DescricaoAcesso)))
-                    // .AddElement(e => e.WithProperty(nameof(Apelido)))
-                    // .AddElement(e => e.WithProperty(nameof(Chapa))))
+                        // .AddElement(e => e.WithProperty(nameof(DescricaoAcesso)))
+                        // .AddElement(e => e.WithProperty(nameof(Apelido)))
+                        // .AddElement(e => e.WithProperty(nameof(Chapa))))
                     )
                     // .AddDataEdit(v => v.WithIdentifier("dataEditUser").WithTitle("Editar Usuário")
                     .AddTabs(t => t
@@ -188,9 +192,9 @@ public class UsuarioRoutineUI : UsuarioModelEntity, ISXRoutineLayoutDataOperatio
                             .AddSection(e => e.WithIdentifier("tablePerfis").WithTitle("Perfis")
                                 .AddElement(c => c.WithProperty(nameof(Perfis))))))
                     .AddSection(s => s.WithIdentifier("relationalFields").WithTitle("Campos Relacionais").WithOrder(2))
-            // .AddElement(e => e.WithProperty(nameof(DescricaoAcesso)))
-            // .AddElement(e => e.WithProperty(nameof(Apelido)))
-            // .AddElement(e => e.WithProperty(nameof(Chapa))))
+                // .AddElement(e => e.WithProperty(nameof(DescricaoAcesso)))
+                // .AddElement(e => e.WithProperty(nameof(Apelido)))
+                // .AddElement(e => e.WithProperty(nameof(Chapa))))
             );
     }
 }

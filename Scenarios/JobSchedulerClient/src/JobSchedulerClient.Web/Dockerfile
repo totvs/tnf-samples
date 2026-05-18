@@ -1,19 +1,21 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["/JobSchedulerClient.Web.csproj", "src/JobSchedulerClient.Web/"]
+COPY ["../../nuget.config", "."]
+COPY ["../../Directory.Packages.props", "."]
+COPY ["JobSchedulerClient.Web.csproj", "src/JobSchedulerClient.Web/"]
 RUN dotnet restore "src/JobSchedulerClient.Web/JobSchedulerClient.Web.csproj"
-COPY . .
+COPY . ./src/JobSchedulerClient.Web/
 WORKDIR "/src/src/JobSchedulerClient.Web"
-RUN dotnet build "JobSchedulerClient.Web.csproj" -c Release -o /app
+RUN dotnet build "JobSchedulerClient.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "JobSchedulerClient.Web.csproj" -c Release -o /app
+RUN dotnet publish "JobSchedulerClient.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "JobSchedulerClient.Web.dll"]

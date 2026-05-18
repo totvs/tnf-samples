@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 using Tnf.SmartX.Domain.CodeFirst.Entities;
 
 namespace Tnf.SmartX.EntityFramework.Configurations;
@@ -23,7 +22,7 @@ public class DeliveryEntityConfiguration : IEntityTypeConfiguration<DeliveryEnti
         builder.Property(d => d.Status)
             .IsRequired()
             .SxTitle("Status")
-            .SXFixedValues(["Criado", "Em separação", "Em rota de entrega", "Entregue"]);
+            .SxFixedValues(["Criado", "Em separação", "Em rota de entrega", "Entregue"]);
 
         builder.Property(d => d.CreationTime)
             .SxHidden()

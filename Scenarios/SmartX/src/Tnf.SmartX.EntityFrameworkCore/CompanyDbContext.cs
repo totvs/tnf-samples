@@ -22,7 +22,6 @@ public class CompanyDbContext(DbContextOptions options, ITnfSession session) : T
         modelBuilder.ApplyConfiguration(new TeamEntityConfiguration());
 
         modelBuilder.SeedData();
-
     }
 }
 
@@ -66,45 +65,15 @@ public static class DatabaseSeedingExtensions
         );
 
         modelBuilder.Entity<DepartmentEntity>().HasData(
-            new DepartmentEntity
-            {
-                Id = deptItId,
-                Name = "IT",
-                CompanyId = company1Id
-            },
-            new DepartmentEntity
-            {
-                Id = deptHrId,
-                Name = "HR",
-                CompanyId = company1Id
-            },
-            new DepartmentEntity
-            {
-                Id = deptFinId,
-                Name = "Finance",
-                CompanyId = company2Id
-            }
+            new DepartmentEntity { Id = deptItId, Name = "IT", CompanyId = company1Id },
+            new DepartmentEntity { Id = deptHrId, Name = "HR", CompanyId = company1Id },
+            new DepartmentEntity { Id = deptFinId, Name = "Finance", CompanyId = company2Id }
         );
 
         modelBuilder.Entity<TeamEntity>().HasData(
-            new TeamEntity
-            {
-                Id = teamDevId,
-                Name = "Development",
-                DepartmentId = deptItId
-            },
-            new TeamEntity
-            {
-                Id = teamQaId,
-                Name = "QA",
-                DepartmentId = deptItId
-            },
-            new TeamEntity
-            {
-                Id = teamRecId,
-                Name = "Recruitment",
-                DepartmentId = deptHrId
-            }
+            new TeamEntity { Id = teamDevId, Name = "Development", DepartmentId = deptItId },
+            new TeamEntity { Id = teamQaId, Name = "QA", DepartmentId = deptItId },
+            new TeamEntity { Id = teamRecId, Name = "Recruitment", DepartmentId = deptHrId }
         );
 
         modelBuilder.Entity<EmployeeEntity>().HasData(

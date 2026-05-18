@@ -21,17 +21,15 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
         builder.AddEvents(e => e
             .AddOnBlur(b => b
                 .WithContext([RoutineLayoutEnum.DataNew, RoutineLayoutEnum.DataEdit])
-                    .WithFields(f => f.AddField(nameof(RegistrationNumber)))
+                .WithFields(f => f.AddField(nameof(RegistrationNumber)))
                 .AddAction(a => a
                     .AddServerValidateAction(sv => sv
-                        .WithIdentifier("validateRegistrationNumber")
+                            .WithIdentifier("validateRegistrationNumber")
                         //.GetPropertyValue(nameof(RegistrationNumber))
-
-                        )
                     )
                 )
-            );
-
+            )
+        );
     }
 
     private static void SetupDataView(IRoutineViewDataViewBuilder builder)
@@ -49,47 +47,47 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
                 .SetColumn(c => c.WithProperty(nameof(Email)))
             )
             .Configuration(c => c
-                .AddTableAction(ta => ta.WithMinSelectedItems(2).WithMaxSelectedItems(5)
-                  .AddAction(a => a
-                    .AddShowMessageAction(sm => sm
-                        .WithIdentifier("teste")
-                        .WithLabel("Teste")
-                        .WithMessage("OK!")
-                    )
-                  )
-                )
-                .AddPageAction(pa => pa
-                  .AddAction(a => a
-                    .AddNavigateAction(n => n
-                        .WithIdentifier("navigateDocHelp")
-                        .WithLabel("Ajuda")
-                        .WithTarget(ActionTargetEnum.Blank)
-                        .WithUrl("https://tnf.totvs.com.br/home"))
-                    )
-                  )
-                .AddPageAction(pa => pa
-                    .AddAction(a => a
-                        .AddNavigateAction(n => n
-                            .WithIdentifier("incluirCompanhia")
-                            .WithLabel("Ação de Página Incluir")
-                            .WithTargetView("dataNewCompany")
+                    .AddTableAction(ta => ta.WithMinSelectedItems(2).WithMaxSelectedItems(5)
+                        .AddAction(a => a
+                            .AddShowMessageAction(sm => sm
+                                .WithIdentifier("teste")
+                                .WithLabel("Teste")
+                                .WithMessage("OK!")
+                            )
                         )
                     )
-                )
-            //.AddPageAction(pa => pa
-            //    .AddAction(a => a
-            //        .AddRoutineAction(ra => ra
-            //            .WithIdentifier("routineActionTeste")
-            //            .WithLabel("Editar companhia")
-            //            .WithRoutine("CompanyRoutine")
-            //            .WithTargetView("dataEditCompany/{{$model.id}}")
-            //        ))
-            //    )
+                    .AddPageAction(pa => pa
+                        .AddAction(a => a
+                            .AddNavigateAction(n => n
+                                .WithIdentifier("navigateDocHelp")
+                                .WithLabel("Ajuda")
+                                .WithTarget(ActionTargetEnum.Blank)
+                                .WithUrl("https://tnf.totvs.com.br/home"))
+                        )
+                    )
+                    .AddPageAction(pa => pa
+                        .AddAction(a => a
+                            .AddNavigateAction(n => n
+                                .WithIdentifier("incluirCompanhia")
+                                .WithLabel("Ação de Página Incluir")
+                                .WithTargetView("dataNewCompany")
+                            )
+                        )
+                    )
+                //.AddPageAction(pa => pa
+                //    .AddAction(a => a
+                //        .AddRoutineAction(ra => ra
+                //            .WithIdentifier("routineActionTeste")
+                //            .WithLabel("Editar companhia")
+                //            .WithRoutine("CompanyRoutine")
+                //            .WithTargetView("dataEditCompany/{{$model.id}}")
+                //        ))
+                //    )
             )
             .SetProperty(p => p
                 .WithProperty(nameof(Id))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(TenantId))
                 .WithHidden(true)
@@ -98,7 +96,6 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
                 .WithProperty(nameof(RegistrationNumber))
                 .WithMask("99.999.999/9999-99")
             );
-
     }
 
     private static void SetupView<T>(
@@ -159,7 +156,8 @@ public class CompanyRoutineUI : CompanyEntity, ISXRoutineLayoutDataOperations
         }
     }
 
-    private static void ConfigureExclude<T>(IRoutineConfigBaseBuilder<T> builder, string[] excludedProperties) where T : class
+    private static void ConfigureExclude<T>(IRoutineConfigBaseBuilder<T> builder, string[] excludedProperties)
+        where T : class
     {
         foreach (var prop in excludedProperties)
         {

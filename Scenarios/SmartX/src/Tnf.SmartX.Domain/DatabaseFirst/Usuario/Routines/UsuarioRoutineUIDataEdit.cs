@@ -34,10 +34,10 @@ public class UsuarioRoutineUIDataEdit : UsuarioModelEntity, ISXRoutineLayoutData
                         .AddTab(s => s.WithIdentifier("tabPerfiUser").WithTitle("Perfis").WithOrder(3)
                             .AddSection(e => e.WithIdentifier("tablePerfis").WithTitle("Perfis")
                                 .AddElement(c => c.WithProperty(nameof(Perfis))))))
-            // .Configuration(c => c
-            //   .ExcludeProperty(ep => ep.WithProperty(nameof(DescricaoAcesso)))
-            //   .ExcludeProperty(ep => ep.WithProperty(nameof(Apelido)))
-            //   .ExcludeProperty(ep => ep.WithProperty(nameof(Chapa))))
+                // .Configuration(c => c
+                //   .ExcludeProperty(ep => ep.WithProperty(nameof(DescricaoAcesso)))
+                //   .ExcludeProperty(ep => ep.WithProperty(nameof(Apelido)))
+                //   .ExcludeProperty(ep => ep.WithProperty(nameof(Chapa))))
             );
     }
 }

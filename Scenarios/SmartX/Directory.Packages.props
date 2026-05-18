@@ -1,0 +1,53 @@
+<Project>
+    <PropertyGroup>
+        <!--
+          Central Package Management (CPM)
+          https://learn.microsoft.com/nuget/consume-packages/central-package-management
+    
+          Tnf.* packages must be resolved from the private TOTVS feed (see nuget.config).
+          The 8.* wildcard floats to the latest available 8.x.x patch from that feed.
+    
+          CentralPackageFloatingVersionsEnabled opts in to wildcard/floating versions inside
+          Directory.Packages.props (disabled by default per NuGet NU1011).
+          See: https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu1011
+        -->
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+    </PropertyGroup>
+    <ItemGroup Label="TNF Framework – latest 8.x patch from the TOTVS feed">
+        <PackageVersion Include="Tnf.AspNetCore" Version="8.*"/>
+        <PackageVersion Include="Tnf.AspNetCore.Security.FluigIdentity" Version="8.*"/>
+        <PackageVersion Include="Tnf.EntityFrameworkCore" Version="8.*"/>
+        <PackageVersion Include="Tnf.Repositories" Version="8.*"/>
+        <PackageVersion Include="Tnf.Runtime" Version="8.*"/>
+        <PackageVersion Include="Tnf.SmartX" Version="8.*"/>
+        <PackageVersion Include="Tnf.SmartX.EntityFrameworkCore" Version="8.*"/>
+        <PackageVersion Include="Tnf.SmartX.Security.FluigIdentity" Version="8.*"/>
+    </ItemGroup>
+    <ItemGroup Label="API / Tooling">
+        <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0"/>
+        <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore" Version="8.1.4"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.4"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.4"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.4"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.Filters" Version="8.0.3"/>
+    </ItemGroup>
+    <ItemGroup Label="Entity Framework Core">
+        <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.14"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14"/>
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11"/>
+    </ItemGroup>
+    <ItemGroup Label="Hosting">
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+    </ItemGroup>
+    <ItemGroup Label="Logging – Serilog">
+        <PackageVersion Include="Serilog" Version="4.0.1"/>
+        <PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0"/>
+        <PackageVersion Include="Serilog.Settings.Configuration" Version="8.0.2"/>
+        <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1"/>
+        <PackageVersion Include="Serilog.Sinks.Async" Version="2.0.0"/>
+        <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0"/>
+    </ItemGroup>
+</Project>

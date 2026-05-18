@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-
-using Asp.Versioning.ApiExplorer;
-
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Tnf.SmartX.Sample.Swagger;
@@ -41,10 +39,7 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : 
         const string Name = "bearer";
         var openApiSecurityScheme = new OpenApiSecurityScheme
         {
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Scheme = "bearer"
+            Type = SecuritySchemeType.Http, BearerFormat = "JWT", In = ParameterLocation.Header, Scheme = "bearer"
         };
 
         return new SecurityDefinition(Name, openApiSecurityScheme);

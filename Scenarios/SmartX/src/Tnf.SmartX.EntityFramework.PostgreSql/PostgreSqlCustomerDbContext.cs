@@ -8,7 +8,7 @@ public class PostgreSqlCustomerDbContext : CustomerDbContext
     public PostgreSqlCustomerDbContext(
         DbContextOptions<CustomerDbContext> options,
         ITnfSession session)
-    : base(options, session)
+        : base(options, session)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }

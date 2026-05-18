@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Tnf.SmartX.EntityFramework.Migrator;
 
-public class MigrationHostedService(IServiceScopeFactory serviceScopeFactory, IHostApplicationLifetime applicationLifetime) : IHostedService
+public class MigrationHostedService(
+    IServiceScopeFactory serviceScopeFactory,
+    IHostApplicationLifetime applicationLifetime) : IHostedService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
 
@@ -20,10 +22,10 @@ public class MigrationHostedService(IServiceScopeFactory serviceScopeFactory, IH
         try
         {
             logger.LogInformation("Applying migration from CompanyDbContext... ");
-            await companyDbContext.Database.MigrateAsync(cancellationToken: cancellationToken);
+            await companyDbContext.Database.MigrateAsync(cancellationToken);
 
             logger.LogInformation("Applying migration from CustomerDBContext...");
-            await customerDbContext.Database.MigrateAsync(cancellationToken: cancellationToken);
+            await customerDbContext.Database.MigrateAsync(cancellationToken);
 
             logger.LogInformation("Database migrations completed!");
         }

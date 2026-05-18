@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using Tnf.SmartX;
 using Tnf.SmartX.EntityFramework.PostgreSql;
 using Tnf.SmartX.Sample.Swagger;
@@ -16,6 +15,7 @@ builder.Services.AddTnfAspNetCore(b =>
     b.MultiTenancy(c => c.IsEnabled = true);
 });
 
+
 builder.Services.AddFluigIdentitySecurity(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -26,10 +26,16 @@ builder.Services.AddSmartXApiVersioning();
 
 builder.Services.AddEFCorePostgreSql(builder.Configuration);
 
+builder.Services
+    .AddTnfAspNetCoreSecurity(builder.Configuration)
+    .AddFluigIdentitySecurity(builder.Configuration)
+    .AddTokenEndpoint();
+
 builder.Services.AddTnfSmartX(b =>
 {
     b.ConfigureEfCodeFirst();
-    b.ConfigureEfDatabaseFirst(configure => configure.UseNpgsql(builder.Configuration.GetConnectionString(DatabaseFirstConnectionStringName)));
+    b.ConfigureEfDatabaseFirst(configure =>
+        configure.UseNpgsql(builder.Configuration.GetConnectionString(DatabaseFirstConnectionStringName)));
 });
 
 var app = builder.Build();
@@ -50,6 +56,9 @@ app.MapTnfHealthChecks();
 
 app.UseHttpsRedirection();
 
-app.MapTnfSmartXControllers();
-
+app.UseTnfSmartX(o =>
+{
+    o.MapTnfSmartXControllers()
+        .RequireFluigIdentitySecurity();
+});
 app.Run();
