@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Version managed in Directory.Packages.props (CPM) -->
+        <PackageReference Include="Tnf.EntityFrameworkCore"/>
+        <!-- Required for IMustHaveTenant tenant-filtering support -->
+        <PackageReference Include="Tnf.Repositories"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TnfZero.Domain/TnfZero.Domain.csproj"/>
+    </ItemGroup>
+</Project>

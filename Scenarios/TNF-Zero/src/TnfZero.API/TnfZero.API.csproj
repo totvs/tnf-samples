@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Version managed in Directory.Packages.props (CPM) -->
+        <PackageReference Include="Tnf.AspNetCore"/>
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
+        <!-- Required by AddSwaggerGenNewtonsoftSupport() – must match Swashbuckle.AspNetCore version -->
+        <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft"/>
+        <!-- Serilog structured logging -->
+        <PackageReference Include="Serilog.AspNetCore"/>
+        <PackageReference Include="Serilog.Sinks.Console"/>
+        <PackageReference Include="Serilog.Sinks.File"/>
+        <!-- Fluig Identity security – versions in Directory.Packages.props -->
+        <PackageReference Include="Tnf.AspNetCore.Security"/>
+        <PackageReference Include="Tnf.AspNetCore.Security.FluigIdentity"/>
+        <!-- Required for EF Core migrations tooling (dotnet ef migrations add) -->
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TnfZero.Application/TnfZero.Application.csproj"/>
+        <!--
+          Referencing EntityFramework.PostgreSQL also gives transitive access to
+          TnfZero.EntityFramework (the abstract DbContext) needed for AddTnfDbContext<,>.
+        -->
+        <ProjectReference Include="../TnfZero.EntityFramework.PostgreSQL/TnfZero.EntityFramework.PostgreSQL.csproj"/>
+    </ItemGroup>
+</Project>

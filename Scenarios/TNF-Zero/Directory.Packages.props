@@ -1,0 +1,77 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Central Package Management (CPM)
+      https://learn.microsoft.com/nuget/consume-packages/central-package-management
+
+      Tnf.* packages must be resolved from the private TOTVS feed (see nuget.config).
+      The 8.* wildcard floats to the latest available 8.x.x patch from that feed.
+
+      CentralPackageFloatingVersionsEnabled opts in to wildcard/floating versions inside
+      Directory.Packages.props (disabled by default per NuGet NU1011).
+      See: https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu1011
+    -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="TNF Framework – latest 8.x patch from the TOTVS feed">
+    <PackageVersion Include="Tnf.AspNetCore"                        Version="8.*" />
+    <PackageVersion Include="Tnf.Domain"                            Version="8.*" />
+    <PackageVersion Include="Tnf.Repositories"                      Version="8.*" />
+    <PackageVersion Include="Tnf.Commands"                          Version="8.*" />
+    <PackageVersion Include="Tnf.Commands.FluentValidation"         Version="8.*" />
+    <PackageVersion Include="Tnf.EntityFrameworkCore"               Version="8.*" />
+  </ItemGroup>
+
+  <ItemGroup Label="EF Core / PostgreSQL">
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL"  Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design"   Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup Label="API / Tooling">
+    <!--
+      Swashbuckle.AspNetCore.Newtonsoft is required by AddSwaggerGenNewtonsoftSupport(),
+      which enables Newtonsoft.Json-compatible schema generation (same version as the core package).
+      Reference: optin-service-core/src/OptIn/OptIn.csproj
+    -->
+    <PackageVersion Include="Swashbuckle.AspNetCore"                 Version="6.6.2" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Newtonsoft"      Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Logging – Serilog">
+    <PackageVersion Include="Serilog.AspNetCore"                     Version="8.0.3" />
+    <PackageVersion Include="Serilog.Sinks.Console"                  Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File"                     Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testing">
+    <PackageVersion Include="Microsoft.NET.Test.Sdk"                 Version="17.9.0" />
+    <PackageVersion Include="xunit"                                  Version="2.7.0" />
+    <PackageVersion Include="xunit.runner.visualstudio"              Version="2.5.7" />
+    <PackageVersion Include="Moq"                                    Version="4.20.70" />
+    <PackageVersion Include="FluentAssertions"                       Version="6.12.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing"       Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup Label="Migrator">
+    <!--
+      Used by {Ns}.EntityFramework.Migrator (Console App).
+      Provides IHostBuilder / Host.CreateDefaultBuilder for configuration loading.
+    -->
+    <PackageVersion Include="Microsoft.Extensions.Hosting"           Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Security – Fluig Identity">
+    <!--
+      Required when enableFluigIdentity = true (scaffold_tnf_solution flag).
+      Both packages come from the TOTVS private NuGet feed (see nuget.config).
+      The 8.* wildcard floats to the latest available 8.x.x patch from that feed.
+      Reference: optin-service-core/src/OptIn/OptIn.csproj
+        Tnf.AspNetCore.Security              → UseTnfAspNetCoreSecurity() middleware
+        Tnf.AspNetCore.Security.FluigIdentity → AddFluigIdentitySecurity(configuration)
+    -->
+    <PackageVersion Include="Tnf.AspNetCore.Security"               Version="8.*" />
+    <PackageVersion Include="Tnf.AspNetCore.Security.FluigIdentity" Version="8.*" />
+  </ItemGroup>
+</Project>
