@@ -10,7 +10,7 @@ Repositório de exemplos e cenários de uso do **TNF Framework** (TOTVS .NET Fra
 
 ```
 tnf-samples/
-├── Scenarios/          # Exemplos de backend com TNF Framework (.NET)
+├── Scenarios/          # Exemplos de backend com TNF Framework (.NET 8)
 │   ├── TNF-Zero/       # Projeto mínimo de referência (DDD + CQRS)
 │   ├── CarShopCrud/    # CRUD completo com DDD, CQRS e mensageria
 │   ├── SmartX/         # Geração automática de interfaces (Smart-UI / PO-UI)
@@ -33,30 +33,131 @@ Exemplos de aplicações backend utilizando o TNF Framework. Todos os projetos i
 
 Para mais detalhes sobre cada cenário, consulte o [README dos Scenarios](./Scenarios/README.md).
 
-## Descrição dos Pacotes TNF
+---
 
-**Tnf.Kernel**: Pacote principal do framework contém as dependências mais primitivas (Localization, Settings, DI Extensions).
+## Pacotes do TNF Framework
 
-**Tnf.AspNetCore**: Suporte ao ASP.NET Core com infraestrutura do TNF para retorno de mensagem, sessão e tratamento de notificações.
+Catálogo completo de pacotes disponíveis no TNF, organizados por área funcional.
 
-**Tnf.Commands**: Implementação do padrão CQRS com CommandHandlers.
+### Core
 
-**Tnf.Commands.FluentValidation**: Validação de commands com FluentValidation.
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Kernel** | Pacote principal do framework com extensões de DI, Localization (arquivo) e Settings (arquivo) |
+| **Tnf.Runtime** | Abstrações e implementações de Multi-Tenancy, segurança e sessão da aplicação |
+| **Tnf.Notifications** | Abstrações e implementação do Notification Pattern |
+| **Tnf.Dto** | DTOs para o padrão de API TOTVS (Request/Response) |
+| **Tnf.Specifications** | Abstração e implementações do Specification Pattern |
+| **Tnf.CloudEvents** | Suporte ao formato CloudEvents para mensagens e eventos |
 
-**Tnf.Domain**: Infraestrutura para Domain-Driven Design e serviços de domínio.
+### ASP.NET Core
 
-**Tnf.Repositories**: Abstrações para entidades, multi-organização, multi-tenancy e UnitOfWork.
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.AspNetCore** | Integração com ASP.NET Core (controllers, middleware, retorno de mensagem, sessão, notificações) |
+| **Tnf.AspNetCore.Security** | Segurança e autenticação com suporte ao RAC (TOTVS Access Control) |
+| **Tnf.AspNetCore.Security.FluigIdentity** | Autenticação via Fluig Identity (OAuth 2.0 / JWT / SSO) |
+| **Tnf.AspNetCore.Metrics.Abstractions** | Abstrações para métricas e observabilidade |
+| **Tnf.AspNetCore.Metrics** | Implementação de métricas com AppMetrics (Prometheus/Grafana) |
 
-**Tnf.EntityFrameworkCore**: Suporte ao EF Core com gerência de transações, filtros automáticos de multi-tenancy, soft delete e auditoria.
+### Domain-Driven Design
 
-**Tnf.Messaging**: Abstração de mensageria.
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Domain** | Infraestrutura para DDD: DomainServices, ApplicationService e Builder de entidades |
+| **Tnf.Domain.Events** | Implementação do padrão Domain Events |
+| **Tnf.Repositories** | Abstrações para repositórios, entidades, multi-organização, multi-tenancy e UnitOfWork |
 
-**Tnf.Messaging.RabbitMQ**: Implementação de mensageria com RabbitMQ.
+### CQRS / Commands
 
-**Tnf.Jobs**: Suporte a agendamento e execução de jobs.
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Commands** | Implementação do padrão Command/Handler (CQRS) |
+| **Tnf.Commands.FluentValidation** | Validação de commands com FluentValidation |
 
-**Tnf.SmartX**: Geração automática de interfaces baseadas em modelos de dados.
+### Persistência / Data Access
 
-**Tnf.AspNetCore.Security**: Middleware de segurança e autenticação.
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.EntityFrameworkCore** | Suporte ao EF Core com gerência de transações (UoW), filtros automáticos de multi-tenancy, soft delete e auditoria |
+| **Tnf.Dapper** | Suporte ao Dapper baseado nas abstrações de Tnf.Repositories (reusa transações do EF Core) |
+| **Tnf.MongoDb** | Implementação para MongoDB |
+| **Tnf.Drivers.Devart** | Suporte a drivers Devart |
+| **Tnf.Drivers.DevartOracle** | Suporte a Oracle via driver Devart DotConnect (licença de terceiro necessária) |
 
-**Tnf.AspNetCore.Security.FluigIdentity**: Integração com Fluig Identity (OAuth 2.0 / JWT).
+### Mensageria
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Messaging** | Abstrações de mensageria |
+| **Tnf.Messaging.RabbitMQ** | Implementação de mensageria com RabbitMQ |
+| **Tnf.Bus.Queue** | Abstrações e implementações compartilhadas para filas |
+| **Tnf.Bus.Queue.RabbitMQ** | Implementação de fila com RabbitMQ (abstração Bus) |
+| **Tnf.Bus.Client** | Cliente de gerência de BUS |
+| **Tnf.RabbitMq** | Infraestrutura base RabbitMQ |
+
+### Jobs
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Jobs** | Suporte a agendamento e execução de jobs |
+
+### Cache
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Caching.Abstractions** | Abstração de cache (inclui implementação de MemoryCache por padrão) |
+| **Tnf.Caching.Redis** | Implementação de cache distribuído com Redis |
+
+### Indexação / Busca
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Indexing.Abstractions** | Abstrações para indexação e busca |
+| **Tnf.Elasticsearch** | Implementação de indexação com Elasticsearch |
+
+### Object Mapping
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.ObjectMapping.Abstractions** | Abstração de mapeamento de objetos |
+| **Tnf.AutoMapper** | Implementação com AutoMapper |
+| **Tnf.Mapster** | Implementação com Mapster |
+
+### Localização e Configurações
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Localization.Management** | Gerência de localização via banco de dados |
+| **Tnf.Localization.EntityFrameworkCore** | Suporte a localização com EF Core |
+| **Tnf.Settings.Management** | Gerência de configurações via banco de dados |
+| **Tnf.Settings.Management.Redis** | Gerência de configurações com cache Redis |
+| **Tnf.Settings.EntityFrameworkCore** | Suporte a configurações com EF Core |
+
+### SmartX (Geração de Interfaces)
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.SmartX.Abstractions** | Abstrações do SmartX |
+| **Tnf.SmartX** | Plataforma SmartX para geração automática de interfaces (Smart-UI / PO-UI) |
+| **Tnf.SmartX.EntityFrameworkCore** | Integração SmartX com EF Core |
+| **Tnf.SmartX.Security.FluigIdentity** | Segurança SmartX com Fluig Identity |
+
+### SGDP (Privacidade de Dados / LGPD)
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Sgdp.Abstractions** | Abstrações para conformidade com LGPD/SGDP |
+| **Tnf.Sgdp** | Implementação do SGDP |
+| **Tnf.Sgdp.EntityFrameworkCore** | Integração SGDP com EF Core |
+
+### Integrações TOTVS
+
+| Pacote | Descrição |
+|--------|-----------|
+| **Tnf.Carol** | Implementação de repositórios e conectividade com TOTVS Carol |
+| **Tnf.Provider** | Abstração de HTTP Provider |
+| **Tnf.Provider.Carol** | HTTP Provider para TOTVS Carol |
+| **Tnf.LsCloud** | Integração com LS Cloud |
+| **Tnf.LsCloud.Client** | Cliente para LS Cloud |
+
