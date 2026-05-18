@@ -8,7 +8,8 @@ public static class LocalizationServiceCollection
     {
         services.ConfigureTnfLocalization(localization =>
         {
-            localization.AddJsonEmbeddedLocalizationFile(LocalizationSource.Default, typeof(LocalizationSource).Assembly, LocalizationSource.Namespace);
+            localization.AddJsonEmbeddedLocalizationFile(LocalizationSource.Default,
+                typeof(LocalizationSource).Assembly, LocalizationSource.Namespace);
 
             localization.AddLanguage(LocalizationSource.DefaultLanguage, isDefault: true);
         });

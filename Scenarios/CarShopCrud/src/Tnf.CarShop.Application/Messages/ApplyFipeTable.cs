@@ -1,6 +1,6 @@
 ﻿namespace Tnf.CarShop.Application.Messages;
 
-public class ApplyFipeTable 
+public class ApplyFipeTable
 {
     public string FipeCode { get; set; }
     public string MonthYearReference { get; set; }

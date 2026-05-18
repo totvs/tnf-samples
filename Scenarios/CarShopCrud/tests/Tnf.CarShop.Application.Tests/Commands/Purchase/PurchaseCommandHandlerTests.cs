@@ -2,8 +2,10 @@
 using Moq;
 using Tnf.CarShop.Application.Commands.Purchase;
 using Tnf.CarShop.Domain.Repositories;
+using Range = Moq.Range;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Purchase;
+
 public class PurchaseCommandHandlerTests
 {
     [Fact]
@@ -17,7 +19,8 @@ public class PurchaseCommandHandlerTests
 
         var car = new Domain.Entities.Car("Ford", "Fiesta", 2019, 20000, storeId);
 
-        var customer = new Domain.Entities.Customer("Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh", DateTime.Now.AddYears(-33), storeId);
+        var customer = new Domain.Entities.Customer("Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh",
+            DateTime.Now.AddYears(-33), storeId);
 
         var purchase = new Domain.Entities.Purchase(carId, customerId, 100, DateTime.UtcNow, Guid.NewGuid());
 
@@ -29,12 +32,12 @@ public class PurchaseCommandHandlerTests
 
         carRepoMock.Setup(x => x.GetAsync(carId, It.IsAny<CancellationToken>())).ReturnsAsync(car);
         customerRepoMock.Setup(x => x.GetAsync(customerId, It.IsAny<CancellationToken>())).ReturnsAsync(customer);
-        storeRepoMock.Setup(x => x.GetAsync(storeId, It.IsAny<CancellationToken>())).ReturnsAsync(store);        
+        storeRepoMock.Setup(x => x.GetAsync(storeId, It.IsAny<CancellationToken>())).ReturnsAsync(store);
 
         purchase.Id = Guid.NewGuid();
 
         purchaseRepoMock.Setup(x => x.GetAsync(purchase.Id, It.IsAny<CancellationToken>()))
-          .ReturnsAsync(purchase);
+            .ReturnsAsync(purchase);
         purchaseRepoMock.Setup(x => x.InsertAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(purchase);
 
@@ -70,37 +73,28 @@ public class PurchaseCommandHandlerTests
         var storeId = Guid.NewGuid();
         var purchaseDate = DateTime.Now;
 
-        var purchase = new Domain.Entities.Purchase(carId, customerId, 23002, DateTime.Now, storeId)
-        {
-            Id = purchaseId
-        };
+        var purchase =
+            new Domain.Entities.Purchase(carId, customerId, 23002, DateTime.Now, storeId) { Id = purchaseId };
         purchase.UpdatePurchaseDate(purchaseDate);
 
-        var customer = new Domain.Entities.Customer("Joao", "Rua bem-te-vi", "51 99999-9999", "joao@joao.com", DateTime.Now.AddYears(-28), storeId)
-        {
-            Id = customerId
-        };
+        var customer = new Domain.Entities.Customer("Joao", "Rua bem-te-vi", "51 99999-9999", "joao@joao.com",
+            DateTime.Now.AddYears(-28), storeId) { Id = customerId };
 
 
         purchase.UpdateCustomer(customer);
 
-        var car = new Domain.Entities.Car("Hyundai", "Azera", 2008, 20000, storeId)
-        {
-            Id = carId
-        };
+        var car = new Domain.Entities.Car("Hyundai", "Azera", 2008, 20000, storeId) { Id = carId };
         purchase.UpdateCar(car);
 
-        var store = new Domain.Entities.Store("Loja do André", "0000000000000", "Xangri-la")
-        {
-            Id = storeId,
-        };
+        var store = new Domain.Entities.Store("Loja do André", "0000000000000", "Xangri-la") { Id = storeId };
 
         purchase.UpdateStore(store);
 
         var purchaseRepositoryMock = new Mock<IPurchaseRepository>();
         purchaseRepositoryMock.Setup(x => x.GetAsync(purchaseId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(purchase);
-        purchaseRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()))
+        purchaseRepositoryMock
+            .Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(purchase);
 
         var customerRepositoryMock = new Mock<ICustomerRepository>();
@@ -140,8 +134,10 @@ public class PurchaseCommandHandlerTests
         Assert.Equal(purchaseId, result.PurchaseDto.Id);
         Assert.Equal(purchaseDate, result.PurchaseDto.PurchaseDate);
 
-        purchaseRepositoryMock.Verify(x => x.GetAsync(purchaseId, It.IsAny<CancellationToken>()), Times.Between(0, 2, Moq.Range.Inclusive));
-        purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()), Times.Once);
+        purchaseRepositoryMock.Verify(x => x.GetAsync(purchaseId, It.IsAny<CancellationToken>()),
+            Times.Between(0, 2, Range.Inclusive));
+        purchaseRepositoryMock.Verify(
+            x => x.UpdateAsync(It.IsAny<Domain.Entities.Purchase>(), It.IsAny<CancellationToken>()), Times.Once);
         customerRepositoryMock.Verify(x => x.GetAsync(customerId, It.IsAny<CancellationToken>()), Times.Once);
         carRepositoryMock.Verify(x => x.GetAsync(carId, It.IsAny<CancellationToken>()), Times.Once);
         storeRepositoryMock.Verify(x => x.GetAsync(storeId, It.IsAny<CancellationToken>()), Times.Once);

@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Tnf.AspNetCore.Mvc.Response;
-
 using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Dtos;
 using Tnf.CarShop.Domain.Repositories;
 using Tnf.CarShop.Host.Constants;
-
 using Tnf.Commands;
 using Tnf.Dto;
-
 using CarShopLocalization = Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Host.Controllers;
@@ -20,9 +16,9 @@ namespace Tnf.CarShop.Host.Controllers;
 [TnfAuthorize]
 public class CustomerController : TnfController
 {
+    private readonly ICommandSender _commandSender;
 
     private readonly ICustomerRepository _customerRepository;
-    private readonly ICommandSender _commandSender;
 
     //Para manter a simplicidade do projeto estamos realizando os GETs e o DELETE diretamente através do repository.
     //Para casos mais complexos deve-se criar uma service
@@ -43,7 +39,9 @@ public class CustomerController : TnfController
         var customer = await _customerRepository.GetAsync(customerId, HttpContext.RequestAborted);
 
         if (customer is null)
+        {
             return NotFound();
+        }
 
         var customerDto = customer.ToDto();
 
@@ -74,10 +72,11 @@ public class CustomerController : TnfController
     [ProducesResponseType(typeof(CustomerDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(Guid? customerId, [FromBody] CustomerCommandUpdate command)
-    {        
+    {
         if (!customerId.HasValue)
         {
-            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
+            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default,
+                CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
 

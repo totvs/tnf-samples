@@ -8,16 +8,16 @@ namespace Tnf.CarShop.Application.Tests.Commands.Store;
 public class StoreCommandHandlerTests
 {
     private readonly StoreCommandCreateHandler _createHandler;
-    private readonly StoreCommandUpdateHandler _updateHandler;
-    private readonly Mock<IStoreRepository> _storeRepositoryMock;
     private readonly Mock<ILogger<StoreCommandCreateHandler>> _createLoggerMock;
+    private readonly Mock<IStoreRepository> _storeRepositoryMock;
+    private readonly StoreCommandUpdateHandler _updateHandler;
     private readonly Mock<ILogger<StoreCommandUpdateHandler>> _updateLoggerMock;
 
     public StoreCommandHandlerTests()
     {
         _storeRepositoryMock = new Mock<IStoreRepository>();
 
-        _createLoggerMock = new Mock<ILogger<StoreCommandCreateHandler>>();        
+        _createLoggerMock = new Mock<ILogger<StoreCommandCreateHandler>>();
         _createHandler = new StoreCommandCreateHandler(_createLoggerMock.Object, _storeRepositoryMock.Object);
 
         _updateLoggerMock = new Mock<ILogger<StoreCommandUpdateHandler>>();
@@ -27,12 +27,7 @@ public class StoreCommandHandlerTests
     [Fact]
     public async Task Should_Create_Store()
     {
-        var command = new StoreCommandCreate
-        {
-            Name = "Store 1",
-            Cnpj = "123456789",
-            Location = "Location 1"
-        };
+        var command = new StoreCommandCreate { Name = "Store 1", Cnpj = "123456789", Location = "Location 1" };
 
         var expectedId = Guid.NewGuid();
 
@@ -48,7 +43,7 @@ public class StoreCommandHandlerTests
 
     [Fact]
     public async Task UpdateStoreCommandHandler_Should_Update_Store()
-    {                
+    {
         var command = new StoreCommandUpdate
         {
             Id = Guid.NewGuid(),
@@ -59,9 +54,10 @@ public class StoreCommandHandlerTests
 
         var store = new Domain.Entities.Store(command.Cnpj, command.Name, command.Location);
 
-        _storeRepositoryMock.Setup(s => s.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>())).ReturnsAsync(store);
+        _storeRepositoryMock.Setup(s => s.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(store);
         _storeRepositoryMock.Setup(s => s.UpdateAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(store);        
+            .ReturnsAsync(store);
 
         var result = await _updateHandler.ExecuteAsync(command);
 
@@ -69,6 +65,7 @@ public class StoreCommandHandlerTests
         Assert.Equal(command.Name, result.StoreDto.Name);
         Assert.Equal(command.Location, result.StoreDto.Location);
         _storeRepositoryMock.Verify(s => s.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>()), Times.Once);
-        _storeRepositoryMock.Verify(s => s.UpdateAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()), Times.Once);
+        _storeRepositoryMock.Verify(
+            s => s.UpdateAsync(It.IsAny<Domain.Entities.Store>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

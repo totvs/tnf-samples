@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tnf.CarShop.Application.Commands.Car;
+﻿using Tnf.CarShop.Application.Commands.Car;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Car;
+
 public class CarCommandValidatorTests : TestBase
 {
     [Fact]
@@ -59,8 +54,8 @@ public class CarCommandValidatorTests : TestBase
 
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
-        
-        int size = command.Brand.Length;
+
+        var size = command.Brand.Length;
 
         result.Errors.ForEach(x => ValidatePropertySize(
             result,
@@ -85,7 +80,7 @@ public class CarCommandValidatorTests : TestBase
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        int size = command.Brand.Length;
+        var size = command.Brand.Length;
 
         result.Errors.ForEach(x => ValidatePropertySize(
             result,
@@ -146,7 +141,7 @@ public class CarCommandValidatorTests : TestBase
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        int size = command.Model.Length;
+        var size = command.Model.Length;
 
         result.Errors.ForEach(x => ValidatePropertySize(
             result,
@@ -171,7 +166,7 @@ public class CarCommandValidatorTests : TestBase
         var validator = new CarCommandValidator();
         var result = validator.Validate(command);
 
-        int size = command.Model.Length;
+        var size = command.Model.Length;
 
         result.Errors.ForEach(x => ValidatePropertySize(
             result,
@@ -191,7 +186,7 @@ public class CarCommandValidatorTests : TestBase
 
         var validationFailure = result.Errors.Where(x => x.PropertyName == nameof(command.Price)).FirstOrDefault();
 
-        string value = validationFailure?.FormattedMessagePlaceholderValues["ComparisonValue"].ToString();
+        var value = validationFailure?.FormattedMessagePlaceholderValues["ComparisonValue"].ToString();
         ValidatePropertyGreaterThanValue(result, nameof(command.Price), value);
     }
 }

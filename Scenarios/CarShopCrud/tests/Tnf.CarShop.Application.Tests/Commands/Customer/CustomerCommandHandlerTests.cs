@@ -3,10 +3,11 @@ using Tnf.CarShop.Application.Commands.Customer;
 using Tnf.CarShop.Domain.Repositories;
 
 namespace Tnf.CarShop.Application.Tests.Commands.Customer;
+
 public class CustomerCommandHandlerTests
 {
-    private readonly Mock<ICustomerRepository> _customerRepoMock;
     private readonly CustomerCommandCreateHandler _createHandler;
+    private readonly Mock<ICustomerRepository> _customerRepoMock;
     private readonly CustomerCommandUpdateHandler _updateHandler;
 
     public CustomerCommandHandlerTests()
@@ -20,7 +21,8 @@ public class CustomerCommandHandlerTests
     public async Task ExecuteAsync_ValidCommand_CreatesCustomerSuccessfully()
     {
         var storeId = Guid.NewGuid();
-        var customer = new Domain.Entities.Customer("Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh", DateTime.Now.AddYears(-33), storeId);
+        var customer = new Domain.Entities.Customer("Joao da Silva", "Rua Bem-te-vi", "999999", "joao@silva.zeh",
+            DateTime.Now.AddYears(-33), storeId);
 
         _customerRepoMock.Setup(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
@@ -37,12 +39,13 @@ public class CustomerCommandHandlerTests
 
         var result = await _createHandler.ExecuteAsync(command);
 
-        _customerRepoMock.Verify(c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
+        _customerRepoMock.Verify(
+            c => c.InsertAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     public async Task CustomerCommandHandler_Should_Update_Customer()
-    {        
+    {
         var command = new CustomerCommandUpdate
         {
             Id = Guid.NewGuid(),
@@ -54,9 +57,11 @@ public class CustomerCommandHandlerTests
             DateOfBirth = new DateTime(1980, 1, 1)
         };
 
-        var customer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email, command.DateOfBirth, command.StoreId);
+        var customer = new Domain.Entities.Customer(command.FullName, command.Address, command.Phone, command.Email,
+            command.DateOfBirth, command.StoreId);
 
-        _customerRepoMock.Setup(x => x.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>())).ReturnsAsync(customer);
+        _customerRepoMock.Setup(x => x.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(customer);
 
         _customerRepoMock.Setup(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
@@ -70,6 +75,7 @@ public class CustomerCommandHandlerTests
         Assert.Equal(command.Email, result.CustomerDto.Email);
         Assert.Equal(command.DateOfBirth, result.CustomerDto.DateOfBirth);
         _customerRepoMock.Verify(x => x.GetAsync((Guid)command.Id, It.IsAny<CancellationToken>()), Times.Once);
-        _customerRepoMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
+        _customerRepoMock.Verify(
+            x => x.UpdateAsync(It.IsAny<Domain.Entities.Customer>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

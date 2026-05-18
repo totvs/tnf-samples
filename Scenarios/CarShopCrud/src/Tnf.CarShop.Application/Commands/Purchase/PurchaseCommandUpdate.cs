@@ -1,10 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
 namespace Tnf.CarShop.Application.Commands.Purchase;
-public class PurchaseCommandUpdate: ITransactionCommand
+
+public class PurchaseCommandUpdate : ITransactionCommand
 {
-    [IgnoreDataMember]
-    public Guid? Id { get; set; }
+    [IgnoreDataMember] public Guid? Id { get; set; }
+
     public DateTime PurchaseDate { get; set; }
     public Guid StoreId { get; set; }
     public Guid CarId { get; set; }

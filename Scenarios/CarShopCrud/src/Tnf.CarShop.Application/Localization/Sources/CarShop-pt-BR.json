@@ -1,5 +1,5 @@
 {
-  "culture": "pt-BR",
+    "culture": "pt-BR",
     "texts": {
         "PropertyRequired": "A propriedade {0} é obrigatória.",
         "PropertyValid": "Um Valido {0} é requerido.",

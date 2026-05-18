@@ -15,7 +15,8 @@ public class ApplyFipeTableCommandHandler : CommandHandler<ApplyFipeTableCommand
         _logger = logger;
     }
 
-    public override async Task<bool> ExecuteAsync(ApplyFipeTableCommand command, CancellationToken cancellationToken = default)
+    public override async Task<bool> ExecuteAsync(ApplyFipeTableCommand command,
+        CancellationToken cancellationToken = default)
     {
         try
         {
@@ -23,12 +24,14 @@ public class ApplyFipeTableCommandHandler : CommandHandler<ApplyFipeTableCommand
 
             if (fipe is null)
             {
-                fipe = new Domain.Entities.Fipe(command.FipeCode, command.MonthYearReference, command.Brand, command.Model, command.Year, command.AveragePrice);
+                fipe = new Domain.Entities.Fipe(command.FipeCode, command.MonthYearReference, command.Brand,
+                    command.Model, command.Year, command.AveragePrice);
                 await _fipeRepository.InsertAsync(fipe, cancellationToken);
                 return true;
             }
 
-            fipe.UpdateTable(command.MonthYearReference, command.Brand, command.Model, command.Year, command.AveragePrice);
+            fipe.UpdateTable(command.MonthYearReference, command.Brand, command.Model, command.Year,
+                command.AveragePrice);
             await _fipeRepository.UpdateAsync(fipe, cancellationToken);
             return true;
         }
@@ -36,6 +39,6 @@ public class ApplyFipeTableCommandHandler : CommandHandler<ApplyFipeTableCommand
         {
             _logger.LogError(ex.Message, ex);
             return false;
-        }        
+        }
     }
 }

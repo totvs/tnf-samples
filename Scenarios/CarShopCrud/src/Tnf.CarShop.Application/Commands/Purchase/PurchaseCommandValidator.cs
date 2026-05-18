@@ -2,6 +2,7 @@
 using Tnf.CarShop.Application.Localization;
 
 namespace Tnf.CarShop.Application.Commands.Purchase;
+
 public class PurchaseCommandValidator : TnfFluentValidator<PurchaseCommandCreate>
 {
     public override void Configure()
@@ -13,20 +14,23 @@ public class PurchaseCommandValidator : TnfFluentValidator<PurchaseCommandCreate
         RuleFor(command => command.CarId)
             .Must(carId => carId != Guid.Empty)
             .When(command => command.CarId == default)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(PurchaseCommandCreate.CarId));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(PurchaseCommandCreate.CarId));
 
         RuleFor(command => command.StoreId)
             .Must(storeId => storeId != Guid.Empty)
             .When(command => command.StoreId == default)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(PurchaseCommandCreate.StoreId));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(PurchaseCommandCreate.StoreId));
 
         RuleFor(command => command.CustomerId)
             .Must(customerId => customerId != Guid.Empty)
             .When(command => command.CustomerId == default)
-            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired, nameof(PurchaseCommandCreate.CustomerId));
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PropertyRequired,
+                nameof(PurchaseCommandCreate.CustomerId));
 
         RuleFor(command => command.Price)
-           .GreaterThan(0)
-           .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PriceShouldBePositive);
+            .GreaterThan(0)
+            .WithTnfNotification(LocalizationSource.Default, LocalizationKeys.PriceShouldBePositive);
     }
 }

@@ -13,7 +13,9 @@ public static class TnfMessagingExtensions
         message = context.Message;
 
         if (message != null)
+        {
             return true;
+        }
 
         logger.MessageIsEmpty();
 
@@ -28,12 +30,16 @@ public static class TnfMessagingExtensions
         data = default;
 
         if (!context.TryGetMessage(logger, out var message))
+        {
             return false;
+        }
 
         data = message.Data;
 
         if (data != null)
+        {
             return true;
+        }
 
         logger.DataIsEmpty();
 

@@ -2,6 +2,7 @@
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Customer;
+
 public class CustomerCommandUpdateHandler : CommandHandler<CustomerCommandUpdate, CustomerResult>
 {
     private readonly ICustomerRepository _customerRepository;
@@ -11,7 +12,8 @@ public class CustomerCommandUpdateHandler : CommandHandler<CustomerCommandUpdate
         _customerRepository = customerRepository;
     }
 
-    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandUpdate command, CancellationToken cancellationToken = default)
+    public override async Task<CustomerResult> ExecuteAsync(CustomerCommandUpdate command,
+        CancellationToken cancellationToken = default)
     {
         var customer = await _customerRepository.GetAsync(command.Id.Value, cancellationToken);
 

@@ -6,7 +6,16 @@ namespace Tnf.CarShop.Domain.Entities;
 
 public class Purchase : IHasCreationTime, IMustHaveTenant
 {
-    public Guid Id { get; set;  }
+    public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid storeId)
+    {
+        CarId = carId;
+        CustomerId = customerId;
+        Price = price;
+        PurchaseDate = purchaseDate;
+        StoreId = storeId;
+    }
+
+    public Guid Id { get; set; }
     public Guid CarId { get; private set; }
     public Guid CustomerId { get; private set; }
     public Guid StoreId { get; private set; }
@@ -20,15 +29,6 @@ public class Purchase : IHasCreationTime, IMustHaveTenant
     public DateTime CreationTime { get; set; }
 
     public Guid TenantId { get; set; }
-
-    public Purchase(Guid carId, Guid customerId, decimal price, DateTime purchaseDate, Guid storeId)
-    {
-        CarId = carId;
-        CustomerId = customerId;
-        Price = price;
-        PurchaseDate = purchaseDate;
-        StoreId = storeId;
-    }
 
     public void UpdatePurchaseDate(DateTime? purchaseDate)
     {

@@ -4,6 +4,7 @@ using Tnf.CarShop.Domain.Repositories;
 using Tnf.Commands;
 
 namespace Tnf.CarShop.Application.Commands.Store;
+
 public class StoreCommandUpdateHandler : CommandHandler<StoreCommandUpdate, StoreResult>
 {
     private readonly ILogger<StoreCommandUpdateHandler> _logger;
@@ -15,11 +16,15 @@ public class StoreCommandUpdateHandler : CommandHandler<StoreCommandUpdate, Stor
         _storeRepository = storeRepository;
     }
 
-    public override async Task<StoreResult> ExecuteAsync(StoreCommandUpdate command, CancellationToken cancellationToken = default)
+    public override async Task<StoreResult> ExecuteAsync(StoreCommandUpdate command,
+        CancellationToken cancellationToken = default)
     {
         var store = await _storeRepository.GetAsync(command.Id.Value, cancellationToken);
 
-        if (store == null) throw new Exception($"Shop with id {command.Id} not found.");
+        if (store == null)
+        {
+            throw new Exception($"Shop with id {command.Id} not found.");
+        }
 
         store.UpdateName(command.Name);
         store.UpdateLocation(command.Location);

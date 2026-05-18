@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tnf.CarShop.Domain.Entities;
 using Tnf.CarShop.Domain.Repositories;
-
 using Tnf.EntityFrameworkCore;
 using Tnf.EntityFrameworkCore.Repositories;
 

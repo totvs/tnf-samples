@@ -14,7 +14,7 @@ public class CarDto
         Year = year;
         Price = price;
         StoreId = storeId;
-    }    
+    }
 
     public Guid Id { get; set; }
     public string Brand { get; set; }

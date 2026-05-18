@@ -38,7 +38,9 @@ public class StoreController : TnfController
         var store = await _storeRepository.GetAsync(storeId, HttpContext.RequestAborted);
 
         if (store is null)
+        {
             return NotFound();
+        }
 
         var storeDto = store.ToDto();
 
@@ -69,10 +71,11 @@ public class StoreController : TnfController
     [ProducesResponseType(typeof(StoreDto), 200)]
     [ProducesResponseType(typeof(ErrorResponse), 400)]
     public async Task<IActionResult> Update(Guid? storeId, [FromBody] StoreCommandUpdate command)
-    {        
+    {
         if (!storeId.HasValue)
         {
-            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default, CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
+            Notification.RaiseError(CarShopLocalization.LocalizationSource.Default,
+                CarShopLocalization.LocalizationKeys.PropertyRequired, nameof(command.Id));
             return CreateResponseOnPut();
         }
 

@@ -1,8 +1,9 @@
 ﻿using FluentValidation.Results;
 
 namespace Tnf.CarShop.Application.Tests.Commands;
+
 public class TestBase
-{   
+{
     public static void ValidateValidEmail(ValidationResult result, string property)
     {
         Assert.False(result.IsValid);
@@ -11,13 +12,15 @@ public class TestBase
                  e.ErrorMessage == $"'{property}' is not a valid email address.");
     }
 
-    public static void ValidatePropertySize(ValidationResult result, string property, int size, string minLength, string maxLength)
+    public static void ValidatePropertySize(ValidationResult result, string property, int size, string minLength,
+        string maxLength)
     {
         var propertyName = property.Replace(" ", "");
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors,
             e => e.PropertyName == propertyName &&
-                 e.ErrorMessage == $"'{property}' must be between {minLength} and {maxLength} characters. You entered {size} characters.");
+                 e.ErrorMessage ==
+                 $"'{property}' must be between {minLength} and {maxLength} characters. You entered {size} characters.");
     }
 
     public static void ValidateNullOrEmpty(ValidationResult result, string property)
@@ -58,6 +61,7 @@ public class TestBase
         Assert.False(result.IsValid);
         Assert.NotEmpty(result.Errors);
         Assert.Contains(result.Errors,
-            e => e.PropertyName == propertyName && e.ErrorMessage == $"The specified condition was not met for '{property}'.");
+            e => e.PropertyName == propertyName &&
+                 e.ErrorMessage == $"The specified condition was not met for '{property}'.");
     }
 }

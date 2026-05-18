@@ -1,4 +1,5 @@
 ﻿namespace Tnf.CarShop.Application.Messages.Events;
+
 public class CarEvent
 {
     public string Brand { get; set; }
