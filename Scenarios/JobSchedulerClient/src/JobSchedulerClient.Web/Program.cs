@@ -1,33 +1,49 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace JobSchedulerClient.Web
+var builder = WebApplication.CreateBuilder(args);
+
+// ── Serilog ───────────────────────────────────────────────────────────────────
+builder.Host.UseSerilog((context, configuration) =>
 {
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            Console.Title = "Job Scheduler Client Sample";
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
-            await CreateHostBuilder(args)
-                .Build()
-                .RunAsync();
+// ── TNF core ──────────────────────────────────────────────────────────────────
+builder.Services.AddTnfAspNetCore(b =>
+{
+    b.ApplicationName("Job Scheduler Client Sample");
+    b.MultiTenancy(c => c.IsEnabled = true);
+});
 
-            Log.CloseAndFlush();
-        }
+// ── Security – Fluig Identity ─────────────────────────────────────────────────
+builder.Services.AddFluigIdentitySecurity(builder.Configuration);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(config =>
-                {
-                    config.UseStartup<Startup>();
-                })
-                .UseSerilog((context, configuration) =>
-                {
-                    configuration.ReadFrom.Configuration(context.Configuration);
-                });
-    }
+// ── TNF Jobs ──────────────────────────────────────────────────────────────────
+builder.Services.AddTnfJobs(builder.Configuration);
+
+// ── MVC / Swagger ─────────────────────────────────────────────────────────────
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Job Scheduler Client API", Version = "v1" });
+});
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseRouting();
+app.UseTnfAspNetCoreSecurity();
+app.MapControllers();
+app.MapTnfHealthChecks();
+
+await app.RunAsync();
+
+Log.CloseAndFlush();

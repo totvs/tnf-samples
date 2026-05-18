@@ -21,37 +21,37 @@ public class AddressRoutineUI : AddressEntity, ISXRoutineLayoutDataOperations
             .SetProperty(p => p
                 .WithProperty(nameof(Id))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(CreationTime))
                 .WithHidden(true)
-             )
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(LastModificationTime))
-            .WithHidden(true)
-             )
+                .WithHidden(true)
+            )
             .SetProperty(p => p
                 .WithProperty(nameof(ZipCode))
-                    .WithOrder(1)
-                    .WithMask("99999-999")
-                    .AddLookup(l => l
-                        .WithModelRef("ZipCodeEntityModel")
-                        .WithDisplayFields(["zipCode"])
-                        .WithFieldValue("zipCode")
-                        .WithMultiSelect(false)
-            )
-            )
-            .SetProperty(cp => cp
-                    .WithProperty(nameof(Street))
-                    .WithOrder(2)
+                .WithOrder(1)
+                .WithMask("99999-999")
+                .AddLookup(l => l
+                    .WithModelRef("ZipCodeEntityModel")
+                    .WithDisplayFields(["zipCode"])
+                    .WithFieldValue("zipCode")
+                    .WithMultiSelect(false)
+                )
             )
             .SetProperty(cp => cp
-                    .WithProperty(nameof(City))
-                    .WithOrder(3)
+                .WithProperty(nameof(Street))
+                .WithOrder(2)
             )
             .SetProperty(cp => cp
-                    .WithProperty(nameof(State))
-                    .WithOrder(4)
+                .WithProperty(nameof(City))
+                .WithOrder(3)
+            )
+            .SetProperty(cp => cp
+                .WithProperty(nameof(State))
+                .WithOrder(4)
             );
     }
 
@@ -68,26 +68,26 @@ public class AddressRoutineUI : AddressEntity, ISXRoutineLayoutDataOperations
                         .WithEndpoint("data/ZipCodeEntityModel/{{$model.zipCode}}")
                         .AddHeaders(h => h.WithHeader("Content-Type", "application/json"))
                         .AddActionSuccess(acs => acs
-                        .AddSetFieldsAction(fa => fa
-                        .WithIdentifier("setFields")
-                        .AddField(f => f
-                                .SetProperty(p => p.WithProperty(nameof(Street)))
-                                .WithValue("{{$response.street}}")
-                            )
-                            .AddField(f => f
-                                .SetProperty(p => p.WithProperty(nameof(City)))
-                                .WithValue("{{$response.city}}")
-                            )
-                            .AddField(f => f
-                                .SetProperty(p => p.WithProperty(nameof(State)))
-                                .WithValue("{{$response.state}}")
+                            .AddSetFieldsAction(fa => fa
+                                .WithIdentifier("setFields")
+                                .AddField(f => f
+                                    .SetProperty(p => p.WithProperty(nameof(Street)))
+                                    .WithValue("{{$response.street}}")
+                                )
+                                .AddField(f => f
+                                    .SetProperty(p => p.WithProperty(nameof(City)))
+                                    .WithValue("{{$response.city}}")
+                                )
+                                .AddField(f => f
+                                    .SetProperty(p => p.WithProperty(nameof(State)))
+                                    .WithValue("{{$response.state}}")
+                                )
                             )
                         )
-                    )
-                    .AddActionError(err => err
-                        .AddShowMessageAction(sm => sm
-                            .WithMessage("Ocorreu um erro ao buscar o CEP.")
-                            .WithMessageType(ActionMessageTypeEnum.Error)
+                        .AddActionError(err => err
+                            .AddShowMessageAction(sm => sm
+                                .WithMessage("Ocorreu um erro ao buscar o CEP.")
+                                .WithMessageType(ActionMessageTypeEnum.Error)
                             )
                         )
                     )
@@ -101,7 +101,7 @@ public class AddressRoutineUI : AddressEntity, ISXRoutineLayoutDataOperations
         builder.AddDataView(d => d
             .WithIdentifier("dataViewAddress")
             .WithTitle("Listagem de endereços")
-        .AddTable(c => c
+            .AddTable(c => c
                 .WithIdentifier("tableAddresses")
                 .SetColumn(c => c.WithProperty(nameof(ZipCode)))
                 .SetColumn(c => c.WithProperty(nameof(Street)))
@@ -110,6 +110,7 @@ public class AddressRoutineUI : AddressEntity, ISXRoutineLayoutDataOperations
             )
         );
     }
+
     private static void SetupDataNew(IRoutineLayoutDataOperationsBuilder builder)
     {
         builder.AddDataNew(d => d
@@ -117,7 +118,7 @@ public class AddressRoutineUI : AddressEntity, ISXRoutineLayoutDataOperations
             .WithTitle("Novo endereço")
             .AddSection(s => s
                 .WithIdentifier("addressSection")
-            .WithTitle("Dados do endereço")
+                .WithTitle("Dados do endereço")
                 .AddElement(e => e
                     .WithProperty(nameof(ZipCode)))
                 .AddElement(e => e

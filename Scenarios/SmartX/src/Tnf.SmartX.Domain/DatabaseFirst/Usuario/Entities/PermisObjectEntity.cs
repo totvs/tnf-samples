@@ -5,9 +5,10 @@
 /// </summary>
 [SxObject("GlbSegurancaPermisObject", "GPERMIS", "Cadastro de Permissõe")]
 [SXConstraint(Name = "pk_gperfil", Type = "primarykey", Columns = new[] { "CODCOLIGADA", "CODSISTEMA", "CODUSUARIO" })]
-[SXConstraint(Name = "fk_gpermis_usuario", Type = "foreignkey", Columns = new[] { "CODUSUARIO" }, ParentObjectName = "GUSUARIO", ParentColumns = new[] { "CODUSUARIO" })]
+[SXConstraint(Name = "fk_gpermis_usuario", Type = "foreignkey", Columns = new[] { "CODUSUARIO" },
+    ParentObjectName = "GUSUARIO", ParentColumns = new[] { "CODUSUARIO" })]
 [SxFinder(new[] { nameof(CodColigada), nameof(CodSistema), nameof(CodUsuario) }, '|', "{0}|{1}|{2}")]
-public class PermisObjectEntity : SXObject
+public class PermisObjectEntity : SXObject<PermisObjectEntity>
 {
     [SxProperty(ColumnName = "CODCOLIGADA", Title = "Código da coligada", Description = "Código da coligada",
         Required = true, IsPrimaryKey = true)]
@@ -22,7 +23,8 @@ public class PermisObjectEntity : SXObject
     })]
     public string CodSistema { get; set; }
 
-    [SxProperty(ColumnName = "CODUSUARIO", Title = "Código do usuario", Description = "Código do usuario",FieldType = FieldType.FKFieldProperty,  MaxLength = 20)]
+    [SxProperty(ColumnName = "CODUSUARIO", Title = "Código do usuario", Description = "Código do usuario",
+        FieldType = FieldType.FKFieldProperty, MaxLength = 20)]
     public string CodUsuario { get; set; }
 
     [SxProperty(ColumnName = "SUPERVISOR", Title = "Supervisor", Description = "Supervisor")]

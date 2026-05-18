@@ -3,7 +3,7 @@
 [SxObject("PPessoaObject", "PPESSOA", "Cadastro de Pessoas")]
 [SXConstraint(Name = "pk_ppessoa", Type = "primarykey", Columns = new[] { "CODIGO" })]
 [SxFinder(new[] { nameof(Codigo) })]
-public class PPessoaObjectEntity : SXObject
+public class PPessoaObjectEntity : SXObject<PPessoaObjectEntity>
 {
     [SxProperty(ColumnName = "CODIGO", Title = "Código", Description = "Código", Required = true,
         IsPrimaryKey = true)]

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using Tnf.SmartX.Domain.CodeFirst.Entities;
 
 namespace Tnf.SmartX.EntityFramework.Seeds;

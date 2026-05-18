@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tnf.SmartX.Domain.CodeFirst.Entities;
 
 namespace Tnf.SmartX.EntityFramework.Configurations;

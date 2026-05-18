@@ -1,147 +1,153 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
+namespace Tnf.SmartX.EntityFramework.PostgreSql.Migrations.PostgreSqlCustomerDb;
 
-namespace Tnf.SmartX.EntityFramework.PostgreSql.Migrations.PostgreSqlCustomerDb
+/// <inheritdoc />
+public partial class InitialCustomer : Migration
 {
     /// <inheritdoc />
-    public partial class InitialCustomer : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
+        migrationBuilder.CreateTable(
+            "Customers",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                TenantId = table.Column<Guid>("uuid", nullable: false),
+                Name = table.Column<string>("text", nullable: false),
+                Email = table.Column<string>("text", nullable: false),
+                PhoneNumber = table.Column<string>("text", nullable: false),
+                CreationTime =
+                    table.Column<DateTime>("timestamp without time zone", nullable: false,
+                        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                LastModificationTime = table.Column<DateTime>("timestamp without time zone", nullable: true)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Customers", x => x.Id);
+            });
 
-            migrationBuilder.CreateTable(
-                name: "States",
-                columns: table => new
-                {
-                    UF = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_States", x => x.UF);
-                });
+        migrationBuilder.CreateTable(
+            "States",
+            table => new
+            {
+                UF = table.Column<string>("text", nullable: false),
+                Description = table.Column<string>("text", nullable: true)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_States", x => x.UF);
+            });
 
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    State = table.Column<string>(type: "text", nullable: true),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    ZipCode = table.Column<string>(type: "text", nullable: false),
-                    Street = table.Column<string>(type: "text", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+        migrationBuilder.CreateTable(
+            "Addresses",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                State = table.Column<string>("text", nullable: true),
+                City = table.Column<string>("text", nullable: false),
+                ZipCode = table.Column<string>("text", nullable: false),
+                Street = table.Column<string>("text", nullable: false),
+                CreationTime =
+                    table.Column<DateTime>("timestamp without time zone", nullable: false,
+                        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                LastModificationTime = table.Column<DateTime>("timestamp without time zone", nullable: true),
+                CustomerId = table.Column<Guid>("uuid", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Addresses", x => x.Id);
+                table.ForeignKey(
+                    "FK_Addresses_Customers_CustomerId",
+                    x => x.CustomerId,
+                    "Customers",
+                    "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
 
-            migrationBuilder.CreateTable(
-                name: "Deliveries",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ScheduledDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
-                    AddressId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deliveries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Deliveries_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+        migrationBuilder.CreateTable(
+            "Deliveries",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                ScheduledDate = table.Column<DateTime>("timestamp without time zone", nullable: false),
+                Status = table.Column<string>("text", nullable: false),
+                LastModificationTime = table.Column<DateTime>("timestamp without time zone", nullable: true),
+                CreationTime =
+                    table.Column<DateTime>("timestamp without time zone", nullable: false,
+                        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                AddressId = table.Column<Guid>("uuid", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Deliveries", x => x.Id);
+                table.ForeignKey(
+                    "FK_Deliveries_Addresses_AddressId",
+                    x => x.AddressId,
+                    "Addresses",
+                    "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
 
-            migrationBuilder.CreateTable(
-                name: "DeliveryItems",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProductName = table.Column<string>(type: "text", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    WeightKg = table.Column<decimal>(type: "numeric", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    DeliveryId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeliveryItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeliveryItems_Deliveries_DeliveryId",
-                        column: x => x.DeliveryId,
-                        principalTable: "Deliveries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+        migrationBuilder.CreateTable(
+            "DeliveryItems",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                ProductName = table.Column<string>("text", nullable: false),
+                Quantity = table.Column<int>("integer", nullable: false),
+                WeightKg = table.Column<decimal>("numeric", nullable: false),
+                CreationTime =
+                    table.Column<DateTime>("timestamp without time zone", nullable: false,
+                        defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                LastModificationTime = table.Column<DateTime>("timestamp without time zone", nullable: true),
+                DeliveryId = table.Column<Guid>("uuid", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_DeliveryItems", x => x.Id);
+                table.ForeignKey(
+                    "FK_DeliveryItems_Deliveries_DeliveryId",
+                    x => x.DeliveryId,
+                    "Deliveries",
+                    "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_CustomerId",
-                table: "Addresses",
-                column: "CustomerId");
+        migrationBuilder.CreateIndex(
+            "IX_Addresses_CustomerId",
+            "Addresses",
+            "CustomerId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_AddressId",
-                table: "Deliveries",
-                column: "AddressId");
+        migrationBuilder.CreateIndex(
+            "IX_Deliveries_AddressId",
+            "Deliveries",
+            "AddressId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_DeliveryItems_DeliveryId",
-                table: "DeliveryItems",
-                column: "DeliveryId");
-        }
+        migrationBuilder.CreateIndex(
+            "IX_DeliveryItems_DeliveryId",
+            "DeliveryItems",
+            "DeliveryId");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "DeliveryItems");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            "DeliveryItems");
 
-            migrationBuilder.DropTable(
-                name: "States");
+        migrationBuilder.DropTable(
+            "States");
 
-            migrationBuilder.DropTable(
-                name: "Deliveries");
+        migrationBuilder.DropTable(
+            "Deliveries");
 
-            migrationBuilder.DropTable(
-                name: "Addresses");
+        migrationBuilder.DropTable(
+            "Addresses");
 
-            migrationBuilder.DropTable(
-                name: "Customers");
-        }
+        migrationBuilder.DropTable(
+            "Customers");
     }
 }

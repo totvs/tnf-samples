@@ -129,6 +129,7 @@ dotnet run
 ```
 
 O Migrator irá:
+
 - ✅ Criar automaticamente os bancos de dados se não existirem
 - ✅ Aplicar todas as migrações do Entity Framework
 - ✅ Configurar as tabelas e estruturas necessárias
@@ -188,10 +189,10 @@ O projeto utiliza os seguintes pacotes NuGet principais:
 
 O **TNF SmartX** atualmente suporta **apenas PostgreSQL** como banco de dados:
 
-| Componente | Versão Recomendada | Descrição |
-|------------|-------------------|-----------|
-| **PostgreSQL** | 12.0 ou superior | Banco de dados principal |
-| **Npgsql.EntityFrameworkCore.PostgreSQL** | 8.0.11 | Provider do Entity Framework |
+| Componente                                | Versão Recomendada | Descrição                    |
+|-------------------------------------------|--------------------|------------------------------|
+| **PostgreSQL**                            | 12.0 ou superior   | Banco de dados principal     |
+| **Npgsql.EntityFrameworkCore.PostgreSQL** | 8.0.11             | Provider do Entity Framework |
 
 > **⚠️ Importante**: O TNF SmartX foi desenvolvido especificamente para PostgreSQL e não suporta outros bancos de dados no momento. Todas as funcionalidades, tipos de dados e configurações são otimizadas para PostgreSQL.
 
@@ -381,6 +382,7 @@ app.Run();
 A abordagem **Code-First** é ideal para **projetos novos** onde você tem controle total sobre o schema do banco de dados. As entidades são definidas como classes C# e o Entity Framework gera automaticamente as tabelas.
 
 ### 🎯 Quando Usar Code-First:
+
 - ✅ Projetos novos sem banco de dados existente
 - ✅ Controle total sobre o schema
 - ✅ Uso de migrations automáticas
@@ -616,6 +618,7 @@ public class CompanyEntityConfiguration : IEntityTypeConfiguration<CompanyEntity
 A abordagem **Database-First** é ideal para trabalhar com **sistemas legados** e **bancos de dados existentes**. Nesta abordagem, você mapeia suas tabelas existentes usando atributos específicos do SmartX, mantendo total compatibilidade com estruturas já estabelecidas.
 
 ### 🎯 Quando Usar Database-First:
+
 - ✅ Sistemas legados com banco de dados existente
 - ✅ DBAs dedicados gerenciando o schema
 - ✅ Performance otimizada para consultas específicas
@@ -755,31 +758,31 @@ public class UsuarioObjectEntity : SXObject
 
 #### 🏷️ Principais Atributos do Object:
 
-| Atributo | Descrição | Exemplo |
-|----------|-----------|---------|
-| **`[SxObject]`** | Define nome do objeto, tabela física e descrição | `[SxObject("UserObj", "USERS", "Usuários")]` |
-| **`[SXConstraint]`** | Define constraints do banco (PK, FK, unique, check) | `[SXConstraint(Name = "pk_user", Type = "primarykey")]` |
-| **`[SxFinder]`** | Define campos usados para busca/filtro | `[SxFinder([nameof(Nome), nameof(Email)])]` |
-| **`[SxProperty]`** | Mapeia propriedades para colunas da tabela | `[SxProperty(ColumnName = "NOME", Title = "Nome")]` |
-| **`[SxFixedValues]`** | Define valores fixos permitidos (enum-like) | `[SxFixedValues([0, 1, 2])]` |
-| **`[SxOptionValues]`** | Define opções com descrições | `[SxOptionValues([0, 1], ["Inativo", "Ativo"])]` |
+| Atributo               | Descrição                                           | Exemplo                                                 |
+|------------------------|-----------------------------------------------------|---------------------------------------------------------|
+| **`[SxObject]`**       | Define nome do objeto, tabela física e descrição    | `[SxObject("UserObj", "USERS", "Usuários")]`            |
+| **`[SXConstraint]`**   | Define constraints do banco (PK, FK, unique, check) | `[SXConstraint(Name = "pk_user", Type = "primarykey")]` |
+| **`[SxFinder]`**       | Define campos usados para busca/filtro              | `[SxFinder([nameof(Nome), nameof(Email)])]`             |
+| **`[SxProperty]`**     | Mapeia propriedades para colunas da tabela          | `[SxProperty(ColumnName = "NOME", Title = "Nome")]`     |
+| **`[SxFixedValues]`**  | Define valores fixos permitidos (enum-like)         | `[SxFixedValues([0, 1, 2])]`                            |
+| **`[SxOptionValues]`** | Define opções com descrições                        | `[SxOptionValues([0, 1], ["Inativo", "Ativo"])]`        |
 
 #### 🔧 Propriedades do SxProperty:
 
-| Propriedade | Tipo | Descrição | Exemplo |
-|-------------|------|-----------|---------|
-| **`ColumnName`** | `string` | Nome da coluna no banco | `"CODUSUARIO"` |
-| **`Title`** | `string` | Título exibido na interface | `"Código do Usuário"` |
-| **`Description`** | `string` | Descrição/tooltip | `"Código único do usuário"` |
-| **`Required`** | `bool` | Campo obrigatório | `true` |
-| **`MaxLength`** | `int` | Tamanho máximo | `50` |
-| **`Hidden`** | `bool` | Ocultar na interface | `true` |
-| **`Pattern`** | `string` | Validação regex | `@"^\d{11}$"` |
-| **`DefaultValue`** | `object` | Valor padrão | `false` |
-| **`IsPrimaryKey`** | `bool` | É chave primária | `true` |
-| **`FieldType`** | `FieldType` | Tipo do campo | `FieldType.FKFieldProperty` |
-| **`BooleanLabelTrue`** | `string` | Label para true | `"Sim"` |
-| **`BooleanLabelFalse`** | `string` | Label para false | `"Não"` |
+| Propriedade             | Tipo        | Descrição                   | Exemplo                     |
+|-------------------------|-------------|-----------------------------|-----------------------------|
+| **`ColumnName`**        | `string`    | Nome da coluna no banco     | `"CODUSUARIO"`              |
+| **`Title`**             | `string`    | Título exibido na interface | `"Código do Usuário"`       |
+| **`Description`**       | `string`    | Descrição/tooltip           | `"Código único do usuário"` |
+| **`Required`**          | `bool`      | Campo obrigatório           | `true`                      |
+| **`MaxLength`**         | `int`       | Tamanho máximo              | `50`                        |
+| **`Hidden`**            | `bool`      | Ocultar na interface        | `true`                      |
+| **`Pattern`**           | `string`    | Validação regex             | `@"^\d{11}$"`               |
+| **`DefaultValue`**      | `object`    | Valor padrão                | `false`                     |
+| **`IsPrimaryKey`**      | `bool`      | É chave primária            | `true`                      |
+| **`FieldType`**         | `FieldType` | Tipo do campo               | `FieldType.FKFieldProperty` |
+| **`BooleanLabelTrue`**  | `string`    | Label para true             | `"Sim"`                     |
+| **`BooleanLabelFalse`** | `string`    | Label para false            | `"Não"`                     |
 
 #### 🔗 Tipos de FieldType:
 
@@ -933,19 +936,20 @@ public class PermisObjectEntity : SXObject
 
 ### 4. Principais Diferenças: Object vs Model
 
-| Aspecto | **Object** | **Model** |
-|---------|------------|-----------|
-| **Propósito** | Mapear tabela do banco | Regras de negócio e interface |
-| **Herança** | `SXObject` | `Object + ISXModel` |
-| **Atributos** | `[SxObject]`, `[SxProperty]` | `[SxModel]`, `[SxRelation]` |
-| **Responsabilidade** | Estrutura de dados | Configurações avançadas |
-| **Validações** | Básicas (atributos) | Customizadas (métodos) |
-| **Relacionamentos** | Navigation Properties | SxRelation com configurações |
-| **Eventos** | Não suporta | Lifecycle completo |
+| Aspecto              | **Object**                   | **Model**                     |
+|----------------------|------------------------------|-------------------------------|
+| **Propósito**        | Mapear tabela do banco       | Regras de negócio e interface |
+| **Herança**          | `SXObject`                   | `Object + ISXModel`           |
+| **Atributos**        | `[SxObject]`, `[SxProperty]` | `[SxModel]`, `[SxRelation]`   |
+| **Responsabilidade** | Estrutura de dados           | Configurações avançadas       |
+| **Validações**       | Básicas (atributos)          | Customizadas (métodos)        |
+| **Relacionamentos**  | Navigation Properties        | SxRelation com configurações  |
+| **Eventos**          | Não suporta                  | Lifecycle completo            |
 
 ### 5. Configurações Avançadas do DatabaseFirst
 
 #### Constraints e Índices
+
 ```csharp
 [SXConstraint(Name = "pk_usuario", Type = "primarykey", Columns = ["CODUSUARIO"])]
 [SXConstraint(Name = "fk_usuario_acesso", Type = "foreignkey", 
@@ -956,6 +960,7 @@ public class PermisObjectEntity : SXObject
 ```
 
 #### Tipos de Dados Específicos
+
 ```csharp
 [SxProperty(ColumnName = "DATA", Title = "Data", DataType = typeof(DateTime))]
 public DateTime Data { get; set; }
@@ -969,6 +974,7 @@ public string Descricao { get; set; }
 ```
 
 #### Finders Customizados
+
 ```csharp
 // Finder simples
 [SxFinder([nameof(Usuario)])]
@@ -1409,6 +1415,7 @@ dotnet run
 ### ⚠️ Troubleshooting
 
 **Se o Migrator falhar:**
+
 ```bash
 # Verificar se PostgreSQL está rodando
 sudo systemctl status postgresql
@@ -1418,6 +1425,7 @@ sudo systemctl status postgresql
 ```
 
 **Se a aplicação não conectar:**
+
 ```bash
 # Verificar se o Migrator foi executado com sucesso
 # Verificar logs da aplicação para erros de conexão
@@ -1441,16 +1449,17 @@ O SmartX gera automaticamente os seguintes endpoints para cada modelo:
 - `DELETE /api/smartx/data/{ModelName}/{id}` - Exclusão
 - `GET /api/smartx/routine/{RoutineName}` - Configuração da rotina
 
-
 ## Principais Diferenças Entre as Abordagens
 
 ### CodeFirst
+
 - Entidades definidas como classes C#
 - Migrations automáticas do Entity Framework
 - Configuração via Fluent API
 - Ideal para projetos novos
 
 ### DatabaseFirst
+
 - **Entidades mapeadas para tabelas existentes** (como GUSUARIO, GPERMIS)
 - **Uso de atributos** para definir colunas (`[SxProperty]`, `[SxObject]`)
 - **Configuração via atributos** (`SxProperty`, `SxObject`, `SxConstraint`)
@@ -1472,6 +1481,7 @@ O SmartX gera automaticamente os seguintes endpoints para cada modelo:
 O TNF SmartX foi desenvolvido especificamente para PostgreSQL, aproveitando recursos únicos deste banco:
 
 ### 📝 Naming Conventions
+
 ```csharp
 // No OnModelCreating do DbContext, configurar convenções do PostgreSQL
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1493,6 +1503,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```
 
 ### 🔧 Tipos de Dados PostgreSQL Específicos
+
 ```csharp
 // Configurações específicas para tipos PostgreSQL
 builder.Property(e => e.Id)
@@ -1513,6 +1524,7 @@ builder.Property(e => e.SearchVector)
 ```
 
 ### ⚡ Performance e Índices Especializados
+
 ```csharp
 // Índices específicos do PostgreSQL
 builder.HasIndex(e => e.Email)
@@ -1535,6 +1547,7 @@ builder.HasIndex(e => new { e.CodColigada, e.IdMov })
 ```
 
 ### 🔍 Recursos Avançados do PostgreSQL
+
 ```csharp
 // Constraints específicas do PostgreSQL
 builder.HasCheckConstraint("CK_Usuario_Status", "status IN (0, 1)");
@@ -1554,6 +1567,7 @@ builder.HasIndex(e => e.Email)
 ## 🎯 Quando Usar Cada Abordagem
 
 ### Use **CodeFirst** quando:
+
 - ✅ Criar um **projeto novo** do zero
 - ✅ Ter **controle total** sobre o schema do banco PostgreSQL
 - ✅ Usar **migrations automáticas** do Entity Framework
@@ -1562,6 +1576,7 @@ builder.HasIndex(e => e.Email)
 - ✅ Aproveitar **recursos modernos** do PostgreSQL (JSONB, arrays, etc.)
 
 ### Use **DatabaseFirst** quando:
+
 - ✅ Trabalhar com **sistemas legados** existentes no PostgreSQL
 - ✅ Ter **DBAs dedicados** gerenciando o schema
 - ✅ Precisar de **performance otimizada** para consultas específicas
@@ -1571,10 +1586,12 @@ builder.HasIndex(e => e.Email)
 - ✅ Usar **recursos avançados** como particionamento, índices especializados
 
 ### 💡 Exemplo Real no SmartX:
+
 - **CodeFirst**: `CompanyEntity`, `DepartmentEntity` → Estruturas novas aproveitando recursos modernos do PostgreSQL
 - **DatabaseFirst**: `UsuarioObjectEntity`, `PermisObjectEntity` → Tabelas de sistema já estabelecidas com estruturas específicas
 
 ### 🔧 Vantagens do PostgreSQL no SmartX:
+
 - **🚀 Performance**: Otimizações específicas para PostgreSQL
 - **📊 Tipos Avançados**: JSONB, arrays, UUID nativos
 - **🔍 Busca Textual**: Full-text search integrado
@@ -1584,23 +1601,27 @@ builder.HasIndex(e => e.Email)
 ## 📚 Recursos Adicionais
 
 ### 📖 Documentação Oficial
+
 - [TNF Framework Documentation](https://github.com/totvs/tnf)
 - [PO-UI Components](https://po-ui.io/)
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 
 ### 🎯 Exemplos Práticos
+
 - **Code-First**: Ideal para novos projetos com controle total do schema
 - **Database-First**: Perfeito para sistemas legados e bancos existentes
 - **Hybrid Approach**: Combine ambas as abordagens conforme necessário
 
 ### 🔧 Ferramentas Recomendadas
+
 - **Visual Studio 2022**: IDE principal para desenvolvimento .NET
 - **pgAdmin**: Interface gráfica para PostgreSQL
 - **Postman**: Teste de APIs REST
 - **Docker**: Containerização da aplicação
 
 ### 🚀 Próximos Passos
+
 1. **Explore os exemplos**: Execute o projeto e teste as funcionalidades
 2. **Customize as entidades**: Adapte para suas necessidades específicas
 3. **Implemente validações**: Adicione regras de negócio customizadas

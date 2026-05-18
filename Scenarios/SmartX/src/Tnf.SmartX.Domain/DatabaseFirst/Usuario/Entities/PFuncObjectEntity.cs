@@ -3,7 +3,7 @@
 [SxObject("PFuncObject", "PFUNC", "Cadastro de Funcionários")]
 [SXConstraint(Name = "pk_pfunc", Type = "primarykey", Columns = new[] { "CODCOLIGADA", "CHAPA" })]
 [SxFinder(new[] { nameof(CodColigada), nameof(Chapa) })]
-public class PFuncObjectEntity : SXObject
+public class PFuncObjectEntity : SXObject<PFuncObjectEntity>
 {
     [SxProperty(ColumnName = "CODCOLIGADA", Title = "Código da coligada", Description = "Código da coligada",
         Required = true, IsPrimaryKey = true)]

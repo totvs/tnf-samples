@@ -2,11 +2,13 @@
 
 [SxObject("GlbUsuarioObject", "GUSUARIO", "Cadastro de Usuários")]
 [SXConstraint(Name = "pk_gusuario", Type = "primarykey", Columns = new[] { "CODUSUARIO" })]
-[SXConstraint(Name = "fk_gusuario_gacesso", Type = "foreignkey", Columns = new[] { "CODACESSO" }, ParentObjectName = "GACESSO", ParentColumns = new[] { "CODACESSO" })]
+[SXConstraint(Name = "fk_gusuario_gacesso", Type = "foreignkey", Columns = new[] { "CODACESSO" },
+    ParentObjectName = "GACESSO", ParentColumns = new[] { "CODACESSO" })]
 [SxFinder(new[] { nameof(Usuario) })]
-public class UsuarioObjectEntity : SXObject
+public class UsuarioObjectEntity : SXObject<UsuarioObjectEntity>
 {
-    [SxProperty(ColumnName = "CODUSUARIO", Title = "Código do usuario", Description = "Código do usuário", Required = true, IsPrimaryKey = true, MaxLength = 20)]
+    [SxProperty(ColumnName = "CODUSUARIO", Title = "Código do usuario", Description = "Código do usuário",
+        Required = true, IsPrimaryKey = true, MaxLength = 20)]
     public string Usuario { get; set; }
 
     [SxProperty(ColumnName = "NOME", Title = "Nome do usuário", Description = "Nome do usuário", Required = true)]
@@ -31,10 +33,12 @@ public class UsuarioObjectEntity : SXObject
     [SxProperty(ColumnName = "DTAEXPSENHA", Title = "Data de expiração senha", Description = "Data de expiração senha")]
     public DateTime? DataExpSenha { get; set; }
 
-    [SxProperty(ColumnName = "DIASEXPSENHA", Title = "Dias de expiração senha", Description = "Dias de expiração senha")]
+    [SxProperty(ColumnName = "DIASEXPSENHA", Title = "Dias de expiração senha",
+        Description = "Dias de expiração senha")]
     public int? DiasExpSenha { get; set; }
 
-    [SxProperty(ColumnName = "EMAIL", Title = "Email", Description = "Email", Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]
+    [SxProperty(ColumnName = "EMAIL", Title = "Email", Description = "Email",
+        Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]
     public string Email { get; set; }
 
     [SxProperty(ColumnName = "USERID", Title = "Identificador", Description = "UserId", Hidden = true)]
@@ -59,10 +63,11 @@ public class UsuarioObjectEntity : SXObject
         BooleanLabelTrue = "Sim",
         BooleanLabelFalse = "Não",
         Rules = new[] { RuleFieldEnum.rboolean }
-     )]
+    )]
     public bool? ObrigaAlterarSenha { get; set; } = false;
 
-    [SxProperty(ColumnName = "CODACESSO", Title = "Cód.Acesso", Description = "Cód.Acesso", FieldType = FieldType.FKFieldProperty)]
+    [SxProperty(ColumnName = "CODACESSO", Title = "Cód.Acesso", Description = "Cód.Acesso",
+        FieldType = FieldType.FKFieldProperty)]
     public string CodAcesso { get; set; }
 
     [SxProperty(FieldType = FieldType.NavigationProperty)]

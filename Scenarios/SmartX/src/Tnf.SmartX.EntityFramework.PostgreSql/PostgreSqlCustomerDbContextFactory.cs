@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-
 using Tnf.Runtime.Session;
 
 namespace Tnf.SmartX.EntityFramework.PostgreSql;
