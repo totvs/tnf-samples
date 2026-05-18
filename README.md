@@ -4,7 +4,7 @@ Repositório de exemplos e cenários de uso do **TNF Framework** (TOTVS .NET Fra
 
 ## Distribuição dos Pacotes
 
-![Diagramas de pacotes do Tnf](https://github.com/totvs/tnf-samples/blob/master/Scenarios/tnf_packages_diagram.png)
+![Diagramas de pacotes do Tnf](https://github.com/totvs/tnf-samples/blob/main/Scenarios/tnf_packages_diagram.png)
 
 ## Estrutura do Repositório
 
